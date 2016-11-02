@@ -1,0 +1,13 @@
+.idea
+node_modules
+jspm_packages
+link-checker-results.txt
+**/*npm-debug.log.*
+**/*.js
+**/*.js.map
+
+_test-output
+_temp
+
+!karma*.js
+!systemjs.config.js
