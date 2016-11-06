@@ -5,8 +5,8 @@ import {DashboardIndexComponent}     from './components/index.component';
 import {HeroesModule} from '../heroes/heroes.module';
 
 import {DashboardRoutingModule}     from './dashboard.routes';
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
