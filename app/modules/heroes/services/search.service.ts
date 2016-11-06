@@ -1,10 +1,11 @@
 import {Injectable}     from '@angular/core';
 import {Http, Response} from '@angular/http';
 
-import {Hero}           from './hero';
+import {Hero}           from '../models/hero.model';
+import {Observable} from "rxjs";
 
 @Injectable()
-export class HeroSearchService {
+export class HeroesSearchService {
     constructor(private http: Http) {
     }
 

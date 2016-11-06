@@ -1,22 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Hero} from './hero';
-import {HeroService} from './hero.service';
+import {Hero} from '../../heroes/models/hero.model';
+import {HeroesDataService} from '../../heroes/services/data.service';
 
 @Component({
     moduleId: module.id,
     selector: 'my-dashboard',
-    templateUrl: 'dashboard.template.html'
+    templateUrl: 'index.template.html',
+    styleUrls: ['../styles/index.css']
 })
-export class DashboardComponent implements OnInit {
-    constructor(private heroService: HeroService, private router: Router) {
+export class DashboardIndexComponent implements OnInit {
+    constructor(private heroesDataService: HeroesDataService, private router: Router) {
     }
 
     heroes: Hero[] = [];
 
     ngOnInit(): void {
-        this.heroService.getHeroes()
+        this.heroesDataService.getHeroes()
             .then(heroes => this.heroes = heroes.slice(1, 5));
     }
 

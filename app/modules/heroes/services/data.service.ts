@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-import {Hero} from './hero';
+import {Hero} from '../models/hero.model';
 
 @Injectable()
-export class HeroService {
+export class HeroesDataService {
 
     private heroesUrl = 'app/heroes';
 
@@ -15,7 +15,9 @@ export class HeroService {
         return Promise.reject(error.message || error);
     }
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        console.log('INIT!!!');
+    }
 
     getHeroes(): Promise<Hero[]> {
         return this.http.get(this.heroesUrl)
@@ -53,5 +55,6 @@ export class HeroService {
             .then(() => null)
             .catch(this.handleError);
     }
+
 }
 

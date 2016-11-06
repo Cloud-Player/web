@@ -2,19 +2,21 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params}   from '@angular/router';
 import {Location}                 from '@angular/common';
 
-import {Hero} from './hero';
-import {HeroService} from './hero.service';
+import {Hero} from '../models/hero.model';
+
+import {HeroesDataService} from '../services/data.service';
 
 @Component({
     moduleId: module.id,
     selector: 'my-hero-detail',
-    templateUrl: 'hero-detail.template.html'
+    templateUrl: 'detail.template.html',
+    providers: [HeroesDataService]
 })
-export class HeroDetailComponent implements OnInit {
+export class HeroesDetailComponent implements OnInit {
     @Input()
     hero: Hero;
 
-    constructor(private heroService: HeroService,
+    constructor(private heroesDataService: HeroesDataService,
                 private route: ActivatedRoute,
                 private location: Location) {
     }
@@ -22,7 +24,7 @@ export class HeroDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
-            this.heroService.getHero(id)
+            this.heroesDataService.getHero(id)
                 .then(hero => this.hero = hero);
         });
     }
@@ -32,7 +34,7 @@ export class HeroDetailComponent implements OnInit {
     }
 
     save(): void{
-        this.heroService.update(this.hero)
+        this.heroesDataService.update(this.hero)
             .then(() => this.goBack());
     }
 }
