@@ -8,14 +8,14 @@ import {HeroesCollection} from '../collections/heroes.collection';
     moduleId: module.id,
     selector: 'my-heroes',
     templateUrl: 'index.template.html',
-    styleUrls: ['../styles/index.css']
+    styleUrls: ['../styles/index.css'],
+    providers: [HeroesCollection]
 })
 export class HeroesBbIndexComponent implements OnInit {
-    heroes: HeroesCollection;
     selectedHero: HeroModel;
 
-    constructor(private router: Router) {
-        this.heroes = new HeroesCollection();
+    constructor(private router: Router,
+                private heroes: HeroesCollection) {
     }
 
     ngOnInit(): void {

@@ -8,18 +8,17 @@ import {HeroModel} from '../models/hero.model';
     moduleId: module.id,
     selector: 'my-hero-detail',
     templateUrl: 'detail.template.html',
+    providers: [HeroModel]
 })
 export class HeroesBbDetailComponent implements OnInit {
-    @Input()
-    hero: HeroModel;
-
     constructor(private route: ActivatedRoute,
-                private location: Location) {
+                private location: Location,
+                private hero: HeroModel) {
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            this.hero = new HeroModel({id: params['id']});
+            this.hero.set('id', params['id']);
             this.hero.fetch();
         });
     }

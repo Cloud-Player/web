@@ -1,6 +1,8 @@
 import {Collection} from 'backbone';
 import {BaseModel} from '../models/backbone.model';
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class BaseCollection<T extends BaseModel> extends Collection<BaseModel> {
     model = BaseModel;
 
@@ -9,7 +11,6 @@ export class BaseCollection<T extends BaseModel> extends Collection<BaseModel> {
     parse(rsp: any) {
         return rsp.data || rsp;
     }
-
 }
 
 
