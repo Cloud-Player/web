@@ -1,11 +1,7 @@
-import {Model} from 'backbone';
+import {BaseModel} from '../../backbone/models/backbone.model';
 
-export class HeroModel extends Model {
+export class HeroModel extends BaseModel {
     urlRoot = 'app/heroes';
-
-    parse(rsp: any) {
-        return rsp.data || rsp;
-    };
 
     getFullName() {
         return `${this.get('name')}`;
