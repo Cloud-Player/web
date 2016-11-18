@@ -1,6 +1,7 @@
 {
   "name": "angular-quickstart",
   "version": "1.0.0",
+  "description": "tutorial from https://angular.io",
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "lite": "lite-server",
@@ -36,5 +37,8 @@
     "concurrently": "^3.0.0",
     "lite-server": "^2.2.2",
     "typescript": "^2.0.3"
+  },
+  "repository": {
+
   }
 }
