@@ -1,5 +1,5 @@
-[![CI Status]
-   (http://img.shields.io/travis/roamlrs/roamlrs.svg?style=flat)]
-   (https://travis-ci.org/Zarlex/cloud-player)
+[![Build Status]
+    (https://travis-ci.org/Zarlex/cloud-player.svg?branch=master)]
+    (https://travis-ci.org/Zarlex/cloud-player)
 
 # cloud-player
