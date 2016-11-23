@@ -17,6 +17,7 @@ import {DashboardModule} from '../dashboard/dashboard.module';
 import {MainComponent}     from './components/main.component';
 
 import {MainRoutingModule}     from './main.routes';
+import {AudioPlayerModule} from "../audioplayer/audio-player.module";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MainRoutingModule}     from './main.routes';
         HeroesModule,
         HeroesBbModule,
         DashboardModule,
-        MainRoutingModule
+        MainRoutingModule,
+        AudioPlayerModule
     ],
     declarations: [
         MainComponent
