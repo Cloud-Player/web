@@ -19,7 +19,7 @@ export class HeroesBbIndexComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.heroes.fetch();
+        this.heroes.fetch().subscribe();
     }
 
     onSelect(hero: HeroModel): void {

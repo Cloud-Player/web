@@ -19,7 +19,7 @@ export class HeroesBbDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             this.hero.set('id', params['id']);
-            this.hero.fetch();
+            this.hero.fetch().subscribe();
         });
     }
 
