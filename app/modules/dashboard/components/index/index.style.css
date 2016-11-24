@@ -34,6 +34,8 @@ h4 {
     min-width: 120px;
     background-color: #607D8B;
     border-radius: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .module:hover {
     background-color: #EEE;

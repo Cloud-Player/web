@@ -1,0 +1,16 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+  <div *ngFor="let hero of getFilteredHeroes()"
+       (click)="gotoDetail(hero)"
+       class="col-1-4">
+    <div class="module hero">
+      <h4>{{hero.get('title')}}</h4>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <hero-search></hero-search>
+  </div>
+</div>
