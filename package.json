@@ -1,27 +1,21 @@
 {
-  "name": "angular-quickstart",
+  "name": "cloud-player",
   "version": "1.0.0",
-  "description": "QuickStart package.json from the documentation, supplemented with testing support",
+  "description": "",
+  "private": true,
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "docker-build": "docker build -t ng2-quickstart .",
-    "docker": "npm run docker-build && docker run -it --rm -p 3000:3000 -p 3001:3001 ng2-quickstart",
-    "pree2e": "npm run webdriver:update",
-    "e2e": "tsc && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
-    "lint": "tslint ./app/**/*.ts -t verbose",
-    "lite": "lite-server",
-    "test-run": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
-    "test": "tsc && karma start karma.conf.js --single-run",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "webdriver:update": "webdriver-manager update"
+    "start": "concurrently --kill-others \"gulp\" \"lite-server\""
   },
   "keywords": [],
-  "author": "",
+  "contributors": [
+    "Alexander Zarges <alex.zarges@online.de> (http://zarg.es/)",
+    "Daniel Reißner <mail@danielreissner.com (http://danielreissner.com)",
+    "Kai Schulz <mail@kaischulz.com> (http://kaischulz.com)"
+  ],
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/angular/angular.io/blob/master/LICENSE"
+      "url": "http://www.opensource.org/licenses/mit-license.php"
     }
   ],
   "dependencies": {
@@ -77,7 +71,13 @@
     "protractor": "^4.0.9",
     "rimraf": "^2.5.4",
     "tslint": "^3.15.1",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.10"
   },
-  "repository": {}
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zarlex/cloud-player.git"
+  },
+  "bug": {
+    "url": "https://github.com/zarlex/cloud-player/issues"
+  }
 }
