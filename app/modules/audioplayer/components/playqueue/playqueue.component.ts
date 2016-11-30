@@ -24,7 +24,6 @@ export class PlayQueueComponent implements OnInit{
     }
 
     ngOnInit(): void {
-
     }
 
     onSongSelect(song: string): void {

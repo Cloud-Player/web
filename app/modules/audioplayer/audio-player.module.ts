@@ -9,6 +9,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AudioPlayerComponent} from "./components/index/index.component";
 import {AudioPlayerRoutingModule} from "./audio-player.routes";
 import {PlayQueueComponent} from "./components/playqueue/playqueue.component";
+import {PlayerControlsComponent} from "./components/controls/controls.component";
 
 @NgModule ({
     imports: [
@@ -18,7 +19,8 @@ import {PlayQueueComponent} from "./components/playqueue/playqueue.component";
     ],
     declarations: [
         AudioPlayerComponent,
-        PlayQueueComponent
+        PlayQueueComponent,
+        PlayerControlsComponent
     ],
     exports: [
         AudioPlayerComponent

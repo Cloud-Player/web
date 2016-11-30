@@ -1,0 +1,6 @@
+<button type="button" (click)="previousSong()">Back</button>
+<button type="button" (click)="playSong()">Play</button>
+<button type="button" (click)="pauseSong()">Pause</button>
+<button type="button" (click)="nextSong()">Next</button>
+
+<input #volume type="range" (change)="setVolume(volume.value)" min="0" max="1" value="0.5" step="0.05" />
