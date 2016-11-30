@@ -4,21 +4,20 @@ import {Router}            from '@angular/router';
 import {Observable}        from 'rxjs/Observable';
 import {Subject}           from 'rxjs/Subject';
 
-import {HeroesSearchService} from '../services/search.service';
-import {Hero} from '../models/hero.model';
+import {Heroes} from '../../collections/heroes.collection';
+import {Hero} from '../../models/hero.model';
 
 @Component({
     moduleId: module.id,
     selector: 'hero-search',
     templateUrl: 'search.template.html',
-    styleUrls: ['../styles/search.css'],
-    providers: [HeroesSearchService]
+    styleUrls: ['search.style.css'],
+    providers: [Heroes]
 })
 export class HeroesSearchComponent implements OnInit {
-    heroes: Observable<Hero[]>;
     private searchTerms = new Subject<string>();
 
-    constructor(private heroesSearchService: HeroesSearchService,
+    constructor(private heroes: Heroes,
                 private router: Router) {
     }
 
@@ -28,19 +27,16 @@ export class HeroesSearchComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.heroes = this.searchTerms
+        this.searchTerms
             .debounceTime(300)        // wait for 300ms pause in events
             .distinctUntilChanged()   // ignore if next search term is same as previous
-            .switchMap(term => term   // switch to new observable each time
-                // return the http search observable
-                ? this.heroesSearchService.search(term)
-                // or the observable of empty heroes if no search term
-                : Observable.of<Hero[]>([]))
-            .catch(error => {
-                // TODO: real error handling
-                console.log(error);
-                return Observable.of<Hero[]>([]);
-            });
+            .switchMap(term => {
+                if (term) {
+                    this.heroes.queryParams.q = term;
+                    this.heroes.fetch({reset: true});
+                }
+                return Observable.of<Heroes>(this.heroes);
+            }).toPromise();
     }
 
     gotoDetail(hero: Hero): void {
