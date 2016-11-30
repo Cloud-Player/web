@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Config} from "../../../../config/config";
+import {PlayQueueComponent} from "../playqueue/playqueue.component";
 
 @Component ({
     moduleId: module.id,
@@ -12,19 +12,22 @@ import {Config} from "../../../../config/config";
 export class AudioPlayerComponent implements OnInit{
     title: string = "This is our awesome Soundcloud Audioplayer!!!"
 
+    private playQueue: PlayQueueComponent;
     private audio: any;
-    private playList: string[];
 
     constructor() {
+
     }
 
     ngOnInit(): void {
+        this.playQueue = new PlayQueueComponent();
+
         this.audio = new Audio();
-        this.playList = Config.testPlaylist;
-        this.audio.src = this.playList[0];
+        this.audio.src = this.playQueue.getFirstSong();
     }
 
-    playSong(): void {
+    playSong(song: string): void {
+        this.audio.src = song;
         this.audio.play();
     }
 
@@ -33,22 +36,15 @@ export class AudioPlayerComponent implements OnInit{
     }
 
     previousSong(): void {
-        var index: any = this.playList.indexOf(this.audio.src);
-        this.audio.src = this.playList[index - 1];
+        this.audio.src = this.playQueue.getPreviousSong();
         this.audio.play();
     }
 
     nextSong(): void {
-        var index: any = this.playList.indexOf(this.audio.src);
-        this.audio.src = this.playList[index + 1];
+        this.audio.src = this.playQueue.getNextSong();
         this.audio.play();
     }
 
-    onSongSelect(song: string): void {
-        this.audio.src = song;
-        this.audio.play();
-    }
-    
     setVolume(volume: string): void {
         this.audio.volume = volume;
     }

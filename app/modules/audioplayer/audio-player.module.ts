@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {AudioPlayerComponent} from "./components/index/index.component";
 import {AudioPlayerRoutingModule} from "./audio-player.routes";
+import {PlayQueueComponent} from "./components/playqueue/playqueue.component";
 
 @NgModule ({
     imports: [
@@ -16,7 +17,8 @@ import {AudioPlayerRoutingModule} from "./audio-player.routes";
         AudioPlayerRoutingModule
     ],
     declarations: [
-        AudioPlayerComponent
+        AudioPlayerComponent,
+        PlayQueueComponent
     ],
     exports: [
         AudioPlayerComponent

@@ -1,1 +1,5 @@
-
+<ul class="play-list">
+    <li *ngFor="let song of playQueue" (click)="onSongSelect(song)">
+        <p>{{song}}</p>
+    </li>
+</ul>
