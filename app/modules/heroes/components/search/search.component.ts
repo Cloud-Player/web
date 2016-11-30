@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Router}            from '@angular/router';
+import {Router} from '@angular/router';
 
-import {Observable}        from 'rxjs/Observable';
-import {Subject}           from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 import {Heroes} from '../../collections/heroes.collection';
 import {Hero} from '../../models/hero.model';
@@ -14,6 +14,7 @@ import {Hero} from '../../models/hero.model';
     styleUrls: ['search.style.css'],
     providers: [Heroes]
 })
+
 export class HeroesSearchComponent implements OnInit {
     private searchTerms = new Subject<string>();
 

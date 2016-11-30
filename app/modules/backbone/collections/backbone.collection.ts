@@ -1,6 +1,6 @@
 import {Model, Collection} from 'backbone';
 import {BaseModel} from '../models/backbone.model';
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 
 @Injectable()

@@ -1,44 +1,43 @@
-/* Master Styles */
-h1 {
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 250%;
-}
-h2, h3 {
-    color: #444;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: lighter;
-}
-body {
-    margin: 2em;
-}
-body, input[text], button {
-    color: #888;
-    font-family: Cambria, Georgia;
-}
-/* . . . */
-/* everywhere else */
-* {
-    font-family: Arial, Helvetica, sans-serif;
-}
-a {
-    cursor: pointer;
-    cursor: hand;
-}
-button {
-    font-family: Arial;
-    background-color: #eee;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    cursor: hand;
-}
-button:hover {
-    background-color: #cfd8dc;
-}
-button:disabled {
-    background-color: #eee;
-    color: #aaa;
-    cursor: auto;
-}
+/*
+Error: Invalid CSS after "}": expected selector or at-rule, was "/*"
+        on line 20 of main.scss
+
+15: }
+16: body, input[text], button {
+17:     color: #888;
+18:     font-family: Cambria, Georgia;
+19: }
+20: /*
+21: * {
+22:     font-family: Arial, Helvetica, sans-serif;
+23: }
+24: a {
+25:     cursor: pointer;
+
+Backtrace:
+main.scss:20
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1189:in `expected'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1125:in `expected'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:42:in `parse'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:406:in `_to_tree'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:381:in `_render_with_sourcemap'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:298:in `render_with_sourcemap'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `each'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/plugin.rb:82:in `update_stylesheets'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:340:in `watch_or_update'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/base.rb:52:in `parse'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/lib/sass/exec/base.rb:19:in `parse!'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/gems/sass-3.4.22/bin/sass:13:in `<top (required)>'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/bin/sass:23:in `load'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/bin/sass:23:in `<main>'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/bin/ruby_executable_hooks:15:in `eval'
+/Users/danielreissner/.rvm/gems/ruby-2.3.0/bin/ruby_executable_hooks:15:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"}\": expected selector or at-rule, was \"/*\"\A         on line 20 of main.scss\A \A 15: }\A 16: body, input[text], button {\A 17:     color: #888;\A 18:     font-family: Cambria, Georgia;\A 19: }\A 20: /*\A 21: * {\A 22:     font-family: Arial, Helvetica, sans-serif;\A 23: }\A 24: a {\A 25:     cursor: pointer;"; }

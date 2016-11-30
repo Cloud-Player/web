@@ -19,5 +19,5 @@ import {FormsModule} from '@angular/forms';
         DashboardIndexComponent
     ]
 })
-export class DashboardModule {
-}
+
+export class DashboardModule {}

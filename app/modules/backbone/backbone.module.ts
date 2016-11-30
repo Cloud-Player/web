@@ -21,6 +21,7 @@ declare namespace Backbone {
         BaseModel
     ]
 })
+
 export class BackboneModule {
     constructor(private http: Http) {
         Backbone.ajax = (options: any) => {
