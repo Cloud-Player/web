@@ -13,12 +13,7 @@ import {PlayerControlsComponent} from "../controls/controls.component";
 export class AudioPlayerComponent implements OnInit{
     title: string = "This is our awesome Soundcloud Audioplayer!!!"
 
-    // private playQueue: PlayQueueComponent;
-    // private playerControls: PlayerControls Component;
-
     constructor() {
-        // this.playerControls = new PlayerControlsComponent();
-        // this.playQueue = new PlayQueueComponent();
     }
 
     ngOnInit(): void {
