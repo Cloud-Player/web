@@ -5,8 +5,8 @@ import {PlayerControlsComponent} from "../controls/controls.component";
 @Component ({
     moduleId: module.id,
     selector: 'audio-player',
-    templateUrl: 'index.component.html',
-    styleUrls: ['index.component.css']
+    templateUrl: 'index.template.html',
+    styleUrls: ['index.style.css']
 
 })
 
