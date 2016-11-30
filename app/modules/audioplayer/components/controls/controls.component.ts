@@ -31,13 +31,11 @@ export class PlayerControlsComponent implements OnInit{
     }
 
     previousSong(): void {
-        this.audio.src = this.playQueue.getPreviousSong();
-        this.audio.play();
+        this.playSong(this.playQueue.getPreviousSong());
     }
 
     nextSong(): void {
-        this.audio.src = this.playQueue.getNextSong();
-        this.audio.play();
+        this.playSong(this.playQueue.getNextSong());
     }
 
     setVolume(volume: string): void {
