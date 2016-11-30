@@ -12,4 +12,3 @@ _temp
 !karma*.js
 !systemjs.config.js
 /npm-debug.log
-/app/config/config.ts
