@@ -1,4 +1,17 @@
 <h1>{{title}}</h1>
 
+<ul class="play-list">
+    <li *ngFor="let song of playList" (click)="onSongSelect(song)">
+        <p>{{song}}</p>
+    </li>
+</ul>
+
+<button type="button" (click)="previousSong()">Back</button>
 <button type="button" (click)="playSong()">Play</button>
-<button type="button" (click)="stopSong()">Stop</button>
+<button type="button" (click)="pauseSong()">Pause</button>
+<button type="button" (click)="nextSong()">Next</button>
+
+<button type="button" (click)="turnVolumeUp()">VolumeDown</button>
+<button type="button" (click)="turnVolumeDown()">VolumeUp</button>
+
+<audio></audio>
