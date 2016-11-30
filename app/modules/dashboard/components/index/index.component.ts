@@ -12,6 +12,7 @@ import {Model} from 'backbone';
     styleUrls: ['index.style.css'],
     providers: [Heroes]
 })
+
 export class DashboardIndexComponent implements OnInit {
     constructor(private heroes: Heroes, private router: Router) {
     }
@@ -25,8 +26,8 @@ export class DashboardIndexComponent implements OnInit {
         this.router.navigate(link);
     }
 
-    getFilteredHeroes(): Model[]{
-       return this.heroes.filter((hero, index)=>{return index<4});
+    getFilteredHeroes(): Model[] {
+       return this.heroes.filter((hero, index) => { return index < 4; });
     }
 
 }

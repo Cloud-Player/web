@@ -14,8 +14,7 @@ import {Heroes} from '../../collections/heroes.collection';
 export class HeroesIndexComponent implements OnInit {
     selectedHero: Hero;
 
-    constructor(private heroes: Heroes, private router: Router) {
-    }
+    constructor(private heroes: Heroes, private router: Router) {}
 
     ngOnInit(): void {
         this.heroes.fetch();

@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Params}   from '@angular/router';
-import {Location}                 from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Location} from '@angular/common';
 
 import {Hero} from '../../models/hero.model';
 
@@ -10,6 +10,7 @@ import {Hero} from '../../models/hero.model';
     templateUrl: 'detail.template.html',
     providers: [Hero]
 })
+
 export class HeroesDetailComponent implements OnInit {
     constructor(private hero: Hero,
                 private route: ActivatedRoute,

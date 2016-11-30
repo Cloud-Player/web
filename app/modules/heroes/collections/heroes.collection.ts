@@ -9,5 +9,5 @@ export class Heroes extends BaseCollection<Model> {
     model = Hero;
     queryParams = {
         q: 'bedouin'
-    }
+    };
 }

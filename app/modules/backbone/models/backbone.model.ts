@@ -1,5 +1,5 @@
 import {Model} from 'backbone';
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 
 @Injectable()

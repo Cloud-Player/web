@@ -9,7 +9,7 @@ import {BackboneModule} from '../backbone/backbone.module';
 import {HeroesModule} from '../heroes/heroes.module';
 import {DashboardModule} from '../dashboard/dashboard.module';
 
-import {MainComponent}     from './components/main.component';
+import {MainComponent}     from './components/main/main.component';
 
 import {MainRoutingModule}     from './main.routes';
 
