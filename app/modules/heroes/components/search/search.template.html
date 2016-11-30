@@ -2,9 +2,10 @@
   <h4>Hero Search</h4>
   <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
   <div>
-    <div *ngFor="let hero of heroes | async"
+    <div *ngFor="let hero of heroes.models"
          (click)="gotoDetail(hero)" class="search-result" >
-      {{hero.name}}
+      <img [src]="hero.get('artwork_url')" width="50px" height="50px" class="cover">
+      <p class="info">{{hero.get('title')}}</p>
     </div>
   </div>
 </div>

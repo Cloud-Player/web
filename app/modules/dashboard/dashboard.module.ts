@@ -1,6 +1,6 @@
 import {NgModule}      from '@angular/core';
 
-import {DashboardIndexComponent}     from './components/index.component';
+import {DashboardIndexComponent}     from './components/index/index.component';
 
 import {HeroesModule} from '../heroes/heroes.module';
 
@@ -19,5 +19,5 @@ import {FormsModule} from '@angular/forms';
         DashboardIndexComponent
     ]
 })
-export class DashboardModule {
-}
+
+export class DashboardModule {}

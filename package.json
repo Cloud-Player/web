@@ -1,27 +1,21 @@
 {
-  "name": "angular-quickstart",
+  "name": "cloud-player",
   "version": "1.0.0",
-  "description": "QuickStart package.json from the documentation, supplemented with testing support",
+  "description": "",
+  "private": true,
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "docker-build": "docker build -t ng2-quickstart .",
-    "docker": "npm run docker-build && docker run -it --rm -p 3000:3000 -p 3001:3001 ng2-quickstart",
-    "pree2e": "npm run webdriver:update",
-    "e2e": "tsc && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
-    "lint": "tslint ./app/**/*.ts -t verbose",
-    "lite": "lite-server",
-    "test-run": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
-    "test": "tsc && karma start karma.conf.js --single-run",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "webdriver:update": "webdriver-manager update"
+    "start": "concurrently --kill-others \"gulp\" \"lite-server\""
   },
   "keywords": [],
-  "author": "",
+  "contributors": [
+    "Alexander Zarges <alex.zarges@online.de> (http://zarg.es/)",
+    "Daniel Reißner <mail@danielreissner.com (http://danielreissner.com)",
+    "Kai Schulz <mail@kaischulz.com> (http://kaischulz.com)"
+  ],
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/angular/angular.io/blob/master/LICENSE"
+      "url": "http://www.opensource.org/licenses/mit-license.php"
     }
   ],
   "dependencies": {
@@ -54,6 +48,15 @@
     "@types/selenium-webdriver": "^2.53.32",
     "canonical-path": "0.0.2",
     "concurrently": "^3.1.0",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-htmlhint": "^0.3.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-sass-lint": "^1.3.2",
+    "gulp-tslint": "^4.3.3",
+    "gulp-typescript": "^3.1.3",
+    "gulp-util": "^3.0.7",
     "http-server": "^0.9.0",
     "jasmine-core": "~2.5.2",
     "jquery": "^3.1.1",
@@ -67,8 +70,15 @@
     "lodash": "^4.16.2",
     "protractor": "^4.0.9",
     "rimraf": "^2.5.4",
+    "run-sequence": "^1.2.2",
     "tslint": "^3.15.1",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.10"
   },
-  "repository": {}
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zarlex/cloud-player.git"
+  },
+  "bug": {
+    "url": "https://github.com/zarlex/cloud-player/issues"
+  }
 }

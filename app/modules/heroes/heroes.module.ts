@@ -1,15 +1,12 @@
-import {NgModule}      from '@angular/core';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 
-import {HeroesIndexComponent}     from './components/index.component';
-import {HeroesDetailComponent}     from './components/detail.component';
+import {HeroesIndexComponent} from './components/index/index.component';
+import {HeroesDetailComponent} from './components/detail/detail.component';
+import {HeroesSearchComponent} from './components/search/search.component';
 
-import {HeroesDataService} from './services/data.service';
-import {HeroesSearchService} from './services/search.service';
-
-import {HeroesRoutingModule}     from './heroes.routes';
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
-import {HeroesSearchComponent} from "./components/search.component";
+import {HeroesRoutingModule} from './heroes.routes';
 
 @NgModule({
     imports: [
@@ -24,10 +21,7 @@ import {HeroesSearchComponent} from "./components/search.component";
         HeroesIndexComponent,
         HeroesDetailComponent,
         HeroesSearchComponent
-    ],
-    providers: [
-        HeroesDataService
     ]
 })
-export class HeroesModule {
-}
+
+export class HeroesModule {}
