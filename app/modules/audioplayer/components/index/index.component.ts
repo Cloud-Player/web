@@ -44,19 +44,13 @@ export class AudioPlayerComponent implements OnInit{
         this.audio.play();
     }
 
-    turnVolumeUp(): void {
-        console.log(this.audio.volume);
-        this.audio.volume += 0.1;
-    }
-
-    turnVolumeDown(): void {
-        console.log(this.audio.volume);
-        this.audio.volume -= 0.1;
-    }
-
     onSongSelect(song: string): void {
         this.audio.src = song;
         this.audio.play();
+    }
+    
+    setVolume(volume: string): void {
+        this.audio.volume = volume;
     }
 
 }

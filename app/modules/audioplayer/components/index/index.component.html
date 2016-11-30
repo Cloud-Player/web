@@ -11,7 +11,5 @@
 <button type="button" (click)="pauseSong()">Pause</button>
 <button type="button" (click)="nextSong()">Next</button>
 
-<button type="button" (click)="turnVolumeUp()">VolumeDown</button>
-<button type="button" (click)="turnVolumeDown()">VolumeUp</button>
+<input #volume type="range" (change)="setVolume(volume.value)" min="0" max="1" value="0.5" step="0.05" />
 
-<audio></audio>
