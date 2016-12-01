@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -e
+
+RELEASE_FOLDER="./dist"
+RELEASE_BRANCH="gh_pages"
+RELEASE_GIT_NAME="Bob Builder"
+RELEASE_GIT_MAIL="bob@builder.com"
+TMP_RELEASE_FOLDER="/tmp/releases/cloud-player"
+
+CURRENT_GIT_USER=`git config user.name`
+CURRENT_GIT_USERMAIL=`git config user.email`
+CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+# Sets everything back to the beginning, before the release process has been started
+reset () {
+    git checkout $CURRENT_BRANCH
+    git reset --hard origin/$CURRENT_BRANCH
+    git config user.name "$CURRENT_GIT_USER"
+    git config user.email "$CURRENT_GIT_USERMAIL"
+    git remote remove origin_gh
+}
+
+# Shows error message and exits with statuscode 1
+exit_with_error () {
+    echo $1
+    exit 1
+}
+
+# Calls function when script exits (error and success)
+trap reset EXIT
+
+# Set or add the remote url for the github repo with the GH_TOKEN
+# The GH_TOKEN is a github personal access token https://github.com/settings/tokens
+# It is encrypted with travis `$ travis encrypt GH_TOKEN=<GH_PERSONAL_TOKEN>` and set as global env via the .travis.yml
+if git remote | grep origin_gh > /dev/null
+then
+  git remote set-url origin_gh https://$GH_TOKEN@$GH_REF.git
+else
+  git remote add origin_gh https://$GH_TOKEN@$GH_REF.git
+fi
+git fetch origin_gh
+
+echo "##########################################"
+echo "#                                        #"
+echo "# Releasing...                           #"
+echo "#                                        #"
+echo "##########################################"
+
+# This replaces the current commiter for the release
+git config user.name "$RELEASE_GIT_NAME"
+git config user.email "$RELEASE_GIT_MAIL"
+
+# Copy the release folder to a temporary directory
+mkdir -p $TMP_RELEASE_FOLDER
+cp $RELEASE_FOLDER/* $TMP_RELEASE_FOLDER
+
+# Check if the release branch already exists
+if [ `git branch -r --list origin_gh/$RELEASE_BRANCH` ]
+then
+  # branch already exists so we get the current remote version
+  git branch $RELEASE_BRANCH origin_gh/$RELEASE_BRANCH
+  git checkout $RELEASE_BRANCH
+  git pull origin_gh $RELEASE_BRANCH
+elif [ `git branch --list $RELEASE_BRANCH` ]
+then
+  # branch exists only locally
+  git checkout $RELEASE_BRANCH
+else
+  # branch does not exist so it is created
+  git checkout --orphan $RELEASE_BRANCH
+fi
+
+# Replace all files with the one from the repository
+git rm -rf *
+cp $TMP_RELEASE_FOLDER/* .
+git add *
+git commit -am 'Release new Version'
+git push origin_gh $RELEASE_BRANCH --no-verify > /dev/null 2>&1 || exit_with_error "Could not push to branch $RELEASE_BRANCH"
+
+echo "##########################################"
+echo "#                                        #"
+echo "# Page is released!                      #"
+echo "#                                        #"
+echo "##########################################"
