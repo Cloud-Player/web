@@ -3,3 +3,4 @@
     (https://travis-ci.org/Zarlex/cloud-player)
 
 # cloud-player
+https://zarlex.github.io/cloud-player
