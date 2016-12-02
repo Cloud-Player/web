@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PlayQueueComponent} from "../playqueue/playqueue.component";
+import {PlayQueueComponent} from '../playqueue/playqueue.component';
 
 @Component ({
     moduleId: module.id,
@@ -9,7 +9,7 @@ import {PlayQueueComponent} from "../playqueue/playqueue.component";
 
 })
 
-export class PlayerControlsComponent implements OnInit{
+export class PlayerControlsComponent implements OnInit {
     private playQueue: PlayQueueComponent;
     private audio: any;
 
