@@ -2,7 +2,7 @@
 set -e
 
 RELEASE_FOLDER="./dist/bundle"
-RELEASE_BRANCH="gh_pages"
+RELEASE_BRANCH="gh-pages"
 RELEASE_GIT_NAME="Bob Builder"
 RELEASE_GIT_MAIL="bob@builder.com"
 TMP_RELEASE_FOLDER="/tmp/releases/cloud-player"
