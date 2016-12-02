@@ -84,7 +84,7 @@ fi
 # Replace all files with the one from the repository
 rm -rf *
 cp -R $TMP_RELEASE_FOLDER/* .
-git add -A *
+git add -Af *
 git commit -am 'Release new Version'
 git push origin_gh $RELEASE_BRANCH --no-verify > /dev/null 2>&1 || exit_with_error "Could not push to branch $RELEASE_BRANCH"
 
