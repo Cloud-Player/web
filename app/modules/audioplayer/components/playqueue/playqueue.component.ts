@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {Config} from "../../../../config/config";
+import {Config} from '../../../../config/config';
 
 @Component ({
     moduleId: module.id,
@@ -13,7 +13,7 @@ import {Config} from "../../../../config/config";
 
 })
 
-export class PlayQueueComponent implements OnInit{
+export class PlayQueueComponent implements OnInit {
 
     private playQueue: string[];
     private indexCurrentSong: number;
@@ -52,6 +52,5 @@ export class PlayQueueComponent implements OnInit{
             return this.playQueue[this.indexCurrentSong];
         }
     }
-
 
 }
