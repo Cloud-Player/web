@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-RELEASE_FOLDER="./dist"
+RELEASE_FOLDER="./dist/bundle"
 RELEASE_BRANCH="gh_pages"
 RELEASE_GIT_NAME="Bob Builder"
 RELEASE_GIT_MAIL="bob@builder.com"
@@ -63,7 +63,7 @@ git config user.email "$RELEASE_GIT_MAIL"
 
 # Copy the release folder to a temporary directory
 mkdir -p $TMP_RELEASE_FOLDER
-cp $RELEASE_FOLDER/* $TMP_RELEASE_FOLDER
+cp -R $RELEASE_FOLDER/* $TMP_RELEASE_FOLDER
 
 # Check if the release branch already exists
 if [ `git branch -r --list origin_gh/$RELEASE_BRANCH` ]
@@ -83,7 +83,7 @@ fi
 
 # Replace all files with the one from the repository
 git rm -rf *
-cp $TMP_RELEASE_FOLDER/* .
+cp -R $TMP_RELEASE_FOLDER/* .
 git add *
 git commit -am 'Release new Version'
 git push origin_gh $RELEASE_BRANCH --no-verify > /dev/null 2>&1 || exit_with_error "Could not push to branch $RELEASE_BRANCH"
