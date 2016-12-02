@@ -3,7 +3,7 @@ import {BaseModel} from '../../backbone/models/backbone.model';
 
 @Injectable()
 export class Hero extends BaseModel {
-    urlRoot = 'http://api.soundcloud.com/tracks';
+    urlRoot = '//api.soundcloud.com/tracks';
 
     defaults() {
         return {

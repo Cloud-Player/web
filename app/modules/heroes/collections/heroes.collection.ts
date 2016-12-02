@@ -5,7 +5,7 @@ import {Model} from 'backbone';
 
 @Injectable()
 export class Heroes extends BaseCollection<Model> {
-    url = 'http://api.soundcloud.com/tracks';
+    url = '//api.soundcloud.com/tracks';
     model = Hero;
     queryParams = {
         q: 'bedouin'
