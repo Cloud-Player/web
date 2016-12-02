@@ -2,17 +2,10 @@
   "https" : false,
   "injectChanges": false,
   "reloadOnRestart": false,
-  "files": ["./dist/**/*.{html,css,js}"],
-  "server" : {
-    "baseDir" : "./dist",
-    "directory": true,
-    "routes": {
-      "/node_modules": "node_modules"
-    }
-  },
-  "ghostMode": true,
-  "watchOptions": {
-    "ignored": "node_modules"
+  "server": {
+    "baseDir": "./dist/bundle",
+    "index": "index.html",
+    "directory": true
   },
   "open": "local",
   "browser": "google chrome"
