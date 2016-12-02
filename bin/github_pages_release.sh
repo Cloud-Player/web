@@ -26,8 +26,16 @@ exit_with_error () {
     exit 1
 }
 
-# Calls function when script exits (error and success)
-trap reset EXIT
+# Check if there are any local changes that are not committed yet
+if [ -n "$(git status --porcelain)" ]; then
+  exit_with_error "There are changes that are not committed yet. Make sure you have checked in all changes before you run this script!";
+fi
+
+# Check if GH_REF and GH_TOKEN env variables are set. They are configured in .travis.yml
+if [ -z "$GH_REF" ] || [ -z "$GH_TOKEN" ]
+then
+  exit_with_error "In order to release the env variables GH_REF and GH_TOKEN have to be set!"
+fi
 
 # Set or add the remote url for the github repo with the GH_TOKEN
 # The GH_TOKEN is a github personal access token https://github.com/settings/tokens
@@ -45,6 +53,9 @@ echo "#                                        #"
 echo "# Releasing...                           #"
 echo "#                                        #"
 echo "##########################################"
+
+# Calls function when script exits (error and success)
+trap reset EXIT
 
 # This replaces the current commiter for the release
 git config user.name "$RELEASE_GIT_NAME"
