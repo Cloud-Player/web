@@ -11,7 +11,7 @@ before_deploy:
 - gulp dist
 deploy:
   - provider: script
-    script: ./bin/github_pages_release
+    script: ./bin/github_pages_release.sh
     skip_cleanup: true 
     on: 
       branch: master
