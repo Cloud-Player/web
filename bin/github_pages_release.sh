@@ -82,7 +82,7 @@ else
 fi
 
 # Replace all files with the one from the repository
-git rm -rf *
+rm -rf *
 cp -R $TMP_RELEASE_FOLDER/* .
 git add *
 git commit -am 'Release new Version'
