@@ -84,6 +84,14 @@ export class PlayQueue extends BaseCollection<Model> {
           }
         });
       }
+
+      if (track.isPaused()) {
+        this.where({status: 'PAUSED'}).forEach((playingTrack) => {
+          if (playingTrack.id !== track.id) {
+            playingTrack.stop();
+          }
+        });
+      }
     });
   }
 }
