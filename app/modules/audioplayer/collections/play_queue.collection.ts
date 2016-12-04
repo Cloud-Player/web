@@ -41,6 +41,10 @@ export class PlayQueue extends BaseCollection<Model> {
     return this.findWhere({status: 'PLAYING'});
   }
 
+  getPausedTrack(): Track {
+    return this.findWhere({status: 'PAUSED'});
+  }
+
   getTrack(): Track {
     let queuedTracks = this.getQueuedTracks();
     if (queuedTracks.length > 0) {
