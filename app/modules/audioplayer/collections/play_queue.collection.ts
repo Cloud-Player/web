@@ -46,12 +46,17 @@ export class PlayQueue extends BaseCollection<Model> {
   }
 
   getTrack(): Track {
+    let pausedTrack = this.getPausedTrack();
+    if (pausedTrack) {
+      console.log(pausedTrack)
+      return pausedTrack;
+    }
     let queuedTracks = this.getQueuedTracks();
     if (queuedTracks.length > 0) {
       return queuedTracks[0];
     } else {
       let tracks = this.find((track) => {
-        return track.isPaused() || track.isScheduled();
+        return track.isScheduled();
       });
       if (tracks && tracks.length > 0) {
         return tracks[0];

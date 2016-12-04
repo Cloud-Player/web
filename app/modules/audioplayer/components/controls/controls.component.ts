@@ -33,9 +33,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   playTrack(track: Track|null): void {
-    if (!track) {
-      track = this.playQueue.getPausedTrack() || this.playQueue.getTrack();
-    }
+    track = track || this.playQueue.getTrack();
 
     track.play();
   }
