@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Hero} from '../../../heroes/models/hero.model';
-import {Heroes} from '../../../heroes/collections/heroes.collection';
+import {Track} from '../../../tracks/models/track.model';
+import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {Model} from 'backbone';
 
 @Component({
@@ -10,24 +10,24 @@ import {Model} from 'backbone';
     selector: 'my-dashboard',
     templateUrl: 'index.template.html',
     styleUrls: ['index.style.css'],
-    providers: [Heroes]
+    providers: [Tracks]
 })
 
 export class DashboardIndexComponent implements OnInit {
-    constructor(private heroes: Heroes, private router: Router) {
+    constructor(private tracks: Tracks, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.heroes.fetch();
+        this.tracks.fetch();
     }
 
-    gotoDetail(hero: Hero): void {
-        let link = ['/heroes', hero.id];
+    gotoDetail(track: Track): void {
+        let link = ['/tracks', track.id];
         this.router.navigate(link);
     }
 
-    getFilteredHeroes(): Model[] {
-       return this.heroes.filter((hero, index) => { return index < 4; });
+    getFilteredTracks(): Model[] {
+       return this.tracks.filter((track, index) => { return index < 4; });
     }
 
 }

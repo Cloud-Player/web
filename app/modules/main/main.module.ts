@@ -6,7 +6,7 @@ import {HttpModule}    from '@angular/http';
 import './rxjs-extensions';
 
 import {BackboneModule} from '../backbone/backbone.module';
-import {HeroesModule} from '../heroes/heroes.module';
+import {TracksModule} from '../tracks/tracks.module';
 import {DashboardModule} from '../dashboard/dashboard.module';
 
 import {MainComponent}     from './components/main/main.component';
@@ -20,7 +20,7 @@ import {AudioPlayerModule} from '../audioplayer/audio-player.module';
         FormsModule,
         HttpModule,
         BackboneModule,
-        HeroesModule,
+        TracksModule,
         DashboardModule,
         MainRoutingModule,
         AudioPlayerModule

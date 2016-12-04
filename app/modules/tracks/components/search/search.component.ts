@@ -4,21 +4,21 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
-import {Heroes} from '../../collections/heroes.collection';
-import {Hero} from '../../models/hero.model';
+import {Tracks} from '../../collections/tracks.collection';
+import {Track} from '../../models/track.model';
 
 @Component({
     moduleId: module.id,
-    selector: 'hero-search',
+    selector: 'track-search',
     templateUrl: 'search.template.html',
     styleUrls: ['search.style.css'],
-    providers: [Heroes]
+    providers: [Tracks]
 })
 
-export class HeroesSearchComponent implements OnInit {
+export class TracksSearchComponent implements OnInit {
     private searchTerms = new Subject<string>();
 
-    constructor(private heroes: Heroes,
+    constructor(private tracks: Tracks,
                 private router: Router) {
     }
 
@@ -33,15 +33,14 @@ export class HeroesSearchComponent implements OnInit {
             .distinctUntilChanged()   // ignore if next search term is same as previous
             .switchMap(term => {
                 if (term) {
-                    this.heroes.queryParams.q = term;
-                    this.heroes.fetch({reset: true});
-                }
-                return Observable.of<Heroes>(this.heroes);
+                    this.tracks.queryParams.q = term;
+                    this.tracks.fetch({reset: true});
+                return Observable.of<Tracks>(this.tracks);
             }).toPromise();
     }
 
-    gotoDetail(hero: Hero): void {
-        let link = ['/heroes', hero.id];
+    gotoDetail(track: Track): void {
+        let link = ['/tracks', track.id];
         this.router.navigate(link);
     }
 }

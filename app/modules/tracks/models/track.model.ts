@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseModel} from '../../backbone/models/backbone.model';
 
 @Injectable()
-export class Hero extends BaseModel {
+export class Track extends BaseModel {
     urlRoot = '//api.soundcloud.com/tracks';
 
     defaults() {

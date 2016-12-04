@@ -1,0 +1,13 @@
+<div>
+  <h2>{{track.get('title')}} details!</h2>
+  <img [src]="track.get('artwork_url')">
+  <div>
+    <label>id: </label>{{track.id}}
+    <label>stream: </label>{{track.getResourceUrl()}}
+  </div>
+  <audio controls *ngIf="track.get('stream_url')">
+    <source [src]="track.getResourceUrl()" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+<button (click)="goBack()">Back</button>

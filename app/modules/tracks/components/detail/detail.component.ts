@@ -2,17 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 
-import {Hero} from '../../models/hero.model';
+import {Track} from '../../models/track.model';
 
 @Component({
     moduleId: module.id,
-    selector: 'my-hero-detail',
+    selector: 'my-track-detail',
     templateUrl: 'detail.template.html',
-    providers: [Hero]
+    providers: [Track]
 })
 
-export class HeroesDetailComponent implements OnInit {
-    constructor(private hero: Hero,
+export class TracksDetailComponent implements OnInit {
+    constructor(private track: Track,
                 private route: ActivatedRoute,
                 private location: Location) {
     }
@@ -20,8 +20,8 @@ export class HeroesDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
-            this.hero.set('id', id);
-            this.hero.fetch();
+            this.track.set('id', id);
+            this.track.fetch();
         });
     }
 
@@ -30,7 +30,7 @@ export class HeroesDetailComponent implements OnInit {
     }
 
     save(): void {
-        this.hero.save(null, {wait: true})
+        this.track.save(null, {wait: true})
             .then(() => this.goBack());
     }
 }

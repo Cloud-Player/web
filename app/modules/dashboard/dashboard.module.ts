@@ -2,7 +2,7 @@ import {NgModule}      from '@angular/core';
 
 import {DashboardIndexComponent}     from './components/index/index.component';
 
-import {HeroesModule} from '../heroes/heroes.module';
+import {TracksModule} from '../tracks/tracks.module';
 
 import {DashboardRoutingModule}     from './dashboard.routes';
 import {BrowserModule} from '@angular/platform-browser';
@@ -12,7 +12,7 @@ import {FormsModule} from '@angular/forms';
     imports: [
         BrowserModule,
         FormsModule,
-        HeroesModule,
+        TracksModule,
         DashboardRoutingModule
     ],
     declarations: [
