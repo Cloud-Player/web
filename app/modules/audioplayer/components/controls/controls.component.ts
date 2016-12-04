@@ -1,45 +1,81 @@
 import {Component, OnInit} from '@angular/core';
-import {PlayQueueComponent} from '../playqueue/playqueue.component';
+import {PlayQueue} from '../../collections/play_queue.collection';
 
-@Component ({
-    moduleId: module.id,
-    selector: 'audio-player-controls',
-    templateUrl: 'controls.template.html',
-    styleUrls: ['controls.style.css']
+@Component({
+  moduleId: module.id,
+  selector: 'audio-player-controls',
+  templateUrl: 'controls.template.html',
+  styleUrls: ['controls.style.css']
 
 })
 
 export class PlayerControlsComponent implements OnInit {
-    private playQueue: PlayQueueComponent;
-    private audio: any;
+  private audio: any;
+  private playQueue: PlayQueue = PlayQueue.getInstance();
 
-    constructor() {
-        this.audio = new Audio();
-        // this.audio.src = this.playQueue.getFirstSong();
-    }
+  constructor() {
+    this.audio = new Audio();
+    this.playQueue.on('change:status', this.reactOnStatusChange, this);
+  }
 
-    ngOnInit(): void {
+  private reactOnStatusChange(track): void {
+    switch (track.get('status')) {
+      case 'PLAYING':
+        this.startAudioPlayer(track);
+        break;
+      case 'STOPPED':
+        this.stopAudioPlayer();
+        break;
+      case 'PAUSED':
+        this.pauseAudioPlayer();
+        break;
     }
+  }
 
-    playSong(song: string): void {
-        this.audio.src = song;
-        this.audio.play();
+  playTrack(track: Track|null): void {
+    track = track || this.playQueue.getTrack();
+    if (track) {
+      track.set('status', 'PLAYING');
     }
+  }
 
-    pauseSong(): void {
-        this.audio.pause();
+  pauseTrack(): void {
+    let track = this.playQueue.getPlayingTrack();
+    if (track) {
+      track.set('status', 'PAUSED');
     }
+  }
 
-    previousSong(): void {
-        this.playSong(this.playQueue.getPreviousSong());
+  previousTrack(): void {
+    if (this.playQueue.getPreviousTrack()) {
+      this.playTrack(this.playQueue.getPreviousTrack());
     }
+  }
 
-    nextSong(): void {
-        this.playSong(this.playQueue.getNextSong());
+  nextTrack(): void {
+    if (this.playQueue.getNextTrack()) {
+      this.playTrack(this.playQueue.getNextTrack());
     }
+  }
 
-    setVolume(volume: string): void {
-        this.audio.volume = volume;
+  startAudioPlayer(track: Track): void {
+    if (this.audio.src !== track.getResourceUrl()) {
+      this.audio.src = track.getResourceUrl();
     }
+    this.audio.play();
+  }
+
+  pauseAudioPlayer(): void {
+    this.audio.pause();
+  }
+
+  stopAudioPlayer(): void {
+    this.audio.pause();
+    delete this.audio.src;
+  }
+
+  setAudioPlayerVolume(volume: string): void {
+    this.audio.volume = volume;
+  }
 
 }
