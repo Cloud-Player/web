@@ -7,12 +7,14 @@ import {TracksDetailComponent} from './components/detail/detail.component';
 import {TracksSearchComponent} from './components/search/search.component';
 
 import {TracksRoutingModule} from './tracks.routes';
+import {AudioPlayerModule} from '../audioplayer/audio-player.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    TracksRoutingModule
+    TracksRoutingModule,
+    AudioPlayerModule
   ],
   exports: [
     TracksSearchComponent
