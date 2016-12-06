@@ -6,6 +6,8 @@ import {Track} from '../../tracks/models/track.model';
 export class PlayQueue extends BaseCollection<Model> {
   private static instance: PlayQueue;
 
+  private playIndex = 0;
+
   model = PlayQueueItem;
 
   static getInstance(): PlayQueue {
@@ -33,7 +35,7 @@ export class PlayQueue extends BaseCollection<Model> {
     return [item.get('priority'), item.get('position')];
   }
 
-  getQueuedTracks(): array {
+  getQueuedTracks(): Array {
     return this.where({status: 'QUEUED'});
   }
 
@@ -48,7 +50,7 @@ export class PlayQueue extends BaseCollection<Model> {
   getTrack(): Track {
     let pausedTrack = this.getPausedTrack();
     if (pausedTrack) {
-      console.log(pausedTrack)
+      console.log(pausedTrack);
       return pausedTrack;
     }
     let queuedTracks = this.getQueuedTracks();
@@ -66,16 +68,28 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  getNextTrack(): Track {
+  hasNextTrack(): boolean {
+    return this.playIndex < this.length - 1;
+  }
 
+  hasPreviousTrack(): boolean {
+    return this.playIndex > 0;
+  }
+
+  getNextTrack(): Track {
+    if (this.hasNextTrack()) {
+      return this.at(this.playIndex + 1);
+    }
   }
 
   getPreviousTrack(): Track {
-
+    if (this.hasPreviousTrack()) {
+      return this.at(this.playIndex - 1);
+    }
   }
 
   addAndPlay(track: Track) {
-    let queueItem = this.add(track.toJSON());
+    let queueItem: PlayQueueItem = this.add(track.toJSON());
     queueItem.play();
     return queueItem;
   }
@@ -85,13 +99,14 @@ export class PlayQueue extends BaseCollection<Model> {
   }
 
   initialize(): void {
-    this.on('change:status', (track) => {
+    this.on('change:status', (track: PlayQueueItem) => {
       if (track.isPlaying()) {
         this.where({status: 'PLAYING'}).forEach((playingTrack) => {
           if (playingTrack.id !== track.id) {
             playingTrack.stop();
           }
         });
+        this.playIndex = this.indexOf(track);
       }
 
       if (track.isPaused()) {
