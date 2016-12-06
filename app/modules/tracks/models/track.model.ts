@@ -19,7 +19,6 @@ export class Track extends BaseModel {
     }
 
     getResourceUrl(): string {
-        console.log(this.get('stream_url'));
         return `${this.get('stream_url')}?client_id=abb6c1cad3f409112a5995bf922e1d1e`;
     }
 }
