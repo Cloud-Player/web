@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
+import {Track} from '../../../tracks/models/track.model';
+import {PlayQueueItem} from '../../models/play_queue_item.model';
 
 @Component({
   moduleId: module.id,
@@ -9,7 +11,7 @@ import {PlayQueue} from '../../collections/play_queue.collection';
 
 })
 
-export class PlayerControlsComponent implements OnInit {
+export class PlayerControlsComponent {
   private audio: any;
   private playQueue: PlayQueue = PlayQueue.getInstance();
 
@@ -32,7 +34,7 @@ export class PlayerControlsComponent implements OnInit {
     }
   }
 
-  playTrack(track: Track|null): void {
+  playTrack(track: PlayQueueItem|null): void {
     track = track || this.playQueue.getTrack();
 
     track.play();
