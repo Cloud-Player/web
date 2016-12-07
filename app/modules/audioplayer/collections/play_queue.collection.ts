@@ -31,11 +31,11 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  comparator(item: PlayQueueItem) {
+  static comparator(item: PlayQueueItem): Array<any> {
     return [item.get('priority'), item.get('position')];
   }
 
-  getQueuedTracks(): Array {
+  getQueuedTracks(): Track {
     return this.where({status: 'QUEUED'});
   }
 
@@ -88,7 +88,7 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  addAndPlay(track: Track) {
+  addAndPlay(track: Track): PlayQueueItem {
     let queueItem: PlayQueueItem = this.add(track.toJSON());
     queueItem.play();
     return queueItem;
