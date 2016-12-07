@@ -27,7 +27,6 @@ export class PlayButtonComponent implements OnInit {
 
   trackIsCurrentlyPlaying(): boolean {
     let currentlyPlaying = this.playQueue.getPlayingTrack();
-
     return currentlyPlaying && currentlyPlaying.id === this.track.id;
   }
 
