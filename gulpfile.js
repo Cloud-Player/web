@@ -15,6 +15,7 @@ var typescript = require('typescript');
 var tslint = require('gulp-tslint');
 var uglify = require('gulp-uglify');
 
+var exec = require('child_process').exec;
 var Builder = require('systemjs-builder');
 var builder = new Builder('.', 'systemjs.config.js');
 
@@ -25,7 +26,7 @@ var vendorBundleName = bundleHash + '.vendor.bundle.js';
 // main tasks
 
 gulp.task('default', ['clean'], function () {
-  return gulp.start(['build', 'watch']);
+  return gulp.start(['build', 'watch', 'serve']);
 });
 
 gulp.task('build', ['res:copy', 'html:copy', 'js:build', 'css:build']);
@@ -45,13 +46,13 @@ gulp.task('html:copy', function () {
     .pipe(gulp.dest('./dist/dev').on('error', gutil.log));
 });
 
-gulp.task('css:build', ['scss:lint'], function () {
+gulp.task('css:build', function () {
   return gulp.src('./app/**/*.scss', { base: '.' })
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./dist/dev').on('error', gutil.log));
 });
 
-gulp.task('js:build', ['ts:lint'], function () {
+gulp.task('js:build', function () {
   var tsProject = ts.createProject('./tsconfig.json', {
     typescript: typescript
   });
@@ -69,7 +70,18 @@ gulp.task('watch', ['build'], function() {
   gulp.watch('./app/**/*.ts', ['js:build']);
 });
 
+// server task
+
+gulp.task('serve', function () {
+  exec('lite-server -c ./bs-config.dev.json', function (err, stdout, stderr) {
+    gutil.log(stdout);
+    gutil.log(stderr);
+  });
+});
+
 // lints & hints
+
+gulp.task('src:lint', ['scss:lint', 'ts:lint']);
 
 gulp.task('ts:lint', function() {
   return gulp.src('./app/**/*.ts')
