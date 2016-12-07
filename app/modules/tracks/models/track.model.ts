@@ -1,9 +1,9 @@
+import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
-import {BaseModel} from '../../backbone/models/backbone.model';
 
 @Injectable()
-export class Track extends BaseModel {
-    urlRoot = '//api.soundcloud.com/tracks';
+export class Track extends SoundcloudModel {
+    endpoint = '/tracks';
 
     defaults() {
         return {
@@ -19,6 +19,6 @@ export class Track extends BaseModel {
     }
 
     getResourceUrl(): string {
-        return `${this.get('stream_url')}?client_id=abb6c1cad3f409112a5995bf922e1d1e`;
+        return `${this.get('stream_url')}?client_id=${this.clientId}`;
     }
 }
