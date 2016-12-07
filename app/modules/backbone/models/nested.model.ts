@@ -54,19 +54,21 @@ export class NestedModel extends Model {
   private _setNestedAttributes(obj: any): any {
 
     for (let key in obj) {
-      let nestedAttrs = this.nested(),
-        value = obj[key],
-        nestedValue = nestedAttrs[key];
+      if (obj.hasOwnProperty(key)) {
+        let nestedAttrs = this.nested(),
+          value = obj[key],
+          nestedValue = nestedAttrs[key];
 
-      if (nestedValue && !(value instanceof nestedValue) && this.get(key)) {
+        if (nestedValue && !(value instanceof nestedValue) && this.get(key)) {
 
-        if (this.get(key) instanceof Model) {
-          this._setNestedModel(key, value);
-        } else if (this.get(key) instanceof Collection) {
-          this._setNestedCollection(key, value);
+          if (this.get(key) instanceof Model) {
+            this._setNestedModel(key, value);
+          } else if (this.get(key) instanceof Collection) {
+            this._setNestedCollection(key, value);
+          }
+
+          delete obj[key];
         }
-
-        delete obj[key];
       }
     }
 
@@ -90,18 +92,20 @@ export class NestedModel extends Model {
       nestedAttrs = this.nested();
 
     for (let key in nestedAttrs) {
-      let nestedAttr = this.get(key);
+      if (nestedAttrs.hasOwnProperty(key)) {
+       let nestedAttr = this.get(key);
 
-      if (nestedAttr instanceof Model) {
-        attrs[key] = this._nestedModelToJson(nestedAttr);
-      } else if (nestedAttr instanceof Collection) {
-        let result: Array<any> = [];
+        if (nestedAttr instanceof Model) {
+          attrs[key] = this._nestedModelToJson(nestedAttr);
+        } else if (nestedAttr instanceof Collection) {
+          let result: Array<any> = [];
 
-        nestedAttr.each(function (model: Model) {
-          result.push(this._nestedModelToJson(model));
-        }.bind(this));
+          nestedAttr.each(function (model: Model) {
+            result.push(this._nestedModelToJson(model));
+          }.bind(this));
 
-        attrs[key] = result;
+          attrs[key] = result;
+        }
       }
     }
 
@@ -121,7 +125,7 @@ export class NestedModel extends Model {
   };
 
   set(attributes: any, options: any) {
-    var obj = {};
+    let obj = {};
 
     if (isString(attributes)) {
       obj[attributes] = options;

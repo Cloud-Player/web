@@ -7,7 +7,7 @@ import {BaseCollection} from '../../backbone/collections/base.collection';
 export class SoundcloudCollection<TModel extends Model> extends BaseCollection<Model> {
   clientId = Config.soundcloudClientId;
 
-  hostName(): string{
+  hostName(): string {
     return '//api.soundcloud.com';
   };
 

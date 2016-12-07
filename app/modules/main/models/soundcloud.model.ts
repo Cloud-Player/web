@@ -6,7 +6,7 @@ import {BaseModel} from '../../backbone/models/base.model';
 export class SoundcloudModel extends BaseModel {
   clientId = Config.soundcloudClientId;
 
-  hostName(): string{
+  hostName(): string {
     return '//api.soundcloud.com';
   };
 
