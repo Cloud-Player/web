@@ -1,45 +1,82 @@
-import {Component, OnInit} from '@angular/core';
-import {PlayQueueComponent} from '../playqueue/playqueue.component';
+import {Component} from '@angular/core';
+import {PlayQueue} from '../../collections/play_queue.collection';
+import {Track} from '../../../tracks/models/track.model';
+import {PlayQueueItem} from '../../models/play_queue_item.model';
 
-@Component ({
-    moduleId: module.id,
-    selector: 'audio-player-controls',
-    templateUrl: 'controls.template.html',
-    styleUrls: ['controls.style.css']
+@Component({
+  moduleId: module.id,
+  selector: 'audio-player-controls',
+  templateUrl: 'controls.template.html',
+  styleUrls: ['controls.style.css']
 
 })
 
-export class PlayerControlsComponent implements OnInit {
-    private playQueue: PlayQueueComponent;
-    private audio: any;
+export class PlayerControlsComponent {
+  private audio: any;
+  private playQueue: PlayQueue = PlayQueue.getInstance();
 
-    constructor() {
-        this.audio = new Audio();
-        // this.audio.src = this.playQueue.getFirstSong();
-    }
+  constructor() {
+    this.audio = new Audio();
+    this.playQueue.on('change:status', this.reactOnStatusChange, this);
+  }
 
-    ngOnInit(): void {
+  private reactOnStatusChange(track): void {
+    switch (track.get('status')) {
+      case 'PLAYING':
+        this.startAudioPlayer(track);
+        break;
+      case 'STOPPED':
+        this.stopAudioPlayer();
+        break;
+      case 'PAUSED':
+        this.pauseAudioPlayer();
+        break;
     }
+  }
 
-    playSong(song: string): void {
-        this.audio.src = song;
-        this.audio.play();
-    }
+  playTrack(track: PlayQueueItem|null): void {
+    track = track || this.playQueue.getTrack();
 
-    pauseSong(): void {
-        this.audio.pause();
-    }
+    track.play();
+  }
 
-    previousSong(): void {
-        this.playSong(this.playQueue.getPreviousSong());
+  pauseTrack(): void {
+    let track = this.playQueue.getPlayingTrack();
+    if (track) {
+      track.pause();
     }
+  }
 
-    nextSong(): void {
-        this.playSong(this.playQueue.getNextSong());
+  previousTrack(): void {
+    if (this.playQueue.getPreviousTrack()) {
+      this.playTrack(this.playQueue.getPreviousTrack());
     }
+  }
 
-    setVolume(volume: string): void {
-        this.audio.volume = volume;
+  nextTrack(): void {
+    if (this.playQueue.getNextTrack()) {
+      this.playTrack(this.playQueue.getNextTrack());
     }
+  }
+
+  startAudioPlayer(track: Track): void {
+    if (this.audio.src !== track.getResourceUrl()) {
+      this.audio.src = track.getResourceUrl();
+    }
+    this.audio.play();
+  }
+
+  pauseAudioPlayer(): void {
+    this.audio.pause();
+  }
+
+  stopAudioPlayer(): void {
+    this.audio.pause();
+    delete this.audio.src;
+  }
+
+  setAudioPlayerVolume(volume: string): void {
+    this.audio.volume = volume;
+  }
 
 }

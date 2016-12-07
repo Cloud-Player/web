@@ -1,5 +1,5 @@
 <ul class="play-list">
-    <li *ngFor="let song of playQueue" (click)="onSongSelect(song)">
-        <p>{{song}}</p>
+    <li *ngFor="let track of playQueue.models" (click)="track.play()">
+        <p [style.color]="playQueue.getPlayingTrack()===track?'tomato':'black'">{{track.id}}</p>
     </li>
 </ul>
