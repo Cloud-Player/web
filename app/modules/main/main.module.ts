@@ -13,22 +13,24 @@ import {MainComponent}     from './components/main/main.component';
 
 import {MainRoutingModule}     from './main.routes';
 import {AudioPlayerModule} from '../audioplayer/audio-player.module';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        BackboneModule,
-        TracksModule,
-        DashboardModule,
-        MainRoutingModule,
-        AudioPlayerModule
-    ],
-    declarations: [
-        MainComponent
-    ],
-    bootstrap: [MainComponent]
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    BackboneModule,
+    TracksModule,
+    DashboardModule,
+    MainRoutingModule,
+    AudioPlayerModule,
+  ],
+  declarations: [
+    MainComponent
+  ],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  bootstrap: [MainComponent]
 })
 export class MainModule {
 }
