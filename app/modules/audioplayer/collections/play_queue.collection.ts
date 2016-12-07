@@ -1,5 +1,5 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
-import {BaseCollection} from '../../backbone/collections/backbone.collection';
+import {BaseCollection} from '../../backbone/collections/base.collection';
 import {Model} from 'backbone';
 import {Track} from '../../tracks/models/track.model';
 
