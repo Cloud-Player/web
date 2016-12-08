@@ -17,12 +17,14 @@ export class PlayerControlsComponent {
 
   private timeTick: string;
   private duration: string;
+  private timeTickWidth: string;
 
   constructor() {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
     this.timeTick = this.formatToHHMMSS(0);
     this.duration = this.formatToHHMMSS(0);
+    this.timeTickWidth = '0%';
 
     this.audio.addEventListener('canplay', () => {
       this.duration = this.formatToHHMMSS(this.audio.duration);
@@ -30,6 +32,7 @@ export class PlayerControlsComponent {
 
     this.audio.addEventListener('timeupdate', () => {
       this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
+      this.timeTickWidth = this.getTimeTickWidth();
     });
 
   }
@@ -43,6 +46,10 @@ export class PlayerControlsComponent {
     } else {
       return time.toISOString().substr(11, 8);
     }
+  }
+
+  getTimeTickWidth(): string {
+    return (this.audio.currentTime * 100) / this.audio.duration  + '%';
   }
 
   private reactOnStatusChange(track): void {

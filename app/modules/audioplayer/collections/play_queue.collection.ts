@@ -25,6 +25,11 @@ export class PlayQueue extends BaseCollection<Model> {
           status: 'NULL',
           id: 176755192,
           stream_url: 'https://api.soundcloud.com/tracks/176755192/stream'
+        },
+        {
+          status: 'NULL',
+          id: 176724778271555192,
+          stream_url: 'https://api.soundcloud.com/tracks/247782715/stream'
         }
       ]);
       return PlayQueue.instance;
