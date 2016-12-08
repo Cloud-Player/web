@@ -1,11 +1,11 @@
 import {Track} from '../models/track.model';
 import {Injectable} from '@angular/core';
-import {BaseCollection} from '../../backbone/collections/backbone.collection';
+import {SoundcloudCollection} from '../../main/collections/soundcloud.collection';
 import {Model} from 'backbone';
 
 @Injectable()
-export class Tracks extends BaseCollection<Model> {
-    url = '//api.soundcloud.com/tracks';
+export class Tracks extends SoundcloudCollection<Model> {
+    endpoint = '/tracks';
     model = Track;
     queryParams = {
         q: 'bedouin'

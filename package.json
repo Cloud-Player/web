@@ -9,7 +9,6 @@
     "serve": "npm run bundle",
     "postserve": "lite-server -c \"./bs-config.json\"",
     "bundle": "gulp dist",
-    "precommit": "npm test",
     "prepush": "npm test",
     "test": "concurrently --kill-others \"gulp src:lint\""
   },

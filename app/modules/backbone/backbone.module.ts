@@ -5,8 +5,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {isUndefined} from 'underscore';
 import 'backbone';
 import {Model, Collection} from 'backbone';
-import {BaseModel} from './models/backbone.model';
-import {BaseCollection} from './collections/backbone.collection';
+import {BaseModel} from './models/base.model';
+import {BaseCollection} from './collections/base.collection';
 
 declare namespace Backbone {
     export function sync(method: string, model: Model|Collection<Model>, options?: any): any;
@@ -26,7 +26,6 @@ export class BackboneModule {
     constructor(private http: Http) {
         Backbone.ajax = (options: any) => {
             let searchParams = options.search || new URLSearchParams();
-            searchParams.set('client_id', 'abb6c1cad3f409112a5995bf922e1d1e');
             let requestOption = new RequestOptions({
                 method: options.type,
                 body: options.data,
