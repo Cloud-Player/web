@@ -93,7 +93,7 @@ export class NestedModel extends Model {
 
     for (let key in nestedAttrs) {
       if (nestedAttrs.hasOwnProperty(key)) {
-       let nestedAttr = this.get(key);
+        let nestedAttr = this.get(key);
 
         if (nestedAttr instanceof Model) {
           attrs[key] = this._nestedModelToJson(nestedAttr);
@@ -114,16 +114,14 @@ export class NestedModel extends Model {
 
   constructor(attributes: Object|null, options: any) {
     let self = this;
-    (function () {
-      options = options || {};
-      if (options.parse) {
-        attributes = this.parse(attributes);
-        options.parse = false;
-      }
-      this.attributes = this._prepare();
-      this.set(attributes);
-      attributes = this.attributes;
-    }.bind(self));
+    options = options || {};
+    if (options.parse) {
+      attributes = self.parse(attributes);
+      options.parse = false;
+    }
+    self.attributes = self._prepare();
+    self.set(attributes);
+    attributes = self.attributes;
     super(attributes, options);
   };
 
