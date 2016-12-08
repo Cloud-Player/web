@@ -4,6 +4,8 @@ import {isObject, isArray, extend, isString} from 'underscore';
 
 export class NestedModel extends Model {
 
+  private _isNestingPrepared: boolean = false;
+
   nested() {
     return {};
   };
@@ -112,21 +114,13 @@ export class NestedModel extends Model {
     return this.compose(attrs);
   };
 
-  constructor(attributes: Object|null, options: any) {
-    let self = this;
-    options = options || {};
-    if (options.parse) {
-      attributes = self.parse(attributes);
-      options.parse = false;
-    }
-    self.attributes = self._prepare();
-    self.set(attributes);
-    attributes = self.attributes;
-    super(attributes, options);
-  };
-
   set(attributes: any, options: any) {
     let obj = {};
+
+    if (!this._isNestingPrepared) {
+      extend(this.attributes, this._prepare());
+      this._isNestingPrepared = true;
+    }
 
     if (isString(attributes)) {
       obj[attributes] = options;
