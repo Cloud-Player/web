@@ -12,12 +12,37 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
 })
 
 export class PlayerControlsComponent {
-  private audio: any;
+  private audio: HTMLAudioElement;
   private playQueue: PlayQueue = PlayQueue.getInstance();
+
+  private timeTick: string;
+  private duration: string;
 
   constructor() {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
+    this.timeTick = this.formatToHHMMSS(0);
+    this.duration = this.formatToHHMMSS(0);
+
+    this.audio.addEventListener('canplay', () => {
+      this.duration = this.formatToHHMMSS(this.audio.duration);
+    });
+
+    this.audio.addEventListener('timeupdate', () => {
+      this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
+    });
+
+  }
+
+  formatToHHMMSS(input: number): string {
+    let time = new Date(null);
+    time.setSeconds(input);
+
+    if (time.getHours() === 1) {
+      return time.toISOString().substr(14, 5);
+    } else {
+      return time.toISOString().substr(11, 8);
+    }
   }
 
   private reactOnStatusChange(track): void {
@@ -36,7 +61,6 @@ export class PlayerControlsComponent {
 
   playTrack(track: PlayQueueItem|null): void {
     track = track || this.playQueue.getTrack();
-
     track.play();
   }
 

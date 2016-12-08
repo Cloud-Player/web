@@ -19,14 +19,12 @@ export class PlayQueue extends BaseCollection<Model> {
         {
           status: 'NULL',
           id: 130470654,
-          stream_url: 'https://api.soundcloud.com/tracks/130470654/stream',
-          duration: '123456'
+          stream_url: 'https://api.soundcloud.com/tracks/130470654/stream'
         },
         {
           status: 'NULL',
           id: 176755192,
-          stream_url: 'https://api.soundcloud.com/tracks/176755192/stream',
-          duration: '654321'
+          stream_url: 'https://api.soundcloud.com/tracks/176755192/stream'
         }
       ]);
       return PlayQueue.instance;
@@ -68,6 +66,11 @@ export class PlayQueue extends BaseCollection<Model> {
         return tracks;
       }
     }
+  }
+
+  getDuration(): number {
+    // console.log('jojo' + this.getPlayingTrack().get('duration'));
+    // return this.getPlayingTrack().get('duration');
   }
 
   hasNextTrack(): boolean {
