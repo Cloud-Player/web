@@ -113,14 +113,17 @@ export class NestedModel extends Model {
   };
 
   constructor(attributes: Object|null, options: any) {
-    options = options || {};
-    if (options.parse) {
-      attributes = this.parse(attributes);
-      options.parse = false;
-    }
-    this.attributes = this._prepare();
-    this.set(attributes);
-    attributes = this.attributes;
+    let self = this;
+    (function () {
+      options = options || {};
+      if (options.parse) {
+        attributes = this.parse(attributes);
+        options.parse = false;
+      }
+      this.attributes = this._prepare();
+      this.set(attributes);
+      attributes = this.attributes;
+    }.bind(self));
     super(attributes, options);
   };
 
