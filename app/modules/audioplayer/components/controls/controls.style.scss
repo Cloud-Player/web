@@ -1,4 +1,28 @@
+.audio-player-progress-bar-line {
+  height: 1px;
+
+  position: relative;
+  top: 25px;
+
+  background-color: grey;
+}
+
 .audio-player-progress-bar {
-  height: 10px;
+  height: 3px;
+
+  position: relative;
+  z-index: 1;
+
+  margin: 10px 0 10px 0;
   background-color: cornflowerblue;
+}
+
+.audio-player-progress-bar-handle {
+  width: 3px;
+  height: 13px;
+
+  position: relative;
+  top: 18px;
+
+  background-color: purple;
 }
