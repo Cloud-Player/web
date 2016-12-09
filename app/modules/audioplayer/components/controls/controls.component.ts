@@ -61,7 +61,7 @@ export class PlayerControlsComponent {
 
     el.addEventListener('drag', (e: DragEvent) => {
       let end: number = e.pageX || e.clientX;
-      if (end != 0) {
+      if (end !== 0) {
         diff = end - start;
         newPos = (diff + currentPos);
         this.setTimeTickPosition(newPos);
@@ -99,8 +99,8 @@ export class PlayerControlsComponent {
   }
 
   getTimeTickPosition(): number {
-    let output = this.timeTickPosition.replace(/'px'/g, '')
-    return parseInt(output);
+    let output = this.timeTickPosition.replace(/'px'/g, '');
+    return parseInt(output, 0);
   }
 
   setTimeTickPosition(newPos: number): void {
@@ -134,7 +134,7 @@ export class PlayerControlsComponent {
   }
 
   playTrackFromPosition(x: number): void {
-    this.audio.currentTime = (parseInt(this.audio.duration.toFixed(0)) / this.progressBarWidth) * x;
+    this.audio.currentTime = (parseInt(this.audio.duration.toFixed(0), 0) / this.progressBarWidth) * x;
     this.playTrack(this.playQueue.getPlayingTrack());
   }
 
