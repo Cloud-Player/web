@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
@@ -12,12 +12,15 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
 })
 
 export class PlayerControlsComponent {
+
   private audio: HTMLAudioElement;
   private playQueue: PlayQueue = PlayQueue.getInstance();
 
   private timeTick: string;
   private duration: string;
   private timeTickWidth: string;
+
+  @ViewChild('audioPlayerHandle') audioPlayerProgressHandle: ElementRef;
 
   constructor() {
     this.audio = new Audio();
@@ -34,6 +37,44 @@ export class PlayerControlsComponent {
       this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
       this.timeTickWidth = this.getTimeTickWidth();
     });
+
+  }
+
+  ngAfterContentInit() {
+    console.log(this.audioPlayerProgressHandle.nativeElement);
+    let el = this.audioPlayerProgressHandle.nativeElement;
+
+
+
+    el.onmousedown = function (e: any) {
+      // e = e || window.event;
+      let start = e.pageX || e.clientX;
+      let diff = 0;
+
+      let endTemp: number = e.pageX || e.clientX;
+      let currentPos: number = parseInt(el.style.left.replace(/\D/g, ''));
+
+      document.body.onmousemove = function (e: any) {
+        // e = e || window.event;
+        let end: number = e.pageX || e.clientX;
+
+        if (end !== endTemp) {
+          diff = end - start;
+
+          //TODO clip values to progress bar dimensions
+          let newPos: string = (diff + currentPos) + "px";
+          el.style.left = newPos;
+        }
+
+        endTemp = end;
+      };
+
+      document.body.onmouseup = function () {
+        document.body.onmousemove = document.body.onmouseup = null;
+      };
+
+    }
+
 
   }
 
