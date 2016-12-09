@@ -135,7 +135,7 @@ export class PlayerControlsComponent {
 
   playTrackFromPosition(x: number): void {
     this.audio.currentTime = (parseInt(this.audio.duration.toFixed(0)) / this.progressBarWidth) * x;
-    this.audio.play();
+    this.playTrack(this.playQueue.getPlayingTrack());
   }
 
   pauseTrack(): void {
