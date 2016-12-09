@@ -58,12 +58,18 @@ export class PlayerControlsComponent {
         // e = e || window.event;
         let end: number = e.pageX || e.clientX;
 
+        // did the progress handle move?
         if (end !== endTemp) {
           diff = end - start;
 
-          //TODO clip values to progress bar dimensions
-          let newPos: string = (diff + currentPos) + "px";
-          el.style.left = newPos;
+          // clipping position
+          let newPos: number = (diff + currentPos);
+          if (newPos < 0) {
+            newPos = 0;
+          } else if(newPos > el.width) {
+            newPos = el.with;
+          }
+          el.style.left = newPos + 'px';
         }
 
         endTemp = end;
