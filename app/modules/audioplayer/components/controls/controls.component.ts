@@ -22,8 +22,9 @@ export class PlayerControlsComponent {
   private timeTickWidth: string;
   private progressBarWidth: number;
 
-  @ViewChild('audioPlayerHandle') audioPlayerProgressHandle: ElementRef;
   @ViewChild('audioPlayerProgressBarLine') audioPlayerProgressBarLine: ElementRef;
+  @ViewChild('audioPlayerHandle') audioPlayerProgressHandle: ElementRef;
+  @ViewChild('audioPlayerProgressBar') audioPlayerProgressBar: ElementRef;
 
   constructor() {
     this.audio = new Audio();
@@ -68,7 +69,17 @@ export class PlayerControlsComponent {
     };
 
     el.addEventListener('dragend', (e: DragEvent) => {
-      console.log('End ');
+      this.playTrackFromPosition(this.getTimeTickPosition());
+    };
+
+    this.audioPlayerProgressBarLine.nativeElement.addEventListener('click', (e: MouseEvent) => {
+      // console.log('Click ' + e.clientX);
+      this.playTrackFromPosition(e.clientX);
+      // debugger;
+    };
+
+    this.audioPlayerProgressBar.nativeElement.addEventListener('click', (e: MouseEvent) => {
+      this.playTrackFromPosition(e.clientX);
     };
 
   };
@@ -122,6 +133,11 @@ export class PlayerControlsComponent {
   playTrack(track: PlayQueueItem|null): void {
     track = track || this.playQueue.getTrack();
     track.play();
+  }
+
+  playTrackFromPosition(x: number): void {
+    this.audio.currentTime = (parseInt(this.audio.duration.toFixed(0)) / this.progressBarWidth) * x;
+    this.audio.play();
   }
 
   pauseTrack(): void {
