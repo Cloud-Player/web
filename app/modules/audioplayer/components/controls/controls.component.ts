@@ -18,15 +18,19 @@ export class PlayerControlsComponent {
 
   private timeTick: string;
   private duration: string;
+
   private timeTickWidth: string;
+  private progressBarWidth: number;
 
   @ViewChild('audioPlayerHandle') audioPlayerProgressHandle: ElementRef;
+  @ViewChild('audioPlayerProgressBarLine') audioPlayerProgressBarLine: ElementRef;
 
   constructor() {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
     this.timeTick = this.formatToHHMMSS(0);
     this.duration = this.formatToHHMMSS(0);
+
     this.timeTickWidth = '0%';
 
     this.audio.addEventListener('canplay', () => {
@@ -40,54 +44,52 @@ export class PlayerControlsComponent {
 
   }
 
+
   ngAfterContentInit() {
-    console.log(this.audioPlayerProgressHandle.nativeElement);
+    // console.log(this.audioPlayerProgressHandle.nativeElement);
     let el = this.audioPlayerProgressHandle.nativeElement;
+    this.progressBarWidth = this.audioPlayerProgressBarLine.nativeElement.offsetWidth;
 
 
+    let start = 0;
+    let diff = 0;
+    let newPos = 0;
+    let currentPos = 0;
 
-    el.onmousedown = function (e: any) {
-      // e = e || window.event;
-      let start = e.pageX || e.clientX;
-      let diff = 0;
+    el.addEventListener('dragstart', (e: DragEvent) => {
+      start = e.pageX || e.clientX;
+      currentPos = parseInt(el.style.left.replace(/\D/g, ''));
+    });
 
-      let endTemp: number = e.pageX || e.clientX;
-      let currentPos: number = parseInt(el.style.left.replace(/\D/g, ''));
+    el.addEventListener('drag', (e: DragEvent) => {
+      let end: number = e.pageX || e.clientX;
+      if (end != 0) {
+        diff = end - start;
 
-      document.body.onmousemove = function (e: any) {
-        // e = e || window.event;
-        let end: number = e.pageX || e.clientX;
-
-        // did the progress handle move?
-        if (end !== endTemp) {
-          diff = end - start;
-
-          // clipping position
-          let newPos: number = (diff + currentPos);
-          if (newPos < 0) {
-            newPos = 0;
-          } else if(newPos > el.width) {
-            newPos = el.with;
-          }
-          el.style.left = newPos + 'px';
+        // clipping position
+        newPos = (diff + currentPos);
+        if (newPos < 0) {
+          newPos = 0;
+        } else if (newPos > this.progressBarWidth) {
+          newPos = this.progressBarWidth;
         }
 
-        endTemp = end;
-      };
+        this.setTimeTickWidth(newPos);
+        el.style.left = newPos + 'px';
+      }
+    };
 
-      document.body.onmouseup = function () {
-        document.body.onmousemove = document.body.onmouseup = null;
-      };
+    el.addEventListener('dragend', (e: DragEvent) => {
+      console.log('End ');
+    };
 
-    }
-
-
-  }
+  };
 
   formatToHHMMSS(input: number): string {
     let time = new Date(null);
     time.setSeconds(input);
 
+    // format time from hh:mm:ss to mm:ss when hh is 0
     if (time.getHours() === 1) {
       return time.toISOString().substr(14, 5);
     } else {
@@ -96,7 +98,11 @@ export class PlayerControlsComponent {
   }
 
   getTimeTickWidth(): string {
-    return (this.audio.currentTime * 100) / this.audio.duration  + '%';
+    return (this.audio.currentTime * 100) / this.audio.duration + '%';
+  }
+
+  setTimeTickWidth(newPos: number): void {
+    this.timeTickWidth = (newPos / 100) + '%';
   }
 
   private reactOnStatusChange(track): void {
