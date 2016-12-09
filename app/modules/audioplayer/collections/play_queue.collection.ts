@@ -73,11 +73,6 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  getDuration(): number {
-    // console.log('jojo' + this.getPlayingTrack().get('duration'));
-    // return this.getPlayingTrack().get('duration');
-  }
-
   hasNextTrack(): boolean {
     return this.playIndex < this.length - 1;
   }

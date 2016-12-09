@@ -19,7 +19,7 @@ export class PlayerControlsComponent {
   private timeTick: string;
   private duration: string;
 
-  private timeTickWidth: string;
+  private timeTickPosition: string;
   private progressBarWidth: number;
 
   @ViewChild('audioPlayerProgressBarLine') audioPlayerProgressBarLine: ElementRef;
@@ -32,7 +32,7 @@ export class PlayerControlsComponent {
     this.timeTick = this.formatToHHMMSS(0);
     this.duration = this.formatToHHMMSS(0);
 
-    this.timeTickWidth = '0px';
+    this.timeTickPosition = '0px';
 
     this.audio.addEventListener('canplay', () => {
       this.duration = this.formatToHHMMSS(this.audio.duration);
@@ -40,7 +40,7 @@ export class PlayerControlsComponent {
 
     this.audio.addEventListener('timeupdate', () => {
       this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
-      this.timeTickWidth = this.getTimeTickPositionFromTime(this.audio.currentTime);
+      this.timeTickPosition = this.getTimeTickPositionFromTime(this.audio.currentTime);
     });
 
   }
@@ -51,8 +51,8 @@ export class PlayerControlsComponent {
 
     let start = 0;
     let diff = 0;
-    let newPos = 0;
     let currentPos = 0;
+    let newPos = 0;
 
     el.addEventListener('dragstart', (e: DragEvent) => {
       start = e.pageX || e.clientX;
@@ -101,7 +101,7 @@ export class PlayerControlsComponent {
   }
 
   getTimeTickPosition(): number {
-    let output = this.timeTickWidth.replace(/'px'/g, '')
+    let output = this.timeTickPosition.replace(/'px'/g, '')
     return parseInt(output);
   }
 
@@ -113,7 +113,7 @@ export class PlayerControlsComponent {
       newPos = this.progressBarWidth;
     }
 
-    this.timeTickWidth = newPos + 'px';
+    this.timeTickPosition = newPos + 'px';
   }
 
   private reactOnStatusChange(track): void {
