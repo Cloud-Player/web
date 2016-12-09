@@ -31,7 +31,7 @@ export class PlayerControlsComponent {
     this.timeTick = this.formatToHHMMSS(0);
     this.duration = this.formatToHHMMSS(0);
 
-    this.timeTickWidth = '0%';
+    this.timeTickWidth = '0px';
 
     this.audio.addEventListener('canplay', () => {
       this.duration = this.formatToHHMMSS(this.audio.duration);
@@ -39,17 +39,14 @@ export class PlayerControlsComponent {
 
     this.audio.addEventListener('timeupdate', () => {
       this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
-      this.timeTickWidth = this.getTimeTickWidth();
+      this.timeTickWidth = this.getTimeTickPositionFromTime(this.audio.currentTime);
     });
 
   }
 
-
   ngAfterContentInit() {
-    // console.log(this.audioPlayerProgressHandle.nativeElement);
     let el = this.audioPlayerProgressHandle.nativeElement;
     this.progressBarWidth = this.audioPlayerProgressBarLine.nativeElement.offsetWidth;
-
 
     let start = 0;
     let diff = 0;
@@ -58,24 +55,15 @@ export class PlayerControlsComponent {
 
     el.addEventListener('dragstart', (e: DragEvent) => {
       start = e.pageX || e.clientX;
-      currentPos = parseInt(el.style.left.replace(/\D/g, ''));
+      currentPos = this.getTimeTickPosition();
     });
 
     el.addEventListener('drag', (e: DragEvent) => {
       let end: number = e.pageX || e.clientX;
       if (end != 0) {
         diff = end - start;
-
-        // clipping position
         newPos = (diff + currentPos);
-        if (newPos < 0) {
-          newPos = 0;
-        } else if (newPos > this.progressBarWidth) {
-          newPos = this.progressBarWidth;
-        }
-
-        this.setTimeTickWidth(newPos);
-        el.style.left = newPos + 'px';
+        this.setTimeTickPosition(newPos);
       }
     };
 
@@ -97,12 +85,24 @@ export class PlayerControlsComponent {
     }
   }
 
-  getTimeTickWidth(): string {
-    return (this.audio.currentTime * 100) / this.audio.duration + '%';
+  getTimeTickPositionFromTime(time: number): string {
+    return (time * this.progressBarWidth) / this.audio.duration + 'px';
   }
 
-  setTimeTickWidth(newPos: number): void {
-    this.timeTickWidth = (newPos / 100) + '%';
+  getTimeTickPosition(): number {
+    let output = this.timeTickWidth.replace(/'px'/g, '')
+    return parseInt(output);
+  }
+
+  setTimeTickPosition(newPos: number): void {
+    // clipping position
+    if (newPos < 0) {
+      newPos = 0;
+    } else if (newPos > this.progressBarWidth) {
+      newPos = this.progressBarWidth;
+    }
+
+    this.timeTickWidth = newPos + 'px';
   }
 
   private reactOnStatusChange(track): void {
