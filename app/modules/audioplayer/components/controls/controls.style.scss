@@ -1,14 +1,19 @@
+.audio-player-progress {
+  position: relative;
+  top: 5px;
+}
+
 .audio-player-progress-bar-line {
-  height: 1px;
+  height: 5px;
 
   position: relative;
-  top: 23px;
+  top: 30px;
 
   background-color: grey;
 }
 
 .audio-player-progress-bar {
-  height: 3px;
+  height: 5px;
 
   position: relative;
   z-index: 1;
@@ -18,11 +23,11 @@
 }
 
 .audio-player-progress-bar-handle {
-  width: 11px;
-  height: 11px;
+  width: 15px;
+  height: 15px;
 
   position: relative;
-  top: 17px;
+  top: 20px;
 
-  background-color: purple;
+  background-color: transparent;
 }
