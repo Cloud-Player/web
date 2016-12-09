@@ -73,13 +73,11 @@ export class PlayerControlsComponent {
     };
 
     this.audioPlayerProgressBarLine.nativeElement.addEventListener('click', (e: MouseEvent) => {
-      // console.log('Click ' + e.clientX);
-      this.playTrackFromPosition(e.clientX);
-      // debugger;
+      this.playTrackFromPosition(e.offsetX);
     };
 
     this.audioPlayerProgressBar.nativeElement.addEventListener('click', (e: MouseEvent) => {
-      this.playTrackFromPosition(e.clientX);
+      this.playTrackFromPosition(e.offsetX);
     };
 
   };
