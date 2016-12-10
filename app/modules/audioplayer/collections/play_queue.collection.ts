@@ -40,7 +40,7 @@ export class PlayQueue extends BaseCollection<Model> {
     return [item.get('priority'), item.get('position')];
   }
 
-  getQueuedTracks(): Track {
+  getQueuedTracks(): Array<Track> {
     return this.where({status: 'QUEUED'});
   }
 
