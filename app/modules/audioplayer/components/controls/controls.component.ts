@@ -34,6 +34,10 @@ export class PlayerControlsComponent {
 
     this.timeTickPosition = 0;
 
+    this.setAudioObjectEventListeners();
+  }
+
+  private setAudioObjectEventListeners() {
     this.audio.addEventListener('canplay', () => {
       this.duration = this.formatToHHMMSS(this.audio.duration);
     });
