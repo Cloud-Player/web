@@ -19,7 +19,7 @@ export class PlayerControlsComponent {
   private timeTick: string;
   private duration: string;
 
-  private timeTickPosition: string;
+  private timeTickPosition: number;
   private progressBarWidth: number;
 
   @ViewChild('audioPlayerProgressBarLine') audioPlayerProgressBarLine: ElementRef;
@@ -32,7 +32,7 @@ export class PlayerControlsComponent {
     this.timeTick = this.formatToHHMMSS(0);
     this.duration = this.formatToHHMMSS(0);
 
-    this.timeTickPosition = '0px';
+    this.timeTickPosition = 0;
 
     this.audio.addEventListener('canplay', () => {
       this.duration = this.formatToHHMMSS(this.audio.duration);
@@ -42,7 +42,6 @@ export class PlayerControlsComponent {
       this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
       this.timeTickPosition = this.getTimeTickPositionFromTime(this.audio.currentTime);
     });
-
   }
 
   ngAfterContentInit() {
@@ -56,7 +55,7 @@ export class PlayerControlsComponent {
 
     el.addEventListener('dragstart', (e: DragEvent) => {
       start = e.pageX || e.clientX;
-      currentPos = this.getTimeTickPosition();
+      currentPos = this.timeTickPosition;
     });
 
     el.addEventListener('drag', (e: DragEvent) => {
@@ -69,7 +68,7 @@ export class PlayerControlsComponent {
     };
 
     el.addEventListener('dragend', (e: DragEvent) => {
-      this.playTrackFromPosition(this.getTimeTickPosition());
+      this.playTrackFromPosition(this.timeTickPosition);
     };
 
     this.audioPlayerProgressBarLine.nativeElement.addEventListener('click', (e: MouseEvent) => {
@@ -94,13 +93,8 @@ export class PlayerControlsComponent {
     }
   }
 
-  getTimeTickPositionFromTime(time: number): string {
-    return (time * this.progressBarWidth) / this.audio.duration + 'px';
-  }
-
-  getTimeTickPosition(): number {
-    let output = this.timeTickPosition.replace(/'px'/g, '');
-    return parseInt(output, 0);
+  getTimeTickPositionFromTime(time: number): number {
+    return (time * this.progressBarWidth) / this.audio.duration;
   }
 
   setTimeTickPosition(newPos: number): void {
@@ -111,7 +105,7 @@ export class PlayerControlsComponent {
       newPos = this.progressBarWidth;
     }
 
-    this.timeTickPosition = newPos + 'px';
+    this.timeTickPosition = newPos;
   }
 
   private reactOnStatusChange(track): void {

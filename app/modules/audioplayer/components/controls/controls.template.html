@@ -7,8 +7,8 @@
 
 <div class="audio-player-progress">
   <div #audioPlayerProgressBarLine class="audio-player-progress-bar-line"></div>
-  <div #audioPlayerHandle class="audio-player-progress-bar-handle" draggable="true" [style.left]="timeTickPosition"></div>
-  <div #audioPlayerProgressBar class="audio-player-progress-bar" [style.width]="timeTickPosition"></div>
+  <div #audioPlayerHandle class="audio-player-progress-bar-handle" draggable="true" [style.left]="timeTickPosition + 'px'"></div>
+  <div #audioPlayerProgressBar class="audio-player-progress-bar" [style.width]="timeTickPosition + 'px'"></div>
 </div>
 
 <span>{{timeTick}}</span>
