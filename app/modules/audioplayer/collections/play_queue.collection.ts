@@ -36,7 +36,7 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  static comparator(item: PlayQueueItem): Array<any> {
+  comparator(item: PlayQueueItem): Array<any> {
     return [item.get('priority'), item.get('position')];
   }
 
