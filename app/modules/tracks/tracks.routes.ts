@@ -6,6 +6,8 @@ import { TracksDetailComponent } from './components/detail/detail.component';
 
 const routes: Routes = [
     { path: 'tracks',     component: TracksIndexComponent },
+    { path: 'likes',     component: TracksIndexComponent },
+    { path: 'playlists',     component: TracksIndexComponent },
     { path: 'tracks/:id', component: TracksDetailComponent }
 ];
 
