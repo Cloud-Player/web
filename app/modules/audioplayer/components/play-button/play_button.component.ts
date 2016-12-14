@@ -10,10 +10,16 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   styleUrls: ['play_button.style.css']
 })
 
-export class PlayButtonComponent implements OnInit {
+export class PlayButtonComponent {
+
   @Input() track: Track;
+
   private playingItem: PlayQueueItem;
   private playQueue: PlayQueue = PlayQueue.getInstance();
+
+  add(): void {
+    this.playQueue.add(this.track.toJSON());
+  }
 
   play(): void {
     this.playingItem = this.playQueue.addAndPlay(this.track);
