@@ -59,7 +59,7 @@ gulp.task('css:build', function () {
 gulp.task('fonts:copy', function () {
   return gulp.src('./node_modules/font-awesome/fonts/*')
     .pipe(gulp.dest('dist/dev/fonts'))
-})
+});
 
 gulp.task('js:build', function () {
   var tsProject = ts.createProject('./tsconfig.json', {
@@ -162,7 +162,7 @@ gulp.task('inline:templates', ['copy:app'], function () {
 });
 
 gulp.task('copy:app', function (done) {
-  return runSequence('copy:dev', 'copy:ts', 'copy:css', function () {
+  return runSequence('copy:dev', 'copy:ts', 'copy:css', 'copy:fonts', function () {
     done();
   })
 });
@@ -182,6 +182,32 @@ gulp.task('copy:css', function () {
     .pipe(gulp.dest('./dist/bundle/app').on('error', gutil.log));
 });
 
+
+gulp.task('copy:fonts', function () {
+  return gulp.src('./node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('dist/bundle/fonts'))
+});
+
+// clean tasks
+
+gulp.task('clean', function (done) {
+  return runSequence('clean:dist', function () {
+    done();
+  });
+});
+
+gulp.task('clean:dist', function () {
+  return gulp.src(['./dist'], {read: false})
+    .pipe(clean({force: true}));
+});
+
+gulp.task('clean:src', function () {
+  return gulp.src(['./app/**/*.{js,css,map}'], {read: false})
+    .pipe(clean({force: true}));
+});
+
+
+// electron tasks
 
 /**
  * Builds the OSX application and places it in our
@@ -231,23 +257,6 @@ gulp.task('electron:package', function (done) {
     ['electron:build:win', 'electron:build:osx', 'electron:build:linux'], done);
 });
 
-// clean tasks
-
-gulp.task('clean', function (done) {
-  return runSequence('clean:dist', function () {
-    done();
-  });
-});
-
-gulp.task('clean:dist', function () {
-  return gulp.src(['./dist'], {read: false})
-    .pipe(clean({force: true}));
-});
-
-gulp.task('clean:src', function () {
-  return gulp.src(['./app/**/*.{js,css,map}'], {read: false})
-    .pipe(clean({force: true}));
-});
 
 gulp.task('default1', function () {
   return gulp.src(['./dist/dev/**/*'])

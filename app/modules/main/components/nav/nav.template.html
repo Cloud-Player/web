@@ -1,9 +1,8 @@
 <div class="sidebar row">
 
-  <div class="desktop visible-md-block visible-lg-block">
+  <show-when-authenticated class="desktop visible-md-block visible-lg-block">
     <div class="avatar">
-      <!--img [src]="user.get('avatar_url') || img" [alt]="user.get('full_name') || 'John Doe'"-->
-      <img [src]="img_url" [alt]="'John Doe'">
+      <img [src]="user.get('avatar_url') || img" [alt]="user.get('full_name') || 'John Doe'">
     </div>
 
     <nav class="col-md-12">
@@ -24,7 +23,7 @@
         <p class="visible-lg">Connect</p>
       </a>
     </nav>
-  </div>
+  </show-when-authenticated>
 
   <div class="mobile visible-sm-block visible-xs-block">
     <nav class="col-md-12">
