@@ -1,14 +1,12 @@
 import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
-import {User} from '../../users/models/user.model';
 import {AuthenticatedUser} from './authenticated_user.model';
-import {Http} from '@angular/http';
 
 @Injectable()
 export class Session extends SoundcloudModel {
-  idAttribute = 'access_token';
-
   private static instance: Session;
+
+  idAttribute = 'access_token';
 
   static getInstance(): SoundcloudModel {
     if (!Session.instance) {

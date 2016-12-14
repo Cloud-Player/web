@@ -6,15 +6,15 @@ import {extend} from 'underscore';
 export class AuthenticatedUser extends User {
   endpoint = '/me';
 
-  defaults(){
-    return extend(super.defaults(),{
+  defaults() {
+    return extend(super.defaults(), {
       authenticated: false
     });
   }
 
-  sync(method: string, model: AuthenticatedUser, options?:any){
-    if(this.get('authenticated')){
-      options.search.set('oauth_token',this.parent.get('access_token'));
+  sync(method: string, model: AuthenticatedUser, options?: any) {
+    if (this.get('authenticated')) {
+      options.search.set('oauth_token', this.parent.get('access_token'));
     }
     return super.sync(method, model, options);
   }

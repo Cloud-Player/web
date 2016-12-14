@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Session} from '../../models/session.model';
-import {ActivatedRoute} from '@angular/router';
 import {User} from '../../../users/models/user.model';
 
 @Component({

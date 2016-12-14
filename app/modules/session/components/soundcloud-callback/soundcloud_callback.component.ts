@@ -1,8 +1,6 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Session} from '../../models/session.model';
-import {User} from '../../../users/models/user.model';
-
 @Component({
   moduleId: module.id,
   selector: 'soundcloud-callback',

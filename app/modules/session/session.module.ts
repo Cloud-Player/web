@@ -5,7 +5,6 @@ import {ConnectBtnComponent} from './components/connect-btn/connect_btn.componen
 import {SessionRoutingModule} from './session.routes';
 import {SoundcloudCallbackComponent} from './components/soundcloud-callback/soundcloud_callback.component';
 import {ShowWhenAuthenticatedComponent} from './components/show-when-authenticated/show_when_authenticated';
-import {ProfileAvatarComponent} from './components/profile-avatar/profile_avatar';
 
 @NgModule ({
   imports: [
