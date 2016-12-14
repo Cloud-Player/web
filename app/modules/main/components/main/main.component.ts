@@ -8,5 +8,5 @@ import {Component} from '@angular/core';
 })
 
 export class MainComponent {
-    title = 'Tour of Tracks';
+  title = 'Awesome Soundcloud Audioplayer';
 }
