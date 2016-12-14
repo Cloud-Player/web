@@ -6,24 +6,25 @@ import {AudioPlayerComponent} from './components/index/index.component';
 import {PlayQueueComponent} from './components/playqueue/playqueue.component';
 import {PlayerControlsComponent} from './components/controls/controls.component';
 import {PlayButtonComponent} from './components/play-button/play_button.component';
+import {PlayListComponent} from './components/playlist/playlist.component';
 
 @NgModule ({
-    imports: [
-        BrowserModule,
-        FormsModule
-    ],
-    declarations: [
-        AudioPlayerComponent,
-        PlayQueueComponent,
-        PlayerControlsComponent,
-        PlayButtonComponent
-    ],
-    exports: [
-        AudioPlayerComponent,
-        PlayButtonComponent
-    ]
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  declarations: [
+    AudioPlayerComponent,
+    PlayQueueComponent,
+    PlayerControlsComponent,
+    PlayButtonComponent,
+    PlayListComponent
+  ],
+  exports: [
+    AudioPlayerComponent,
+    PlayButtonComponent,
+    PlayListComponent
+  ]
 })
 
-export class AudioPlayerModule {
-
-}
+export class AudioPlayerModule { }

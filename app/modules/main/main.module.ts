@@ -14,6 +14,7 @@ import {MainComponent}     from './components/main/main.component';
 import {MainRoutingModule}     from './main.routes';
 import {AudioPlayerModule} from '../audioplayer/audio-player.module';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {NavComponent} from './components/nav/nav.component';
 
 @NgModule({
   imports: [
@@ -27,11 +28,10 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
     AudioPlayerModule,
   ],
   declarations: [
-    MainComponent
+    MainComponent,
+    NavComponent
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  bootstrap: [MainComponent]
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  bootstrap: [ MainComponent ]
 })
-export class MainModule {
-}
-
+export class MainModule { }

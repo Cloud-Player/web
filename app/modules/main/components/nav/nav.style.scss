@@ -1,0 +1,50 @@
+@import '../../../../variables';
+
+$img-size: 65px;
+
+.sidebar {
+  background: $gray-lighter;
+  height: 100%;
+
+  .avatar {
+    margin: 25px auto;
+    position: relative;
+    width: $img-size;
+    height: $img-size;
+    background: $brand-primary;
+    border-radius: ($img-size / 2);
+
+    img {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: $img-size;
+    }
+  }
+
+  nav {
+    height: 100vh;
+    margin: 15px auto;
+
+    a {
+      margin: 5px auto;
+      color: $gray-darker;
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+    }
+
+    a:hover {
+      color: $gray-light;
+    }
+
+    i {
+      margin: 10px auto;
+      font-size: 38px;
+    }
+
+  }
+}

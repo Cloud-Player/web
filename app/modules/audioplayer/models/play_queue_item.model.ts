@@ -11,7 +11,7 @@ export class PlayQueueItem extends Track {
   queue(priority: number): void {
     this.set({
       status: 'QUEUED',
-      prirotiy: priority
+      priority: priority
     });
   }
 

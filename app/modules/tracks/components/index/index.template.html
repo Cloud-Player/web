@@ -1,19 +1,18 @@
-<h2>My Tracks</h2>
-<div>
-  <label>Track name:</label> <input #trackName />
-  <button (click)="add(trackName.value); trackName.value=''">
-    Add
-  </button>
-</div>
-<div *ngFor="let track of tracks.models"
-    (click)="onSelect(track)"
-    [class.selected]="track === selectedTrack">
-  <img [src]="track.get('artwork_url')" width="50px">
-  <span class="badge">{{track.id}}</span> {{track.get('title')}}
-</div>
-<div *ngIf="selectedTrack">
-  <h2>
-    {{selectedTrack.get('title') | uppercase}} is my track
-  </h2>
-  <button (click)="gotoDetail()">View Details</button>
+<div class="row">
+
+  <h3>{{title}}</h3>
+  <div>
+    <label>Track name:</label> <input #trackName />
+    <button (click)="add(trackName.value); trackName.value=''">
+      Add
+    </button>
+  </div>
+  <div *ngIf="selectedTrack">
+    <h2>
+      {{selectedTrack.get('title') | uppercase}} is my track
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+  </div>
+  <play-list [tracks]="tracks"></play-list>
+
 </div>

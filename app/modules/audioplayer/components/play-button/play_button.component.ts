@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
@@ -10,10 +10,16 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   styleUrls: ['play_button.style.css']
 })
 
-export class PlayButtonComponent implements OnInit {
+export class PlayButtonComponent {
+
   @Input() track: Track;
+
   private playingItem: PlayQueueItem;
   private playQueue: PlayQueue = PlayQueue.getInstance();
+
+  add(): void {
+    this.playQueue.add(this.track.toJSON());
+  }
 
   play(): void {
     this.playingItem = this.playQueue.addAndPlay(this.track);

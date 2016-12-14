@@ -33,7 +33,7 @@ gulp.task('build', ['res:copy', 'html:copy', 'js:build', 'css:build']);
 
 // build tasks
 
-gulp.task('res:copy',  function () {
+gulp.task('res:copy', ['fonts:copy'], function () {
   return gulp.src([
     './index.html',
     './systemjs.config.dev.js'
@@ -51,6 +51,11 @@ gulp.task('css:build', function () {
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./dist/dev').on('error', gutil.log));
 });
+
+gulp.task('fonts:copy', function() {
+  return gulp.src('./node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('dist/dev/fonts'))
+})
 
 gulp.task('js:build', function () {
   var tsProject = ts.createProject('./tsconfig.json', {
@@ -186,7 +191,7 @@ gulp.task('clean:dist', function () {
     .pipe(clean({ force: true }));
 });
 
-gulp.task('clean:app', function () {
+gulp.task('clean:src', function () {
   return gulp.src(['./app/**/*.{js,css,map}'], { read: false })
     .pipe(clean({ force: true }));
 });

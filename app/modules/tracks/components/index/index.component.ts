@@ -12,6 +12,7 @@ import {Tracks} from '../../collections/tracks.collection';
     providers: [Tracks]
 })
 export class TracksIndexComponent implements OnInit {
+    title = 'My Tracks';
     selectedTrack: Track;
 
     constructor(private tracks: Tracks, private router: Router) {}

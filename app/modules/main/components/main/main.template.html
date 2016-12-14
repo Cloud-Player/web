@@ -1,9 +1,21 @@
-<audio-player></audio-player>
+<section class="container-fluid">
 
+  <header class="row">
 
-<h1>{{title}}</h1>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/tracks">Tracks</a>
-</nav>
-<router-outlet>
+    <h1 class="col-md-5">{{title}}</h1>
+    <track-search class="col-md-4 col-md-offset-3"></track-search>
+
+  </header>
+
+  <main class="row">
+
+    <nav-sidebar class="col-md-1"></nav-sidebar>
+    <audio-player class="col-md-4"></audio-player>
+
+    <div class="col-md-7">
+      <router-outlet></router-outlet>
+    </div>
+
+  </main>
+
+</section>
