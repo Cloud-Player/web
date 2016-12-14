@@ -42,34 +42,34 @@ gulp.task('res:copy', ['fonts:copy'], function () {
 });
 
 gulp.task('html:copy', function () {
-  return gulp.src('./app/**/*.html', { base: '.' })
+  return gulp.src('./app/**/*.html', {base: '.'})
     .pipe(gulp.dest('./dist/dev').on('error', gutil.log));
 });
 
 gulp.task('css:build', function () {
-  return gulp.src('./app/**/*.scss', { base: '.' })
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+  return gulp.src('./app/**/*.scss', {base: '.'})
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./dist/dev').on('error', gutil.log));
 });
 
-gulp.task('fonts:copy', function() {
+gulp.task('fonts:copy', function () {
   return gulp.src('./node_modules/font-awesome/fonts/*')
     .pipe(gulp.dest('dist/dev/fonts'))
-})
+});
 
 gulp.task('js:build', function () {
   var tsProject = ts.createProject('./tsconfig.json', {
     typescript: typescript
   });
 
-  return gulp.src('./app/**/*.ts', { base: '.' })
+  return gulp.src('./app/**/*.ts', {base: '.'})
     .pipe(tsProject().on('error', gutil.log))
     .pipe(gulp.dest('./dist/dev').on('error', gutil.log));
 });
 
 // watch tasks
 
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', ['build'], function () {
   gulp.watch('./app/**/*.html', ['html:copy']);
   gulp.watch('./app/**/*.scss', ['css:build']);
   gulp.watch('./app/**/*.ts', ['js:build']);
@@ -88,14 +88,14 @@ gulp.task('serve', function () {
 
 gulp.task('src:lint', ['scss:lint', 'ts:lint']);
 
-gulp.task('ts:lint', function() {
+gulp.task('ts:lint', function () {
   return gulp.src('./app/**/*.ts')
     .pipe(cache('tslint'))
     .pipe(tslint())
     .pipe(tslint.report('prose'));
 });
 
-gulp.task('scss:lint', function() {
+gulp.task('scss:lint', function () {
   return gulp.src('./app/**/*.scss')
     .pipe(cache('sasslint'))
     .pipe(sasslint())
@@ -111,8 +111,8 @@ gulp.task('html:hint', function () {
 
 // dist & bundle tasks
 
-gulp.task('dist', ['clean'], function(done) {
-  return runSequence('build', 'inline:templates', 'bundle', function() {
+gulp.task('dist', ['clean'], function (done) {
+  return runSequence('build', 'inline:templates', 'bundle', function () {
     done();
   });
 });
@@ -128,7 +128,7 @@ gulp.task('bundle', ['bundle:vendor', 'bundle:app'], function () {
 
 gulp.task('bundle:vendor', function () {
   return builder
-    .buildStatic('dist/prod/app/vendor.js', './dist/bundle/' + vendorBundleName, { minify: true })
+    .buildStatic('dist/prod/app/vendor.js', './dist/bundle/' + vendorBundleName, {minify: true})
     .then(function () {
       gutil.log('Vendor bundle created')
     }).catch(function (err) {
@@ -138,7 +138,7 @@ gulp.task('bundle:vendor', function () {
 
 gulp.task('bundle:app', function () {
   return builder
-    .buildStatic('app', './dist/bundle/' + mainBundleName, { minify: true })
+    .buildStatic('app', './dist/bundle/' + mainBundleName, {minify: true})
     .then(function () {
       gutil.log('App bundle created')
     }).catch(function (err) {
@@ -152,13 +152,13 @@ gulp.task('inline:templates', ['copy:app'], function () {
   });
 
   return gulp.src('./dist/.tmp/**/*.ts')
-    .pipe(inlineTemplates({ base: './dist/.tmp', indent: 0, useRelativePaths: true, removeLineBreaks: true }))
+    .pipe(inlineTemplates({base: './dist/.tmp', indent: 0, useRelativePaths: true, removeLineBreaks: true}))
     .pipe(tsProject().on('error', gutil.log))
     .pipe(gulp.dest('./dist/prod'));
 });
 
 gulp.task('copy:app', function (done) {
-  return runSequence('copy:dev', 'copy:ts', 'copy:css', function () {
+  return runSequence('copy:dev', 'copy:ts', 'copy:css', 'copy:fonts', function () {
     done();
   })
 });
@@ -169,13 +169,18 @@ gulp.task('copy:dev', function () {
 });
 
 gulp.task('copy:ts', function () {
-  return gulp.src(['./app/**/*.ts'], { base: '.' })
+  return gulp.src(['./app/**/*.ts'], {base: '.'})
     .pipe(gulp.dest('./dist/.tmp').on('error', gutil.log));
 });
 
 gulp.task('copy:css', function () {
   return gulp.src(['./dist/dev/app/main.css'])
     .pipe(gulp.dest('./dist/bundle/app').on('error', gutil.log));
+});
+
+gulp.task('copy:fonts', function () {
+  return gulp.src('./node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('dist/bundle/fonts'))
 });
 
 // clean tasks
@@ -187,11 +192,11 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('clean:dist', function () {
-  return gulp.src(['./dist'], { read: false })
-    .pipe(clean({ force: true }));
+  return gulp.src(['./dist'], {read: false})
+    .pipe(clean({force: true}));
 });
 
 gulp.task('clean:src', function () {
-  return gulp.src(['./app/**/*.{js,css,map}'], { read: false })
-    .pipe(clean({ force: true }));
+  return gulp.src(['./app/**/*.{js,css,map}'], {read: false})
+    .pipe(clean({force: true}));
 });
