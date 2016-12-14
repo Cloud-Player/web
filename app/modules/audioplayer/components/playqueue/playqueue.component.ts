@@ -1,7 +1,3 @@
-/**
- * Created by kaischulz on 30.11.16.
- */
-
 import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 
@@ -10,10 +6,9 @@ import {PlayQueue} from '../../collections/play_queue.collection';
   selector: 'play-queue',
   templateUrl: 'playqueue.template.html',
   styleUrls: ['playqueue.style.css']
-
 })
 
-export class PlayQueueComponent implements OnInit {
+export class PlayQueueComponent {
   private playQueue: PlayQueue;
 
   constructor() {
