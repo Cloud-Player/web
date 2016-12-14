@@ -17,7 +17,6 @@ var uglify = require('gulp-uglify');
 
 var electron = require('gulp-atom-electron');
 var symdest = require('gulp-symdest');
-var config = require('./project-config');
 
 var exec = require('child_process').exec;
 var Builder = require('systemjs-builder');
