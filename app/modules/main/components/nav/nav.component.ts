@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {User} from '../../../users/models/user.model';
+import {Session} from '../../../session/models/session.model';
 
 @Component({
     moduleId: module.id,
@@ -8,5 +10,5 @@ import {Component} from '@angular/core';
 })
 
 export class NavComponent {
-  img_url = 'https://a-v2.sndcdn.com/assets/images/header/cloud@2x-e5fba4.png';
+  private user: User = Session.getInstance().get('user');
 }
