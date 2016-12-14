@@ -17,7 +17,6 @@ export class NestedModel extends Model {
     for (let key in nestedAttributes) {
       if (typeof nestedAttributes[key] === 'function') {
         let instance = new nestedAttributes[key]();
-
         instance.parent = this;
         instanceObject[key] = instance;
       } else {
@@ -114,7 +113,7 @@ export class NestedModel extends Model {
     return this.compose(attrs);
   };
 
-  set(attributes: any, options: any) {
+  set(attributes: any, options?: any) {
     let obj = {};
 
     if (!this._isNestingPrepared) {

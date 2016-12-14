@@ -22,7 +22,7 @@ export class BaseModel extends NestedModel {
     return getUrl(this);
   };
 
-  request(url: string, method: string, options: any) {
+  request(url: string, method: string, options?: any) {
     return request(url, method, options, this);
   }
 

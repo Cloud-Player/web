@@ -25,17 +25,22 @@ export class PlayQueue extends BaseCollection<Model> {
           status: 'NULL',
           id: 176755192,
           stream_url: 'https://api.soundcloud.com/tracks/176755192/stream'
+        },
+        {
+          status: 'NULL',
+          id: 176724778271555192,
+          stream_url: 'https://api.soundcloud.com/tracks/247782715/stream'
         }
       ]);
       return PlayQueue.instance;
     }
   }
 
-  comparator(item: PlayQueueItem) {
+  comparator = (item: PlayQueueItem) => {
     return [item.get('priority'), item.get('position')];
-  }
+  };
 
-  getQueuedTracks(): Array {
+  getQueuedTracks(): Array<Track> {
     return this.where({status: 'QUEUED'});
   }
 
@@ -88,7 +93,7 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  addAndPlay(track: Track) {
+  addAndPlay(track: Track): PlayQueueItem {
     let queueItem: PlayQueueItem = this.add(track.toJSON());
     queueItem.play();
     return queueItem;
