@@ -33,7 +33,6 @@ export class PlayButtonComponent {
 
   trackIsCurrentlyPlaying(): boolean {
     let currentlyPlaying = this.playQueue.getPlayingTrack();
-
     return currentlyPlaying && currentlyPlaying.id === this.track.id;
   }
 

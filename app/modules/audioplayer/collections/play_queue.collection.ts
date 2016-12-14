@@ -1,5 +1,5 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
-import {BaseCollection} from '../../backbone/collections/backbone.collection';
+import {BaseCollection} from '../../backbone/collections/base.collection';
 import {Model} from 'backbone';
 import {Track} from '../../tracks/models/track.model';
 
@@ -19,11 +19,11 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  comparator(item: PlayQueueItem) {
+  comparator = (item: PlayQueueItem) => {
     return [item.get('priority'), item.get('position')];
-  }
+  };
 
-  getQueuedTracks(): Array {
+  getQueuedTracks(): Array<Track> {
     return this.where({ status: 'QUEUED' });
   }
 
@@ -88,7 +88,7 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  addAndPlay(track: Track) {
+  addAndPlay(track: Track): PlayQueueItem {
     let queueItem: PlayQueueItem = this.add(track.toJSON());
     queueItem.play();
     return queueItem;
