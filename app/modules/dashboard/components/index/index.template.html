@@ -1,17 +1,6 @@
-<h3>Top Tracks</h3>
-<div class="grid grid-pad">
-  <div *ngFor="let track of tracks.models"
-       (click)="gotoDetail(track)"
-       class="col-1-4">
-    <div class="module track">
-      <h4>{{track.get('title')}}</h4>
-      <audio-player-play-button [track]="track"></audio-player-play-button>
-    </div>
-  </div>
-</div>
-
 <div class="row">
-  <div class="col-md-12">
-    <track-search></track-search>
-  </div>
+
+  <h3>{{title}}</h3>
+  <play-list [tracks]="tracks"></play-list>
+
 </div>
