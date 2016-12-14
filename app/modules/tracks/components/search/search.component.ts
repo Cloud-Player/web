@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
 import {Tracks} from '../../collections/tracks.collection';
-import {Track} from '../../models/track.model';
 
 @Component({
     moduleId: module.id,
@@ -18,8 +16,7 @@ import {Track} from '../../models/track.model';
 export class TracksSearchComponent implements OnInit {
     private searchTerms = new Subject<string>();
 
-    constructor(private tracks: Tracks,
-                private router: Router) {
+    constructor(private tracks: Tracks) {
     }
 
     // Push a search term into the observable stream.
@@ -36,11 +33,7 @@ export class TracksSearchComponent implements OnInit {
                     this.tracks.queryParams.q = term;
                     this.tracks.fetch({reset: true});
                 return Observable.of<Tracks>(this.tracks);
-            }).toPromise();
+            }}).toPromise();
     }
 
-    gotoDetail(track: Track): void {
-        let link = ['/tracks', track.id];
-        this.router.navigate(link);
-    }
 }

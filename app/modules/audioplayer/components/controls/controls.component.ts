@@ -8,7 +8,6 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   selector: 'audio-player-controls',
   templateUrl: 'controls.template.html',
   styleUrls: ['controls.style.css']
-
 })
 
 export class PlayerControlsComponent {

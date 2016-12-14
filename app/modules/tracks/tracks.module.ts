@@ -26,5 +26,4 @@ import {AudioPlayerModule} from '../audioplayer/audio-player.module';
   ]
 })
 
-export class TracksModule {
-}
+export class TracksModule { }
