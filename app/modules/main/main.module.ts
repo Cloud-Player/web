@@ -13,6 +13,8 @@ import {MainComponent}     from './components/main/main.component';
 
 import {MainRoutingModule}     from './main.routes';
 import {AudioPlayerModule} from '../audioplayer/audio-player.module';
+import {SessionModule} from '../session/session.module';
+import {UsersModule} from '../users/users.module';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {NavComponent} from './components/nav/nav.component';
 
@@ -26,6 +28,8 @@ import {NavComponent} from './components/nav/nav.component';
     DashboardModule,
     MainRoutingModule,
     AudioPlayerModule,
+    SessionModule,
+    UsersModule
   ],
   declarations: [
     MainComponent,

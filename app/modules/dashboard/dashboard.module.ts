@@ -8,6 +8,7 @@ import {DashboardRoutingModule}     from './dashboard.routes';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {AudioPlayerModule} from '../audioplayer/audio-player.module';
+import {SessionModule} from '../session/session.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {AudioPlayerModule} from '../audioplayer/audio-player.module';
     FormsModule,
     TracksModule,
     DashboardRoutingModule,
-    AudioPlayerModule
+    AudioPlayerModule,
+    SessionModule
   ],
   declarations: [
     DashboardIndexComponent
