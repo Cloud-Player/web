@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Session} from '../../models/session.model';
 import {User} from '../../../users/models/user.model';
@@ -17,13 +17,7 @@ export class SoundcloudCallbackComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.session.get('user').on('change:authenticated', (user: User) => {
-      user.fetch().then(() => {
-        console.log(user);
-      });
-    });
-
-    this.route.queryParams.forEach((params: Params) => {
+    this.route.queryParams.forEach((params: any) => {
       this.session.set({
         access_token: params.access_token,
         expires_in: params.expires_in,
