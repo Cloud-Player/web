@@ -19,7 +19,7 @@ export class SoundcloudCallbackComponent implements OnInit {
   ngOnInit(): void {
     this.session.get('user').on('change:authenticated', (user: User) => {
       user.fetch().then(() => {
-        debugger;
+        console.log(user);
       });
     });
 
