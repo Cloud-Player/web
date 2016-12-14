@@ -15,7 +15,7 @@ export class PlayQueue extends BaseCollection<Model> {
       return PlayQueue.instance;
     } else {
       PlayQueue.instance = new PlayQueue();
-      PlayQueue.instance.add([
+      /*PlayQueue.instance.add([
         {
           status: 'NULL',
           id: 130470654,
@@ -26,7 +26,7 @@ export class PlayQueue extends BaseCollection<Model> {
           id: 176755192,
           stream_url: 'https://api.soundcloud.com/tracks/176755192/stream'
         }
-      ]);
+      ]);*/
       return PlayQueue.instance;
     }
   }
@@ -36,15 +36,23 @@ export class PlayQueue extends BaseCollection<Model> {
   }
 
   getQueuedTracks(): Array {
-    return this.where({status: 'QUEUED'});
+    return this.where({ status: 'QUEUED' });
+  }
+
+  getScheduledTracks(): Array {
+    return this.where({ status: 'NULL' });
   }
 
   getPlayingTrack(): Track {
-    return this.findWhere({status: 'PLAYING'});
+    return this.findWhere({ status: 'PLAYING' });
   }
 
   getPausedTrack(): Track {
-    return this.findWhere({status: 'PAUSED'});
+    return this.findWhere({ status: 'PAUSED' });
+  }
+
+  getCurrentTrack(): Track {
+    return this.findWhere({ status: 'PLAYING' }) || this.findWhere({ status: 'PAUSED' });;
   }
 
   getTrack(): Track {
@@ -57,7 +65,7 @@ export class PlayQueue extends BaseCollection<Model> {
     if (queuedTracks.length > 0) {
       return queuedTracks[0];
     } else {
-      let tracks = this.find((track) => {
+      let tracks = this.find((track: PlayQueueItem) => {
         return track.isScheduled();
       });
       if (tracks && tracks.length > 0) {
@@ -74,6 +82,10 @@ export class PlayQueue extends BaseCollection<Model> {
 
   hasPreviousTrack(): boolean {
     return this.playIndex > 0;
+  }
+
+  hasCurrentTrack(): boolean {
+    return
   }
 
   getNextTrack(): Track {
