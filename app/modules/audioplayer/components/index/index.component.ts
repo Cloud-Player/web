@@ -1,20 +1,24 @@
 import {Component, OnInit} from '@angular/core';
+import {PlayQueue} from '../../collections/play_queue.collection';
 
 @Component ({
-    moduleId: module.id,
-    selector: 'audio-player',
-    templateUrl: 'index.template.html',
-    styleUrls: ['index.style.css']
-
+  moduleId: module.id,
+  selector: 'audio-player',
+  templateUrl: 'index.template.html',
+  styleUrls: ['index.style.css']
 })
 
 export class AudioPlayerComponent implements OnInit {
-    title: string = 'This is our awesome Soundcloud Audioplayer!!!';
 
-    constructor() {
-    }
+  private playQueue: PlayQueue;
+  private track: any;
 
-    ngOnInit(): void {
-    }
+  constructor() {
+  }
+
+  ngOnInit(): void {
+    this.playQueue = PlayQueue.getInstance();
+    this.track = this.playQueue.getCurrentTrack();
+  }
 
 }

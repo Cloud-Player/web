@@ -1,4 +1,12 @@
-<h1>{{title}}</h1>
+<div class="row">
 
-<play-queue></play-queue>
-<audio-player-controls></audio-player-controls>
+  <!--div class="col-md-12">
+    <div class="cover">
+      <img [src]="track.get('artwork_url')">
+    </div>
+  </div-->
+
+  <audio-player-controls class="col-md-12"></audio-player-controls>
+  <play-queue class="col-md-12"></play-queue>
+
+</div>
