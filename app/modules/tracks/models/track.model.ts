@@ -3,22 +3,28 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class Track extends SoundcloudModel {
-    endpoint = '/tracks';
+  endpoint = '/tracks';
 
-    defaults() {
-        return {
-            name: ''
-        };
-    }
+  nested() {
+    return {
+      user: SoundcloudModel
+    };
+  }
 
-    validate(attrs: any) {
-        attrs.name = attrs.name.trim();
-        if (!attrs.name) {
-            return 'Name is required';
-        }
-    }
+  defaults() {
+    return {
+      name: ''
+    };
+  }
 
-    getResourceUrl(): string {
-        return `${this.get('stream_url')}?client_id=${this.clientId}`;
+  validate(attrs: any) {
+    attrs.name = attrs.name.trim();
+    if (!attrs.name) {
+      return 'Name is required';
     }
+  }
+
+  getResourceUrl(): string {
+    return `${this.get('stream_url')}?client_id=${this.clientId}`;
+  }
 }
