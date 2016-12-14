@@ -10,7 +10,8 @@
     "postserve": "lite-server -c \"./bs-config.json\"",
     "bundle": "gulp dist",
     "prepush": "npm test",
-    "test": "concurrently --kill-others \"gulp src:lint\""
+    "test": "concurrently --kill-others \"gulp src:lint\"",
+    "package": "gulp electron:package"
   },
   "keywords": [],
   "contributors": [

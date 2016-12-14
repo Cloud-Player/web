@@ -17,6 +17,9 @@
       System.import('app/vendor').then(function() {
         System.import('app').catch(function(err){ console.error(err); });
       });
+
+      System.set('electron', System.newModule(require('electron')));
+      System.import('app').catch(function(err){ console.error(err); });
     </script>
     <!-- endbuild -->
   </head>
