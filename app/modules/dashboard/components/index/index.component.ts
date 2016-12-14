@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 
-import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 
 @Component({

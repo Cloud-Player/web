@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
-import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
 
 @Component({
   moduleId: module.id,

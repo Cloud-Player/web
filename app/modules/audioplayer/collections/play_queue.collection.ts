@@ -15,18 +15,6 @@ export class PlayQueue extends BaseCollection<Model> {
       return PlayQueue.instance;
     } else {
       PlayQueue.instance = new PlayQueue();
-      /*PlayQueue.instance.add([
-        {
-          status: 'NULL',
-          id: 130470654,
-          stream_url: 'https://api.soundcloud.com/tracks/130470654/stream'
-        },
-        {
-          status: 'NULL',
-          id: 176755192,
-          stream_url: 'https://api.soundcloud.com/tracks/176755192/stream'
-        }
-      ]);*/
       return PlayQueue.instance;
     }
   }
@@ -52,7 +40,7 @@ export class PlayQueue extends BaseCollection<Model> {
   }
 
   getCurrentTrack(): Track {
-    return this.findWhere({ status: 'PLAYING' }) || this.findWhere({ status: 'PAUSED' });;
+    return this.findWhere({ status: 'PLAYING' }) || this.findWhere({ status: 'PAUSED' });
   }
 
   getTrack(): Track {
@@ -85,7 +73,7 @@ export class PlayQueue extends BaseCollection<Model> {
   }
 
   hasCurrentTrack(): boolean {
-    return
+    return;
   }
 
   getNextTrack(): Track {

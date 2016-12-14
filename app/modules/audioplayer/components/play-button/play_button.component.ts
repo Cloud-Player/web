@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
