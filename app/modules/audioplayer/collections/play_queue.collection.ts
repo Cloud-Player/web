@@ -36,9 +36,9 @@ export class PlayQueue extends BaseCollection<Model> {
     }
   }
 
-  comparator(item: PlayQueueItem): Array<any> {
+  comparator = (item: PlayQueueItem) => {
     return [item.get('priority'), item.get('position')];
-  }
+  };
 
   getQueuedTracks(): Array<Track> {
     return this.where({status: 'QUEUED'});
