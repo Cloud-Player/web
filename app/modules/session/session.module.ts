@@ -4,6 +4,8 @@ import {FormsModule} from '@angular/forms';
 import {ConnectBtnComponent} from './components/connect-btn/connect_btn.component';
 import {SessionRoutingModule} from './session.routes';
 import {SoundcloudCallbackComponent} from './components/soundcloud-callback/soundcloud_callback.component';
+import {ShowWhenAuthenticatedComponent} from './components/show-when-authenticated/show_when_authenticated';
+import {ProfileAvatarComponent} from './components/profile-avatar/profile_avatar';
 
 @NgModule ({
   imports: [
@@ -13,10 +15,12 @@ import {SoundcloudCallbackComponent} from './components/soundcloud-callback/soun
   ],
   declarations: [
     ConnectBtnComponent,
-    SoundcloudCallbackComponent
+    SoundcloudCallbackComponent,
+    ShowWhenAuthenticatedComponent
   ],
   exports: [
-    ConnectBtnComponent
+    ConnectBtnComponent,
+    ShowWhenAuthenticatedComponent
   ]
 })
 
