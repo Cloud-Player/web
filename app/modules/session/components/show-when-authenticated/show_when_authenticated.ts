@@ -12,15 +12,23 @@ export class ShowWhenAuthenticatedComponent {
 
   private isAuthenticated = false;
 
+  private setAuthenticated(user: User){
+    if (user.get('authenticated')) {
+      user.fetch().then(() => {
+        this.isAuthenticated = true;
+      });
+    } else {
+      this.isAuthenticated = false;
+    }
+  };
+
   ngOnInit(): void {
     this.session.get('user').on('change:authenticated', (user: User) => {
-      if (user.get('authenticated')) {
-        user.fetch().then(() => {
-          this.isAuthenticated = true;
-        });
-      } else {
-        this.isAuthenticated = false;
-      }
+      this.setAuthenticated(user);
     });
+
+    if(this.session.get('user').get('authenticated')){
+      this.setAuthenticated(this.session.get('user'));
+    }
   };
 }
