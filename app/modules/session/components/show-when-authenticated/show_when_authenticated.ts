@@ -12,7 +12,7 @@ export class ShowWhenAuthenticatedComponent {
 
   private isAuthenticated = false;
 
-  private setAuthenticated(user: User){
+  private setAuthenticated(user: User) {
     if (user.get('authenticated')) {
       user.fetch().then(() => {
         this.isAuthenticated = true;
@@ -27,7 +27,7 @@ export class ShowWhenAuthenticatedComponent {
       this.setAuthenticated(user);
     });
 
-    if(this.session.get('user').get('authenticated')){
+    if (this.session.get('user').get('authenticated')) {
       this.setAuthenticated(this.session.get('user'));
     }
   };
