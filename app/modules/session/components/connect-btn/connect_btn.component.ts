@@ -11,7 +11,9 @@ export class ConnectBtnComponent {
     window.open('https://soundcloud.com/connect?' +
       'client_id=abb6c1cad3f409112a5995bf922e1d1e&' +
       'redirect_uri=http://sc.menu-flow.com/connect&' +
-      'response_type=code');
+      'response_type=code&' +
+      'state=' + window.location.origin + window.location.pathname
+    );
   }
 
   private receiveConnectMessage(event: any): void {
