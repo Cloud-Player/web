@@ -61,12 +61,13 @@ header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $scClientId = $soundcloud['clientId'];
 $scClientSecret = $soundcloud['clientSecret'];
+$scRedirectUri = $soundcloud['redirectUrl'];
 $scAuthUrl = 'https://api.soundcloud.com/oauth2/token';
 
 $fields = array(
     'client_id' => $scClientId,
     'client_secret' => $scClientSecret,
-    'redirect_uri' => 'http://sc.menu-flow.com/connect'
+    'redirect_uri' => $scRedirectUri
 );
 
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
