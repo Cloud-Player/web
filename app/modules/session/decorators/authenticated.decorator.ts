@@ -1,9 +1,11 @@
 import {Model} from 'backbone';
 import {Session} from '../models/session.model';
+import {URLSearchParams} from '@angular/http';
 
-function authenticatedSync(method: string, model: Model, options?: any) {
+function authenticatedSync(method: string, model: Model, options: any = {}) {
   let session = Session.getInstance();
   if (session.get('access_token') && session.isNotExpired()) {
+    options.search = options.search || new URLSearchParams();
     options.search.set('oauth_token', session.get('access_token'));
     return this.superSync(method, model, options);
   } else {
