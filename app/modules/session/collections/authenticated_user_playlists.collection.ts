@@ -7,5 +7,5 @@ import {AuthenticatedUserPlaylist} from '../models/authenticated_user_playlist.m
 @authenticated
 export class AuthenticatedUserPlaylists extends Playlists {
   endpoint = '/me/playlists';
-  model = AuthenticatedUserPlaylist
+  model = AuthenticatedUserPlaylist;
 }

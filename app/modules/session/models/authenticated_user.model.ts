@@ -12,7 +12,7 @@ export class AuthenticatedUser extends User {
   nested() {
     return {
       playlists: AuthenticatedUserPlaylists
-    }
+    };
   }
 
   defaults() {
