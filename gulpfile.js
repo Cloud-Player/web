@@ -15,7 +15,7 @@ var typescript = require('typescript');
 var tslint = require('gulp-tslint');
 var uglify = require('gulp-uglify');
 
-var electron = require('gulp-atom-electron');
+var electron = require('gulp-electron');
 var symdest = require('gulp-symdest');
 
 var exec = require('child_process').exec;
@@ -257,16 +257,28 @@ gulp.task('electron:package', function (done) {
     ['electron:build:win', 'electron:build:osx', 'electron:build:linux'], done);
 });
 
+var packageJson = require('./package.json');
 
-gulp.task('default1', function () {
-  return gulp.src(['./dist/dev/**/*'])
-    .pipe(electron.dest('./dist/packages/osx', {
-      src: './app/**/*',
-      version: '1.3.3',
-      platform: 'darwin'
-    }));
-});
+gulp.task('electron', function() {
 
-gulp.task('default2', function () {
-  return electron.dest('./dist/packages/osx/123', {version: '0.34.1', platform: 'darwin'});
+  gulp.src("")
+    .pipe(electron({
+      src: './dist/dev',
+      packageJson: packageJson,
+      release: './dist/release',
+      cache: './dist/cache',
+      version: 'v1.4.13',
+      token: 'abc123...',
+      platforms: ['darwin-x64'],
+      platformResources: {
+        darwin: {
+          CFBundleDisplayName: packageJson.name,
+          CFBundleIdentifier: packageJson.name,
+          CFBundleName: packageJson.name,
+          CFBundleVersion: packageJson.version,
+          icon: 'logo.icns'
+        }
+      }
+    }))
+    .pipe(gulp.dest(""));
 });
