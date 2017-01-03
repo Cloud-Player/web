@@ -21,7 +21,7 @@ export class AuthenticatedUserPlaylists {
   };
 
   ngOnInit(): void {
-    this.user.on('change:authenticated', this.fetchPlaylist);
+    this.user.on('change:authenticated', this.fetchPlaylist.bind(this));
     this.fetchPlaylist();
   };
 
