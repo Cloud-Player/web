@@ -2,7 +2,7 @@
 
   <show-when-authenticated class="desktop visible-md-block visible-lg-block">
     <div class="avatar">
-      <img [src]="user.get('avatar_url') || img" [alt]="user.get('full_name') || 'John Doe'">
+      <img [src]="user.get('avatar_url').getLargeSize() || img" [alt]="user.get('full_name') || 'John Doe'">
     </div>
 
     <nav class="col-md-12">
