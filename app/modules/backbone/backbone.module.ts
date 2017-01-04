@@ -33,6 +33,7 @@ export class BackboneModule {
                 search: searchParams,
                 url: options.url
             });
+            requestOption.headers.append('content-type', 'application/json');
             return http.request(options.url, requestOption)
                 .toPromise()
                 .then(function (resp: Response) {

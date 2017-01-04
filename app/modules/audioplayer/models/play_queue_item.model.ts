@@ -3,9 +3,9 @@ import {Track} from '../../tracks/models/track.model';
 export class PlayQueueItem extends Track {
 
   defaults() {
-    return _.extend(super.defaults(), {
+    return {
       status: 'NULL'
-    });
+    };
   }
 
   queue(priority: number): void {

@@ -142,7 +142,7 @@ export class NestedModel extends Model {
     return attrs;
   };
 
-  toJSON(options: any): any {
+  toJSON(options?: any): any {
     // When options are set toJSON is called from the sync method so it is called before the object is send to the server
     // We use this to transform our data before we are sending it to the server
     // It is the counterpart of parse for the server
@@ -153,7 +153,7 @@ export class NestedModel extends Model {
     }
   };
 
-  clear(options: any): any {
+  clear(options?: any): any {
     let attrs = {};
 
     for (let key in this.attributes) {

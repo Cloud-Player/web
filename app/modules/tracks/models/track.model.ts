@@ -1,5 +1,6 @@
 import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
+import {User} from '../../users/models/user.model';
 
 @Injectable()
 export class Track extends SoundcloudModel {
@@ -7,21 +8,8 @@ export class Track extends SoundcloudModel {
 
   nested() {
     return {
-      user: SoundcloudModel
+      user: User
     };
-  }
-
-  defaults() {
-    return {
-      name: ''
-    };
-  }
-
-  validate(attrs: any) {
-    attrs.name = attrs.name.trim();
-    if (!attrs.name) {
-      return 'Name is required';
-    }
   }
 
   getResourceUrl(): string {

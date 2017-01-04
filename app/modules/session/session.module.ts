@@ -5,6 +5,7 @@ import {ConnectBtnComponent} from './components/connect-btn/connect_btn.componen
 import {SessionRoutingModule} from './session.routes';
 import {SoundcloudCallbackComponent} from './components/soundcloud-callback/soundcloud_callback.component';
 import {ShowWhenAuthenticatedComponent} from './components/show-when-authenticated/show_when_authenticated';
+import {AuthenticatedUserPlaylists} from './components/authenticated-user-playlists/authenticated_user_playlists';
 
 @NgModule ({
   imports: [
@@ -15,11 +16,13 @@ import {ShowWhenAuthenticatedComponent} from './components/show-when-authenticat
   declarations: [
     ConnectBtnComponent,
     SoundcloudCallbackComponent,
-    ShowWhenAuthenticatedComponent
+    ShowWhenAuthenticatedComponent,
+    AuthenticatedUserPlaylists
   ],
   exports: [
     ConnectBtnComponent,
-    ShowWhenAuthenticatedComponent
+    ShowWhenAuthenticatedComponent,
+    AuthenticatedUserPlaylists
   ]
 })
 
