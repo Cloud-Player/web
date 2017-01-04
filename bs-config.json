@@ -7,6 +7,6 @@
     "index": "index.html",
     "directory": true
   },
-  "open": "local",
+  "open": false,
   "browser": "google chrome"
 }

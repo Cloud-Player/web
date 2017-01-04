@@ -14,6 +14,6 @@
   "watchOptions": {
     "ignored": "node_modules"
   },
-  "open": "local",
+  "open": false,
   "browser": "google chrome"
 }
