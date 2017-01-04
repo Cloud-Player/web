@@ -12,7 +12,7 @@ export class User extends SoundcloudModel {
     };
   }
 
-  nested(){
+  nested() {
     return {
       avatar_url: SoundcloudImageModel
     };
