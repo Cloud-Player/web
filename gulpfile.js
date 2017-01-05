@@ -15,7 +15,7 @@ var typescript = require('typescript');
 var tslint = require('gulp-tslint');
 var uglify = require('gulp-uglify');
 
-var electron = require('gulp-electron');
+var electron = require('gulp-atom-electron');
 var symdest = require('gulp-symdest');
 
 var exec = require('child_process').exec;
@@ -162,7 +162,7 @@ gulp.task('inline:templates', ['copy:app'], function () {
 });
 
 gulp.task('copy:app', function (done) {
-  return runSequence('copy:dev', 'copy:ts', 'copy:css', 'copy:fonts', function () {
+  return runSequence('copy:dev', 'copy:ts', 'copy:css', 'copy:fonts', 'copy:electron', function () {
     done();
   })
 });
@@ -182,6 +182,10 @@ gulp.task('copy:css', function () {
     .pipe(gulp.dest('./dist/bundle/app').on('error', gutil.log));
 });
 
+// gulp.task('copy:electron', function () {
+//   return gulp.src(['./dist/dev/index.js'])
+//     .pipe(gulp.dest('./dist/bundle').on('error', gutil.log));
+// });
 
 gulp.task('copy:fonts', function () {
   return gulp.src('./node_modules/font-awesome/fonts/*')
@@ -208,77 +212,180 @@ gulp.task('clean:src', function () {
 
 
 // electron tasks
+//
+// /**
+//  * Builds the OSX application and places it in our
+//  * 'packages' folder
+//  */
+// gulp.task('electron:build:osx', function () {
+//   gulp.src(['./dist/electron/**/*'])
+//     .pipe(electron({
+//       version: '1.3.3',
+//       platform: 'darwin'
+//     }))
+//     .pipe(symdest('./dist/packages/osx'));
+// });
+//
+// /**
+//  * Builds the Linux application and places it in our
+//  * 'packages' folder
+//  */
+// gulp.task('electron:build:linux', function () {
+//   gulp.src(['./dist/dev/**/*'])
+//     .pipe(electron({
+//       version: '1.3.3',
+//       platform: 'linux'
+//     }))
+//     .pipe(gulp.dest('./dist/packages/linux'));
+// });
+//
+// /**
+//  * Builds the Windows executable file and places it in our
+//  * 'packages' folder
+//  */
+// gulp.task('electron:build:win', function () {
+//   gulp.src(['./dist/electron/**/*'])
+//     .pipe(electron({
+//       version: '1.3.3',
+//       platform: 'win32'
+//     }))
+//     .pipe(gulp.dest('./dist/packages/win'));
+// });
+//
+//
+// /**
+//  * Task for packing our application for OS distribution
+//  */
+// gulp.task('electron:package', function (done) {
+//   return runSequence(
+//     ['electron:build:win', 'electron:build:osx', 'electron:build:linux'], done);
+// });
 
-/**
- * Builds the OSX application and places it in our
- * 'packages' folder
- */
-gulp.task('electron:build:osx', function () {
-  gulp.src(['./dist/electron/**/*'])
+
+
+
+
+
+var gulp = require('gulp'),
+  rename = require('gulp-rename'),
+  electron = require('gulp-atom-electron'),
+  symdest = require('gulp-symdest');
+
+
+
+var config = {
+  sourceDir: './',
+  buildDir:  './dist/build',
+  buildDirBundle:  './dist/bundle',
+  packagesDir: 'packages',
+  npmDir:    'node_modules'
+};
+
+gulp.task('frontend', [
+  'frontend:dependencies',
+  'frontend:js',
+  'frontend:html',
+  'frontend:css',
+  'copy:electron'
+]);
+
+gulp.task('frontend:dependencies', function() {
+  return gulp.src([
+    config.npmDir + '/traceur/bin/traceur-runtime.js',
+    config.npmDir + '/systemjs/dist/system-csp-production.src.js',
+    config.npmDir + '/systemjs/dist/system.js',
+    config.npmDir + '/reflect-metadata/Reflect.js',
+    config.npmDir + '/angular2/bundles/angular2.js',
+    config.npmDir + '/angular2//angular2.js',
+    config.npmDir + '/angular2/bundles/angular2-polyfills.js',
+    config.npmDir + '/rxjs/bundles/Rx.js',
+    config.npmDir + '/es6-shim/es6-shim.min.js',
+    config.npmDir + '/es6-shim/es6-shim.map'
+  ])
+    .pipe(gulp.dest(config.buildDir + '/lib'));
+});
+
+
+gulp.task('frontend:js', function() {
+  return gulp.src(config.sourceDir + 'dist/dev/**/*.js')
+    .pipe(rename({
+      extname: ''
+    }))
+    .pipe(traceur({
+      modules: 'instantiate',
+      moduleName: true,
+      annotations: true,
+      types: true,
+      memberVariables: true
+    }))
+    .pipe(rename({
+      extname: '.js'
+    }))
+    .pipe(gulp.dest(config.buildDir));
+});
+
+gulp.task('frontend:html', function () {
+  return gulp.src('dist/dev/**/*.html')
+    .pipe(gulp.dest(config.buildDir))
+});
+
+gulp.task('frontend:css', function () {
+  return gulp.src('dist/dev/**/*.css')
+    .pipe(gulp.dest(config.buildDir))
+});
+
+gulp.task('copy:electron', function() {
+  return gulp.src([
+    config.sourceDir + '/electron/main.js',
+    config.sourceDir + '/electron/package.json'
+  ])
+    .pipe(gulp.dest(config.buildDir));
+});
+
+gulp.task('package:osx', function() {
+  return gulp.src(config.buildDir + '/**/*')
     .pipe(electron({
-      version: '1.3.3',
+      version: '0.36.7',
       platform: 'darwin'
     }))
-    .pipe(symdest('./dist/packages/osx'));
+    .pipe(symdest(config.packagesDir + '/osx'));
 });
 
-/**
- * Builds the Linux application and places it in our
- * 'packages' folder
- */
-gulp.task('electron:build:linux', function () {
-  gulp.src(['./dist/dev/**/*'])
+gulp.task('package:osxbundle', function() {
+  return gulp.src(config.buildDirBundle + '/**/*')
     .pipe(electron({
-      version: '1.3.3',
-      platform: 'linux'
+      version: '0.36.7',
+      platform: 'darwin'
     }))
-    .pipe(gulp.dest('./dist/packages/linux'));
-});
-
-/**
- * Builds the Windows executable file and places it in our
- * 'packages' folder
- */
-gulp.task('electron:build:win', function () {
-  gulp.src(['./dist/electron/**/*'])
-    .pipe(electron({
-      version: '1.3.3',
-      platform: 'win32'
-    }))
-    .pipe(gulp.dest('./dist/packages/win'));
+    .pipe(symdest(config.packagesDir + '/bundle'));
 });
 
 
-/**
- * Task for packing our application for OS distribution
- */
-gulp.task('electron:package', function (done) {
-  return runSequence(
-    ['electron:build:win', 'electron:build:osx', 'electron:build:linux'], done);
-});
 
-var packageJson = require('./package.json');
 
-gulp.task('electron', function() {
 
-  gulp.src("")
-    .pipe(electron({
-      src: './dist/dev',
-      packageJson: packageJson,
-      release: './dist/release',
-      cache: './dist/cache',
-      version: 'v1.4.13',
-      token: 'abc123...',
-      platforms: ['darwin-x64'],
-      platformResources: {
-        darwin: {
-          CFBundleDisplayName: packageJson.name,
-          CFBundleIdentifier: packageJson.name,
-          CFBundleName: packageJson.name,
-          CFBundleVersion: packageJson.version,
-          icon: 'logo.icns'
-        }
-      }
-    }))
-    .pipe(gulp.dest(""));
-});
+
+// var packageJson = require('./package.json');
+//
+// gulp.task('electron', function() {
+//
+//   gulp.src("./dist/bundle")
+//     .pipe(electron({
+//       src: './dist/bundle',
+//       packageJson: packageJson,
+//       release: './dist/release',
+//       cache: './dist/cache',
+//       version: 'v1.4.13',
+//       platforms: ['darwin-x64'],
+//       platformResources: {
+//         darwin: {
+//           CFBundleDisplayName: packageJson.name,
+//           CFBundleIdentifier: packageJson.name,
+//           CFBundleName: packageJson.name,
+//           CFBundleVersion: packageJson.version,
+//           icon: 'logo.icns'
+//         }
+//       }
+//     }))
+//     .pipe(gulp.dest(""));
+// });
