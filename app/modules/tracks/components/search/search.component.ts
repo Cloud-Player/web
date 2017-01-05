@@ -9,7 +9,7 @@ import {Tracks} from '../../collections/tracks.collection';
     moduleId: module.id,
     selector: 'track-search',
     templateUrl: 'search.template.html',
-    styleUrls: ['search.style.css'],
+    styleUrls: ['search.style.scss'],
     providers: [Tracks]
 })
 

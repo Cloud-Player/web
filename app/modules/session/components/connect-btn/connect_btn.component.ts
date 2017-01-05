@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
   moduleId: module.id,
   selector: 'connect-btn',
   templateUrl: 'connect_btn.template.html',
-  styleUrls: ['connect_btn.style.css']
+  styleUrls: ['connect_btn.style.scss']
 })
 export class ConnectBtnComponent {
   connect() {

@@ -6,7 +6,7 @@ import {Session} from '../../../session/models/session.model';
   moduleId: module.id,
   selector: 'nav-sidebar',
   templateUrl: 'nav.template.html',
-  styleUrls: ['nav.style.css']
+  styleUrls: ['nav.style.scss']
 })
 
 export class NavComponent {

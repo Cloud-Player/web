@@ -5,7 +5,7 @@ import {Session} from '../../models/session.model';
   moduleId: module.id,
   selector: 'soundcloud-callback',
   templateUrl: 'soundcloud_callback.template.html',
-  styleUrls: ['soundcloud_callback.style.css']
+  styleUrls: ['soundcloud_callback.style.scss']
 })
 export class SoundcloudCallbackComponent implements OnInit {
   private session = Session.getInstance();

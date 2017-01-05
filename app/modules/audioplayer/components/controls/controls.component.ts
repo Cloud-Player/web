@@ -7,7 +7,7 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   moduleId: module.id,
   selector: 'audio-player-controls',
   templateUrl: 'controls.template.html',
-  styleUrls: ['controls.style.css']
+  styleUrls: ['controls.style.scss']
 })
 
 export class PlayerControlsComponent {
@@ -68,19 +68,19 @@ export class PlayerControlsComponent {
         newPos = (diff + currentPos);
         this.setTimeTickPosition(newPos);
       }
-    };
+    });
 
     el.addEventListener('dragend', (e: DragEvent) => {
       this.playTrackFromPosition(this.timeTickPosition);
-    };
+    });
 
     this.audioPlayerProgressBarLine.nativeElement.addEventListener('click', (e: MouseEvent) => {
       this.playTrackFromPosition(e.offsetX);
-    };
+    });
 
     this.audioPlayerProgressBar.nativeElement.addEventListener('click', (e: MouseEvent) => {
       this.playTrackFromPosition(e.offsetX);
-    };
+    });
 
   };
 

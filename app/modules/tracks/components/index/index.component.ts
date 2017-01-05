@@ -8,7 +8,7 @@ import {Tracks} from '../../collections/tracks.collection';
     moduleId: module.id,
     selector: 'my-tracks',
     templateUrl: 'index.template.html',
-    styleUrls: ['index.style.css'],
+    styleUrls: ['index.style.scss'],
     providers: [Tracks]
 })
 export class TracksIndexComponent implements OnInit {

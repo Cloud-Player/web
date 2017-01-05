@@ -5,7 +5,7 @@ import {PlayQueue} from '../../collections/play_queue.collection';
   moduleId: module.id,
   selector: 'play-queue',
   templateUrl: 'playqueue.template.html',
-  styleUrls: ['playqueue.style.css']
+  styleUrls: ['playqueue.style.scss']
 })
 
 export class PlayQueueComponent {

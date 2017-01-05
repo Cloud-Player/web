@@ -7,7 +7,7 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   moduleId: module.id,
   selector: 'audio-player-play-button',
   templateUrl: 'play_button.template.html',
-  styleUrls: ['play_button.style.css']
+  styleUrls: ['play_button.style.scss']
 })
 
 export class PlayButtonComponent {

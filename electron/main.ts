@@ -7,7 +7,7 @@ var mainWindow : any;
 
 myElectron.app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
-    app.quit();
+    myElectron.app.quit();
   }
 });
 

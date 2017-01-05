@@ -5,7 +5,7 @@ import {PlayQueue} from '../../collections/play_queue.collection';
   moduleId: module.id,
   selector: 'audio-player',
   templateUrl: 'index.template.html',
-  styleUrls: ['index.style.css']
+  styleUrls: ['index.style.scss']
 })
 
 export class AudioPlayerComponent implements OnInit {

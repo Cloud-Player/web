@@ -6,7 +6,7 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
   moduleId: module.id,
   selector: 'my-dashboard',
   templateUrl: 'index.template.html',
-  styleUrls: ['index.style.css'],
+  styleUrls: ['index.style.scss'],
   providers: [Tracks]
 })
 

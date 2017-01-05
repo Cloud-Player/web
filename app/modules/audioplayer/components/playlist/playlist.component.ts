@@ -8,7 +8,7 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
   moduleId: module.id,
   selector: 'play-list',
   templateUrl: 'playlist.template.html',
-  styleUrls: ['playlist.style.css'],
+  styleUrls: ['playlist.style.scss'],
   providers: [Tracks]
 })
 

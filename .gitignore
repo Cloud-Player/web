@@ -7,13 +7,16 @@
 # Project Exceptions
 !gulpfile.js
 !systemjs.config*.js
+!/karma.conf.js
+!/webpack.config.js
+
 
 # IntelliJ project files
 .idea
 *.iml
 
 # Ignored folders
-**/config/
+
 dist/
 
 # Ignored files
