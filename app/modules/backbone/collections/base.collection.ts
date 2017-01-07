@@ -5,7 +5,7 @@ import {URLSearchParams} from '@angular/http';
 import {getUrl} from '../utils/get_url.util';
 
 @Injectable()
-export class BaseCollection<TModel extends Model> extends Collection<Model> {
+export class BaseCollection<TModel extends BaseModel> extends Collection<TModel> {
   model = BaseModel;
 
   queryParams: Object = {};

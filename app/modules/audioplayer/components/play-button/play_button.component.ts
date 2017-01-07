@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
+import {Tracks} from '../../../tracks/collections/tracks.collection';
 
 @Component({
   moduleId: module.id,
@@ -14,34 +15,23 @@ export class PlayButtonComponent {
 
   @Input() track: Track;
 
+  @Input() tracks: Tracks;
+
   private playingItem: PlayQueueItem;
-  private playQueue: PlayQueue = PlayQueue.getInstance();
+  private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  add(): void {
-    this.playQueue.add(this.track.toJSON());
+  private addToPlayQueue():void{
+    this.playQueue.add({track:this.track});
   }
 
-  play(): void {
-    this.playingItem = this.playQueue.addAndPlay(this.track);
-  }
-
-  pause(): void {
-    if (this.trackIsCurrentlyPlaying()) {
-      this.playQueue.getPlayingTrack().pause();
+  private play(): void{
+    if(this.tracks){
+      this.tracks.forEach((track: Track) => {
+        this.playQueue.add({track: track});
+      });
     }
-  }
 
-  trackIsCurrentlyPlaying(): boolean {
-    let currentlyPlaying = this.playQueue.getPlayingTrack();
-    return currentlyPlaying && currentlyPlaying.id === this.track.id;
+    let playQueueItem = this.playQueue.add({track: this.track});
+    playQueueItem.play();
   }
-
-  canPlay(): boolean {
-    return !this.trackIsCurrentlyPlaying();
-  }
-
-  canPause(): boolean {
-    return this.trackIsCurrentlyPlaying();
-  }
-
 }
