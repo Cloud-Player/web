@@ -13,8 +13,8 @@ import {BackboneModule} from '../backbone/backbone.module';
     FormsModule,
     TracksModule,
     DashboardRoutingModule,
-    AudioPlayerModule,
-    SessionModule
+    SessionModule,
+    BackboneModule
   ],
   declarations: [
     DashboardIndexComponent
