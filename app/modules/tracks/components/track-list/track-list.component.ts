@@ -6,13 +6,12 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 
 @Component({
   moduleId: module.id,
-  selector: 'play-list',
-  templateUrl: 'playlist.template.html',
-  styleUrls: ['playlist.style.css'],
+  selector: 'track-list',
+  templateUrl: 'track-list.template.html',
+  styleUrls: ['track-list.style.css'],
   providers: [Tracks]
 })
-
-export class PlayListComponent {
+export class TrackListComponent {
 
   @Input() tracks: Tracks;
 
