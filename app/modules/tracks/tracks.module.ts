@@ -1,13 +1,10 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-
-import {TracksIndexComponent} from './components/index/index.component';
 import {TracksDetailComponent} from './components/detail/detail.component';
-import {TracksSearchComponent} from './components/search/search.component';
-
 import {TracksRoutingModule} from './tracks.routes';
 import {AudioPlayerModule} from '../audioplayer/audio-player.module';
+import {TrackListComponent} from './components/track-list/track-list.component';
 
 @NgModule({
   imports: [
@@ -17,12 +14,11 @@ import {AudioPlayerModule} from '../audioplayer/audio-player.module';
     AudioPlayerModule
   ],
   exports: [
-    TracksSearchComponent
+    TrackListComponent
   ],
   declarations: [
-    TracksIndexComponent,
     TracksDetailComponent,
-    TracksSearchComponent
+    TrackListComponent
   ]
 })
 
