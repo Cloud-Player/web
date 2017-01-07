@@ -26,7 +26,8 @@ import {PlaylistModule} from '../playlists/playlist.module';
     MainRoutingModule,
     AudioPlayerModule,
     SessionModule,
-    UsersModule
+    UsersModule,
+    PlaylistModule
   ],
   declarations: [
     MainComponent,
