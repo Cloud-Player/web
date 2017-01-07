@@ -1,7 +1,7 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
+import {Component, ViewChild, ElementRef, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
-import {Track} from '../../../tracks/models/track.model';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
+import {throttle, debounce} from 'underscore';
 
 @Component({
   moduleId: module.id,
@@ -10,10 +10,10 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   styleUrls: ['controls.style.css']
 })
 
-export class PlayerControlsComponent {
+export class PlayerControlsComponent implements OnInit {
 
   private audio: HTMLAudioElement;
-  private playQueue: PlayQueue = PlayQueue.getInstance();
+  private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
   private timeTick: string;
   private duration: string;
@@ -36,6 +36,11 @@ export class PlayerControlsComponent {
     this.setAudioObjectEventListeners();
   }
 
+  private debouncedVolumeSave = debounce(() => {
+    let volume = (Math.round(this.audio.volume * 10) / 10).toString();
+    localStorage.setItem('sc_volume', volume);
+  }, 500);
+
   private setAudioObjectEventListeners() {
     this.audio.addEventListener('canplay', () => {
       this.duration = this.formatToHHMMSS(this.audio.duration);
@@ -45,6 +50,23 @@ export class PlayerControlsComponent {
       this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
       this.timeTickPosition = this.getTimeTickPositionFromTime(this.audio.currentTime);
     });
+
+    this.audio.addEventListener('ended', () => {
+      if (this.playQueue.hasNextItem()) {
+        this.playQueue.getNextItem().play();
+      } else {
+        this.playQueue.getCurrentItem().stop();
+      }
+    });
+
+    this.audio.addEventListener('volumechange', this.debouncedVolumeSave);
+  }
+
+  ngOnInit() {
+    let savedVolume = localStorage.getItem('sc_volume');
+    if (savedVolume) {
+      this.audio.volume = parseFloat(savedVolume);
+    }
   }
 
   ngAfterContentInit() {
@@ -68,19 +90,19 @@ export class PlayerControlsComponent {
         newPos = (diff + currentPos);
         this.setTimeTickPosition(newPos);
       }
-    };
+    });
 
-    el.addEventListener('dragend', (e: DragEvent) => {
+    el.addEventListener('dragend', () => {
       this.playTrackFromPosition(this.timeTickPosition);
-    };
+    });
 
     this.audioPlayerProgressBarLine.nativeElement.addEventListener('click', (e: MouseEvent) => {
       this.playTrackFromPosition(e.offsetX);
-    };
+    });
 
     this.audioPlayerProgressBar.nativeElement.addEventListener('click', (e: MouseEvent) => {
       this.playTrackFromPosition(e.offsetX);
-    };
+    });
 
   };
 
@@ -111,10 +133,10 @@ export class PlayerControlsComponent {
     this.timeTickPosition = newPos;
   }
 
-  private reactOnStatusChange(track): void {
-    switch (track.get('status')) {
+  private reactOnStatusChange(item: PlayQueueItem): void {
+    switch (item.get('status')) {
       case 'PLAYING':
-        this.startAudioPlayer(track);
+        this.startAudioPlayer(item);
         break;
       case 'STOPPED':
         this.stopAudioPlayer();
@@ -125,38 +147,38 @@ export class PlayerControlsComponent {
     }
   }
 
-  playTrack(track: PlayQueueItem|null): void {
-    track = track || this.playQueue.getTrack();
-    track.play();
+  playTrack(playQueueItem: PlayQueueItem|null): void {
+    playQueueItem = playQueueItem || this.playQueue.getItem();
+    playQueueItem.play();
   }
 
   playTrackFromPosition(x: number): void {
     this.audio.currentTime = (parseInt(this.audio.duration.toFixed(0), 0) / this.progressBarWidth) * x;
-    this.playTrack(this.playQueue.getPlayingTrack());
+    this.playTrack(this.playQueue.getPlayingItem());
   }
 
   pauseTrack(): void {
-    let track = this.playQueue.getPlayingTrack();
+    let track = this.playQueue.getPlayingItem();
     if (track) {
       track.pause();
     }
   }
 
   previousTrack(): void {
-    if (this.playQueue.getPreviousTrack()) {
-      this.playTrack(this.playQueue.getPreviousTrack());
+    if (this.playQueue.hasPreviousItem()) {
+      this.playTrack(this.playQueue.getPreviousItem());
     }
   }
 
   nextTrack(): void {
-    if (this.playQueue.getNextTrack()) {
-      this.playTrack(this.playQueue.getNextTrack());
+    if (this.playQueue.hasNextItem()) {
+      this.playTrack(this.playQueue.getNextItem());
     }
   }
 
-  startAudioPlayer(track: Track): void {
-    if (this.audio.src !== track.getResourceUrl()) {
-      this.audio.src = track.getResourceUrl();
+  startAudioPlayer(item: PlayQueueItem): void {
+    if (this.audio.src !== item.get('track').getResourceUrl()) {
+      this.audio.src = item.get('track').getResourceUrl();
     }
     this.audio.play();
   }
@@ -168,10 +190,6 @@ export class PlayerControlsComponent {
   stopAudioPlayer(): void {
     this.audio.pause();
     delete this.audio.src;
-  }
-
-  setAudioPlayerVolume(volume: string): void {
-    this.audio.volume = volume;
   }
 
 }
