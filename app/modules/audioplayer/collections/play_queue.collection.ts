@@ -17,8 +17,6 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     }
   }
 
-  comparator = 'priority';
-
   getQueuedItems(): TModel[] {
     return this.where({status: 'QUEUED'});
   }
