@@ -1,8 +1,9 @@
 <div class="row">
+  <h3>
+    {{title}}
+  </h3>
 
-  <h3>{{title}}</h3>
-  <play-list [tracks]="tracks"></play-list>
+  <collection-search [collection]="tracks" [queryParam]="'q'"></collection-search>
 
+  <track-list [tracks]="tracks"></track-list>
 </div>
-
-<connect-btn></connect-btn>
