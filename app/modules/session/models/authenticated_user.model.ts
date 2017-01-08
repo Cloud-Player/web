@@ -10,9 +10,9 @@ export class AuthenticatedUser extends User {
   endpoint = '/me';
 
   nested() {
-    return {
+    return _.extend(super.nested(), {
       playlists: AuthenticatedUserPlaylists
-    };
+    });
   }
 
   defaults() {
