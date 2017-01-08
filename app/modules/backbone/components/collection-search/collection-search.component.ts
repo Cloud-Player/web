@@ -15,13 +15,15 @@ import {BaseModel} from '../../models/base.model';
 export class CollectionSearchComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
+  private query: string;
+
   @Input() collection: BaseCollection<BaseModel>;
 
   @Input() queryParam: string;
 
   // Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
+  search(): void {
+    this.searchTerms.next(this.query);
   }
 
   ngOnInit(): void {
@@ -35,6 +37,8 @@ export class CollectionSearchComponent implements OnInit {
           return Observable.of<BaseCollection<BaseModel>>(this.collection);
         }
       }).toPromise();
+
+    this.query = this.collection.queryParams[this.queryParam];
   }
 
 }

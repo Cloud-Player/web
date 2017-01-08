@@ -1,6 +1,7 @@
 import {NgModule}      from '@angular/core';
 import {Http, RequestOptions, Headers, Response, URLSearchParams} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 import {isUndefined} from 'underscore';
 import 'backbone';
 import {Model, Collection} from 'backbone';
@@ -15,7 +16,7 @@ declare namespace Backbone {
 }
 
 @NgModule({
-  imports: [BrowserModule],
+  imports: [BrowserModule, FormsModule],
   exports: [
     CollectionSearchComponent
   ],
