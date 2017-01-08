@@ -8,6 +8,7 @@ export class Tracks extends SoundcloudCollection<Model> {
     endpoint = '/tracks';
     model = Track;
     queryParams = {
-        q: 'bedouin'
+        q: 'bedouin',
+        limit: 10
     };
 }
