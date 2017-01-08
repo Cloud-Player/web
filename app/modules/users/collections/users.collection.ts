@@ -4,7 +4,7 @@ import {Model} from 'backbone';
 import {User} from '../models/user.model';
 
 @Injectable()
-export class Users extends SoundcloudCollection<Model> {
+export class Users<TModel extends User> extends SoundcloudCollection<TModel> {
     endpoint = '/users';
-    model = User;
+    model: any = User;
 }

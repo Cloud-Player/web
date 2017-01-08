@@ -13,7 +13,7 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 })
 export class TrackListComponent {
 
-  @Input() tracks: Tracks;
+  @Input() tracks: Tracks<Track>;
 
   constructor(private router: Router) { }
 

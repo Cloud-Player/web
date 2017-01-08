@@ -15,7 +15,7 @@ export class PlayButtonComponent {
 
   @Input() track: Track;
 
-  @Input() tracks: Tracks;
+  @Input() tracks: Tracks<Track>;
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
