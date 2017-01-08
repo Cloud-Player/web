@@ -1,12 +1,13 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
 import {BaseCollection} from '../../backbone/collections/base.collection';
+import {isArray} from 'underscore';
 
 export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TModel> {
   private static instance: PlayQueue<PlayQueueItem>;
 
   private playIndex = 0;
 
-  model = PlayQueueItem;
+  model: any = PlayQueueItem;
 
   static getInstance(): PlayQueue<PlayQueueItem> {
     if (PlayQueue.instance) {
@@ -16,6 +17,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
       return PlayQueue.instance;
     }
   }
+
 
   getQueuedItems(): TModel[] {
     return this.where({status: 'QUEUED'});
@@ -85,17 +87,14 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   }
 
   queue(item: TModel|any): TModel {
-    let playQueueItem: PlayQueueItem;
-    if (item instanceof PlayQueueItem) {
-      playQueueItem = item;
-    } else {
-      playQueueItem = new PlayQueueItem(item);
+    if (!(item instanceof PlayQueueItem)) {
+      item = new PlayQueueItem(item);
     }
-    if (this.get(playQueueItem)) {
-      this.remove(playQueueItem, {silent: true});
+    if (this.get(item)) {
+      this.remove(item, {silent: true});
     }
-    playQueueItem.queue();
-    return this.add(playQueueItem);
+    item.queue();
+    return this.add(item);
   }
 
   getPlayIndex(): number {
@@ -133,36 +132,46 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   scheduleStoppedItemsAfterCurrentItem(scheduledItem: TModel): void {
     if (scheduledItem && scheduledItem.isStopped()) {
       let index = this.indexOf(scheduledItem);
-      if(index > this.playIndex){
+      if (index > this.playIndex) {
         scheduledItem.set('status', 'NULL');
-        this.scheduleStoppedItemsAfterCurrentItem(this.at(index-1));
+        this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
       }
     }
   }
 
-  add(item: TModel|{}, options: any = {}): TModel {
+  private addItem(item: any): PlayQueueItem {
+    if (!(item instanceof PlayQueueItem)) {
+      item = new PlayQueueItem(item);
+    }
+    item.set('id', item.get('track').get('id'));
+    let existingItem = this.get(item);
+    if (existingItem) {
+      existingItem.set(item.toJSON());
+    }
+    return item;
+  }
+
+  add(item: TModel|TModel[]|{}, options: any = {}): any {
     if (options.doNothing) {
       return super.add(item, options);
     }
-    let playQueueItem: PlayQueueItem;
-    if (item instanceof PlayQueueItem) {
-      playQueueItem = item;
-    } else {
-      playQueueItem = new PlayQueueItem(item);
-    }
-    playQueueItem.set('id', playQueueItem.get('track').get('id'));
 
-    let existingItem = this.get(playQueueItem);
-    let addedItem: TModel;
-    if (existingItem) {
-      existingItem.set(playQueueItem.toJSON());
-      addedItem = existingItem;
+    if (isArray(item)) {
+      let addedItems: Array<PlayQueueItem> = [];
+      item.forEach((obj: any) => {
+        addedItems.push(this.addItem(obj));
+      });
+      item = addedItems;
     } else {
-      addedItem = super.add(playQueueItem, options);
+      item = this.addItem(item);
     }
+
+    item = super.add(item, options);
+
     this.ensureQueuingOrder();
     this.setPlayIndex();
-    return addedItem;
+
+    return item;
   }
 
   initialize(): void {
@@ -186,7 +195,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
       }
 
       if (queueItem.isStopped()) {
-          this.scheduleStoppedItemsAfterCurrentItem(queueItem);
+        this.scheduleStoppedItemsAfterCurrentItem(queueItem);
       }
     });
 

@@ -9,7 +9,7 @@ export class PlayQueueItem extends BaseModel {
     };
   }
 
-  nested(){
+  nested() {
     return {
       track: Track
     };
@@ -34,7 +34,7 @@ export class PlayQueueItem extends BaseModel {
   }
 
   isQueued(): boolean {
-    return this.get('status') === 'QUEUED' || this.isPlaying() || this.isPaused();
+    return this.get('status') === 'QUEUED';
   }
 
   isPlaying(): boolean {

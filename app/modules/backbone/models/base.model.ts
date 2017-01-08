@@ -10,16 +10,16 @@ export class BaseModel extends NestedModel {
 
   endpoint: string = null;
 
+  urlRoot: Function = (): string => {
+    return getUrl(this);
+  };
+
   hostName(): string {
     return '';
   };
 
   basePath(): string {
     return '';
-  };
-
-  urlRoot(): string {
-    return getUrl(this);
   };
 
   request(url: string, method: string, options?: any) {
