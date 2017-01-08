@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import {Playlist} from '../../models/playlist.model';
 
@@ -11,8 +11,9 @@ import {Playlist} from '../../models/playlist.model';
   providers: [Playlist]
 })
 
-export class PlayListViewComponent implements OnInit{
-  constructor(private route: ActivatedRoute,private playlist: Playlist) { }
+export class PlayListViewComponent implements OnInit {
+  constructor(private route: ActivatedRoute, private playlist: Playlist) {
+  }
 
   ngOnInit(): void {
     this.route.params.forEach((params: any) => {

@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
-import {throttle, debounce} from 'underscore';
+import {debounce} from 'underscore';
 
 @Component({
   moduleId: module.id,
@@ -21,6 +21,11 @@ export class PlayerControlsComponent implements OnInit {
   private timeTickPosition: number;
   private progressBarWidth: number;
 
+  private debouncedVolumeSave = debounce(() => {
+    let volume = (Math.round(this.audio.volume * 10) / 10).toString();
+    localStorage.setItem('sc_volume', volume);
+  }, 500);
+
   @ViewChild('audioPlayerProgressBarLine') audioPlayerProgressBarLine: ElementRef;
   @ViewChild('audioPlayerHandle') audioPlayerProgressHandle: ElementRef;
   @ViewChild('audioPlayerProgressBar') audioPlayerProgressBar: ElementRef;
@@ -35,11 +40,6 @@ export class PlayerControlsComponent implements OnInit {
 
     this.setAudioObjectEventListeners();
   }
-
-  private debouncedVolumeSave = debounce(() => {
-    let volume = (Math.round(this.audio.volume * 10) / 10).toString();
-    localStorage.setItem('sc_volume', volume);
-  }, 500);
 
   private setAudioObjectEventListeners() {
     this.audio.addEventListener('canplay', () => {

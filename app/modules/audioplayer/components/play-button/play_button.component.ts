@@ -17,15 +17,20 @@ export class PlayButtonComponent {
 
   @Input() tracks: Tracks;
 
-  private playingItem: PlayQueueItem;
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  private addToPlayQueue():void{
-    this.playQueue.add({track:this.track});
+  addToPlayQueue(): void {
+    this.playQueue.add({track: this.track});
   }
 
-  private play(): void{
-    if(this.tracks){
+  play(): void {
+    this.playQueue.filter((model) => {
+      return !model.isQueued();
+    }).forEach((model) => {
+      this.playQueue.remove(model);
+    });
+
+    if (this.tracks) {
       this.tracks.forEach((track: Track) => {
         this.playQueue.add({track: track});
       });
