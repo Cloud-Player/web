@@ -6,7 +6,7 @@ import {Playlist} from '../../../playlists/models/playlist.model';
   moduleId: module.id,
   selector: 'liked-track-view',
   templateUrl: 'liked-tracks-view.template.html',
-  styleUrls: ['liked-tracks-view.style.css'],
+  styleUrls: ['liked-tracks-view.style.scss'],
   providers: [Playlist]
 })
 

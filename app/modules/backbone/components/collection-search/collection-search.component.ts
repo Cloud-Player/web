@@ -9,7 +9,7 @@ import {BaseModel} from '../../models/base.model';
   moduleId: module.id,
   selector: 'collection-search',
   templateUrl: 'collection-search.template.html',
-  styleUrls: ['collection-search.style.css']
+  styleUrls: ['collection-search.style.scss']
 })
 
 export class CollectionSearchComponent implements OnInit {

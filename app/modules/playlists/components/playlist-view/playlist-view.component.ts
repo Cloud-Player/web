@@ -7,7 +7,7 @@ import {Playlist} from '../../models/playlist.model';
   moduleId: module.id,
   selector: 'play-list-view',
   templateUrl: 'playlist-view.template.html',
-  styleUrls: ['playlist-view.style.css'],
+  styleUrls: ['playlist-view.style.scss'],
   providers: [Playlist]
 })
 
