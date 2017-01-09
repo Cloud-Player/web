@@ -3,7 +3,6 @@ import {Session} from '../../models/session.model';
 import {Playlist} from '../../../playlists/models/playlist.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'liked-track-view',
   templateUrl: 'liked-tracks-view.template.html',
   styleUrls: ['liked-tracks-view.style.scss'],

@@ -5,7 +5,6 @@ import {Track} from '../../models/track.model';
 import {Tracks} from '../../collections/tracks.collection';
 
 @Component({
-    moduleId: module.id,
     selector: 'my-tracks',
     templateUrl: 'index.template.html',
     styleUrls: ['index.style.scss'],

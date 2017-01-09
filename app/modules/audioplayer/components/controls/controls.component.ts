@@ -4,7 +4,6 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {debounce} from 'underscore';
 
 @Component({
-  moduleId: module.id,
   selector: 'audio-player-controls',
   templateUrl: 'controls.template.html',
   styleUrls: ['controls.style.scss']

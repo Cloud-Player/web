@@ -6,7 +6,6 @@ import {Subject} from 'rxjs/Subject';
 import {Tracks} from '../../collections/tracks.collection';
 
 @Component({
-    moduleId: module.id,
     selector: 'track-search',
     templateUrl: 'search.template.html',
     styleUrls: ['search.style.scss'],

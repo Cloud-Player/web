@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Session} from '../../models/session.model';
 @Component({
-  moduleId: module.id,
   selector: 'soundcloud-callback',
   templateUrl: 'soundcloud_callback.template.html',
   styleUrls: ['soundcloud_callback.style.scss']

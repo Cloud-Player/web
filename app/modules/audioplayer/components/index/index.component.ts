@@ -3,7 +3,6 @@ import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 
 @Component ({
-  moduleId: module.id,
   selector: 'audio-player',
   templateUrl: 'index.template.html',
   styleUrls: ['index.style.scss']

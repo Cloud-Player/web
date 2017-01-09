@@ -6,7 +6,6 @@ import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'collection-search',
   templateUrl: 'collection-search.template.html',
   styleUrls: ['collection-search.style.scss']

@@ -4,7 +4,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Playlist} from '../../models/playlist.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'play-list-view',
   templateUrl: 'playlist-view.template.html',
   styleUrls: ['playlist-view.style.scss'],

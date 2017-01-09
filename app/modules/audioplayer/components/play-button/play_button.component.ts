@@ -5,7 +5,6 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 
 @Component({
-  moduleId: module.id,
   selector: 'audio-player-play-button',
   templateUrl: 'play_button.template.html',
   styleUrls: ['play_button.style.scss']

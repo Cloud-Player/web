@@ -5,7 +5,6 @@ import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 
 @Component({
-  moduleId: module.id,
   selector: 'track-list',
   templateUrl: 'track-list.template.html',
   styleUrls: ['track-list.style.scss'],
