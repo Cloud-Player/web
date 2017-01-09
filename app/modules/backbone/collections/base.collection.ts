@@ -1,12 +1,12 @@
-import {Model, Collection} from 'backbone';
+import {Collection} from 'backbone';
 import {BaseModel} from '../models/base.model';
 import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {getUrl} from '../utils/get_url.util';
 
 @Injectable()
-export class BaseCollection<TModel extends Model> extends Collection<Model> {
-  model = BaseModel;
+export class BaseCollection<TModel extends BaseModel> extends Collection<TModel> {
+  model: any = BaseModel;
 
   queryParams: Object = {};
 
@@ -20,7 +20,7 @@ export class BaseCollection<TModel extends Model> extends Collection<Model> {
     return '';
   };
 
-  url(): string {
+  url = () => {
     return getUrl(this);
   };
 

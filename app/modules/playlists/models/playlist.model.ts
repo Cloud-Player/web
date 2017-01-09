@@ -23,19 +23,15 @@ export class Playlist extends SoundcloudModel {
   };
 
   compose(args: any) {
-    if (this.isNew()) {
-      return {
-        playlist: {
-          title: args.title,
-          sharing: args.isPublic ? 'public' : 'private',
-          tracks: map(this.get('tracks').toJSON(), (obj: any) => {
-            return {id: obj.id};
-          })
-        }
-      };
-    } else {
-      return args;
-    }
+    return {
+      playlist: {
+        title: args.title,
+        sharing: args.isPublic ? 'public' : 'private',
+        tracks: map(this.get('tracks').toJSON(), (obj: any) => {
+          return {id: obj.id};
+        })
+      }
+    };
   }
 
 }

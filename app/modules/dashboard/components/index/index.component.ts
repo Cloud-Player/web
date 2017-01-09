@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {Tracks} from '../../../tracks/collections/tracks.collection';
+import {Track} from '../../../tracks/models/track.model';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,7 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 export class DashboardIndexComponent implements OnInit {
   title = 'Top Tracks';
 
-  constructor(private tracks: Tracks) {
+  constructor(private tracks: Tracks<Track>) {
   }
 
   ngOnInit(): void {

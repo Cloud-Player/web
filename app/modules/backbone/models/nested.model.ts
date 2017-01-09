@@ -119,7 +119,7 @@ export class NestedModel extends Model {
   set(attributes: any, options: any = {}) {
     let obj = {};
 
-    if (options._prepareNesting) {
+    if (options && options._prepareNesting) {
       extend(this.attributes, this._prepare());
     }
 
