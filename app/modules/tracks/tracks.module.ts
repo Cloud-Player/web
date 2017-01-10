@@ -4,21 +4,18 @@ import {FormsModule} from '@angular/forms';
 import {TracksDetailComponent} from './components/detail/detail.component';
 import {TracksRoutingModule} from './tracks.routes';
 import {AudioPlayerModule} from '../audioplayer/audio-player.module';
-import {TrackListComponent} from './components/track-list/track-list.component';
+import {SharedModule} from '../shared/shared.module';
+import {SessionModule} from '../session/session.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     TracksRoutingModule,
-    AudioPlayerModule
-  ],
-  exports: [
-    TrackListComponent
+    SharedModule
   ],
   declarations: [
-    TracksDetailComponent,
-    TrackListComponent
+    TracksDetailComponent
   ]
 })
 

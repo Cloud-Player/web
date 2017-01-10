@@ -6,11 +6,11 @@ import {debounce} from 'underscore';
 @Component({
   moduleId: module.id,
   selector: 'audio-player-controls',
-  templateUrl: 'controls.template.html',
-  styleUrls: ['controls.style.css']
+  templateUrl: 'audio-player-controls.template.html',
+  styleUrls: ['audio-player-controls.style.css']
 })
 
-export class PlayerControlsComponent implements OnInit {
+export class AudioPlayerControlsComponent implements OnInit {
 
   private audio: HTMLAudioElement;
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
@@ -20,6 +20,8 @@ export class PlayerControlsComponent implements OnInit {
 
   private timeTickPosition: number;
   private progressBarWidth: number;
+
+  private hadError: boolean = false;
 
   private debouncedVolumeSave = debounce(() => {
     let volume = (Math.round(this.audio.volume * 10) / 10).toString();
@@ -57,6 +59,17 @@ export class PlayerControlsComponent implements OnInit {
       } else {
         this.playQueue.getCurrentItem().stop();
       }
+    });
+
+    this.audio.addEventListener('error', () => {
+      this.hadError = true;
+      if (this.playQueue.hasCurrentItem()) {
+        this.playQueue.getCurrentItem().pause();
+      }
+    });
+
+    this.audio.addEventListener('playing', () => {
+      this.hadError = false;
     });
 
     this.audio.addEventListener('volumechange', this.debouncedVolumeSave);
@@ -177,7 +190,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   startAudioPlayer(item: PlayQueueItem): void {
-    if (this.audio.src !== item.get('track').getResourceUrl()) {
+    if (this.audio.src !== item.get('track').getResourceUrl() || this.hadError) {
       this.audio.src = item.get('track').getResourceUrl();
     }
     this.audio.play();
