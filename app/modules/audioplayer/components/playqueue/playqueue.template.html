@@ -1,6 +1,7 @@
 <div class="play-queue">
   <div *ngIf="playQueue.getCurrentItem()">
     <h5>Current playing</h5>
+    <toggle-liked-track [track]="playQueue.getCurrentItem().get('track')"></toggle-liked-track>
     {{playQueue.getCurrentItem().get('track').get('title')}}
   </div>
 
