@@ -120,7 +120,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   };
 
   getTimeTickPositionFromTime(time: number): number {
-    return (100 / this.audio.duration)*time;
+    return (100 / this.audio.duration) * time;
   }
 
   setTimeTickPosition(newPos: number): void {
