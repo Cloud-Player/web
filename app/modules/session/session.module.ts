@@ -7,14 +7,14 @@ import {SoundcloudCallbackComponent} from './components/soundcloud-callback/soun
 import {ShowWhenAuthenticatedComponent} from './components/show-when-authenticated/show_when_authenticated';
 import {AuthenticatedUserPlaylists} from './components/authenticated-user-playlists/authenticated_user_playlists';
 import {LikedTracksViewComponent} from './components/liked-tracks-view/liked-tracks-view.component';
-import {TracksModule} from '../tracks/tracks.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule ({
   imports: [
     BrowserModule,
     FormsModule,
     SessionRoutingModule,
-    TracksModule
+    SharedModule
   ],
   declarations: [
     ConnectBtnComponent,
