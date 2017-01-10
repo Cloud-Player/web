@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'hReadableSeconds'})
 export class HumanReadableSecondsPipe implements PipeTransform {
@@ -16,10 +16,10 @@ export class HumanReadableSecondsPipe implements PipeTransform {
   }
 
   transform(value: string, args: string[]): any {
-    if (!value){
+    if (!value) {
       return value;
     } else {
-      return this.formatToHHMMSS(parseInt(value,10));
+      return this.formatToHHMMSS(parseInt(value, 10));
     }
   }
 }

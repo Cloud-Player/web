@@ -2,8 +2,6 @@ import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
 import {SoundcloudImageModel} from '../../main/models/soundcloud-image.model';
-import {PlayQueue} from '../../audioplayer/collections/play_queue.collection';
-import {PlayQueueItem} from '../../audioplayer/models/play_queue_item.model';
 
 @Injectable()
 export class Track extends SoundcloudModel {

@@ -29,8 +29,8 @@ export class ToggleLikedTrackComponent {
     }
   }
 
-  toggleLike(): void{
-    if(!this.hasLikedTrack()){
+  toggleLike(): void {
+    if (!this.hasLikedTrack()) {
       this.like();
     } else {
       this.dislike();
