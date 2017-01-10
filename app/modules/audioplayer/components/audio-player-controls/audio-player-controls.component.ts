@@ -15,8 +15,8 @@ export class AudioPlayerControlsComponent implements OnInit {
   private audio: HTMLAudioElement;
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  private timeTick: string;
-  private duration: string;
+  private timeTick: number;
+  private duration: number;
 
   private timeTickPosition: number;
   private progressBarWidth: number;
@@ -35,8 +35,8 @@ export class AudioPlayerControlsComponent implements OnInit {
   constructor() {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
-    this.timeTick = this.formatToHHMMSS(0);
-    this.duration = this.formatToHHMMSS(0);
+    this.timeTick = 0;
+    this.duration = 0;
 
     this.timeTickPosition = 0;
 
@@ -45,11 +45,11 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private setAudioObjectEventListeners() {
     this.audio.addEventListener('canplay', () => {
-      this.duration = this.formatToHHMMSS(this.audio.duration);
+      this.duration = this.audio.duration;
     });
 
     this.audio.addEventListener('timeupdate', () => {
-      this.timeTick = this.formatToHHMMSS(this.audio.currentTime);
+      this.timeTick = this.audio.currentTime;
       this.timeTickPosition = this.getTimeTickPositionFromTime(this.audio.currentTime);
     });
 
@@ -118,18 +118,6 @@ export class AudioPlayerControlsComponent implements OnInit {
     });
 
   };
-
-  formatToHHMMSS(input: number): string {
-    let time = new Date(null);
-    time.setSeconds(input);
-
-    // format time from hh:mm:ss to mm:ss when hh is 0
-    if (time.getHours() === 1) {
-      return time.toISOString().substr(14, 5);
-    } else {
-      return time.toISOString().substr(11, 8);
-    }
-  }
 
   getTimeTickPositionFromTime(time: number): number {
     return (time * this.progressBarWidth) / this.audio.duration;

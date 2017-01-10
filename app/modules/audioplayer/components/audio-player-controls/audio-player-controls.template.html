@@ -21,6 +21,5 @@
   <div #audioPlayerProgressBar class="audio-player-progress-bar" [style.width]="timeTickPosition + 'px'"></div>
 </div>
 
-<span>{{timeTick}}</span>
+<span>{{timeTick | hReadableSeconds}}</span>
 <span> {{duration | hReadableSeconds}} </span>
-<!--<duration [duration]="duration"></duration>-->
