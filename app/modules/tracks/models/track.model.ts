@@ -2,7 +2,6 @@ import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
 import {SoundcloudImageModel} from '../../main/models/soundcloud-image.model';
-import {Session} from '../../session/models/session.model';
 import {PlayQueue} from '../../audioplayer/collections/play_queue.collection';
 import {PlayQueueItem} from '../../audioplayer/models/play_queue_item.model';
 
