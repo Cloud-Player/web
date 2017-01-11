@@ -1,6 +1,7 @@
 import {Track} from '../../tracks/models/track.model';
+import {BaseModel} from '../../backbone/models/base.model';
 
-export class PlayQueueItem extends Track {
+export class PlayQueueItem extends BaseModel {
 
   defaults() {
     return {
@@ -8,10 +9,15 @@ export class PlayQueueItem extends Track {
     };
   }
 
-  queue(priority: number): void {
+  nested() {
+    return {
+      track: Track
+    };
+  };
+
+  queue(): void {
     this.set({
-      status: 'QUEUED',
-      priority: priority
+      status: 'QUEUED'
     });
   }
 

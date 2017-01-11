@@ -1,0 +1,25 @@
+<button type="button" (click)="previousTrack()" [disabled]="!playQueue.hasPreviousItem()">
+  <i class="fa fa-backward" aria-hidden="true"></i>
+</button>
+
+<button type="button" (click)="playTrack()" *ngIf="!playQueue.getPlayingItem()">
+  <i class="fa fa-play" aria-hidden="true"></i>
+</button>
+<button type="button" (click)="pauseTrack()" *ngIf="playQueue.getPlayingItem()">
+  <i class="fa fa-pause" aria-hidden="true"></i>
+</button>
+
+<button type="button" (click)="nextTrack()" [disabled]="!playQueue.hasNextItem()">
+  <i class="fa fa-forward" aria-hidden="true"></i>
+</button>
+
+<input type="range" min="0" max="1" [(ngModel)]="audio.volume" step="0.01" />
+
+<div class="audio-player-progress">
+  <div #audioPlayerProgressBarLine class="audio-player-progress-bar-line"></div>
+  <div #audioPlayerHandle class="audio-player-progress-bar-handle" draggable="true" [style.left]="timeTickPosition + '%'"></div>
+  <div #audioPlayerProgressBar class="audio-player-progress-bar" [style.width]="timeTickPosition + '%'"></div>
+</div>
+
+<span>{{timeTick | hReadableSeconds}}</span>
+<span> {{duration | hReadableSeconds}} </span>
