@@ -6,4 +6,10 @@ import {authenticated} from '../decorators/authenticated.decorator';
 @authenticated
 export class AuthenticatedUserPlaylist extends Playlist {
   endpoint = '/me/playlists';
+
+  initialize() {
+    this.get('tracks').on('add remove', () => {
+      this.save();
+    });
+  };
 }

@@ -1,0 +1,10 @@
+<div class="collection-search">
+  <input type="range"
+         class="form-control"
+         aria-describedby="basic-addon3"
+         name="search"
+         min="1000"
+         max="3600000"
+         [(ngModel)]="query"
+         (ngModelChange)="search()">
+</div>

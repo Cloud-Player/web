@@ -16,6 +16,7 @@ export class ShowWhenAuthenticatedComponent {
     if (user.get('authenticated')) {
       user.fetch().then(() => {
         this.isAuthenticated = true;
+        user.get('likes').fetch();
       });
     } else {
       this.isAuthenticated = false;

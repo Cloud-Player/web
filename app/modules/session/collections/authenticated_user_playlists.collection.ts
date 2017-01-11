@@ -5,7 +5,7 @@ import {AuthenticatedUserPlaylist} from '../models/authenticated_user_playlist.m
 
 @Injectable()
 @authenticated
-export class AuthenticatedUserPlaylists extends Playlists {
+export class AuthenticatedUserPlaylists<TModel extends AuthenticatedUserPlaylist> extends Playlists<TModel> {
   endpoint = '/me/playlists';
-  model = AuthenticatedUserPlaylist;
+  model: any = AuthenticatedUserPlaylist;
 }

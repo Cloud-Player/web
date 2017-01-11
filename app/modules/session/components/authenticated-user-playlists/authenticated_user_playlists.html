@@ -7,7 +7,9 @@
   <button class="btn btn-primary" (click)="save()">Save</button>
   <ul>
     <li *ngFor="let playlist of user.get('playlists').models">
-      {{playlist.get('title')}}
+      <a routerLink="playlists/{{playlist.get('id')}}">
+        {{playlist.get('title')}}
+      </a>
       <button class="btn btn-danger" (click)="playlist.destroy()">
         Delete
       </button>

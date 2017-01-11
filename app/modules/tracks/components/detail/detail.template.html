@@ -5,6 +5,6 @@
     <label>id: </label>{{track.id}}
     <label>stream: </label>{{track.getResourceUrl()}}
   </div>
-  <audio-player-play-button [track]="track"></audio-player-play-button>
+  <play-button [track]="track"></play-button>
 </div>
 <button (click)="goBack()">Back</button>
