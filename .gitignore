@@ -9,7 +9,7 @@
 !systemjs.config*.js
 !/karma.conf.js
 !/webpack.config.js
-!/config/webpack.prod.js
+!/config/*
 
 # IntelliJ project files
 .idea

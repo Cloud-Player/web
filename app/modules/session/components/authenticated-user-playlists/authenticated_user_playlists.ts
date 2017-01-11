@@ -4,7 +4,7 @@ import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlis
 
 @Component({
   selector: 'authenticated-user-playlists',
-  templateUrl: 'authenticated_user_playlists.html',
+  template: require('./authenticated_user_playlists.html'),
 })
 export class AuthenticatedUserPlaylists {
   private session = Session.getInstance();

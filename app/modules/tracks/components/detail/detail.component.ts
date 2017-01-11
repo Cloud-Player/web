@@ -6,7 +6,7 @@ import {Track} from '../../models/track.model';
 
 @Component({
   selector: 'my-track-detail',
-  templateUrl: 'detail.template.html',
+  template: require('./detail.template.html'),
   providers: [Track]
 })
 

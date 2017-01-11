@@ -7,8 +7,8 @@ import {BaseModel} from '../../models/base.model';
 
 @Component({
   selector: 'collection-search',
-  templateUrl: 'collection-search.template.html',
-  styleUrls: ['collection-search.style.scss']
+  template: require('./collection-search.template.html'),
+  styleUrls: ['./collection-search.style.scss']
 })
 
 export class CollectionSearchComponent implements OnInit {

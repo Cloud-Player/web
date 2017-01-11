@@ -7,8 +7,8 @@ import {Tracks} from '../../collections/tracks.collection';
 
 @Component({
     selector: 'track-search',
-    templateUrl: 'search.template.html',
-    styleUrls: ['search.style.scss'],
+    template: require('./search.template.html'),
+    styleUrls: ['./search.style.scss'],
     providers: [Tracks]
 })
 

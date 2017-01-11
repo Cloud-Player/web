@@ -4,8 +4,8 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
 
 @Component ({
   selector: 'audio-player',
-  templateUrl: 'index.template.html',
-  styleUrls: ['index.style.scss']
+  template: require('./index.template.html'),
+  styleUrls: ['./index.style.scss']
 })
 
 export class AudioPlayerComponent implements OnInit {
