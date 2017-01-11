@@ -1,33 +1,58 @@
+@import '../../../../variables';
+
+.track-item {
+
+  .cover {
+
+    img {
+      width: 100%;
+    }
+
+  }
+
+  .details {
+
+    p {
+      text-align: center;
+    }
+
+  }
+
+}
+
+.controls {
+}
+
 .audio-player-progress {
   position: relative;
   top: 5px;
-}
 
-.audio-player-progress-bar-line {
-  height: 5px;
+  .audio-player-progress-bar-line {
+    height: 5px;
 
-  position: relative;
-  top: 30px;
+    position: relative;
+    top: 30px;
 
-  background-color: grey;
-}
+    background-color: grey;
+  }
 
-.audio-player-progress-bar {
-  height: 5px;
+  .audio-player-progress-bar {
+    height: 5px;
 
-  position: relative;
-  z-index: 1;
+    position: relative;
+    z-index: 1;
 
-  margin: 10px 0 10px 0;
-  background-color: cornflowerblue;
-}
+    margin: 10px 0 10px 0;
+    background-color: $brand-primary;
+  }
 
-.audio-player-progress-bar-handle {
-  width: 15px;
-  height: 15px;
+  .audio-player-progress-bar-handle {
+    width: 15px;
+    height: 15px;
 
-  position: relative;
-  top: 20px;
+    position: relative;
+    top: 20px;
 
-  background-color: transparent;
+    background-color: transparent;
+  }
 }

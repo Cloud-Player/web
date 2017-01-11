@@ -1,6 +1,6 @@
 @import '../../../../variables';
 
-$img-size: 65px;
+$img-size: 80px;
 
 .sidebar {
   background: $gray-lighter;
@@ -12,15 +12,12 @@ $img-size: 65px;
     width: $img-size;
     height: $img-size;
     background: $brand-primary;
-    border-radius: ($img-size / 2);
+    background: linear-gradient(#f70, #f30);
+    clip-path: circle(50% at 50% 50%);
 
     img {
       position: absolute;
       margin: auto;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
       width: $img-size;
     }
   }
@@ -45,6 +42,10 @@ $img-size: 65px;
       margin: 10px auto;
       font-size: 38px;
     }
-
   }
+
+  &.toggle {
+    width: 500px;
+  }
+
 }

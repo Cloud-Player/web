@@ -1,6 +1,6 @@
-@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-@import '../node_modules/font-awesome/scss/font-awesome';
 @import './variables';
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
 // Master Styles
 
@@ -16,12 +16,28 @@ body {
   background: $body-bg;
 }
 
+main {
+
+  &:before {
+    width: 100%;
+    height: 5px;
+    background: $brand-primary;
+    background: linear-gradient(#f70, #f30);
+  }
+
+  &:after {
+    width: 100%;
+    height: 10px;
+    background: $gray-light;
+  }
+
+}
+
 a {
   cursor: pointer;
 }
 
 h1 {
-  color: $brand-primary;
   font-size: 22px;
   margin: 15px 0;
 }
