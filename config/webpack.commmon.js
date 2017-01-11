@@ -4,13 +4,13 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var helpers = require('./helpers');
 
-
 module.exports = {
   entry: {
     'polyfills': './app/polyfills.ts',
     'vendor': './app/vendor.ts',
     'app': './app/main.ts'
   },
+
 
   resolve: {
     modules: [path.resolve(__dirname, '/app'), 'node_modules/'],
@@ -34,8 +34,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
         loaders: ['raw-loader', 'sass-loader'] // sass-loader not scss-loader
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }
     ]
   },
