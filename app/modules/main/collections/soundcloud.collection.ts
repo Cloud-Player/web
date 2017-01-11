@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Model} from 'backbone';
 import {Config} from '../../../config/config';
 import {BaseCollection} from '../../backbone/collections/base.collection';
 import {SoundcloudModel} from '../models/soundcloud.model';
