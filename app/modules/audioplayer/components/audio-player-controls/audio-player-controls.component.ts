@@ -80,6 +80,10 @@ export class AudioPlayerControlsComponent implements OnInit {
     if (savedVolume) {
       this.audio.volume = parseFloat(savedVolume);
     }
+
+    window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
+    window.addEventListener('nextTrackKeyPressed', this.nextTrack.bind(this));
+    window.addEventListener('previousTrackKeyPressed', this.previousTrack.bind(this));
   }
 
   ngAfterContentInit() {
@@ -162,6 +166,17 @@ export class AudioPlayerControlsComponent implements OnInit {
     let track = this.playQueue.getPlayingItem();
     if (track) {
       track.pause();
+    }
+  }
+
+  togglePlayPause(): void {
+    let currItem = this.playQueue.getCurrentItem();
+    if (currItem) {
+      if (currItem.isPlaying()) {
+        currItem.pause();
+      } else {
+        currItem.play();
+      }
     }
   }
 
