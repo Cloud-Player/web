@@ -6,7 +6,7 @@ import {Track} from '../../../tracks/models/track.model';
 @Component({
   selector: 'my-dashboard',
   template: require('./index.template.html'),
-  styleUrls: ['./index.style.scss'],
+  styleUrls: ['/index.style.css'],
   providers: [Tracks]
 })
 

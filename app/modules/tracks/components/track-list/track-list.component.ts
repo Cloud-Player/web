@@ -7,7 +7,7 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 @Component({
   selector: 'track-list',
   template: require('./track-list.template.html'),
-  styleUrls: ['./track-list.style.scss'],
+  styleUrls: ['/track-list.style.css'],
   providers: [Tracks]
 })
 export class TrackListComponent {

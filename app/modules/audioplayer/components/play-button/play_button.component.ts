@@ -7,7 +7,7 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 @Component({
   selector: 'audio-player-play-button',
   template: require('./play_button.template.html'),
-  styleUrls: ['./play_button.style.scss']
+  styleUrls: ['/play_button.style.css']
 })
 
 export class PlayButtonComponent {

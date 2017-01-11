@@ -5,7 +5,7 @@ import {Session} from '../../../session/models/session.model';
 @Component({
   selector: 'nav-sidebar',
   template: require('./nav.template.html'),
-  styleUrls: ['./nav.style.scss']
+  styleUrls: ['/nav.style.css']
 })
 
 export class NavComponent {

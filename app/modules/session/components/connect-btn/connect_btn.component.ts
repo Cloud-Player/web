@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 @Component({
   selector: 'connect-btn',
   template: require('./connect_btn.template.html'),
-  styleUrls: ['./connect_btn.style.scss']
+  styleUrls: ['/connect_btn.style.css']
 })
 export class ConnectBtnComponent {
   connect() {

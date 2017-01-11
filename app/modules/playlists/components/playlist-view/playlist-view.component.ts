@@ -6,7 +6,7 @@ import {Playlist} from '../../models/playlist.model';
 @Component({
   selector: 'play-list-view',
   template: require('./playlist-view.template.html'),
-  styleUrls: ['./playlist-view.style.scss'],
+  styleUrls: ['/playlist-view.style.css'],
   providers: [Playlist]
 })
 

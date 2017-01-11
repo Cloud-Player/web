@@ -6,7 +6,7 @@ import {debounce} from 'underscore';
 @Component({
   selector: 'audio-player-controls',
   template: require('./controls.template.html'),
-  styleUrls: ['./controls.style.scss']
+  styleUrls: ['/controls.style.css']
 })
 
 export class PlayerControlsComponent implements OnInit {
