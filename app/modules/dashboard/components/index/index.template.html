@@ -11,6 +11,8 @@
 
   <div class="sort-tracks">
     Sort items by:
+    <collection-sort [collection]="tracks" [label]="'None'"></collection-sort>
+    |
     <collection-sort [collection]="tracks" [comparator]="'duration'" [label]="'Duration'"></collection-sort>
     |
     <collection-sort [collection]="tracks" [comparator]="'likes_count'" [label]="'Likes'"></collection-sort>
