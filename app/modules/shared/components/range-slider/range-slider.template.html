@@ -1,0 +1,8 @@
+<div class="range-slider-component" [class.is-loading]="showLoadingSpinner">
+  <div #progressBarLine class="progress-bar-line"></div>
+  <div #handle class="visible-dragger">
+    <div class="loading-spinner"></div>
+  </div>
+  <div #progressBarBg class="progress-bar-bg"></div>
+  <input type="range" [min]="min" [max]="max" [(ngModel)]="tmpValue" [step]="step">
+</div>
