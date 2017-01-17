@@ -1,5 +1,4 @@
 import {Component, Input, Output, ViewChild, ElementRef, EventEmitter} from '@angular/core';
-import {throttle} from 'underscore';
 
 @Component({
   moduleId: module.id,
@@ -90,7 +89,8 @@ export class RangeSliderComponent {
     this.showLoadingSpinner = val;
   }
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) {
+  }
 
   private setDragPosFromVal() {
     let pos = (((this.tmpVal - this.min) / (this.max - this.min)) * 100);

@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
@@ -92,11 +92,11 @@ export class AudioPlayerControlsComponent implements OnInit {
     }
   }
 
-  setVolume(volume: number){
+  setVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  saveVolume(volume: number){
+  saveVolume(volume: number) {
     let roundedVolumeStr = (Math.round(volume * 10) / 10).toString();
     localStorage.setItem('sc_volume', roundedVolumeStr);
   }
@@ -148,7 +148,7 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.audio.src = item.get('track').getResourceUrl();
     }
 
-    if(this.hadError){
+    if (this.hadError) {
       let currTime = this.audio.currentTime;
       this.audio.src = item.get('track').getResourceUrl();
       this.audio.currentTime = currTime;
