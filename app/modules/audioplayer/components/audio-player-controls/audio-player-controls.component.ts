@@ -36,7 +36,7 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.isBuffering = false;
     });
 
-    var throttledTimeUpdater = throttle(() => {
+    let throttledTimeUpdater = throttle(() => {
       this.timeTick = this.audio.currentTime;
     }, 1000);
 
