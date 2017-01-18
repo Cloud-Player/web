@@ -7,10 +7,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {QueueButtonComponent} from './components/queue-button/queue_button.component';
 import {SortTracksComponent} from './components/sort-tracks/sort-tracks.component';
 import {BackboneModule} from '../backbone/backbone.module';
+import {RangeSliderComponent} from './components/range-slider/range-slider.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
     BackboneModule
   ],
   declarations: [
@@ -19,6 +22,7 @@ import {BackboneModule} from '../backbone/backbone.module';
     PlayButtonComponent,
     QueueButtonComponent,
     SortTracksComponent,
+    RangeSliderComponent,
     HumanReadableSecondsPipe
   ],
   exports: [
@@ -27,7 +31,9 @@ import {BackboneModule} from '../backbone/backbone.module';
     PlayButtonComponent,
     QueueButtonComponent,
     SortTracksComponent,
+    RangeSliderComponent,
     HumanReadableSecondsPipe
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}
