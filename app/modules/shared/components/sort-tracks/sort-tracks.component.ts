@@ -5,8 +5,7 @@ import './sort-tracks.style.scss';
 
 @Component({
   selector: 'sort-tracks',
-  template: require('./sort-tracks.template.html'),
-  styleUrls: ['/sort-tracks.style.css']
+  template: require('./sort-tracks.template.html')
 })
 export class SortTracksComponent {
 

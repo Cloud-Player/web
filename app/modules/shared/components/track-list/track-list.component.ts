@@ -8,7 +8,6 @@ import './track-list.style.scss';
 @Component({
   selector: 'track-list',
   template: require('./track-list.template.html'),
-  styleUrls: ['/track-list.style.css'],
   providers: [Tracks]
 })
 export class TrackListComponent {

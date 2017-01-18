@@ -5,8 +5,7 @@ import './collection-sort.style.scss';
 
 @Component({
   selector: 'collection-sort',
-  template: require('./collection-sort.template.html'),
-  styleUrls: ['/collection-sort.style.css']
+  template: require('./collection-sort.template.html')
 })
 
 export class CollectionSortComponent {

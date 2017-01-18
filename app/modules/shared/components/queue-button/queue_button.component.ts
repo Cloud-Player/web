@@ -7,8 +7,7 @@ import './queue_button.style.scss';
 
 @Component({
   selector: 'queue-button',
-  template: require('./queue_button.template.html'),
-  styleUrls: ['/queue_button.style.css']
+  template: require('./queue_button.template.html')
 })
 
 export class QueueButtonComponent {

@@ -5,8 +5,7 @@ import './nav.style.scss';
 
 @Component({
   selector: 'nav-sidebar',
-  template: require('./nav.template.html'),
-  styleUrls: ['/nav.style.css']
+  template: require('./nav.template.html')
 })
 
 export class NavComponent {

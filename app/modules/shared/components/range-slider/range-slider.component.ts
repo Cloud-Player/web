@@ -3,8 +3,7 @@ import './range-slider.style.scss';
 
 @Component({
   selector: 'range-slider',
-  template: require('./range-slider.template.html'),
-  styleUrls: ['/range-slider.style.css']
+  template: require('./range-slider.template.html')
 })
 
 export class RangeSliderComponent {

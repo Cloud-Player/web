@@ -5,8 +5,7 @@ import './playqueue.style.scss';
 
 @Component({
   selector: 'play-queue',
-  template: require('./playqueue.template.html'),
-  styleUrls: ['/playqueue.style.css']
+  template: require('./playqueue.template.html')
 })
 export class PlayQueueComponent {
   private playQueue: PlayQueue<PlayQueueItem>;

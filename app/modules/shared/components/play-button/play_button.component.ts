@@ -7,8 +7,7 @@ import './play_button.style.scss';
 
 @Component({
   selector: 'play-button',
-  template: require('./play_button.template.html'),
-  styleUrls: ['/play_button.style.css']
+  template: require('./play_button.template.html')
 })
 
 export class PlayButtonComponent {

@@ -6,7 +6,6 @@ import './liked-tracks-view.style.scss';
 @Component({
   selector: 'liked-track-view',
   template: require('./liked-tracks-view.template.html'),
-  styleUrls: ['/liked-tracks-view.style.css'],
   providers: [Playlist]
 })
 

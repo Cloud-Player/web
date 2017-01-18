@@ -5,8 +5,7 @@ import './soundcloud_callback.style.scss';
 
 @Component({
   selector: 'soundcloud-callback',
-  template: require('./soundcloud_callback.template.html'),
-  styleUrls: ['/soundcloud_callback.style.css']
+  template: require('./soundcloud_callback.template.html')
 })
 export class SoundcloudCallbackComponent implements OnInit {
   private session = Session.getInstance();

@@ -8,8 +8,7 @@ import './collection-range-input-search.style.scss';
 
 @Component({
   selector: 'collection-range-input-search',
-  template: require('./collection-range-input-search.template.html'),
-  styleUrls: ['/collection-range-input-search.style.css']
+  template: require('./collection-range-input-search.template.html')
 })
 
 export class CollectionRangeInputSearchComponent implements OnInit {

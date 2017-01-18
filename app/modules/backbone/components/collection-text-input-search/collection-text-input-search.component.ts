@@ -8,8 +8,7 @@ import './collection-text-input-search.style.scss';
 
 @Component({
   selector: 'collection-text-input-search',
-  template: require('./collection-text-input-search.template.html'),
-  styleUrls: ['/collection-text-input-search.style.css']
+  template: require('./collection-text-input-search.template.html')
 })
 
 export class CollectionTextInputSearchComponent implements OnInit {

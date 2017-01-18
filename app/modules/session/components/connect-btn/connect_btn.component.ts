@@ -5,8 +5,7 @@ import './connect_btn.style.scss'
 
 @Component({
   selector: 'connect-btn',
-  template: require('./connect_btn.template.html'),
-  styleUrls: ['/connect_btn.style.css']
+  template: require('./connect_btn.template.html')
 })
 export class ConnectBtnComponent {
   private session: Session = Session.getInstance();

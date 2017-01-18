@@ -7,7 +7,6 @@ import './playlist-view.style.scss';
 @Component({
   selector: 'play-list-view',
   template: require('./playlist-view.template.html'),
-  styleUrls: ['/playlist-view.style.css'],
   providers: [Playlist]
 })
 

@@ -6,8 +6,7 @@ import './audio-player-controls.style.scss';
 
 @Component({
   selector: 'audio-player-controls',
-  template: require('./audio-player-controls.template.html'),
-  styleUrls: ['/audio-player-controls.style.css']
+  template: require('./audio-player-controls.template.html')
 })
 
 export class AudioPlayerControlsComponent implements OnInit {

@@ -5,8 +5,7 @@ import './toggle-liked-track.style.scss';
 
 @Component({
   selector: 'toggle-liked-track',
-  template: require('./toggle-liked-track.template.html'),
-  styleUrls: ['/toggle-liked-track.style.css']
+  template: require('./toggle-liked-track.template.html')
 })
 export class ToggleLikedTrackComponent {
 

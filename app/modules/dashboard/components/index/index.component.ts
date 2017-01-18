@@ -7,7 +7,6 @@ import './index.style.scss';
 @Component({
   selector: 'my-dashboard',
   template: require('./index.template.html'),
-  styleUrls: ['/index.style.css'],
   providers: [Tracks]
 })
 

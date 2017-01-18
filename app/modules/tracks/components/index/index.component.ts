@@ -6,8 +6,7 @@ import {Tracks} from '../../collections/tracks.collection';
 
 @Component({
     selector: 'my-tracks',
-    templateUrl: './index.template.html',
-    styleUrls: ['./index.style.scss'],
+    templateUrl: './index.template.html'
     providers: [Tracks]
 })
 export class TracksIndexComponent implements OnInit {

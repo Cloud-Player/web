@@ -5,8 +5,7 @@ import './audio-player.style.scss';
 
 @Component ({
   selector: 'audio-player',
-  template: require('./audio-player.template.html'),
-  styleUrls: ['/audio-player.style.css']
+  template: require('./audio-player.template.html')
 })
 
 export class AudioPlayerComponent implements OnInit {
