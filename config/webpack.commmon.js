@@ -38,10 +38,6 @@ module.exports = {
         loader: 'style!css!sass!resolve-url!sass?sourceMap'
       },
       {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      },
-      {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=application/font-woff"
       }, {
