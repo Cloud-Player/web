@@ -31,11 +31,11 @@ function getExpiresOn($expiresIn){
 
 function successAuth($jsonData){
   if($_GET['state']){
-   $url = $_GET['state'];
+   $url = $_GET['state'].'#/connect';
   } else {
-   $url = 'http://localhost:3000/#/connect';
+   $url = 'http://sc.menu-flow.com/connect/success.php';
   }
-  $url = $url . '#/connect' .
+  $url = $url .
            '?access_token='  . $jsonData->access_token  .
            '&expires_on='    . getExpiresOn($jsonData->expires_in)    .
            '&refresh_token=' . $jsonData->refresh_token;
