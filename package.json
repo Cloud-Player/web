@@ -7,8 +7,6 @@
     "serve": "npm run bundle",
     "postserve": "lite-server -c \"./bs-config.json\"",
     "bundle": "gulp dist",
-    "prepush": "npm test",
-    "test": "xo",
 
     "webpack": "webpack-dev-server --display-error-details --inline --progress --port 8080",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
