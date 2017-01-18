@@ -1,7 +1,12 @@
 <div class="row">
   <h3>
-    {{playlist.get('title')}}
+    <i *ngIf="!playlist.get('isPublic')"
+       class="fa fa-lock"></i> {{playlist.get('title')}}
   </h3>
+
+  <hr>
+
+  <sort-tracks [tracks]="tracks"></sort-tracks>
 
   <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
 
