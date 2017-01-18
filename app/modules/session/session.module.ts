@@ -9,6 +9,10 @@ import {AuthenticatedUserPlaylists} from './components/authenticated-user-playli
 import {LikedTracksViewComponent} from './components/liked-tracks-view/liked-tracks-view.component';
 import {SharedModule} from '../shared/shared.module';
 import {UserPlayListViewComponent} from './components/user-playlist-view/user-playlist-view.component';
+import {
+  AuthenticatedUserPlaylistsViewComponent
+}
+  from './components/authenticated-user-playlists-view/authenticated-user-playlists-view.component';
 
 @NgModule({
   imports: [
@@ -23,7 +27,8 @@ import {UserPlayListViewComponent} from './components/user-playlist-view/user-pl
     ShowWhenAuthenticatedComponent,
     AuthenticatedUserPlaylists,
     LikedTracksViewComponent,
-    UserPlayListViewComponent
+    UserPlayListViewComponent,
+    AuthenticatedUserPlaylistsViewComponent
   ],
   exports: [
     ConnectBtnComponent,
