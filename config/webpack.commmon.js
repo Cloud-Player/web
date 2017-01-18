@@ -30,12 +30,12 @@ module.exports = {
         loader: 'html'
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        loader: 'file?name=assets/[name].[hash].[ext]'
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
       },
       {
-        test: /\.scss$/,
-        loader: 'style!css!sass!resolve-url!sass?sourceMap'
+        test: /\.css$/,
+        loader:'style!css!'
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
