@@ -1,8 +1,8 @@
-import {SoundcloudModel} from '../../main/models/soundcloud.model';
-import {Injectable} from '@angular/core';
-import {User} from '../../users/models/user.model';
+
+import {Injectable} from '@angular/core';import {User} from '../../users/models/user.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
 import {map} from 'underscore';
+import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 
 @Injectable()
 export class Playlist extends SoundcloudModel {
