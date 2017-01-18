@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     modules: [path.resolve(__dirname, 'app'), 'node_modules/'],
     descriptionFiles: ['package.json'],
-    extensions: ['', '.js', '.ts']
+    extensions: ['', '.js', '.ts', '.css']
   },
 
   module: {
