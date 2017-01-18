@@ -1,12 +1,14 @@
-<div class="row">
+<div class="container" *ngIf="track">
 
-  <!--div class="col-md-12">
-    <div class="cover">
-      <img [src]="track.get('artwork_url')">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="cover">
+        <img [src]="track.get('artwork_url').getLargeSize()">
+      </div>
     </div>
-  </div-->
 
-  <audio-player-controls class="col-md-12"></audio-player-controls>
-  <play-queue class="col-md-12"></play-queue>
+    <audio-player-controls class="col-md-12"></audio-player-controls>
+    <play-queue class="col-md-12"></play-queue>
+  </div>
 
 </div>
