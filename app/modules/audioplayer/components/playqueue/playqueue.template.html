@@ -1,1 +1,48 @@
-<play-list [tracks]="playQueue"></play-list>
+<div class="play-queue">
+  <div *ngIf="playQueue.getCurrentItem()">
+    <h5>Current playing</h5>
+    <toggle-liked-track [track]="playQueue.getCurrentItem().get('track')"></toggle-liked-track>
+    {{playQueue.getCurrentItem().get('track').get('title')}}
+  </div>
+
+  <hr
+    *ngIf="playQueue.getCurrentItem() && (playQueue.getScheduledItems().length>0 || playQueue.getQueuedItems().length>0)">
+
+  <div *ngIf="playQueue.getQueuedItems().length>0"
+       class="queued-items">
+    Queued Items
+    <ul>
+      <li *ngFor="let playQueueItem of playQueue.getQueuedItems()">
+        {{playQueueItem.get('track').get('title')}}
+      </li>
+    </ul>
+  </div>
+
+  <hr *ngIf="playQueue.getScheduledItems().length>0 && playQueue.getQueuedItems().length>0">
+
+  <div *ngIf="playQueue.getScheduledItems().length>0"
+       class="scheduled-items">
+    Coming up next
+    <ul>
+      <li *ngFor="let playQueueItem of playQueue.getScheduledItems()">
+        {{playQueueItem.get('track').get('title')}}
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<hr>
+
+Debug output
+
+<ul>
+  <li *ngFor="let playQueueItem of playQueue.models; let i = index"
+      (dblclick)="playQueueItem.play()"
+      [style.font-weight]="playQueue.getCurrentItem() && playQueue.getCurrentItem().id === playQueueItem.id ? 900 : 400"
+      [class.text-muted]="playQueueItem.isQueued()">
+    <span *ngIf="i===playQueue.playIndex"> > </span>
+    {{playQueueItem.get('status')}}
+    <span>{{playQueueItem.get('track').get('title')}}</span>
+  </li>
+</ul>

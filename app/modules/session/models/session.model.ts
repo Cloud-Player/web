@@ -18,7 +18,7 @@ export class Session extends SoundcloudModel {
     return Session.instance;
   }
 
-  defaults() {
+  defaults(): Object {
     return {
       expires_on: null,
       refresh_token: null
