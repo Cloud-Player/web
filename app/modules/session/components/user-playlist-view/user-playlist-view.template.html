@@ -1,0 +1,8 @@
+<div class="row">
+  <h3>
+    {{playlist.get('title')}}
+  </h3>
+
+  <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
+
+</div>
