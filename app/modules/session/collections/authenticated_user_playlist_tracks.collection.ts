@@ -13,7 +13,7 @@ export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Track
     return track;
   }
 
-  triggerSave(track: Track){
+  triggerSave(track: Track) {
     this.trigger('save', track, this);
   }
 

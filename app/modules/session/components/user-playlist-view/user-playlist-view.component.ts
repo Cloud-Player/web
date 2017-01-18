@@ -17,8 +17,8 @@ export class UserPlayListViewComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
   }
 
-  private fetchPlaylist(){
-    if(this.session.get('user').authenticated && this.playlist.id){
+  private fetchPlaylist() {
+    if (this.session.isValid() && this.playlist.id) {
       this.playlist.fetch();
     }
   }

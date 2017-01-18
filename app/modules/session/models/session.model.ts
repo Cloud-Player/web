@@ -106,7 +106,7 @@ export class Session extends SoundcloudModel {
     this.fetchLocal();
   };
 
-  isValid():boolean{
+  isValid(): boolean {
     return this.get('access_token') && this.isNotExpired();
   }
 }
