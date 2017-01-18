@@ -16,7 +16,7 @@ body {
   background: $body-bg;
 }
 
-main {
+main.flex-container {
 
   &:before {
     width: 100%;
@@ -40,8 +40,4 @@ a {
 h1 {
   font-size: 22px;
   margin: 15px 0;
-}
-
-header {
-  background: $gray-dark;
 }

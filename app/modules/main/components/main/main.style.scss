@@ -1,0 +1,29 @@
+.flex-container {
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+
+  .flex-item {
+  }
+
+  nav-sidebar {
+    order: 1;
+    flex-grow: 0;
+    flex-basis: 8%;
+  }
+
+  audio-player {
+    order: 2;
+    flex-grow: 0;
+    flex-basis: 22%;
+  }
+
+  div.routes {
+    order: 3;
+    flex-grow: 1;
+    flex-basis: 35%;
+  }
+
+}

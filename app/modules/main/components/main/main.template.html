@@ -1,12 +1,12 @@
-<section class="container-fluid">
+<section>
 
-  <main class="row">
+  <main class="flex-container">
 
-    <nav-sidebar class="col-md-1"></nav-sidebar>
-    <audio-player class="col-md-4"></audio-player>
+    <nav-sidebar class="flex-item"></nav-sidebar>
+    <audio-player class="flex-item"></audio-player>
 
-    <div class="col-md-7">
-      <router-outlet></router-outlet>
+    <div class="routes">
+      <router-outlet class="flex-item"></router-outlet>
     </div>
 
   </main>
