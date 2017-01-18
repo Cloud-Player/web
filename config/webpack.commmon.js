@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
+        loader: 'style!css!sass!resolve-url!sass?sourceMap'
       },
       {
         test: /\.css$/,
