@@ -16,41 +16,41 @@ export class CollectionSortComponent {
 
   @Input() label: string;
 
-  isDescendingSorted: boolean = false;
+  sortDesc: boolean = true;
 
   isSorted(): boolean {
-    return this.collection && this.collection.comparator === this.comparator;
-  }
-
-  sortDesending(): void {
-    this.collection.set(this.collection.models.reverse());
+    return this.collection &&
+      (
+        (this.collection.comparator === this.comparator) ||
+        (!this.comparator && !this.collection.comparator)
+      );
   }
 
   sort(): void {
     if (this.comparator) {
-      if (!this.isSorted()) {
-        this.isDescendingSorted = false;
+      if (this.collection.length < 2) {
+        return;
       }
-
-      this.collection.comparator = this.comparator;
-      this.collection.sort();
-
-      if (!this.isDescendingSorted) {
-        this.sortDesending();
+      if (this.collection.comparator !== this.comparator) {
+        this.collection.sortOrder = null;
+        this.collection.comparator = this.comparator;
       }
-
-      this.isDescendingSorted = !this.isDescendingSorted;
-
+      if (!this.collection.sortOrder || this.collection.sortOrder === 'ASC') {
+        this.collection.sortDescending();
+      } else {
+        this.collection.sortAscending();
+      }
+    } else if (this.collection.comparator) {
+      this.collection.comparator = null;
+      this.collection.fetch({sort: false});
     }
   }
 
   ngOnInit() {
-    this.collection.on('reset', () => {
-      if (this.isSorted() && this.isDescendingSorted) {
-        this.sortDesending();
+    this.collection.on('sync', () => {
+      if (this.isSorted() && this.comparator) {
+        this.collection.sortDescending();
       }
-      console.log('RESET');
     });
   }
-
 }

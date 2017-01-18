@@ -5,16 +5,20 @@ import {ToggleLikedTrackComponent} from './components/toggle-liked-track-compone
 import {PlayButtonComponent} from './components/play-button/play_button.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {QueueButtonComponent} from './components/queue-button/queue_button.component';
+import {SortTracksComponent} from './components/sort-tracks/sort-tracks.component';
+import {BackboneModule} from '../backbone/backbone.module';
 
 @NgModule({
   imports: [
-    BrowserModule
+    BrowserModule,
+    BackboneModule
   ],
   declarations: [
     TrackListComponent,
     ToggleLikedTrackComponent,
     PlayButtonComponent,
     QueueButtonComponent,
+    SortTracksComponent,
     HumanReadableSecondsPipe
   ],
   exports: [
@@ -22,6 +26,7 @@ import {QueueButtonComponent} from './components/queue-button/queue_button.compo
     ToggleLikedTrackComponent,
     PlayButtonComponent,
     QueueButtonComponent,
+    SortTracksComponent,
     HumanReadableSecondsPipe
   ]
 })
