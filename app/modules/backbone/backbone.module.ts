@@ -7,7 +7,9 @@ import 'backbone';
 import {Model, Collection} from 'backbone';
 import {BaseModel} from './models/base.model';
 import {BaseCollection} from './collections/base.collection';
-import {CollectionSearchComponent} from './components/collection-search/collection-search.component';
+import {CollectionTextInputSearchComponent} from './components/collection-text-input-search/collection-text-input-search.component';
+import {CollectionRangeInputSearchComponent} from './components/collection-range-input-search/collection-range-input-search.component';
+import {CollectionSortComponent} from './components/collection-sort-component/collection-sort.component';
 
 declare namespace Backbone {
   export function sync(method: string, model: Model|Collection<Model>, options?: any): any;
@@ -18,14 +20,18 @@ declare namespace Backbone {
 @NgModule({
   imports: [BrowserModule, FormsModule],
   exports: [
-    CollectionSearchComponent
+    CollectionTextInputSearchComponent,
+    CollectionRangeInputSearchComponent,
+    CollectionSortComponent
   ],
   providers: [
     BaseCollection,
     BaseModel
   ],
   declarations: [
-    CollectionSearchComponent
+    CollectionTextInputSearchComponent,
+    CollectionRangeInputSearchComponent,
+    CollectionSortComponent
   ],
 })
 

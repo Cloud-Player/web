@@ -5,6 +5,7 @@
 <button type="button" (click)="playTrack()" *ngIf="!playQueue.getPlayingItem()">
   <i class="fa fa-play" aria-hidden="true"></i>
 </button>
+
 <button type="button" (click)="pauseTrack()" *ngIf="playQueue.getPlayingItem()">
   <i class="fa fa-pause" aria-hidden="true"></i>
 </button>
@@ -13,13 +14,7 @@
   <i class="fa fa-forward" aria-hidden="true"></i>
 </button>
 
-<input type="range" min="0" max="1" [(ngModel)]="audio.volume" step="0.01" />
-
-<div class="audio-player-progress">
-  <div #audioPlayerProgressBarLine class="audio-player-progress-bar-line"></div>
-  <div #audioPlayerHandle class="audio-player-progress-bar-handle" draggable="true" [style.left]="timeTickPosition + 'px'"></div>
-  <div #audioPlayerProgressBar class="audio-player-progress-bar" [style.width]="timeTickPosition + 'px'"></div>
-</div>
-
-<span>{{timeTick}}</span>
-<span> {{duration}} </span>
+<range-slider min="0" max="1" [value]="audio.volume" step="0.01" (valueChange)="setVolume($event)" (valueChanged)="saveVolume($event)"></range-slider>
+<range-slider min="0" [max]="audio.duration" [value]="timeTick" step="0.01" (valueChanged)="playTrackFromPosition($event)" [isLoading]="isBuffering"></range-slider>
+<span>{{timeTick | hReadableSeconds}}</span>
+<span> {{duration | hReadableSeconds}} </span>

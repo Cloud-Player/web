@@ -8,6 +8,7 @@ export class Tracks<TModel extends Track> extends SoundcloudCollection<TModel> {
     model: any = Track;
     queryParams = {
         q: 'bedouin',
-        limit: 10
+        limit: 200,
+        'duration[from]': 1
     };
 }

@@ -1,0 +1,8 @@
+<span (click)="sort()" [style.font-weight]="isSorted()?'bold':'normal'">
+  <i *ngIf="isSorted()"
+     class="fa fa-angle-up"
+     [class.fa-angle-up]="collection.sortOrder === 'ASC' && comparator"
+     [class.fa-angle-down]="collection.sortOrder === 'DESC' && comparator"
+     aria-hidden="true"></i>
+  {{label}}
+</span>

@@ -14,7 +14,7 @@ export class SoundcloudCollection<TModel extends SoundcloudModel> extends BaseCo
   };
 
   sync(method: string, model: any, options: any = {}) {
-    options.search.set('client_id', this.clientId);
+    this.queryParams['client_id'] = this.clientId;
     return super.sync(method, model, options);
   }
 

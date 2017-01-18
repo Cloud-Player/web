@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Session} from '../../models/session.model';
 import {Playlist} from '../../../playlists/models/playlist.model';
+import './liked-tracks-view.style.scss';
 
 @Component({
   selector: 'liked-track-view',

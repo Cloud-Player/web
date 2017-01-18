@@ -3,5 +3,9 @@
     Liked Tracks
   </h3>
 
+  <hr>
+
+  <sort-tracks [tracks]="user.get('likes')"></sort-tracks>
+
   <track-list [tracks]="user.get('likes')"></track-list>
 </div>

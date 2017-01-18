@@ -4,15 +4,15 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
-import './collection-search.style.scss';
+import './collection-text-input-search.style.scss';
 
 @Component({
-  selector: 'collection-search',
-  template: require('./collection-search.template.html'),
-  styleUrls: ['/collection-search.style.css']
+  selector: 'collection-text-input-search',
+  template: require('./collection-text-input-search.template.html'),
+  styleUrls: ['/collection-text-input-search.style.css']
 })
 
-export class CollectionSearchComponent implements OnInit {
+export class CollectionTextInputSearchComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
   private query: string;

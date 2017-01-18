@@ -6,6 +6,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {SessionModule} from '../session/session.module';
 import {BackboneModule} from '../backbone/backbone.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {BackboneModule} from '../backbone/backbone.module';
     TracksModule,
     DashboardRoutingModule,
     SessionModule,
-    BackboneModule
+    BackboneModule,
+    SharedModule
   ],
   declarations: [
     DashboardIndexComponent

@@ -1,0 +1,12 @@
+<div class="sort-tracks">
+  Sort tracks by:
+  <collection-sort [collection]="tracks" [label]="'None'"></collection-sort>
+  |
+  <collection-sort [collection]="tracks" [comparator]="'duration'" [label]="'Duration'"></collection-sort>
+  |
+  <collection-sort [collection]="tracks" [comparator]="'likes_count'" [label]="'Likes'"></collection-sort>
+  |
+  <collection-sort [collection]="tracks" [comparator]="'playback_count'" [label]="'Plays'"></collection-sort>
+  |
+  <collection-sort [collection]="tracks" [comparator]="'created_at'" [label]="'Created At'"></collection-sort>
+</div>
