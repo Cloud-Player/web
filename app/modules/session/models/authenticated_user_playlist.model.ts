@@ -7,14 +7,14 @@ import {AuthenticatedUserPlaylistTracks} from '../collections/authenticated_user
 export class AuthenticatedUserPlaylist extends Playlist {
   endpoint = '/me/playlists';
 
-  nested(){
+  nested() {
     return extend(super.nested(), {
       tracks: AuthenticatedUserPlaylistTracks
     });
   }
 
   initialize() {
-    this.get('tracks').on('add remove', () => {
+    this.get('tracks').on('save', () => {
       this.save();
     });
   };

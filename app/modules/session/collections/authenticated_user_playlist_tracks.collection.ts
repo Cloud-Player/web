@@ -6,4 +6,15 @@ import {AuthenticatedUserPlaylistTrack} from '../models/authenticated_user_playl
 @Injectable()
 export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Tracks<TModel> {
   model: any = AuthenticatedUserPlaylistTrack;
+
+  create(track: TModel): TModel {
+    this.add(track);
+    this.triggerSave(track);
+    return track;
+  }
+
+  triggerSave(track: Track){
+    this.trigger('save', track, this);
+  }
+
 }
