@@ -5,7 +5,7 @@ import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlis
 @Component({
   moduleId: module.id,
   selector: 'authenticated-user-playlists',
-  templateUrl: 'authenticated_user_playlists.html',
+  templateUrl: 'authenticated_user_playlists.html'
 })
 export class AuthenticatedUserPlaylists {
   private session = Session.getInstance();
@@ -30,5 +30,9 @@ export class AuthenticatedUserPlaylists {
     newPlaylist.save().then(() => {
       this.tmpPlaylist.clear();
     });
+  }
+
+  dropTrack(dropData: {}, playlist: AuthenticatedUserPlaylist, event: DragEvent): void {
+    playlist.get('tracks').create(dropData);
   }
 }

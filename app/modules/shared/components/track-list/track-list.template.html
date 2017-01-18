@@ -1,5 +1,9 @@
 <div class="tracks-list">
-  <div *ngFor="let track of tracks.models" class="track col-md-12">
+  <div *ngFor="let track of tracks.models" class="track col-md-12"
+       draggable="true"
+       [dragData]="track.toJSON()"
+       [dragImageUrl]="track.get('artwork_url').getSmallSize()"
+       dragEffect="copy">
     <div class="cover" class="col-md-3" (click)="gotoDetail(track)">
       <img [src]="track.get('artwork_url').getDefaultSize()" [alt]="track.get('title')">
     </div>
