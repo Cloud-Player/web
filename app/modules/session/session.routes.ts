@@ -3,10 +3,12 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {SoundcloudCallbackComponent}   from './components/soundcloud-callback/soundcloud_callback.component';
 import {LikedTracksViewComponent} from './components/liked-tracks-view/liked-tracks-view.component';
+import {UserPlayListViewComponent} from './components/user-playlist-view/user-playlist-view.component';
 
 const routes: Routes = [
   {path: 'connect', component: SoundcloudCallbackComponent},
-  {path: 'likes', component: LikedTracksViewComponent}
+  {path: 'me/likes', component: LikedTracksViewComponent},
+  {path: 'me/playlists/:id', component: UserPlayListViewComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
