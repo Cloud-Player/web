@@ -3,6 +3,7 @@ import {PlayQueue} from '../../collections/play_queue.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
+import './play_button.style.scss';
 
 @Component({
   selector: 'audio-player-play-button',

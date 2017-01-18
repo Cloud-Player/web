@@ -5,6 +5,8 @@ var path = require('path');
 var helpers = require('./helpers');
 
 module.exports = {
+  devtool: "source-map", // or "inline-source-map"
+
   entry: {
     'polyfills': './app/polyfills.ts',
     'vendor': './app/vendor.ts',
@@ -34,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['raw-loader', 'sass-loader'] // sass-loader not scss-loader
+        loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
       },
       {
         test: /\.css$/,
