@@ -1,2 +1,10 @@
-<button (click)="play()" *ngIf="!isPlaying()">Play</button>
-<button (click)="pause()" *ngIf="isPlaying()">Pause</button>
+<button *ngIf="!isPlaying()"
+        class="btn btn-primary btn-xs"
+        (click)="play()">
+  Play
+</button>
+<button *ngIf="isPlaying()"
+        class="btn btn-default btn-xs"
+        (click)="pause()">
+  Pause
+</button>
