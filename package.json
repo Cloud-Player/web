@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npm install -g webpack",
     "start": "webpack-dev-server --display-error-details --inline --progress --port 8080",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail --display-error-details",
     "electron": "webpack --config config/webpack.electron.js --progress --profile --bail"
   },
   "keywords": [],
