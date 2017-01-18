@@ -17,7 +17,7 @@ export class SoundcloudCollection<TModel extends SoundcloudModel> extends BaseCo
   sync(method: string, model: any, options: any = {}) {
     this.queryParams['client_id'] = this.clientId;
     let session = getSession();
-    if (session && session.get('access_token') && session.isNotExpired()) {
+    if (session && session.isValid()) {
       this.queryParams['oauth_token'] = session.get('access_token');
     }
     return super.sync(method, model, options);
