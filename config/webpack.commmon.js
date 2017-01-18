@@ -4,7 +4,7 @@ var path = require('path');
 var helpers = require('./helpers');
 
 module.exports = {
-  devtool: "source-map", // or "inline-source-map"
+  // devtool: "source-map", // or "inline-source-map"
 
   entry: {
     'polyfills': './app/polyfills.ts',

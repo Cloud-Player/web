@@ -11,6 +11,7 @@
     "prepush": "npm test",
     "test": "concurrently --kill-others \"gulp src:lint\"",
     "package": "gulp electron:package",
+
     "webpack": "webpack-dev-server --display-error-details --inline --progress --port 8080",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "webpackelectron": "webpack --config config/webpack.electron.js --progress --profile --bail"
