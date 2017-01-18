@@ -6,9 +6,9 @@ env:
   - GH_REF=github.com/Zarlex/cloud-player
   - secure: "KlZzlKY1G5w035pbzJbNr2mR8fjHtz//2UqiB12A2QAlQY+B2ZsCFDJO2jTdgLEFUT5i62F77IphHILjyGKqaQ88jKMSMHRuzuVLqJD23tLXB8VUzj3AGF4B2pgjb9hyTj1BEKG0pktCC2lpIzmP0XGMwgDWqhenOVUQFvW26vb8OoQ3zUlMh7TNiujOvrUTf5n+c7NOuI6e/Ihu/Zi+Pt7b6KY7qGpLNU8oZ07cT7150jo8ISWe6Yvp6KSjAFhEvY4yXLPABRvwgMez+NtLQi5/mU5Vf2WaQx45AGtT/BuJd2opfanF5CD0NeeIrdXS14iJVeP5cOCa7NFnpialXIid34+nHegH9KqdYSINgjlwgIWqwK+FW7FnqhkxMnEVbjpv52pdqMfwFYWN3pTAfY/fzYugiHPrv/GzGzK8lmEB6t6ND5zj6RB08cyq7l/6iMuMyyAvcgZDfrNrbPHpSo1mn5SA3gRzYKCRPq2LsBvckD9Ocq1vrHSJXuf6+7MTKEn4V/DRhfHw0VejPMXKwuRrVJbZbk1tJX1QYYgMhygX97GMQ0Xd6rsPb47d1qsR0Z4R5xqI8VcmNbnPAdZUYi+cqxu/DDnXrpd+iAk8RDpxpv7JvoC5PLLCJfUoKtPCfPPZHi3MHBEewrr8QswcC74sg5WPaGhpMJvQGgopNfY="
 before_install:
-- npm install -g gulp-cli
+- npm install -g webpack
 before_deploy:
-- gulp dist
+- npm run build
 deploy:
   - provider: script
     script: ./bin/github_pages_release.sh
