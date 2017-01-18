@@ -1,7 +1,8 @@
-import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
 import {AuthenticatedUser} from './authenticated_user.model';
 import Timer = NodeJS.Timer;
+import {setSession} from '../../shared/session-manager.fn';
+import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 
 @Injectable()
 export class Session extends SoundcloudModel {
@@ -105,3 +106,5 @@ export class Session extends SoundcloudModel {
     this.fetchLocal();
   };
 }
+
+setSession(Session.getInstance());
