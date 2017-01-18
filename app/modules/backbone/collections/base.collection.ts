@@ -13,6 +13,24 @@ export class BaseCollection<TModel extends BaseModel> extends Collection<TModel>
 
   endpoint: string = null;
 
+  sortOrder: string = null;
+
+  private setSearchParams(searchParams: URLSearchParams, obj: {} = {}, discardKeys: Array<string> = []): URLSearchParams {
+    Object.keys(obj).forEach((key) => {
+      if (discardKeys.indexOf(key) === -1) {
+        searchParams.set(key, this.queryParams[key]);
+      }
+    });
+    return searchParams;
+  }
+
+  constructor() {
+    super();
+    this.on('sync', () => {
+      this.sortOrder = null;
+    });
+  }
+
   hostName(): string {
     return '';
   };
@@ -24,15 +42,6 @@ export class BaseCollection<TModel extends BaseModel> extends Collection<TModel>
   url = () => {
     return getUrl(this);
   };
-
-  private setSearchParams(searchParams: URLSearchParams, obj: {} = {}, discardKeys: Array<string> = []): URLSearchParams {
-    Object.keys(obj).forEach((key) => {
-      if (discardKeys.indexOf(key) === -1) {
-        searchParams.set(key, this.queryParams[key]);
-      }
-    });
-    return searchParams;
-  }
 
   sync(method: string, model: any, options: any = {}) {
     let searchParams: URLSearchParams;
@@ -65,7 +74,21 @@ export class BaseCollection<TModel extends BaseModel> extends Collection<TModel>
     options.search = queryParams;
     return super.fetch(options);
   }
-  ;
+
+  sortAscending() {
+    this.sort();
+    this.sortOrder = 'ASC';
+  }
+
+  sortDescending() {
+    if (this.sortOrder !== 'ASC') {
+      this.sortAscending();
+    }
+    this.models = this.models.reverse();
+    this.trigger('sort', this);
+    this.sortOrder = 'DESC';
+  }
+
 }
 
 
