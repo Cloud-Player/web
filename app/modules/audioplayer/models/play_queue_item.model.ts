@@ -1,5 +1,5 @@
 import {Track} from '../../tracks/models/track.model';
-import {SoundcloudModel} from '../../main/models/soundcloud.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 
 export class PlayQueueItem extends SoundcloudModel {
 
