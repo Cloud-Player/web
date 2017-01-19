@@ -3,6 +3,7 @@ import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
 import * as localforage from 'localforage';
+import {Track} from '../../../tracks/models/track.model';
 
 @Component({
   selector: 'audio-player-controls',
@@ -72,19 +73,13 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   private initializeLastPlayingTrack(lastTrack: any) {
-    this.playQueue.once('add', (item: PlayQueueItem) => {
-      if (item.id && lastTrack.id) {
-        this.audio.currentTime = lastTrack.currentTime;
-        this.timeTick = lastTrack.currentTime;
-        this.duration = lastTrack.duration;
-      }
-      if (item.get('track').get('stream_url')) {
-        this.audio.src = item.get('track').getResourceUrl();
-      } else {
-        item.get('track').once('change:stream_url', () => {
-          this.audio.src = item.get('track').getResourceUrl();
-        });
-      }
+    this.audio.currentTime = lastTrack.currentTime;
+    this.timeTick = lastTrack.currentTime;
+    this.duration = lastTrack.duration;
+
+    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}});
+    item.get('track').fetch().then((track: Track) => {
+      this.audio.src = track.getResourceUrl();
     });
   }
 
@@ -188,6 +183,8 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.audio.src = item.get('track').getResourceUrl();
       this.audio.currentTime = currTime;
     }
+
+    this.timeTick = this.audio.currentTime;
 
     this.audio.play();
   }

@@ -31,4 +31,8 @@ export class AuthenticatedUserPlaylists {
       this.tmpPlaylist.clear();
     });
   }
+
+  dropTrack(dropData: {}, playlist: AuthenticatedUserPlaylist, event: DragEvent): void {
+    playlist.get('tracks').create(dropData);
+  }
 }

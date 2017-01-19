@@ -4,7 +4,7 @@ import {Session} from '../../../session/models/session.model';
 
 @Component({
   selector: 'nav-sidebar',
-  styles: [ require('./nav.style.scss') ],
+  styles: [require('./nav.style.scss')],
   template: require('./nav.template.html')
 })
 

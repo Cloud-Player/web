@@ -4,7 +4,7 @@ var path = require('path');
 var helpers = require('./helpers');
 
 module.exports = {
-  // devtool: "source-map", // or "inline-source-map"
+  devtool: "source-map", // or "inline-source-map"
 
   entry: {
     'polyfills': './app/polyfills.ts',
@@ -12,11 +12,10 @@ module.exports = {
     'app': './app/main.ts'
   },
 
-
   resolve: {
     modules: [path.resolve(__dirname, '/app'), 'node_modules/'],
     descriptionFiles: ['package.json'],
-    extensions: ['', '.js', '.ts', '.css', '.scss']
+    extensions: ['', '.js', '.ts', '.css']
   },
 
   module: {
@@ -29,16 +28,19 @@ module.exports = {
         test: /\.html$/,
         loader: 'html'
       },
-
-      {
-        test: /\.css$/,
-        loader:'style!css!'
-      },
       {
         test: /\.scss$/,
+        exclude: [/\.global\.scss$/],
         loaders: ['raw-loader', 'sass-loader']
       },
-
+      {
+        test: /\.global\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader']
+      },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=application/font-woff"
@@ -66,6 +68,8 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: './index.html'
-    })
+    }),
+
   ]
-};
+}
+;

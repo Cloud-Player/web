@@ -11,7 +11,9 @@ import 'rxjs';
 
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
-import './main.scss';
+// import './node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+// import './_variables';
+import './main.global.scss';
 
 import 'backbone';
 import 'underscore';
