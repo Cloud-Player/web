@@ -156,6 +156,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   previousTrack(): void {
     if (this.audio && this.audio.currentTime && this.audio.currentTime > 1) {
+      this.timeTick = 0;
       this.playTrackFromPosition(0);
     } else {
       if (this.playQueue.hasPreviousItem()) {
