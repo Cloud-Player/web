@@ -73,14 +73,13 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   private initializeLastPlayingTrack(lastTrack: any) {
-    this.audio.currentTime = lastTrack.currentTime;
-    this.timeTick = lastTrack.currentTime;
-    this.duration = lastTrack.duration;
-
-    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}});
+    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0, merge: true});
     item.get('track').fetch().then((track: Track) => {
       this.audio.src = track.getResourceUrl();
     });
+    this.audio.currentTime = lastTrack.currentTime;
+    this.timeTick = lastTrack.currentTime;
+    this.duration = lastTrack.duration;
   }
 
   ngOnInit() {

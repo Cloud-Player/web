@@ -42,12 +42,8 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   getScheduledItemsJSON(maxItems: number): Array<{}> {
     let allItems: Array<{}> = [],
       queuedItems = this.getQueuedItems(),
-      scheduledItems = this.getScheduledItems(),
-      currentItem = this.getCurrentItem();
+      scheduledItems = this.getScheduledItems();
 
-    if (currentItem) {
-      allItems.push(this.getMiniItem(currentItem));
-    }
     this.pushMiniItems(queuedItems, allItems, maxItems);
     this.pushMiniItems(scheduledItems, allItems, maxItems);
     return allItems;
