@@ -190,6 +190,8 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.audio.currentTime = currTime;
     }
 
+    this.timeTick = this.audio.currentTime;
+
     this.audio.play();
   }
 
