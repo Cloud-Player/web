@@ -14,4 +14,4 @@ deploy:
     script: ./bin/github_pages_release.sh
     skip_cleanup: true 
     on: 
-      branch: feature/electron
+      branch: master
