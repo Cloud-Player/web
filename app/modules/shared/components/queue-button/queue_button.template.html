@@ -1,3 +1,5 @@
 <span class="play-button">
-  <button (click)="queue()" *ngIf="!isQueued()">Add To Queue</button>
+  <button *ngIf="!isQueued()"
+          class="btn btn-default btn-xs"
+          (click)="queue()">Add To Queue</button>
 </span>

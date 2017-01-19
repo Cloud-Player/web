@@ -8,8 +8,9 @@ import {ShowWhenAuthenticatedComponent} from './components/show-when-authenticat
 import {AuthenticatedUserPlaylists} from './components/authenticated-user-playlists/authenticated_user_playlists';
 import {LikedTracksViewComponent} from './components/liked-tracks-view/liked-tracks-view.component';
 import {SharedModule} from '../shared/shared.module';
+import {UserPlayListViewComponent} from './components/user-playlist-view/user-playlist-view.component';
 
-@NgModule ({
+@NgModule({
   imports: [
     BrowserModule,
     FormsModule,
@@ -21,7 +22,8 @@ import {SharedModule} from '../shared/shared.module';
     SoundcloudCallbackComponent,
     ShowWhenAuthenticatedComponent,
     AuthenticatedUserPlaylists,
-    LikedTracksViewComponent
+    LikedTracksViewComponent,
+    UserPlayListViewComponent
   ],
   exports: [
     ConnectBtnComponent,
@@ -31,5 +33,4 @@ import {SharedModule} from '../shared/shared.module';
 })
 
 export class SessionModule {
-
 }

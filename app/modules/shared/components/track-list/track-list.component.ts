@@ -15,6 +15,8 @@ export class TrackListComponent {
 
   @Input() tracks: Tracks<Track>;
 
+  @Input() canBeDeleted: boolean;
+
   constructor(private router: Router) { }
 
   gotoDetail(track: Track): void {

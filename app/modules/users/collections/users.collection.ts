@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {SoundcloudCollection} from '../../main/collections/soundcloud.collection';
 import {User} from '../models/user.model';
+import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
 
 @Injectable()
 export class Users<TModel extends User> extends SoundcloudCollection<TModel> {
