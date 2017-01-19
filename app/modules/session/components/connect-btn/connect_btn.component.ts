@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
 import {Session} from '../../models/session.model';
 import setInterval = core.setInterval;
-import './connect_btn.style.scss'
+import '!!style!css!sass!./connect_btn.style.scss'
 
 @Component({
   selector: 'connect-btn',
+  styles: [ require('./connect_btn.style.scss') ],
+
   template: require('./connect_btn.template.html')
 })
 export class ConnectBtnComponent {

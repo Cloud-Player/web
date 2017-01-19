@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
-import './audio-player.style.scss';
+import '!!style!css!sass!./audio-player.style.scss';
 
 @Component ({
   selector: 'audio-player',
+  styles: [ require('./audio-player.style.scss') ],
   template: require('./audio-player.template.html')
 })
 

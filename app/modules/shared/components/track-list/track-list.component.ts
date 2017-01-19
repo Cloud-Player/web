@@ -3,10 +3,12 @@ import {Router} from '@angular/router';
 
 import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
-import './track-list.style.scss';
+import '!!style!css!sass!./track-list.style.scss';
 
 @Component({
   selector: 'track-list',
+  styles: [ require('./track-list.style.scss') ],
+
   template: require('./track-list.template.html'),
   providers: [Tracks]
 })

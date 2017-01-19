@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
-import './main.style.scss';
+import '!!style!css!sass!./main.style.scss';
 
 @Component({
     selector: 'cloud-player',
-    template: require('./main.template.html')
+  styles: [ require('./main.style.scss') ],
+
+  template: require('./main.template.html')
 })
 
 export class MainComponent {

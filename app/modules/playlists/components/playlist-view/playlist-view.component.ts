@@ -2,10 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {Playlist} from '../../models/playlist.model';
-import './playlist-view.style.scss';
+import '!!style!css!sass!./playlist-view.style.scss';
 
 @Component({
   selector: 'play-list-view',
+  styles: [ require('./playlist-view.style.scss') ],
+
   template: require('./playlist-view.template.html'),
   providers: [Playlist]
 })

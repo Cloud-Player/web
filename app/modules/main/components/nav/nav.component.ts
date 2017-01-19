@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
-import './nav.style.scss';
+import '!!style!css!sass!./nav.style.scss';
 
 @Component({
   selector: 'nav-sidebar',
+  styles: [ require('./nav.style.scss') ],
+
   template: require('./nav.template.html')
 })
 

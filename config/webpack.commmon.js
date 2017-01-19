@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     modules: [path.resolve(__dirname, '/app'), 'node_modules/'],
     descriptionFiles: ['package.json'],
-    extensions: ['', '.js', '.ts', '.css']
+    extensions: ['', '.js', '.ts', '.css', '.scss']
   },
 
   module: {
@@ -29,14 +29,16 @@ module.exports = {
         test: /\.html$/,
         loader: 'html'
       },
-      {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
-      },
+
       {
         test: /\.css$/,
         loader:'style!css!'
       },
+      {
+        test: /\.scss$/,
+        loaders: ['raw-loader', 'sass-loader']
+      },
+
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=application/font-woff"
