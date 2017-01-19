@@ -30,6 +30,7 @@
       'backbone': 'npm:backbone/backbone.js',
       'underscore': 'npm:underscore/underscore.js',
       'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
+      'localforage': 'npm:localforage/dist/localforage.js',
 
       //shims
       'core-js-shim':'npm:core-js/client/shim.min.js',

@@ -5,8 +5,11 @@ import {PlayQueueComponent} from './components/playqueue/playqueue.component';
 import {SharedModule} from '../shared/shared.module';
 import {AudioPlayerComponent} from './components/audio-player/audio-player.component';
 import {AudioPlayerControlsComponent} from './components/audio-player-controls/audio-player-controls.component';
+import {debounce} from 'underscore';
+import * as localforage from 'localforage';
+import {PlayQueue} from './collections/play_queue.collection';
 
-@NgModule ({
+@NgModule({
   imports: [
     BrowserModule,
     FormsModule,
@@ -22,4 +25,22 @@ import {AudioPlayerControlsComponent} from './components/audio-player-controls/a
   ]
 })
 
-export class AudioPlayerModule { }
+export class AudioPlayerModule {
+
+  constructor() {
+    let playQueue = PlayQueue.getInstance();
+
+    localforage.getItem('sc_playqueue').then((playQueueItems: any) => {
+      if (playQueueItems) {
+        playQueue.add(playQueueItems);
+        playQueue.fetchTrackInformationOfAllAddedTracks();
+      }
+    });
+
+    let debouncedPlayQueueSave = debounce(() => {
+      localforage.setItem('sc_playqueue', playQueue.getScheduledItemsJSON(30));
+    }, 100);
+    playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
+  }
+
+}
