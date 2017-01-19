@@ -9,6 +9,11 @@
       <p>{{track.get('user').get('username')}}</p>
       <play-button [track]="track" [tracks]="tracks"></play-button>
       <queue-button [track]="track" [tracks]="tracks"></queue-button>
+      <button *ngIf="canBeDeleted"
+              class="btn btn-default btn-xs"
+              (click)="track.destroy()">
+        Delete
+      </button>
     </div>
   </div>
 </div>

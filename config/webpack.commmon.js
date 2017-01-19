@@ -55,7 +55,8 @@ module.exports = {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=image/svg+xml"
       }
-    ]
+    ],
+    noParse: [new RegExp('./node_modules/localforage/dist/localforage.js')]
   },
 
   plugins: [

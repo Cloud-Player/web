@@ -1,8 +1,8 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
-import {BaseCollection} from '../../backbone/collections/base.collection';
 import {isArray} from 'underscore';
+import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
 
-export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TModel> {
+export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
   private static instance: PlayQueue<PlayQueueItem>;
 
   private playIndex = 0;
@@ -18,6 +18,70 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     }
   }
 
+  private getMiniItem(playQueueItem: PlayQueueItem): {} {
+    let mini = playQueueItem.toJSON(true);
+    mini.track = {
+      id: mini.track.id
+    };
+    if (mini.status === 'PLAYING') {
+      mini.status = 'PAUSED';
+    }
+    return mini;
+  }
+
+  private pushMiniItems(items: Array<PlayQueueItem>, allItems: Array<any>, maxItems?: number): Array<any> {
+    items.forEach((item: PlayQueueItem) => {
+      if (maxItems && allItems.length > maxItems) {
+        return;
+      }
+      allItems.push(this.getMiniItem(item));
+    });
+    return allItems;
+  }
+
+  getScheduledItemsJSON(maxItems: number): Array<{}> {
+    let allItems: Array<{}> = [],
+      queuedItems = this.getQueuedItems(),
+      scheduledItems = this.getScheduledItems(),
+      currentItem = this.getCurrentItem();
+
+    if (currentItem) {
+      allItems.push(this.getMiniItem(currentItem));
+    }
+    this.pushMiniItems(queuedItems, allItems, maxItems);
+    this.pushMiniItems(scheduledItems, allItems, maxItems);
+    return allItems;
+  }
+
+  parse(attrs: any): any {
+    let data: any = [];
+    attrs.forEach((track: any) => {
+      data.push({
+        id: track.id,
+        track: track
+      });
+    });
+    return data;
+  }
+
+  fetchTrackInformationOfAllAddedTracks(): void {
+    if (this.length === 0) {
+      return;
+    }
+
+    let ids = this.map((item) => {
+      return item.get('track').id;
+    }).join(',');
+
+    this.fetch(<any>{
+      url: '//api.soundcloud.com/tracks',
+      search: {
+        ids: ids
+      },
+      merge: true,
+      add: false
+    });
+  }
 
   getQueuedItems(): TModel[] {
     return this.where({status: 'QUEUED'});

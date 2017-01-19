@@ -27,7 +27,7 @@ export class ShowWhenAuthenticatedComponent {
       this.setAuthenticated(user);
     });
 
-    if (this.session.get('user').get('authenticated')) {
+    if (this.session.isValid()) {
       this.setAuthenticated(this.session.get('user'));
     }
   };

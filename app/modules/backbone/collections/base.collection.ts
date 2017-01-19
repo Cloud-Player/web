@@ -65,16 +65,6 @@ export class BaseCollection<TModel extends BaseModel> extends Collection<TModel>
     return super.sync(method, model, options);
   }
 
-
-  fetch(options: any = {}) {
-    let queryParams = new URLSearchParams();
-    Object.keys(this.queryParams).forEach((prop) => {
-      queryParams.set(prop, this.queryParams[prop]);
-    });
-    options.search = queryParams;
-    return super.fetch(options);
-  }
-
   sortAscending() {
     this.sort();
     this.sortOrder = 'ASC';

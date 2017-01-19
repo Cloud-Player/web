@@ -38,17 +38,19 @@
     "jquery": "^3.1.1",
     "bootstrap": "^4.0.0-alpha.6",
     "bootstrap-sass": "^3.3.7",
+    "localforage": "1.4.3",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.3",
     "systemjs": "0.19.39",
     "underscore": "1.8.3",
-    "zone.js": "^0.7.5"
+    "zone.js": "^0.7.6"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.34",
     "@types/jasmine": "^2.5.35",
+    "@types/localforage": "0.0.33",
     "@types/node": "^6.0.45",
     "angular2-template-loader": "^0.4.0",
     "awesome-typescript-loader": "^2.2.4",

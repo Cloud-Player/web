@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
+import * as localforage from 'localforage';
 
 @Component({
   selector: 'audio-player-controls',
@@ -37,6 +38,11 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     let throttledTimeUpdater = throttle(() => {
       this.timeTick = this.audio.currentTime;
+      localforage.setItem('sc_current_track', {
+        id: this.playQueue.getCurrentItem().get('track').id,
+        currentTime: this.audio.currentTime,
+        duration: this.audio.duration
+      });
     }, 1000);
 
     this.audio.addEventListener('timeupdate', throttledTimeUpdater);
@@ -65,11 +71,35 @@ export class AudioPlayerControlsComponent implements OnInit {
     });
   }
 
+  private initializeLastPlayingTrack(lastTrack: any) {
+    this.playQueue.once('add', (item: PlayQueueItem) => {
+      if (item.id && lastTrack.id) {
+        this.audio.currentTime = lastTrack.currentTime;
+        this.timeTick = lastTrack.currentTime;
+        this.duration = lastTrack.duration;
+      }
+      if (item.get('track').get('stream_url')) {
+        this.audio.src = item.get('track').getResourceUrl();
+      } else {
+        item.get('track').once('change:stream_url', () => {
+          this.audio.src = item.get('track').getResourceUrl();
+        });
+      }
+    });
+  }
+
   ngOnInit() {
-    let savedVolume = localStorage.getItem('sc_volume');
-    if (savedVolume) {
-      this.audio.volume = parseFloat(savedVolume);
-    }
+    localforage.getItem('sc_volume').then((volume: number) => {
+      if (volume) {
+        this.audio.volume = volume;
+      }
+    });
+
+    localforage.getItem('sc_current_track').then((currentTrack: any) => {
+      if (currentTrack) {
+        this.initializeLastPlayingTrack(currentTrack);
+      }
+    });
 
     window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
     window.addEventListener('nextTrackKeyPressed', this.nextTrack.bind(this));
@@ -97,7 +127,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   saveVolume(volume: number) {
     let roundedVolumeStr = (Math.round(volume * 10) / 10).toString();
-    localStorage.setItem('sc_volume', roundedVolumeStr);
+    localforage.setItem('sc_volume', roundedVolumeStr);
   }
 
   playTrack(playQueueItem: PlayQueueItem|null): void {
@@ -129,9 +159,13 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   previousTrack(): void {
-    if (this.playQueue.hasPreviousItem()) {
-      this.timeTick = 0;
-      this.playTrack(this.playQueue.getPreviousItem());
+    if (this.audio && this.audio.currentTime && this.audio.currentTime > 1) {
+      this.playTrackFromPosition(0);
+    } else {
+      if (this.playQueue.hasPreviousItem()) {
+        this.timeTick = 0;
+        this.playTrack(this.playQueue.getPreviousItem());
+      }
     }
   }
 
@@ -143,12 +177,14 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   startAudioPlayer(item: PlayQueueItem): void {
+    let currTime = this.audio.currentTime;
+
     if (this.audio.src !== item.get('track').getResourceUrl()) {
       this.audio.src = item.get('track').getResourceUrl();
+      this.audio.currentTime = 0;
     }
 
     if (this.hadError) {
-      let currTime = this.audio.currentTime;
       this.audio.src = item.get('track').getResourceUrl();
       this.audio.currentTime = currTime;
     }

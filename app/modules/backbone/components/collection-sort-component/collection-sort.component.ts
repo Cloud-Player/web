@@ -41,7 +41,7 @@ export class CollectionSortComponent {
       }
     } else if (this.collection.comparator) {
       this.collection.comparator = null;
-      this.collection.fetch({sort: false});
+      this.collection.fetch();
     }
   }
 
