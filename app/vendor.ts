@@ -13,7 +13,7 @@ import 'rxjs';
 // You can import js, ts, css, sass, ...
 // import './node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 // import './_variables';
-import './main.global.scss';
+import './main.scss';
 
 import 'backbone';
 import 'underscore';
