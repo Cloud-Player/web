@@ -1,6 +1,6 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
 import {isArray} from 'underscore';
-import {SoundcloudCollection} from '../../main/collections/soundcloud.collection';
+import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
 
 export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
   private static instance: PlayQueue<PlayQueueItem>;
