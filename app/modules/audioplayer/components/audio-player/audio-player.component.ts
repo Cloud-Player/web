@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
-import '!!style!css!sass!./audio-player.style.scss';
 
 @Component ({
   selector: 'audio-player',

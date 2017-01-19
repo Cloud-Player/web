@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
-import '!!style!css!sass!./main.style.scss';
 
 @Component({
-    selector: 'cloud-player',
-  styles: [ require('./main.style.scss') ],
-
+  selector: 'cloud-player',
+  styles: [require('./main.style.scss')],
   template: require('./main.template.html')
 })
 

@@ -4,12 +4,10 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
-import '!!style!css!sass!./collection-range-input-search.style.scss';
 
 @Component({
   selector: 'collection-range-input-search',
   styles: [ require('./collection-range-input-search.style.scss') ],
-
   template: require('./collection-range-input-search.template.html')
 })
 

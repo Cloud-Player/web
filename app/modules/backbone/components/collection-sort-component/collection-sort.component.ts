@@ -1,12 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
-import '!!style!css!sass!./collection-sort.style.scss';
 
 @Component({
   selector: 'collection-sort',
   styles: [ require('./collection-sort.style.scss') ],
-
   template: require('./collection-sort.template.html')
 })
 

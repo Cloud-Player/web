@@ -4,12 +4,10 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
-import '!!style!css!sass!./collection-text-input-search.style.scss';
 
 @Component({
   selector: 'collection-text-input-search',
   styles: [ require('./collection-text-input-search.style.scss') ],
-
   template: require('./collection-text-input-search.template.html')
 })
 

@@ -3,12 +3,10 @@ import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
 import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
-import '!!style!css!sass!./play_button.style.scss';
 
 @Component({
   selector: 'play-button',
-  styles: [ require('./play_button.style.scss') ],
-
+  styles: [require('./play_button.style.scss')],
   template: require('./play_button.template.html')
 })
 

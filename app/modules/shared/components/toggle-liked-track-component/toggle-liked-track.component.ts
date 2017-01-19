@@ -1,12 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {Track} from '../../../tracks/models/track.model';
 import {Session} from '../../../session/models/session.model';
-import '!!style!css!sass!./toggle-liked-track.style.scss';
 
 @Component({
   selector: 'toggle-liked-track',
   styles: [ require('./toggle-liked-track.style.scss') ],
-
   template: require('./toggle-liked-track.template.html')
 })
 export class ToggleLikedTrackComponent {

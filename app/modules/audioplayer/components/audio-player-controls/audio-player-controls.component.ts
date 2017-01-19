@@ -2,12 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
-import '!!style!css!sass!./audio-player-controls.style.scss';
 
 @Component({
   selector: 'audio-player-controls',
   styles: [ require('./audio-player-controls.style.scss') ],
-
   template: require('./audio-player-controls.template.html')
 })
 
