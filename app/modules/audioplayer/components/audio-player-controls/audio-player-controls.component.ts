@@ -78,7 +78,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     this.timeTick = lastTrack.currentTime;
     this.duration = lastTrack.duration;
 
-    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}});
+    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0, merge: true});
     item.get('track').fetch().then((track: Track) => {
       this.audio.src = track.getResourceUrl();
     });
