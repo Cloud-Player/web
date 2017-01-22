@@ -6,7 +6,7 @@
 
   <hr>
 
-  <sort-tracks [tracks]="tracks"></sort-tracks>
+  <sort-tracks [tracks]="playlist.get('tracks')"></sort-tracks>
 
   <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
 
