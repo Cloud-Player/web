@@ -8,12 +8,10 @@ function setSearchParams(searchParams: URLSearchParams, queryParams: {} = {}): U
 
     searchParams.set(key, value);
   });
-  console.log(searchParams)
   return searchParams;
 }
 
 export function prepareSearchParams(searchParams: any, queryParams: any) {
-
   if (!searchParams) {
     return setSearchParams(new URLSearchParams(), queryParams);
   } else if (searchParams instanceof URLSearchParams) {
@@ -24,5 +22,4 @@ export function prepareSearchParams(searchParams: any, queryParams: any) {
   } else {
     throw new Error('Search property of options has to be an object');
   }
-
 }
