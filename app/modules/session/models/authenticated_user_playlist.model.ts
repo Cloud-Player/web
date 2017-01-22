@@ -13,9 +13,18 @@ export class AuthenticatedUserPlaylist extends Playlist {
     });
   }
 
+  private setTracksEndpoint() {
+    if (this.id) {
+      this.get('tracks').setEndpoint(this.id);
+    }
+  }
+
   initialize() {
     this.get('tracks').on('save', () => {
       this.save();
     });
+
+    this.setTracksEndpoint();
+    this.on('change:id', this.setTracksEndpoint, this);
   };
 }
