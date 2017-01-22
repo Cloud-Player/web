@@ -9,7 +9,7 @@ export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Track
 
   queryParams = <any>{};
 
-  parse(attrs: any){
+  parse(attrs: any) {
     return attrs.tracks;
   }
 
@@ -23,7 +23,7 @@ export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Track
     this.trigger('save', track, this);
   }
 
-  setEndpoint(playlistId: number){
+  setEndpoint(playlistId: number) {
     this.endpoint = `/me/playlists/${playlistId}`;
   }
 }

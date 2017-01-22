@@ -15,10 +15,10 @@ export function prepareSearchParams(searchParams: any, queryParams: any) {
   if (!searchParams) {
     return setSearchParams(new URLSearchParams(), queryParams);
   } else if (searchParams instanceof URLSearchParams) {
-    return setSearchParams(searchParams, queryParams)
+    return setSearchParams(searchParams, queryParams);
   } else if (!(searchParams instanceof URLSearchParams) && isObject(searchParams)) {
-    queryParams = extend({}, queryParams, searchParams)
-    return setSearchParams(new URLSearchParams(), queryParams)
+    queryParams = extend({}, queryParams, searchParams);
+    return setSearchParams(new URLSearchParams(), queryParams);
   } else {
     throw new Error('Search property of options has to be an object');
   }
