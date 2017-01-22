@@ -3,17 +3,12 @@ import {Injectable} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {getUrl} from '../utils/get_url.util';
 import {request} from '../utils/request.util';
-import {isObject, pairs} from 'underscore';
+import {extend} from 'underscore';
+import {prepareSearchParams} from '../utils/prepare_search_params';
 
 @Injectable()
 export class BaseModel extends NestedModel {
-  queryParams: Object = {
-    GET: {},
-    POST: {},
-    PUT: {},
-    DELETE: {},
-    PATCH: {}
-  };
+  queryParams: Object = {};
 
   endpoint: string = null;
 
@@ -33,52 +28,12 @@ export class BaseModel extends NestedModel {
     return request(url, method, options, this);
   }
 
-  private setSearchParams(searchParams: URLSearchParams, obj: {} = {}, discardKeys: Array<string> = []): URLSearchParams {
-    Object.keys(obj).forEach((key) => {
-      if (discardKeys.indexOf(key) === -1) {
-        searchParams.set(key, this.queryParams[key]);
-      }
-    });
-    return searchParams;
-  }
-
   sync(method: string, model: any, options: any = {}) {
-    let searchParams: URLSearchParams;
-
-    if (!(options.search instanceof URLSearchParams)) {
-      searchParams = new URLSearchParams();
-      if (isObject(options.search)) {
-        pairs(options.search).forEach((pair: any) => {
-          searchParams.set(pair[0], pair[1]);
-        });
-      } else if (options.search) {
-        throw new Error('Search property of options has to be an object');
-      }
-    } else {
-      searchParams = options.search;
+    let queryParams = this.queryParams;
+    if (options.queryParams) {
+      queryParams = extend({}, this.queryParams, options.queryParams);
     }
-
-    searchParams = this.setSearchParams(searchParams, this.queryParams, ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']);
-
-    switch (method) {
-      case 'read':
-        searchParams = this.setSearchParams(searchParams, this.queryParams['GET']);
-        break;
-      case 'create':
-        searchParams = this.setSearchParams(searchParams, this.queryParams['POST']);
-        break;
-      case 'update':
-        searchParams = this.setSearchParams(searchParams, this.queryParams['PUT']);
-        break;
-      case 'delete':
-        searchParams = this.setSearchParams(searchParams, this.queryParams['DELETE']);
-        break;
-      case 'patch':
-        searchParams = this.setSearchParams(searchParams, this.queryParams['PATCH']);
-        break;
-    }
-
-    options.search = searchParams;
+    options.search = prepareSearchParams(options.search, queryParams);
     return super.sync(method, model, options);
   }
 }
