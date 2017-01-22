@@ -3,9 +3,8 @@ import {Session} from '../../models/session.model';
 import {User} from '../../../users/models/user.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'show-when-authenticated',
-  templateUrl: 'show_when_authenticated.html',
+  template: require('./show_when_authenticated.html'),
 })
 export class ShowWhenAuthenticatedComponent {
   private session = Session.getInstance();

@@ -5,9 +5,8 @@ import {Location} from '@angular/common';
 import {Track} from '../../models/track.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'my-track-detail',
-  templateUrl: 'detail.template.html',
+  template: require('./detail.template.html'),
   providers: [Track]
 })
 

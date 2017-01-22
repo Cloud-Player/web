@@ -3,10 +3,9 @@ import {Track} from '../../../tracks/models/track.model';
 import {Session} from '../../../session/models/session.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'toggle-liked-track',
-  templateUrl: 'toggle-liked-track.template.html',
-  styleUrls: ['toggle-liked-track.style.css']
+  styles: [ require('./toggle-liked-track.style.scss') ],
+  template: require('./toggle-liked-track.template.html')
 })
 export class ToggleLikedTrackComponent {
 

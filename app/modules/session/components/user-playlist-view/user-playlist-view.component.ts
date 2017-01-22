@@ -4,10 +4,9 @@ import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'user-play-list-view',
-  templateUrl: 'user-playlist-view.template.html',
-  styleUrls: ['user-playlist-view.style.css'],
+  template: require('./user-playlist-view.template.html'),
+  styles: [require('./user-playlist-view.style.scss')]
 })
 
 export class UserPlayListViewComponent implements OnInit {

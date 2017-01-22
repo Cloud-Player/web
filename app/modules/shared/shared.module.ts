@@ -9,6 +9,7 @@ import {SortTracksComponent} from './components/sort-tracks/sort-tracks.componen
 import {BackboneModule} from '../backbone/backbone.module';
 import {RangeSliderComponent} from './components/range-slider/range-slider.component';
 import {FormsModule} from '@angular/forms';
+
 import {DraggableDirective} from './directives/draggable.directive';
 import {DropZoneDirective} from './directives/dropzone.directive';
 

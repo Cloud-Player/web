@@ -3,9 +3,9 @@ import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'authenticated-user-playlists',
-  templateUrl: 'authenticated_user_playlists.html'
+  styles: [ require('./authenticated-user-playlists.style.scss') ],
+  template: require('./authenticated_user_playlists.html'),
 })
 export class AuthenticatedUserPlaylists {
   private session = Session.getInstance();

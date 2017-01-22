@@ -6,10 +6,9 @@ import * as localforage from 'localforage';
 import {Track} from '../../../tracks/models/track.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'audio-player-controls',
-  templateUrl: 'audio-player-controls.template.html',
-  styleUrls: ['audio-player-controls.style.css']
+  styles: [ require('./audio-player-controls.style.scss') ],
+  template: require('./audio-player-controls.template.html')
 })
 
 export class AudioPlayerControlsComponent implements OnInit {
@@ -155,7 +154,6 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   previousTrack(): void {
     if (this.audio && this.audio.currentTime && this.audio.currentTime > 1) {
-      this.timeTick = 0;
       this.playTrackFromPosition(0);
     } else {
       if (this.playQueue.hasPreviousItem()) {

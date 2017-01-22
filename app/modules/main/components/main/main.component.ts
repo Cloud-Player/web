@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
 
 @Component({
-    moduleId: module.id,
-    selector: 'cloud-player',
-    templateUrl: 'main.template.html',
-    styleUrls: ['main.style.css']
+  selector: 'cloud-player',
+  styles: [require('./main.style.scss')],
+  template: require('./main.template.html')
 })
 
 export class MainComponent {

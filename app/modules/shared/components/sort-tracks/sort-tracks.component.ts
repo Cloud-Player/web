@@ -3,10 +3,9 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {Track} from '../../../tracks/models/track.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'sort-tracks',
-  templateUrl: 'sort-tracks.template.html',
-  styleUrls: ['sort-tracks.style.css']
+  styles: [ require('./sort-tracks.style.scss') ],
+  template: require('./sort-tracks.template.html')
 })
 export class SortTracksComponent {
 

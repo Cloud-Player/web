@@ -3,10 +3,9 @@ import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'collection-sort',
-  templateUrl: 'collection-sort.template.html',
-  styleUrls: ['collection-sort.style.css']
+  styles: [ require('./collection-sort.style.scss') ],
+  template: require('./collection-sort.template.html')
 })
 
 export class CollectionSortComponent {

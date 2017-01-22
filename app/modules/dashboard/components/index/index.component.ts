@@ -4,10 +4,9 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {Track} from '../../../tracks/models/track.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'my-dashboard',
-  templateUrl: 'index.template.html',
-  styleUrls: ['index.style.css'],
+  styles: [ require('./index.style.scss') ],
+  template: require('./index.template.html'),
   providers: [Tracks]
 })
 
