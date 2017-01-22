@@ -49,36 +49,6 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     return allItems;
   }
 
-  parse(attrs: any): any {
-    let data: any = [];
-    attrs.forEach((track: any) => {
-      data.push({
-        id: track.id,
-        track: track
-      });
-    });
-    return data;
-  }
-
-  fetchTrackInformationOfAllAddedTracks(): void {
-    if (this.length === 0) {
-      return;
-    }
-
-    let ids = this.map((item) => {
-      return item.get('track').id;
-    }).join(',');
-
-    this.fetch(<any>{
-      url: '//api.soundcloud.com/tracks',
-      search: {
-        ids: ids
-      },
-      merge: true,
-      add: false
-    });
-  }
-
   getQueuedItems(): TModel[] {
     return this.where({status: 'QUEUED'});
   }
