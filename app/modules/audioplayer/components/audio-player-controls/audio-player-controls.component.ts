@@ -39,11 +39,13 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     let throttledTimeUpdater = throttle(() => {
       this.timeTick = this.audio.currentTime;
-      localforage.setItem('sc_current_track', {
-        id: this.playQueue.getCurrentItem().get('track').id,
-        currentTime: this.audio.currentTime,
-        duration: this.audio.duration
-      });
+      if (this.playQueue.getCurrentItem()) {
+        localforage.setItem('sc_current_track', {
+          id: this.playQueue.getCurrentItem().get('track').id,
+          currentTime: this.audio.currentTime,
+          duration: this.audio.duration
+        });
+      }
     }, 1000);
 
     this.audio.addEventListener('timeupdate', throttledTimeUpdater);
@@ -73,7 +75,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   private initializeLastPlayingTrack(lastTrack: any) {
-    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0, merge: true});
+    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0, silent: true});
     item.get('track').fetch().then((track: Track) => {
       this.audio.src = track.getResourceUrl();
     });

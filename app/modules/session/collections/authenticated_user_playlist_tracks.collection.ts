@@ -7,6 +7,12 @@ import {AuthenticatedUserPlaylistTrack} from '../models/authenticated_user_playl
 export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Tracks<TModel> {
   model: any = AuthenticatedUserPlaylistTrack;
 
+  queryParams = <any>{};
+
+  parse(attrs: any) {
+    return attrs.tracks;
+  }
+
   create(track: TModel): TModel {
     this.add(track);
     this.triggerSave(track);
@@ -17,4 +23,7 @@ export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Track
     this.trigger('save', track, this);
   }
 
+  setEndpoint(playlistId: number) {
+    this.endpoint = `/me/playlists/${playlistId}`;
+  }
 }

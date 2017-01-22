@@ -49,36 +49,6 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     return allItems;
   }
 
-  parse(attrs: any): any {
-    let data: any = [];
-    attrs.forEach((track: any) => {
-      data.push({
-        id: track.id,
-        track: track
-      });
-    });
-    return data;
-  }
-
-  fetchTrackInformationOfAllAddedTracks(): void {
-    if (this.length === 0) {
-      return;
-    }
-
-    let ids = this.map((item) => {
-      return item.get('track').id;
-    }).join(',');
-
-    this.fetch(<any>{
-      url: '//api.soundcloud.com/tracks',
-      search: {
-        ids: ids
-      },
-      merge: true,
-      add: false
-    });
-  }
-
   getQueuedItems(): TModel[] {
     return this.where({status: 'QUEUED'});
   }
@@ -141,7 +111,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   addAndPlay(item: TModel|any): TModel {
-    let addItem: TModel = this.add(item);
+    let addItem: TModel = this.add(item, {merge: true});
     addItem.play();
     return addItem;
   }
@@ -154,7 +124,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
       this.remove(item, {silent: true});
     }
     item.queue();
-    return this.add(item);
+    return this.add(item, {merge: true});
   }
 
   getPlayIndex(): number {
@@ -199,14 +169,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     }
   }
 
-  private addItem(item: any): PlayQueueItem {
-    if (!(item instanceof PlayQueueItem)) {
-      item = new PlayQueueItem(item);
-    }
-    item.set('id', item.get('track').get('id'));
-    let existingItem = this.get(item);
-    if (existingItem) {
-      existingItem.set(item.toJSON());
+  private prepareItem(item: any): PlayQueueItem {
+    if (item instanceof PlayQueueItem) {
+      item.set('id', item.get('track').get('id'));
+    } else {
+      item.id = item.track.id;
     }
     return item;
   }
@@ -219,11 +186,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     if (isArray(item)) {
       let addedItems: Array<PlayQueueItem> = [];
       item.forEach((obj: any) => {
-        addedItems.push(this.addItem(obj));
+        addedItems.push(this.prepareItem(obj));
       });
       item = addedItems;
     } else {
-      item = this.addItem(item);
+      item = this.prepareItem(item);
     }
 
     item = super.add(item, options);
