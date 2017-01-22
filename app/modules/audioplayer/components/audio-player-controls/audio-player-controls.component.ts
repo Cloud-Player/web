@@ -40,11 +40,13 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     let throttledTimeUpdater = throttle(() => {
       this.timeTick = this.audio.currentTime;
-      localforage.setItem('sc_current_track', {
-        id: this.playQueue.getCurrentItem().get('track').id,
-        currentTime: this.audio.currentTime,
-        duration: this.audio.duration
-      });
+      if (this.playQueue.getCurrentItem()) {
+        localforage.setItem('sc_current_track', {
+          id: this.playQueue.getCurrentItem().get('track').id,
+          currentTime: this.audio.currentTime,
+          duration: this.audio.duration
+        });
+      }
     }, 1000);
 
     this.audio.addEventListener('timeupdate', throttledTimeUpdater);
