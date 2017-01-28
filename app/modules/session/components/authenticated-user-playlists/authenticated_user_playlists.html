@@ -1,18 +1,30 @@
 <div class="authenticated-user-playlists">
-  <input type="text" [(ngModel)]="tmpPlaylist.attributes.title">
-  <label>
-    <input type="checkbox" [(ngModel)]="tmpPlaylist.attributes.isPublic">
-    Playlist is public
-  </label>
-  <button class="btn btn-primary" (click)="save()">Save</button>
-  <ul>
-    <li *ngFor="let playlist of user.get('playlists').models">
-      <a routerLink="playlists/{{playlist.get('id')}}">
-        {{playlist.get('title')}}
-      </a>
-      <button class="btn btn-danger" (click)="playlist.destroy()">
-        Delete
-      </button>
-    </li>
-  </ul>
+
+  <a *ngFor="let playlist of user.get('playlists').models" routerLink="playlists/{{playlist.get('id')}}" >
+    <div class="cover">
+      <img [src]="playlist.get('artwork_url').getDefaultSize()">
+    </div>
+    <p class="visible-lg">{{playlist.get('title')}}</p>
+  </a>
+
+
+  <!--<ul>-->
+    <!--<li >-->
+      <!--<a >-->
+        <!--{{playlist.get('title')}}-->
+      <!--</a>-->
+      <!--<button class="btn btn-danger" (click)="playlist.destroy()">-->
+        <!--Delete-->
+      <!--</button>-->
+    <!--</li>-->
+  <!--</ul>-->
+
+
+  <!--<input type="text" [(ngModel)]="tmpPlaylist.attributes.title">-->
+  <!--<label>-->
+    <!--<input type="checkbox" [(ngModel)]="tmpPlaylist.attributes.isPublic">-->
+    <!--Playlist is public-->
+  <!--</label>-->
+  <!--<button class="btn btn-primary" (click)="save()">Save</button>-->
+
 </div>

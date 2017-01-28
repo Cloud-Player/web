@@ -6,6 +6,7 @@ import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlis
   moduleId: module.id,
   selector: 'authenticated-user-playlists',
   templateUrl: 'authenticated_user_playlists.html',
+  styleUrls: ['authenticated_user_playlists.style.css'],
 })
 export class AuthenticatedUserPlaylists {
   private session = Session.getInstance();
