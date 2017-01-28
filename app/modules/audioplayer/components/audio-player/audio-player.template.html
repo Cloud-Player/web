@@ -1,14 +1,17 @@
-<div class="container" *ngIf="track">
+<section class="column">
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="cover">
-        <img [src]="track.get('artwork_url').getLargeSize()">
-      </div>
+  <div class="track-item" *ngIf="track">
+    <div class="cover">
+      <img [src]="track.get('artwork_url').getLargeSize()">
     </div>
-
-    <audio-player-controls class="col-md-12"></audio-player-controls>
-    <play-queue class="col-md-12"></play-queue>
+    <div class="details">
+      <p>{{track.get('title')}}</p>
+      <p>{{track.get('user').get('username')}}</p>
+      <toggle-liked-track [track]="track"></toggle-liked-track>
+    </div>
   </div>
 
-</div>
+  <audio-player-controls class="controls"></audio-player-controls>
+  <play-queue class="queue"></play-queue>
+
+</section>

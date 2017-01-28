@@ -1,11 +1,24 @@
-h1 {
-    color: tomato;
-}
+.track-item {
 
-.cover {
+  .cover {
 
-  img {
-    width: 100px;
+    margin: 10px;
+
+    img {
+      width: 100%;
+    }
+
+  }
+
+  .details {
+
+    h1 {
+      color: tomato;
+    }
+
+    p {
+      text-align: center;
+    }
   }
 
 }
