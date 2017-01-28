@@ -1,2 +1,4 @@
-<button (click)="play()" *ngIf="!isPlaying()">Play</button>
-<button (click)="pause()" *ngIf="isPlaying()">Pause</button>
+<span (click)="play()" *ngIf="!isPlaying()"><i class="fa fa-play"></i></span>
+<span (click)="pause()" *ngIf="isPlaying()"><i class="fa fa-pause"></i></span>
+
+
