@@ -1,29 +1,49 @@
-.flex-container {
+@import '../../../../main';
+
+section.main {
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 5px;
+    display: block;
+    background: $brand-primary;
+    background: linear-gradient(#f70, #f30);
+    -webkit-app-region: drag;
+  }
+
+}
+
+main.flex-container {
 
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap-reverse;
-  justify-content: flex-start;
+  //flex-direction: row;
+  //flex-wrap: wrap-reverse;
+  //justify-content: flex-start;
 
-  .flex-item {
-  }
-
-  nav-sidebar {
+  nav-sidebar.flex-item {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
     order: 1;
-    flex-grow: 0;
-    flex-basis: 8%;
   }
 
-  audio-player {
-    order: 2;
+  audio-player.flex-item {
+    width: 350px;
+    flex-basis: auto;
+    flex-shrink: 0;
     flex-grow: 0;
-    flex-basis: 22%;
+    order: 2;
+
+    &.invisible {
+      width: 0;
+    }
+
   }
 
   div.routes {
+    flex: auto;
     order: 3;
-    flex-grow: 1;
-    flex-basis: 35%;
   }
 
 }
