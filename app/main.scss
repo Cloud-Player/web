@@ -14,26 +14,6 @@ html {
 
 body {
   background: $body-bg;
-
-  // for electron
-  -webkit-app-region: drag;
-}
-
-main.flex-container {
-
-  &:before {
-    width: 100%;
-    height: 5px;
-    background: $brand-primary;
-    background: linear-gradient(#f70, #f30);
-  }
-
-  &:after {
-    width: 100%;
-    height: 10px;
-    background: $gray-light;
-  }
-
 }
 
 a {
@@ -43,4 +23,22 @@ a {
 h1 {
   font-size: 22px;
   margin: 15px 0;
+}
+
+cloud-player {
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 20px;
+    display: block;
+    background: $gray-light;
+    -webkit-app-region: drag;
+  }
+
+}
+
+section.column {
+  padding: 15px;
+  height: 100vh;
 }
