@@ -1,9 +1,4 @@
 <div class="play-queue">
-  <div *ngIf="playQueue.getCurrentItem()">
-    <h5>Current playing</h5>
-    <toggle-liked-track [track]="playQueue.getCurrentItem().get('track')"></toggle-liked-track>
-    {{playQueue.getCurrentItem().get('track').get('title')}}
-  </div>
 
   <hr
     *ngIf="playQueue.getCurrentItem() && (playQueue.getScheduledItems().length>0 || playQueue.getQueuedItems().length>0)">
@@ -33,8 +28,6 @@
 </div>
 
 <hr>
-
-Debug output
 
 <ul>
   <li *ngFor="let playQueueItem of playQueue.models; let i = index"
