@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
 import {map} from 'underscore';
+import {SoundcloudImageModel} from '../../main/models/soundcloud-image.model';
 
 @Injectable()
 export class Playlist extends SoundcloudModel {
@@ -18,9 +19,23 @@ export class Playlist extends SoundcloudModel {
   nested() {
     return {
       user: User,
-      tracks: Tracks
+      tracks: Tracks,
+      artwork_url: SoundcloudImageModel
     };
   };
+
+  parse(attrs: any) {
+    if (attrs.sharing === 'public') {
+      attrs.isPublic = true;
+    } else {
+      attrs.isPublic = false;
+    }
+    if (!attrs.artwork_url && attrs.tracks.length > 0) {
+      attrs.artwork_url = attrs.tracks[0].artwork_url;
+    }
+    delete attrs.sharing;
+    return attrs;
+  }
 
   compose(args: any) {
     return {
