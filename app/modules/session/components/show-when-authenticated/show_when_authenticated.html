@@ -1,4 +1,4 @@
 <div class="show-when-authetnicated">
   <ng-content *ngIf="isAuthenticated"></ng-content>
-  <connect-btn *ngIf="!isAuthenticated"></connect-btn>
+  <connect-btn [auth]="isAuthenticated"></connect-btn>
 </div>
