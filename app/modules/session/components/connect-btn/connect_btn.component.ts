@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Session} from '../../models/session.model';
 import setInterval = core.setInterval;
 
@@ -9,6 +9,9 @@ import setInterval = core.setInterval;
   styleUrls: ['connect_btn.style.css']
 })
 export class ConnectBtnComponent {
+
+  @Input() auth: boolean;
+
   private session: Session = Session.getInstance();
   private checkInterval: number;
 
