@@ -1,51 +1,51 @@
-@import '../../../../variables';
+@import '../../../../main';
 
 $img-size: 80px;
 
 .sidebar {
   background: $gray-lighter;
+  min-width: 125px;
   height: 100%;
 
-  .avatar {
-    margin: 25px auto;
-    position: relative;
-    width: $img-size;
-    height: $img-size;
-    background: $brand-primary;
-    background: linear-gradient(#f70, #f30);
-    clip-path: circle(50% at 50% 50%);
+  .desktop {
 
-    img {
-      position: absolute;
-      margin: auto;
+    .avatar {
+      margin: 25px auto;
+      position: relative;
       width: $img-size;
-    }
-  }
+      height: $img-size;
+      background: $brand-primary;
+      background: linear-gradient(#f70, #f30);
+      clip-path: circle(50% at 50% 50%);
 
-  nav {
-    height: 100vh;
-    margin: 15px auto;
-
-    a {
-      margin: 5px auto;
-      color: $gray-darker;
-      display: inline-block;
-      text-align: center;
-      width: 100%;
+      img {
+        position: absolute;
+        margin: auto;
+        width: $img-size;
+      }
     }
 
-    a:hover {
-      color: $gray-light;
-    }
+    nav {
+      height: 100vh;
+      margin: 15px auto;
 
-    i {
-      margin: 10px auto;
-      font-size: 38px;
-    }
-  }
+      a {
+        margin: 5px auto;
+        color: $gray-darker;
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+      }
 
-  &.toggle {
-    width: 500px;
+      a:hover {
+        color: $gray-light;
+      }
+
+      i {
+        margin: 10px auto;
+        font-size: 38px;
+      }
+    }
   }
 
 }

@@ -1,27 +1,36 @@
-<div class="sidebar row">
+<section class="column sidebar" [@toggle]="toggleState">
 
-  <show-when-authenticated class="desktop visible-md-block visible-lg-block">
+  <div class="desktop">
     <div class="avatar">
       <img [src]="user.get('avatar_url').getLargeSize() || img" [alt]="user.get('full_name') || 'John Doe'">
     </div>
 
-    <nav class="col-md-12">
+    <nav>
       <a routerLink="/dashboard">
         <i class="fa fa-music" aria-hidden="true"></i>
         <p class="visible-lg">Home</p>
       </a>
-      <a routerLink="/likes">
-        <i class="fa fa-heart" aria-hidden="true"></i>
-        <p class="visible-lg">Likes</p>
-      </a>
-      <authenticated-user-playlists></authenticated-user-playlists>
-    </nav>
-  </show-when-authenticated>
+      <show-when-authenticated>
 
-  <div class="mobile visible-sm-block visible-xs-block">
-    <nav class="col-md-12">
+        <a routerLink="/likes">
+          <i class="fa fa-heart" aria-hidden="true"></i>
+          <p class="visible-lg">Likes</p>
+        </a>
 
+        <a routerLink="/playlists">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <p class="visible-lg">Playlists</p>
+        </a>
+
+        <authenticated-user-playlists></authenticated-user-playlists>
+
+        <a (click)="toggle()">
+          <i class="fa fa-expand" aria-hidden="true"></i>
+          <p class="visible-lg">Toggle</p>
+        </a>
+
+      </show-when-authenticated>
     </nav>
   </div>
 
-</div>
+</section>
