@@ -5,15 +5,16 @@ import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 
 @Component({
-  moduleId: module.id,
   selector: 'track-list',
-  templateUrl: 'track-list.template.html',
-  styleUrls: ['track-list.style.css'],
+  styles: [ require('./track-list.style.scss') ],
+  template: require('./track-list.template.html'),
   providers: [Tracks]
 })
 export class TrackListComponent {
 
   @Input() tracks: Tracks<Track>;
+
+  @Input() canBeDeleted: boolean;
 
   constructor(private router: Router) { }
 

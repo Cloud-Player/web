@@ -1,19 +1,18 @@
 import {Component, Input} from '@angular/core';
 import {Session} from '../../models/session.model';
-import setInterval = core.setInterval;
+import Timer = NodeJS.Timer;
 
 @Component({
-  moduleId: module.id,
   selector: 'connect-btn',
-  templateUrl: 'connect_btn.template.html',
-  styleUrls: ['connect_btn.style.css']
+  styles: [ require('./connect_btn.style.scss') ],
+  template: require('./connect_btn.template.html')
 })
 export class ConnectBtnComponent {
 
   @Input() auth: boolean;
 
   private session: Session = Session.getInstance();
-  private checkInterval: number;
+  private checkInterval: Timer;
 
   private receiveConnectMessage(event: any): void {
     let origin = event.origin || event.originalEvent.origin;

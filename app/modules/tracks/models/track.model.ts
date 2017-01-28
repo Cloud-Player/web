@@ -1,7 +1,7 @@
-import {SoundcloudModel} from '../../main/models/soundcloud.model';
 import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
-import {SoundcloudImageModel} from '../../main/models/soundcloud-image.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
 
 @Injectable()
 export class Track extends SoundcloudModel {

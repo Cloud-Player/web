@@ -1,8 +1,8 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
-import {BaseCollection} from '../../backbone/collections/base.collection';
 import {isArray} from 'underscore';
+import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
 
-export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TModel> {
+export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
   private static instance: PlayQueue<PlayQueueItem>;
 
   private playIndex = 0;
@@ -18,6 +18,36 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     }
   }
 
+  private getMiniItem(playQueueItem: PlayQueueItem): {} {
+    let mini = playQueueItem.toJSON(true);
+    mini.track = {
+      id: mini.track.id
+    };
+    if (mini.status === 'PLAYING') {
+      mini.status = 'PAUSED';
+    }
+    return mini;
+  }
+
+  private pushMiniItems(items: Array<PlayQueueItem>, allItems: Array<any>, maxItems?: number): Array<any> {
+    items.forEach((item: PlayQueueItem) => {
+      if (maxItems && allItems.length > maxItems) {
+        return;
+      }
+      allItems.push(this.getMiniItem(item));
+    });
+    return allItems;
+  }
+
+  getScheduledItemsJSON(maxItems: number): Array<{}> {
+    let allItems: Array<{}> = [],
+      queuedItems = this.getQueuedItems(),
+      scheduledItems = this.getScheduledItems();
+
+    this.pushMiniItems(queuedItems, allItems, maxItems);
+    this.pushMiniItems(scheduledItems, allItems, maxItems);
+    return allItems;
+  }
 
   getQueuedItems(): TModel[] {
     return this.where({status: 'QUEUED'});
@@ -81,7 +111,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   }
 
   addAndPlay(item: TModel|any): TModel {
-    let addItem: TModel = this.add(item);
+    let addItem: TModel = this.add(item, {merge: true});
     addItem.play();
     return addItem;
   }
@@ -94,7 +124,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
       this.remove(item, {silent: true});
     }
     item.queue();
-    return this.add(item);
+    return this.add(item, {merge: true});
   }
 
   getPlayIndex(): number {
@@ -139,14 +169,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     }
   }
 
-  private addItem(item: any): PlayQueueItem {
-    if (!(item instanceof PlayQueueItem)) {
-      item = new PlayQueueItem(item);
-    }
-    item.set('id', item.get('track').get('id'));
-    let existingItem = this.get(item);
-    if (existingItem) {
-      existingItem.set(item.toJSON());
+  private prepareItem(item: any): PlayQueueItem {
+    if (item instanceof PlayQueueItem) {
+      item.set('id', item.get('track').get('id'));
+    } else {
+      item.id = item.track.id;
     }
     return item;
   }
@@ -159,11 +186,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     if (isArray(item)) {
       let addedItems: Array<PlayQueueItem> = [];
       item.forEach((obj: any) => {
-        addedItems.push(this.addItem(obj));
+        addedItems.push(this.prepareItem(obj));
       });
       item = addedItems;
     } else {
-      item = this.addItem(item);
+      item = this.prepareItem(item);
     }
 
     item = super.add(item, options);

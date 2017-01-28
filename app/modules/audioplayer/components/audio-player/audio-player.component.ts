@@ -2,10 +2,9 @@ import {Component, Input} from '@angular/core';
 import {Track} from '../../../tracks/models/track.model';
 
 @Component ({
-  moduleId: module.id,
   selector: 'audio-player',
-  templateUrl: 'audio-player.template.html',
-  styleUrls: ['audio-player.style.css']
+  styles: [ require('./audio-player.style.scss') ],
+  template: require('./audio-player.template.html')
 })
 
 export class AudioPlayerComponent{

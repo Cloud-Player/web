@@ -3,10 +3,9 @@ import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'nav-sidebar',
-  templateUrl: 'nav.template.html',
-  styleUrls: ['nav.style.css'],
+  styles: [require('./nav.style.scss')],
+  template: require('./nav.template.html'),
   animations: [
     trigger('toggle', [
       state('in', style({

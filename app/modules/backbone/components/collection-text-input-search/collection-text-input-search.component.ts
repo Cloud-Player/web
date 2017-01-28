@@ -6,10 +6,9 @@ import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
 
 @Component({
-  moduleId: module.id,
   selector: 'collection-text-input-search',
-  templateUrl: 'collection-text-input-search.template.html',
-  styleUrls: ['collection-text-input-search.style.css']
+  styles: [ require('./collection-text-input-search.style.scss') ],
+  template: require('./collection-text-input-search.template.html')
 })
 
 export class CollectionTextInputSearchComponent implements OnInit {

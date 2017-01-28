@@ -1,10 +1,9 @@
 import {Component, Input, Output, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'range-slider',
-  templateUrl: 'range-slider.template.html',
-  styleUrls: ['range-slider.style.css']
+  styles: [ require('./range-slider.style.scss') ],
+  template: require('./range-slider.template.html')
 })
 
 export class RangeSliderComponent {

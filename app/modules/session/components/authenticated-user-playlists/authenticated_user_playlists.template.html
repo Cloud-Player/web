@@ -1,0 +1,10 @@
+<div class="authenticated-user-playlists">
+
+  <a *ngFor="let playlist of user.get('playlists').models" routerLink="playlists/{{playlist.get('id')}}" dropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
+    <div class="cover">
+      <img [src]="playlist.get('artwork_url').getDefaultSize()">
+    </div>
+    <p class="visible-lg">{{playlist.get('title')}}</p>
+  </a>
+
+</div>

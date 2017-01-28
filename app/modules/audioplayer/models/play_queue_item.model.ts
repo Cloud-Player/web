@@ -1,7 +1,7 @@
 import {Track} from '../../tracks/models/track.model';
-import {BaseModel} from '../../backbone/models/base.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 
-export class PlayQueueItem extends BaseModel {
+export class PlayQueueItem extends SoundcloudModel {
 
   defaults() {
     return {

@@ -1,6 +1,10 @@
 <div class="tracks-list">
-  <div *ngFor="let track of tracks.models" class="track">
-    <div class="cover" (click)="gotoDetail(track)">
+  <div *ngFor="let track of tracks.models" class="track"
+       draggable="true"
+       [dragData]="track.toJSON()"
+       [dragImageUrl]="track.get('artwork_url').getSmallSize()"
+       dragEffect="copy">
+    <div class="cover" class="col-md-3" (click)="gotoDetail(track)">
       <img [src]="track.get('artwork_url').getDefaultSize()" [alt]="track.get('title')">
     </div>
     <div class="details">
@@ -9,6 +13,11 @@
       <p>{{track.get('user').get('username')}}</p>
       <play-button [track]="track" [tracks]="tracks"></play-button>
       <queue-button [track]="track" [tracks]="tracks"></queue-button>
+      <button *ngIf="canBeDeleted"
+              class="btn btn-default btn-xs"
+              (click)="track.destroy()">
+        Delete
+      </button>
     </div>
   </div>
 </div>

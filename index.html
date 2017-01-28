@@ -1,27 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <base href="">
+    <base href="./">
     <title>Cloud Player</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="app/main.css">
   </head>
 
   <body>
     <cloud-player>Loading...</cloud-player>
-
-    <!-- build:vendor -->
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="systemjs.config.dev.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:app -->
-    <script>
-      System.import('app/vendor').then(function() {
-        System.import('app').catch(function(err){ console.error(err); });
-      });
-    </script>
-    <!-- endbuild -->
   </body>
+
 </html>
