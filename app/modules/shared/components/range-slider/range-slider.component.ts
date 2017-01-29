@@ -13,13 +13,14 @@ export class RangeSliderComponent {
   private maxVal: number = 0;
   private stepVal: number = 0.1;
   private showLoadingSpinner: boolean = false;
-  private dragInProgress: boolean = false;
+  public dragInProgress: boolean = false;
+  public dragDisplayValue: number = 0;
   private draggerWidth = 0;
   @Output() valueChange = new EventEmitter();
   @Output() valueChanged = new EventEmitter();
 
-  @ViewChild('progressBarLine') progressBarLine: ElementRef;
-  @ViewChild('progressBarBg') progressBarBg: ElementRef;
+  @ViewChild('progressLine') progressBarLine: ElementRef;
+  @ViewChild('progressBar') progressBarBg: ElementRef;
   @ViewChild('handle') handle: ElementRef;
 
   get tmpValue(): number {
@@ -29,8 +30,16 @@ export class RangeSliderComponent {
   set tmpValue(val: number) {
     this.tmpVal = val;
     this.setDragPosFromVal();
+    this.dragDisplayValue = this.getDisplayValue(val);
     this.valueChange.emit(val);
   }
+
+  @Input()
+  public transformDisplayValue: Function;
+  @Input()
+  public hideSliderValue: boolean;
+  @Input()
+  public showCurrentValue: boolean;
 
   @Input()
   get value(): number {
@@ -89,6 +98,14 @@ export class RangeSliderComponent {
   }
 
   constructor(private el: ElementRef) {
+  }
+
+  public getDisplayValue(value: number){
+    if(value && typeof this.transformDisplayValue === "function"){
+      return this.transformDisplayValue(value);
+    } else {
+      return value;
+    }
   }
 
   private setDragPosFromVal() {
