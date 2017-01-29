@@ -51,6 +51,12 @@ module.exports = {
       }, {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url?limit=10000&mimetype=image/svg+xml"
+      },
+      {
+        test: /\.(jpe?g|png|gif|ico)(\?v=\d+\.\d+\.\d+)?$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[name].[hash].[ext]'
+        ]
       }
     ],
     noParse: [new RegExp('./node_modules/localforage/dist/localforage.js')]
@@ -63,8 +69,6 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: './index.html'
-    }),
-
+    })
   ]
-}
-;
+};
