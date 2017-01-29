@@ -1,0 +1,56 @@
+@import '../../../../variables';
+@import '../range-slider/range-slider.style';
+
+.two-range-slider-component {
+  position: relative;
+  @extend .range-slider-component;
+
+  .progress-bar{
+    input[type="range"] {
+      pointer-events: none;
+    }
+  }
+
+  &.inactive {
+    .progress-line {
+      @extend .progress-line;
+    }
+  }
+
+  &.is-loading {
+    .progress-bar {
+      .progress-line {
+        background: -moz-linear-gradient(left, rgba($brand-primary, 1) 0%, rgba($brand-primary, 1) 10%, rgba($brand-primary, 0) 10%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, rgba($brand-primary, 1) 0%, rgba($brand-primary, 1) 10%, rgba($brand-primary, 0) 10%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, rgba($brand-primary, 1) 0%, rgba($brand-primary, 1) 10%, rgba($brand-primary, 0) 10%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background-size: 200% 100%;
+        animation: move 1.15s cubic-bezier(0.53, -0.46, 0.49, 0.99) infinite reverse;
+      }
+
+      .loading-spinner {
+
+      }
+
+      .handle-one .loading-spinner {
+        animation-delay: 1.5s;
+      }
+
+      .handle-two .loading-spinner {
+        animation-delay: -0.2s;
+      }
+    }
+  }
+}
+
+@keyframes move {
+  0% {
+    background-position: 90% 100%
+  }
+  50% {
+    background-position: 200% 100%
+  }
+  100% {
+    background-position: 90% 100%
+  }
+}
+
