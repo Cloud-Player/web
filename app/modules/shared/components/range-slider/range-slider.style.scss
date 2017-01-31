@@ -1,8 +1,10 @@
 @import '../../../../variables';
 
 .range-slider-component {
+  display: inline-block;
   position: relative;
   margin: 10px 0;
+  width: 250px;
 
   .progress-bar-bg {
     height: 5px;
