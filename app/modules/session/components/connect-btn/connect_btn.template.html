@@ -1,1 +1,13 @@
-<button class="btn btn-primary" (click)="connect()">Connect</button>
+<div class="connect">
+
+  <a (click)="connect()" *ngIf="!auth">
+    <i class="fa fa-sign-in" aria-hidden="true"></i>
+    <p class="visible-lg">Connect</p>
+  </a>
+
+  <a (click)="disconnect()" *ngIf="auth">
+    <i class="fa fa-sign-out" aria-hidden="true"></i>
+    <p class="visible-lg">Disconnect</p>
+  </a>
+
+</div>

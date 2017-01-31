@@ -1,0 +1,15 @@
+div.sort-tracks {
+
+  display: flex;
+
+  collection-sort {
+    flex: auto 0 0;
+    display: inline-flex;
+
+    &:before, &:after {
+      content: '';
+      margin: 0 2px;
+    }
+  }
+
+}

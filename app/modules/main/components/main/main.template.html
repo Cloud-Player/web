@@ -1,12 +1,16 @@
-<section class="container-fluid">
+<section class="main">
 
-  <main class="row">
+  <span class="search-bar"></span>
 
-    <nav-sidebar class="col-md-1"></nav-sidebar>
-    <audio-player class="col-md-4"></audio-player>
+  <main class="flex-container">
 
-    <div class="col-md-7">
-      <router-outlet></router-outlet>
+    <nav-sidebar class="flex-item"></nav-sidebar>
+    <audio-player class="flex-item" [track]="track" [class.invisible]="!playQueue.length > 0"></audio-player>
+    <authenticated-user-playlists-view class="flex-item visible-lg-inline-block"
+                                       *ngIf="isAuthenticated"></authenticated-user-playlists-view>
+
+    <div class="routes">
+      <router-outlet class="flex-item"></router-outlet>
     </div>
 
   </main>

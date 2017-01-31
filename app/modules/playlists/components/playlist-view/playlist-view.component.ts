@@ -11,6 +11,7 @@ import {Playlist} from '../../models/playlist.model';
 })
 
 export class PlayListViewComponent implements OnInit {
+
   constructor(private route: ActivatedRoute, private playlist: Playlist) {
   }
 

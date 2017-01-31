@@ -1,50 +1,110 @@
-@import '../../../../_variables.scss';
+@import '../../../../variables';
 
-$img-size: 65px;
+$img-size: 80px;
 
-.sidebar {
-  background: $gray-lighter;
-  height: 100%;
+@media only screen and (min-width: 320px) {
 
-  .avatar {
-    margin: 25px auto;
-    position: relative;
-    width: $img-size;
-    height: $img-size;
-    background: $brand-primary;
-    border-radius: ($img-size / 2);
+  //section.column {
+  //  left: 0;
+  //  right: 0;
+  //  bottom: 0;
+  //  width: auto;
+  //  height: 55px;
+  //  position: absolute;
+  //  padding: 0 25px;
+  //}
 
-    img {
-      position: absolute;
-      margin: auto;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+  div.sidebar {
+    background: #efefef;
+    min-width: 125px;
+
+    nav {
+      margin: 0;
+      height: auto;
+      display: flex;
+      justify-content: space-around;
+
+      a {
+        flex: auto 0 0;
+        color: $gray-darker;
+      }
+
+      i {
+        padding: 10px;
+        font-size: 32px;
+      }
+    }
+  }
+
+}
+
+@media only screen and (min-width: 768px) {
+
+  section.column {
+    padding: 0 15px;
+    background: #efefef;
+    display: inline-block;
+    height: calc(100vh - 50px);
+  }
+
+  div.sidebar {
+    min-width: 95px;
+
+    .avatar {
+      margin: 25px auto;
+      position: relative;
       width: $img-size;
+      height: $img-size;
+      background: $brand-primary;
+      background: linear-gradient(#f70, #f30);
+      clip-path: circle(50% at 50% 50%);
+
+      img {
+        width: $img-size;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+      }
+    }
+
+    nav {
+      height: auto;
+      display: inline;
+      margin: 15px auto;
+      position: relative;
+
+      a {
+        margin: 5px auto;
+        color: $gray-darker;
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+
+        &.bottom {
+          position: absolute;
+          bottom: 0;
+        }
+
+      }
+
+      a:hover {
+        color: $gray-light;
+        text-decoration: none;
+      }
+
+      a:active {
+        font-weight: bold;
+      }
+
+      i {
+        margin: 10px auto;
+        font-size: 38px;
+      }
     }
   }
 
-  nav {
-    height: 100vh;
-    margin: 15px auto;
-
-    a {
-      margin: 5px auto;
-      color: $gray-darker;
-      display: inline-block;
-      text-align: center;
-      width: 100%;
-    }
-
-    a:hover {
-      color: $gray-light;
-    }
-
-    i {
-      margin: 10px auto;
-      font-size: 38px;
-    }
-
-  }
 }

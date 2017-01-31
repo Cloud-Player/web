@@ -1,22 +1,26 @@
 <div class="tracks-list">
-  <div *ngFor="let track of tracks.models" class="track col-md-12"
+  <div *ngFor="let track of tracks.models" class="track"
        draggable="true"
        [dragData]="track.toJSON()"
        [dragImageUrl]="track.get('artwork_url').getSmallSize()"
        dragEffect="copy">
-    <div class="cover" class="col-md-3" (click)="gotoDetail(track)">
-      <img [src]="track.get('artwork_url').getDefaultSize()" [alt]="track.get('title')">
+    <div class="cover" (click)="gotoDetail(track)">
+      <img [src]="track.get('artwork_url').getLargeSize()" [alt]="track.get('title')">
     </div>
-    <div class="details" class="col-md-9">
-      <toggle-liked-track [track]="track"></toggle-liked-track>
-      <span>{{track.get('title')}}</span> - <span>{{track.get('duration')/1000 | hReadableSeconds}} - {{track.get('created_at')}}</span>
+    <div class="details">
+      <!--<toggle-liked-track [track]="track"></toggle-liked-track>-->
+      <b>{{track.get('title')}}</b>
       <p>{{track.get('user').get('username')}}</p>
       <play-button [track]="track" [tracks]="tracks"></play-button>
       <queue-button [track]="track" [tracks]="tracks"></queue-button>
+      <button class="btn btn-danger btn-round" title="Like track">
+        <toggle-liked-track [track]="track"></toggle-liked-track>
+      </button>
       <button *ngIf="canBeDeleted"
-              class="btn btn-default btn-xs"
+              class="btn btn-default btn-round"
+              title="Delete track"
               (click)="track.destroy()">
-        Delete
+        <i class="fa fa-trash"></i>
       </button>
     </div>
   </div>

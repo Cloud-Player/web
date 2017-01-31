@@ -34,7 +34,7 @@ export class AudioPlayerModule {
 
     localforage.getItem('sc_playqueue').then((playQueueItems: any) => {
       if (playQueueItems) {
-        playQueue.add(playQueueItems, {silent: true});
+        playQueue.add(playQueueItems);
         let playQueueItemTracks = map(playQueueItems, (item: any) => {
           return {
             id: item.id

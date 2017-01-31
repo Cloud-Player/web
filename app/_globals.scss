@@ -1,0 +1,150 @@
+/* Global styles */
+
+h2 {
+  font-size: 28px;
+  margin-top: 10px;
+}
+
+$btn-width: 40px;
+$btn-color: #f50;
+
+button.btn {
+  margin: 5px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+button i.play {
+  padding-left: 3px;
+}
+
+button.btn-round {
+  width: $btn-width;
+  height: $btn-width;
+  border-radius: $btn-width/2;
+}
+
+button.btn-brand {
+  background: #f50;
+  background: linear-gradient(#f70, #f30);
+  border-color: #f50;
+  color: white;
+
+  &:hover {
+    background: darken($btn-color, 5%);
+  }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+  section.column {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    display: inline-block;
+  }
+
+  main.flex-container {
+
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    justify-content: flex-start;
+
+    audio-player {
+
+      &.invisible {
+        width: 0;
+      }
+
+    }
+
+  }
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+  section.column {
+    height: calc(100vh - 180px);
+  }
+
+  main.flex-container {
+
+  }
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+  section.column {
+    overflow: hidden;
+    height: calc(100vh - 180px);
+  }
+
+  main.flex-container {
+
+    flex-wrap: nowrap;
+
+    nav-sidebar {
+      flex: auto 0 0;
+      order: 1;
+    }
+
+    div.routes {
+      flex: auto;
+      order: 2;
+    }
+
+  }
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+  section.column {
+    overflow: hidden;
+    height: calc(100vh - 50px);
+  }
+
+  main.flex-container {
+
+    audio-player {
+      flex: auto 0 0;
+      order: 2;
+    }
+
+    div.routes {
+      flex: auto;
+      order: 3;
+    }
+  }
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+  main.flex-container {
+
+    audio-player {
+      flex: auto 0 0;
+    }
+
+    authenticated-user-playlists-view {
+      flex: 1;
+      order: 3;
+    }
+
+    div.routes {
+      flex: 1;
+      order: 4;
+    }
+  }
+
+}

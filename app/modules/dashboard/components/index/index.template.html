@@ -1,15 +1,16 @@
-<div class="row">
-  <h3>
+<section class="column">
+  <h2>
     {{title}}
-  </h3>
+  </h2>
+
+  <hr>
 
   <collection-text-input-search [collection]="tracks" [queryParam]="'q'"></collection-text-input-search>
   <collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></collection-range-input-search>
   {{tracks.queryParams['duration[from]']/1000 | hReadableSeconds}}
+  <sort-tracks [tracks]="tracks"></sort-tracks>
 
   <hr>
 
-  <sort-tracks [tracks]="tracks"></sort-tracks>
-
   <track-list [tracks]="tracks"></track-list>
-</div>
+</section>

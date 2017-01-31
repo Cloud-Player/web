@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem} from '../../models/play_queue_item.model';
+import {Component, Input} from '@angular/core';
+import {Track} from '../../../tracks/models/track.model';
 
 @Component ({
   selector: 'audio-player',
@@ -8,17 +7,8 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
   template: require('./audio-player.template.html')
 })
 
-export class AudioPlayerComponent implements OnInit {
+export class AudioPlayerComponent{
 
-  private playQueue: PlayQueue<PlayQueueItem>;
-  private track: any;
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-    this.playQueue = PlayQueue.getInstance();
-    this.track = this.playQueue.getCurrentItem();
-  }
+  @Input() track: Track;
 
 }

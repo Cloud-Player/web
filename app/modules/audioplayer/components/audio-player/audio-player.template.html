@@ -1,12 +1,22 @@
-<div class="row">
+<section class="column">
 
-  <!--div class="col-md-12">
-    <div class="cover">
-      <img [src]="track.get('artwork_url')">
+  <div class="audio-player">
+
+    <div class="track-item" *ngIf="track">
+      <div class="cover">
+        <img [src]="track.get('artwork_url').getLargeSize()">
+      </div>
+      <div class="details">
+        <b>{{track.get('title')}}</b>
+        <p>{{track.get('user').get('username')}}</p>
+      </div>
     </div>
-  </div-->
 
-  <audio-player-controls class="col-md-12"></audio-player-controls>
-  <play-queue class="col-md-12"></play-queue>
+    <toggle-liked-track [track]="track"></toggle-liked-track>
 
-</div>
+    <audio-player-controls class="controls"></audio-player-controls>
+    <play-queue class="hidden-xs hidden-sm queue"></play-queue>
+
+  </div>
+
+</section>

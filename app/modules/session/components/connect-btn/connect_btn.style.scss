@@ -1,0 +1,22 @@
+@import "../../../../variables";
+
+div.connect {
+
+  a {
+    margin: 5px auto;
+    color: $gray-darker;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
+
+  a:hover {
+    color: $gray-light;
+  }
+
+  i {
+    margin: 10px auto;
+    font-size: 38px;
+  }
+
+}

@@ -1,34 +1,45 @@
-.audio-player-progress {
-  position: relative;
-  top: 5px;
+@import '../../../../variables';
+
+div.audio-player-controls {
+
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+
+  button.next, button.prev {
+    border: none;
+    font-size: 24px;
+    background: none;
+    vertical-align: middle;
+
+    &:hover {
+      color: grey;
+    }
+
+  }
+
+  button.play, button.pause {
+    width: 60px;
+    height: 60px;
+    border: none;
+    font-size: 28px;
+    border-radius: 30px;
+  }
+
 }
 
-.audio-player-progress-bar-line {
-  height: 5px;
+div.volume, div.time {
+  display: flex;
+  justify-content: space-around;
 
-  position: relative;
-  top: 30px;
+  span, i, div {
+    flex: auto;
+    text-align: center;
+  }
 
-  background-color: grey;
-}
+  i {
+    font-size: 22px;
+  }
 
-.audio-player-progress-bar {
-  height: 5px;
-
-  position: relative;
-  z-index: 1;
-
-  margin: 10px 0 10px 0;
-  background-color: cornflowerblue;
-}
-
-.audio-player-progress-bar-handle {
-  width: 15px;
-  height: 15px;
-
-  position: relative;
-  top: 20px;
-
-  background-color: cornflowerblue;
-  border-radius: 50%;
 }

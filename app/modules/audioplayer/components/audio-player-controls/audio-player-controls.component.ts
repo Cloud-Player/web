@@ -104,6 +104,10 @@ export class AudioPlayerControlsComponent implements OnInit {
     window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
     window.addEventListener('nextTrackKeyPressed', this.nextTrack.bind(this));
     window.addEventListener('previousTrackKeyPressed', this.previousTrack.bind(this));
+
+    if (this.playQueue.getPlayingItem()) {
+      this.startAudioPlayer(this.playQueue.getPlayingItem());
+    }
   }
 
 

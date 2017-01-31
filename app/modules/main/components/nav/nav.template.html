@@ -1,27 +1,44 @@
-<div class="sidebar row">
+<section class="column" [@toggle]="toggleState">
 
-  <show-when-authenticated class="desktop visible-md-block visible-lg-block">
-    <div class="avatar">
-      <img [src]="user.get('avatar_url').getLargeSize() || img" [alt]="user.get('full_name') || 'John Doe'">
+  <div class="sidebar">
+    <div class="avatar hidden-xs">
+      <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name') || 'John Doe'">
     </div>
 
-    <nav class="col-md-12">
+    <nav>
       <a routerLink="/dashboard">
-        <i class="fa fa-music" aria-hidden="true"></i>
-        <p class="visible-lg">Home</p>
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <p class="visible-md visible-lg">Search</p>
       </a>
-      <a routerLink="me/likes">
+
+      <a routerLink="me/likes" *ngIf="isAuthenticated">
         <i class="fa fa-heart" aria-hidden="true"></i>
-        <p class="visible-lg">Likes</p>
+        <p class="visible-md visible-lg">Likes</p>
       </a>
-      <authenticated-user-playlists></authenticated-user-playlists>
-    </nav>
-  </show-when-authenticated>
 
-  <div class="mobile visible-sm-block visible-xs-block">
-    <nav class="col-md-12">
+      <a routerLink="me/playlists" class="hidden-lg" *ngIf="isAuthenticated">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        <p class="visible-md visible-lg">Playlists</p>
+      </a>
 
+      <authenticated-user-playlists class="hidden-lg"></authenticated-user-playlists>
+
+      <a (click)="toggle()" class="hidden">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+        <p class="visible-md visible-lg">Toggle</p>
+      </a>
+
+      <a (click)="connect()" *ngIf="!isAuthenticated">
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
+        <p class="visible-md visible-lg">Connect</p>
+      </a>
+
+      <a (click)="disconnect()" *ngIf="isAuthenticated">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+        <p class="visible-md visible-lg">Disconnect</p>
+      </a>
     </nav>
+
   </div>
 
-</div>
+</section>

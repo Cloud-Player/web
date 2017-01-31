@@ -1,34 +1,21 @@
-//@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-//@import '../node_modules/font-awesome/scss/font-awesome';
-@import './_variables';
-
-// Master Styles
+@import './_variables.scss';
 
 * {
-  font-family: $font-family-sans-serif;
+  font-family: $font-family-base;
+  font-weight: 300;
 }
 
-html {
-  overflow: hidden;
+html, body {
+  height: 100vh;
+  width: 100%;
 }
 
 body {
   background: $body-bg;
-
-  // for electron
-  -webkit-app-region: drag;
+  overflow: hidden;
 }
 
 a {
   cursor: pointer;
 }
 
-h1 {
-  color: $brand-primary;
-  font-size: 22px;
-  margin: 15px 0;
-}
-
-header {
-  background: $gray-dark;
-}

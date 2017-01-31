@@ -1,0 +1,34 @@
+@import "../../../../variables";
+
+$img-size: 50px;
+
+div.authenticated-user-playlists {
+
+  a {
+    margin: 5px auto;
+    color: $gray-darker;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
+
+  a:hover {
+    color: $gray-light;
+  }
+
+  div {
+    margin: 10px auto;
+    position: relative;
+    width: $img-size;
+    height: $img-size;
+    background: $brand-primary;
+    background: linear-gradient(#f70, #f30);
+    clip-path: circle(50% at 50% 50%);
+
+    img {
+      margin: auto;
+      width: $img-size;
+    }
+  }
+
+}

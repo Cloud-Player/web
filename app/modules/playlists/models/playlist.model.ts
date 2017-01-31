@@ -19,8 +19,8 @@ export class Playlist extends SoundcloudModel {
   nested() {
     return {
       user: User,
-      artwork_url: SoundcloudImageModel,
-      tracks: Tracks
+      tracks: Tracks,
+      artwork_url: SoundcloudImageModel
     };
   };
 

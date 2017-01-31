@@ -33,7 +33,8 @@ import {
   exports: [
     ConnectBtnComponent,
     ShowWhenAuthenticatedComponent,
-    AuthenticatedUserPlaylists
+    AuthenticatedUserPlaylists,
+    AuthenticatedUserPlaylistsViewComponent
   ]
 })
 

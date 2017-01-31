@@ -9,15 +9,15 @@ import '@angular/router';
 // RxJS
 import 'rxjs';
 
-// Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
-// import './node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-// import './_variables';
+import 'font-awesome/css/font-awesome.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './_variables.scss';
+import './_globals.scss';
 import './main.scss';
 
+// Other vendors for example jQuery, Lodash or Bootstrap
+import 'jquery';
 import 'backbone';
 import 'underscore';
-import 'jquery';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.css';
 import 'localforage';

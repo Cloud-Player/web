@@ -1,17 +1,11 @@
-import {Component, Input} from '@angular/core';
-import {Session} from '../../models/session.model';
+import {Injectable} from '@angular/core';
+import {Session} from '../../session/models/session.model';
 import Timer = NodeJS.Timer;
 
-@Component({
-  selector: 'connect-btn',
-  styles: [ require('./connect_btn.style.scss') ],
-  template: require('./connect_btn.template.html')
-})
-export class ConnectBtnComponent {
+@Injectable()
+export class AuthService {
 
-  @Input() auth: boolean;
-
-  private session: Session = Session.getInstance();
+  private session = Session.getInstance();
   private checkInterval: Timer;
 
   private receiveConnectMessage(event: any): void {
@@ -36,6 +30,10 @@ export class ConnectBtnComponent {
     }, 100);
   }
 
+  disconnect() {
+    this.session.clear();
+  }
+
   connectionSuccessFul(params: any) {
     this.session.set({
       access_token: params.access_token,
@@ -58,4 +56,5 @@ export class ConnectBtnComponent {
       }
     });
   }
+
 }

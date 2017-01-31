@@ -1,3 +1,2 @@
 linters:
-  PropertySortOrder:
-    ignore_unspecified: true
+  PropertySortOrder: false

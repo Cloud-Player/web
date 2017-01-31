@@ -1,8 +1,8 @@
-<div class="row">
-  <h3>
-    <i *ngIf="!playlist.get('isPublic')"
-       class="fa fa-lock"></i> {{playlist.get('title')}}
-  </h3>
+<section class="column">
+  <h2>
+    <i *ngIf="!playlist.get('isPublic')" class="fa fa-lock"></i>
+    {{playlist.get('title')}}
+  </h2>
 
   <hr>
 
@@ -10,4 +10,4 @@
 
   <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
 
-</div>
+</section>
