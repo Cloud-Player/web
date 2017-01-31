@@ -14,6 +14,7 @@ import {UsersModule} from '../users/users.module';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {NavComponent} from './components/nav/nav.component';
 import {PlaylistModule} from '../playlists/playlist.module';
+import {AuthService} from '../shared/services/auth.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import {PlaylistModule} from '../playlists/playlist.module';
     MainComponent,
     NavComponent
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, AuthService],
   bootstrap: [ MainComponent ]
 })
 export class MainModule { }
