@@ -1,17 +1,22 @@
 <section class="column">
 
-  <div class="track-item" *ngIf="track">
-    <div class="cover">
-      <img [src]="track.get('artwork_url').getLargeSize()">
-    </div>
-    <div class="details">
-      <p>{{track.get('title')}}</p>
-      <p>{{track.get('user').get('username')}}</p>
-      <toggle-liked-track [track]="track"></toggle-liked-track>
-    </div>
-  </div>
+  <div class="audio-player">
 
-  <audio-player-controls class="controls"></audio-player-controls>
-  <play-queue class="queue"></play-queue>
+    <div class="track-item" *ngIf="track">
+      <div class="cover">
+        <img [src]="track.get('artwork_url').getLargeSize()">
+      </div>
+      <div class="details">
+        <b>{{track.get('title')}}</b>
+        <p>{{track.get('user').get('username')}}</p>
+      </div>
+    </div>
+
+    <toggle-liked-track [track]="track"></toggle-liked-track>
+
+    <audio-player-controls class="controls"></audio-player-controls>
+    <play-queue class="hidden-xs hidden-sm queue"></play-queue>
+
+  </div>
 
 </section>
