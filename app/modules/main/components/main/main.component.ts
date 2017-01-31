@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.playQueue = PlayQueue.getInstance();
     this.item = this.playQueue.getCurrentItem();
-    this.playQueue.on('change:status', () => {
+    this.playQueue.on('add change:status', () => {
       if (this.playQueue.hasCurrentItem()) {
         this.item = this.playQueue.getCurrentItem();
         this.track = this.item.get('track');
