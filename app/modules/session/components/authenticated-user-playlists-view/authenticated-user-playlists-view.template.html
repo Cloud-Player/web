@@ -1,29 +1,34 @@
-<div class="row">
-  <h3>
-    Playlists
-  </h3>
+<section class="column">
 
-  <hr>
+  <div class="playlists">
+    <h2>Playlists</h2>
 
-  <div class="well">
-    <h5>Create a new Playlist</h5>
-    <input type="text" [(ngModel)]="tmpPlaylist.attributes.title">
-    <label>
-      <input type="checkbox" [(ngModel)]="tmpPlaylist.attributes.isPublic">
-      Playlist is public
-    </label>
-    <button class="btn btn-primary" (click)="save()">Save</button>
+    <hr>
+
+    <div class="well">
+      <h5>Create a new Playlist</h5>
+
+      <input type="checkbox" class="icon fa fa-lock" [(ngModel)]="tmpPlaylist.attributes.isPublic">
+
+      <input type="text" placeholder="Playlist" [(ngModel)]="tmpPlaylist.attributes.title">
+      <button class="btn btn-round btn-primary" (click)="save()" title="Create playlist"><i class="fa fa-plus"></i></button>
+    </div>
+
+    <div class="playlists">
+      <div *ngFor="let playlist of user.get('playlists').models">
+        <a routerLink="/me/playlists/{{playlist.get('id')}}" dropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
+          <div class="cover">
+            <img [src]="playlist.get('artwork_url').getDefaultSize()">
+          </div>
+          <div class="details">
+            <p>{{playlist.get('title')}}</p>
+          </div>
+        </a>
+        <button class="btn btn-default btn-round" (click)="playlist.destroy()" title="Delete playlist"><i class="fa fa-trash"></i></button>
+        <hr>
+      </div>
+    </div>
+
   </div>
 
-  <ul>
-    <li *ngFor="let playlist of user.get('playlists').models">
-      <a routerLink="me/playlists/{{playlist.get('id')}}">
-        {{playlist.get('title')}}
-      </a>
-      <button class="btn btn-danger" (click)="playlist.destroy()">
-        Delete
-      </button>
-    </li>
-  </ul>
-
-</div>
+</section>
