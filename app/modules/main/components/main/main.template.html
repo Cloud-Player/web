@@ -1,9 +1,13 @@
 <section class="main">
 
+  <span class="search-bar"></span>
+
   <main class="flex-container">
 
     <nav-sidebar class="flex-item"></nav-sidebar>
-    <audio-player class="flex-item" [track]="track" [class.invisible]="!track"></audio-player>
+    <audio-player class="flex-item" [track]="track" [class.invisible]="!playQueue.length > 0"></audio-player>
+    <authenticated-user-playlists-view class="flex-item visible-lg-inline-block"
+                                       *ngIf="isAuthenticated"></authenticated-user-playlists-view>
 
     <div class="routes">
       <router-outlet class="flex-item"></router-outlet>
