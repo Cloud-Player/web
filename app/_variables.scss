@@ -1,9 +1,13 @@
-@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables';
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600');
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables';
+@import './globals';
 
 // Bootstrap variables
 
-$body-bg: #fff;
+$font-family-base: 'Raleway', $font-family-sans-serif;
+
+$body-bg: #fcfbfa;
 
 $brand-primary: #f50;
 
-$grid-gutter-width: 10px;
+$grid-gutter-width: 0px;
