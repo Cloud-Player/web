@@ -4,19 +4,23 @@
        [dragData]="track.toJSON()"
        [dragImageUrl]="track.get('artwork_url').getSmallSize()"
        dragEffect="copy">
-    <div class="cover" class="col-md-3" (click)="gotoDetail(track)">
-      <img [src]="track.get('artwork_url').getDefaultSize()" [alt]="track.get('title')">
+    <div class="cover" (click)="gotoDetail(track)">
+      <img [src]="track.get('artwork_url').getLargeSize()" [alt]="track.get('title')">
     </div>
     <div class="details">
-      <toggle-liked-track [track]="track"></toggle-liked-track>
-      <p>{{track.get('title')}}</p>
+      <!--<toggle-liked-track [track]="track"></toggle-liked-track>-->
+      <b>{{track.get('title')}}</b>
       <p>{{track.get('user').get('username')}}</p>
       <play-button [track]="track" [tracks]="tracks"></play-button>
       <queue-button [track]="track" [tracks]="tracks"></queue-button>
+      <button class="btn btn-danger btn-round" title="Like track">
+        <toggle-liked-track [track]="track"></toggle-liked-track>
+      </button>
       <button *ngIf="canBeDeleted"
-              class="btn btn-default btn-xs"
+              class="btn btn-default btn-round"
+              title="Delete track"
               (click)="track.destroy()">
-        Delete
+        <i class="fa fa-trash"></i>
       </button>
     </div>
   </div>
