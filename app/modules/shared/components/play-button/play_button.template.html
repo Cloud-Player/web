@@ -1,6 +1,6 @@
-<span *ngIf="!isPlaying()" (click)="play()">
-  <i class="fa fa-play"></i>
-</span>
-<span *ngIf="isPlaying()" (click)="pause()">
+<button class="btn btn-round btn-brand" *ngIf="!isPlaying()" (click)="play()">
+  <i class="fa fa-play play"></i>
+</button>
+<button class="btn btn-round btn-brand" *ngIf="isPlaying()" (click)="pause()">
   <i class="fa fa-pause"></i>
-</span>
+</button>
