@@ -1,36 +1,45 @@
 @import '../../../../variables';
 
-.audio-player-progress {
-  position: relative;
-  top: 5px;
+div.controls {
 
-  .audio-player-progress-bar-line {
-    height: 5px;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
 
-    position: relative;
-    top: 30px;
+  button.next, button.prev {
+    border: none;
+    font-size: 24px;
+    background: none;
+    vertical-align: middle;
 
-    background-color: grey;
+    &:hover {
+      color: grey;
+    }
+
   }
 
-  .audio-player-progress-bar {
-    height: 5px;
-
-    position: relative;
-    z-index: 1;
-
-    margin: 10px 0 10px 0;
-    background-color: $brand-primary;
+  button.play, button.pause {
+    width: 60px;
+    height: 60px;
+    border: none;
+    font-size: 28px;
+    border-radius: 30px;
   }
 
-  .audio-player-progress-bar-handle {
-    width: 15px;
-    height: 15px;
+}
 
-    position: relative;
-    top: 20px;
+div.volume, div.time {
+  display: flex;
+  justify-content: space-around;
 
-    background-color: cornflowerblue;
-    border-radius: 50%;
+  span, i, div {
+    flex: auto;
+    text-align: center;
   }
+
+  i {
+    font-size: 22px;
+  }
+
 }
