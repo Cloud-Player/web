@@ -1,5 +1,34 @@
 <div class="play-queue">
 
+  <div class="queued-tracks-list row" *ngIf="playQueue.getScheduledItems().length > 0">
+    <div *ngFor="let playQueueItem of playQueue.getQueuedItems()" class="track col-md-12">
+      <div class="cover col-md-4">
+        <img [src]="playQueueItem.get('track').get('artwork_url').getDefaultSize()" [alt]="playQueueItem.get('track').get('title')">
+      </div>
+      <div class="details col-md-8">
+        <b>{{playQueueItem.get('track').get('title')}}</b>
+        <p>{{playQueueItem.get('track').get('user').get('username')}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scheduled-tracks-list row" *ngIf="playQueue.getScheduledItems().length > 0">
+    <div *ngFor="let playQueueItem of playQueue.getScheduledItems()" class="track col-md-12">
+      <div class="cover col-md-4">
+        <img [src]="playQueueItem.get('track').get('artwork_url').getDefaultSize()" [alt]="playQueueItem.get('track').get('title')">
+      </div>
+      <div class="details col-md-8">
+        <b>{{playQueueItem.get('track').get('title')}}</b>
+        <p>{{playQueueItem.get('track').get('user').get('username')}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--
+<div class="play-queue">
+
   <hr
     *ngIf="playQueue.getCurrentItem() && (playQueue.getScheduledItems().length>0 || playQueue.getQueuedItems().length>0)">
 
@@ -39,3 +68,4 @@
     <span>{{playQueueItem.get('track').get('title')}}</span>
   </li>
 </ul>
+-->

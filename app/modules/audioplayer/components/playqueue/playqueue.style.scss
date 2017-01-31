@@ -1,0 +1,33 @@
+div.play-queue {
+
+  border-top: solid 1px #dad9d9;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 10px 0;
+  margin: 10px 0;
+  height: 100%;
+
+  div.queued-tracks-list, div.scheduled-tracks-list {
+
+    div.track {
+
+      padding: 0;
+      margin: 5px 0;
+
+      div.details {
+
+        b {
+          font-weight: bold;
+        }
+
+      }
+
+    }
+
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+}
