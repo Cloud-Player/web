@@ -1,17 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Session} from '../../session/models/session.model';
-import {User} from '../../users/models/user.model';
 import Timer = NodeJS.Timer;
 
 @Injectable()
 export class AuthService {
 
-  get isAuthenticated(): boolean {
-    return this._isAuthenticated;
-  }
-
   private session = Session.getInstance();
-  private _isAuthenticated = false;
   private checkInterval: Timer;
 
   private receiveConnectMessage(event: any): void {

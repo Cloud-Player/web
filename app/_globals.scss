@@ -133,7 +133,7 @@ button.btn-brand {
   main.flex-container {
 
     audio-player {
-      flex: 1;
+      flex: auto 0 0;
     }
 
     authenticated-user-playlists-view {
