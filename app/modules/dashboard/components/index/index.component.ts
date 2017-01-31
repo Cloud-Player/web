@@ -11,7 +11,7 @@ import {Track} from '../../../tracks/models/track.model';
 })
 
 export class DashboardIndexComponent implements OnInit {
-  title = 'Top Tracks';
+  title = 'Search Tracks';
 
   constructor(private tracks: Tracks<Track>) {
   }
