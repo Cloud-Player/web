@@ -1,11 +1,12 @@
-<div class="row">
-  <h3>
+<section class="column">
+  <h2>
     {{playlist.get('title')}}
-  </h3>
+  </h2>
 
   <hr>
 
   <sort-tracks [tracks]="playlist.get('tracks')"></sort-tracks>
 
   <track-list [tracks]="playlist.get('tracks')"></track-list>
-</div>
+
+</section>
