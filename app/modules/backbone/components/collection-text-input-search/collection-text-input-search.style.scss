@@ -1,31 +1,22 @@
-.search {
-  margin: 10px auto;
+div.collection-search {
+
+  top: 5px;
+  right: 5px;
+  max-width: 350px;
+  margin-left: 5px;
+  position: absolute;
+
 }
 
-.search-result{
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    width: 200px;
-    height: 50px;
-    background-color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+@media only screen and (min-width: 768px) {
 
-  .cover{
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-    flex-grow: 1;
+  div.collection-search {
+
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 50%;
+
   }
 
-  .info{
-    max-height: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 11px;
-    padding: 2px 5px;
-  }
 }
