@@ -1,35 +1,50 @@
-<div class="controls">
+<div class="audio-player-controls">
 
-  <button class="btn prev" (click)="previousTrack()"
-          [disabled]="!playQueue.hasPreviousItem() && audio.currentTime < 1">
+  <div class="controls">
+  <button type="button"
+          [disabled]="!playQueue.hasPreviousItem() && audio.currentTime < 1"
+          (click)="previousTrack()">
     <i class="fa fa-backward" aria-hidden="true"></i>
   </button>
 
-  <button class="btn btn-round btn-brand play" (click)="playTrack()" *ngIf="!playQueue.getPlayingItem()"
-          [disabled]="playQueue.getCurrentItem() && !playQueue.getCurrentItem().get('track').get('stream_url')">
-    <i class="fa fa-play play" aria-hidden="true"></i>
+  <button *ngIf="!playQueue.getPlayingItem()"
+          type="button"
+          [disabled]="playQueue.getCurrentItem() && !playQueue.getCurrentItem().get('track').get('stream_url')"
+          (click)="playTrack()">
+    <i class="fa fa-play" aria-hidden="true"></i>
   </button>
 
-  <button class="btn btn-round btn-brand pause" (click)="pauseTrack()" *ngIf="playQueue.getPlayingItem()">
+  <button *ngIf="playQueue.getPlayingItem()"
+          type="button"
+          (click)="pauseTrack()">
     <i class="fa fa-pause" aria-hidden="true"></i>
   </button>
 
-  <button class="btn next" (click)="nextTrack()" [disabled]="!playQueue.hasNextItem()">
+  <button type="button"
+          [disabled]="!playQueue.hasNextItem()"
+          (click)="nextTrack()">
     <i class="fa fa-forward" aria-hidden="true"></i>
   </button>
+  </div>
 
-</div>
+  <range-slider [min]="0"
+                [max]="duration"
+                [value]="timeTick"
+                [step]="0.01"
+                [isLoading]="isBuffering"
+                [transformDisplayValue]="transformProgressBarValues"
+                [showCurrentValue]="true"
+                (valueChanged)="playTrackFromPosition($event)"
+                class="time">
+  </range-slider>
 
-<div class="time">
-  <span>{{timeTick | hReadableSeconds}}</span>
-  <range-slider min="0" [max]="duration" [value]="timeTick" step="0.01" (valueChanged)="playTrackFromPosition($event)"
-                [isLoading]="isBuffering"></range-slider>
-  <span>{{duration | hReadableSeconds}}</span>
-</div>
-
-<div class="volume">
-  <i class="fa fa-volume-down"></i>
-  <range-slider min="0" max="1" [value]="audio.volume" step="0.01" (valueChange)="setVolume($event)"
-                (valueChanged)="saveVolume($event)"></range-slider>
-  <i class="fa fa-volume-up"></i>
+  <range-slider [min]="0"
+                [max]="1"
+                [value]="audio.volume"
+                [step]="0.01"
+                [hideSliderValue]="true"
+                (valueChange)="setVolume($event)"
+                (valueChanged)="saveVolume($event)"
+                class="volume">
+  </range-slider>
 </div>

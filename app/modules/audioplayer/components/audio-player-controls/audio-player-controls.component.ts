@@ -4,10 +4,11 @@ import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
 import * as localforage from 'localforage';
 import {Track} from '../../../tracks/models/track.model';
+import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 
 @Component({
   selector: 'audio-player-controls',
-  styles: [ require('./audio-player-controls.style.scss') ],
+  styles: [require('./audio-player-controls.style.scss')],
   template: require('./audio-player-controls.template.html')
 })
 
@@ -23,11 +24,14 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private isBuffering: boolean = false;
 
+  private humanReadableSecPipe: HumanReadableSecondsPipe;
+
   constructor() {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
     this.timeTick = 0;
     this.duration = 0;
+    this.humanReadableSecPipe = new HumanReadableSecondsPipe();
     this.setAudioObjectEventListeners();
   }
 
@@ -120,6 +124,10 @@ export class AudioPlayerControlsComponent implements OnInit {
         break;
     }
   }
+
+  private transformProgressBarValues = function (input: any) {
+    return this.humanReadableSecPipe.transform(input, null);
+  }.bind(this);
 
   setVolume(volume: number) {
     this.audio.volume = volume;

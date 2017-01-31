@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
 
 import {DraggableDirective} from './directives/draggable.directive';
 import {DropZoneDirective} from './directives/dropzone.directive';
+import {TwoRangeSliderComponent} from './components/two-range-slider/two-range-slider.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {DropZoneDirective} from './directives/dropzone.directive';
     QueueButtonComponent,
     SortTracksComponent,
     RangeSliderComponent,
+    TwoRangeSliderComponent,
     DraggableDirective,
     DropZoneDirective,
     HumanReadableSecondsPipe
@@ -37,6 +39,7 @@ import {DropZoneDirective} from './directives/dropzone.directive';
     QueueButtonComponent,
     SortTracksComponent,
     RangeSliderComponent,
+    TwoRangeSliderComponent,
     DraggableDirective,
     DropZoneDirective,
     HumanReadableSecondsPipe
