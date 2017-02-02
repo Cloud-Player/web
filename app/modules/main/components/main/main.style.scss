@@ -6,7 +6,7 @@ section.main {
   height: 100vh;
   overflow: hidden;
 
-  span.search-bar {
+  .search-bar {
     -webkit-app-region: drag;
 
     &:before {
