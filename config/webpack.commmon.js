@@ -28,9 +28,13 @@ module.exports = {
         test: /\.html$/,
         loader: 'html'
       },
+      // {
+      //   test: /\.scss$/,
+      //   loaders: ["to-string-loader", "style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
+      // },
       {
-        test: /\.scss$/, 
-        loaders: ["to-string-loader", "style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
+        test: /\.scss$/,
+        loaders: ['raw-loader', 'sass-loader']
       },
       {
         test: /\.css$/,
