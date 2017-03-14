@@ -13,6 +13,8 @@ import {FormsModule} from '@angular/forms';
 import {DraggableDirective} from './directives/draggable.directive';
 import {DropZoneDirective} from './directives/dropzone.directive';
 import {TwoRangeSliderComponent} from './components/two-range-slider/two-range-slider.component';
+import {ViewHeaderComponent} from './components/view-header/view-header.component';
+import {ScrollViewComponent} from './components/scroll-view/scroll-view.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import {TwoRangeSliderComponent} from './components/two-range-slider/two-range-s
     SortTracksComponent,
     RangeSliderComponent,
     TwoRangeSliderComponent,
+    ViewHeaderComponent,
+    ScrollViewComponent,
     DraggableDirective,
     DropZoneDirective,
     HumanReadableSecondsPipe
@@ -40,6 +44,8 @@ import {TwoRangeSliderComponent} from './components/two-range-slider/two-range-s
     SortTracksComponent,
     RangeSliderComponent,
     TwoRangeSliderComponent,
+    ViewHeaderComponent,
+    ScrollViewComponent,
     DraggableDirective,
     DropZoneDirective,
     HumanReadableSecondsPipe

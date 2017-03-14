@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {SessionModule} from '../session/session.module';
 import {BackboneModule} from '../backbone/backbone.module';
 import {SharedModule} from '../shared/shared.module';
+import {SearchFilterComponent} from './components/search-filter/search-filter.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {SharedModule} from '../shared/shared.module';
     SharedModule
   ],
   declarations: [
-    DashboardIndexComponent
+    DashboardIndexComponent,
+    SearchFilterComponent
   ]
 })
 

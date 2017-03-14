@@ -1,43 +1,89 @@
-<section class="column" [@toggle]="toggleState">
+<section class="column">
 
   <div class="sidebar">
-    <div class="avatar hidden-xs">
-      <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name') || 'John Doe'">
+    <div class="cloud-player">
+      <object type="image/svg+xml" data="../../../../../assets/logo-animated.svg" id="logoSVG">
+        <img src="../../../../../assets/logo-animated.svg" alt="Cloud Player">
+        <script>
+          console.log('LÄUFT');
+          window.addEventListener('abc', function(){
+            console.log('LÄUFT')
+          });
+        </script>
+      </object>
     </div>
 
-    <nav>
-      <a routerLink="/dashboard">
-        <i class="fa fa-search" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Search</p>
-      </a>
+    <div class="menu">
+      <nav>
+        <a routerLink="/dashboard"
+           [routerLinkActive]="['is-active']">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <div class="text">Search</div>
+        </a>
 
-      <a routerLink="me/likes" *ngIf="isAuthenticated">
-        <i class="fa fa-heart" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Likes</p>
-      </a>
+        <div class="divider">
+          <div class="title">Account</div>
+        </div>
 
-      <a routerLink="me/playlists" class="hidden-lg" *ngIf="isAuthenticated">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Playlists</p>
-      </a>
+        <div *ngIf="isAuthenticated"
+             class="user nav-item">
+          <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name')" class="avatar">
+          <div class="text">
+            <span>{{user.get('full_name')}}</span>
+          </div>
+        </div>
 
-      <authenticated-user-playlists class="hidden-lg"></authenticated-user-playlists>
+        <a *ngIf="!isAuthenticated"
+           (click)="connect()">
+          <i class="fa fa-sign-in" aria-hidden="true"></i>
+          <div class="text">Login with Soundcloud</div>
+        </a>
 
-      <a (click)="toggle()" class="hidden">
-        <i class="fa fa-expand" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Toggle</p>
-      </a>
+        <a routerLink="me/likes"
+           [routerLinkActive]="['is-active']" [class.disabled]="!isAuthenticated">
+          <i class="fa fa-heart" aria-hidden="true"></i>
+          <div class="text">Likes</div>
+        </a>
 
-      <a (click)="connect()" *ngIf="!isAuthenticated">
-        <i class="fa fa-sign-in" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Connect</p>
-      </a>
 
-      <a (click)="disconnect()" *ngIf="isAuthenticated">
-        <i class="fa fa-sign-out" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Disconnect</p>
-      </a>
-    </nav>
+        <a *ngIf="isAuthenticated"
+           routerLink="me/playlists"
+           [routerLinkActive]="['is-active']"
+           class="visible-xs visible-sm">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <div class="text">Playlists</div>
+        </a>
+
+        <div class="divider">
+          <div class="title">Playlists</div>
+        </div>
+
+        <a href="#" class="new-playlist" [class.disabled]="!isAuthenticated">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <div class="text">New Playlist</div>
+        </a>
+
+        <authenticated-user-playlists></authenticated-user-playlists>
+
+        <div *ngIf="!isAuthenticated">
+          <a class="dummy-playlist-item disabled" style="opacity: 0.3">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            <div class="text" style="width: 30%">Playlists</div>
+          </a>
+
+          <a class="dummy-playlist-item disabled" style="opacity: 0.2">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            <div class="text" style="width: 45%">Playlists</div>
+          </a>
+
+          <a class="dummy-playlist-item disabled" style="opacity: 0.1">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            <div class="text" style="width: 40%">Playlists</div>
+          </a>
+        </div>
+
+      </nav>
+    </div>
 
   </div>
 

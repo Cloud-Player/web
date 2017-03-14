@@ -1,16 +1,13 @@
 <section class="column">
-  <h2>
-    {{title}}
-  </h2>
+  <view-header>
+    <collection-text-input-search [collection]="tracks" [queryParam]="'q'"></collection-text-input-search>
+  </view-header>
 
-  <hr>
+  <!--<collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></collection-range-input-search>-->
+  <!--<sort-tracks [tracks]="tracks"></sort-tracks>-->
 
-  <collection-text-input-search [collection]="tracks" [queryParam]="'q'"></collection-text-input-search>
-  <collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></collection-range-input-search>
-  {{tracks.queryParams['duration[from]']/1000 | hReadableSeconds}}
-  <sort-tracks [tracks]="tracks"></sort-tracks>
-
-  <hr>
-
-  <track-list [tracks]="tracks"></track-list>
+  <scroll-view>
+    <search-filter [collection]="tracks"></search-filter>
+    <track-list [tracks]="tracks"></track-list>
+  </scroll-view>
 </section>

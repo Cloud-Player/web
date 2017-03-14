@@ -1,13 +1,9 @@
 <section class="column">
-  <h2>
-    <i *ngIf="!playlist.get('isPublic')" class="fa fa-lock"></i>
-    {{playlist.get('title')}}
-  </h2>
+  <view-header>
+    <img [src]="playlist.get('artwork_url').getDefaultSize()"> {{playlist.get('title')}}
+  </view-header>
 
-  <hr>
-
-  <sort-tracks [tracks]="playlist.get('tracks')"></sort-tracks>
-
-  <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
-
+  <scroll-view>
+    <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
+  </scroll-view>
 </section>

@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600');
-@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables';
-@import './globals';
 
 // Bootstrap variables
+$font-family-base: 'Raleway';
+$brand-primary: #ff3600;
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables';
 
-$font-family-base: 'Raleway', $font-family-sans-serif;
+// Cloud Player variables
+$btn-width: 40px;
+$btn-color: $brand-primary;
+$light-white: #fcfcfc;
+$light-boxshadow: 0 0 8px 0 rgb(200, 200, 200);
 
-$body-bg: #fcfbfa;
-
-$brand-primary: #f50;
-
-$grid-gutter-width: 0px;

@@ -1,110 +1,244 @@
 @import '../../../../variables';
 
-$img-size: 80px;
-
-@media only screen and (min-width: 320px) {
-
-  //section.column {
-  //  left: 0;
-  //  right: 0;
-  //  bottom: 0;
-  //  width: auto;
-  //  height: 55px;
-  //  position: absolute;
-  //  padding: 0 25px;
-  //}
-
-  div.sidebar {
-    background: #efefef;
-    min-width: 125px;
-
-    nav {
-      margin: 0;
-      height: auto;
-      display: flex;
-      justify-content: space-around;
-
-      a {
-        flex: auto 0 0;
-        color: $gray-darker;
-      }
-
-      i {
-        padding: 10px;
-        font-size: 32px;
-      }
-    }
-  }
-
+:host .column {
+  background: #efefef;
+  height: calc(100vh);
 }
 
-@media only screen and (min-width: 768px) {
+.sidebar {
+  min-width: 95px;
 
-  section.column {
-    padding: 0 15px;
-    background: #efefef;
-    display: inline-block;
-    height: calc(100vh - 50px);
-  }
+  .cloud-player {
+    background: $light-white;
+    padding: 0;
+    text-align: center;
+    margin: 17px 15px 30px 15px;
+    border-radius: 4px;
 
-  div.sidebar {
-    min-width: 95px;
-
-    .avatar {
-      margin: 25px auto;
-      position: relative;
-      width: $img-size;
-      height: $img-size;
-      background: $brand-primary;
-      background: linear-gradient(#f70, #f30);
-      clip-path: circle(50% at 50% 50%);
-
-      img {
-        width: $img-size;
-        position: absolute;
-        margin: auto;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-      }
+    img,
+    object{
+      width: 60px;
     }
 
-    nav {
-      height: auto;
-      display: inline;
-      margin: 15px auto;
+    object{
       position: relative;
+      top: 4px;
+    }
+  }
 
-      a {
-        margin: 5px auto;
-        color: $gray-darker;
-        display: inline-block;
-        text-align: center;
-        width: 100%;
+  a,
+  .nav-item {
+    margin: 20px 0;
+    color: $gray-darker;
+    text-align: center;
+    width: 100%;
+    display: block;
+    text-decoration: none;
 
-        &.bottom {
-          position: absolute;
-          bottom: 0;
-        }
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
 
-      }
+    i {
+      border: 1px solid;
+      border-radius: 50%;
 
-      a:hover {
-        color: $gray-light;
-        text-decoration: none;
-      }
+      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      padding-top: 11px;
+    }
 
-      a:active {
+    .text {
+      display: none;
+    }
+
+    &.is-active {
+      div {
         font-weight: bold;
       }
 
       i {
-        margin: 10px auto;
-        font-size: 38px;
+        background: $brand-primary;
+        color: white;
+      }
+
+      img {
+        border: 1px solid $brand-primary;
+      }
+    }
+
+    &.disabled{
+      pointer-events: none;
+      cursor: default;
+      color: #999;
+    }
+  }
+
+  a:hover {
+    color: $gray-light;
+    text-decoration: none;
+  }
+
+  a:active {
+    font-weight: bold;
+  }
+
+  .divider {
+    position: relative;
+
+    .title {
+      display: flex;
+      &:before,
+      &:after {
+        content: "";
+        position: relative;
+        border-top: 1px solid #ccc;
+        flex-grow: 1;
+        margin: 9px 3px;
+      }
+
+      &:before {
+        max-width: 10px;
       }
     }
   }
 
+  /deep/ authenticated-user-playlists {
+    a {
+      margin: 20px 0;
+      display: block;
+
+      .text {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-sm-max) {
+  :host {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    z-index: 1;
+    box-shadow: $light-boxshadow;
+
+    .column {
+      width: 100%;
+      padding: 0;
+
+      .divider,
+      .cloud-player,
+      .new-playlist {
+        display: none;
+      }
+
+      .user{
+        order: 4;
+      }
+
+      nav {
+        display: flex;
+        font-size: 13px;
+        margin: 0;
+
+        a,
+        .nav-item {
+          margin: 0;
+          border-left: 1px solid #dad9d9;
+          padding: 7px;
+
+          &.is-active {
+            background: #dad9d9;
+
+            i {
+              color: $brand-primary;
+            }
+          }
+
+          i {
+            font-size: 27px;
+            padding: 0;
+            border: none;
+            background: transparent;
+          }
+
+          img {
+            width: 27px;
+            height: 27px;
+          }
+        }
+
+        /deep/ authenticated-user-playlists {
+          display: none;
+        }
+
+        .dummy-playlist-item{
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  :host {
+    .sidebar {
+      width: 250px;
+
+      a,
+      .nav-item {
+        margin: 20px 15px;
+        display: flex;
+        align-items: center;
+
+        img {
+          margin: 0 13px 0 0;
+          width: 30px;
+          height: 30px;
+        }
+
+        i {
+          margin-right: 13px;
+          font-size: 15px;
+          width: 30px;
+          height: 30px;
+          padding-top: 6px;
+        }
+
+        .text {
+          display: block;
+        }
+      }
+
+      .dummy-playlist-item{
+        i,
+        .text{
+          background: #999;
+        }
+      }
+
+      /deep/ authenticated-user-playlists {
+        a {
+          display: flex;
+          align-items: center;
+          margin: 20px 15px;
+
+          .cover {
+            margin: 0 13px 0 0;
+            width: 30px;
+            height: 30px;
+          }
+
+          .text {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 <div class="play-queue">
 
-  <div class="queued-tracks-list row" *ngIf="playQueue.getScheduledItems().length > 0">
+  <div class="queued-tracks-list" *ngIf="playQueue.getScheduledItems().length > 0">
     <div *ngFor="let playQueueItem of playQueue.getQueuedItems()" class="track col-md-12">
       <div class="cover col-md-4">
         <img [src]="playQueueItem.get('track').get('artwork_url').getDefaultSize()" [alt]="playQueueItem.get('track').get('title')">
@@ -12,9 +12,7 @@
     </div>
   </div>
 
-  <hr>
-
-  <div class="scheduled-tracks-list row" *ngIf="playQueue.getScheduledItems().length > 0">
+  <div class="scheduled-tracks-list" *ngIf="playQueue.getScheduledItems().length > 0">
     <div *ngFor="let playQueueItem of playQueue.getScheduledItems()" class="track col-md-12">
       <div class="cover col-md-4">
         <img [src]="playQueueItem.get('track').get('artwork_url').getDefaultSize()" [alt]="playQueueItem.get('track').get('title')">

@@ -1,11 +1,21 @@
 @import '../../../../variables';
 
-div.audio-player-controls {
-
+.audio-player-controls {
   width: 100%;
   margin: 0 auto;
   display: block;
   text-align: center;
+  padding: 0 10px;
+  position: relative;
+
+  .button-container {
+    padding-top: 12px;
+  }
+
+  range-slider {
+    display: block;
+    margin-top: -5px;
+  }
 
   button.next, button.prev {
     border: none;
@@ -26,7 +36,6 @@ div.audio-player-controls {
     font-size: 28px;
     border-radius: 30px;
   }
-
 }
 
 div.volume, div.time {
@@ -41,5 +50,8 @@ div.volume, div.time {
   i {
     font-size: 22px;
   }
+}
 
+button i.fa-play {
+  padding-left: 3px;
 }

@@ -1,4 +1,4 @@
-import {Component, trigger, state, style, transition, animate} from '@angular/core';
+import {Component, trigger, state, style, transition, animate, ContentChild} from '@angular/core';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../../shared/services/auth.service';
@@ -6,19 +6,7 @@ import {AuthService} from '../../../shared/services/auth.service';
 @Component({
   selector: 'nav-sidebar',
   styles: [require('./nav.style.scss')],
-  template: require('./nav.template.html'),
-  animations: [
-    trigger('toggle', [
-      state('in', style({
-        width: '125px'
-      })),
-      state('out', style({
-        width: '250px'
-      })),
-      transition('in => out', animate('200ms ease-in-out')),
-      transition('out => in', animate('200ms ease-in-out'))
-    ]),
-  ]
+  template: require('./nav.template.html')
 })
 
 export class NavComponent {
@@ -66,5 +54,18 @@ export class NavComponent {
     if (this.session.isValid()) {
       this.setAuthenticated(this.session.get('user'));
     }
+
+    document.getElementById('logoSVG').addEventListener("load",function(){
+      let svgObj = <HTMLObjectElement>document.getElementById('logoSVG');
+      let content = <any>svgObj.contentDocument;
+      let svg = <SVGSVGElement>content.getElementById('cloudPlayerCassette');
+      //svg.pauseAnimations();
+    }, false);
   };
+
+  getDummyWidth(): number {
+    let min = 20;
+    let max = 50;
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 }

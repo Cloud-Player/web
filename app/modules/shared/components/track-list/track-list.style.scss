@@ -1,9 +1,10 @@
 @import '../../../../variables';
 
-div.tracks-list {
-
-  height: 100%;
-  overflow-y: auto;
+.tracks-list {
+  background: $light-white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: $light-boxshadow;
 
   div.track {
 
@@ -34,4 +35,11 @@ div.tracks-list {
     display: none;
   }
 
+}
+
+@media (max-width: $screen-md-min) {
+  .tracks-list {
+    box-shadow: none;
+    border-radius: 0;
+  }
 }

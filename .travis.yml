@@ -13,5 +13,7 @@ deploy:
   - provider: script
     script: ./bin/github_pages_release.sh
     skip_cleanup: true 
-    on: 
-      branch: master
+    branches:
+      only:
+        - master
+        - feature/aws-deploy

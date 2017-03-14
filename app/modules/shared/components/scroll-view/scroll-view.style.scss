@@ -1,0 +1,17 @@
+@import '../../../../variables';
+
+:host {
+  height: calc(100vh - 80px);
+  overflow: scroll;
+  display: block;
+  border-radius: 4px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-view{
+    padding: 15px 0;
+  }
+}
+

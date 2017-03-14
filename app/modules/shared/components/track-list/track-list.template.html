@@ -5,7 +5,9 @@
        [dragImageUrl]="track.get('artwork_url').getSmallSize()"
        dragEffect="copy">
     <div class="cover" (click)="gotoDetail(track)">
-      <img [src]="track.get('artwork_url').getLargeSize()" [alt]="track.get('title')">
+      <img [src]="track.get('artwork_url').getSmallSize()"
+           [alt]="track.get('title')"
+           [srcset]="track.get('artwork_url').getSmallSize()+' 200w, ' + track.get('artwork_url').getDefaultSize()+' 400w'">
     </div>
     <div class="details">
       <!--<toggle-liked-track [track]="track"></toggle-liked-track>-->

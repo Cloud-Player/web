@@ -1,10 +1,16 @@
 <div class="authenticated-user-playlists" *ngIf="user.get('playlists').models.length < 5">
 
-  <a *ngFor="let playlist of user.get('playlists').models" routerLink="me/playlists/{{playlist.get('id')}}" dropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
+  <a *ngFor="let playlist of user.get('playlists').models"
+     routerLink="me/playlists/{{playlist.get('id')}}"
+     [routerLinkActive]="['is-active']"
+
+     dropzone
+     [dropCallback]="dropTrack"
+     [dropItemRef]="playlist">
     <div class="cover">
       <img [src]="playlist.get('artwork_url').getDefaultSize()">
     </div>
-    <p class="visible-md visible-lg">{{playlist.get('title')}}</p>
+    <div class="text">{{playlist.get('title')}}</div>
   </a>
 
 </div>

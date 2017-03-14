@@ -1,22 +1,32 @@
-<section class="column">
+<section class="audio-player">
 
-  <div class="audio-player">
+  <div class="track-item">
 
-    <div class="track-item" *ngIf="track">
-      <div class="cover">
-        <img [src]="track.get('artwork_url').getLargeSize()">
-      </div>
+    <div class="cover hidden-xs">
+      <img *ngIf="track && track.get('artwork_url').getLargeSize()" [src]="track.get('artwork_url').getLargeSize()">
+      <img *ngIf="track && !track.get('artwork_url').getLargeSize()" src="../../assets/default-sc-img.jpg">
+    </div>
+
+    <audio-player-controls class="controls"></audio-player-controls>
+
+    <div *ngIf="track" class="meta">
+      <toggle-liked-track [track]="track" class="hidden-xs"></toggle-liked-track>
       <div class="details">
-        <b>{{track.get('title')}}</b>
-        <p>{{track.get('user').get('username')}}</p>
+        <b class="track-title">{{track.get('title')}}</b>
+        <div class="artist">{{track.get('user').get('username')}}</div>
       </div>
     </div>
 
-    <toggle-liked-track [track]="track"></toggle-liked-track>
-
-    <audio-player-controls class="controls"></audio-player-controls>
-    <play-queue class="hidden-xs hidden-sm queue"></play-queue>
-
+    <div *ngIf="!track"
+         class="dummy meta">
+      <i class="fa fa-heart-o"
+         aria-hidden="true"></i>
+      <div class="details">
+        <b class="track-title">abc</b>
+        <div class="artist">abc</div>
+      </div>
+    </div>
   </div>
 
+  <play-queue class="queue"></play-queue>
 </section>

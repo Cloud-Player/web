@@ -27,14 +27,16 @@ export class CollectionTextInputSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchTerms
-      .debounceTime(300)        // wait for 300ms pause in events
+      .debounceTime(500)        // wait for 300ms pause in events
       .distinctUntilChanged()   // ignore if next search term is same as previous
       .switchMap(term => {
         if (term) {
           this.collection.queryParams[this.queryParam] = term;
-          this.collection.fetch({reset: true});
-          return Observable.of<BaseCollection<BaseModel>>(this.collection);
+        } else {
+          this.collection.queryParams[this.queryParam] = null;
         }
+        this.collection.fetch({reset: true});
+        return Observable.of<BaseCollection<BaseModel>>(this.collection);
       }).toPromise();
 
     this.query = this.collection.queryParams[this.queryParam];

@@ -1,11 +1,9 @@
 <section class="column">
-  <h2>
-    Liked Tracks
-  </h2>
+  <view-header>
+    <i class="fa fa-heart" aria-hidden="true"></i> Liked Tracks
+  </view-header>
 
-  <hr>
-
-  <sort-tracks [tracks]="user.get('likes')"></sort-tracks>
-
-  <track-list [tracks]="user.get('likes')"></track-list>
+  <scroll-view>
+    <track-list [tracks]="user.get('likes')"></track-list>
+  </scroll-view>
 </section>

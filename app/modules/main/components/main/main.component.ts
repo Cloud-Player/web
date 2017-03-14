@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
 import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
 import {Track} from '../../../tracks/models/track.model';
@@ -8,11 +8,11 @@ import {Session} from '../../../session/models/session.model';
 @Component({
   selector: 'cloud-player',
   styles: [require('./main.style.scss')],
-  template: require('./main.template.html')
+  template: require('./main.template.html'),
+  encapsulation: ViewEncapsulation.None
 })
 
 export class MainComponent implements OnInit {
-
   private playQueue: PlayQueue<PlayQueueItem>;
   private isAuthenticated: boolean = false;
   private item: PlayQueueItem;
