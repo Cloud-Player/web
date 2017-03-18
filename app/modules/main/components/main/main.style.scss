@@ -26,6 +26,18 @@ a {
   cursor: pointer;
 }
 
+a,div{
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #999 !important;
+  }
+}
+
+button:focus {
+  outline: 0 !important;
+}
+
 .btn {
   margin: 5px;
 
@@ -48,6 +60,15 @@ a {
   &:hover {
     background: darken($brand-primary, 5%);
     color: white;
+  }
+}
+
+.btn-danger{
+  @include button-variant($brand-danger, $btn-default-bg, $btn-danger-border);
+  transition: all 0.3s ease;
+
+  &:hover{
+    @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
   }
 }
 
@@ -86,72 +107,11 @@ a {
   }
 }
 
-///* Extra Small Devices, Phones */
-//@media only screen and (min-width : 480px) {
-//
-//  main.flex-container {
-//
-//  }
-//
-//}
-//
-///* Small Devices, Tablets */
-//@media only screen and (min-width : 768px) {
-//
-//  main.flex-container {
-//
-//    flex-wrap: nowrap;
-//
-//    nav-sidebar {
-//      flex: auto 0 0;
-//      order: 1;
-//    }
-//
-//    div.routes {
-//      flex: auto;
-//      order: 2;
-//    }
-//
-//  }
-//
-//}
-//
-///* Medium Devices, Desktops */
-//@media only screen and (min-width : 992px) {
-//
-//  main.flex-container {
-//
-//    audio-player {
-//      flex: auto 0 0;
-//      order: 2;
-//    }
-//
-//    div.routes {
-//      flex: auto;
-//      order: 3;
-//    }
-//  }
-//
-//}
-//
-///* Large Devices, Wide Screens */
-//@media only screen and (min-width : 1200px) {
-//
-//  main.flex-container {
-//
-//    audio-player {
-//      flex: auto 0 0;
-//    }
-//
-//    authenticated-user-playlists-view {
-//      flex: 1;
-//      order: 3;
-//    }
-//
-//    div.routes {
-//      flex: 1;
-//      order: 4;
-//    }
-//  }
-//
-//}
+@media (min-width: $screen-lg-min) {
+  .main {
+    .routes {
+      margin: 0;
+      max-width: initial;
+    }
+  }
+}

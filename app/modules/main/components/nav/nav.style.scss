@@ -6,84 +6,27 @@
 }
 
 .sidebar {
-  min-width: 95px;
+  width: 95px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+
+  .menu {
+    min-width: 250px;
+    padding-left: 15px;
+    transition: transform 0.4s ease;
+  }
 
   .cloud-player {
     background: $light-white;
     padding: 0;
     text-align: center;
-    margin: 17px 15px 30px 15px;
+    margin: 15px 15px 15px 15px;
     border-radius: 4px;
-
-    img,
-    object{
-      width: 60px;
-    }
-
-    object{
-      position: relative;
-      top: 4px;
-    }
-  }
-
-  a,
-  .nav-item {
-    margin: 20px 0;
-    color: $gray-darker;
-    text-align: center;
-    width: 100%;
-    display: block;
-    text-decoration: none;
+    height: 60px;
 
     img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+      width: 58px;
     }
-
-    i {
-      border: 1px solid;
-      border-radius: 50%;
-
-      font-size: 18px;
-      width: 40px;
-      height: 40px;
-      padding-top: 11px;
-    }
-
-    .text {
-      display: none;
-    }
-
-    &.is-active {
-      div {
-        font-weight: bold;
-      }
-
-      i {
-        background: $brand-primary;
-        color: white;
-      }
-
-      img {
-        border: 1px solid $brand-primary;
-      }
-    }
-
-    &.disabled{
-      pointer-events: none;
-      cursor: default;
-      color: #999;
-    }
-  }
-
-  a:hover {
-    color: $gray-light;
-    text-decoration: none;
-  }
-
-  a:active {
-    font-weight: bold;
   }
 
   .divider {
@@ -106,14 +49,177 @@
     }
   }
 
+  .menu,
   /deep/ authenticated-user-playlists {
-    a {
-      margin: 20px 0;
-      display: block;
+
+    a,
+    .nav-item {
+      margin: 20px 15px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      text-decoration: none;
+      cursor: pointer;
+
+      img {
+        margin: 0 13px 0 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      i {
+        border: 1px solid;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+
+        &.fa-search {
+          font-size: 14px;
+        }
+      }
 
       .text {
-        display: none;
+        display: block;
       }
+    }
+
+    a, .nav-item {
+      text-decoration: none;
+
+      .text,
+      i {
+        transition: color 0.6s ease;
+      }
+
+      i {
+        color: $gray-darker;
+        transition: color 0.6s ease;
+      }
+
+      .text {
+        color: #cbcbcb;
+      }
+
+      &.disabled {
+        .text,
+        i {
+          color: #cbcbcb;
+        }
+      }
+
+      &:hover {
+        .text,
+        i {
+          color: $brand-primary;
+        }
+
+        i {
+          border-color: $gray-darker;
+          color: $brand-primary;
+        }
+
+        .private-badge i{
+          color: $gray-darker;
+        }
+
+        .private-badge i{
+          border-color: $gray-darker !important;
+          color: $gray-darker !important;
+        }
+      }
+
+      &.is-active,
+      &.is-active:hover {
+        .text,
+        i {
+          font-weight: bold;
+        }
+
+        i,
+        .cover{
+          color: $brand-primary !important;
+          border-color: $brand-primary !important;
+        }
+
+        .cover{
+          border: 1px solid;
+        }
+
+        .private-badge i{
+          border-color: $gray-darker !important;
+          color: $gray-darker !important;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    width: 250px;
+
+    .menu,
+    /deep/ authenticated-user-playlists {
+      a, .nav-item {
+        .text {
+          color: $gray-darker;
+        }
+
+        &.disabled {
+          .text,
+          i {
+            color: #cbcbcb;
+          }
+        }
+
+        &:hover {
+          .text,
+          i {
+            color: $brand-primary;
+          }
+        }
+
+        &.is-active{
+          .text{
+            color: $gray-darker !important;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: $screen-lg-min) {
+    width: 250px;
+
+    .menu,
+    /deep/ authenticated-user-playlists {
+      a, .nav-item {
+        .text,
+        i {
+          color: $gray-darker;
+        }
+
+        &.disabled {
+          .text,
+          i {
+            color: #cbcbcb;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1380px) {
+    width: 300px;
+    &:hover {
+      max-width: 500px;
+      min-width: 300px;
+      width: initial;
     }
   }
 }
@@ -127,17 +233,22 @@
     z-index: 1;
     box-shadow: $light-boxshadow;
 
-    .column {
-      width: 100%;
+    .sidebar,
+    /deep/ authenticated-user-playlists {
+      min-width: 100%;
       padding: 0;
 
+      .menu {
+        min-width: 100%;
+        padding-left: 0;
+      }
+
       .divider,
-      .cloud-player,
-      .new-playlist {
+      .cloud-player {
         display: none;
       }
 
-      .user{
+      .user {
         order: 4;
       }
 
@@ -148,6 +259,7 @@
 
         a,
         .nav-item {
+          display: block;
           margin: 0;
           border-left: 1px solid #dad9d9;
           padding: 7px;
@@ -161,81 +273,24 @@
           }
 
           i {
-            font-size: 27px;
+            margin: 0 auto;
+            font-size: 20px;
             padding: 0;
             border: none;
             background: transparent;
+
+            &.fa-search{
+              font-size: 18px;
+            }
           }
 
           img {
             width: 27px;
             height: 27px;
           }
-        }
-
-        /deep/ authenticated-user-playlists {
-          display: none;
-        }
-
-        .dummy-playlist-item{
-          display: none;
-        }
-      }
-    }
-  }
-}
-
-@media (min-width: $screen-lg-min) {
-  :host {
-    .sidebar {
-      width: 250px;
-
-      a,
-      .nav-item {
-        margin: 20px 15px;
-        display: flex;
-        align-items: center;
-
-        img {
-          margin: 0 13px 0 0;
-          width: 30px;
-          height: 30px;
-        }
-
-        i {
-          margin-right: 13px;
-          font-size: 15px;
-          width: 30px;
-          height: 30px;
-          padding-top: 6px;
-        }
-
-        .text {
-          display: block;
-        }
-      }
-
-      .dummy-playlist-item{
-        i,
-        .text{
-          background: #999;
-        }
-      }
-
-      /deep/ authenticated-user-playlists {
-        a {
-          display: flex;
-          align-items: center;
-          margin: 20px 15px;
-
-          .cover {
-            margin: 0 13px 0 0;
-            width: 30px;
-            height: 30px;
-          }
 
           .text {
-            display: block;
+            display: none;
           }
         }
       }

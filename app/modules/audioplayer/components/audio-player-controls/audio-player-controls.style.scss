@@ -22,11 +22,11 @@
     font-size: 24px;
     background: none;
     vertical-align: middle;
+    box-shadow: none;
 
     &:hover {
       color: grey;
     }
-
   }
 
   button.play, button.pause {
