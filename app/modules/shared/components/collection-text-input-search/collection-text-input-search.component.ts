@@ -24,9 +24,14 @@ export class CollectionTextInputSearchComponent implements OnInit {
 
   @Input() queryParam: string;
 
+  @Output() valueChange = new EventEmitter();
+
   // Push a search term into the observable stream.
-  search(): void {
-    console.log('START SEARCHING');
+  search(query?: string): void {
+    if(query){
+      this.query = query;
+    }
+    this.isIdle = true;
     this.searchTerms.next(this.query);
   }
 
@@ -53,6 +58,7 @@ export class CollectionTextInputSearchComponent implements OnInit {
           this.collection.queryParams[this.queryParam] = null;
         }
         this.collection.fetch({reset: true});
+        this.valueChange.emit(term);
         return Observable.of<BaseCollection<BaseModel>>(this.collection);
       }).toPromise();
 
