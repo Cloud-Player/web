@@ -7,7 +7,6 @@ import 'backbone';
 import {Model, Collection} from 'backbone';
 import {BaseModel} from './models/base.model';
 import {BaseCollection} from './collections/base.collection';
-import {CollectionTextInputSearchComponent} from './components/collection-text-input-search/collection-text-input-search.component';
 import {CollectionRangeInputSearchComponent} from './components/collection-range-input-search/collection-range-input-search.component';
 import {CollectionSortComponent} from './components/collection-sort-component/collection-sort.component';
 
@@ -20,7 +19,6 @@ declare namespace Backbone {
 @NgModule({
   imports: [BrowserModule, FormsModule],
   exports: [
-    CollectionTextInputSearchComponent,
     CollectionRangeInputSearchComponent,
     CollectionSortComponent
   ],
@@ -29,7 +27,6 @@ declare namespace Backbone {
     BaseModel
   ],
   declarations: [
-    CollectionTextInputSearchComponent,
     CollectionRangeInputSearchComponent,
     CollectionSortComponent
   ],

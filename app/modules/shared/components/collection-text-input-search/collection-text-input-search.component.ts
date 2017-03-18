@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
@@ -16,16 +16,33 @@ export class CollectionTextInputSearchComponent implements OnInit {
 
   private query: string;
 
+  public isLoading: boolean = false;
+
+  @ViewChild('searchInput') searchBar: ElementRef;
+
   @Input() collection: BaseCollection<BaseModel>;
 
   @Input() queryParam: string;
 
   // Push a search term into the observable stream.
   search(): void {
+    console.log('START SEARCHING');
     this.searchTerms.next(this.query);
   }
 
+  focus(): void{
+    this.searchBar.nativeElement.focus();
+  }
+
   ngOnInit(): void {
+    this.collection.on('request', (collection: BaseCollection<BaseModel>,promise: any, xhr:any)=>{
+      this.isLoading = true;
+    });
+
+    this.collection.on('sync', ()=>{
+      this.isLoading = false;
+    });
+
     this.searchTerms
       .debounceTime(500)        // wait for 300ms pause in events
       .distinctUntilChanged()   // ignore if next search term is same as previous
