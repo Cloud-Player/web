@@ -1,4 +1,32 @@
-<div class="authenticated-user-playlists" *ngIf="user.get('playlists').models.length < 5">
+<div class="authenticated-user-playlists">
+
+  <div class="nav-item new-playlist"
+       [class.disabled]="!isAuthenticated()"
+       (click)="addNewPlaylist()">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    <div class="text">New Playlist</div>
+  </div>
+
+  <div *ngIf="isInCreationMode"
+       class="nav-item">
+    <i class="fa fa-list-ul" aria-hidden="true"></i>
+    <div class="text">
+      <form class="form-inline" (submit)="createPlaylist()">
+        <div class="form-group">
+          <input type="text"
+                 name="playlistName"
+                 class="form-control"
+                 id="playlistName"
+                 placeholder="Playlist Name"
+                 [(ngModel)]="tmpPlaylist.attributes.title"
+                 (blur)="cancel()"
+                 required
+                 #newPlaylistInput
+                 focusInput>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <a *ngFor="let playlist of user.get('playlists').models"
      routerLink="me/playlists/{{playlist.get('id')}}"
@@ -7,10 +35,25 @@
      dropzone
      [dropCallback]="dropTrack"
      [dropItemRef]="playlist">
-    <div class="cover">
-      <img [src]="playlist.get('artwork_url').getDefaultSize()">
-    </div>
+    <play-list-icon [playlist]="playlist"></play-list-icon>
     <div class="text">{{playlist.get('title')}}</div>
   </a>
+
+  <div *ngIf="!isAuthenticated()">
+    <a class="dummy-playlist-item disabled" style="opacity: 0.3">
+      <i class="fa fa-list" aria-hidden="true"></i>
+      <div class="text" style="width: 30%">Playlists</div>
+    </a>
+
+    <a class="dummy-playlist-item disabled" style="opacity: 0.2">
+      <i class="fa fa-list" aria-hidden="true"></i>
+      <div class="text" style="width: 45%">Playlists</div>
+    </a>
+
+    <a class="dummy-playlist-item disabled" style="opacity: 0.1">
+      <i class="fa fa-list" aria-hidden="true"></i>
+      <div class="text" style="width: 40%">Playlists</div>
+    </a>
+  </div>
 
 </div>
