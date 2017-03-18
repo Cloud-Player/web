@@ -4,6 +4,7 @@ import {PlaylistsRoutingModule}     from './playlist.routes';
 import {BrowserModule} from '@angular/platform-browser';
 import {PlayListViewComponent} from './components/playlist-view/playlist-view.component';
 import {SharedModule} from '../shared/shared.module';
+import {PlayListIconComponent} from './components/playlist-icon/playlist-icon.component';
 
 @NgModule({
   imports: [
@@ -12,8 +13,12 @@ import {SharedModule} from '../shared/shared.module';
     PlaylistsRoutingModule,
     SharedModule
   ],
+  exports: [
+    PlayListIconComponent
+  ],
   declarations: [
-    PlayListViewComponent
+    PlayListViewComponent,
+    PlayListIconComponent
   ]
 })
 

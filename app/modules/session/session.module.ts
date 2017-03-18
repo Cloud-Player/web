@@ -13,12 +13,14 @@ import {
   AuthenticatedUserPlaylistsViewComponent
 }
   from './components/authenticated-user-playlists-view/authenticated-user-playlists-view.component';
+import {PlaylistModule} from '../playlists/playlist.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     SessionRoutingModule,
+    PlaylistModule,
     SharedModule
   ],
   declarations: [

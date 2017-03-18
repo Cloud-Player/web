@@ -15,6 +15,13 @@ import {DropZoneDirective} from './directives/dropzone.directive';
 import {TwoRangeSliderComponent} from './components/two-range-slider/two-range-slider.component';
 import {ViewHeaderComponent} from './components/view-header/view-header.component';
 import {ScrollViewComponent} from './components/scroll-view/scroll-view.component';
+import {CloudPlayerLogoService} from './services/cloud-player-logo.service';
+import {CloudPlayerLogoComponent} from './components/cloud-player-logo/cloud-player-logo.component';
+import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
+import {LoadingSpinnerComponent} from './components/loading-spinner/loading-spinner.component';
+import {CollectionTextInputSearchComponent} from './components/collection-text-input-search/collection-text-input-search.component';
+import {FocusInputDirective} from './directives/focus-input.directive';
+import {ViewChangeLoaderComponent} from './components/view-change-loader/view-change-loader.component';
 
 @NgModule({
   imports: [
@@ -23,6 +30,8 @@ import {ScrollViewComponent} from './components/scroll-view/scroll-view.componen
     BackboneModule
   ],
   declarations: [
+    CloudPlayerLogoComponent,
+    CollectionTextInputSearchComponent,
     TrackListComponent,
     ToggleLikedTrackComponent,
     PlayButtonComponent,
@@ -31,12 +40,18 @@ import {ScrollViewComponent} from './components/scroll-view/scroll-view.componen
     RangeSliderComponent,
     TwoRangeSliderComponent,
     ViewHeaderComponent,
+    ViewChangeLoaderComponent,
     ScrollViewComponent,
+    ToggleSwitchComponent,
+    LoadingSpinnerComponent,
     DraggableDirective,
     DropZoneDirective,
+    FocusInputDirective,
     HumanReadableSecondsPipe
   ],
   exports: [
+    CloudPlayerLogoComponent,
+    CollectionTextInputSearchComponent,
     TrackListComponent,
     ToggleLikedTrackComponent,
     PlayButtonComponent,
@@ -45,11 +60,16 @@ import {ScrollViewComponent} from './components/scroll-view/scroll-view.componen
     RangeSliderComponent,
     TwoRangeSliderComponent,
     ViewHeaderComponent,
+    ViewChangeLoaderComponent,
     ScrollViewComponent,
+    ToggleSwitchComponent,
+    LoadingSpinnerComponent,
     DraggableDirective,
     DropZoneDirective,
+    FocusInputDirective,
     HumanReadableSecondsPipe
-  ]
+  ],
+  providers: [CloudPlayerLogoService]
 })
 export class SharedModule {
 }

@@ -15,6 +15,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {NavComponent} from './components/nav/nav.component';
 import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthService} from '../shared/services/auth.service';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {AuthService} from '../shared/services/auth.service';
     AudioPlayerModule,
     SessionModule,
     UsersModule,
-    PlaylistModule
+    PlaylistModule,
+    SharedModule
   ],
   declarations: [
     MainComponent,
