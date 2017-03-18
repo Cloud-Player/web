@@ -27,6 +27,7 @@ exit_with_error () {
 }
 
 git rm --cached -r .
+git add .
 
 # Check if there are any local changes that are not committed yet
 if [ -n "$(git status --porcelain)" ]; then
