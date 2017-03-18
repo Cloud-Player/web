@@ -13,8 +13,7 @@ deploy:
   - provider: script
     script: ./bin/github_pages_release.sh
     skip_cleanup: true 
-    on:
-      branches:
-        only:
-          - master
-          - feature/design
+    branches:
+      only:
+        - master
+        - feature/design
