@@ -9,11 +9,11 @@ export class DropZoneDirective {
 
   @Input('dropItemRef') dropItemRef: any;
 
-  @HostListener('dragenter', ['$event']) onDragEnter(event: DragEvent) {
+  @HostListener('dragenter', ['$event']) onDragEnter() {
     this.renderer.setElementClass(this.el.nativeElement, 'drag-over', true);
   }
 
-  @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
+  @HostListener('dragover', ['$event']) onDragOver(event: any) {
     event.preventDefault();
   }
 
@@ -21,7 +21,7 @@ export class DropZoneDirective {
     this.renderer.setElementClass(this.el.nativeElement, 'drag-over', false);
   }
 
-  @HostListener('drop', ['$event']) onMouseOver(event: DragEvent) {
+  @HostListener('drop', ['$event']) onMouseOver(event: any) {
     if (this.dropCallback) {
       let args = [this.getDragData(event)];
       if (this.dropItemRef) {
