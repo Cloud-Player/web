@@ -9,8 +9,6 @@
            [(ngModel)]="query"
            (ngModelChange)="search()"
            #searchInput>
-    <div *ngIf="isLoading">
-      <loading-spinner></loading-spinner>
-    </div>
+    <loading-spinner [isIdle]="isIdle" [isLoading]="isLoading"></loading-spinner>
   </div>
 </div>
