@@ -1,9 +1,9 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
-import {BaseCollection} from '../../collections/base.collection';
-import {BaseModel} from '../../models/base.model';
+import {BaseCollection} from '../../../backbone/collections/base.collection';
+import {BaseModel} from '../../../backbone/models/base.model';
 
 @Component({
   selector: 'collection-text-input-search',
@@ -17,6 +17,7 @@ export class CollectionTextInputSearchComponent implements OnInit {
   private query: string;
 
   public isLoading: boolean = false;
+  public isIdle: boolean = false;
 
   @ViewChild('searchInput') searchBar: ElementRef;
 
@@ -40,8 +41,9 @@ export class CollectionTextInputSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.collection.on('request', (collection: BaseCollection<BaseModel>,promise: any, xhr:any)=>{
+    this.collection.on('request', ()=>{
       this.isLoading = true;
+      this.isIdle = false;
     });
 
     this.collection.on('sync', ()=>{
@@ -49,7 +51,7 @@ export class CollectionTextInputSearchComponent implements OnInit {
     });
 
     this.searchTerms
-      .debounceTime(500)        // wait for 300ms pause in events
+      .debounceTime(600)        // wait for 300ms pause in events
       .distinctUntilChanged()   // ignore if next search term is same as previous
       .switchMap(term => {
         if (term) {
