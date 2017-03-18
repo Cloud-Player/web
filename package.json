@@ -45,6 +45,7 @@
     "rxjs": "5.0.3",
     "systemjs": "0.19.39",
     "underscore": "1.8.3",
+    "web-animations-js": "^2.2.2",
     "zone.js": "^0.7.6"
   },
   "devDependencies": {
