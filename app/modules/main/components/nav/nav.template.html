@@ -50,29 +50,7 @@
           <div class="title">Playlists</div>
         </div>
 
-        <a href="#" class="new-playlist" [class.disabled]="!isAuthenticated">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-          <div class="text">New Playlist</div>
-        </a>
-
-        <authenticated-user-playlists></authenticated-user-playlists>
-
-        <div *ngIf="!isAuthenticated">
-          <a class="dummy-playlist-item disabled" style="opacity: 0.3">
-            <i class="fa fa-list" aria-hidden="true"></i>
-            <div class="text" style="width: 30%">Playlists</div>
-          </a>
-
-          <a class="dummy-playlist-item disabled" style="opacity: 0.2">
-            <i class="fa fa-list" aria-hidden="true"></i>
-            <div class="text" style="width: 45%">Playlists</div>
-          </a>
-
-          <a class="dummy-playlist-item disabled" style="opacity: 0.1">
-            <i class="fa fa-list" aria-hidden="true"></i>
-            <div class="text" style="width: 40%">Playlists</div>
-          </a>
-        </div>
+        <authenticated-user-playlists class="hidden-xs hidden-sm"></authenticated-user-playlists>
 
       </nav>
     </div>
