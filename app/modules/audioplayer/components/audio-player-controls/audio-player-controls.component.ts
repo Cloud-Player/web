@@ -140,7 +140,9 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   playTrack(playQueueItem: PlayQueueItem|null): void {
     playQueueItem = playQueueItem || this.playQueue.getItem();
-    playQueueItem.play();
+    if(playQueueItem){
+      playQueueItem.play();
+    }
   }
 
   playTrackFromPosition(newTimeSec: number): void {
