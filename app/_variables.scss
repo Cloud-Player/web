@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600');
 
 // Bootstrap variables
-$font-family-base: 'Raleway';
+$font-family-base: 'Raleway', Helvetica, sans-serif;
 $brand-primary: #ff3600;
+$input-border-focus: lighten($brand-primary,20%);
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables';
 
 // Cloud Player variables
