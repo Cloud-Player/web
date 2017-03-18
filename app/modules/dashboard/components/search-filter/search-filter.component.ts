@@ -10,7 +10,7 @@ import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds
   template: require('./search-filter.template.html'),
   animations: [
     trigger('visibilityChanged', [
-      state('true', style({height: '*', marginBottom: '15px'})),
+      state('true', style({height: '*', marginBottom: '15px', padding:'15px', })),
       state('false', style({height: 0, marginBottom: 0, padding: 0, display: 'none'})),
       state('void', style({height: 0, marginBottom: 0, padding:0, display: 'none'})),
       transition('* => *', animate('200ms ease-in-out'))
