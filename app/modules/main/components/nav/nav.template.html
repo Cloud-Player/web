@@ -13,6 +13,13 @@
           <div class="text">Search</div>
         </a>
 
+        <a *ngIf="showDesktopAppEntry()"
+           routerLink="/app"
+           [routerLinkActive]="['is-active']">
+          <i class="fa fa-desktop" aria-hidden="true"></i>
+          <div class="text">Desktop App</div>
+        </a>
+
         <div class="divider">
           <div class="title">Account</div>
         </div>
