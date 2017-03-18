@@ -87,7 +87,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   hasNextItem(): boolean {
-    return this.playIndex < this.length - 1;
+    return this.playIndex < this.length-1;
   }
 
   hasPreviousItem(): boolean {
