@@ -204,10 +204,9 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   initialize(): void {
     this.on('change:status', (queueItem: TModel) => {
       this.setPlayIndex();
-
       if (queueItem.isPlaying()) {
         this.filter((item: TModel) => {
-          return item.isPlaying();
+          return item.isPlaying() || item.isPaused();
         }).forEach((playingQueueItem: PlayQueueItem) => {
           if (playingQueueItem.id !== queueItem.id) {
             playingQueueItem.stop();
