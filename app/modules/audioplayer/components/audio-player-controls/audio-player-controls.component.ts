@@ -153,6 +153,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     if (track) {
       track.pause();
     }
+    this.pauseAudioPlayer();
   }
 
   togglePlayPause(): void {
