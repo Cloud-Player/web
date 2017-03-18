@@ -2,6 +2,7 @@ import {Component, trigger, state, style, transition, animate, ContentChild} fro
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../../shared/services/auth.service';
+import {ClientDetector, Os, OsNames} from '../../../shared/services/client-detector.service';
 
 @Component({
   selector: 'nav-sidebar',
@@ -54,18 +55,11 @@ export class NavComponent {
     if (this.session.isValid()) {
       this.setAuthenticated(this.session.get('user'));
     }
-
-    document.getElementById('logoSVG').addEventListener("load",function(){
-      let svgObj = <HTMLObjectElement>document.getElementById('logoSVG');
-      let content = <any>svgObj.contentDocument;
-      let svg = <SVGSVGElement>content.getElementById('cloudPlayerCassette');
-      //svg.pauseAnimations();
-    }, false);
   };
 
-  getDummyWidth(): number {
-    let min = 20;
-    let max = 50;
-    return Math.floor(Math.random() * (max - min)) + min;
+  showDesktopAppEntry(): boolean {
+    let os: Os = ClientDetector.getOs();
+
+    return ( (os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7));
   }
 }
