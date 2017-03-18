@@ -5,6 +5,7 @@ import {throttle} from 'underscore';
 import * as localforage from 'localforage';
 import {Track} from '../../../tracks/models/track.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
+import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 
 @Component({
   selector: 'audio-player-controls',
@@ -26,7 +27,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private humanReadableSecPipe: HumanReadableSecondsPipe;
 
-  constructor() {
+  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
     this.timeTick = 0;
@@ -64,13 +65,12 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     this.audio.addEventListener('error', () => {
       this.hadError = true;
-      if (this.playQueue.hasCurrentItem()) {
-        this.playQueue.getCurrentItem().pause();
-      }
+      this.pauseTrack();
     });
 
     this.audio.addEventListener('playing', () => {
       this.hadError = false;
+      this.cloudPlayerLogoService.play();
     });
 
     this.audio.addEventListener('waiting', () => {
@@ -204,6 +204,8 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   pauseAudioPlayer(): void {
     this.audio.pause();
+    this.isBuffering = false;
+    this.cloudPlayerLogoService.pause();
   }
 
   stopAudioPlayer(): void {
