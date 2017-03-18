@@ -1,7 +1,4 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
-import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
-import {Track} from '../../../tracks/models/track.model';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 
@@ -13,25 +10,14 @@ import {Session} from '../../../session/models/session.model';
 })
 
 export class MainComponent implements OnInit {
-  private playQueue: PlayQueue<PlayQueueItem>;
   private isAuthenticated: boolean = false;
-  private item: PlayQueueItem;
   private session: Session;
-  private track: Track;
 
   constructor() {
     this.session = Session.getInstance();
   }
 
   ngOnInit(): void {
-    this.playQueue = PlayQueue.getInstance();
-    this.item = this.playQueue.getCurrentItem();
-    this.playQueue.on('add change:status', () => {
-      if (this.playQueue.hasCurrentItem()) {
-        this.item = this.playQueue.getCurrentItem();
-        this.track = this.item.get('track');
-      }
-    });
     this.session.get('user').on('change:authenticated', (user: User) => {
       this.setAuthenticated(user);
     });
