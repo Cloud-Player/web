@@ -170,16 +170,16 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   private prepareItem(item: any): PlayQueueItem {
-    if (item instanceof PlayQueueItem) {
+    if (!item.id && item instanceof PlayQueueItem) {
       item.set('id', item.get('track').get('id'));
-    } else {
+    } else if(!item.id){
       item.id = item.track.id;
     }
     return item;
   }
 
   add(item: TModel|TModel[]|{}, options: any = {}): any {
-    if (options.doNothing) {
+    if (options.doNothing || !item) {
       return super.add(item, options);
     }
 
