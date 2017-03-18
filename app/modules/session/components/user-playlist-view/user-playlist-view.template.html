@@ -1,6 +1,38 @@
 <section class="column">
   <view-header>
-    <img [src]="playlist.get('artwork_url').getDefaultSize()"> {{playlist.get('title')}}
+    <form *ngIf="isInEditMode"
+          class="title edit-mode form-inline"
+          (submit)="save()">
+      <toggle-switch [(value)]="playlist.attributes.isPublic"></toggle-switch>
+      <div class="form-group">
+        <input type="text"
+               name="playlistName"
+               class="form-control"
+               id="playlistName"
+               placeholder="Playlist Name"
+               [(ngModel)]="playlist.attributes.title"
+               required
+               focusInput>
+      </div>
+      <div class="button-group">
+        <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+        <input type="submit" class="btn btn-success" value="Save"/>
+      </div>
+    </form>
+
+    <div *ngIf="!isInEditMode" class="title">
+      <play-list-icon [playlist]="playlist"></play-list-icon>
+      <span class="text">{{playlist.get('title')}}</span>
+      <div class="button-group">
+        <button class="btn btn-default" (click)="isInEditMode = true">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-default btn-danger" (click)="destroy()">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
   </view-header>
 
   <scroll-view>
