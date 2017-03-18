@@ -194,6 +194,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     if (this.hadError) {
       this.audio.src = item.get('track').getResourceUrl();
+      this.audio.load();
       this.audio.currentTime = currTime;
     }
 
