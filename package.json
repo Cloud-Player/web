@@ -48,7 +48,7 @@
     "zone.js": "^0.7.6"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.34",
+    "@types/core-js": "^0.9.37",
     "@types/localforage": "0.0.33",
     "@types/node": "^6.0.45",
     "angular2-template-loader": "^0.4.0",
