@@ -15,7 +15,9 @@ export class LikedTracksViewComponent implements OnInit {
   private user = this.session.get('user');
 
   ngOnInit(): void {
-    this.user.get('likes').fetch({reset: true});
+    if(this.user.get('authenticated')){
+      this.user.get('likes').fetch({reset: true});
+    }
   }
 
 }
