@@ -2,16 +2,17 @@
 
   <div class="track-item">
 
-    <div class="cover hidden-xs">
-      <img *ngIf="track && track.get('artwork_url').getLargeSize()" [src]="track.get('artwork_url').getLargeSize()">
-      <img *ngIf="track && !track.get('artwork_url').getLargeSize()" src="../../assets/default-sc-img.jpg">
-    </div>
+    <track-cover [track]="track" class="hidden-xs"></track-cover>
 
     <audio-player-controls class="controls"></audio-player-controls>
 
     <div *ngIf="track" class="meta">
       <toggle-liked-track [track]="track" class="hidden-xs"></toggle-liked-track>
-      <div class="details">
+      <div class="details"
+           draggable="true"
+           [dragData]="track.toJSON()"
+           [dragImageUrl]="track.get('artwork_url').getSmallSize()"
+           dragEffect="copy">
         <b class="track-title">{{track.get('title')}}</b>
         <div class="artist">{{track.get('user').get('username')}}</div>
       </div>

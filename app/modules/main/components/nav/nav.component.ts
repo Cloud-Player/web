@@ -2,7 +2,7 @@ import {Component, trigger, state, style, transition, animate, ContentChild} fro
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../../shared/services/auth.service';
-import {ClientDetector, Os, OsNames} from '../../../shared/services/client-detector.service';
+import {ClientDetector, OsNames, Result, ClientNames} from '../../../shared/services/client-detector.service';
 
 @Component({
   selector: 'nav-sidebar',
@@ -58,8 +58,11 @@ export class NavComponent {
   };
 
   showDesktopAppEntry(): boolean {
-    let os: Os = ClientDetector.getOs();
-
-    return ( (os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7));
+    let os: Result = ClientDetector.getOs(),
+        client: Result = ClientDetector.getClient();
+    return (
+     client.name !== ClientNames.Electron &&
+      ( (os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7) )
+    );
   }
 }

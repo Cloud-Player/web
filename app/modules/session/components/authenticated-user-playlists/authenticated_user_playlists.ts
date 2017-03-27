@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
+import {Component, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
 
@@ -12,19 +12,27 @@ export class AuthenticatedUserPlaylists {
 
   private user = this.session.get('user');
 
+  private valueChange = new EventEmitter();
+
+  private isFetching: boolean = false;
+
   public isInCreationMode: boolean = false;
 
   public tmpPlaylist = new AuthenticatedUserPlaylist();
 
-  private fetchPlaylist(): void {
-    if (this.user.get('authenticated')) {
-      this.user.get('playlists').fetch();
+  private fetchPlaylists(): void {
+    if (this.user.get('authenticated') && !this.isFetching) {
+      this.isFetching = true;
+      this.user.get('playlists').fetch().then(()=>{
+        this.isFetching = false;
+        this.valueChange.emit();
+      });
     }
   };
 
   ngOnInit(): void {
-    this.user.on('change:authenticated', this.fetchPlaylist.bind(this));
-    this.fetchPlaylist();
+    this.user.on('change:authenticated', this.fetchPlaylists.bind(this));
+    this.fetchPlaylists();
   };
 
   save(): void {

@@ -22,29 +22,4 @@ export class PlayButtonComponent {
     let playingItem = this.playQueue.getPlayingItem();
     return (playingItem && playingItem.get('track').get('id') === this.track.get('id'));
   }
-
-  play(): void {
-    this.playQueue.filter((model) => {
-      return !model.isQueued();
-    }).forEach((model) => {
-      this.playQueue.remove(model);
-    });
-
-    if (this.tracks) {
-      this.tracks.forEach((track: Track) => {
-        if (!this.playQueue.get(track)) {
-          this.playQueue.add({track: track});
-        }
-      });
-    }
-
-    let playQueueItem = this.playQueue.add({track: this.track});
-    playQueueItem.play();
-  }
-
-  pause(): void {
-    if (this.isPlaying()) {
-      PlayQueue.getInstance().getPlayingItem().pause();
-    }
-  }
 }

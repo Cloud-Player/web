@@ -22,6 +22,10 @@ import {LoadingSpinnerComponent} from './components/loading-spinner/loading-spin
 import {CollectionTextInputSearchComponent} from './components/collection-text-input-search/collection-text-input-search.component';
 import {FocusInputDirective} from './directives/focus-input.directive';
 import {ViewChangeLoaderComponent} from './components/view-change-loader/view-change-loader.component';
+import {TrackCoverComponent} from './components/track-cover/track-cover.component';
+import {TimeAgoDirective} from './directives/time-ago.directive';
+import {PlayTrackOnEventDirective} from './directives/play-track-on-event.directive';
+import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/options-btn/options-btn.component';
 
 @NgModule({
   imports: [
@@ -44,9 +48,14 @@ import {ViewChangeLoaderComponent} from './components/view-change-loader/view-ch
     ScrollViewComponent,
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
+    OptionsBtnComponent,
+    OptionsBtnOptionComponent,
+    TrackCoverComponent,
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
+    TimeAgoDirective,
+    PlayTrackOnEventDirective,
     HumanReadableSecondsPipe
   ],
   exports: [
@@ -64,9 +73,14 @@ import {ViewChangeLoaderComponent} from './components/view-change-loader/view-ch
     ScrollViewComponent,
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
+    OptionsBtnComponent,
+    OptionsBtnOptionComponent,
+    TrackCoverComponent,
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
+    TimeAgoDirective,
+    PlayTrackOnEventDirective,
     HumanReadableSecondsPipe
   ],
   providers: [CloudPlayerLogoService]

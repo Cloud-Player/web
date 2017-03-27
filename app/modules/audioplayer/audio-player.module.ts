@@ -11,6 +11,7 @@ import {PlayQueue} from './collections/play_queue.collection';
 import {Tracks} from '../tracks/collections/tracks.collection';
 import {Track} from '../tracks/models/track.model';
 import {PlayQueueItem} from './models/play_queue_item.model';
+import {TracksModule} from '../tracks/tracks.module';
 
 @NgModule({
   imports: [

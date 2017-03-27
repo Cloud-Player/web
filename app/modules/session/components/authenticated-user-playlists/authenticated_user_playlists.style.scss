@@ -1,11 +1,32 @@
 @import "../../../../variables";
 
 .dummy-playlist-item,
-.dummy-playlist-item:hover{
+.dummy-playlist-item:hover {
 
-    i,
-    .text {
-      background: #cbcbcb;
-      color: transparent !important;
+  i,
+  .text {
+    background: #cbcbcb;
+    color: transparent !important;
+  }
+}
+
+.playlist-item{
+  transition: background 0.5s ease;
+
+  &.drag-over{
+    background: #ddd;
+
+    .text{
+      color: $brand-primary !important;
     }
   }
+}
+
+.authenticated-user-playlists{
+  height: calc(100vh - 353px);
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

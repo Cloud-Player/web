@@ -27,6 +27,10 @@
     &:hover {
       color: grey;
     }
+
+    &:disabled{
+      pointer-events: none;
+    }
   }
 
   button.play, button.pause {
@@ -35,6 +39,10 @@
     border: none;
     font-size: 28px;
     border-radius: 30px;
+
+    &:disabled{
+      pointer-events: none;
+    }
   }
 }
 

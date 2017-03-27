@@ -4,6 +4,15 @@ section.column {
   border-right: solid 1px #dad9d9;
 }
 
+form{
+  display: flex;
+  align-items: center;
+
+  input[type="text"]{
+    flex-grow: 1;
+  }
+}
+
 div.details {
 
   display: flex;
@@ -21,7 +30,7 @@ div.details {
   }
 
   button {
-    flex-basis: $btn-width;
+    flex-basis: 20px;
     margin: 25px 10px;
   }
 
