@@ -17,4 +17,10 @@ export class Track extends SoundcloudModel {
   getResourceUrl(): string {
     return `${this.get('stream_url')}?client_id=${this.clientId}`;
   }
+
+  parse(attrs: any) {
+    attrs = super.parse(attrs);
+    attrs.likes = attrs.likes_count || attrs.favoritings_count;
+    return attrs;
+  }
 }
