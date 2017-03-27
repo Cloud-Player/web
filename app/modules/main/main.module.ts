@@ -16,6 +16,7 @@ import {NavComponent} from './components/nav/nav.component';
 import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthService} from '../shared/services/auth.service';
 import {SharedModule} from '../shared/shared.module';
+import {DesktopAppViewComponent} from './components/desktop-app-view/desktop-app-view.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {SharedModule} from '../shared/shared.module';
   ],
   declarations: [
     MainComponent,
-    NavComponent
+    NavComponent,
+    DesktopAppViewComponent
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, AuthService],
   bootstrap: [ MainComponent ]

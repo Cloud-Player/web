@@ -1,0 +1,28 @@
+<section class="column">
+  <view-header>
+    Desktop App
+  </view-header>
+
+  <scroll-view>
+    <div class="card">
+      <p>Download the native Cloud Player App to install it on your PC.</p>
+      <ul>
+        <li>Create a shortcut to Cloud Player on your Desktop</li>
+        <li>Control the Cloud Palyer from your keyboard (play/pause, next track, previous track)</li>
+        <li>Have all the other nice feautures of Cloud Player</li>
+      </ul>
+      <a *ngIf="isWindowsPc()" href="#" class="btn btn-primary btn-block">
+        Download for Windows
+      </a>
+
+      <a *ngIf="isMacPc()" href="#" class="btn btn-primary btn-block">
+        Download for Mac OSX
+      </a>
+
+      <div *ngIf="!isWindowsPc() && !isMacPc()"
+           class="alert alert-info">
+        Sorry for this platform we don't have a native app yet :(
+      </div>
+    </div>
+  </scroll-view>
+</section>
