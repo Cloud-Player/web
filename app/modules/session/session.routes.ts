@@ -7,9 +7,11 @@ import {
   AuthenticatedUserPlaylistsViewComponent
 }
   from './components/authenticated-user-playlists-view/authenticated-user-playlists-view.component';
+import {AuthenticatedUserViewComponent} from './components/authenticated-user-view/authenticated-user-view.component';
 
 const routes: Routes = [
   {path: 'connect', component: SoundcloudCallbackComponent},
+  {path: 'me', component: AuthenticatedUserViewComponent},
   {path: 'me/likes', component: LikedTracksViewComponent},
   {path: 'me/playlists', component: AuthenticatedUserPlaylistsViewComponent},
   {path: 'me/playlists/:id', component: UserPlayListViewComponent}
