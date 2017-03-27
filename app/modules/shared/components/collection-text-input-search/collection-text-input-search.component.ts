@@ -46,7 +46,7 @@ export class CollectionTextInputSearchComponent implements OnInit {
       this.isIdle = false;
     });
 
-    this.collection.on('sync', ()=>{
+    this.collection.on('sync error', ()=>{
       this.isLoading = false;
     });
 
