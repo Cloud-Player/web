@@ -18,3 +18,4 @@ import 'jquery';
 import 'backbone';
 import 'underscore';
 import 'localforage';
+import 'moment';
