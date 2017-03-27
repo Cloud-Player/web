@@ -1,6 +1,12 @@
-export interface Os {
-  name: OsNames;
-  version: number;
+export interface Result {
+  name: OsNames|ClientNames;
+  version?: number;
+}
+
+export interface Test {
+  s: OsNames|ClientNames,
+  v?: number,
+  r: RegExp
 }
 
 export enum OsNames {
@@ -15,11 +21,22 @@ export enum OsNames {
   UNIX,
   BeOS,
   OS2,
-  SearchBot
+  SearchBot,
+  Electron
+}
+
+export enum ClientNames {
+  Chrome,
+  Safari,
+  Firefox,
+  IE,
+  Edge,
+  Opera,
+  Electron
 }
 
 export class ClientDetector {
-  static clientStrings = [
+  static osStrings: Array<Test> = [
     {s: OsNames.Windows, v: 10, r: /(Windows 10.0|Windows NT 10.0)/},
     {s: OsNames.Windows, v: 8.1, r: /(Windows 8.1|Windows NT 6.3)/},
     {s: OsNames.Windows, v: 8, r: /(Windows 8|Windows NT 6.2)/},
@@ -45,21 +62,37 @@ export class ClientDetector {
     {s: OsNames.UNIX, v: 0, r: /UNIX/},
     {s: OsNames.BeOS, v: 0, r: /BeOS/},
     {s: OsNames.OS2, v: 0, r: /OS\/2/},
-    {s: OsNames.SearchBot, v: 0, r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
+    {s: OsNames.SearchBot, v: 0, r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/},
+    {s: OsNames.Electron, v: 0, r: /Electron/}
   ];
 
-  static getOs(): Os {
-    let os: Os = {
-      name: null,
-      version: 0
-    };
+  static clientStrings: Array<Test> = [
+    {s: ClientNames.Electron, r: /Electron/},
+    {s: ClientNames.Chrome, r: /Chrome/},
+    {s: ClientNames.Safari, r: /Safari/},
+    {s: ClientNames.Firefox, r: /Firefox/},
+    {s: ClientNames.IE, r: /(MSIE|Trident)/},
+    {s: ClientNames.Edge, r: /Edge/},
+    {s: ClientNames.Opera, r: /OPR/}
+  ];
 
-    ClientDetector.clientStrings.forEach((osItem) => {
-      if (osItem.r.test(navigator.userAgent) && !os.name) {
-        os.name = osItem.s;
-        os.version = osItem.v;
+  static test<T extends Result>(array: Array<Test>): T {
+    let result: T = <T>{};
+
+    array.forEach((osItem: any) => {
+      if (osItem.r.test(navigator.userAgent) && !result.name) {
+        result.name = osItem.s;
+        result.version = osItem.v;
       }
     });
-    return os;
+    return result;
+  }
+
+  static getOs(): Result {
+    return ClientDetector.test(ClientDetector.osStrings);
+  }
+
+  static getClient(): Result {
+    return ClientDetector.test(ClientDetector.clientStrings);
   }
 }
