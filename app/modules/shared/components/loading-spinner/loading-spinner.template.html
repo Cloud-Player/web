@@ -1,0 +1,11 @@
+<div class="idle-dots" *ngIf="isIdle && !isLoading">
+  <div class="dot one"></div>
+  <div class="dot two"></div>
+  <div class="dot three"></div>
+</div>
+
+<div class="loading-spinner" *ngIf="isLoading">
+  <div class="load-circle-line-mask">
+    <div class="load-line"></div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+@import '../../../../variables';
+
+:host{
+  .toggle-switch{
+    display: flex;
+    position: relative;
+    border: 1px solid #aaa;
+    border-radius: 20px;
+    margin-right: 10px;
+    background: white;
+
+    .left,
+    .right{
+      height: 26px;
+      width: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      text-align: center;
+      color: #aaa;
+      z-index: 1;
+      transition: color 0.5s ease;
+      cursor: pointer;
+
+      &.active{
+        color: white;
+      }
+    }
+
+    .right{
+      margin-left: -4px;
+    }
+
+    .indicator{
+      position: absolute;
+      height: 26px;
+      width: 26px;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      background: $brand-primary;
+      border: 1px solid $brand-primary;
+      transition: transform 0.5s ease;
+    }
+
+    &.on{
+      .indicator{
+        transform: translateX(22px);
+      }
+    }
+
+    &.off{
+      .indicator{
+        //left: -1px;
+      }
+    }
+  }
+}

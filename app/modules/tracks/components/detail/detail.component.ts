@@ -21,9 +21,7 @@ export class TracksDetailComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];
       this.track.set('id', id);
-      this.track.fetch().then((track) => {
-        console.log(track);
-      });
+      this.track.fetch();
     });
   }
 

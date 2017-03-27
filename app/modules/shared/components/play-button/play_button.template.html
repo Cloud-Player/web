@@ -1,6 +1,11 @@
-<button class="btn btn-round btn-brand" *ngIf="!isPlaying()" (click)="play()">
-  <i class="fa fa-play play"></i>
-</button>
-<button class="btn btn-round btn-brand" *ngIf="isPlaying()" (click)="pause()">
-  <i class="fa fa-pause"></i>
-</button>
+<div class="play-button"
+     playTrackOn="click"
+     [track]="track"
+     [tracks]="tracks">
+  <button class="btn btn-round btn-brand" *ngIf="!isPlaying()">
+    <i class="fa fa-play play"></i>
+  </button>
+  <button class="btn btn-round btn-brand" *ngIf="isPlaying()">
+    <i class="fa fa-pause"></i>
+  </button>
+</div>

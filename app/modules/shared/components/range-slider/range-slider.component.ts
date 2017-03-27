@@ -118,6 +118,7 @@ export class RangeSliderComponent {
 
   ngAfterContentInit() {
     this.el.nativeElement.addEventListener('mousedown', () => {
+      this.draggerWidth = this.handle.nativeElement.offsetWidth;
       this.dragInProgress = true;
     });
 
@@ -127,7 +128,6 @@ export class RangeSliderComponent {
       this.valueChanged.emit(this.value);
     });
 
-    this.draggerWidth = this.handle.nativeElement.offsetWidth;
     this.setDragPosFromVal();
   };
 

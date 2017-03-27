@@ -1,0 +1,12 @@
+<div class="playlist-icon">
+  <div *ngIf="playlist.get('artwork_url').getDefaultSize()"
+       class="cover">
+    <img [src]="playlist.get('artwork_url').getDefaultSize()">
+  </div>
+  <i *ngIf="!playlist.get('artwork_url').getDefaultSize()"
+     class="fa fa-list-ul" aria-hidden="true"></i>
+  <div *ngIf="!playlist.get('isPublic')"
+       class="private-badge">
+    <i class="fa fa-lock" aria-hidden="true"></i>
+  </div>
+</div>

@@ -87,7 +87,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   hasNextItem(): boolean {
-    return this.playIndex < this.length - 1;
+    return this.playIndex < this.length-1;
   }
 
   hasPreviousItem(): boolean {
@@ -170,16 +170,16 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   private prepareItem(item: any): PlayQueueItem {
-    if (item instanceof PlayQueueItem) {
+    if (!item.id && item instanceof PlayQueueItem) {
       item.set('id', item.get('track').get('id'));
-    } else {
+    } else if(!item.id){
       item.id = item.track.id;
     }
     return item;
   }
 
   add(item: TModel|TModel[]|{}, options: any = {}): any {
-    if (options.doNothing) {
+    if (options.doNothing || !item) {
       return super.add(item, options);
     }
 
@@ -204,10 +204,9 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   initialize(): void {
     this.on('change:status', (queueItem: TModel) => {
       this.setPlayIndex();
-
       if (queueItem.isPlaying()) {
         this.filter((item: TModel) => {
-          return item.isPlaying();
+          return item.isPlaying() || item.isPaused();
         }).forEach((playingQueueItem: PlayQueueItem) => {
           if (playingQueueItem.id !== queueItem.id) {
             playingQueueItem.stop();

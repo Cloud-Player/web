@@ -15,7 +15,7 @@ export class DraggableDirective {
 
   @Input('dragEffect') dragEffect: string;
 
-  @HostListener('dragstart', ['$event']) onDragStart(event: DragEvent) {
+  @HostListener('dragstart', ['$event']) onDragStart(event: any) {
     let transfer = <any>event.dataTransfer;
     if (this.dragData) {
       try {

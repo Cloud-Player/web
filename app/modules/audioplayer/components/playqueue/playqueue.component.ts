@@ -13,4 +13,8 @@ export class PlayQueueComponent {
   constructor() {
     this.playQueue = PlayQueue.getInstance();
   }
+
+  dropTrack = (dropData: {}) => {
+    this.playQueue.queue({track: dropData});
+  }
 }

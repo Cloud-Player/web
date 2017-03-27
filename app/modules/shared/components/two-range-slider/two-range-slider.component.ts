@@ -184,6 +184,7 @@ export class TwoRangeSliderComponent {
 
   ngAfterContentInit() {
     this.el.nativeElement.addEventListener('mousedown', () => {
+      this.draggerWidth = this.handleOne.nativeElement.offsetWidth;
       this.dragInProgress = true;
     });
 
@@ -203,7 +204,6 @@ export class TwoRangeSliderComponent {
       this.sliderTwo.nativeElement.value = isNumber(this._tmpMaxValue) ? this._tmpMaxValue : this.max;
     });
 
-    this.draggerWidth = this.handleOne.nativeElement.offsetWidth;
     this.setDragPosFromVal();
   };
 

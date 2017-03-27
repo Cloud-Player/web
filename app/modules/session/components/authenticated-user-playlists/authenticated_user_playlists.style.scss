@@ -1,34 +1,32 @@
 @import "../../../../variables";
 
-$img-size: 50px;
+.dummy-playlist-item,
+.dummy-playlist-item:hover {
 
-div.authenticated-user-playlists {
-
-  a {
-    margin: 5px auto;
-    color: $gray-darker;
-    display: inline-block;
-    text-align: center;
-    width: 100%;
+  i,
+  .text {
+    background: #cbcbcb;
+    color: transparent !important;
   }
+}
 
-  a:hover {
-    color: $gray-light;
-  }
+.playlist-item{
+  transition: background 0.5s ease;
 
-  div {
-    margin: 10px auto;
-    position: relative;
-    width: $img-size;
-    height: $img-size;
-    background: $brand-primary;
-    background: linear-gradient(#f70, #f30);
-    clip-path: circle(50% at 50% 50%);
+  &.drag-over{
+    background: #ddd;
 
-    img {
-      margin: auto;
-      width: $img-size;
+    .text{
+      color: $brand-primary !important;
     }
   }
+}
 
+.authenticated-user-playlists{
+  height: calc(100vh - 353px);
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -1,37 +1,101 @@
 @import '../../../../variables';
 
-div.tracks-list {
+.tracks-list {
+  background: $light-white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: $light-boxshadow;
 
-  height: 100%;
-  overflow-y: auto;
-
-  div.track {
-
+  .track {
     display: flex;
-    margin: 15px auto;
+    margin: 0 -15px;
+    padding: 20px 15px;
+    transition: background 0.5s ease;
 
-    div.cover {
-      order: 1;
-      flex: auto 0 0;
-      max-width: 150px;
+    &:hover{
+      background: $gray-lighter;
 
-        img {
-          width: 150px;
-          height: 150px;
-        }
-
+      .cover play-button{
+        opacity: 1;
+      }
     }
 
-    div.details {
+    &:not(:last-child){
+      border-bottom: 1px solid $gray-lighter;
+    }
+
+    .cover{
+      position: relative;
+
+      track-cover{
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0;
+      }
+
+      play-button{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,0.5);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+    }
+
+    .details {
       order: 2;
       flex: auto;
       margin-left: 15px;
-    }
+      overflow: hidden;
 
+      .track-info{
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+
+        toggle-liked-track{
+          padding-right: 10px;
+        }
+
+        .meta{
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          flex-grow: 1;
+
+          .created{
+            color: #aaa;
+            &:before{
+              content: '—';
+              margin-left: -2px;
+              margin-right: 2px;
+            }
+          }
+        }
+
+        options-btn{
+          align-self: flex-start;
+          margin: 0 0 0 10px;
+        }
+      }
+    }
   }
 
   &::-webkit-scrollbar {
     display: none;
   }
 
+}
+
+@media (max-width: $screen-md-min) {
+  .tracks-list {
+    box-shadow: none;
+    border-radius: 0;
+  }
 }

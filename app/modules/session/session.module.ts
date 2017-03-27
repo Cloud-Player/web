@@ -13,12 +13,17 @@ import {
   AuthenticatedUserPlaylistsViewComponent
 }
   from './components/authenticated-user-playlists-view/authenticated-user-playlists-view.component';
+import {PlaylistModule} from '../playlists/playlist.module';
+import {AuthenticatedUserViewComponent} from './components/authenticated-user-view/authenticated-user-view.component';
+import {Session} from './models/session.model';
+import localforage = require('localforage');
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     SessionRoutingModule,
+    PlaylistModule,
     SharedModule
   ],
   declarations: [
@@ -28,7 +33,8 @@ import {
     AuthenticatedUserPlaylists,
     LikedTracksViewComponent,
     UserPlayListViewComponent,
-    AuthenticatedUserPlaylistsViewComponent
+    AuthenticatedUserPlaylistsViewComponent,
+    AuthenticatedUserViewComponent
   ],
   exports: [
     ConnectBtnComponent,
@@ -39,4 +45,5 @@ import {
 })
 
 export class SessionModule {
+
 }

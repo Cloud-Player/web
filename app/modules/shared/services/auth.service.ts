@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Session} from '../../session/models/session.model';
 import Timer = NodeJS.Timer;
+import localforage = require('localforage');
 
 @Injectable()
 export class AuthService {
@@ -32,6 +33,7 @@ export class AuthService {
 
   disconnect() {
     this.session.clear();
+    localforage.removeItem('sc_session');
   }
 
   connectionSuccessFul(params: any) {

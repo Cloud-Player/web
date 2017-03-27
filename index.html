@@ -59,7 +59,8 @@
       overflow: hidden;
       -webkit-transform-origin: 150px 150px;
       transform-origin: 300px 300px;
-      -webkit-mask-image: -webkit-linear-gradient(top, #000000, rgba(0, 0, 0, 0));
+      -webkit-mask-image: -webkit-linear-gradient(top, #000000, transparent);
+      mask-image: linear-gradient(#000 0%, transparent 100%);
       animation: rotate 1.4s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95);
     }
 
@@ -67,7 +68,7 @@
       width: 600px;
       height: 600px;
       border-radius: 50%;
-      box-shadow: inset 0 0 0 3px rgba(255, 102, 0, 0.8);
+      box-shadow: inset 0 0 0 3px rgba(255, 54, 0, 0.8);
     }
 
     @keyframes rotate {
@@ -83,18 +84,16 @@
 
 <body>
 <cloud-player>
-
   <div id="initScreen">
     <div id="loader">
       <div id="loadCircle"></div>
       <div id="loadCircleLineMask">
         <div id="loadLine"></div>
       </div>
-      <img src="assets/app-icon-sm.png">
+      <img src="assets/logo-animated.svg">
       <p id="statusText">Initialising Cloud Player...</p>
     </div>
   </div>
-
 </cloud-player>
 </body>
 
