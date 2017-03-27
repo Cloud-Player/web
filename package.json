@@ -41,6 +41,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
     "localforage": "1.4.3",
+    "moment": "^2.18.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.3",
     "systemjs": "0.19.39",
