@@ -1,0 +1,11 @@
+<div class="track-cover" [class.hasNoTrack]="!track || !track.get('artwork_url').getLargeSize()">
+  <div *ngIf="track && track.get('artwork_url').getLargeSize()"
+       class="cover hidden-xs">
+    <img [src]="track.get('artwork_url').getLargeSize()">
+  </div>
+
+  <div *ngIf="!track || !track.get('artwork_url').getLargeSize()"
+       class="no-track">
+    <cloud-player-logo></cloud-player-logo>
+  </div>
+</div>
