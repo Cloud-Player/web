@@ -24,7 +24,7 @@ export class DesktopAppViewComponent implements OnInit {
   isMacPc(): boolean{
     let os: Result = ClientDetector.getOs();
     return (
-      os.name === OsNames.Windows && os.version >= 7
+      os.name === OsNames.MacOs && os.version > 0
     );
   }
 
