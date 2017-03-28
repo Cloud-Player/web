@@ -5,6 +5,7 @@ import {throttle} from 'underscore';
 import * as localforage from 'localforage';
 import {Track} from '../../../tracks/models/track.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
+import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 
 @Component({
   selector: 'audio-player-controls',
@@ -26,7 +27,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private humanReadableSecPipe: HumanReadableSecondsPipe;
 
-  constructor() {
+  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
     this.timeTick = 0;
@@ -64,13 +65,12 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     this.audio.addEventListener('error', () => {
       this.hadError = true;
-      if (this.playQueue.hasCurrentItem()) {
-        this.playQueue.getCurrentItem().pause();
-      }
+      this.pauseTrack();
     });
 
     this.audio.addEventListener('playing', () => {
       this.hadError = false;
+      this.cloudPlayerLogoService.play();
     });
 
     this.audio.addEventListener('waiting', () => {
@@ -79,7 +79,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   private initializeLastPlayingTrack(lastTrack: any) {
-    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0, silent: true});
+    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0});
     item.get('track').fetch().then((track: Track) => {
       this.audio.src = track.getResourceUrl();
     });
@@ -140,7 +140,9 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   playTrack(playQueueItem: PlayQueueItem|null): void {
     playQueueItem = playQueueItem || this.playQueue.getItem();
-    playQueueItem.play();
+    if(playQueueItem){
+      playQueueItem.play();
+    }
   }
 
   playTrackFromPosition(newTimeSec: number): void {
@@ -153,6 +155,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     if (track) {
       track.pause();
     }
+    this.pauseAudioPlayer();
   }
 
   togglePlayPause(): void {
@@ -194,6 +197,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
     if (this.hadError) {
       this.audio.src = item.get('track').getResourceUrl();
+      this.audio.load();
       this.audio.currentTime = currTime;
     }
 
@@ -204,6 +208,8 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   pauseAudioPlayer(): void {
     this.audio.pause();
+    this.isBuffering = false;
+    this.cloudPlayerLogoService.pause();
   }
 
   stopAudioPlayer(): void {

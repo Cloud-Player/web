@@ -1,0 +1,10 @@
+<div class="options-btn">
+  <div class="btn btn-xs btn-default" (click)="toggleOpen()">
+    <i class="fa fa-ellipsis-v" aria-hidden="true" alt="Options"></i>
+  </div>
+  <ul [hidden]="!optionsAreVisible"
+      class="options-list"
+      #optionsHolder>
+    <ng-content></ng-content>
+  </ul>
+</div>

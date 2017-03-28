@@ -1,0 +1,48 @@
+@import '../../../../variables';
+.playlist-icon{
+  position: relative;
+
+  .cover {
+    border-radius: 50%;
+    background: $brand-primary;
+    margin: 0 13px 0 0;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      vertical-align: top;
+    }
+  }
+
+  i {
+    border: 1px solid;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .private-badge{
+    position: absolute;
+    right: 5px;
+    bottom: -5px;
+    width: 20px;
+    height: 20px;
+    background: $light-white;
+    border-radius: 50%;
+
+    i{
+      width: inherit;
+      height: inherit;
+    }
+  }
+
+}

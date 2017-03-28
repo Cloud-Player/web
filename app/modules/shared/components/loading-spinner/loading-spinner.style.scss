@@ -1,0 +1,86 @@
+@import '../../../../variables';
+:host{
+  width: 100px;
+  height: 100px;
+}
+
+.idle-dots{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .dot{
+    width: 5px;
+    height: 5px;
+    background: $gray-light;
+    border-radius: 50%;
+    margin-left: 3px;
+    animation: bounce 1.2s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95);
+
+    &.two{
+      animation-delay: 0.4s;
+    }
+
+    &.three{
+      animation-delay: 0.8s;
+    }
+  }
+}
+
+.loading-spinner{
+  width: inherit;
+  height: inherit;
+  position: relative;
+  animation: rotate 1.4s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95);
+
+  .load-circle {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+
+  .load-circle-line-mask {
+    width: 100%;
+    height: 50%;
+    position: initial;
+    overflow: hidden;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-mask-image: -webkit-linear-gradient(top, #000000, transparent);
+    mask-image: linear-gradient(#000 0%, transparent 100%);
+
+    .load-line {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 3px $brand-primary;
+      position: absolute;
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

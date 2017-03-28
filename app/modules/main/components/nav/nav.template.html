@@ -1,43 +1,69 @@
-<section class="column" [@toggle]="toggleState">
+<section class="column">
 
   <div class="sidebar">
-    <div class="avatar hidden-xs">
-      <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name') || 'John Doe'">
+    <div class="cloud-player">
+      <cloud-player-logo></cloud-player-logo>
     </div>
 
-    <nav>
-      <a routerLink="/dashboard">
-        <i class="fa fa-search" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Search</p>
-      </a>
+    <div class="menu">
+      <nav>
+        <a routerLink="/dashboard"
+           [routerLinkActive]="['is-active']">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <div class="text">Search</div>
+        </a>
 
-      <a routerLink="me/likes" *ngIf="isAuthenticated">
-        <i class="fa fa-heart" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Likes</p>
-      </a>
+        <a *ngIf="showDesktopAppEntry()"
+           routerLink="/desktop-app"
+           [routerLinkActive]="['is-active']"
+           class="desktop-entry">
+          <i class="fa fa-desktop" aria-hidden="true"></i>
+          <div class="text">Desktop App</div>
+        </a>
 
-      <a routerLink="me/playlists" class="hidden-lg" *ngIf="isAuthenticated">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Playlists</p>
-      </a>
+        <div class="divider">
+          <div class="title">Account</div>
+        </div>
 
-      <authenticated-user-playlists class="hidden-lg"></authenticated-user-playlists>
+        <a *ngIf="isAuthenticated"
+           routerLink="/me"
+           class="user">
+          <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name')" class="avatar">
+          <div class="text">
+            <span>{{user.get('full_name')}}</span>
+          </div>
+        </a>
 
-      <a (click)="toggle()" class="hidden">
-        <i class="fa fa-expand" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Toggle</p>
-      </a>
+        <a *ngIf="!isAuthenticated"
+           (click)="connect()"
+            class="sc-connect">
+          <i class="fa fa-soundcloud" aria-hidden="true"></i>
+          <div class="text">Login with Soundcloud</div>
+        </a>
 
-      <a (click)="connect()" *ngIf="!isAuthenticated">
-        <i class="fa fa-sign-in" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Connect</p>
-      </a>
+        <a routerLink="me/likes"
+           [routerLinkActive]="['is-active']" [class.disabled]="!isAuthenticated">
+          <i class="fa fa-heart" aria-hidden="true"></i>
+          <div class="text">Likes</div>
+        </a>
 
-      <a (click)="disconnect()" *ngIf="isAuthenticated">
-        <i class="fa fa-sign-out" aria-hidden="true"></i>
-        <p class="visible-md visible-lg">Disconnect</p>
-      </a>
-    </nav>
+
+        <a *ngIf="isAuthenticated"
+           routerLink="me/playlists"
+           [routerLinkActive]="['is-active']"
+           class="visible-xs visible-sm">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <div class="text">Playlists</div>
+        </a>
+
+        <div class="divider">
+          <div class="title">Playlists</div>
+        </div>
+
+        <authenticated-user-playlists class="hidden-xs hidden-sm"></authenticated-user-playlists>
+
+      </nav>
+    </div>
 
   </div>
 

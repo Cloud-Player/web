@@ -28,6 +28,7 @@ exit_with_error () {
 
 # Check if there are any local changes that are not committed yet
 if [ -n "$(git status --porcelain)" ]; then
+  git status --porcelain
   exit_with_error "There are changes that are not committed yet. Make sure you have checked in all changes before you run this script!";
 fi
 

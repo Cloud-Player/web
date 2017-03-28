@@ -1,0 +1,24 @@
+@import '../../../../variables';
+
+:host {
+  height: calc(100vh - 80px);
+  overflow: scroll;
+  display: block;
+  border-radius: 4px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-view{
+    padding: 20px 0;
+
+    /deep/ > .card{
+      background: #fcfcfc;
+      padding: 10px 15px;
+      border-radius: 4px;
+      box-shadow: 0 0 8px 0 #c8c8c8;
+    }
+  }
+}
+

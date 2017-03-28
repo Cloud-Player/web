@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
 
 @Component({
   selector: 'authenticated-user-playlists',
-  styles: [ require('./authenticated_user_playlists.style.scss') ],
+  styles: [require('./authenticated_user_playlists.style.scss')],
   template: require('./authenticated_user_playlists.template.html'),
 })
 export class AuthenticatedUserPlaylists {
@@ -12,17 +12,27 @@ export class AuthenticatedUserPlaylists {
 
   private user = this.session.get('user');
 
-  private tmpPlaylist = new AuthenticatedUserPlaylist();
+  private valueChange = new EventEmitter();
 
-  private fetchPlaylist(): void {
-    if (this.user.get('authenticated')) {
-      this.user.get('playlists').fetch();
+  private isFetching: boolean = false;
+
+  public isInCreationMode: boolean = false;
+
+  public tmpPlaylist = new AuthenticatedUserPlaylist();
+
+  private fetchPlaylists(): void {
+    if (this.user.get('authenticated') && !this.isFetching) {
+      this.isFetching = true;
+      this.user.get('playlists').fetch().then(()=>{
+        this.isFetching = false;
+        this.valueChange.emit();
+      });
     }
   };
 
   ngOnInit(): void {
-    this.user.on('change:authenticated', this.fetchPlaylist.bind(this));
-    this.fetchPlaylist();
+    this.user.on('change:authenticated', this.fetchPlaylists.bind(this));
+    this.fetchPlaylists();
   };
 
   save(): void {
@@ -34,5 +44,25 @@ export class AuthenticatedUserPlaylists {
 
   dropTrack(dropData: {}, playlist: AuthenticatedUserPlaylist, event: DragEvent): void {
     playlist.get('tracks').create(dropData);
+  }
+
+  cancel(): void {
+    if (!this.tmpPlaylist.get('title') || this.tmpPlaylist.get('title').length < 1) {
+      this.isInCreationMode = false;
+    }
+  }
+
+  addNewPlaylist(): void {
+    this.isInCreationMode = true;
+  }
+
+  createPlaylist(): void {
+    this.user.get('playlists').create(this.tmpPlaylist.toJSON(), {at: 0});
+    this.isInCreationMode = false;
+    this.tmpPlaylist.clear();
+  }
+
+  isAuthenticated(): boolean{
+    return this.session.get('user').get('authenticated');
   }
 }

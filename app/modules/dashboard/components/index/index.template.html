@@ -1,16 +1,38 @@
 <section class="column">
-  <h2>
-    {{title}}
-  </h2>
+  <view-header>
+    <collection-text-input-search [collection]="tracks" [queryParam]="'q'" #searchBar></collection-text-input-search>
+  </view-header>
 
-  <hr>
+  <!--<collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></collection-range-input-search>-->
+  <!--<sort-tracks [tracks]="tracks"></sort-tracks>-->
 
-  <collection-text-input-search [collection]="tracks" [queryParam]="'q'"></collection-text-input-search>
-  <collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></collection-range-input-search>
-  {{tracks.queryParams['duration[from]']/1000 | hReadableSeconds}}
-  <sort-tracks [tracks]="tracks"></sort-tracks>
+  <scroll-view>
+    <div *ngIf="tracks.length>0">
+      <search-filter [collection]="tracks"></search-filter>
+      <track-list [tracks]="tracks"></track-list>
+    </div>
+    <div *ngIf="tracks.length === 0 && !isFetching"
+         class="card getting-started">
+      <h1>Welcome to Cloud Player!</h1>
+      <p>
+        Cloud player is an inoffical Soundcloud player to play songs from Soundcloud.
+        <br>
+        You can search for all songs that are available on Soundcloud
+      </p>
+      <p>
+        <a (click)="connect()">Connect with your Soundcloud account</a> to get your playlists and liked tracks. They will appear in the menubar
+        as soon as the connection was successful.
+      </p>
+      <p>
+        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply
+        drag and drop tracks on it.
+      </p>
+      <p>Cloud Player is also available as <a routerLink="/desktop-app">native App for your PC.</a></p>
+    </div>
 
-  <hr>
-
-  <track-list [tracks]="tracks"></track-list>
+    <div *ngIf="tracks.length === 0 && isFetching"
+         class="card">
+      Searching for tracks that match your query "{{tracks.queryParams.q}}"
+    </div>
+  </scroll-view>
 </section>

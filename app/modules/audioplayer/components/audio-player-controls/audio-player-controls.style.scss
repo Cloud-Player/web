@@ -1,22 +1,36 @@
 @import '../../../../variables';
 
-div.audio-player-controls {
-
+.audio-player-controls {
   width: 100%;
   margin: 0 auto;
   display: block;
   text-align: center;
+  padding: 0 10px;
+  position: relative;
+
+  .button-container {
+    padding-top: 12px;
+  }
+
+  range-slider {
+    display: block;
+    margin-top: -5px;
+  }
 
   button.next, button.prev {
     border: none;
     font-size: 24px;
     background: none;
     vertical-align: middle;
+    box-shadow: none;
 
     &:hover {
       color: grey;
     }
 
+    &:disabled{
+      pointer-events: none;
+    }
   }
 
   button.play, button.pause {
@@ -25,8 +39,11 @@ div.audio-player-controls {
     border: none;
     font-size: 28px;
     border-radius: 30px;
-  }
 
+    &:disabled{
+      pointer-events: none;
+    }
+  }
 }
 
 div.volume, div.time {
@@ -41,5 +58,8 @@ div.volume, div.time {
   i {
     font-size: 22px;
   }
+}
 
+button i.fa-play {
+  padding-left: 3px;
 }

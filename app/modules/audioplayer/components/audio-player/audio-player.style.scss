@@ -1,104 +1,150 @@
 @import '../../../../_variables.scss';
 
 @media only screen and (min-width: 320px) {
-
-  section.column {
-    bottom: 0;
-    width: 100%;
-    border: none;
-    height: 130px;
-    position: absolute;
-    background: #efefef;
-    border-top: solid 1px #dad9d9;
-  }
-
-  div.audio-player {
-
-    div.track-item {
-
-      width: 65%;
-      height: 100%;
-      float: left;
-
-      div.cover {
-
-        width: 100px;
-
-        img {
-          float: left;
-          height: 100px;
-        }
-
-      }
-
-      div.details {
-
-        float: left;
-        padding: 0 15px;
-        text-align: left;
-
-        b {
-          font-size: 16px;
-        }
-
-      }
-
-    }
-  }
-}
-
-@media only screen and (min-width: 992px) {
-
-  section.column {
-    border: none;
-    background: none;
+  .audio-player {
+    width: 320px;
     position: relative;
-    height: calc(100vh - 50px);
-    border-right: solid 1px #dad9d9;
-  }
+    box-shadow: 0 8px 8px 0 #c8c8c8;
+    z-index: 99;
 
-  div.audio-player {
+    .track-item {
+      box-shadow: 0 2px 8px 0 #c8c8c8;
+      position: relative;
+      z-index: 1;
+      background: white;
 
-    width: 350px;
-    height: 100%;
+      .meta {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+        padding-right: 10px;
+        padding-bottom: 15px;
 
-    div.track-item {
-
-      width: 100%;
-      height: auto;
-
-      div.cover {
-
-        width: 100%;
-
-        img {
-          width: 100%;
-          height: 100%;
+        toggle-liked-track {
+          padding: 10px;
         }
 
+        .details {
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          .track-title,
+          .artist {
+            white-space: nowrap;
+          }
+        }
       }
 
-      div.details {
-
-        margin: 10px 0;
-        padding: 0 15px;
-        text-align: center;
-
-        b {
-          font-size: 16px;
+      .dummy{
+        i{
+          padding: 10px;
+          color: #ccc;
         }
 
+        .track-title,
+        .artist{
+          background: #efefef;
+          color: transparent;
+          display: block;
+          height: 17px;
+        }
+
+        .track-title{
+          width: 250px;
+          margin-bottom: 4px;
+        }
+
+        .artist{
+          width: 100px;
+        }
       }
 
     }
   }
-
 }
 
-//height: 130px;
-//position: absolute;
-//width: 100%;
-//          bottom: 0;
-//left: 0;
-//background: #eee;
-//border: none;
+@media (max-width: $screen-xs-max) {
+  :host {
+    position: fixed;
+    bottom: 40px;
+    width: 100vw;
+    z-index: 2;
+
+    .audio-player {
+      width: 100%;
+      box-shadow: none;
+
+      .track-item{
+        height: 48px;
+      }
+
+      .play-track {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        margin: 0 8px;
+
+        i {
+          font-size: 16px;
+          padding: 6px 9px;
+        }
+      }
+
+      .meta {
+        padding: 5px 5px 5px 54px !important;
+
+        .artist {
+          display: block;
+        }
+      }
+
+      /deep/ audio-player-controls {
+        .button-container {
+          padding: 0;
+          .prev,
+          .next {
+            display: none;
+          }
+
+          .play,
+          .pause{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid;
+            margin: 0 8px;
+            font-size: inherit;
+            padding: 0;
+            color: inherit;
+            background: none;
+            position: absolute;
+            left: 5px;
+            top: 9px;
+
+            i {
+              font-size: 16px;
+              padding: 6px 9px;
+            }
+          }
+
+          .pause i{
+            padding: 6px 0;
+          }
+        }
+
+        /deep/ range-slider {
+          top: -10px;
+          position: absolute;
+          width: 100%;
+          left: 0;
+
+          .min-value,
+          .max-value {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,8 +6,8 @@
   "scripts": {
     "preinstall": "npm install -g webpack",
     "lint": "tslint -c ./tslint.json 'app/**/*.ts'",
-    "start": "webpack-dev-server --display-error-details --inline --progress --port 8080",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail --display-error-details"
+    "start": "webpack-dev-server --display-error-details --inline --progress --port 8080 --host 0.0.0.0",
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail --display-error-details && cp ./CNAME ./dist/"
   },
   "keywords": [],
   "contributors": [
@@ -22,15 +22,15 @@
     }
   ],
   "dependencies": {
-    "@angular/common": "~2.4.3",
-    "@angular/compiler": "~2.4.3",
-    "@angular/core": "~2.4.3",
-    "@angular/forms": "~2.4.3",
-    "@angular/http": "~2.4.3",
-    "@angular/platform-browser": "~2.4.3",
-    "@angular/platform-browser-dynamic": "~2.4.3",
-    "@angular/router": "~3.4.3",
-    "@angular/upgrade": "~2.4.3",
+    "@angular/common": "~2.4.10",
+    "@angular/compiler": "~2.4.10",
+    "@angular/core": "~2.4.10",
+    "@angular/forms": "~2.4.10",
+    "@angular/http": "~2.4.10",
+    "@angular/platform-browser": "~2.4.10",
+    "@angular/platform-browser-dynamic": "~2.4.10",
+    "@angular/router": "~3.4.10",
+    "@angular/upgrade": "~2.4.10",
     "@types/backbone": "^1.3.33",
     "@types/jquery": "^2.0.33",
     "@types/underscore": "^1.7.33",
@@ -41,10 +41,12 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
     "localforage": "1.4.3",
+    "moment": "^2.18.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.3",
     "systemjs": "0.19.39",
     "underscore": "1.8.3",
+    "web-animations-js": "^2.2.2",
     "zone.js": "^0.7.6"
   },
   "devDependencies": {

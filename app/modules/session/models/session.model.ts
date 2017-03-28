@@ -3,6 +3,7 @@ import {AuthenticatedUser} from './authenticated_user.model';
 import Timer = NodeJS.Timer;
 import {setSession} from '../../shared/session-manager.fn';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import localforage = require('localforage');
 
 @Injectable()
 export class Session extends SoundcloudModel {
@@ -45,14 +46,15 @@ export class Session extends SoundcloudModel {
   };
 
   saveLocal(options?: any): void {
-    localStorage.setItem('sc_session', JSON.stringify(this.toJSON({})));
+    localforage.setItem('sc_session', this.toJSON({}));
   };
 
   fetchLocal(options?: any): Session {
-    let session = localStorage.getItem('sc_session');
-    if (session) {
-      this.set(this.parse(JSON.parse(session)));
-    }
+    localforage.getItem('sc_session').then((session: any)=>{
+      if(session){
+        this.set(session);
+      }
+    });
     return this;
   };
 

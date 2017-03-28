@@ -1,41 +1,191 @@
 @import '../../../../variables';
+@import '../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+/* Global styles */
 
-section.main {
+h2 {
+  font-size: 28px;
+  margin-top: 10px;
+}
 
+* {
+  font-family: $font-family-base;
+  font-weight: 300;
+}
+
+html, body {
+  height: 100vh;
+  width: 100%;
+}
+
+body {
+  background: #efefef;
+  overflow: hidden;
+
+  &.native.desktop{
+    background: red;
+  }
+}
+
+a {
+  cursor: pointer;
+}
+
+a,div{
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #999 !important;
+  }
+}
+
+button:focus {
+  outline: 0 !important;
+}
+
+.btn {
+  margin: 5px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn-round {
+  width: $btn-width;
+  height: $btn-width;
+  border-radius: 50%;
+}
+
+.btn-brand {
+  background: $brand-primary;
+  border-color: #fff;
+  color: white;
+
+  &:hover {
+    background: darken($brand-primary, 5%);
+    color: white;
+  }
+}
+
+.btn-danger{
+  @include button-variant($brand-danger, $btn-default-bg, $btn-danger-border);
+  transition: all 0.3s ease;
+
+  &:hover{
+    @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+  }
+}
+
+.divider {
+  position: relative;
+
+  .title {
+    display: flex;
+    &:before,
+    &:after {
+      content: "";
+      position: relative;
+      border-top: 1px solid #ccc;
+      flex-grow: 1;
+      margin: 9px 3px;
+    }
+
+    &:before {
+      max-width: 10px;
+    }
+  }
+}
+
+.main {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  max-width: 1500px;
+  background: #efefef;
+  margin: auto;
+  box-shadow: $light-boxshadow;
 
-  .search-bar {
-    -webkit-app-region: drag;
+  .flex-container {
+    display: flex;
+  }
 
-    &:before {
-      content: "";
-      width: 100%;
-      height: 45px;
-      display: block;
-      //background: #dad9d9;
-      background: #333;
-    }
-
-    &:after {
-      content: "";
-      width: 100%;
-      height: 5px;
-      display: block;
-      background: $brand-primary;
-      background: linear-gradient(#f70, #f30);
-    }
+  .routes {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: auto;
   }
 
 }
 
-main.flex-container {
+body.native.desktop{
+  .native-bar {
+    -webkit-app-region: drag;
+    height: 27px;
+    width: 100vw;
+    background: $gray-light;
+    position: relative;
 
-  display: flex;
-
-  div.routes {
-    width: 100%;
+    &:after{
+      content: '';
+      width: 100%;
+      height: 3px;
+      background: #ff3600;
+      position: absolute;
+      bottom: 0;
+    }
   }
+}
 
+.label + .label {
+  margin-left: 5px;
+}
+
+.label {
+  &.label-light {
+    background: transparent;
+    border: 1px solid;
+
+    &.label-default {
+      color: $gray-light;
+    }
+
+    &.label-primary {
+      color: $brand-primary;
+    }
+
+    &.label-success {
+      color: $brand-success;
+    }
+
+    &.label-danger {
+      color: $brand-danger;
+    }
+
+    &.label-info {
+      color: $brand-info;
+    }
+
+    &.label-warning {
+      color: $brand-warning;
+    }
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+  .main {
+    .routes {
+      padding: 15px;
+    }
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  .main {
+    .routes {
+      margin: 0;
+      max-width: initial;
+    }
+  }
 }

@@ -1,110 +1,297 @@
 @import '../../../../variables';
 
-$img-size: 80px;
-
-@media only screen and (min-width: 320px) {
-
-  //section.column {
-  //  left: 0;
-  //  right: 0;
-  //  bottom: 0;
-  //  width: auto;
-  //  height: 55px;
-  //  position: absolute;
-  //  padding: 0 25px;
-  //}
-
-  div.sidebar {
-    background: #efefef;
-    min-width: 125px;
-
-    nav {
-      margin: 0;
-      height: auto;
-      display: flex;
-      justify-content: space-around;
-
-      a {
-        flex: auto 0 0;
-        color: $gray-darker;
-      }
-
-      i {
-        padding: 10px;
-        font-size: 32px;
-      }
-    }
-  }
-
+:host .column {
+  background: #efefef;
+  height: calc(100vh);
 }
 
-@media only screen and (min-width: 768px) {
+.sidebar {
+  width: 95px;
+  overflow: hidden;
+  transition: all 0.4s ease;
 
-  section.column {
-    padding: 0 15px;
-    background: #efefef;
-    display: inline-block;
-    height: calc(100vh - 50px);
+  .menu {
+    min-width: 250px;
+    padding-left: 15px;
+    transition: transform 0.4s ease;
   }
 
-  div.sidebar {
-    min-width: 95px;
+  .cloud-player {
+    background: $light-white;
+    padding: 0;
+    text-align: center;
+    margin: 15px 15px 15px 15px;
+    border-radius: 4px;
+    height: 60px;
 
-    .avatar {
-      margin: 25px auto;
-      position: relative;
-      width: $img-size;
-      height: $img-size;
-      background: $brand-primary;
-      background: linear-gradient(#f70, #f30);
-      clip-path: circle(50% at 50% 50%);
+    img {
+      width: 58px;
+    }
+  }
+
+  .menu,
+  /deep/ authenticated-user-playlists {
+
+    a,
+    .nav-item {
+      margin: 20px 15px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      text-decoration: none;
+      cursor: pointer;
 
       img {
-        width: $img-size;
-        position: absolute;
-        margin: auto;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-      }
-    }
-
-    nav {
-      height: auto;
-      display: inline;
-      margin: 15px auto;
-      position: relative;
-
-      a {
-        margin: 5px auto;
-        color: $gray-darker;
-        display: inline-block;
-        text-align: center;
-        width: 100%;
-
-        &.bottom {
-          position: absolute;
-          bottom: 0;
-        }
-
-      }
-
-      a:hover {
-        color: $gray-light;
-        text-decoration: none;
-      }
-
-      a:active {
-        font-weight: bold;
+        margin: 0 13px 0 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
       }
 
       i {
-        margin: 10px auto;
-        font-size: 38px;
+        border: 1px solid;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+
+        &.fa-search {
+          font-size: 14px;
+        }
+      }
+
+      .text {
+        display: block;
+      }
+    }
+
+    a, .nav-item {
+      text-decoration: none;
+
+      .text,
+      i {
+        transition: color 0.6s ease;
+      }
+
+      i {
+        color: $gray-darker;
+        transition: color 0.6s ease;
+      }
+
+      .text {
+        color: #cbcbcb;
+      }
+
+      &.disabled {
+        .text,
+        i {
+          color: #cbcbcb;
+        }
+      }
+
+      &:hover {
+        .text,
+        i {
+          color: $brand-primary;
+        }
+
+        i {
+          border-color: $gray-darker;
+          color: $brand-primary;
+        }
+
+        .private-badge i{
+          color: $gray-darker;
+        }
+
+        .private-badge i{
+          border-color: $gray-darker !important;
+          color: $gray-darker !important;
+        }
+      }
+
+      &.is-active,
+      &.is-active:hover {
+        .text,
+        i {
+          font-weight: bold;
+        }
+
+        i,
+        .cover{
+          color: $brand-primary !important;
+          border-color: $brand-primary !important;
+        }
+
+        .cover{
+          border: 1px solid;
+        }
+
+        .private-badge i{
+          border-color: $gray-darker !important;
+          color: $gray-darker !important;
+        }
       }
     }
   }
 
+  &:hover {
+    width: 250px;
+
+    .menu,
+    /deep/ authenticated-user-playlists {
+      a, .nav-item {
+        .text {
+          color: $gray-darker;
+        }
+
+        &.disabled {
+          .text,
+          i {
+            color: #cbcbcb;
+          }
+        }
+
+        &:hover {
+          .text,
+          i {
+            color: $brand-primary;
+          }
+        }
+
+        &.is-active{
+          .text{
+            color: $gray-darker !important;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: $screen-lg-min) {
+    width: 250px;
+
+    .menu,
+    /deep/ authenticated-user-playlists {
+      a, .nav-item {
+        .text,
+        i {
+          color: $gray-darker;
+        }
+
+        &.disabled {
+          .text,
+          i {
+            color: #cbcbcb;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1380px) {
+    width: 300px;
+    &:hover {
+      max-width: 500px;
+      min-width: 300px;
+      width: initial;
+    }
+  }
+}
+
+@media (max-width: $screen-sm-max) {
+  :host {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    z-index: 1;
+    box-shadow: $light-boxshadow;
+    z-index: 999;
+
+    .sidebar,
+    /deep/ authenticated-user-playlists {
+      min-width: 100%;
+      padding: 0;
+
+      .menu {
+        min-width: 100%;
+        padding-left: 0;
+      }
+
+      .divider,
+      .cloud-player {
+        display: none;
+      }
+
+      .user {
+        order: 4;
+      }
+
+      nav {
+        display: flex;
+        font-size: 13px;
+        margin: 0;
+
+        a,
+        .nav-item {
+          display: block;
+          margin: 0;
+          border-left: 1px solid #dad9d9;
+          padding: 7px;
+
+          &.is-active {
+            background: #dad9d9;
+
+            i {
+              color: $brand-primary;
+            }
+          }
+
+          &.disabled{
+            display: none;
+          }
+
+          i {
+            margin: 0 auto;
+            font-size: 20px;
+            padding: 0;
+            border: none;
+            background: transparent;
+
+            &.fa-search{
+              font-size: 18px;
+            }
+          }
+
+          img {
+            width: 27px;
+            height: 27px;
+          }
+
+          .text {
+            display: none;
+          }
+
+          &.sc-connect {
+            display: flex;
+
+            i{
+              margin-right: 5px;
+            }
+            .text{
+              display: block;
+              margin-right: auto;
+              color: $gray-darker;
+            }
+          }
+        }
+      }
+    }
+  }
 }

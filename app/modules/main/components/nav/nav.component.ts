@@ -1,24 +1,13 @@
-import {Component, trigger, state, style, transition, animate} from '@angular/core';
+import {Component, trigger, state, style, transition, animate, ContentChild} from '@angular/core';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../../shared/services/auth.service';
+import {ClientDetector, OsNames, Result, ClientNames} from '../../../shared/services/client-detector.service';
 
 @Component({
   selector: 'nav-sidebar',
   styles: [require('./nav.style.scss')],
-  template: require('./nav.template.html'),
-  animations: [
-    trigger('toggle', [
-      state('in', style({
-        width: '125px'
-      })),
-      state('out', style({
-        width: '250px'
-      })),
-      transition('in => out', animate('200ms ease-in-out')),
-      transition('out => in', animate('200ms ease-in-out'))
-    ]),
-  ]
+  template: require('./nav.template.html')
 })
 
 export class NavComponent {
@@ -67,4 +56,13 @@ export class NavComponent {
       this.setAuthenticated(this.session.get('user'));
     }
   };
+
+  showDesktopAppEntry(): boolean {
+    let os: Result = ClientDetector.getOs(),
+        client: Result = ClientDetector.getClient();
+    return (
+     client.name !== ClientNames.Electron &&
+      ( (os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7) )
+    );
+  }
 }
