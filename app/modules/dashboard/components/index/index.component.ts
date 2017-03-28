@@ -4,8 +4,6 @@ import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {CollectionTextInputSearchComponent} from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
 import localforage = require('localforage');
-import {SearchFilter} from '../../models/search-filter.model';
-import {SearchFilters} from '../../collections/search-filters.collection';
 import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
