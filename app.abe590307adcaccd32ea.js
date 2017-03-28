@@ -11192,7 +11192,7 @@ webpackJsonp([0],[
 	    }
 	    isMacPc() {
 	        let os = client_detector_service_1.ClientDetector.getOs();
-	        return (os.name === client_detector_service_1.OsNames.Windows && os.version >= 7);
+	        return (os.name === client_detector_service_1.OsNames.MacOs && os.version > 0);
 	    }
 	};
 	DesktopAppViewComponent = __decorate([
