@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="595.28px" height="841.89px" viewBox="0 0 595.28 841.89" enable-background="new 0 0 595.28 841.89" xml:space="preserve">
+<g id="bg">
+	<g>
+		<line fill="#E73E1E" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="207" y1="458" x2="402" y2="457"/>
+		<path fill="none" stroke="#E73E1E" stroke-width="12" stroke-miterlimit="10" d="M401.771,316
+			C363.239,316,332,347.237,332,385.771c0,38.533,31.239,69.772,69.771,69.772c38.533,0,69.772-31.239,69.772-69.772
+			C471.543,347.237,440.304,316,401.771,316z"/>
+	</g>
+</g>
+<g id="play" display="none">
+	<path display="inline" fill="#E73E1E" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" d="M210.612,265.254
+		c-42.676,0-77.271,34.596-77.271,77.271c0,42.677,34.595,77.272,77.271,77.272c42.677,0,77.272-34.595,77.272-77.272
+		C287.885,299.85,253.289,265.254,210.612,265.254z M177.204,393.457V291.561l77.188,50.947L177.204,393.457z"/>
+</g>
+<g id="noten">
+	<g>
+
+			<line fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="274.887" y1="472.603" x2="274.887" y2="549.27"/>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="245.22" cy="548.27" r="29.22"/>
+	</g>
+	<g>
+		<line fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="370" y1="472" x2="370" y2="529.937"/>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="340.333" cy="530.27" r="29.22"/>
+	</g>
+	<g>
+
+			<line fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="466.887" y1="472.603" x2="466.887" y2="549.27"/>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="437.22" cy="548.27" r="29.22"/>
+	</g>
+	<g>
+		<line fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="562" y1="472" x2="562" y2="529.937"/>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="532.333" cy="530.27" r="29.22"/>
+	</g>
+	<g>
+		<line fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="178" y1="472" x2="178" y2="529.937"/>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="148.333" cy="530.27" r="29.22"/>
+	</g>
+	<g>
+		<line fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" x1="82.887" y1="472.603" x2="82.887" y2="549.27"/>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="53.22" cy="548.27" r="29.22"/>
+	</g>
+</g>
+<g id="zahnrad">
+	<g>
+		<circle fill="none" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" cx="361.889" cy="269.137" r="43.116"/>
+		<g>
+
+				<rect x="395.644" y="301.095" transform="matrix(0.6971 -0.717 0.717 0.6971 -97.8947 379.4896)" fill="#E73E1E" width="9" height="8.999"/>
+
+				<rect x="320.355" y="227.905" transform="matrix(0.6971 -0.717 0.717 0.6971 -68.2302 303.3031)" fill="#E73E1E" width="9.001" height="9"/>
+
+				<rect x="394.594" y="226.856" transform="matrix(-0.717 -0.6971 0.6971 -0.717 523.9507 675.4415)" fill="#E73E1E" width="9.001" height="8.999"/>
+
+				<rect x="321.404" y="302.143" transform="matrix(-0.717 -0.6971 0.6971 -0.717 345.8029 753.6854)" fill="#E73E1E" width="9.001" height="9"/>
+
+				<rect x="357.258" y="212.005" transform="matrix(-0.9999 0.0141 -0.0141 -0.9999 726.5228 427.9042)" fill="#E73E1E" width="9.001" height="8.999"/>
+
+				<rect x="358.738" y="316.994" transform="matrix(-0.9999 0.0143 -0.0143 -0.9999 731.0283 637.7748)" fill="#E73E1E" width="9.003" height="9.001"/>
+
+				<rect x="305.505" y="265.239" transform="matrix(0.0143 0.9999 -0.9999 0.0143 575.2767 -44.0968)" fill="#E73E1E" width="9" height="9.001"/>
+
+				<rect x="410.493" y="263.758" transform="matrix(0.0141 0.9999 -0.9999 0.0141 677.3707 -150.4779)" fill="#E73E1E" width="9" height="8.999"/>
+		</g>
+	</g>
+</g>
+<g id="right-wheel">
+	<path fill="#E73E1E" d="M210.612,222.254c-66.424,0-120.27,53.848-120.27,120.271c0,66.426,53.846,120.272,120.27,120.272
+		c66.426,0,120.273-53.846,120.273-120.272C330.885,276.102,277.038,222.254,210.612,222.254z M209.633,230
+		c2.761-0.009,5.007,2.221,5.017,4.983c0.008,2.762-2.222,5.007-4.983,5.017c-2.763,0.009-5.008-2.222-5.017-4.983
+		C204.641,232.255,206.872,230.008,209.633,230z M210.612,437.797c-52.617,0-95.271-42.653-95.271-95.272
+		c0-52.616,42.653-95.271,95.271-95.271c52.618,0,95.272,42.655,95.272,95.271C305.885,395.144,263.23,437.797,210.612,437.797z"/>
+</g>
+<g id="left-wheel">
+	<g>
+		<circle opacity="0" fill="#FFFFFF" cx="402.999" cy="435" r="5"/>
+		<circle fill="#E73E1E" cx="401.352" cy="336" r="5"/>
+	</g>
+</g>
+<defs>
+  <mask id="Mask">
+        <polygon fill="#fff" points="210,367 172,392 172,292 210,317">
+          <animate attributeName="points" dur="500ms" to="210,392 172,392 172,292 210,292" begin="indefinite"/>
+        </polygon>
+        <polygon fill="#fff" points="248,342 210,367 210,317 248,341">
+          <animate attributeName="points" dur="500ms" to="258,392 220,392 220,292 258,292" begin="indefinite"/>
+        </polygon>
+  </mask>
+</defs>
+<g id="pause-circle" mask="url(#Mask)">
+	<path fill="#E73E1E" stroke="#E73E1E" stroke-width="10" stroke-miterlimit="10" d="M210.612,265.254
+		c-42.676,0-77.271,34.596-77.271,77.271c0,42.677,34.595,77.272,77.271,77.272c42.677,0,77.272-34.595,77.272-77.272
+		C287.885,299.85,253.289,265.254,210.612,265.254z M177.204,393.457V291.561l77.188,50.947L177.204,393.457z"/>
+	<circle fill="#E73E1E" cx="210" cy="342" r="83"/>
+</g>
+<!--<g id="play-2">-->
+	<!--<polygon fill="#A67D52" points="248,342 210,367 210,317 248,341 	"/>-->
+<!--</g>-->
+<!--<g id="play-1">-->
+	<!--<polygon fill="#A67D52" points="210,367 172,392 172,292 210,317 	"/>-->
+<!--</g>-->
+<!--<g id="pause-1">-->
+	<!--<rect x="162" y="292" fill="#A67D52" width="38" height="100"/>-->
+<!--</g>-->
+<!--<g id="pause-2">-->
+	<!--<rect x="220" y="292" fill="#A67D52" width="38" height="100"/>-->
+<!--</g>-->
+</svg>
