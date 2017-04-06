@@ -6,7 +6,7 @@
        [dragImageUrl]="track.get('artwork_url').getSmallSize()"
        dragEffect="copy">
     <div class="cover">
-      <track-cover [track]="track"></track-cover>
+      <track-cover [track]="track" [size]="getSize()"></track-cover>
       <play-button [track]="track" [tracks]="tracks"></play-button>
     </div>
     <div class="details">
@@ -14,7 +14,7 @@
         <toggle-liked-track [track]="track"></toggle-liked-track>
         <div class="meta"
              playTrackOn
-             [events]="['dblclick', 'touchstart']"
+             [events]="['click']"
              [track]="track"
              [tracks]="tracks">
           <b class="track-title">{{track.get('title')}}</b>
@@ -38,15 +38,15 @@
         </options-btn>
       </div>
       <div class="stats">
-        <div class="favs label label-default label-light">
-          <i class="fa fa-heart" aria-hidden="true" alt="favouites count"></i> {{track.get('likes')}}
-        </div>
-        <div class="plays label label-default label-light">
-          <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.get('playback_count')}}
-        </div>
         <div class="duration label label-default label-light">
           <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
           {{track.get('duration')/1000 | hReadableSeconds}}
+        </div>
+        <div class="favs label label-default label-light">
+          <i class="fa fa-heart" aria-hidden="true" alt="favouites count"></i> {{track.get('likes') | kMilShortener}}
+        </div>
+        <div class="plays label label-default label-light">
+          <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.get('playback_count') | kMilShortener}}
         </div>
         <div *ngIf="track.get('genre')"
              class="genre label label-default label-light">

@@ -10,14 +10,20 @@
     display: none;
   }
 
-  .scroll-view{
-    padding: 20px 0;
+  .scroll-view {
+    padding: 10px 0;
 
-    /deep/ > .card{
+    /deep/ > .card {
       background: #fcfcfc;
       padding: 10px 15px;
       border-radius: 4px;
       box-shadow: 0 0 8px 0 #c8c8c8;
+    }
+  }
+
+  @media (max-width: $screen-md-min) {
+    .scroll-view {
+      padding: 0 0;
     }
   }
 }

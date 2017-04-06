@@ -2,7 +2,7 @@
 
   <div class="sidebar">
     <div class="cloud-player">
-      <cloud-player-logo></cloud-player-logo>
+      <cloud-player-logo [animate]="true"></cloud-player-logo>
     </div>
 
     <div class="menu">
@@ -36,7 +36,7 @@
 
         <a *ngIf="!isAuthenticated"
            (click)="connect()"
-            class="sc-connect">
+           class="sc-connect">
           <i class="fa fa-soundcloud" aria-hidden="true"></i>
           <div class="text">Login with Soundcloud</div>
         </a>
@@ -60,8 +60,7 @@
           <div class="title">Playlists</div>
         </div>
 
-        <authenticated-user-playlists class="hidden-xs hidden-sm"></authenticated-user-playlists>
-
+        <authenticated-user-playlists class="hidden-xs hidden-sm" fillHeight></authenticated-user-playlists>
       </nav>
     </div>
 

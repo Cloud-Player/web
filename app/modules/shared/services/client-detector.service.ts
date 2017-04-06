@@ -11,6 +11,7 @@ export interface Test {
 
 export enum OsNames {
   Windows,
+  WindowsMobile,
   Android,
   OpenBSD,
   SunOs,
@@ -51,6 +52,7 @@ export class ClientDetector {
     {s: OsNames.Windows, v: 0, r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/},
     {s: OsNames.Windows, v: 0, r: /Windows CE/},
     {s: OsNames.Windows, v: 0, r: /Win16/},
+    {s: OsNames.WindowsMobile, v: 0, r: /Windows Phone|iemobile/},
     {s: OsNames.Android, v: 0, r: /Android/},
     {s: OsNames.OpenBSD, v: 0, r: /OpenBSD/},
     {s: OsNames.SunOs, v: 0, r: /SunOS/},
@@ -94,5 +96,15 @@ export class ClientDetector {
 
   static getClient(): Result {
     return ClientDetector.test(ClientDetector.clientStrings);
+  }
+
+  static isMobileDevice(): boolean{
+    return ClientDetector.getOs().name === OsNames.Android ||
+      ClientDetector.getOs().name === OsNames.iOS ||
+      ClientDetector.getOs().name === OsNames.WindowsMobile
+  }
+
+  static isPhone(): boolean{
+    return ClientDetector.isMobileDevice() && window.screen.width<770;
   }
 }

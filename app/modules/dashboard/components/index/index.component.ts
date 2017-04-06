@@ -33,12 +33,18 @@ export class DashboardIndexComponent implements AfterViewInit {
       localforage.setItem('sc_search_term', val);
     });
 
+    localforage.getItem('sc_search_term').then((val: string)=>{
+      if(val){
+        this.searchBar.search(val);
+      }
+    });
+
     this.tracks.on('request', ()=>{
       this.isFetching = true;
     });
 
     this.tracks.on('sync error', ()=>{
       this.isFetching = false;
-    })
+    });
   }
 }

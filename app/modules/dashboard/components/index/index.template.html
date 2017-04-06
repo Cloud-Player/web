@@ -7,7 +7,8 @@
   <!--<sort-tracks [tracks]="tracks"></sort-tracks>-->
 
   <scroll-view>
-    <div *ngIf="tracks.length>0">
+    <div *ngIf="tracks.length>0"
+         class="results">
       <search-filter [collection]="tracks"></search-filter>
       <track-list [tracks]="tracks"></track-list>
     </div>

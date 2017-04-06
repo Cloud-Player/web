@@ -70,6 +70,7 @@ export class PlayTrackOnEventDirective implements OnInit{
   }
 
   ngOnInit(): void {
+    this.el.nativeElement.style = 'cursor: pointer';
     if(this.playTrackOn){
       this.registerListener(this.playTrackOn);
     } else if(this.events){

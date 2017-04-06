@@ -84,6 +84,12 @@
           margin: 0 0 0 10px;
         }
       }
+
+      .stats{
+        .label-light{
+          border: none;
+        }
+      }
     }
   }
 
@@ -97,5 +103,57 @@
   .tracks-list {
     box-shadow: none;
     border-radius: 0;
+  }
+}
+
+@media (max-width: $screen-sm-min) {
+  .tracks-list{
+    .track{
+      position: relative;
+      .cover{
+        track-cover{
+          width: 40px;
+          height: 40px;
+
+          &.hasNoTrack{
+            padding: 2px;
+          }
+        }
+
+        /deep/ track-cover{
+          .hasNoTrack{
+            padding: 2px;
+          }
+        }
+
+        play-button{
+          width: 40px;
+          height: 40px;
+        }
+
+        /deep/ play-button{
+          .btn-round{
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+            padding: 0 0 0 1px;
+          }
+        }
+      }
+      .details{
+        .stats{
+          position: absolute;
+          left: 15px;
+          white-space: nowrap;
+          bottom: 10px;
+
+          .label-light{
+            &:first-child{
+              padding-left: 0;
+            }
+          }
+        }
+      }
+    }
   }
 }

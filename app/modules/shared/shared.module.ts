@@ -26,6 +26,8 @@ import {TrackCoverComponent} from './components/track-cover/track-cover.componen
 import {TimeAgoDirective} from './directives/time-ago.directive';
 import {PlayTrackOnEventDirective} from './directives/play-track-on-event.directive';
 import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/options-btn/options-btn.component';
+import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
+import {FillHeightDirective} from './directives/fill-height.directive';
 
 @NgModule({
   imports: [
@@ -56,7 +58,9 @@ import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/optio
     FocusInputDirective,
     TimeAgoDirective,
     PlayTrackOnEventDirective,
-    HumanReadableSecondsPipe
+    FillHeightDirective,
+    HumanReadableSecondsPipe,
+    KMilShortenerPipe
   ],
   exports: [
     CloudPlayerLogoComponent,
@@ -81,7 +85,9 @@ import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/optio
     FocusInputDirective,
     TimeAgoDirective,
     PlayTrackOnEventDirective,
-    HumanReadableSecondsPipe
+    FillHeightDirective,
+    HumanReadableSecondsPipe,
+    KMilShortenerPipe
   ],
   providers: [CloudPlayerLogoService]
 })

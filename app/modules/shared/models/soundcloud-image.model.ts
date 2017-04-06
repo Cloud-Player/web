@@ -13,6 +13,10 @@ export class SoundcloudImageModel extends BaseModel {
     return this.getImageByFormat('t500x500');
   };
 
+  getMediumSize() {
+    return this.getImageByFormat('badge');
+  };
+
   getSmallSize() {
     return this.getImageByFormat('small');
   };

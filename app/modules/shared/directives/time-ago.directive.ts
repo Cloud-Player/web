@@ -22,15 +22,15 @@ export class TimeAgoDirective implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.setTime(this.timeAgo);
-    this.interval = setInterval(()=>{
-      this.setTime(this.timeAgo);
-    }, 1000 * 60 * 2);
+    // this.interval = setInterval(()=>{
+    //   this.setTime(this.timeAgo);
+    // }, 1000 * 60 * 2);
   }
 
   ngOnDestroy(): void {
-    if(this.interval){
-      clearInterval(this.interval);
-    }
+    // if(this.interval){
+    //   clearInterval(this.interval);
+    // }
   }
 
 }
