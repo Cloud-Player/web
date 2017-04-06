@@ -1,5 +1,7 @@
 <div class="collection-search">
-  <div class="input-group">
+  <form class="input-group"
+        autocomplete="off"
+        (submit)="search(); searchInput.blur()">
     <span class="input-group-addon" id="basic-addon3"><i class="fa fa-search"></i></span>
     <input type="text"
            class="form-control"
@@ -7,8 +9,8 @@
            name="search"
            placeholder="Search"
            [(ngModel)]="query"
-           (ngModelChange)="search()"
+           (ngModelChange)="searchOnInput()"
            #searchInput>
     <loading-spinner [isIdle]="isIdle" [isLoading]="isLoading"></loading-spinner>
-  </div>
+  </form>
 </div>

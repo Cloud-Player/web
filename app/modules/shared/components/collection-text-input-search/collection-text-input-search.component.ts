@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {BaseCollection} from '../../../backbone/collections/base.collection';
 import {BaseModel} from '../../../backbone/models/base.model';
+import {ClientDetector} from '../../services/client-detector.service';
 
 @Component({
   selector: 'collection-text-input-search',
@@ -26,6 +27,16 @@ export class CollectionTextInputSearchComponent implements OnInit {
   @Input() queryParam: string;
 
   @Output() valueChange = new EventEmitter();
+
+  public isMobileDevice(){
+   return ClientDetector.isMobileDevice();
+  }
+
+  searchOnInput(): void{
+    if(!this.isMobileDevice()){
+      this.search();
+    }
+  }
 
   // Push a search term into the observable stream.
   search(query?: string): void {
