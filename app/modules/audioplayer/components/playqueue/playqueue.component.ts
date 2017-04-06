@@ -18,6 +18,10 @@ export class PlayQueueComponent {
   }
 
   dropTrack = (dropData: {}) => {
-    this.playQueue.queue({track: dropData});
+    if(this.playQueue.length>0){
+      this.playQueue.queue({track: dropData});
+    } else {
+      this.playQueue.addAndPlay({track: dropData});
+    }
   }
 }
