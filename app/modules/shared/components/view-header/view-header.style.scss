@@ -74,6 +74,7 @@
   @media (max-width: $screen-sm-max) {
     .view-header {
       padding-top: 0;
+      border-bottom: 2px solid $brand-primary;
 
       /deep/ collection-text-input-search {
         .input-group{
