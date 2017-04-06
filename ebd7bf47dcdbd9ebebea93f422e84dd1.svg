@@ -133,13 +133,13 @@
         <mask id="playerStateMask">
           <circle fill="#fff" cx="43" cy="48.5" r="20.364"/>
           <polygon fill="#000" points="42,54.903 33,61.037 33,36.502 42,42.637">
-              <animate class="icon-animation-to-pause" begin="indefinite" attributeName="points" dur="500ms" to="40,61.037 31,61.037 31,36.502 40,36.502" fill="freeze"/>
-              <animate class="icon-animation-to-play" begin="indefinite" attributeName="points" dur="500ms" to="42,54.903 33,61.037 33,36.502 42,42.637" fill="freeze"/>
+              <animate class="icon-animation-to-pause" begin="indefinite" attributeName="points" dur="200ms" to="40,61.037 31,61.037 31,36.502 40,36.502" fill="freeze"/>
+              <animate class="icon-animation-to-play" begin="indefinite" attributeName="points" dur="200ms" to="42,54.903 33,61.037 33,36.502 42,42.637" fill="freeze"/>
           </polygon>
 
           <polygon fill="#000" points="53,48.77 42,54.903 42,42.637 53,48.525">
-              <animate class="icon-animation-to-pause" begin="indefinite" attributeName="points" dur="500ms" to="53,61.037 44,61.037 44,36.502 53,36.502" fill="freeze"/>
-              <animate class="icon-animation-to-play" begin="indefinite" attributeName="points" dur="500ms" to="55,48.77 42,54.903 42,42.637 55,48.525" fill="freeze"/>
+              <animate class="icon-animation-to-pause" begin="indefinite" attributeName="points" dur="200ms" to="53,61.037 44,61.037 44,36.502 53,36.502" fill="freeze"/>
+              <animate class="icon-animation-to-play" begin="indefinite" attributeName="points" dur="200ms" to="55,48.77 42,54.903 42,42.637 55,48.525" fill="freeze"/>
           </polygon>
         </mask>
       </defs>
