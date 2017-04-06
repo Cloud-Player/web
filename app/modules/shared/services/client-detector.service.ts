@@ -97,4 +97,14 @@ export class ClientDetector {
   static getClient(): Result {
     return ClientDetector.test(ClientDetector.clientStrings);
   }
+
+  static isMobileDevice(): boolean{
+    return ClientDetector.getOs().name === OsNames.Android ||
+      ClientDetector.getOs().name === OsNames.iOS ||
+      ClientDetector.getOs().name === OsNames.WindowsMobile
+  }
+
+  static isPhone(): boolean{
+    return ClientDetector.isMobileDevice() && window.screen.width<770;
+  }
 }
