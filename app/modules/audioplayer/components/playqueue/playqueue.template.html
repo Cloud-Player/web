@@ -12,7 +12,7 @@
          [dragData]="playQueueItem.get('track').toJSON()"
          [dragImageUrl]="playQueueItem.get('track').get('artwork_url').getSmallSize()"
          dragEffect="copy">
-      <track-cover [track]="playQueueItem.get('track')"></track-cover>
+      <track-cover [track]="playQueueItem.get('track')" [size]="coverSize"></track-cover>
       <div class="details"
            [class.dummy]="!playQueueItem.get('track').get('user').get('username')">
         <b class="title">{{playQueueItem.get('track').get('title') || 'None'}}</b>
@@ -42,7 +42,7 @@
          [dragImageUrl]="playQueueItem.get('track').get('artwork_url').getSmallSize()"
          dragEffect="copy">
       <div class="cover">
-        <track-cover [track]="playQueueItem.get('track')"></track-cover>
+        <track-cover [track]="playQueueItem.get('track')" [size]="coverSize"></track-cover>
       </div>
       <div class="details"
            [class.dummy]="!playQueueItem.get('track').get('user').get('username')">

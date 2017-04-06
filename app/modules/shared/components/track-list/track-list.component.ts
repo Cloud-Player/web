@@ -5,6 +5,8 @@ import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
 import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
+import {CoverSizes} from '../track-cover/track-cover.component';
+import {ClientDetector} from '../../services/client-detector.service';
 
 @Component({
   selector: 'track-list',
@@ -31,4 +33,11 @@ export class TrackListComponent {
     this.playQueue.queue({track: track});
   }
 
+  getSize(){
+    if(ClientDetector.isMobileDevice()){
+      return CoverSizes.Small;
+    } else {
+      return CoverSizes.Regular;
+    }
+  }
 }
