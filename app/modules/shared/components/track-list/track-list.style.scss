@@ -15,7 +15,7 @@
     &:hover{
       background: $gray-lighter;
 
-      .cover play-button{
+      .cover /deep/ play-button .play-button{
         opacity: 1;
       }
     }
@@ -33,7 +33,7 @@
         flex-shrink: 0;
       }
 
-      play-button{
+      /deep/ play-button .play-button{
         position: absolute;
         top: 0;
         left: 0;
@@ -45,6 +45,10 @@
         background: rgba(255,255,255,0.5);
         opacity: 0;
         transition: opacity 0.5s ease;
+
+        &.isPlaying{
+          opacity: 1;
+        }
       }
     }
 
