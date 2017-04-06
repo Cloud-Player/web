@@ -4,4 +4,8 @@
      [class.fa-heart-o]="!hasLikedTrack()"
      aria-hidden="true"
      (click)="toggleLike()"></i>
+
+  <div class="not-authenticated" [@visibilityChanged]="showAuthenticateTooltip">
+    <a (click)="connect()">Connect with Soundcloud</a> to like tracks
+  </div>
 </span>

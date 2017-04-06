@@ -1,22 +1,25 @@
-.tracks-list {
-  overflow-y: auto;
-  max-height: 90vh;
+@import '../../../../variables';
 
-  .track {
-    margin: 15px auto;
+:host{
+  cursor: pointer;
 
-    .cover {
+  .toggle-liked-track{
+    position: relative;
 
+    .not-authenticated{
+      position: absolute;
+      left: 20px;
+      top: -7px;
+      width: 263px;
+      background: $brand-primary;
+      color: $gray-darker;
+      padding: 5px;
+      border-radius: 4px;
+      white-space: nowrap;
+
+      a{
+        color: white;
+      }
     }
-
-    .details {
-
-    }
-
   }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
 }
