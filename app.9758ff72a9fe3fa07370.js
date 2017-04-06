@@ -209,7 +209,7 @@ webpackJsonp([0],[
 	const http_1 = __webpack_require__(65);
 	const backbone_module_1 = __webpack_require__(66);
 	const tracks_module_1 = __webpack_require__(83);
-	const dashboard_module_1 = __webpack_require__(304);
+	const dashboard_module_1 = __webpack_require__(305);
 	const main_component_1 = __webpack_require__(346);
 	const main_routes_1 = __webpack_require__(349);
 	const audio_player_module_1 = __webpack_require__(353);
@@ -218,7 +218,7 @@ webpackJsonp([0],[
 	const common_1 = __webpack_require__(22);
 	const nav_component_1 = __webpack_require__(365);
 	const playlist_module_1 = __webpack_require__(335);
-	const auth_service_1 = __webpack_require__(306);
+	const auth_service_1 = __webpack_require__(136);
 	const shared_module_1 = __webpack_require__(111);
 	const desktop_app_view_component_1 = __webpack_require__(350);
 	let MainModule = class MainModule {
@@ -7233,31 +7233,31 @@ webpackJsonp([0],[
 	const h_readable_seconds_pipe_1 = __webpack_require__(112);
 	const track_list_component_1 = __webpack_require__(113);
 	const toggle_liked_track_component_1 = __webpack_require__(124);
-	const play_button_component_1 = __webpack_require__(138);
+	const play_button_component_1 = __webpack_require__(139);
 	const platform_browser_1 = __webpack_require__(21);
-	const queue_button_component_1 = __webpack_require__(141);
-	const sort_tracks_component_1 = __webpack_require__(144);
+	const queue_button_component_1 = __webpack_require__(142);
+	const sort_tracks_component_1 = __webpack_require__(145);
 	const backbone_module_1 = __webpack_require__(66);
-	const range_slider_component_1 = __webpack_require__(147);
+	const range_slider_component_1 = __webpack_require__(148);
 	const forms_1 = __webpack_require__(62);
-	const draggable_directive_1 = __webpack_require__(150);
-	const dropzone_directive_1 = __webpack_require__(151);
-	const two_range_slider_component_1 = __webpack_require__(152);
-	const view_header_component_1 = __webpack_require__(155);
-	const scroll_view_component_1 = __webpack_require__(158);
-	const cloud_player_logo_service_1 = __webpack_require__(161);
-	const cloud_player_logo_component_1 = __webpack_require__(162);
-	const toggle_switch_component_1 = __webpack_require__(166);
-	const loading_spinner_component_1 = __webpack_require__(169);
-	const collection_text_input_search_component_1 = __webpack_require__(172);
-	const focus_input_directive_1 = __webpack_require__(175);
-	const view_change_loader_component_1 = __webpack_require__(176);
+	const draggable_directive_1 = __webpack_require__(151);
+	const dropzone_directive_1 = __webpack_require__(152);
+	const two_range_slider_component_1 = __webpack_require__(153);
+	const view_header_component_1 = __webpack_require__(156);
+	const scroll_view_component_1 = __webpack_require__(159);
+	const cloud_player_logo_service_1 = __webpack_require__(162);
+	const cloud_player_logo_component_1 = __webpack_require__(163);
+	const toggle_switch_component_1 = __webpack_require__(167);
+	const loading_spinner_component_1 = __webpack_require__(170);
+	const collection_text_input_search_component_1 = __webpack_require__(173);
+	const focus_input_directive_1 = __webpack_require__(176);
+	const view_change_loader_component_1 = __webpack_require__(177);
 	const track_cover_component_1 = __webpack_require__(118);
-	const time_ago_directive_1 = __webpack_require__(179);
-	const play_track_on_event_directive_1 = __webpack_require__(298);
-	const options_btn_component_1 = __webpack_require__(299);
-	const k_mil_shortener_pipe_1 = __webpack_require__(302);
-	const fill_height_directive_1 = __webpack_require__(303);
+	const time_ago_directive_1 = __webpack_require__(180);
+	const play_track_on_event_directive_1 = __webpack_require__(299);
+	const options_btn_component_1 = __webpack_require__(300);
+	const k_mil_shortener_pipe_1 = __webpack_require__(303);
+	const fill_height_directive_1 = __webpack_require__(304);
 	let SharedModule = class SharedModule {
 	};
 	SharedModule = __decorate([
@@ -8000,14 +8000,34 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const track_model_1 = __webpack_require__(102);
 	const session_model_1 = __webpack_require__(125);
+	const auth_service_1 = __webpack_require__(136);
 	let ToggleLikedTrackComponent = class ToggleLikedTrackComponent {
+	    constructor(authService) {
+	        this.authService = authService;
+	        this.session = session_model_1.Session.getInstance();
+	        this.showAuthenticateTooltip = false;
+	    }
+	    showConnectTooltip() {
+	        this.showAuthenticateTooltip = true;
+	        setTimeout(() => {
+	            this.showAuthenticateTooltip = false;
+	        }, 2000);
+	    }
 	    hasLikedTrack() {
 	        if (this.track && this.track.get('id') && session_model_1.Session.getInstance().get('user').get('likes').length > 0) {
 	            return !!session_model_1.Session.getInstance().get('user').get('likes').findWhere({ id: this.track.id });
 	        }
 	    }
+	    connect() {
+	        this.authService.connect();
+	    }
 	    like() {
-	        session_model_1.Session.getInstance().get('user').get('likes').create(this.track.toJSON());
+	        if (this.session.isValid()) {
+	            session_model_1.Session.getInstance().get('user').get('likes').create(this.track.toJSON());
+	        }
+	        else {
+	            this.showConnectTooltip();
+	        }
 	    }
 	    dislike() {
 	        let likedTrack = session_model_1.Session.getInstance().get('user').get('likes').get(this.track.toJSON());
@@ -8031,13 +8051,21 @@ webpackJsonp([0],[
 	ToggleLikedTrackComponent = __decorate([
 	    core_1.Component({
 	        selector: 'toggle-liked-track',
-	        styles: [__webpack_require__(136)],
-	        template: __webpack_require__(137)
+	        styles: [__webpack_require__(137)],
+	        template: __webpack_require__(138),
+	        animations: [
+	            core_1.trigger('visibilityChanged', [
+	                core_1.state('true', core_1.style({ width: '*', opacity: 1 })),
+	                core_1.state('false', core_1.style({ width: 0, display: 'none', opacity: 0 })),
+	                core_1.state('void', core_1.style({ width: 0, display: 'none', opacity: 0 })),
+	                core_1.transition('* => *', core_1.animate('300ms ease-in-out'))
+	            ])
+	        ]
 	    }), 
-	    __metadata('design:paramtypes', [])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _b) || Object])
 	], ToggleLikedTrackComponent);
 	exports.ToggleLikedTrackComponent = ToggleLikedTrackComponent;
-	var _a;
+	var _a, _b;
 
 
 /***/ },
@@ -8548,18 +8576,89 @@ webpackJsonp([0],[
 /***/ },
 /* 135 */,
 /* 136 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = ".tracks-list {\n  overflow-y: auto;\n  max-height: 90vh; }\n  .tracks-list .track {\n    margin: 15px auto; }\n  .tracks-list::-webkit-scrollbar {\n    display: none; }\n"
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const session_model_1 = __webpack_require__(125);
+	const localforage = __webpack_require__(135);
+	let AuthService = class AuthService {
+	    constructor() {
+	        this.session = session_model_1.Session.getInstance();
+	        window.addEventListener('message', this.receiveConnectMessage.bind(this), false);
+	        window.addEventListener('connectionSuccessFul', (ev) => {
+	            let creds = ev.detail;
+	            if (creds) {
+	                try {
+	                    creds = JSON.parse(creds);
+	                }
+	                catch (err) {
+	                }
+	                this.connectionSuccessFul(creds);
+	            }
+	        });
+	    }
+	    receiveConnectMessage(event) {
+	        let origin = event.origin || event.originalEvent.origin;
+	        if (origin !== 'http://sc.menu-flow.com') {
+	            return;
+	        }
+	        this.connectionSuccessFul(event.data);
+	    }
+	    getConnectionUrl() {
+	        return '//soundcloud.com/connect?' +
+	            'client_id=abb6c1cad3f409112a5995bf922e1d1e&' +
+	            'redirect_uri=http://sc.menu-flow.com/connect&' +
+	            'response_type=code';
+	    }
+	    connect() {
+	        let popup = window.open(this.getConnectionUrl());
+	        this.checkInterval = setInterval(() => {
+	            popup.postMessage(null, 'http://sc.menu-flow.com');
+	        }, 100);
+	    }
+	    disconnect() {
+	        this.session.clear();
+	        localforage.removeItem('sc_session');
+	    }
+	    connectionSuccessFul(params) {
+	        this.session.set({
+	            access_token: params.access_token,
+	            expires_on: params.expires_on,
+	            refresh_token: params.refresh_token
+	        });
+	    }
+	};
+	AuthService = __decorate([
+	    core_1.Injectable(), 
+	    __metadata('design:paramtypes', [])
+	], AuthService);
+	exports.AuthService = AuthService;
+
 
 /***/ },
 /* 137 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"toggle-liked-track\">\n  <i class=\"fa\"\n     [class.fa-heart]=\"hasLikedTrack()\"\n     [class.fa-heart-o]=\"!hasLikedTrack()\"\n     aria-hidden=\"true\"\n     (click)=\"toggleLike()\"></i>\n</span>\n";
+	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host {\n  cursor: pointer; }\n  :host .toggle-liked-track {\n    position: relative; }\n    :host .toggle-liked-track .not-authenticated {\n      position: absolute;\n      left: 20px;\n      top: -7px;\n      width: 263px;\n      background: #ff3600;\n      color: #222222;\n      padding: 5px;\n      border-radius: 4px;\n      white-space: nowrap; }\n      :host .toggle-liked-track .not-authenticated a {\n        color: white; }\n"
 
 /***/ },
 /* 138 */
+/***/ function(module, exports) {
+
+	module.exports = "<span class=\"toggle-liked-track\">\n  <i class=\"fa\"\n     [class.fa-heart]=\"hasLikedTrack()\"\n     [class.fa-heart-o]=\"!hasLikedTrack()\"\n     aria-hidden=\"true\"\n     (click)=\"toggleLike()\"></i>\n\n  <div class=\"not-authenticated\" [@visibilityChanged]=\"showAuthenticateTooltip\">\n    <a (click)=\"connect()\">Connect with Soundcloud</a> to like tracks\n  </div>\n</span>\n";
+
+/***/ },
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8596,8 +8695,8 @@ webpackJsonp([0],[
 	PlayButtonComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-button',
-	        styles: [__webpack_require__(139)],
-	        template: __webpack_require__(140)
+	        styles: [__webpack_require__(140)],
+	        template: __webpack_require__(141)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], PlayButtonComponent);
@@ -8606,15 +8705,15 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 139 */
-910,
 /* 140 */
+910,
+/* 141 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"play-button\"\n     playTrackOn=\"click\"\n     [track]=\"track\"\n     [tracks]=\"tracks\">\n  <button class=\"btn btn-round btn-brand\" *ngIf=\"!isPlaying()\">\n    <i class=\"fa fa-play play\"></i>\n  </button>\n  <button class=\"btn btn-round btn-brand\" *ngIf=\"isPlaying()\">\n    <i class=\"fa fa-pause\"></i>\n  </button>\n</div>\n";
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8661,8 +8760,8 @@ webpackJsonp([0],[
 	QueueButtonComponent = __decorate([
 	    core_1.Component({
 	        selector: 'queue-button',
-	        styles: [__webpack_require__(142)],
-	        template: __webpack_require__(143)
+	        styles: [__webpack_require__(143)],
+	        template: __webpack_require__(144)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], QueueButtonComponent);
@@ -8671,15 +8770,15 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 142 */
-910,
 /* 143 */
+910,
+/* 144 */
 /***/ function(module, exports) {
 
 	module.exports = "<button class=\"btn btn-round btn-primary\" *ngIf=\"!isQueued()\" (click)=\"queue()\" title=\"Add to Queue\">\n  <i class=\"fa fa-history\"></i>\n</button>\n";
 
 /***/ },
-/* 144 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8703,8 +8802,8 @@ webpackJsonp([0],[
 	SortTracksComponent = __decorate([
 	    core_1.Component({
 	        selector: 'sort-tracks',
-	        styles: [__webpack_require__(145)],
-	        template: __webpack_require__(146)
+	        styles: [__webpack_require__(146)],
+	        template: __webpack_require__(147)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], SortTracksComponent);
@@ -8713,19 +8812,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 145 */
+/* 146 */
 /***/ function(module, exports) {
 
 	module.exports = "div.sort-tracks {\n  display: flex; }\n  div.sort-tracks collection-sort {\n    flex: auto 0 0;\n    display: inline-flex; }\n    div.sort-tracks collection-sort:before, div.sort-tracks collection-sort:after {\n      content: '';\n      margin: 0 2px; }\n"
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"sort-tracks\">\n  <span class=\"sort-by visible-xs\">\n    <i class=\"fa fa-sort\" aria-hidden=\"true\"></i>\n  </span>\n  <span class=\"sort-by sort-by-tracks hidden-xs\">\n    Sort tracks by:\n  </span>\n  <collection-sort [collection]=\"tracks\" [label]=\"'None'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'duration'\" [label]=\"'Duration'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'likes'\" [label]=\"'Likes'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'playback_count'\" [label]=\"'Plays'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'created_at'\" [label]=\"'Created'\"></collection-sort>\n</div>\n";
 
 /***/ },
-/* 147 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8887,8 +8986,8 @@ webpackJsonp([0],[
 	RangeSliderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'range-slider',
-	        styles: [__webpack_require__(148)],
-	        template: __webpack_require__(149)
+	        styles: [__webpack_require__(149)],
+	        template: __webpack_require__(150)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_d = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _d) || Object])
 	], RangeSliderComponent);
@@ -8897,19 +8996,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n.range-slider-component {\n  position: relative;\n  margin: 10px 0;\n  display: flex;\n  align-items: center; }\n  .range-slider-component .min-value {\n    margin-right: 5px; }\n  .range-slider-component .progress-bar {\n    width: 100%;\n    background: #ccc;\n    position: relative;\n    height: 5px;\n    border-radius: 5px;\n    flex-grow: 1;\n    box-shadow: none; }\n    .range-slider-component .progress-bar .progress-line {\n      width: 0;\n      background: #ff3600;\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      border-radius: 5px; }\n    .range-slider-component .progress-bar .visible-dragger {\n      width: 14px;\n      height: 14px;\n      border-radius: 50%;\n      background: white;\n      position: absolute;\n      top: -5px;\n      opacity: 0;\n      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.46);\n      transition: border-radius 0.5s ease;\n      cursor: pointer;\n      cursor: -webkit-grab;\n      pointer-events: none;\n      z-index: 99999; }\n    .range-slider-component .progress-bar input[type=\"range\"] {\n      position: absolute;\n      height: 100%;\n      width: 100%;\n      top: 0;\n      left: 0;\n      opacity: 0; }\n      .range-slider-component .progress-bar input[type=\"range\"]::-webkit-slider-thumb {\n        pointer-events: all;\n        position: relative;\n        z-index: 9999999;\n        outline: 0;\n        cursor: -webkit-grab; }\n      .range-slider-component .progress-bar input[type=\"range\"]::-moz-range-thumb {\n        pointer-events: all;\n        position: relative;\n        z-index: 9999999;\n        outline: 0;\n        cursor: -moz-grab; }\n      .range-slider-component .progress-bar input[type=\"range\"]::-ms-thumb {\n        pointer-events: all;\n        position: relative;\n        z-index: 9999999;\n        outline: 0;\n        cursor: pointer; }\n  .range-slider-component .max-value {\n    margin-left: 5px; }\n  .range-slider-component:hover .progress-bar .visible-dragger, .range-slider-component.is-loading .progress-bar .visible-dragger, .range-slider-component.is-dragging .progress-bar .visible-dragger {\n    opacity: 1; }\n  .range-slider-component.is-loading .progress-bar .visible-dragger .loading-spinner {\n    display: block; }\n  .range-slider-component.is-dragging .progress-bar .visible-dragger.display-value {\n    width: initial;\n    height: initial;\n    font-size: 10px;\n    border-radius: 5px;\n    top: -8px;\n    padding: 0 4px;\n    color: black; }\n  .range-slider-component.is-dragging .progress-bar .visible-dragger .loading-spinner {\n    display: none; }\n\n.loading-spinner {\n  border: 0 solid #f70;\n  border-radius: 50%;\n  position: relative;\n  animation: loader-figure 1.15s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;\n  transform: translate(3px, 3px);\n  display: none; }\n\n@keyframes loader-figure {\n  0% {\n    width: 0;\n    height: 0;\n    left: 4px;\n    top: 4px;\n    background-color: #f70; }\n  29% {\n    background-color: #f70; }\n  30% {\n    top: 0;\n    left: 0;\n    width: 8px;\n    height: 8px;\n    background-color: transparent;\n    border-width: 4px;\n    opacity: 1; }\n  100% {\n    top: 0;\n    left: 0;\n    width: 8px;\n    height: 8px;\n    border-width: 0;\n    opacity: 0;\n    background-color: transparent; } }\n"
 
 /***/ },
-/* 149 */
+/* 150 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"range-slider-component\" [class.is-loading]=\"showLoadingSpinner\" [class.is-dragging]=\"dragInProgress\">\n  <div *ngIf=\"!hideSliderValue && min !== null\"\n       class=\"min-value\">\n    <span *ngIf=\"showCurrentValue\">\n      {{getDisplayValue(value)}}\n    </span>\n    <span *ngIf=\"!showCurrentValue\">\n      {{getDisplayValue(min)}}\n    </span>\n  </div>\n\n  <div #progressBar class=\"progress-bar\">\n    <div #progressLine class=\"progress-line\"></div>\n    <div #handle class=\"visible-dragger\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">{{dragDisplayValue}}</span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n    <input type=\"range\" [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpValue\" [step]=\"step\">\n  </div>\n\n  <div *ngIf=\"!hideSliderValue && max !== null\"\n       class=\"max-value\">\n    {{getDisplayValue(max)}}\n  </div>\n</div>\n";
 
 /***/ },
-/* 150 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9001,7 +9100,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 151 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9095,7 +9194,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 152 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9337,8 +9436,8 @@ webpackJsonp([0],[
 	TwoRangeSliderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'two-range-slider',
-	        styles: [__webpack_require__(153)],
-	        template: __webpack_require__(154)
+	        styles: [__webpack_require__(154)],
+	        template: __webpack_require__(155)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_g = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _g) || Object])
 	], TwoRangeSliderComponent);
@@ -9347,19 +9446,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 153 */
+/* 154 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n.range-slider-component, .two-range-slider-component {\n  position: relative;\n  margin: 10px 0;\n  display: flex;\n  align-items: center; }\n  .range-slider-component .min-value, .two-range-slider-component .min-value {\n    margin-right: 5px; }\n  .range-slider-component .progress-bar, .two-range-slider-component .progress-bar {\n    width: 100%;\n    background: #ccc;\n    position: relative;\n    height: 5px;\n    border-radius: 5px;\n    flex-grow: 1;\n    box-shadow: none; }\n    .range-slider-component .progress-bar .progress-line, .two-range-slider-component .progress-bar .progress-line {\n      width: 0;\n      background: #ff3600;\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      border-radius: 5px; }\n    .range-slider-component .progress-bar .visible-dragger, .two-range-slider-component .progress-bar .visible-dragger {\n      width: 14px;\n      height: 14px;\n      border-radius: 50%;\n      background: white;\n      position: absolute;\n      top: -5px;\n      opacity: 0;\n      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.46);\n      transition: border-radius 0.5s ease;\n      cursor: pointer;\n      cursor: -webkit-grab;\n      pointer-events: none;\n      z-index: 99999; }\n    .range-slider-component .progress-bar input[type=\"range\"], .two-range-slider-component .progress-bar input[type=\"range\"] {\n      position: absolute;\n      height: 100%;\n      width: 100%;\n      top: 0;\n      left: 0;\n      opacity: 0; }\n      .range-slider-component .progress-bar input[type=\"range\"]::-webkit-slider-thumb, .two-range-slider-component .progress-bar input[type=\"range\"]::-webkit-slider-thumb {\n        pointer-events: all;\n        position: relative;\n        z-index: 9999999;\n        outline: 0;\n        cursor: -webkit-grab; }\n      .range-slider-component .progress-bar input[type=\"range\"]::-moz-range-thumb, .two-range-slider-component .progress-bar input[type=\"range\"]::-moz-range-thumb {\n        pointer-events: all;\n        position: relative;\n        z-index: 9999999;\n        outline: 0;\n        cursor: -moz-grab; }\n      .range-slider-component .progress-bar input[type=\"range\"]::-ms-thumb, .two-range-slider-component .progress-bar input[type=\"range\"]::-ms-thumb {\n        pointer-events: all;\n        position: relative;\n        z-index: 9999999;\n        outline: 0;\n        cursor: pointer; }\n  .range-slider-component .max-value, .two-range-slider-component .max-value {\n    margin-left: 5px; }\n  .range-slider-component:hover .progress-bar .visible-dragger, .two-range-slider-component:hover .progress-bar .visible-dragger, .range-slider-component.is-loading .progress-bar .visible-dragger, .is-loading.two-range-slider-component .progress-bar .visible-dragger, .range-slider-component.is-dragging .progress-bar .visible-dragger, .is-dragging.two-range-slider-component .progress-bar .visible-dragger {\n    opacity: 1; }\n  .range-slider-component.is-loading .progress-bar .visible-dragger .loading-spinner, .is-loading.two-range-slider-component .progress-bar .visible-dragger .loading-spinner {\n    display: block; }\n  .range-slider-component.is-dragging .progress-bar .visible-dragger.display-value, .is-dragging.two-range-slider-component .progress-bar .visible-dragger.display-value {\n    width: initial;\n    height: initial;\n    font-size: 10px;\n    border-radius: 5px;\n    top: -8px;\n    padding: 0 4px;\n    color: black; }\n  .range-slider-component.is-dragging .progress-bar .visible-dragger .loading-spinner, .is-dragging.two-range-slider-component .progress-bar .visible-dragger .loading-spinner {\n    display: none; }\n\n.loading-spinner {\n  border: 0 solid #f70;\n  border-radius: 50%;\n  position: relative;\n  animation: loader-figure 1.15s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;\n  transform: translate(3px, 3px);\n  display: none; }\n\n@keyframes loader-figure {\n  0% {\n    width: 0;\n    height: 0;\n    left: 4px;\n    top: 4px;\n    background-color: #f70; }\n  29% {\n    background-color: #f70; }\n  30% {\n    top: 0;\n    left: 0;\n    width: 8px;\n    height: 8px;\n    background-color: transparent;\n    border-width: 4px;\n    opacity: 1; }\n  100% {\n    top: 0;\n    left: 0;\n    width: 8px;\n    height: 8px;\n    border-width: 0;\n    opacity: 0;\n    background-color: transparent; } }\n\n.two-range-slider-component {\n  position: relative; }\n  .two-range-slider-component .progress-bar input[type=\"range\"] {\n    pointer-events: none; }\n  .two-range-slider-component.is-loading .progress-bar .progress-line {\n    background: -moz-linear-gradient(left, #ff3600 0%, #ff3600 10%, rgba(255, 54, 0, 0) 10%);\n    /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, #ff3600 0%, #ff3600 10%, rgba(255, 54, 0, 0) 10%);\n    /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, #ff3600 0%, #ff3600 10%, rgba(255, 54, 0, 0) 10%);\n    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    background-size: 200% 100%;\n    animation: move 1.15s cubic-bezier(0.53, -0.46, 0.49, 0.99) infinite reverse; }\n  .two-range-slider-component.is-loading .progress-bar .handle-one .loading-spinner {\n    animation-delay: 1.5s; }\n  .two-range-slider-component.is-loading .progress-bar .handle-two .loading-spinner {\n    animation-delay: -0.2s; }\n\n@keyframes move {\n  0% {\n    background-position: 90% 100%; }\n  50% {\n    background-position: 200% 100%; }\n  100% {\n    background-position: 90% 100%; } }\n"
 
 /***/ },
-/* 154 */
+/* 155 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"two-range-slider-component\" [class.is-loading]=\"showLoadingSpinner\" [class.is-dragging]=\"dragInProgress\">\n  <div *ngIf=\"!hideSliderValue && min !== null\"\n       class=\"min-value\">\n    {{getDisplayValue(min)}}\n  </div>\n\n  <div #progressBar class=\"progress-bar\">\n    <div #progressLine class=\"progress-line\"></div>\n\n    <div #handleOne class=\"visible-dragger handle-one\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">\n        <span *ngIf=\"allowInfinityMin && dragHandleMinDisplayValue === null\">None</span>\n        <span *ngIf=\"!allowInfinityMin || dragHandleMinDisplayValue !== null\">{{dragHandleMinDisplayValue}}</span>\n      </span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n\n    <div #handleTwo class=\"visible-dragger handle-two\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">\n        <span *ngIf=\"allowInfinityMax && dragHandleMaxDisplayValue === null\">None</span>\n        <span *ngIf=\"!allowInfinityMax || dragHandleMaxDisplayValue !== null\">{{dragHandleMaxDisplayValue}}</span>\n      </span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n\n    <input type=\"range\" #sliderOne [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpMinValue\" [step]=\"step\">\n    <input type=\"range\" #sliderTwo [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpMaxValue\" [step]=\"step\">\n  </div>\n\n  <div *ngIf=\"!hideSliderValue && max !== null\"\n       class=\"max-value\">\n    {{getDisplayValue(max)}}\n  </div>\n</div>\n";
 
 /***/ },
-/* 155 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9378,8 +9477,8 @@ webpackJsonp([0],[
 	ViewHeaderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'view-header',
-	        styles: [__webpack_require__(156)],
-	        template: __webpack_require__(157)
+	        styles: [__webpack_require__(157)],
+	        template: __webpack_require__(158)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], ViewHeaderComponent);
@@ -9387,19 +9486,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host {\n  display: block;\n  position: relative;\n  z-index: 9;\n  height: 60px;\n  font-size: 35px; }\n  :host .view-header {\n    width: inherit;\n    border-radius: 4px 4px 0 0;\n    padding: 6px 15px;\n    display: flex;\n    align-items: center;\n    color: #555;\n    height: 100%; }\n    :host .view-header /deep/ > i {\n      font-size: 20px;\n      margin-right: 15px;\n      color: #555; }\n    :host .view-header /deep/ > img {\n      width: 30px;\n      height: 30px;\n      border-radius: 50%;\n      margin-right: 15px; }\n  :host :after {\n    content: \"\";\n    position: absolute;\n    width: 102%;\n    height: 25px;\n    background: #efefef;\n    top: -25px;\n    left: -1%; }\n  :host /deep/ collection-text-input-search {\n    width: 100%; }\n    :host /deep/ collection-text-input-search .input-group {\n      padding: 4px 15px;\n      background: #fcfcfc;\n      margin-left: -15px;\n      box-sizing: initial;\n      width: 100%;\n      border-radius: 4px; }\n      :host /deep/ collection-text-input-search .input-group .input-group-addon {\n        background: transparent;\n        border: none;\n        font-size: 20px;\n        padding: 0; }\n      :host /deep/ collection-text-input-search .input-group input {\n        border: none;\n        font-size: 35px;\n        width: 100%;\n        font-weight: lighter;\n        height: initial;\n        background: transparent;\n        padding: 0 16px;\n        box-shadow: none; }\n  @media (max-width: 991px) {\n    :host .view-header {\n      padding-top: 0;\n      border-bottom: 2px solid #ff3600; }\n      :host .view-header /deep/ collection-text-input-search .input-group {\n        border-radius: 0; } }\n"
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"view-header\">\n  <ng-content></ng-content>\n</div>\n";
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9418,8 +9517,8 @@ webpackJsonp([0],[
 	ScrollViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'scroll-view',
-	        styles: [__webpack_require__(159)],
-	        template: __webpack_require__(160)
+	        styles: [__webpack_require__(160)],
+	        template: __webpack_require__(161)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], ScrollViewComponent);
@@ -9427,19 +9526,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host {\n  height: calc(100vh - 80px);\n  overflow: scroll;\n  display: block;\n  border-radius: 4px; }\n  :host::-webkit-scrollbar {\n    display: none; }\n  :host .scroll-view {\n    padding: 10px 0; }\n    :host .scroll-view /deep/ > .card {\n      background: #fcfcfc;\n      padding: 10px 15px;\n      border-radius: 4px;\n      box-shadow: 0 0 8px 0 #c8c8c8; }\n  @media (max-width: 992px) {\n    :host .scroll-view {\n      padding: 0 0; } }\n"
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"scroll-view\">\n  <ng-content></ng-content>\n</div>\n";
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9477,7 +9576,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9491,7 +9590,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const cloud_player_logo_service_1 = __webpack_require__(161);
+	const cloud_player_logo_service_1 = __webpack_require__(162);
 	let CloudPlayerLogoComponent = class CloudPlayerLogoComponent {
 	    constructor(cloudPlayerLogoService) {
 	        this.cloudPlayerLogoService = cloudPlayerLogoService;
@@ -9546,8 +9645,8 @@ webpackJsonp([0],[
 	CloudPlayerLogoComponent = __decorate([
 	    core_1.Component({
 	        selector: 'cloud-player-logo',
-	        styles: [__webpack_require__(163)],
-	        template: __webpack_require__(164),
+	        styles: [__webpack_require__(164)],
+	        template: __webpack_require__(165),
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_b = typeof cloud_player_logo_service_1.CloudPlayerLogoService !== 'undefined' && cloud_player_logo_service_1.CloudPlayerLogoService) === 'function' && _b) || Object])
 	], CloudPlayerLogoComponent);
@@ -9556,25 +9655,25 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports) {
 
 	module.exports = ":host object {\n  width: 58px;\n  position: relative;\n  top: 2px; }\n"
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"cloud-player-logo\">\n  <object type=\"image/svg+xml\" data=\"" + __webpack_require__(165) + "\" #svgObject>\n    <img src=\"" + __webpack_require__(165) + "\" alt=\"Cloud Player\">\n  </object>\n</div>\n";
+	module.exports = "<div class=\"cloud-player-logo\">\n  <object type=\"image/svg+xml\" data=\"" + __webpack_require__(166) + "\" #svgObject>\n    <img src=\"" + __webpack_require__(166) + "\" alt=\"Cloud Player\">\n  </object>\n</div>\n";
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "ebd7bf47dcdbd9ebebea93f422e84dd1.svg";
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9628,8 +9727,8 @@ webpackJsonp([0],[
 	ToggleSwitchComponent = __decorate([
 	    core_1.Component({
 	        selector: 'toggle-switch',
-	        styles: [__webpack_require__(167)],
-	        template: __webpack_require__(168),
+	        styles: [__webpack_require__(168)],
+	        template: __webpack_require__(169),
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], ToggleSwitchComponent);
@@ -9637,19 +9736,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host .toggle-switch {\n  display: flex;\n  position: relative;\n  border: 1px solid #aaa;\n  border-radius: 20px;\n  margin-right: 10px;\n  background: white; }\n  :host .toggle-switch .left,\n  :host .toggle-switch .right {\n    height: 26px;\n    width: 26px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 15px;\n    text-align: center;\n    color: #aaa;\n    z-index: 1;\n    transition: color 0.5s ease;\n    cursor: pointer; }\n    :host .toggle-switch .left.active,\n    :host .toggle-switch .right.active {\n      color: white; }\n  :host .toggle-switch .right {\n    margin-left: -4px; }\n  :host .toggle-switch .indicator {\n    position: absolute;\n    height: 26px;\n    width: 26px;\n    border-radius: 50%;\n    top: 0;\n    left: 0;\n    background: #ff3600;\n    border: 1px solid #ff3600;\n    transition: transform 0.5s ease; }\n  :host .toggle-switch.on .indicator {\n    transform: translateX(22px); }\n"
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"toggle-switch\" [class.on]=\"isOn()\" [class.off]=\"!isOn()\">\n  <div class=\"left\" [class.active]=\"!isOn()\" (click)=\"turnOff()\">\n    <i class=\"fa fa-lock\" aria-hidden=\"true\"></i>\n  </div>\n\n  <div class=\"right\" [class.active]=\"isOn()\" (click)=\"turnOn()\">\n    <i class=\"fa fa-globe\" aria-hidden=\"true\"></i>\n  </div>\n\n  <div class=\"indicator\" (click)=\"toggle()\"></div>\n</div>\n";
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9680,8 +9779,8 @@ webpackJsonp([0],[
 	LoadingSpinnerComponent = __decorate([
 	    core_1.Component({
 	        selector: 'loading-spinner',
-	        styles: [__webpack_require__(170)],
-	        template: __webpack_require__(171)
+	        styles: [__webpack_require__(171)],
+	        template: __webpack_require__(172)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], LoadingSpinnerComponent);
@@ -9689,19 +9788,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host {\n  width: 100px;\n  height: 100px; }\n\n.idle-dots {\n  height: 100%;\n  width: 100%;\n  position: absolute;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n  .idle-dots .dot {\n    width: 5px;\n    height: 5px;\n    background: #777777;\n    border-radius: 50%;\n    margin-left: 3px;\n    animation: bounce 1.2s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95); }\n    .idle-dots .dot.two {\n      animation-delay: 0.4s; }\n    .idle-dots .dot.three {\n      animation-delay: 0.8s; }\n\n.loading-spinner {\n  width: inherit;\n  height: inherit;\n  position: relative;\n  animation: rotate 1.4s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95); }\n  .loading-spinner .load-circle {\n    margin: auto;\n    width: 100%;\n    height: 100%;\n    border-radius: 50%;\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5); }\n  .loading-spinner .load-circle-line-mask {\n    width: 100%;\n    height: 50%;\n    position: initial;\n    overflow: hidden;\n    -webkit-transform-origin: 50% 50%;\n    transform-origin: 50% 50%;\n    -webkit-mask-image: -webkit-linear-gradient(top, #000000, transparent);\n    mask-image: linear-gradient(#000 0%, transparent 100%); }\n    .loading-spinner .load-circle-line-mask .load-line {\n      width: 100%;\n      height: 100%;\n      border-radius: 50%;\n      box-shadow: inset 0 0 0 3px #ff3600;\n      position: absolute; }\n\n@keyframes rotate {\n  0% {\n    transform: rotate(-90deg); }\n  100% {\n    transform: rotate(270deg); } }\n\n@keyframes bounce {\n  0% {\n    transform: translateY(0); }\n  50% {\n    transform: translateY(3px); }\n  100% {\n    transform: translateY(0); } }\n"
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"idle-dots\" *ngIf=\"isIdle && !isLoading\">\n  <div class=\"dot one\"></div>\n  <div class=\"dot two\"></div>\n  <div class=\"dot three\"></div>\n</div>\n\n<div class=\"loading-spinner\" *ngIf=\"isLoading\">\n  <div class=\"load-circle-line-mask\">\n    <div class=\"load-line\"></div>\n  </div>\n</div>\n";
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9789,8 +9888,8 @@ webpackJsonp([0],[
 	CollectionTextInputSearchComponent = __decorate([
 	    core_1.Component({
 	        selector: 'collection-text-input-search',
-	        styles: [__webpack_require__(173)],
-	        template: __webpack_require__(174)
+	        styles: [__webpack_require__(174)],
+	        template: __webpack_require__(175)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], CollectionTextInputSearchComponent);
@@ -9799,19 +9898,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports) {
 
 	module.exports = ".collection-search /deep/ loading-spinner {\n  position: absolute;\n  right: 10px;\n  top: 14px;\n  height: 30px;\n  width: 30px; }\n"
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"collection-search\">\n  <form class=\"input-group\"\n        autocomplete=\"off\"\n        (submit)=\"search(); searchInput.blur()\">\n    <span class=\"input-group-addon\" id=\"basic-addon3\"><i class=\"fa fa-search\"></i></span>\n    <input type=\"text\"\n           class=\"form-control\"\n           aria-describedby=\"basic-addon3\"\n           name=\"search\"\n           placeholder=\"Search\"\n           [(ngModel)]=\"query\"\n           (ngModelChange)=\"searchOnInput()\"\n           #searchInput>\n    <loading-spinner [isIdle]=\"isIdle\" [isLoading]=\"isLoading\"></loading-spinner>\n  </form>\n</div>\n";
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9844,7 +9943,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9897,8 +9996,8 @@ webpackJsonp([0],[
 	ViewChangeLoaderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'view-change-loader',
-	        styles: [__webpack_require__(177)],
-	        template: __webpack_require__(178),
+	        styles: [__webpack_require__(178)],
+	        template: __webpack_require__(179),
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _d) || Object])
 	], ViewChangeLoaderComponent);
@@ -9907,19 +10006,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports) {
 
 	module.exports = ":host {\n  width: 100vw;\n  position: fixed;\n  z-index: 9999;\n  left: 0;\n  top: 0;\n  display: none; }\n  :host .view-change-loader {\n    position: relative;\n    width: 100%;\n    height: 100vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    z-index: 100;\n    background: rgba(255, 255, 255, 0.8); }\n"
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"view-change-loader\">\n  <loading-spinner></loading-spinner>\n</div>\n";
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9933,7 +10032,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const moment = __webpack_require__(180);
+	const moment = __webpack_require__(181);
 	let TimeAgoDirective = class TimeAgoDirective {
 	    constructor(el) {
 	        this.el = el;
@@ -9969,7 +10068,6 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 180 */,
 /* 181 */,
 /* 182 */,
 /* 183 */,
@@ -10087,7 +10185,8 @@ webpackJsonp([0],[
 /* 295 */,
 /* 296 */,
 /* 297 */,
-/* 298 */
+/* 298 */,
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10182,7 +10281,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10258,8 +10357,8 @@ webpackJsonp([0],[
 	OptionsBtnComponent = __decorate([
 	    core_1.Component({
 	        selector: 'options-btn',
-	        styles: [__webpack_require__(300)],
-	        template: __webpack_require__(301)
+	        styles: [__webpack_require__(301)],
+	        template: __webpack_require__(302)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _c) || Object])
 	], OptionsBtnComponent);
@@ -10282,19 +10381,19 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host {\n  position: relative; }\n  :host .btn {\n    margin: 0; }\n  :host .options-list {\n    position: fixed;\n    width: 150px;\n    border: 1px solid #ccc;\n    border-radius: 4px 0 4px 4px;\n    list-style: none;\n    padding: 0;\n    background: white;\n    flex-direction: column;\n    flex-grow: 1;\n    margin-top: 20px;\n    margin-left: -135px;\n    z-index: 999; }\n    :host .options-list /deep/ options-btn-option {\n      padding: 10px 5px;\n      display: block;\n      border-bottom: 1px solid #eeeeee; }\n      :host .options-list /deep/ options-btn-option:hover {\n        background: #eeeeee; }\n"
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"options-btn\">\n  <div class=\"btn btn-xs btn-default\" (click)=\"toggleOpen()\">\n    <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\" alt=\"Options\"></i>\n  </div>\n  <ul [hidden]=\"!optionsAreVisible\"\n      class=\"options-list\"\n      #optionsHolder>\n    <ng-content></ng-content>\n  </ul>\n</div>\n";
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10337,7 +10436,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10372,7 +10471,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10386,7 +10485,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const index_component_1 = __webpack_require__(305);
+	const index_component_1 = __webpack_require__(306);
 	const tracks_module_1 = __webpack_require__(83);
 	const dashboard_routes_1 = __webpack_require__(309);
 	const platform_browser_1 = __webpack_require__(21);
@@ -10419,7 +10518,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10434,9 +10533,9 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const tracks_collection_1 = __webpack_require__(114);
-	const collection_text_input_search_component_1 = __webpack_require__(172);
+	const collection_text_input_search_component_1 = __webpack_require__(173);
 	const localforage = __webpack_require__(135);
-	const auth_service_1 = __webpack_require__(306);
+	const auth_service_1 = __webpack_require__(136);
 	let DashboardIndexComponent = class DashboardIndexComponent {
 	    constructor(tracks, authService) {
 	        this.tracks = tracks;
@@ -10482,77 +10581,6 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 306 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(125);
-	const localforage = __webpack_require__(135);
-	let AuthService = class AuthService {
-	    constructor() {
-	        this.session = session_model_1.Session.getInstance();
-	        window.addEventListener('message', this.receiveConnectMessage.bind(this), false);
-	        window.addEventListener('connectionSuccessFul', (ev) => {
-	            let creds = ev.detail;
-	            if (creds) {
-	                try {
-	                    creds = JSON.parse(creds);
-	                }
-	                catch (err) {
-	                }
-	                this.connectionSuccessFul(creds);
-	            }
-	        });
-	    }
-	    receiveConnectMessage(event) {
-	        let origin = event.origin || event.originalEvent.origin;
-	        if (origin !== 'http://sc.menu-flow.com') {
-	            return;
-	        }
-	        this.connectionSuccessFul(event.data);
-	    }
-	    getConnectionUrl() {
-	        return '//soundcloud.com/connect?' +
-	            'client_id=abb6c1cad3f409112a5995bf922e1d1e&' +
-	            'redirect_uri=http://sc.menu-flow.com/connect&' +
-	            'response_type=code';
-	    }
-	    connect() {
-	        let popup = window.open(this.getConnectionUrl());
-	        this.checkInterval = setInterval(() => {
-	            popup.postMessage(null, 'http://sc.menu-flow.com');
-	        }, 100);
-	    }
-	    disconnect() {
-	        this.session.clear();
-	        localforage.removeItem('sc_session');
-	    }
-	    connectionSuccessFul(params) {
-	        this.session.set({
-	            access_token: params.access_token,
-	            expires_on: params.expires_on,
-	            refresh_token: params.refresh_token
-	        });
-	    }
-	};
-	AuthService = __decorate([
-	    core_1.Injectable(), 
-	    __metadata('design:paramtypes', [])
-	], AuthService);
-	exports.AuthService = AuthService;
-
-
-/***/ },
 /* 307 */
 /***/ function(module, exports) {
 
@@ -10580,7 +10608,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(85);
-	const index_component_1 = __webpack_require__(305);
+	const index_component_1 = __webpack_require__(306);
 	const routes = [
 	    { path: 'dashboard', component: index_component_1.DashboardIndexComponent }
 	];
@@ -11142,7 +11170,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const auth_service_1 = __webpack_require__(306);
+	const auth_service_1 = __webpack_require__(136);
 	let AuthenticatedUserViewComponent = class AuthenticatedUserViewComponent {
 	    constructor(authService) {
 	        this.authService = authService;
@@ -11830,7 +11858,7 @@ webpackJsonp([0],[
 	const underscore_1 = __webpack_require__(67);
 	const localforage = __webpack_require__(135);
 	const h_readable_seconds_pipe_1 = __webpack_require__(112);
-	const cloud_player_logo_service_1 = __webpack_require__(161);
+	const cloud_player_logo_service_1 = __webpack_require__(162);
 	let AudioPlayerControlsComponent = class AudioPlayerControlsComponent {
 	    constructor(cloudPlayerLogoService) {
 	        this.cloudPlayerLogoService = cloudPlayerLogoService;
@@ -12134,7 +12162,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const session_model_1 = __webpack_require__(125);
-	const auth_service_1 = __webpack_require__(306);
+	const auth_service_1 = __webpack_require__(136);
 	const client_detector_service_1 = __webpack_require__(121);
 	let NavComponent = class NavComponent {
 	    constructor(authService) {
