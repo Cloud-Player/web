@@ -1,7 +1,9 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 var path = require('path');
 var helpers = require('./helpers');
+var packageJSON = require('../package.json');
 
 module.exports = {
   // devtool: "source-map", // or "inline-source-map"
@@ -73,6 +75,19 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: './index.html'
+    }),
+
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(packageJSON.version)
+    }),
+
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, '../app/service-worker.ts'),
+      excludes: [
+        '**/.*',
+        '**/*.map',
+        '*.html'
+      ]
     })
   ]
 };
