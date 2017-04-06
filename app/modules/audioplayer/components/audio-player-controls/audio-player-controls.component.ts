@@ -1,3 +1,6 @@
+import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
+declare let MediaMetadata: any;
+
 import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
@@ -88,6 +91,37 @@ export class AudioPlayerControlsComponent implements OnInit {
     this.duration = lastTrack.duration;
   }
 
+  private setMobileMediaNotification(track: Track) {
+    if ('mediaSession' in navigator) {
+      let nv: any = navigator;
+      let artwork: SoundcloudImageModel = track.get('artwork_url');
+      nv.mediaSession.metadata = new MediaMetadata({
+        title: track.get('title'),
+        artist: track.get('user').get('username'),
+        artwork: [
+          {src: artwork.getDefaultSize(), sizes: '96x96', type: 'image/jpg'},
+          {src: artwork.getDefaultSize(), sizes: '128x128', type: 'image/jpg'},
+          {src: artwork.getDefaultSize(), sizes: '192x192', type: 'image/jpg'},
+          {src: artwork.getImageByFormat('t300x300'), sizes: '256x256', type: 'image/jpg'},
+          {src: artwork.getImageByFormat('crop'), sizes: '384x384', type: 'image/jpg'},
+          {src: artwork.getLargeSize(), sizes: '512x512', type: 'image/jpg'},
+        ]
+      });
+      // nv.mediaSession.setActionHandler('play', this.playTrack(this.playQueue.getCurrentItem()));
+      // nv.mediaSession.setActionHandler('pause', this.pauseTrack());
+      if (this.playQueue.hasPreviousItem()) {
+        nv.mediaSession.setActionHandler('previoustrack', () => {
+          this.previousTrack();
+        });
+      }
+      if (this.playQueue.hasNextItem()) {
+        nv.mediaSession.setActionHandler('nexttrack', () => {
+          this.nextTrack();
+        });
+      }
+    }
+  }
+
   ngOnInit() {
     localforage.getItem('sc_volume').then((volume: number) => {
       if (volume) {
@@ -140,7 +174,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   playTrack(playQueueItem: PlayQueueItem|null): void {
     playQueueItem = playQueueItem || this.playQueue.getItem();
-    if(playQueueItem){
+    if (playQueueItem) {
       playQueueItem.play();
     }
   }
@@ -204,6 +238,8 @@ export class AudioPlayerControlsComponent implements OnInit {
     this.timeTick = this.audio.currentTime;
 
     this.audio.play();
+
+    this.setMobileMediaNotification(item.get('track'));
   }
 
   pauseAudioPlayer(): void {
