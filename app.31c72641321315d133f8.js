@@ -10244,6 +10244,7 @@ webpackJsonp([0],[
 	        }
 	    }
 	    ngOnInit() {
+	        this.el.nativeElement.style = 'cursor: pointer';
 	        if (this.playTrackOn) {
 	            this.registerListener(this.playTrackOn);
 	        }
@@ -11755,7 +11756,12 @@ webpackJsonp([0],[
 	    constructor() {
 	        this.coverSize = track_cover_component_1.CoverSizes.Medium;
 	        this.dropTrack = (dropData) => {
-	            this.playQueue.queue({ track: dropData });
+	            if (this.playQueue.length > 0) {
+	                this.playQueue.queue({ track: dropData });
+	            }
+	            else {
+	                this.playQueue.addAndPlay({ track: dropData });
+	            }
 	        };
 	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
 	    }
