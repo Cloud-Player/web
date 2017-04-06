@@ -22,6 +22,9 @@ export class TrackCoverComponent {
   @Input()
   public size: CoverSizes;
 
+  @Input()
+  public animate: boolean = false;
+
   private getArtworkUrl(): string {
     if(this.track){
       let artwork: SoundcloudImageModel = this.track.get('artwork_url');

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
 import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
 
 @Component({
@@ -8,6 +8,9 @@ import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
 })
 
 export class CloudPlayerLogoComponent implements OnInit {
+
+  @Input()
+  public animate: boolean = false;
 
   @ViewChild('svgObject') svgObject: ElementRef;
   private mainAnimation: Array<SVGSVGElement>;
@@ -35,7 +38,7 @@ export class CloudPlayerLogoComponent implements OnInit {
   }
 
   play(): void {
-    if (this.mainAnimation) {
+    if (this.mainAnimation && this.animate) {
       this.mainAnimation.forEach((el: any)=>{
         el.beginElement(el.getCurrentTime());
       });
@@ -47,7 +50,7 @@ export class CloudPlayerLogoComponent implements OnInit {
   }
 
   pause(): void {
-    if (this.mainAnimation) {
+    if (this.mainAnimation && this.animate) {
       this.mainAnimation.forEach((el: any)=>{
         el.endElement();
       });
