@@ -21,12 +21,3 @@
     }
   }
 }
-
-.authenticated-user-playlists{
-  height: calc(100vh - 353px);
-  overflow: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
