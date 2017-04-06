@@ -60,7 +60,7 @@ var serviceWorkerOption = {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	var g = global;
-	var cacheVersion = ("1.0.0");
+	var cacheVersion = ("0.5.0");
 	self.addEventListener('install', function (event) {
 	    event.waitUntil(self.caches.open(cacheVersion).then(function (cache) {
 	        return cache.addAll(g.serviceWorkerOption.assets);
