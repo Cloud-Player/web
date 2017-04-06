@@ -27,6 +27,7 @@ import {TimeAgoDirective} from './directives/time-ago.directive';
 import {PlayTrackOnEventDirective} from './directives/play-track-on-event.directive';
 import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/options-btn/options-btn.component';
 import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
+import {FillHeightDirective} from './directives/fill-height.directive';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
     FocusInputDirective,
     TimeAgoDirective,
     PlayTrackOnEventDirective,
+    FillHeightDirective,
     HumanReadableSecondsPipe,
     KMilShortenerPipe
   ],
@@ -83,6 +85,7 @@ import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
     FocusInputDirective,
     TimeAgoDirective,
     PlayTrackOnEventDirective,
+    FillHeightDirective,
     HumanReadableSecondsPipe,
     KMilShortenerPipe
   ],

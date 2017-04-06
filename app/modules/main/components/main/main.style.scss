@@ -172,6 +172,14 @@ body.native.desktop{
   }
 }
 
+.scrollable{
+  overflow: auto;
+  display: block;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
   .main {
