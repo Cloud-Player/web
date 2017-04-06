@@ -6,9 +6,9 @@ var serviceWorkerOption = {
     "/fee66e712a8a08eef5805a46892932ad.woff",
     "/b06871f281fee6b241d60582ae9369b9.ttf",
     "/912ec66d7572ff821749319396470bde.svg",
-    "/app.3152ee2bbf919181808d.js",
-    "/polyfills.3152ee2bbf919181808d.js",
-    "/vendor.3152ee2bbf919181808d.js"
+    "/app.ce1b6031bc0a4adf5300.js",
+    "/polyfills.ce1b6031bc0a4adf5300.js",
+    "/vendor.ce1b6031bc0a4adf5300.js"
   ]
 };
         
@@ -62,21 +62,24 @@ var serviceWorkerOption = {
 	var g = global;
 	var cacheVersion = ("0.5.1");
 	self.addEventListener('install', function (event) {
+	    self.skipWaiting();
 	    event.waitUntil(self.caches.open(cacheVersion).then(function (cache) {
 	        return cache.addAll(g.serviceWorkerOption.assets);
 	    }));
-	    event.waitUntil(self.skipWaiting());
 	});
 	self.addEventListener('fetch', function (event) {
-	    event.respondWith(self.caches.match(event.request)
-	        .then(function (response) {
-	        if (response) {
-	            return response;
-	        }
-	        return fetch(event.request);
-	    }, function () {
-	        // Offline Fallback
-	    }));
+	    var url = new URL(event.request.url);
+	    if (url.origin === location.origin) {
+	        event.respondWith(self.caches.match(event.request)
+	            .then(function (response) {
+	            if (response) {
+	                return response;
+	            }
+	            return fetch(event.request);
+	        }, function () {
+	            // Offline Fallback
+	        }));
+	    }
 	});
 	self.addEventListener('activate', function (event) {
 	    event.waitUntil(self.caches.keys().then(function (keyList) {
