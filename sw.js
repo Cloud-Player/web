@@ -6,9 +6,9 @@ var serviceWorkerOption = {
     "/fee66e712a8a08eef5805a46892932ad.woff",
     "/b06871f281fee6b241d60582ae9369b9.ttf",
     "/912ec66d7572ff821749319396470bde.svg",
-    "/app.a48b1f1646239a7f0f36.js",
-    "/polyfills.a48b1f1646239a7f0f36.js",
-    "/vendor.a48b1f1646239a7f0f36.js"
+    "/app.21d5c9aa6abd8b31e2be.js",
+    "/polyfills.21d5c9aa6abd8b31e2be.js",
+    "/vendor.21d5c9aa6abd8b31e2be.js"
   ]
 };
         
@@ -60,7 +60,7 @@ var serviceWorkerOption = {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	var g = global;
-	var cacheVersion = ("0.5.0");
+	var cacheVersion = ("0.5.1");
 	self.addEventListener('install', function (event) {
 	    event.waitUntil(self.caches.open(cacheVersion).then(function (cache) {
 	        return cache.addAll(g.serviceWorkerOption.assets);
