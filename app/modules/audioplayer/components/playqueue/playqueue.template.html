@@ -18,12 +18,12 @@
         <b class="title">{{playQueueItem.get('track').get('title') || 'None'}}</b>
         <div class="artist">{{playQueueItem.get('track').get('user').get('username')}}</div>
         <div class="stats">
-          <div class="duration label label-default label-light">
+          <div class="duration">
             <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
             {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}
           </div>
           <div *ngIf="playQueueItem.get('track').get('genre')"
-               class="genre label label-default label-light">
+               class="genre">
             #{{playQueueItem.get('track').get('genre')}}
           </div>
         </div>
@@ -49,12 +49,12 @@
         <b class="title">{{playQueueItem.get('track').get('title')|| 'None'}}</b>
         <div class="artist">{{playQueueItem.get('track').get('user').get('username') || 'None'}}</div>
         <div class="stats">
-          <div class="duration label label-default label-light">
+          <div class="duration">
             <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
             {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}
           </div>
           <div *ngIf="playQueueItem.get('track').get('genre')"
-               class="genre label label-default label-light">
+               class="genre">
             #{{playQueueItem.get('track').get('genre')}}
           </div>
         </div>

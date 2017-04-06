@@ -51,8 +51,14 @@
           }
         }
 
-        .label{
-          font-size: 8px;
+        .stats{
+          margin-top: 5px;
+
+          > div{
+            display: inline-block;
+            font-size: 11px;
+            color: $gray-light;
+          }
         }
       }
     }
