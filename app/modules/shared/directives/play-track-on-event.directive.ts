@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, OnInit, Input, SimpleChanges, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, OnInit, Input} from '@angular/core';
 import moment = require('moment');
 import Timer = NodeJS.Timer;
 import {Track} from '../../tracks/models/track.model';
@@ -9,7 +9,7 @@ import {PlayQueueItem} from '../../audioplayer/models/play_queue_item.model';
 @Directive({
   selector: '[playTrackOn]'
 })
-export class PlayTrackOnEventDirective implements OnInit{
+export class PlayTrackOnEventDirective implements OnInit {
   private interval: Timer;
 
   @Input()
@@ -29,9 +29,9 @@ export class PlayTrackOnEventDirective implements OnInit{
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  private registerListener(event: String){
-    this.el.nativeElement.addEventListener(event, ()=>{
-      if(this.isPlaying()){
+  private registerListener(event: String) {
+    this.el.nativeElement.addEventListener(event, () => {
+      if (this.isPlaying()) {
         this.pause();
       } else {
         this.play();
@@ -70,11 +70,11 @@ export class PlayTrackOnEventDirective implements OnInit{
   }
 
   ngOnInit(): void {
-    this.el.nativeElement.style = 'cursor: pointer';
-    if(this.playTrackOn){
+    this.el.nativeElement.style.cursor = 'pointer';
+    if (this.playTrackOn) {
       this.registerListener(this.playTrackOn);
-    } else if(this.events){
-      this.events.forEach((ev: String)=>{
+    } else if (this.events) {
+      this.events.forEach((ev: String) => {
         this.registerListener(ev);
       });
     }
