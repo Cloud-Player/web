@@ -12,7 +12,7 @@ webpackJsonp([0],[
 	    core_1.enableProdMode();
 	}
 	platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(main_module_1.MainModule);
-	if ('serviceWorker' in navigator /*&& window.location.protocol === 'https:'*/) {
+	if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
 	    const registration = runtime.register();
 	    registerEvents(registration, {
 	        onInstalled: () => {
@@ -250,7 +250,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], MainModule);
 	exports.MainModule = MainModule;
-	//# sourceMappingURL=main.module.js.map
+
 
 /***/ },
 /* 26 */
@@ -269,7 +269,7 @@ webpackJsonp([0],[
 	__webpack_require__(56);
 	__webpack_require__(58);
 	__webpack_require__(60);
-	//# sourceMappingURL=rxjs-extensions.js.map
+
 
 /***/ },
 /* 27 */,
@@ -6287,10 +6287,11 @@ webpackJsonp([0],[
 	            collection_sort_component_1.CollectionSortComponent
 	        ],
 	    }), 
-	    __metadata('design:paramtypes', [http_1.Http])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
 	], BackboneModule);
 	exports.BackboneModule = BackboneModule;
-	//# sourceMappingURL=backbone.module.js.map
+	var _a;
+
 
 /***/ },
 /* 67 */,
@@ -6349,7 +6350,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], BaseModel);
 	exports.BaseModel = BaseModel;
-	//# sourceMappingURL=base.model.js.map
+
 
 /***/ },
 /* 71 */
@@ -6509,7 +6510,7 @@ webpackJsonp([0],[
 	    ;
 	}
 	exports.NestedModel = NestedModel;
-	//# sourceMappingURL=nested.model.js.map
+
 
 /***/ },
 /* 72 */
@@ -6536,7 +6537,7 @@ webpackJsonp([0],[
 	}
 	exports.getUrl = getUrl;
 	;
-	//# sourceMappingURL=get_url.util.js.map
+
 
 /***/ },
 /* 73 */
@@ -6562,7 +6563,7 @@ webpackJsonp([0],[
 	    return cleanedUrlParts.join('/');
 	}
 	exports.concatUrlParts = concatUrlParts;
-	//# sourceMappingURL=concat_url_parts.util.js.map
+
 
 /***/ },
 /* 74 */
@@ -6590,7 +6591,7 @@ webpackJsonp([0],[
 	    return backbone_1.ajax(underscore_1.extend(requestOptions, options));
 	}
 	exports.request = request;
-	//# sourceMappingURL=request.util.js.map
+
 
 /***/ },
 /* 75 */
@@ -6622,7 +6623,7 @@ webpackJsonp([0],[
 	    }
 	}
 	exports.prepareSearchParams = prepareSearchParams;
-	//# sourceMappingURL=prepare_search_params.js.map
+
 
 /***/ },
 /* 76 */
@@ -6692,7 +6693,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], BaseCollection);
 	exports.BaseCollection = BaseCollection;
-	//# sourceMappingURL=base.collection.js.map
+
 
 /***/ },
 /* 77 */
@@ -6736,7 +6737,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', base_collection_1.BaseCollection)
+	    __metadata('design:type', (typeof (_a = typeof base_collection_1.BaseCollection !== 'undefined' && base_collection_1.BaseCollection) === 'function' && _a) || Object)
 	], CollectionRangeInputSearchComponent.prototype, "collection", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -6751,7 +6752,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], CollectionRangeInputSearchComponent);
 	exports.CollectionRangeInputSearchComponent = CollectionRangeInputSearchComponent;
-	//# sourceMappingURL=collection-range-input-search.component.js.map
+	var _a;
+
 
 /***/ },
 /* 78 */
@@ -6821,7 +6823,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', base_collection_1.BaseCollection)
+	    __metadata('design:type', (typeof (_a = typeof base_collection_1.BaseCollection !== 'undefined' && base_collection_1.BaseCollection) === 'function' && _a) || Object)
 	], CollectionSortComponent.prototype, "collection", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -6840,7 +6842,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], CollectionSortComponent);
 	exports.CollectionSortComponent = CollectionSortComponent;
-	//# sourceMappingURL=collection-sort.component.js.map
+	var _a;
+
 
 /***/ },
 /* 81 */
@@ -6891,7 +6894,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], TracksModule);
 	exports.TracksModule = TracksModule;
-	//# sourceMappingURL=tracks.module.js.map
+
 
 /***/ },
 /* 84 */
@@ -6939,10 +6942,11 @@ webpackJsonp([0],[
 	        template: __webpack_require__(109),
 	        providers: [track_model_1.Track]
 	    }), 
-	    __metadata('design:paramtypes', [track_model_1.Track, router_1.ActivatedRoute, common_1.Location])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof common_1.Location !== 'undefined' && common_1.Location) === 'function' && _c) || Object])
 	], TracksDetailComponent);
 	exports.TracksDetailComponent = TracksDetailComponent;
-	//# sourceMappingURL=detail.component.js.map
+	var _a, _b, _c;
+
 
 /***/ },
 /* 85 */,
@@ -7004,7 +7008,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], Track);
 	exports.Track = Track;
-	//# sourceMappingURL=track.model.js.map
+
 
 /***/ },
 /* 103 */
@@ -7044,7 +7048,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], User);
 	exports.User = User;
-	//# sourceMappingURL=user.model.js.map
+
 
 /***/ },
 /* 104 */
@@ -7092,7 +7096,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SoundcloudModel);
 	exports.SoundcloudModel = SoundcloudModel;
-	//# sourceMappingURL=soundcloud.model.js.map
+
 
 /***/ },
 /* 105 */
@@ -7102,7 +7106,7 @@ webpackJsonp([0],[
 	exports.Config = {
 	    soundcloudClientId: 'abb6c1cad3f409112a5995bf922e1d1e'
 	};
-	//# sourceMappingURL=config.js.map
+
 
 /***/ },
 /* 106 */
@@ -7118,7 +7122,7 @@ webpackJsonp([0],[
 	    return _session;
 	}
 	exports.getSession = getSession;
-	//# sourceMappingURL=session-manager.fn.js.map
+
 
 /***/ },
 /* 107 */
@@ -7165,7 +7169,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SoundcloudImageModel);
 	exports.SoundcloudImageModel = SoundcloudImageModel;
-	//# sourceMappingURL=soundcloud-image.model.js.map
+
 
 /***/ },
 /* 108 */
@@ -7209,7 +7213,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], TracksRoutingModule);
 	exports.TracksRoutingModule = TracksRoutingModule;
-	//# sourceMappingURL=tracks.routes.js.map
+
 
 /***/ },
 /* 111 */
@@ -7322,7 +7326,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SharedModule);
 	exports.SharedModule = SharedModule;
-	//# sourceMappingURL=shared.module.js.map
+
 
 /***/ },
 /* 112 */
@@ -7365,7 +7369,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], HumanReadableSecondsPipe);
 	exports.HumanReadableSecondsPipe = HumanReadableSecondsPipe;
-	//# sourceMappingURL=h-readable-seconds.pipe.js.map
+
 
 /***/ },
 /* 113 */
@@ -7410,7 +7414,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', tracks_collection_1.Tracks)
+	    __metadata('design:type', (typeof (_a = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _a) || Object)
 	], TrackListComponent.prototype, "tracks", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -7423,10 +7427,11 @@ webpackJsonp([0],[
 	        template: __webpack_require__(123),
 	        providers: [tracks_collection_1.Tracks]
 	    }), 
-	    __metadata('design:paramtypes', [router_1.Router])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
 	], TrackListComponent);
 	exports.TrackListComponent = TrackListComponent;
-	//# sourceMappingURL=track-list.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 114 */
@@ -7471,7 +7476,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], Tracks);
 	exports.Tracks = Tracks;
-	//# sourceMappingURL=tracks.collection.js.map
+
 
 /***/ },
 /* 115 */
@@ -7520,7 +7525,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SoundcloudCollection);
 	exports.SoundcloudCollection = SoundcloudCollection;
-	//# sourceMappingURL=soundcloud.collection.js.map
+
 
 /***/ },
 /* 116 */
@@ -7727,7 +7732,7 @@ webpackJsonp([0],[
 	    }
 	}
 	exports.PlayQueue = PlayQueue;
-	//# sourceMappingURL=play_queue.collection.js.map
+
 
 /***/ },
 /* 117 */
@@ -7779,7 +7784,7 @@ webpackJsonp([0],[
 	    }
 	}
 	exports.PlayQueueItem = PlayQueueItem;
-	//# sourceMappingURL=play_queue_item.model.js.map
+
 
 /***/ },
 /* 118 */
@@ -7832,7 +7837,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', track_model_1.Track)
+	    __metadata('design:type', (typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object)
 	], TrackCoverComponent.prototype, "track", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -7851,7 +7856,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], TrackCoverComponent);
 	exports.TrackCoverComponent = TrackCoverComponent;
-	//# sourceMappingURL=track-cover.component.js.map
+	var _a;
+
 
 /***/ },
 /* 119 */
@@ -7963,7 +7969,7 @@ webpackJsonp([0],[
 	    { s: ClientNames.Opera, r: /OPR/ }
 	];
 	exports.ClientDetector = ClientDetector;
-	//# sourceMappingURL=client-detector.service.js.map
+
 
 /***/ },
 /* 122 */
@@ -8040,7 +8046,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', track_model_1.Track)
+	    __metadata('design:type', (typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object)
 	], ToggleLikedTrackComponent.prototype, "track", void 0);
 	ToggleLikedTrackComponent = __decorate([
 	    core_1.Component({
@@ -8056,10 +8062,11 @@ webpackJsonp([0],[
 	            ])
 	        ]
 	    }), 
-	    __metadata('design:paramtypes', [auth_service_1.AuthService])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _b) || Object])
 	], ToggleLikedTrackComponent);
 	exports.ToggleLikedTrackComponent = ToggleLikedTrackComponent;
-	//# sourceMappingURL=toggle-liked-track.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 125 */
@@ -8190,7 +8197,7 @@ webpackJsonp([0],[
 	], Session);
 	exports.Session = Session;
 	session_manager_fn_1.setSession(Session.getInstance());
-	//# sourceMappingURL=session.model.js.map
+
 
 /***/ },
 /* 126 */
@@ -8233,7 +8240,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUser);
 	exports.AuthenticatedUser = AuthenticatedUser;
-	//# sourceMappingURL=authenticated_user.model.js.map
+
 
 /***/ },
 /* 127 */
@@ -8264,7 +8271,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserLikedTracks);
 	exports.AuthenticatedUserLikedTracks = AuthenticatedUserLikedTracks;
-	//# sourceMappingURL=authenticated_user_liked_tracks.collection.js.map
+
 
 /***/ },
 /* 128 */
@@ -8293,7 +8300,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserLikedTrack);
 	exports.AuthenticatedUserLikedTrack = AuthenticatedUserLikedTrack;
-	//# sourceMappingURL=authenticated_user_liked_track.model.js.map
+
 
 /***/ },
 /* 129 */
@@ -8324,7 +8331,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylists);
 	exports.AuthenticatedUserPlaylists = AuthenticatedUserPlaylists;
-	//# sourceMappingURL=authenticated_user_playlists.collection.js.map
+
 
 /***/ },
 /* 130 */
@@ -8355,7 +8362,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], Playlists);
 	exports.Playlists = Playlists;
-	//# sourceMappingURL=playlists.collection.js.map
+
 
 /***/ },
 /* 131 */
@@ -8427,7 +8434,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], Playlist);
 	exports.Playlist = Playlist;
-	//# sourceMappingURL=playlist.model.js.map
+
 
 /***/ },
 /* 132 */
@@ -8476,7 +8483,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylist);
 	exports.AuthenticatedUserPlaylist = AuthenticatedUserPlaylist;
-	//# sourceMappingURL=authenticated_user_playlist.model.js.map
+
 
 /***/ },
 /* 133 */
@@ -8521,7 +8528,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylistTracks);
 	exports.AuthenticatedUserPlaylistTracks = AuthenticatedUserPlaylistTracks;
-	//# sourceMappingURL=authenticated_user_playlist_tracks.collection.js.map
+
 
 /***/ },
 /* 134 */
@@ -8564,7 +8571,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylistTrack);
 	exports.AuthenticatedUserPlaylistTrack = AuthenticatedUserPlaylistTrack;
-	//# sourceMappingURL=authenticated_user_playlist_track.model.js.map
+
 
 /***/ },
 /* 135 */,
@@ -8636,7 +8643,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthService);
 	exports.AuthService = AuthService;
-	//# sourceMappingURL=auth.service.js.map
+
 
 /***/ },
 /* 137 */
@@ -8648,7 +8655,7 @@ webpackJsonp([0],[
 /* 138 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"toggle-liked-track\">\n  <i class=\"fa\"\n     [class.fa-heart]=\"hasLikedTrack()\"\n     [class.fa-heart-o]=\"!hasLikedTrack()\"\n     aria-hidden=\"true\"\n     (click)=\"toggleLike()\"></i>\n\n  <div class=\"not-authenticated\" [@visibilityChanged]=\"showAuthenticateTooltip\">\n    <a (click)=\"connect()\">Connect with SoundCloud</a> to like tracks\n  </div>\n</span>\n";
+	module.exports = "<span class=\"toggle-liked-track\">\n  <i class=\"fa\"\n     [class.fa-heart]=\"hasLikedTrack()\"\n     [class.fa-heart-o]=\"!hasLikedTrack()\"\n     aria-hidden=\"true\"\n     (click)=\"toggleLike()\"></i>\n\n  <div class=\"not-authenticated\" [@visibilityChanged]=\"showAuthenticateTooltip\">\n    <a (click)=\"connect()\">Connect with Soundcloud</a> to like tracks\n  </div>\n</span>\n";
 
 /***/ },
 /* 139 */
@@ -8679,11 +8686,11 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', track_model_1.Track)
+	    __metadata('design:type', (typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object)
 	], PlayButtonComponent.prototype, "track", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', tracks_collection_1.Tracks)
+	    __metadata('design:type', (typeof (_b = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _b) || Object)
 	], PlayButtonComponent.prototype, "tracks", void 0);
 	PlayButtonComponent = __decorate([
 	    core_1.Component({
@@ -8694,7 +8701,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], PlayButtonComponent);
 	exports.PlayButtonComponent = PlayButtonComponent;
-	//# sourceMappingURL=play_button.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 140 */
@@ -8743,11 +8751,11 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', track_model_1.Track)
+	    __metadata('design:type', (typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object)
 	], QueueButtonComponent.prototype, "track", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', tracks_collection_1.Tracks)
+	    __metadata('design:type', (typeof (_b = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _b) || Object)
 	], QueueButtonComponent.prototype, "tracks", void 0);
 	QueueButtonComponent = __decorate([
 	    core_1.Component({
@@ -8758,7 +8766,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], QueueButtonComponent);
 	exports.QueueButtonComponent = QueueButtonComponent;
-	//# sourceMappingURL=queue_button.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 143 */
@@ -8788,7 +8797,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', tracks_collection_1.Tracks)
+	    __metadata('design:type', (typeof (_a = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _a) || Object)
 	], SortTracksComponent.prototype, "tracks", void 0);
 	SortTracksComponent = __decorate([
 	    core_1.Component({
@@ -8799,7 +8808,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SortTracksComponent);
 	exports.SortTracksComponent = SortTracksComponent;
-	//# sourceMappingURL=sort-tracks.component.js.map
+	var _a;
+
 
 /***/ },
 /* 146 */
@@ -8931,19 +8941,19 @@ webpackJsonp([0],[
 	], RangeSliderComponent.prototype, "valueChanged", void 0);
 	__decorate([
 	    core_1.ViewChild('progressLine'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
 	], RangeSliderComponent.prototype, "progressBarLine", void 0);
 	__decorate([
 	    core_1.ViewChild('progressBar'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object)
 	], RangeSliderComponent.prototype, "progressBarBg", void 0);
 	__decorate([
 	    core_1.ViewChild('handle'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_c = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _c) || Object)
 	], RangeSliderComponent.prototype, "handle", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', Function)
+	    __metadata('design:type', Object)
 	], RangeSliderComponent.prototype, "transformDisplayValue", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -8979,10 +8989,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(149)],
 	        template: __webpack_require__(150)
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef])
+	    __metadata('design:paramtypes', [(typeof (_d = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _d) || Object])
 	], RangeSliderComponent);
 	exports.RangeSliderComponent = RangeSliderComponent;
-	//# sourceMappingURL=range-slider.component.js.map
+	var _a, _b, _c, _d;
+
 
 /***/ },
 /* 149 */
@@ -9082,10 +9093,11 @@ webpackJsonp([0],[
 	    core_1.Directive({
 	        selector: '[draggable]'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _b) || Object])
 	], DraggableDirective);
 	exports.DraggableDirective = DraggableDirective;
-	//# sourceMappingURL=draggable.directive.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 152 */
@@ -9141,7 +9153,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input('dropCallback'), 
-	    __metadata('design:type', Function)
+	    __metadata('design:type', Object)
 	], DropZoneDirective.prototype, "dropCallback", void 0);
 	__decorate([
 	    core_1.Input('dropItemRef'), 
@@ -9175,10 +9187,11 @@ webpackJsonp([0],[
 	    core_1.Directive({
 	        selector: '[dropzone]'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _b) || Object])
 	], DropZoneDirective);
 	exports.DropZoneDirective = DropZoneDirective;
-	//# sourceMappingURL=dropzone.directive.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 153 */
@@ -9358,31 +9371,31 @@ webpackJsonp([0],[
 	], TwoRangeSliderComponent.prototype, "maxValueChanged", void 0);
 	__decorate([
 	    core_1.ViewChild('progressBar'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
 	], TwoRangeSliderComponent.prototype, "progressBar", void 0);
 	__decorate([
 	    core_1.ViewChild('progressLine'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object)
 	], TwoRangeSliderComponent.prototype, "progressLine", void 0);
 	__decorate([
 	    core_1.ViewChild('handleOne'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_c = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _c) || Object)
 	], TwoRangeSliderComponent.prototype, "handleOne", void 0);
 	__decorate([
 	    core_1.ViewChild('handleTwo'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_d = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _d) || Object)
 	], TwoRangeSliderComponent.prototype, "handleTwo", void 0);
 	__decorate([
 	    core_1.ViewChild('sliderOne'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_e = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _e) || Object)
 	], TwoRangeSliderComponent.prototype, "sliderOne", void 0);
 	__decorate([
 	    core_1.ViewChild('sliderTwo'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_f = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _f) || Object)
 	], TwoRangeSliderComponent.prototype, "sliderTwo", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', Function)
+	    __metadata('design:type', Object)
 	], TwoRangeSliderComponent.prototype, "transformDisplayValue", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -9426,10 +9439,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(154)],
 	        template: __webpack_require__(155)
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef])
+	    __metadata('design:paramtypes', [(typeof (_g = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _g) || Object])
 	], TwoRangeSliderComponent);
 	exports.TwoRangeSliderComponent = TwoRangeSliderComponent;
-	//# sourceMappingURL=two-range-slider.component.js.map
+	var _a, _b, _c, _d, _e, _f, _g;
+
 
 /***/ },
 /* 154 */
@@ -9469,7 +9483,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], ViewHeaderComponent);
 	exports.ViewHeaderComponent = ViewHeaderComponent;
-	//# sourceMappingURL=view-header.component.js.map
+
 
 /***/ },
 /* 157 */
@@ -9509,7 +9523,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], ScrollViewComponent);
 	exports.ScrollViewComponent = ScrollViewComponent;
-	//# sourceMappingURL=scroll-view.component.js.map
+
 
 /***/ },
 /* 160 */
@@ -9559,7 +9573,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], CloudPlayerLogoService);
 	exports.CloudPlayerLogoService = CloudPlayerLogoService;
-	//# sourceMappingURL=cloud-player-logo.service.js.map
+
 
 /***/ },
 /* 163 */
@@ -9626,7 +9640,7 @@ webpackJsonp([0],[
 	], CloudPlayerLogoComponent.prototype, "animate", void 0);
 	__decorate([
 	    core_1.ViewChild('svgObject'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
 	], CloudPlayerLogoComponent.prototype, "svgObject", void 0);
 	CloudPlayerLogoComponent = __decorate([
 	    core_1.Component({
@@ -9634,10 +9648,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(164)],
 	        template: __webpack_require__(165),
 	    }), 
-	    __metadata('design:paramtypes', [cloud_player_logo_service_1.CloudPlayerLogoService])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof cloud_player_logo_service_1.CloudPlayerLogoService !== 'undefined' && cloud_player_logo_service_1.CloudPlayerLogoService) === 'function' && _b) || Object])
 	], CloudPlayerLogoComponent);
 	exports.CloudPlayerLogoComponent = CloudPlayerLogoComponent;
-	//# sourceMappingURL=cloud-player-logo.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 164 */
@@ -9718,7 +9733,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], ToggleSwitchComponent);
 	exports.ToggleSwitchComponent = ToggleSwitchComponent;
-	//# sourceMappingURL=toggle-switch.component.js.map
+
 
 /***/ },
 /* 168 */
@@ -9770,7 +9785,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], LoadingSpinnerComponent);
 	exports.LoadingSpinnerComponent = LoadingSpinnerComponent;
-	//# sourceMappingURL=loading-spinner.component.js.map
+
 
 /***/ },
 /* 171 */
@@ -9856,11 +9871,11 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.ViewChild('searchInput'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
 	], CollectionTextInputSearchComponent.prototype, "searchBar", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', base_collection_1.BaseCollection)
+	    __metadata('design:type', (typeof (_b = typeof base_collection_1.BaseCollection !== 'undefined' && base_collection_1.BaseCollection) === 'function' && _b) || Object)
 	], CollectionTextInputSearchComponent.prototype, "collection", void 0);
 	__decorate([
 	    core_1.Input(), 
@@ -9879,7 +9894,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], CollectionTextInputSearchComponent);
 	exports.CollectionTextInputSearchComponent = CollectionTextInputSearchComponent;
-	//# sourceMappingURL=collection-text-input-search.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 174 */
@@ -9920,10 +9936,11 @@ webpackJsonp([0],[
 	    core_1.Directive({
 	        selector: '[focusInput]'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
 	], FocusInputDirective);
 	exports.FocusInputDirective = FocusInputDirective;
-	//# sourceMappingURL=focus-input.directive.js.map
+	var _a;
+
 
 /***/ },
 /* 177 */
@@ -9982,10 +9999,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(178)],
 	        template: __webpack_require__(179),
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef, router_1.Router, core_1.NgZone, core_1.Renderer])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _d) || Object])
 	], ViewChangeLoaderComponent);
 	exports.ViewChangeLoaderComponent = ViewChangeLoaderComponent;
-	//# sourceMappingURL=view-change-loader.component.js.map
+	var _a, _b, _c, _d;
+
 
 /***/ },
 /* 178 */
@@ -10043,10 +10061,11 @@ webpackJsonp([0],[
 	    core_1.Directive({
 	        selector: '[timeAgo]'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
 	], TimeAgoDirective);
 	exports.TimeAgoDirective = TimeAgoDirective;
-	//# sourceMappingURL=time-ago.directive.js.map
+	var _a;
+
 
 /***/ },
 /* 181 */,
@@ -10225,7 +10244,7 @@ webpackJsonp([0],[
 	        }
 	    }
 	    ngOnInit() {
-	        this.el.nativeElement.style = 'cursor: pointer';
+	        this.el.nativeElement.style.cursor = 'pointer';
 	        if (this.playTrackOn) {
 	            this.registerListener(this.playTrackOn);
 	        }
@@ -10242,24 +10261,25 @@ webpackJsonp([0],[
 	], PlayTrackOnEventDirective.prototype, "playTrackOn", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', track_model_1.Track)
+	    __metadata('design:type', (typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object)
 	], PlayTrackOnEventDirective.prototype, "track", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', Array)
+	    __metadata('design:type', Object)
 	], PlayTrackOnEventDirective.prototype, "events", void 0);
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', tracks_collection_1.Tracks)
+	    __metadata('design:type', (typeof (_b = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _b) || Object)
 	], PlayTrackOnEventDirective.prototype, "tracks", void 0);
 	PlayTrackOnEventDirective = __decorate([
 	    core_1.Directive({
 	        selector: '[playTrackOn]'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef])
+	    __metadata('design:paramtypes', [(typeof (_c = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _c) || Object])
 	], PlayTrackOnEventDirective);
 	exports.PlayTrackOnEventDirective = PlayTrackOnEventDirective;
-	//# sourceMappingURL=play-track-on-event.directive.js.map
+	var _a, _b, _c;
+
 
 /***/ },
 /* 300 */
@@ -10333,7 +10353,7 @@ webpackJsonp([0],[
 	], OptionsBtnComponent.prototype, "openState", void 0);
 	__decorate([
 	    core_1.ViewChild('optionsHolder'), 
-	    __metadata('design:type', core_1.ElementRef)
+	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
 	], OptionsBtnComponent.prototype, "optionsHolder", void 0);
 	OptionsBtnComponent = __decorate([
 	    core_1.Component({
@@ -10341,7 +10361,7 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(301)],
 	        template: __webpack_require__(302)
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _c) || Object])
 	], OptionsBtnComponent);
 	exports.OptionsBtnComponent = OptionsBtnComponent;
 	let OptionsBtnOptionComponent = class OptionsBtnOptionComponent {
@@ -10355,10 +10375,11 @@ webpackJsonp([0],[
 	        selector: 'options-btn-option',
 	        template: '<li class="option-btn-option"><ng-content></ng-content></li>'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef, OptionsBtnComponent])
+	    __metadata('design:paramtypes', [(typeof (_d = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _d) || Object, OptionsBtnComponent])
 	], OptionsBtnOptionComponent);
 	exports.OptionsBtnOptionComponent = OptionsBtnOptionComponent;
-	//# sourceMappingURL=options-btn.component.js.map
+	var _a, _b, _c, _d;
+
 
 /***/ },
 /* 301 */
@@ -10413,7 +10434,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], KMilShortenerPipe);
 	exports.KMilShortenerPipe = KMilShortenerPipe;
-	//# sourceMappingURL=k-mil-shortener.pipe.js.map
+
 
 /***/ },
 /* 304 */
@@ -10444,10 +10465,11 @@ webpackJsonp([0],[
 	    core_1.Directive({
 	        selector: '[fillHeight]'
 	    }), 
-	    __metadata('design:paramtypes', [core_1.ElementRef])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
 	], FillHeightDirective);
 	exports.FillHeightDirective = FillHeightDirective;
-	//# sourceMappingURL=fill-height.directive.js.map
+	var _a;
+
 
 /***/ },
 /* 305 */
@@ -10494,7 +10516,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], DashboardModule);
 	exports.DashboardModule = DashboardModule;
-	//# sourceMappingURL=dashboard.module.js.map
+
 
 /***/ },
 /* 306 */
@@ -10545,7 +10567,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.ViewChild('searchBar'), 
-	    __metadata('design:type', collection_text_input_search_component_1.CollectionTextInputSearchComponent)
+	    __metadata('design:type', (typeof (_a = typeof collection_text_input_search_component_1.CollectionTextInputSearchComponent !== 'undefined' && collection_text_input_search_component_1.CollectionTextInputSearchComponent) === 'function' && _a) || Object)
 	], DashboardIndexComponent.prototype, "searchBar", void 0);
 	DashboardIndexComponent = __decorate([
 	    core_1.Component({
@@ -10553,10 +10575,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(307)],
 	        template: __webpack_require__(308)
 	    }), 
-	    __metadata('design:paramtypes', [tracks_collection_1.Tracks, auth_service_1.AuthService])
+	    __metadata('design:paramtypes', [(typeof (_b = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _b) || Object, (typeof (_c = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _c) || Object])
 	], DashboardIndexComponent);
 	exports.DashboardIndexComponent = DashboardIndexComponent;
-	//# sourceMappingURL=index.component.js.map
+	var _a, _b, _c;
+
 
 /***/ },
 /* 307 */
@@ -10568,7 +10591,7 @@ webpackJsonp([0],[
 /* 308 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"column\">\n  <view-header>\n    <collection-text-input-search [collection]=\"tracks\" [queryParam]=\"'q'\" #searchBar></collection-text-input-search>\n  </view-header>\n\n  <!--<collection-range-input-search [collection]=\"tracks\" [queryParam]=\"'duration[from]'\"></collection-range-input-search>-->\n  <!--<sort-tracks [tracks]=\"tracks\"></sort-tracks>-->\n\n  <scroll-view>\n    <div *ngIf=\"tracks.length>0\"\n         class=\"results\">\n      <search-filter [collection]=\"tracks\"></search-filter>\n      <track-list [tracks]=\"tracks\"></track-list>\n    </div>\n    <div *ngIf=\"tracks.length === 0 && !isFetching\"\n         class=\"card getting-started\">\n      <h1>Welcome to Cloud Player!</h1>\n      <p>\n        Cloud player is an inoffical SoundCloud player to play songs from SoundCloud.\n        <br>\n        You can search for all songs that are available on SoundCloud\n      </p>\n      <p>\n        <a (click)=\"connect()\">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They will appear in the menubar\n        as soon as the connection was successful.\n      </p>\n      <p>\n        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply\n        drag and drop tracks on it.\n      </p>\n      <p>Cloud Player is also available as <a routerLink=\"/desktop-app\">native App for your PC.</a></p>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && isFetching\"\n         class=\"card\">\n      Searching for tracks that match your query \"{{tracks.queryParams.q}}\"\n    </div>\n  </scroll-view>\n</section>\n";
+	module.exports = "<section class=\"column\">\n  <view-header>\n    <collection-text-input-search [collection]=\"tracks\" [queryParam]=\"'q'\" #searchBar></collection-text-input-search>\n  </view-header>\n\n  <!--<collection-range-input-search [collection]=\"tracks\" [queryParam]=\"'duration[from]'\"></collection-range-input-search>-->\n  <!--<sort-tracks [tracks]=\"tracks\"></sort-tracks>-->\n\n  <scroll-view>\n    <div *ngIf=\"tracks.length>0\"\n         class=\"results\">\n      <search-filter [collection]=\"tracks\"></search-filter>\n      <track-list [tracks]=\"tracks\"></track-list>\n    </div>\n    <div *ngIf=\"tracks.length === 0 && !isFetching\"\n         class=\"card getting-started\">\n      <h1>Welcome to Cloud Player!</h1>\n      <p>\n        Cloud player is an inoffical Soundcloud player to play songs from Soundcloud.\n        <br>\n        You can search for all songs that are available on Soundcloud\n      </p>\n      <p>\n        <a (click)=\"connect()\">Connect with your Soundcloud account</a> to get your playlists and liked tracks. They will appear in the menubar\n        as soon as the connection was successful.\n      </p>\n      <p>\n        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply\n        drag and drop tracks on it.\n      </p>\n      <p>Cloud Player is also available as <a routerLink=\"/desktop-app\">native App for your PC.</a></p>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && isFetching\"\n         class=\"card\">\n      Searching for tracks that match your query \"{{tracks.queryParams.q}}\"\n    </div>\n  </scroll-view>\n</section>\n";
 
 /***/ },
 /* 309 */
@@ -10600,7 +10623,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], DashboardRoutingModule);
 	exports.DashboardRoutingModule = DashboardRoutingModule;
-	//# sourceMappingURL=dashboard.routes.js.map
+
 
 /***/ },
 /* 310 */
@@ -10661,7 +10684,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SessionModule);
 	exports.SessionModule = SessionModule;
-	//# sourceMappingURL=session.module.js.map
+
 
 /***/ },
 /* 311 */
@@ -10735,7 +10758,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], ConnectBtnComponent);
 	exports.ConnectBtnComponent = ConnectBtnComponent;
-	//# sourceMappingURL=connect_btn.component.js.map
+
 
 /***/ },
 /* 312 */
@@ -10787,7 +10810,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SessionRoutingModule);
 	exports.SessionRoutingModule = SessionRoutingModule;
-	//# sourceMappingURL=session.routes.js.map
+
 
 /***/ },
 /* 315 */
@@ -10833,10 +10856,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(316)],
 	        template: __webpack_require__(317)
 	    }), 
-	    __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
 	], SoundcloudCallbackComponent);
 	exports.SoundcloudCallbackComponent = SoundcloudCallbackComponent;
-	//# sourceMappingURL=soundcloud_callback.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 316 */
@@ -10888,7 +10912,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], LikedTracksViewComponent);
 	exports.LikedTracksViewComponent = LikedTracksViewComponent;
-	//# sourceMappingURL=liked-tracks-view.component.js.map
+
 
 /***/ },
 /* 319 */
@@ -10983,10 +11007,11 @@ webpackJsonp([0],[
 	        template: __webpack_require__(322),
 	        styles: [__webpack_require__(323)]
 	    }), 
-	    __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
 	], UserPlayListViewComponent);
 	exports.UserPlayListViewComponent = UserPlayListViewComponent;
-	//# sourceMappingURL=user-playlist-view.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 322 */
@@ -11027,7 +11052,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylistsViewComponent);
 	exports.AuthenticatedUserPlaylistsViewComponent = AuthenticatedUserPlaylistsViewComponent;
-	//# sourceMappingURL=authenticated-user-playlists-view.component.js.map
+
 
 /***/ },
 /* 325 */
@@ -11105,7 +11130,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylists);
 	exports.AuthenticatedUserPlaylists = AuthenticatedUserPlaylists;
-	//# sourceMappingURL=authenticated_user_playlists.js.map
+
 
 /***/ },
 /* 326 */
@@ -11161,10 +11186,11 @@ webpackJsonp([0],[
 	        template: __webpack_require__(331),
 	        styles: [__webpack_require__(332)]
 	    }), 
-	    __metadata('design:paramtypes', [auth_service_1.AuthService])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _a) || Object])
 	], AuthenticatedUserViewComponent);
 	exports.AuthenticatedUserViewComponent = AuthenticatedUserViewComponent;
-	//# sourceMappingURL=authenticated-user-view.component.js.map
+	var _a;
+
 
 /***/ },
 /* 331 */
@@ -11229,7 +11255,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], ShowWhenAuthenticatedComponent);
 	exports.ShowWhenAuthenticatedComponent = ShowWhenAuthenticatedComponent;
-	//# sourceMappingURL=show_when_authenticated.js.map
+
 
 /***/ },
 /* 334 */
@@ -11279,7 +11305,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], PlaylistModule);
 	exports.PlaylistModule = PlaylistModule;
-	//# sourceMappingURL=playlist.module.js.map
+
 
 /***/ },
 /* 336 */
@@ -11311,7 +11337,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], PlaylistsRoutingModule);
 	exports.PlaylistsRoutingModule = PlaylistsRoutingModule;
-	//# sourceMappingURL=playlist.routes.js.map
+
 
 /***/ },
 /* 337 */
@@ -11350,10 +11376,11 @@ webpackJsonp([0],[
 	        template: __webpack_require__(339),
 	        providers: [playlist_model_1.Playlist]
 	    }), 
-	    __metadata('design:paramtypes', [router_1.ActivatedRoute, playlist_model_1.Playlist])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof playlist_model_1.Playlist !== 'undefined' && playlist_model_1.Playlist) === 'function' && _b) || Object])
 	], PlayListViewComponent);
 	exports.PlayListViewComponent = PlayListViewComponent;
-	//# sourceMappingURL=playlist-view.component.js.map
+	var _a, _b;
+
 
 /***/ },
 /* 338 */
@@ -11385,7 +11412,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', playlist_model_1.Playlist)
+	    __metadata('design:type', (typeof (_a = typeof playlist_model_1.Playlist !== 'undefined' && playlist_model_1.Playlist) === 'function' && _a) || Object)
 	], PlayListIconComponent.prototype, "playlist", void 0);
 	PlayListIconComponent = __decorate([
 	    core_1.Component({
@@ -11396,7 +11423,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], PlayListIconComponent);
 	exports.PlayListIconComponent = PlayListIconComponent;
-	//# sourceMappingURL=playlist-icon.component.js.map
+	var _a;
+
 
 /***/ },
 /* 341 */
@@ -11449,7 +11477,7 @@ webpackJsonp([0],[
 	};
 	__decorate([
 	    core_1.Input(), 
-	    __metadata('design:type', base_collection_1.BaseCollection)
+	    __metadata('design:type', (typeof (_a = typeof base_collection_1.BaseCollection !== 'undefined' && base_collection_1.BaseCollection) === 'function' && _a) || Object)
 	], SearchFilterComponent.prototype, "collection", void 0);
 	SearchFilterComponent = __decorate([
 	    core_1.Component({
@@ -11468,7 +11496,8 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], SearchFilterComponent);
 	exports.SearchFilterComponent = SearchFilterComponent;
-	//# sourceMappingURL=search-filter.component.js.map
+	var _a;
+
 
 /***/ },
 /* 344 */
@@ -11534,7 +11563,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], MainComponent);
 	exports.MainComponent = MainComponent;
-	//# sourceMappingURL=main.component.js.map
+
 
 /***/ },
 /* 347 */
@@ -11579,7 +11608,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], MainRoutingModule);
 	exports.MainRoutingModule = MainRoutingModule;
-	//# sourceMappingURL=main.routes.js.map
+
 
 /***/ },
 /* 350 */
@@ -11618,7 +11647,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], DesktopAppViewComponent);
 	exports.DesktopAppViewComponent = DesktopAppViewComponent;
-	//# sourceMappingURL=desktop-app-view.component.js.map
+
 
 /***/ },
 /* 351 */
@@ -11704,7 +11733,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AudioPlayerModule);
 	exports.AudioPlayerModule = AudioPlayerModule;
-	//# sourceMappingURL=audio-player.module.js.map
+
 
 /***/ },
 /* 354 */
@@ -11746,7 +11775,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], PlayQueueComponent);
 	exports.PlayQueueComponent = PlayQueueComponent;
-	//# sourceMappingURL=playqueue.component.js.map
+
 
 /***/ },
 /* 355 */
@@ -11802,7 +11831,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], AudioPlayerComponent);
 	exports.AudioPlayerComponent = AudioPlayerComponent;
-	//# sourceMappingURL=audio-player.component.js.map
+
 
 /***/ },
 /* 358 */
@@ -12041,10 +12070,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(361)],
 	        template: __webpack_require__(362)
 	    }), 
-	    __metadata('design:paramtypes', [cloud_player_logo_service_1.CloudPlayerLogoService])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof cloud_player_logo_service_1.CloudPlayerLogoService !== 'undefined' && cloud_player_logo_service_1.CloudPlayerLogoService) === 'function' && _a) || Object])
 	], AudioPlayerControlsComponent);
 	exports.AudioPlayerControlsComponent = AudioPlayerControlsComponent;
-	//# sourceMappingURL=audio-player-controls.component.js.map
+	var _a;
+
 
 /***/ },
 /* 361 */
@@ -12091,7 +12121,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], UsersModule);
 	exports.UsersModule = UsersModule;
-	//# sourceMappingURL=users.module.js.map
+
 
 /***/ },
 /* 364 */
@@ -12120,7 +12150,7 @@ webpackJsonp([0],[
 	    __metadata('design:paramtypes', [])
 	], UsersRoutingModule);
 	exports.UsersRoutingModule = UsersRoutingModule;
-	//# sourceMappingURL=users.routes.js.map
+
 
 /***/ },
 /* 365 */
@@ -12190,10 +12220,11 @@ webpackJsonp([0],[
 	        styles: [__webpack_require__(366)],
 	        template: __webpack_require__(367)
 	    }), 
-	    __metadata('design:paramtypes', [auth_service_1.AuthService])
+	    __metadata('design:paramtypes', [(typeof (_a = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _a) || Object])
 	], NavComponent);
 	exports.NavComponent = NavComponent;
-	//# sourceMappingURL=nav.component.js.map
+	var _a;
+
 
 /***/ },
 /* 366 */
@@ -12205,7 +12236,7 @@ webpackJsonp([0],[
 /* 367 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"column\">\n\n  <div class=\"sidebar\">\n    <div class=\"cloud-player\">\n      <cloud-player-logo [animate]=\"true\"></cloud-player-logo>\n    </div>\n\n    <div class=\"menu\">\n      <nav>\n        <a routerLink=\"/dashboard\"\n           [routerLinkActive]=\"['is-active']\">\n          <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Search</div>\n        </a>\n\n        <a *ngIf=\"showDesktopAppEntry()\"\n           routerLink=\"/desktop-app\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"desktop-entry\">\n          <i class=\"fa fa-desktop\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Desktop App</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Account</div>\n        </div>\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"/me\"\n           class=\"user\">\n          <img [src]=\"user.get('avatar_url').getLargeSize() || imgUrl\" [alt]=\"user.get('full_name')\" class=\"avatar\">\n          <div class=\"text\">\n            <span>{{user.get('full_name')}}</span>\n          </div>\n        </a>\n\n        <a *ngIf=\"!isAuthenticated\"\n           (click)=\"connect()\"\n           class=\"sc-connect\">\n          <i class=\"fa fa-soundcloud\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Login with SoundCloud</div>\n        </a>\n\n        <a routerLink=\"me/likes\"\n           [routerLinkActive]=\"['is-active']\" [class.disabled]=\"!isAuthenticated\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Likes</div>\n        </a>\n\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"me/playlists\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"visible-xs visible-sm\">\n          <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Playlists</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Playlists</div>\n        </div>\n\n        <authenticated-user-playlists class=\"hidden-xs hidden-sm\" fillHeight></authenticated-user-playlists>\n      </nav>\n    </div>\n\n  </div>\n\n</section>\n";
+	module.exports = "<section class=\"column\">\n\n  <div class=\"sidebar\">\n    <div class=\"cloud-player\">\n      <cloud-player-logo [animate]=\"true\"></cloud-player-logo>\n    </div>\n\n    <div class=\"menu\">\n      <nav>\n        <a routerLink=\"/dashboard\"\n           [routerLinkActive]=\"['is-active']\">\n          <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Search</div>\n        </a>\n\n        <a *ngIf=\"showDesktopAppEntry()\"\n           routerLink=\"/desktop-app\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"desktop-entry\">\n          <i class=\"fa fa-desktop\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Desktop App</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Account</div>\n        </div>\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"/me\"\n           class=\"user\">\n          <img [src]=\"user.get('avatar_url').getLargeSize() || imgUrl\" [alt]=\"user.get('full_name')\" class=\"avatar\">\n          <div class=\"text\">\n            <span>{{user.get('full_name')}}</span>\n          </div>\n        </a>\n\n        <a *ngIf=\"!isAuthenticated\"\n           (click)=\"connect()\"\n           class=\"sc-connect\">\n          <i class=\"fa fa-soundcloud\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Login with Soundcloud</div>\n        </a>\n\n        <a routerLink=\"me/likes\"\n           [routerLinkActive]=\"['is-active']\" [class.disabled]=\"!isAuthenticated\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Likes</div>\n        </a>\n\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"me/playlists\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"visible-xs visible-sm\">\n          <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Playlists</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Playlists</div>\n        </div>\n\n        <authenticated-user-playlists class=\"hidden-xs hidden-sm\" fillHeight></authenticated-user-playlists>\n      </nav>\n    </div>\n\n  </div>\n\n</section>\n";
 
 /***/ }
 ]);
