@@ -6,9 +6,9 @@ var serviceWorkerOption = {
     "/fee66e712a8a08eef5805a46892932ad.woff",
     "/b06871f281fee6b241d60582ae9369b9.ttf",
     "/912ec66d7572ff821749319396470bde.svg",
-    "/app.772b3b683cb42673243a.js",
-    "/polyfills.772b3b683cb42673243a.js",
-    "/vendor.772b3b683cb42673243a.js"
+    "/app.917d27b4cb9493aaafc5.js",
+    "/polyfills.917d27b4cb9493aaafc5.js",
+    "/vendor.917d27b4cb9493aaafc5.js"
   ]
 };
         
@@ -60,23 +60,26 @@ var serviceWorkerOption = {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	var g = global;
-	var cacheVersion = ("0.5.2");
+	var cacheVersion = ("1.0.0");
 	self.addEventListener('install', function (event) {
+	    self.skipWaiting();
 	    event.waitUntil(self.caches.open(cacheVersion).then(function (cache) {
 	        return cache.addAll(g.serviceWorkerOption.assets);
 	    }));
-	    event.waitUntil(self.skipWaiting());
 	});
 	self.addEventListener('fetch', function (event) {
-	    event.respondWith(self.caches.match(event.request)
-	        .then(function (response) {
-	        if (response) {
-	            return response;
-	        }
-	        return fetch(event.request);
-	    }, function () {
-	        // Offline Fallback
-	    }));
+	    var url = new URL(event.request.url);
+	    if (url.origin === location.origin) {
+	        event.respondWith(self.caches.match(event.request)
+	            .then(function (response) {
+	            if (response) {
+	                return response;
+	            }
+	            return fetch(event.request);
+	        }, function () {
+	            // Offline Fallback
+	        }));
+	    }
 	});
 	self.addEventListener('activate', function (event) {
 	    event.waitUntil(self.caches.keys().then(function (keyList) {
