@@ -1,8 +1,4 @@
-import {Component, Input, ElementRef, OnInit, Output, EventEmitter, ViewChild, Renderer} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
-import {Tracks} from '../../../tracks/collections/tracks.collection';
-import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
-import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
+import {Component, ElementRef, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'options-btn',
@@ -14,8 +10,9 @@ export class OptionsBtnComponent implements OnInit {
   public optionsAreVisible: Boolean = false;
   @Output() openState = new EventEmitter();
   @ViewChild('optionsHolder') optionsHolder: ElementRef;
+  @ViewChild('toggler') toggler: ElementRef;
 
-  constructor(private el: ElementRef, private renderer: Renderer) {
+  constructor(private el: ElementRef) {
 
   }
 
@@ -29,8 +26,10 @@ export class OptionsBtnComponent implements OnInit {
   }
 
   private registerCloseListeners() {
-    let close = () => {
-      this.close();
+    let close = (ev: MouseEvent) => {
+      if(!this.toggler.nativeElement.contains(ev.target)){
+        this.close();
+      }
       document.removeEventListener('scroll', close, true);
       document.removeEventListener('click', close, true);
     };
@@ -45,7 +44,7 @@ export class OptionsBtnComponent implements OnInit {
   public open(): void {
     this.registerCloseListeners();
     this.optionsHolder.nativeElement.style.left = `${this.el.nativeElement.offsetLeft}px`;
-    this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.offsetTop - this.getScrollOffset()}px`;
+    this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.getBoundingClientRect().top}px`;
     this.optionsAreVisible = true;
     this.openState.emit(true);
   }
