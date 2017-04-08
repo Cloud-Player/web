@@ -1,6 +1,10 @@
 @import '../../../../variables';
 
 :host{
+  .form-group{
+    margin-bottom: 0;
+  }
+
   input[type="text"]{
     font-size: 20px;
     width: 100%;
