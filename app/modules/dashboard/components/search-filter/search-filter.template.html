@@ -1,7 +1,7 @@
 <div class="search-filter">
   <ul class="nav nav-tabs">
-    <li role="presentation" [class.active]="!showFilterForm"><a (click)="showFilterForm=false">All Results</a></li>
-    <li role="presentation" [class.active]="showFilterForm"><a (click)="showFilterForm=true">Filter Result</a></li>
+    <li role="presentation" [class.active]="!showFilterForm"><a (click)="toggleFilterForm()">All Results</a></li>
+    <li role="presentation" [class.active]="showFilterForm"><a (click)="toggleFilterForm()">Filter Result</a></li>
   </ul>
   <div class="item-amount">
     <span class="label label-default">{{collection.length}} Tracks</span>
@@ -20,8 +20,8 @@
             [allowInfinityMin]="true"
             [allowInfinityMax]="true"
             [transformDisplayValue]="transformProgressBarValues"
-            (maxValueChanged)="reFetch()"
-            (minValueChanged)="reFetch()"
+            (maxValueChanged)="reFetch('duration_to')"
+            (minValueChanged)="reFetch('duration_from')"
             [step]="1000">
           </two-range-slider>
         </div>
@@ -37,8 +37,8 @@
             [max]="200"
             [allowInfinityMin]="true"
             [allowInfinityMax]="true"
-            (maxValueChanged)="reFetch()"
-            (minValueChanged)="reFetch()"
+            (maxValueChanged)="reFetch('bpm_to')"
+            (minValueChanged)="reFetch('bpm_from')"
             [step]="20">
           </two-range-slider>
         </div>

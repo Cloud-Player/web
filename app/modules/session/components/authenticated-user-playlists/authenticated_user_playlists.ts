@@ -1,6 +1,7 @@
 import {Component, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'authenticated-user-playlists',
@@ -19,6 +20,9 @@ export class AuthenticatedUserPlaylists {
   public isInCreationMode: boolean = false;
 
   public tmpPlaylist = new AuthenticatedUserPlaylist();
+
+  constructor(private userAnalyticsService: UserAnalyticsService){
+  }
 
   private fetchPlaylists(): void {
     if (this.user.get('authenticated') && !this.isFetching) {
@@ -42,7 +46,8 @@ export class AuthenticatedUserPlaylists {
     });
   }
 
-  dropTrack(dropData: {}, playlist: AuthenticatedUserPlaylist, event: DragEvent): void {
+  dropTrack(dropData: {}, playlist: AuthenticatedUserPlaylist): void {
+    this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
     playlist.get('tracks').create(dropData);
   }
 
@@ -57,6 +62,7 @@ export class AuthenticatedUserPlaylists {
   }
 
   createPlaylist(): void {
+    this.userAnalyticsService.trackEvent('created_playlist', 'click', 'menu-playlist-bar');
     this.user.get('playlists').create(this.tmpPlaylist.toJSON(), {at: 0});
     this.isInCreationMode = false;
     this.tmpPlaylist.clear();
