@@ -45,7 +45,7 @@ export class OptionsBtnComponent implements OnInit {
   public open(): void {
     this.registerCloseListeners();
     this.optionsHolder.nativeElement.style.left = `${this.el.nativeElement.offsetLeft}px`;
-    this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.offsetTop - this.getScrollOffset()}px`;
+    this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.getBoundingClientRect().top}px`;
     this.optionsAreVisible = true;
     this.openState.emit(true);
   }
