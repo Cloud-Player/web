@@ -14,8 +14,9 @@ export class OptionsBtnComponent implements OnInit {
   public optionsAreVisible: Boolean = false;
   @Output() openState = new EventEmitter();
   @ViewChild('optionsHolder') optionsHolder: ElementRef;
+  @ViewChild('toggler') toggler: ElementRef;
 
-  constructor(private el: ElementRef, private renderer: Renderer) {
+  constructor(private el: ElementRef) {
 
   }
 

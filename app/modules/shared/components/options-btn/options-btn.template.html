@@ -1,5 +1,5 @@
 <div class="options-btn">
-  <div class="btn btn-xs btn-default" (click)="toggleOpen()">
+  <div class="btn btn-xs btn-default" (click)="toggleOpen()" #toggler>
     <i class="fa fa-ellipsis-v" aria-hidden="true" alt="Options"></i>
   </div>
   <ul [hidden]="!optionsAreVisible"
