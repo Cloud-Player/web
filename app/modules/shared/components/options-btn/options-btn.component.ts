@@ -29,8 +29,10 @@ export class OptionsBtnComponent implements OnInit {
   }
 
   private registerCloseListeners() {
-    let close = () => {
-      this.close();
+    let close = (ev: MouseEvent) => {
+      if(!this.toggler.nativeElement.contains(ev.target)){
+        this.close();
+      }
       document.removeEventListener('scroll', close, true);
       document.removeEventListener('click', close, true);
     };
