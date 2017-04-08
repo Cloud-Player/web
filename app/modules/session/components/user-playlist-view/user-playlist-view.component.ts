@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'user-play-list-view',
@@ -15,7 +16,7 @@ export class UserPlayListViewComponent implements OnInit {
 
   public isInEditMode: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private userAnalyticsService: UserAnalyticsService) {
   }
 
   private fetchPlaylist() {
@@ -30,12 +31,14 @@ export class UserPlayListViewComponent implements OnInit {
   }
 
   public save(): void{
+    this.userAnalyticsService.trackEvent('saved_playlist', 'click', 'user-playlist-cmp');
     this.playlist.save().then(()=>{
       this.isInEditMode = false;
     });
   }
 
   public destroy(): void{
+    this.userAnalyticsService.trackEvent('destroyed_playlist', 'click', 'user-playlist-cmp');
     let userPlaylists = this.session.get('user').get('playlists');
     let indexOfPlaylist = userPlaylists.indexOf(this.playlist);
     let otherPlaylistId: number;

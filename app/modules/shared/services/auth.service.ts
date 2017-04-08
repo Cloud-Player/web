@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Session} from '../../session/models/session.model';
 import Timer = NodeJS.Timer;
 import localforage = require('localforage');
+import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,7 @@ export class AuthService {
   }
 
   connect() {
+    this.userAnalyticsService.trackEvent('sc_auth_start', 'click', 'auth-service');
     let popup = window.open(this.getConnectionUrl());
     this.checkInterval = setInterval(() => {
       popup.postMessage(null, 'http://sc.menu-flow.com');
@@ -32,11 +34,13 @@ export class AuthService {
   }
 
   disconnect() {
+    this.userAnalyticsService.trackEvent('sc_auth_disconnect', 'click', 'auth-service');
     this.session.clear();
     localforage.removeItem('sc_session');
   }
 
   connectionSuccessFul(params: any) {
+    this.userAnalyticsService.trackEvent('sc_auth_success', 'click', 'auth-service');
     this.session.set({
       access_token: params.access_token,
       expires_on: params.expires_on,
@@ -44,7 +48,7 @@ export class AuthService {
     });
   }
 
-  constructor() {
+  constructor(private userAnalyticsService: UserAnalyticsService) {
     window.addEventListener('message', this.receiveConnectMessage.bind(this), false);
     window.addEventListener('connectionSuccessFul', (ev: CustomEvent) => {
       let creds = ev.detail;

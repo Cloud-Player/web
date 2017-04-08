@@ -2,6 +2,7 @@ import {Component, Input, trigger, state, transition, style, animate} from '@ang
 import {Track} from '../../../tracks/models/track.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../services/auth.service';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'toggle-liked-track',
@@ -23,7 +24,7 @@ export class ToggleLikedTrackComponent {
 
   public showAuthenticateTooltip: boolean = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private userAnalyticsService: UserAnalyticsService) {
   }
 
   showConnectTooltip() {
@@ -46,6 +47,7 @@ export class ToggleLikedTrackComponent {
   like(): void {
     if (this.session.isValid()) {
       Session.getInstance().get('user').get('likes').create(this.track.toJSON());
+      this.userAnalyticsService.trackEvent('like_track', 'click', 'toggle-like-cmp');
     } else {
       this.showConnectTooltip();
     }
@@ -54,6 +56,7 @@ export class ToggleLikedTrackComponent {
   dislike(): void {
     let likedTrack = Session.getInstance().get('user').get('likes').get(this.track.toJSON());
     if (likedTrack) {
+      this.userAnalyticsService.trackEvent('dislike_track', 'click', 'toggle-like-cmp');
       likedTrack.destroy();
     }
   }
