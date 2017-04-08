@@ -7975,7 +7975,7 @@ webpackJsonp([0],[
 /* 122 */
 /***/ function(module, exports) {
 
-	module.exports = "@charset \"UTF-8\";\n@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n.tracks-list {\n  background: #fcfcfc;\n  padding: 10px 15px;\n  border-radius: 4px;\n  box-shadow: 0 0 8px 0 #c8c8c8; }\n  .tracks-list .track {\n    display: flex;\n    margin: 0 -15px;\n    padding: 20px 15px;\n    transition: background 0.5s ease; }\n    .tracks-list .track:hover {\n      background: #eeeeee; }\n      .tracks-list .track:hover .cover /deep/ play-button .play-button {\n        opacity: 1; }\n    .tracks-list .track:not(:last-child) {\n      border-bottom: 1px solid #eeeeee; }\n    .tracks-list .track .cover {\n      position: relative; }\n      .tracks-list .track .cover track-cover {\n        width: 80px;\n        height: 80px;\n        flex-shrink: 0; }\n      .tracks-list .track .cover /deep/ play-button .play-button {\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        background: rgba(255, 255, 255, 0.5);\n        opacity: 0;\n        transition: opacity 0.5s ease; }\n        .tracks-list .track .cover /deep/ play-button .play-button.isPlaying {\n          opacity: 1; }\n    .tracks-list .track .details {\n      order: 2;\n      flex: auto;\n      margin-left: 15px;\n      overflow: hidden; }\n      .tracks-list .track .details .track-info {\n        display: flex;\n        align-items: center;\n        margin-bottom: 18px; }\n        .tracks-list .track .details .track-info toggle-liked-track {\n          padding-right: 10px; }\n        .tracks-list .track .details .track-info .meta {\n          text-overflow: ellipsis;\n          overflow: hidden;\n          white-space: nowrap;\n          flex-grow: 1; }\n          .tracks-list .track .details .track-info .meta .created {\n            color: #aaa; }\n            .tracks-list .track .details .track-info .meta .created:before {\n              content: '—';\n              margin-left: -2px;\n              margin-right: 2px; }\n        .tracks-list .track .details .track-info options-btn {\n          align-self: flex-start;\n          margin: 0 0 0 10px; }\n      .tracks-list .track .details .stats .label-light {\n        border: none; }\n  .tracks-list::-webkit-scrollbar {\n    display: none; }\n\n@media (max-width: 992px) {\n  .tracks-list {\n    box-shadow: none;\n    border-radius: 0; } }\n\n@media (max-width: 768px) {\n  .tracks-list .track {\n    position: relative; }\n    .tracks-list .track .cover track-cover {\n      width: 40px;\n      height: 40px; }\n      .tracks-list .track .cover track-cover.hasNoTrack {\n        padding: 2px; }\n    .tracks-list .track .cover /deep/ track-cover .hasNoTrack {\n      padding: 2px; }\n    .tracks-list .track .cover play-button {\n      width: 40px;\n      height: 40px; }\n    .tracks-list .track .cover /deep/ play-button .btn-round {\n      width: 30px;\n      height: 30px;\n      font-size: 12px;\n      padding: 0 0 0 1px; }\n    .tracks-list .track .details .stats {\n      position: absolute;\n      left: 15px;\n      white-space: nowrap;\n      bottom: 10px; }\n      .tracks-list .track .details .stats .label-light:first-child {\n        padding-left: 0; } }\n"
+	module.exports = "@charset \"UTF-8\";\n@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n.tracks-list {\n  background: #fcfcfc;\n  padding: 10px 15px;\n  border-radius: 4px;\n  box-shadow: 0 0 8px 0 #c8c8c8; }\n  .tracks-list .track {\n    display: flex;\n    margin: 0 -15px;\n    padding: 20px 15px;\n    transition: background 0.5s ease; }\n    .tracks-list .track:hover {\n      background: #eeeeee; }\n      .tracks-list .track:hover .cover /deep/ play-button .play-button {\n        opacity: 1; }\n    .tracks-list .track:not(:last-child) {\n      border-bottom: 1px solid #eeeeee; }\n    .tracks-list .track .cover {\n      position: relative; }\n      .tracks-list .track .cover track-cover {\n        width: 80px;\n        height: 80px;\n        flex-shrink: 0; }\n      .tracks-list .track .cover play-button {\n        width: 100%;\n        height: 100%; }\n      .tracks-list .track .cover /deep/ play-button .play-button {\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: inherit;\n        height: inherit;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        background: rgba(255, 255, 255, 0.5);\n        opacity: 0;\n        transition: opacity 0.5s ease; }\n        .tracks-list .track .cover /deep/ play-button .play-button.isPlaying {\n          opacity: 1; }\n          .tracks-list .track .cover /deep/ play-button .play-button.isPlaying .btn {\n            background: rgba(255, 255, 255, 0.6);\n            color: #ff3600;\n            border-color: #ff3600; }\n        .tracks-list .track .cover /deep/ play-button .play-button .btn {\n          background: rgba(0, 0, 0, 0.2); }\n          .tracks-list .track .cover /deep/ play-button .play-button .btn:hover {\n            background: rgba(255, 255, 255, 0.6);\n            color: #ff3600;\n            border-color: #ff3600; }\n    .tracks-list .track .details {\n      order: 2;\n      flex: auto;\n      margin-left: 15px;\n      overflow: hidden; }\n      .tracks-list .track .details .track-info {\n        display: flex;\n        align-items: center;\n        margin-bottom: 18px; }\n        .tracks-list .track .details .track-info toggle-liked-track {\n          padding-right: 10px; }\n        .tracks-list .track .details .track-info .meta {\n          text-overflow: ellipsis;\n          overflow: hidden;\n          white-space: nowrap;\n          flex-grow: 1; }\n          .tracks-list .track .details .track-info .meta .created {\n            color: #aaa; }\n            .tracks-list .track .details .track-info .meta .created:before {\n              content: '—';\n              margin-left: -2px;\n              margin-right: 2px; }\n        .tracks-list .track .details .track-info options-btn {\n          align-self: flex-start;\n          margin: 0 0 0 10px; }\n      .tracks-list .track .details .stats .label-light {\n        border: none; }\n  .tracks-list::-webkit-scrollbar {\n    display: none; }\n\n@media (max-width: 992px) {\n  .tracks-list {\n    box-shadow: none;\n    border-radius: 0; } }\n\n@media (max-width: 768px) {\n  .tracks-list .track {\n    position: relative; }\n    .tracks-list .track .cover track-cover {\n      width: 40px;\n      height: 40px; }\n      .tracks-list .track .cover track-cover.hasNoTrack {\n        padding: 2px; }\n    .tracks-list .track .cover /deep/ track-cover .hasNoTrack {\n      padding: 2px; }\n    .tracks-list .track .cover play-button {\n      width: 40px;\n      height: 40px; }\n    .tracks-list .track .cover /deep/ play-button .btn-round {\n      width: 30px;\n      height: 30px;\n      font-size: 12px;\n      padding: 0 0 0 1px; }\n    .tracks-list .track .details .stats {\n      position: absolute;\n      left: 15px;\n      white-space: nowrap;\n      bottom: 10px; }\n      .tracks-list .track .details .stats .label-light:first-child {\n        padding-left: 0; } }\n"
 
 /***/ },
 /* 123 */
@@ -10297,9 +10297,8 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	let OptionsBtnComponent = class OptionsBtnComponent {
-	    constructor(el, renderer) {
+	    constructor(el) {
 	        this.el = el;
-	        this.renderer = renderer;
 	        this.options = [];
 	        this.optionsAreVisible = false;
 	        this.openState = new core_1.EventEmitter();
@@ -10314,8 +10313,10 @@ webpackJsonp([0],[
 	        }
 	    }
 	    registerCloseListeners() {
-	        let close = () => {
-	            this.close();
+	        let close = (ev) => {
+	            if (!this.toggler.nativeElement.contains(ev.target)) {
+	                this.close();
+	            }
 	            document.removeEventListener('scroll', close, true);
 	            document.removeEventListener('click', close, true);
 	        };
@@ -10328,7 +10329,7 @@ webpackJsonp([0],[
 	    open() {
 	        this.registerCloseListeners();
 	        this.optionsHolder.nativeElement.style.left = `${this.el.nativeElement.offsetLeft}px`;
-	        this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.offsetTop - this.getScrollOffset()}px`;
+	        this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.getBoundingClientRect().top}px`;
 	        this.optionsAreVisible = true;
 	        this.openState.emit(true);
 	    }
@@ -10355,13 +10356,17 @@ webpackJsonp([0],[
 	    core_1.ViewChild('optionsHolder'), 
 	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
 	], OptionsBtnComponent.prototype, "optionsHolder", void 0);
+	__decorate([
+	    core_1.ViewChild('toggler'), 
+	    __metadata('design:type', (typeof (_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object)
+	], OptionsBtnComponent.prototype, "toggler", void 0);
 	OptionsBtnComponent = __decorate([
 	    core_1.Component({
 	        selector: 'options-btn',
 	        styles: [__webpack_require__(301)],
 	        template: __webpack_require__(302)
 	    }), 
-	    __metadata('design:paramtypes', [(typeof (_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _c) || Object])
+	    __metadata('design:paramtypes', [(typeof (_c = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _c) || Object])
 	], OptionsBtnComponent);
 	exports.OptionsBtnComponent = OptionsBtnComponent;
 	let OptionsBtnOptionComponent = class OptionsBtnOptionComponent {
@@ -10391,7 +10396,7 @@ webpackJsonp([0],[
 /* 302 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"options-btn\">\n  <div class=\"btn btn-xs btn-default\" (click)=\"toggleOpen()\">\n    <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\" alt=\"Options\"></i>\n  </div>\n  <ul [hidden]=\"!optionsAreVisible\"\n      class=\"options-list\"\n      #optionsHolder>\n    <ng-content></ng-content>\n  </ul>\n</div>\n";
+	module.exports = "<div class=\"options-btn\">\n  <div class=\"btn btn-xs btn-default\" (click)=\"toggleOpen()\" #toggler>\n    <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\" alt=\"Options\"></i>\n  </div>\n  <ul [hidden]=\"!optionsAreVisible\"\n      class=\"options-list\"\n      #optionsHolder>\n    <ng-content></ng-content>\n  </ul>\n</div>\n";
 
 /***/ },
 /* 303 */
@@ -11017,13 +11022,13 @@ webpackJsonp([0],[
 /* 322 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"column\">\n  <view-header>\n    <form *ngIf=\"isInEditMode\"\n          class=\"title edit-mode form-inline\"\n          (submit)=\"save()\">\n      <toggle-switch [(value)]=\"playlist.attributes.isPublic\"></toggle-switch>\n      <div class=\"form-group\">\n        <input type=\"text\"\n               name=\"playlistName\"\n               class=\"form-control\"\n               id=\"playlistName\"\n               placeholder=\"Playlist Name\"\n               [(ngModel)]=\"playlist.attributes.title\"\n               required\n               focusInput>\n      </div>\n      <div class=\"button-group\">\n        <button class=\"btn btn-danger\" (click)=\"cancel()\">Cancel</button>\n        <input type=\"submit\" class=\"btn btn-success\" value=\"Save\"/>\n      </div>\n    </form>\n\n    <div *ngIf=\"!isInEditMode\" class=\"title\">\n      <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n      <span class=\"text\">{{playlist.get('title')}}</span>\n      <div class=\"button-group\">\n        <button class=\"btn btn-default\" (click)=\"isInEditMode = true\">\n          <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n        </button>\n        <button class=\"btn btn-default btn-danger\" (click)=\"destroy()\">\n          <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i>\n        </button>\n      </div>\n    </div>\n\n  </view-header>\n\n  <scroll-view>\n    <track-list [tracks]=\"playlist.get('tracks')\" [canBeDeleted]=\"true\"></track-list>\n  </scroll-view>\n</section>\n";
+	module.exports = "<section class=\"column\">\n  <form (submit)=\"save()\">\n    <view-header>\n      <div *ngIf=\"isInEditMode\"\n           class=\"title edit-mode form-inline\">\n        <toggle-switch [(value)]=\"playlist.attributes.isPublic\"></toggle-switch>\n        <div class=\"form-group\">\n          <input type=\"text\"\n                 name=\"playlistName\"\n                 class=\"form-control\"\n                 id=\"playlistName\"\n                 placeholder=\"Playlist Name\"\n                 [(ngModel)]=\"playlist.attributes.title\"\n                 required\n                 focusInput>\n        </div>\n        <div class=\"button-group\">\n          <input type=\"button\" class=\"btn btn-danger\" (click)=\"cancel()\" value=\"Cancel\"/>\n          <input type=\"submit\" class=\"btn btn-success\" value=\"Save\"/>\n        </div>\n      </div>\n\n      <div *ngIf=\"!isInEditMode\" class=\"title\">\n        <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n        <span class=\"text\">{{playlist.get('title')}}</span>\n        <div class=\"button-group\">\n          <button class=\"btn btn-default\" (click)=\"isInEditMode = true\">\n            <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n          </button>\n          <button class=\"btn btn-default btn-danger\" (click)=\"destroy()\">\n            <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i>\n          </button>\n        </div>\n      </div>\n\n    </view-header>\n  </form>\n\n  <scroll-view>\n    <track-list [tracks]=\"playlist.get('tracks')\" [canBeDeleted]=\"true\"></track-list>\n  </scroll-view>\n</section>\n";
 
 /***/ },
 /* 323 */
 /***/ function(module, exports) {
 
-	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host input[type=\"text\"] {\n  font-size: 20px;\n  width: 100%;\n  border-radius: 4px;\n  margin-right: 5px; }\n\n:host /deep/ view-header .default-playlist-img {\n  border: 1px solid;\n  border-radius: 50%;\n  width: 30px;\n  height: 30px;\n  margin-right: 13px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 12px; }\n\n:host /deep/ view-header .title {\n  display: flex;\n  align-items: center;\n  width: 100%; }\n  :host /deep/ view-header .title .text {\n    white-space: nowrap;\n    overflow: hidden; }\n\n:host /deep/ view-header .form-group {\n  display: flex;\n  width: 100%; }\n\n:host /deep/ view-header .button-group {\n  margin-left: auto;\n  display: flex;\n  flex-wrap: nowrap; }\n"
+	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n:host .form-group {\n  margin-bottom: 0; }\n\n:host input[type=\"text\"] {\n  font-size: 20px;\n  width: 100%;\n  border-radius: 4px;\n  margin-right: 5px; }\n\n:host /deep/ view-header .default-playlist-img {\n  border: 1px solid;\n  border-radius: 50%;\n  width: 30px;\n  height: 30px;\n  margin-right: 13px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 12px; }\n\n:host /deep/ view-header .title {\n  display: flex;\n  align-items: center;\n  width: 100%; }\n  :host /deep/ view-header .title .text {\n    white-space: nowrap;\n    overflow: hidden; }\n\n:host /deep/ view-header .form-group {\n  display: flex;\n  width: 100%; }\n\n:host /deep/ view-header .button-group {\n  margin-left: auto;\n  display: flex;\n  flex-wrap: nowrap; }\n"
 
 /***/ },
 /* 324 */
