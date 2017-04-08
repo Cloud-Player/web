@@ -1,8 +1,4 @@
-import {Component, Input, ElementRef, OnInit, Output, EventEmitter, ViewChild, Renderer} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
-import {Tracks} from '../../../tracks/collections/tracks.collection';
-import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
-import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
+import {Component, ElementRef, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'options-btn',
