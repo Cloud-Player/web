@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'collection-sort',
@@ -16,6 +17,8 @@ export class CollectionSortComponent {
   @Input() label: string;
 
   sortDesc: boolean = true;
+
+  constructor(private userAnalyticsService: UserAnalyticsService){}
 
   isSorted(): boolean {
     return this.collection &&
@@ -36,12 +39,15 @@ export class CollectionSortComponent {
       }
       if (!this.collection.sortOrder || this.collection.sortOrder === 'ASC') {
         this.collection.sortDescending();
+        this.userAnalyticsService.trackEvent(`sort_${this.collection.comparator}_desc`, 'click', 'collection-sort-cmp');
       } else {
         this.collection.sortAscending();
+        this.userAnalyticsService.trackEvent(`sort_${this.collection.comparator}_asc`, 'click', 'collection-sort-cmp');
       }
     } else if (this.collection.comparator) {
       this.collection.comparator = null;
       this.collection.fetch();
+      this.userAnalyticsService.trackEvent('sort_reset', 'click', 'collection-sort-cmp');
     }
   }
 

@@ -17,6 +17,7 @@ import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthService} from '../shared/services/auth.service';
 import {SharedModule} from '../shared/shared.module';
 import {DesktopAppViewComponent} from './components/desktop-app-view/desktop-app-view.component';
+import {UserAnalyticsModule} from '../user-analytics/user-analytics.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {DesktopAppViewComponent} from './components/desktop-app-view/desktop-app
     SessionModule,
     UsersModule,
     PlaylistModule,
-    SharedModule
+    SharedModule,
+    UserAnalyticsModule
   ],
   declarations: [
     MainComponent,

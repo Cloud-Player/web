@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {User} from '../../../users/models/user.model';
-import {Session} from '../../../session/models/session.model';
+import {Component} from '@angular/core';
 import {Result, ClientDetector, OsNames} from '../../../shared/services/client-detector.service';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'cloud-player',
@@ -9,23 +8,26 @@ import {Result, ClientDetector, OsNames} from '../../../shared/services/client-d
   template: require('./desktop-app-view.template.html')
 })
 
-export class DesktopAppViewComponent implements OnInit {
+export class DesktopAppViewComponent {
 
-  ngOnInit(): void {
+  constructor(private userAnalyticsService: UserAnalyticsService) {
   }
 
-  isWindowsPc(): boolean{
+  isWindowsPc(): boolean {
     let os: Result = ClientDetector.getOs();
     return (
       os.name === OsNames.Windows && os.version >= 7
     );
   }
 
-  isMacPc(): boolean{
+  isMacPc(): boolean {
     let os: Result = ClientDetector.getOs();
     return (
       os.name === OsNames.MacOs && os.version > 0
     );
   }
 
+  download(platform: string) {
+    this.userAnalyticsService.trackEvent(`download_desktop_app_${platform}`, 'click', 'desktop-app-view');
+  }
 }

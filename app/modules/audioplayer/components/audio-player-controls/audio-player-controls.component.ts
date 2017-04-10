@@ -9,6 +9,7 @@ import * as localforage from 'localforage';
 import {Track} from '../../../tracks/models/track.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'audio-player-controls',
@@ -30,7 +31,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private humanReadableSecPipe: HumanReadableSecondsPipe;
 
-  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
+  constructor(private cloudPlayerLogoService: CloudPlayerLogoService, private userAnalyticsService: UserAnalyticsService) {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
     this.timeTick = 0;
@@ -67,6 +68,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     });
 
     this.audio.addEventListener('error', () => {
+      this.userAnalyticsService.trackEvent('playback_err', 'click', 'audio-player-cmp');
       this.hadError = true;
       this.pauseTrack();
     });
@@ -107,14 +109,15 @@ export class AudioPlayerControlsComponent implements OnInit {
           {src: artwork.getLargeSize(), sizes: '512x512', type: 'image/jpg'},
         ]
       });
-      // nv.mediaSession.setActionHandler('play', this.playTrack(this.playQueue.getCurrentItem()));
-      // nv.mediaSession.setActionHandler('pause', this.pauseTrack());
+      this.userAnalyticsService.trackEvent('set_notification_chrome_mob', 'click', 'audio-player-cmp');
       if (this.playQueue.hasPreviousItem()) {
         nv.mediaSession.setActionHandler('previoustrack', () => {
+          this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'audio-player-cmp');
           this.previousTrack();
         });
       }
       if (this.playQueue.hasNextItem()) {
+        this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'audio-player-cmp');
         nv.mediaSession.setActionHandler('nexttrack', () => {
           this.nextTrack();
         });
@@ -173,6 +176,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   playTrack(playQueueItem: PlayQueueItem|null): void {
+    this.userAnalyticsService.trackEvent('play_track', 'click', 'audio-player-cmp');
     playQueueItem = playQueueItem || this.playQueue.getItem();
     if (playQueueItem) {
       playQueueItem.play();
@@ -185,6 +189,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   pauseTrack(): void {
+    this.userAnalyticsService.trackEvent('pause_track', 'click', 'audio-player-cmp');
     let track = this.playQueue.getPlayingItem();
     if (track) {
       track.pause();
@@ -204,6 +209,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   previousTrack(): void {
+    this.userAnalyticsService.trackEvent('next_track', 'click', 'audio-player-cmp');
     if (this.audio && this.audio.currentTime && this.audio.currentTime > 1) {
       this.playTrackFromPosition(0);
     } else {
@@ -215,6 +221,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   nextTrack(): void {
+    this.userAnalyticsService.trackEvent('previous_track', 'click', 'audio-player-cmp');
     if (this.playQueue.hasNextItem()) {
       this.timeTick = 0;
       this.playTrack(this.playQueue.getNextItem());
