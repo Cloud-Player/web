@@ -14,9 +14,7 @@ webpackJsonp([2],[
 	__webpack_require__(633);
 	// You can import js, ts, css, sass, ...
 	__webpack_require__(905);
-	__webpack_require__(915);
 	// Other vendors for example jQuery, Lodash or Bootstrap
-	__webpack_require__(69);
 	__webpack_require__(68);
 	__webpack_require__(67);
 	__webpack_require__(138);
@@ -108610,12 +108608,6 @@ webpackJsonp([2],[
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 915 */
-/***/ function(module, exports) {
-
-	module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600\");\n"
 
 /***/ }
 ]);
