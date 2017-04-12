@@ -21,17 +21,13 @@ html, body {
 body {
   background: #efefef;
   overflow: hidden;
-
-  &.native.desktop{
-    background: red;
-  }
 }
 
 a {
   cursor: pointer;
 }
 
-a,div{
+a, div {
   &.disabled {
     pointer-events: none;
     cursor: default;
@@ -68,11 +64,11 @@ button:focus {
   }
 }
 
-.btn-danger{
+.btn-danger {
   @include button-variant($brand-danger, $btn-default-bg, $btn-danger-border);
   transition: all 0.3s ease;
 
-  &:hover{
+  &:hover {
     @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
   }
 }
@@ -178,7 +174,7 @@ body.native.desktop {
   }
 }
 
-.scrollable{
+.scrollable {
   overflow: auto;
   display: block;
   &::-webkit-scrollbar {
