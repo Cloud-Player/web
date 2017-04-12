@@ -197,9 +197,7 @@
   @media (min-width: 1380px) {
     width: 300px;
     &:hover {
-      max-width: 500px;
-      min-width: 300px;
-      width: initial;
+      width: 300px;
     }
   }
 }
