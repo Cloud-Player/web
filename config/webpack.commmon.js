@@ -31,12 +31,11 @@ module.exports = {
         loader: 'html'
       },
       {
-        test: /\.scss$/,
-        loaders: ['raw-loader', 'sass-loader']
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style-loader', 'css-loader']
+        test   : /\.css$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      }, {
+        test   : /\.scss$/,
+        loaders: ['css-to-string-loader','css-loader','sass-loader']
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
