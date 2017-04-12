@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var helpers = require('./helpers');
 var packageJSON = require('../package.json');
