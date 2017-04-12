@@ -1,136 +1,28 @@
 @import '../../../../variables';
-@import '../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-/* Global styles */
 
-h2 {
-  font-size: 28px;
-  margin-top: 10px;
-}
+:host{
+  .screenshot{
+    background-position-y: initial;
+    -webkit-background-size: cover;
+    margin-left: -15px;
+    width: calc(100% + 30px);
+    margin-top: -10px;
+    border-radius: 4px 4px 0 0;
 
-* {
-  font-family: $font-family-base;
-  font-weight: 300;
-}
+    &.win{
+      background: url(./assets/win-screenshot.png) no-repeat;
+      height: 300px;
+    }
 
-html, body {
-  height: 100vh;
-  width: 100%;
-}
-
-body {
-  background: #efefef;
-  overflow: hidden;
-
-  &.native.desktop{
-    background: red;
-  }
-}
-
-a {
-  cursor: pointer;
-}
-
-a,div{
-  &.disabled {
-    pointer-events: none;
-    cursor: default;
-    color: #999 !important;
-  }
-}
-
-button:focus {
-  outline: 0 !important;
-}
-
-.btn {
-  margin: 5px;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.btn-round {
-  width: $btn-width;
-  height: $btn-width;
-  border-radius: 50%;
-}
-
-.btn-brand {
-  background: $brand-primary;
-  border-color: #fff;
-  color: white;
-
-  &:hover {
-    background: darken($brand-primary, 5%);
-    color: white;
-  }
-}
-
-.btn-danger{
-  @include button-variant($brand-danger, $btn-default-bg, $btn-danger-border);
-  transition: all 0.3s ease;
-
-  &:hover{
-    @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
-  }
-}
-
-.main {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  max-width: 1500px;
-  background: #efefef;
-  margin: auto;
-  box-shadow: $light-boxshadow;
-
-  .flex-container {
-    display: flex;
-  }
-
-  .routes {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    overflow: auto;
-  }
-
-}
-
-body.native.desktop{
-  .native-bar {
-    -webkit-app-region: drag;
-    height: 27px;
-    width: 100vw;
-    background: $gray-light;
-    position: relative;
-
-    &:after{
-      content: '';
-      width: 100%;
-      height: 3px;
-      background: #ff3600;
-      position: absolute;
-      bottom: 0;
+    &.osx{
+      background: url(./assets/osx-screenshot.png) no-repeat;
+      height: 300px;
     }
   }
-}
 
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: $screen-md-min) {
-  .main {
-    .routes {
-      padding: 15px;
-    }
-  }
-}
-
-@media (min-width: $screen-lg-min) {
-  .main {
-    .routes {
-      margin: 0;
-      max-width: initial;
+  .tutorial{
+    .img-holder{
+      text-align: center;
     }
   }
 }
