@@ -65,7 +65,7 @@ var serviceWorkerOption = {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	var g = global;
-	var cacheVersion = ("1.0.3");
+	var cacheVersion = ("1.0.4");
 	var externalDomainWhiteList = [
 	    'https://fonts.gstatic.com',
 	    'https://fonts.googleapis.com'
