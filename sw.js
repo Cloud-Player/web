@@ -6,9 +6,14 @@ var serviceWorkerOption = {
     "/fee66e712a8a08eef5805a46892932ad.woff",
     "/b06871f281fee6b241d60582ae9369b9.ttf",
     "/912ec66d7572ff821749319396470bde.svg",
-    "/app.ca038dad598c8e992f1a.js",
-    "/polyfills.ca038dad598c8e992f1a.js",
-    "/vendor.ca038dad598c8e992f1a.js"
+    "/win-screenshot.72c50c881a234637ac1418f6a00c7f3a.png",
+    "/osx-screenshot.1ea45195d62c85507366f794aaa27816.png",
+    "/osx-dmg.6e033680f5cb65a592061aa159b6e9fa.png",
+    "/win-exe.25d192266a404622165f3c54c8982243.png",
+    "/app.b54852afcec60034e8c9.js",
+    "/polyfills.b54852afcec60034e8c9.js",
+    "/vendor.b54852afcec60034e8c9.js",
+    "/vendor.b54852afcec60034e8c9.css"
   ]
 };
         
