@@ -119,21 +119,26 @@ button:focus {
 
 }
 
-body.native.desktop{
+body.native.desktop {
   .native-bar {
     -webkit-app-region: drag;
-    height: 27px;
     width: 100vw;
     background: $gray-light;
     position: relative;
 
-    &:after{
+    &:after {
       content: '';
       width: 100%;
       height: 3px;
       background: #ff3600;
       position: absolute;
       bottom: 0;
+    }
+  }
+
+  &.darwin {
+    .native-bar {
+      height: 27px;
     }
   }
 }
