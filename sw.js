@@ -10,10 +10,10 @@ var serviceWorkerOption = {
     "/osx-screenshot.1ea45195d62c85507366f794aaa27816.png",
     "/osx-dmg.6e033680f5cb65a592061aa159b6e9fa.png",
     "/win-exe.25d192266a404622165f3c54c8982243.png",
-    "/app.c7200a8b3da27e6c5c3b.js",
-    "/polyfills.c7200a8b3da27e6c5c3b.js",
-    "/vendor.c7200a8b3da27e6c5c3b.js",
-    "/vendor.c7200a8b3da27e6c5c3b.css"
+    "/app.78ef302bc543b7a54d15.js",
+    "/polyfills.78ef302bc543b7a54d15.js",
+    "/vendor.78ef302bc543b7a54d15.js",
+    "/vendor.78ef302bc543b7a54d15.css"
   ]
 };
         
