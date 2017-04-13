@@ -1,19 +1,16 @@
-[![Build Status]
-    (https://travis-ci.org/Cloud-Player/web.svg?branch=master)]
-    (https://travis-ci.org/Cloud-Player/web)
+[![Build Status](https://travis-ci.org/mwaylabs/uikit.svg?branch=master)](https://travis-ci.org/mwaylabs/uikit)
 
-# cloud-player
-Organisation
-https://github.com/Cloud-Player
+# Cloud Player
+[![Cloud Player Teaser](https://github.com/Cloud-Player/web/blob/master/assets/meta/social/facebook.jpg)](https://cloud-player.io)
 
-Web
-https://github.com/Cloud-Player/web
+Cloud Player is an alternative SoundCloud player. It is using the official [SoundCloud API](https://developers.soundcloud.com/docs/api). 
 
-Desktop-App
-https://github.com/Cloud-Player/desktop-app
+Play all the tracks from SoundCloud and manage your likes and playlists. Also available as native desktop app to controll the player from your keyboard media keys.
 
-GitHub Pages 
-https://cloud-player.github.io/web/
+[Start the webplayer](https://cloud-player.io)
 
-# gitflow nov16 - jan17
-https://youtu.be/eympvA2hdKU
+Get the [native desktop app](https://github.com/Cloud-Player/desktop-app)
+
+## Disclaimer
+We are neither related to SoundCloud nor was this build on behalf of SoundCloud
+
