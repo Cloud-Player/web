@@ -26,7 +26,7 @@ Cloud Player is a study project created at [HTW Berlin](http://www.htw-berlin.de
       <td align="center" valign="top">
         <img width="150" height="150" src="https://github.com/Dathix.png?s=150">
         <br>
-        <a href="https://github.com/Dathix">Daniel Reissner</a>
+        <a href="https://github.com/Dathix">Daniel Reißner</a>
         <p>Developer</p>
       </td>
       <td align="center" width="20%" valign="top">
