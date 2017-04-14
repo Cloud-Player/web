@@ -1,6 +1,6 @@
 webpackJsonp([0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const platform_browser_dynamic_1 = __webpack_require__(1);
@@ -37,7 +37,7 @@ webpackJsonp([0],[
 	}
 
 
-/***/ },
+/***/ }),
 /* 1 */,
 /* 2 */,
 /* 3 */,
@@ -61,7 +61,7 @@ webpackJsonp([0],[
 /* 21 */,
 /* 22 */,
 /* 23 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	var serviceWorkerOption = {"scriptURL":"/sw.js"};
 	      "use strict";
@@ -85,9 +85,9 @@ webpackJsonp([0],[
 	};
 	module.exports = exports["default"];
 
-/***/ },
+/***/ }),
 /* 24 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -188,9 +188,9 @@ webpackJsonp([0],[
 	exports.default = registerEvents;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -210,18 +210,18 @@ webpackJsonp([0],[
 	const backbone_module_1 = __webpack_require__(66);
 	const tracks_module_1 = __webpack_require__(89);
 	const dashboard_module_1 = __webpack_require__(328);
-	const main_component_1 = __webpack_require__(380);
-	const main_routes_1 = __webpack_require__(384);
-	const audio_player_module_1 = __webpack_require__(393);
+	const main_component_1 = __webpack_require__(374);
+	const main_routes_1 = __webpack_require__(378);
+	const audio_player_module_1 = __webpack_require__(387);
 	const session_module_1 = __webpack_require__(334);
-	const users_module_1 = __webpack_require__(406);
+	const users_module_1 = __webpack_require__(400);
 	const common_1 = __webpack_require__(22);
-	const nav_component_1 = __webpack_require__(408);
-	const playlist_module_1 = __webpack_require__(366);
+	const nav_component_1 = __webpack_require__(402);
+	const playlist_module_1 = __webpack_require__(360);
 	const auth_service_1 = __webpack_require__(145);
 	const shared_module_1 = __webpack_require__(118);
-	const desktop_app_view_component_1 = __webpack_require__(385);
-	const user_analytics_module_1 = __webpack_require__(412);
+	const desktop_app_view_component_1 = __webpack_require__(379);
+	const user_analytics_module_1 = __webpack_require__(406);
 	let MainModule = class MainModule {
 	};
 	MainModule = __decorate([
@@ -254,9 +254,9 @@ webpackJsonp([0],[
 	exports.MainModule = MainModule;
 
 
-/***/ },
+/***/ }),
 /* 26 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	// Observable class extensions
@@ -273,7 +273,7 @@ webpackJsonp([0],[
 	__webpack_require__(60);
 
 
-/***/ },
+/***/ }),
 /* 27 */,
 /* 28 */,
 /* 29 */,
@@ -310,7 +310,7 @@ webpackJsonp([0],[
 /* 60 */,
 /* 61 */,
 /* 62 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * @license Angular v2.4.10
@@ -6200,12 +6200,12 @@ webpackJsonp([0],[
 
 	}));
 
-/***/ },
+/***/ }),
 /* 63 */,
 /* 64 */,
 /* 65 */,
 /* 66 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6295,12 +6295,12 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 67 */,
 /* 68 */,
 /* 69 */,
 /* 70 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6354,9 +6354,9 @@ webpackJsonp([0],[
 	exports.BaseModel = BaseModel;
 
 
-/***/ },
+/***/ }),
 /* 71 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const backbone_1 = __webpack_require__(68);
@@ -6514,9 +6514,9 @@ webpackJsonp([0],[
 	exports.NestedModel = NestedModel;
 
 
-/***/ },
+/***/ }),
 /* 72 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const backbone_1 = __webpack_require__(68);
@@ -6541,9 +6541,9 @@ webpackJsonp([0],[
 	;
 
 
-/***/ },
+/***/ }),
 /* 73 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const underscore_1 = __webpack_require__(67);
@@ -6567,9 +6567,9 @@ webpackJsonp([0],[
 	exports.concatUrlParts = concatUrlParts;
 
 
-/***/ },
+/***/ }),
 /* 74 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const backbone_1 = __webpack_require__(68);
@@ -6595,9 +6595,9 @@ webpackJsonp([0],[
 	exports.request = request;
 
 
-/***/ },
+/***/ }),
 /* 75 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const http_1 = __webpack_require__(65);
@@ -6627,9 +6627,9 @@ webpackJsonp([0],[
 	exports.prepareSearchParams = prepareSearchParams;
 
 
-/***/ },
+/***/ }),
 /* 76 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6697,9 +6697,9 @@ webpackJsonp([0],[
 	exports.BaseCollection = BaseCollection;
 
 
-/***/ },
+/***/ }),
 /* 77 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6757,9 +6757,9 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 78 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -6774,9 +6774,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 79 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -6788,16 +6788,16 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 80 */,
 /* 81 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"collection-search\">\n  <input type=\"range\"\n         class=\"form-control\"\n         aria-describedby=\"basic-addon3\"\n         name=\"search\"\n         min=\"1000\"\n         max=\"3600000\"\n         [(ngModel)]=\"query\"\n         (ngModelChange)=\"search()\">\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 82 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6878,9 +6878,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 83 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6921,9 +6921,9 @@ webpackJsonp([0],[
 	exports.UserAnalyticsService = UserAnalyticsService;
 
 
-/***/ },
+/***/ }),
 /* 84 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const base_collection_1 = __webpack_require__(76);
@@ -6969,9 +6969,9 @@ webpackJsonp([0],[
 	exports.TrackingProviders = TrackingProviders;
 
 
-/***/ },
+/***/ }),
 /* 85 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7002,9 +7002,9 @@ webpackJsonp([0],[
 	exports.TrackingProviderModel = TrackingProviderModel;
 
 
-/***/ },
+/***/ }),
 /* 86 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -7019,17 +7019,17 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 87 */
 79,
 /* 88 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<span (click)=\"sort()\" [style.font-weight]=\"isSorted()?'bold':'normal'\">\n  <i *ngIf=\"isSorted()\"\n     class=\"fa fa-angle-up\"\n     [class.fa-angle-up]=\"collection.sortOrder === 'ASC' && comparator\"\n     [class.fa-angle-down]=\"collection.sortOrder === 'DESC' && comparator\"\n     aria-hidden=\"true\"></i>\n  {{label}}\n</span>\n";
 
-/***/ },
+/***/ }),
 /* 89 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7070,9 +7070,9 @@ webpackJsonp([0],[
 	exports.TracksModule = TracksModule;
 
 
-/***/ },
+/***/ }),
 /* 90 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7122,7 +7122,7 @@ webpackJsonp([0],[
 	var _a, _b, _c;
 
 
-/***/ },
+/***/ }),
 /* 91 */,
 /* 92 */,
 /* 93 */,
@@ -7141,7 +7141,7 @@ webpackJsonp([0],[
 /* 106 */,
 /* 107 */,
 /* 108 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7184,9 +7184,9 @@ webpackJsonp([0],[
 	exports.Track = Track;
 
 
-/***/ },
+/***/ }),
 /* 109 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7224,9 +7224,9 @@ webpackJsonp([0],[
 	exports.User = User;
 
 
-/***/ },
+/***/ }),
 /* 110 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7272,19 +7272,22 @@ webpackJsonp([0],[
 	exports.SoundcloudModel = SoundcloudModel;
 
 
-/***/ },
+/***/ }),
 /* 111 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
+	const soundCloudredirectDomain = 'https://sc.menu-flow.com';
 	exports.Config = {
-	    soundcloudClientId: 'abb6c1cad3f409112a5995bf922e1d1e'
+	    soundcloudClientId: 'mqCVRxAeYDUjlPhqj27Hb1H9kydm9fMm',
+	    soundcloudRedirectDomain: soundCloudredirectDomain,
+	    soundcloudRedirectUrl: soundCloudredirectDomain + '/connect'
 	};
 
 
-/***/ },
+/***/ }),
 /* 112 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 	let _session = null;
@@ -7298,9 +7301,9 @@ webpackJsonp([0],[
 	exports.getSession = getSession;
 
 
-/***/ },
+/***/ }),
 /* 113 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7345,9 +7348,9 @@ webpackJsonp([0],[
 	exports.SoundcloudImageModel = SoundcloudImageModel;
 
 
-/***/ },
+/***/ }),
 /* 114 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -7362,9 +7365,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 115 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -7376,15 +7379,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 116 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n\n  <span (click)=\"goBack()\"><i class=\"fa fa-chevron-left\"></i> Back</span>\n  <h2>Details</h2>\n\n  <hr>\n\n  <div class=\"cover\">\n    <img [src]=\"track.get('artwork_url').getLargeSize()\">\n  </div>\n  <div class=\"details\">\n    <b>{{track.get('title')}}</b>\n    <p>{{track.get('user').get('username')}}</p>\n    <play-button [track]=\"track\"></play-button>\n    <a href=\"{{track.attributes.purchase_url}}\" target=\"_blank\" *ngIf=\"track.attributes.purchase_url\">\n      <button class=\"btn btn-warning\" [class.btn-round]=\"!track.attributes.purchase_title\">\n        <i class=\"fa fa-download\"></i>\n        {{track.attributes.purchase_title}}\n      </button>\n    </a>\n    <a href=\"{{track.attributes.permalink_url}}\" target=\"_blank\" *ngIf=\"track.attributes.permalink_url\">\n      <button class=\"btn btn-success btn-round\">\n        <i class=\"fa fa-share\"></i>\n      </button>\n    </a>\n  </div>\n\n</section>\n\n";
 
-/***/ },
+/***/ }),
 /* 117 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7414,9 +7417,9 @@ webpackJsonp([0],[
 	exports.TracksRoutingModule = TracksRoutingModule;
 
 
-/***/ },
+/***/ }),
 /* 118 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7527,9 +7530,9 @@ webpackJsonp([0],[
 	exports.SharedModule = SharedModule;
 
 
-/***/ },
+/***/ }),
 /* 119 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7570,9 +7573,9 @@ webpackJsonp([0],[
 	exports.HumanReadableSecondsPipe = HumanReadableSecondsPipe;
 
 
-/***/ },
+/***/ }),
 /* 120 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7632,9 +7635,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 121 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7677,9 +7680,9 @@ webpackJsonp([0],[
 	exports.Tracks = Tracks;
 
 
-/***/ },
+/***/ }),
 /* 122 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7726,9 +7729,9 @@ webpackJsonp([0],[
 	exports.SoundcloudCollection = SoundcloudCollection;
 
 
-/***/ },
+/***/ }),
 /* 123 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const play_queue_item_model_1 = __webpack_require__(124);
@@ -7933,9 +7936,9 @@ webpackJsonp([0],[
 	exports.PlayQueue = PlayQueue;
 
 
-/***/ },
+/***/ }),
 /* 124 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const track_model_1 = __webpack_require__(108);
@@ -7985,9 +7988,9 @@ webpackJsonp([0],[
 	exports.PlayQueueItem = PlayQueueItem;
 
 
-/***/ },
+/***/ }),
 /* 125 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8058,9 +8061,9 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 126 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -8075,9 +8078,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 127 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -8089,15 +8092,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 128 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"track-cover\" [class.hasNoTrack]=\"!track || !getArtworkUrl()\">\n  <div *ngIf=\"track && getArtworkUrl()\"\n       class=\"cover\">\n    <img [src]=\"getArtworkUrl()\">\n  </div>\n\n  <div *ngIf=\"!track || !getArtworkUrl()\"\n       class=\"no-track\">\n    <cloud-player-logo [animate]=\"animate\"></cloud-player-logo>\n  </div>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 129 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 	(function (OsNames) {
@@ -8195,9 +8198,9 @@ webpackJsonp([0],[
 	exports.ClientDetector = ClientDetector;
 
 
-/***/ },
+/***/ }),
 /* 130 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -8212,9 +8215,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 131 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -8226,15 +8229,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 132 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"tracks-list\">\n  <sort-tracks [tracks]=\"tracks\"></sort-tracks>\n  <div *ngFor=\"let track of tracks.models\" class=\"track\"\n       draggable=\"true\"\n       [dragData]=\"track.toJSON()\"\n       [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n       dragEffect=\"copy\">\n    <div class=\"cover\">\n      <track-cover [track]=\"track\" [size]=\"getSize()\"></track-cover>\n      <play-button [track]=\"track\" [tracks]=\"tracks\"></play-button>\n    </div>\n    <div class=\"details\">\n      <div class=\"track-info\">\n        <toggle-liked-track [track]=\"track\"></toggle-liked-track>\n        <div class=\"meta\"\n             playTrackOn\n             [events]=\"['click']\"\n             [track]=\"track\"\n             [tracks]=\"tracks\">\n          <b class=\"track-title\">{{track.get('title')}}</b>\n          <div class=\"artist\">\n            <span>{{track.get('user').get('username')}}</span>\n            <span class=\"created\">created\n              <span [timeAgo]=\"track.get('created_at')\">{{track.get('created_at')}}</span>\n            </span>\n          </div>\n        </div>\n        <options-btn>\n          <options-btn-option playTrackOn=\"click\" [track]=\"track\" [tracks]=\"tracks\">\n            Play this track and the following ones\n          </options-btn-option>\n          <options-btn-option playTrackOn=\"click\" [track]=\"track\">\n            Play only this track\n          </options-btn-option>\n          <options-btn-option (click)=\"addToQueue(track)\">\n            Add as next track to the playqueue\n          </options-btn-option>\n        </options-btn>\n      </div>\n      <div class=\"stats\">\n        <div class=\"duration label label-default label-light\">\n          <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n          {{track.get('duration')/1000 | hReadableSeconds}}\n        </div>\n        <div class=\"favs label label-default label-light\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\" alt=\"favouites count\"></i> {{track.get('likes') | kMilShortener}}\n        </div>\n        <div class=\"plays label label-default label-light\">\n          <i class=\"fa fa-play-circle\" aria-hidden=\"true\" alt=\"play count\"></i> {{track.get('playback_count') | kMilShortener}}\n        </div>\n        <div *ngIf=\"track.get('genre')\"\n             class=\"genre label label-default label-light\">\n          #{{track.get('genre')}}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 133 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8321,9 +8324,9 @@ webpackJsonp([0],[
 	var _a, _b, _c;
 
 
-/***/ },
+/***/ }),
 /* 134 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8340,6 +8343,7 @@ webpackJsonp([0],[
 	const session_manager_fn_1 = __webpack_require__(112);
 	const soundcloud_model_1 = __webpack_require__(110);
 	const localforage = __webpack_require__(144);
+	const config_1 = __webpack_require__(111);
 	let Session_1 = class Session extends soundcloud_model_1.SoundcloudModel {
 	    constructor() {
 	        super(...arguments);
@@ -8390,9 +8394,10 @@ webpackJsonp([0],[
 	    ;
 	    refresh() {
 	        if (this.get('refresh_token')) {
-	            return this.request('//sc.menu-flow.com/connect/', 'PUT', {
+	            return this.request(config_1.Config.soundcloudRedirectUrl + '/', 'PUT', {
 	                data: {
-	                    refresh_token: this.get('refresh_token')
+	                    refresh_token: this.get('refresh_token'),
+	                    version: 2
 	                }
 	            }).then((rsp) => {
 	                let data = rsp.json();
@@ -8452,9 +8457,9 @@ webpackJsonp([0],[
 	session_manager_fn_1.setSession(Session.getInstance());
 
 
-/***/ },
+/***/ }),
 /* 135 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8495,9 +8500,9 @@ webpackJsonp([0],[
 	exports.AuthenticatedUser = AuthenticatedUser;
 
 
-/***/ },
+/***/ }),
 /* 136 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8526,9 +8531,9 @@ webpackJsonp([0],[
 	exports.AuthenticatedUserLikedTracks = AuthenticatedUserLikedTracks;
 
 
-/***/ },
+/***/ }),
 /* 137 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8555,9 +8560,9 @@ webpackJsonp([0],[
 	exports.AuthenticatedUserLikedTrack = AuthenticatedUserLikedTrack;
 
 
-/***/ },
+/***/ }),
 /* 138 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8586,9 +8591,9 @@ webpackJsonp([0],[
 	exports.AuthenticatedUserPlaylists = AuthenticatedUserPlaylists;
 
 
-/***/ },
+/***/ }),
 /* 139 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8617,9 +8622,9 @@ webpackJsonp([0],[
 	exports.Playlists = Playlists;
 
 
-/***/ },
+/***/ }),
 /* 140 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8689,9 +8694,9 @@ webpackJsonp([0],[
 	exports.Playlist = Playlist;
 
 
-/***/ },
+/***/ }),
 /* 141 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8738,9 +8743,9 @@ webpackJsonp([0],[
 	exports.AuthenticatedUserPlaylist = AuthenticatedUserPlaylist;
 
 
-/***/ },
+/***/ }),
 /* 142 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8783,9 +8788,9 @@ webpackJsonp([0],[
 	exports.AuthenticatedUserPlaylistTracks = AuthenticatedUserPlaylistTracks;
 
 
-/***/ },
+/***/ }),
 /* 143 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8826,10 +8831,10 @@ webpackJsonp([0],[
 	exports.AuthenticatedUserPlaylistTrack = AuthenticatedUserPlaylistTrack;
 
 
-/***/ },
+/***/ }),
 /* 144 */,
 /* 145 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8845,6 +8850,7 @@ webpackJsonp([0],[
 	const session_model_1 = __webpack_require__(134);
 	const localforage = __webpack_require__(144);
 	const user_analytics_service_1 = __webpack_require__(83);
+	const config_1 = __webpack_require__(111);
 	let AuthService = class AuthService {
 	    constructor(userAnalyticsService) {
 	        this.userAnalyticsService = userAnalyticsService;
@@ -8864,22 +8870,23 @@ webpackJsonp([0],[
 	    }
 	    receiveConnectMessage(event) {
 	        let origin = event.origin || event.originalEvent.origin;
-	        if (origin !== 'http://sc.menu-flow.com') {
+	        if (origin !== config_1.Config.soundcloudRedirectDomain) {
 	            return;
 	        }
 	        this.connectionSuccessFul(event.data);
 	    }
 	    getConnectionUrl() {
 	        return '//soundcloud.com/connect?' +
-	            'client_id=abb6c1cad3f409112a5995bf922e1d1e&' +
-	            'redirect_uri=http://sc.menu-flow.com/connect&' +
-	            'response_type=code';
+	            'client_id=' + config_1.Config.soundcloudClientId + '&' +
+	            'redirect_uri=' + config_1.Config.soundcloudRedirectUrl + '&' +
+	            'response_type=code&' +
+	            'state=v2';
 	    }
 	    connect() {
 	        this.userAnalyticsService.trackEvent('sc_auth_start', 'click', 'auth-service');
 	        let popup = window.open(this.getConnectionUrl());
 	        this.checkInterval = setInterval(() => {
-	            popup.postMessage(null, 'http://sc.menu-flow.com');
+	            popup.postMessage(null, config_1.Config.soundcloudRedirectDomain);
 	        }, 100);
 	    }
 	    disconnect() {
@@ -8904,9 +8911,9 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 146 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -8921,9 +8928,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 147 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -8935,15 +8942,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 148 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<span class=\"toggle-liked-track\">\n  <i class=\"fa\"\n     [class.fa-heart]=\"hasLikedTrack()\"\n     [class.fa-heart-o]=\"!hasLikedTrack()\"\n     aria-hidden=\"true\"\n     (click)=\"toggleLike()\"></i>\n\n  <div class=\"not-authenticated\" [@visibilityChanged]=\"showAuthenticateTooltip\">\n    <a (click)=\"connect()\">Connect with SoundCloud</a> to like tracks\n  </div>\n</span>\n";
 
-/***/ },
+/***/ }),
 /* 149 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8988,9 +8995,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 150 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9005,9 +9012,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 151 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -9019,15 +9026,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 152 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"play-button\"\n     [class.isPlaying]=\"isPlaying()\"\n     playTrackOn=\"click\"\n     [track]=\"track\"\n     [tracks]=\"tracks\">\n  <button class=\"btn btn-round btn-brand\" *ngIf=\"!isPlaying()\">\n    <i class=\"fa fa-play play\"></i>\n  </button>\n  <button class=\"btn btn-round btn-brand\" *ngIf=\"isPlaying()\">\n    <i class=\"fa fa-pause\"></i>\n  </button>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 153 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9082,9 +9089,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 154 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9099,17 +9106,17 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 155 */
 151,
 /* 156 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<button class=\"btn btn-round btn-primary\" *ngIf=\"!isQueued()\" (click)=\"queue()\" title=\"Add to Queue\">\n  <i class=\"fa fa-history\"></i>\n</button>\n";
 
-/***/ },
+/***/ }),
 /* 157 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9141,9 +9148,9 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 158 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9158,9 +9165,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 159 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -9172,15 +9179,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 160 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"sort-tracks\">\n  <span class=\"sort-by visible-xs\">\n    <i class=\"fa fa-sort\" aria-hidden=\"true\"></i>\n  </span>\n  <span class=\"sort-by sort-by-tracks hidden-xs\">\n    Sort tracks by:\n  </span>\n  <collection-sort [collection]=\"tracks\" [label]=\"'None'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'duration'\" [label]=\"'Duration'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'likes'\" [label]=\"'Likes'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'playback_count'\" [label]=\"'Plays'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'created_at'\" [label]=\"'Created'\"></collection-sort>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 161 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9350,9 +9357,9 @@ webpackJsonp([0],[
 	var _a, _b, _c, _d;
 
 
-/***/ },
+/***/ }),
 /* 162 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9367,9 +9374,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 163 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -9381,15 +9388,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 164 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"range-slider-component\" [class.is-loading]=\"showLoadingSpinner\" [class.is-dragging]=\"dragInProgress\">\n  <div *ngIf=\"!hideSliderValue && min !== null\"\n       class=\"min-value\">\n    <span *ngIf=\"showCurrentValue\">\n      {{getDisplayValue(value)}}\n    </span>\n    <span *ngIf=\"!showCurrentValue\">\n      {{getDisplayValue(min)}}\n    </span>\n  </div>\n\n  <div #progressBar class=\"progress-bar\">\n    <div #progressLine class=\"progress-line\"></div>\n    <div #handle class=\"visible-dragger\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">{{dragDisplayValue}}</span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n    <input type=\"range\" [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpValue\" [step]=\"step\">\n  </div>\n\n  <div *ngIf=\"!hideSliderValue && max !== null\"\n       class=\"max-value\">\n    {{getDisplayValue(max)}}\n  </div>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 165 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9479,9 +9486,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 166 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9573,9 +9580,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 167 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9825,9 +9832,9 @@ webpackJsonp([0],[
 	var _a, _b, _c, _d, _e, _f, _g;
 
 
-/***/ },
+/***/ }),
 /* 168 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9842,9 +9849,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 169 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -9856,15 +9863,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 170 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"two-range-slider-component\" [class.is-loading]=\"showLoadingSpinner\" [class.is-dragging]=\"dragInProgress\">\n  <div *ngIf=\"!hideSliderValue && min !== null\"\n       class=\"min-value\">\n    {{getDisplayValue(min)}}\n  </div>\n\n  <div #progressBar class=\"progress-bar\">\n    <div #progressLine class=\"progress-line\"></div>\n\n    <div #handleOne class=\"visible-dragger handle-one\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">\n        <span *ngIf=\"allowInfinityMin && dragHandleMinDisplayValue === null\">None</span>\n        <span *ngIf=\"!allowInfinityMin || dragHandleMinDisplayValue !== null\">{{dragHandleMinDisplayValue}}</span>\n      </span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n\n    <div #handleTwo class=\"visible-dragger handle-two\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">\n        <span *ngIf=\"allowInfinityMax && dragHandleMaxDisplayValue === null\">None</span>\n        <span *ngIf=\"!allowInfinityMax || dragHandleMaxDisplayValue !== null\">{{dragHandleMaxDisplayValue}}</span>\n      </span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n\n    <input type=\"range\" #sliderOne [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpMinValue\" [step]=\"step\">\n    <input type=\"range\" #sliderTwo [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpMaxValue\" [step]=\"step\">\n  </div>\n\n  <div *ngIf=\"!hideSliderValue && max !== null\"\n       class=\"max-value\">\n    {{getDisplayValue(max)}}\n  </div>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 171 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9890,9 +9897,9 @@ webpackJsonp([0],[
 	exports.ViewHeaderComponent = ViewHeaderComponent;
 
 
-/***/ },
+/***/ }),
 /* 172 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9907,9 +9914,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 173 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -9921,15 +9928,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 174 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"view-header\">\n  <ng-content></ng-content>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 175 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9955,9 +9962,9 @@ webpackJsonp([0],[
 	exports.ScrollViewComponent = ScrollViewComponent;
 
 
-/***/ },
+/***/ }),
 /* 176 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -9972,9 +9979,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 177 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -9986,15 +9993,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 178 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"scroll-view\">\n  <ng-content></ng-content>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 179 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10030,9 +10037,9 @@ webpackJsonp([0],[
 	exports.CloudPlayerLogoService = CloudPlayerLogoService;
 
 
-/***/ },
+/***/ }),
 /* 180 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10109,9 +10116,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 181 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -10126,9 +10133,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 182 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -10140,21 +10147,21 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 183 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = "<div class=\"cloud-player-logo\">\n  <object type=\"image/svg+xml\" data=\"" + __webpack_require__(184) + "\" #svgObject>\n    <img src=\"" + __webpack_require__(184) + "\" alt=\"Cloud Player\">\n  </object>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 184 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "ebd7bf47dcdbd9ebebea93f422e84dd1.svg";
 
-/***/ },
+/***/ }),
 /* 185 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10215,9 +10222,9 @@ webpackJsonp([0],[
 	exports.ToggleSwitchComponent = ToggleSwitchComponent;
 
 
-/***/ },
+/***/ }),
 /* 186 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -10232,9 +10239,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 187 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -10246,15 +10253,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 188 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"toggle-switch\" [class.on]=\"isOn()\" [class.off]=\"!isOn()\">\n  <div class=\"left\" [class.active]=\"!isOn()\" (click)=\"turnOff()\">\n    <i class=\"fa fa-lock\" aria-hidden=\"true\"></i>\n  </div>\n\n  <div class=\"right\" [class.active]=\"isOn()\" (click)=\"turnOn()\">\n    <i class=\"fa fa-globe\" aria-hidden=\"true\"></i>\n  </div>\n\n  <div class=\"indicator\" (click)=\"toggle()\"></div>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 189 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10292,9 +10299,9 @@ webpackJsonp([0],[
 	exports.LoadingSpinnerComponent = LoadingSpinnerComponent;
 
 
-/***/ },
+/***/ }),
 /* 190 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -10309,9 +10316,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 191 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -10323,15 +10330,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 192 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"idle-dots\" *ngIf=\"isIdle && !isLoading\">\n  <div class=\"dot one\"></div>\n  <div class=\"dot two\"></div>\n  <div class=\"dot three\"></div>\n</div>\n\n<div class=\"loading-spinner\" *ngIf=\"isLoading\">\n  <div class=\"load-circle-line-mask\">\n    <div class=\"load-line\"></div>\n  </div>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 193 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10427,9 +10434,9 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
+/***/ }),
 /* 194 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -10444,9 +10451,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 195 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -10458,15 +10465,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 196 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"collection-search\">\n  <form class=\"input-group\"\n        autocomplete=\"off\"\n        (submit)=\"search(); searchInput.blur()\">\n    <span class=\"input-group-addon\" id=\"basic-addon3\"><i class=\"fa fa-search\"></i></span>\n    <input type=\"text\"\n           class=\"form-control\"\n           aria-describedby=\"basic-addon3\"\n           name=\"search\"\n           placeholder=\"Search\"\n           [(ngModel)]=\"query\"\n           (ngModelChange)=\"searchOnInput()\"\n           #searchInput>\n    <loading-spinner [isIdle]=\"isIdle\" [isLoading]=\"isLoading\"></loading-spinner>\n  </form>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 197 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10497,9 +10504,9 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 198 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10560,9 +10567,9 @@ webpackJsonp([0],[
 	var _a, _b, _c, _d;
 
 
-/***/ },
+/***/ }),
 /* 199 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -10577,9 +10584,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 200 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -10591,15 +10598,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 201 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"view-change-loader\">\n  <loading-spinner></loading-spinner>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 202 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10647,7 +10654,7 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 203 */,
 /* 204 */,
 /* 205 */,
@@ -10767,7 +10774,7 @@ webpackJsonp([0],[
 /* 319 */,
 /* 320 */,
 /* 321 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10861,9 +10868,9 @@ webpackJsonp([0],[
 	var _a, _b, _c;
 
 
-/***/ },
+/***/ }),
 /* 322 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10966,9 +10973,9 @@ webpackJsonp([0],[
 	var _a, _b, _c, _d;
 
 
-/***/ },
+/***/ }),
 /* 323 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -10983,9 +10990,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 324 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -10997,15 +11004,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 325 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"options-btn\">\n  <div class=\"btn btn-xs btn-default\" (click)=\"toggleOpen()\" #toggler>\n    <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\" alt=\"Options\"></i>\n  </div>\n  <ul [hidden]=\"!optionsAreVisible\"\n      class=\"options-list\"\n      #optionsHolder>\n    <ng-content></ng-content>\n  </ul>\n</div>\n";
 
-/***/ },
+/***/ }),
 /* 326 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11046,9 +11053,9 @@ webpackJsonp([0],[
 	exports.KMilShortenerPipe = KMilShortenerPipe;
 
 
-/***/ },
+/***/ }),
 /* 327 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11081,9 +11088,9 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
 /* 328 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11104,7 +11111,7 @@ webpackJsonp([0],[
 	const session_module_1 = __webpack_require__(334);
 	const backbone_module_1 = __webpack_require__(66);
 	const shared_module_1 = __webpack_require__(118);
-	const search_filter_component_1 = __webpack_require__(376);
+	const search_filter_component_1 = __webpack_require__(370);
 	let DashboardModule = class DashboardModule {
 	};
 	DashboardModule = __decorate([
@@ -11128,9 +11135,9 @@ webpackJsonp([0],[
 	exports.DashboardModule = DashboardModule;
 
 
-/***/ },
+/***/ }),
 /* 329 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11191,9 +11198,9 @@ webpackJsonp([0],[
 	var _a, _b, _c;
 
 
-/***/ },
+/***/ }),
 /* 330 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -11208,9 +11215,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 331 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -11222,15 +11229,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 332 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
-	module.exports = "<section class=\"column\">\n  <view-header>\n    <collection-text-input-search [collection]=\"tracks\" [queryParam]=\"'q'\" #searchBar></collection-text-input-search>\n  </view-header>\n\n  <!--<collection-range-input-search [collection]=\"tracks\" [queryParam]=\"'duration[from]'\"></collection-range-input-search>-->\n  <!--<sort-tracks [tracks]=\"tracks\"></sort-tracks>-->\n\n  <scroll-view>\n    <div *ngIf=\"tracks.length>0\"\n         class=\"results\">\n      <search-filter [collection]=\"tracks\"></search-filter>\n      <track-list [tracks]=\"tracks\"></track-list>\n    </div>\n    <div *ngIf=\"tracks.length === 0 && !isFetching\"\n         class=\"card getting-started\">\n      <h1>Welcome to Cloud Player!</h1>\n      <p>\n        Cloud player is an inoffical SoundCloud player to play songs from SoundCloud.\n        <br>\n        You can search for all songs that are available on SoundCloud\n      </p>\n      <p>\n        <a (click)=\"connect()\">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They will appear in the menubar\n        as soon as the connection was successful.\n      </p>\n      <p>\n        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply\n        drag and drop tracks on it.\n      </p>\n      <p>Cloud Player is also available as <a routerLink=\"/desktop-app\">native App for your PC.</a></p>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && isFetching\"\n         class=\"card\">\n      Searching for tracks that match your query \"{{tracks.queryParams.q}}\"\n    </div>\n  </scroll-view>\n</section>\n";
+	module.exports = "<section class=\"column\">\n  <view-header>\n    <collection-text-input-search [collection]=\"tracks\" [queryParam]=\"'q'\" #searchBar></collection-text-input-search>\n  </view-header>\n\n  <!--<collection-range-input-search [collection]=\"tracks\" [queryParam]=\"'duration[from]'\"></collection-range-input-search>-->\n  <!--<sort-tracks [tracks]=\"tracks\"></sort-tracks>-->\n\n  <scroll-view>\n    <div *ngIf=\"tracks.length>0\"\n         class=\"results\">\n      <search-filter [collection]=\"tracks\"></search-filter>\n      <track-list [tracks]=\"tracks\"></track-list>\n    </div>\n    <div *ngIf=\"tracks.length === 0 && !isFetching\"\n         class=\"card getting-started\">\n      <h1>Welcome to Cloud Player!</h1>\n      <p>\n        Cloud player is an unofficial SoundCloud player to play songs from SoundCloud.\n        <br>\n        You can search for all songs that are available on SoundCloud\n      </p>\n      <p>\n        <a (click)=\"connect()\">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They will appear in the menubar\n        as soon as the connection was successful.\n      </p>\n      <p>\n        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply\n        drag and drop tracks on it.\n      </p>\n      <p>Cloud Player is also available as <a routerLink=\"/desktop-app\">native App for your PC.</a></p>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && isFetching\"\n         class=\"card\">\n      Searching for tracks that match your query \"{{tracks.queryParams.q}}\"\n    </div>\n  </scroll-view>\n</section>\n";
 
-/***/ },
+/***/ }),
 /* 333 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11260,9 +11267,9 @@ webpackJsonp([0],[
 	exports.DashboardRoutingModule = DashboardRoutingModule;
 
 
-/***/ },
+/***/ }),
 /* 334 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11277,17 +11284,15 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const platform_browser_1 = __webpack_require__(21);
 	const forms_1 = __webpack_require__(62);
-	const connect_btn_component_1 = __webpack_require__(335);
-	const session_routes_1 = __webpack_require__(339);
-	const soundcloud_callback_component_1 = __webpack_require__(340);
-	const show_when_authenticated_1 = __webpack_require__(364);
-	const authenticated_user_playlists_1 = __webpack_require__(353);
-	const liked_tracks_view_component_1 = __webpack_require__(344);
+	const session_routes_1 = __webpack_require__(335);
+	const soundcloud_callback_component_1 = __webpack_require__(336);
+	const authenticated_user_playlists_1 = __webpack_require__(349);
+	const liked_tracks_view_component_1 = __webpack_require__(340);
 	const shared_module_1 = __webpack_require__(118);
-	const user_playlist_view_component_1 = __webpack_require__(348);
-	const authenticated_user_playlists_view_component_1 = __webpack_require__(352);
-	const playlist_module_1 = __webpack_require__(366);
-	const authenticated_user_view_component_1 = __webpack_require__(360);
+	const user_playlist_view_component_1 = __webpack_require__(344);
+	const authenticated_user_playlists_view_component_1 = __webpack_require__(348);
+	const playlist_module_1 = __webpack_require__(360);
+	const authenticated_user_view_component_1 = __webpack_require__(356);
 	let SessionModule = class SessionModule {
 	};
 	SessionModule = __decorate([
@@ -11300,9 +11305,7 @@ webpackJsonp([0],[
 	            shared_module_1.SharedModule
 	        ],
 	        declarations: [
-	            connect_btn_component_1.ConnectBtnComponent,
 	            soundcloud_callback_component_1.SoundcloudCallbackComponent,
-	            show_when_authenticated_1.ShowWhenAuthenticatedComponent,
 	            authenticated_user_playlists_1.AuthenticatedUserPlaylists,
 	            liked_tracks_view_component_1.LikedTracksViewComponent,
 	            user_playlist_view_component_1.UserPlayListViewComponent,
@@ -11310,8 +11313,6 @@ webpackJsonp([0],[
 	            authenticated_user_view_component_1.AuthenticatedUserViewComponent
 	        ],
 	        exports: [
-	            connect_btn_component_1.ConnectBtnComponent,
-	            show_when_authenticated_1.ShowWhenAuthenticatedComponent,
 	            authenticated_user_playlists_1.AuthenticatedUserPlaylists,
 	            authenticated_user_playlists_view_component_1.AuthenticatedUserPlaylistsViewComponent
 	        ]
@@ -11321,120 +11322,9 @@ webpackJsonp([0],[
 	exports.SessionModule = SessionModule;
 
 
-/***/ },
+/***/ }),
 /* 335 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
-	let ConnectBtnComponent = class ConnectBtnComponent {
-	    constructor() {
-	        this.session = session_model_1.Session.getInstance();
-	        window.addEventListener('message', this.receiveConnectMessage.bind(this), false);
-	        window.addEventListener('connectionSuccessFul', (ev) => {
-	            let creds = ev.detail;
-	            if (creds) {
-	                try {
-	                    creds = JSON.parse(creds);
-	                }
-	                catch (err) {
-	                }
-	                this.connectionSuccessFul(creds);
-	            }
-	        });
-	    }
-	    receiveConnectMessage(event) {
-	        let origin = event.origin || event.originalEvent.origin;
-	        if (origin !== 'http://sc.menu-flow.com') {
-	            return;
-	        }
-	        this.connectionSuccessFul(event.data);
-	    }
-	    getConnectionUrl() {
-	        return '//soundcloud.com/connect?' +
-	            'client_id=abb6c1cad3f409112a5995bf922e1d1e&' +
-	            'redirect_uri=http://sc.menu-flow.com/connect&' +
-	            'response_type=code';
-	    }
-	    connect() {
-	        let popup = window.open(this.getConnectionUrl());
-	        this.checkInterval = setInterval(() => {
-	            popup.postMessage(null, 'http://sc.menu-flow.com');
-	        }, 100);
-	    }
-	    connectionSuccessFul(params) {
-	        this.session.set({
-	            access_token: params.access_token,
-	            expires_on: params.expires_on,
-	            refresh_token: params.refresh_token
-	        });
-	    }
-	};
-	__decorate([
-	    core_1.Input(), 
-	    __metadata('design:type', Boolean)
-	], ConnectBtnComponent.prototype, "auth", void 0);
-	ConnectBtnComponent = __decorate([
-	    core_1.Component({
-	        selector: 'connect-btn',
-	        styles: [__webpack_require__(336)],
-	        template: __webpack_require__(338)
-	    }), 
-	    __metadata('design:paramtypes', [])
-	], ConnectBtnComponent);
-	exports.ConnectBtnComponent = ConnectBtnComponent;
-
-
-/***/ },
-/* 336 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// css-to-string-loader: transforms styles from css-loader to a string output
-
-	// Get the styles
-	var styles = __webpack_require__(337);
-
-	if (typeof styles === 'string') {
-	  // Return an existing string
-	  module.exports = styles;
-	} else {
-	  // Call the custom toString method from css-loader module
-	  module.exports = styles.toString();
-	}
-
-/***/ },
-/* 337 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(80)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "div.connect a {\n  margin: 5px auto;\n  color: #222222;\n  display: inline-block;\n  text-align: center;\n  width: 100%; }\n\ndiv.connect a:hover {\n  color: #777777; }\n\ndiv.connect i {\n  margin: 10px auto;\n  font-size: 38px; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 338 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"connect\">\n\n  <a (click)=\"connect()\" *ngIf=\"!auth\">\n    <i class=\"fa fa-sign-in\" aria-hidden=\"true\"></i>\n    <p class=\"visible-lg\">Connect</p>\n  </a>\n\n  <a (click)=\"disconnect()\" *ngIf=\"auth\">\n    <i class=\"fa fa-sign-out\" aria-hidden=\"true\"></i>\n    <p class=\"visible-lg\">Disconnect</p>\n  </a>\n\n</div>\n";
-
-/***/ },
-/* 339 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11448,11 +11338,11 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const soundcloud_callback_component_1 = __webpack_require__(340);
-	const liked_tracks_view_component_1 = __webpack_require__(344);
-	const user_playlist_view_component_1 = __webpack_require__(348);
-	const authenticated_user_playlists_view_component_1 = __webpack_require__(352);
-	const authenticated_user_view_component_1 = __webpack_require__(360);
+	const soundcloud_callback_component_1 = __webpack_require__(336);
+	const liked_tracks_view_component_1 = __webpack_require__(340);
+	const user_playlist_view_component_1 = __webpack_require__(344);
+	const authenticated_user_playlists_view_component_1 = __webpack_require__(348);
+	const authenticated_user_view_component_1 = __webpack_require__(356);
 	const routes = [
 	    { path: 'connect', component: soundcloud_callback_component_1.SoundcloudCallbackComponent },
 	    { path: 'me', component: authenticated_user_view_component_1.AuthenticatedUserViewComponent },
@@ -11472,9 +11362,9 @@ webpackJsonp([0],[
 	exports.SessionRoutingModule = SessionRoutingModule;
 
 
-/***/ },
-/* 340 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 336 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11513,8 +11403,8 @@ webpackJsonp([0],[
 	SoundcloudCallbackComponent = __decorate([
 	    core_1.Component({
 	        selector: 'soundcloud-callback',
-	        styles: [__webpack_require__(341)],
-	        template: __webpack_require__(343)
+	        styles: [__webpack_require__(337)],
+	        template: __webpack_require__(339)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
 	], SoundcloudCallbackComponent);
@@ -11522,14 +11412,14 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
-/* 341 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 337 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(342);
+	var styles = __webpack_require__(338);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11539,17 +11429,17 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 342 */
+/***/ }),
+/* 338 */
 151,
-/* 343 */
-/***/ function(module, exports) {
+/* 339 */
+/***/ (function(module, exports) {
 
 	module.exports = "<h1>The authentication with Soundcloud was successful!</h1>\n";
 
-/***/ },
-/* 344 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 340 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11578,8 +11468,8 @@ webpackJsonp([0],[
 	LikedTracksViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'liked-track-view',
-	        styles: [__webpack_require__(345)],
-	        template: __webpack_require__(347),
+	        styles: [__webpack_require__(341)],
+	        template: __webpack_require__(343),
 	        providers: [playlist_model_1.Playlist]
 	    }), 
 	    __metadata('design:paramtypes', [])
@@ -11587,14 +11477,14 @@ webpackJsonp([0],[
 	exports.LikedTracksViewComponent = LikedTracksViewComponent;
 
 
-/***/ },
-/* 345 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 341 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(346);
+	var styles = __webpack_require__(342);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11604,17 +11494,17 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 346 */
+/***/ }),
+/* 342 */
 151,
-/* 347 */
-/***/ function(module, exports) {
+/* 343 */
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    <i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Liked Tracks\n  </view-header>\n\n  <scroll-view>\n    <track-list [tracks]=\"user.get('likes')\"></track-list>\n  </scroll-view>\n</section>\n";
 
-/***/ },
-/* 348 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 344 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11698,8 +11588,8 @@ webpackJsonp([0],[
 	UserPlayListViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'user-play-list-view',
-	        template: __webpack_require__(349),
-	        styles: [__webpack_require__(350)]
+	        template: __webpack_require__(345),
+	        styles: [__webpack_require__(346)]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _c) || Object])
 	], UserPlayListViewComponent);
@@ -11707,20 +11597,20 @@ webpackJsonp([0],[
 	var _a, _b, _c;
 
 
-/***/ },
-/* 349 */
-/***/ function(module, exports) {
+/***/ }),
+/* 345 */
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <form (submit)=\"save()\">\n    <view-header>\n      <div *ngIf=\"isInEditMode\"\n           class=\"title edit-mode form-inline\">\n        <toggle-switch [(value)]=\"playlist.attributes.isPublic\"></toggle-switch>\n        <div class=\"form-group\">\n          <input type=\"text\"\n                 name=\"playlistName\"\n                 class=\"form-control\"\n                 id=\"playlistName\"\n                 placeholder=\"Playlist Name\"\n                 [(ngModel)]=\"playlist.attributes.title\"\n                 required\n                 focusInput>\n        </div>\n        <div class=\"button-group\">\n          <input type=\"button\" class=\"btn btn-danger\" (click)=\"cancel()\" value=\"Cancel\"/>\n          <input type=\"submit\" class=\"btn btn-success\" value=\"Save\"/>\n        </div>\n      </div>\n\n      <div *ngIf=\"!isInEditMode\" class=\"title\">\n        <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n        <span class=\"text\">{{playlist.get('title')}}</span>\n        <div class=\"button-group\">\n          <button class=\"btn btn-default\" (click)=\"isInEditMode = true\">\n            <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n          </button>\n          <button class=\"btn btn-default btn-danger\" (click)=\"destroy()\">\n            <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i>\n          </button>\n        </div>\n      </div>\n\n    </view-header>\n  </form>\n\n  <scroll-view>\n    <track-list [tracks]=\"playlist.get('tracks')\" [canBeDeleted]=\"true\"></track-list>\n  </scroll-view>\n</section>\n";
 
-/***/ },
-/* 350 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 346 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(351);
+	var styles = __webpack_require__(347);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11730,9 +11620,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 351 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 347 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -11744,9 +11634,9 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 352 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11759,23 +11649,23 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const authenticated_user_playlists_1 = __webpack_require__(353);
+	const authenticated_user_playlists_1 = __webpack_require__(349);
 	let AuthenticatedUserPlaylistsViewComponent = class AuthenticatedUserPlaylistsViewComponent extends authenticated_user_playlists_1.AuthenticatedUserPlaylists {
 	};
 	AuthenticatedUserPlaylistsViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'authenticated-user-playlists-view',
-	        template: __webpack_require__(357),
-	        styles: [__webpack_require__(358)]
+	        template: __webpack_require__(353),
+	        styles: [__webpack_require__(354)]
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylistsViewComponent);
 	exports.AuthenticatedUserPlaylistsViewComponent = AuthenticatedUserPlaylistsViewComponent;
 
 
-/***/ },
-/* 353 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11847,8 +11737,8 @@ webpackJsonp([0],[
 	AuthenticatedUserPlaylists = __decorate([
 	    core_1.Component({
 	        selector: 'authenticated-user-playlists',
-	        styles: [__webpack_require__(354)],
-	        template: __webpack_require__(356),
+	        styles: [__webpack_require__(350)],
+	        template: __webpack_require__(352),
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _a) || Object])
 	], AuthenticatedUserPlaylists);
@@ -11856,9 +11746,52 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
+/***/ }),
+/* 350 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(351);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 351 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".dummy-playlist-item i,\n.dummy-playlist-item .text,\n.dummy-playlist-item:hover i,\n.dummy-playlist-item:hover .text {\n  background: #cbcbcb;\n  color: transparent !important; }\n\n.playlist-item {\n  transition: background 0.5s ease; }\n  .playlist-item.drag-over {\n    background: #ddd; }\n    .playlist-item.drag-over .text {\n      color: #ff3600 !important; }\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 352 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"authenticated-user-playlists\">\n\n  <div class=\"nav-item new-playlist\"\n       [class.disabled]=\"!isAuthenticated()\"\n       (click)=\"addNewPlaylist()\">\n    <i class=\"fa fa-plus\" aria-hidden=\"true\"></i>\n    <div class=\"text\">New Playlist</div>\n  </div>\n\n  <div *ngIf=\"isInCreationMode\"\n       class=\"nav-item\">\n    <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\n    <div class=\"text\">\n      <form class=\"form-inline\" (submit)=\"createPlaylist()\">\n        <div class=\"form-group\">\n          <input type=\"text\"\n                 name=\"playlistName\"\n                 class=\"form-control\"\n                 id=\"playlistName\"\n                 placeholder=\"Playlist Name\"\n                 [(ngModel)]=\"tmpPlaylist.attributes.title\"\n                 (blur)=\"cancel()\"\n                 required\n                 #newPlaylistInput\n                 focusInput>\n        </div>\n      </form>\n    </div>\n  </div>\n\n  <a *ngFor=\"let playlist of user.get('playlists').models\"\n     routerLink=\"me/playlists/{{playlist.get('id')}}\"\n     class=\"playlist-item\"\n     [routerLinkActive]=\"['is-active']\"\n\n     dropzone\n     [dropCallback]=\"dropTrack\"\n     [dropItemRef]=\"playlist\">\n    <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n    <div class=\"text\">{{playlist.get('title')}}</div>\n  </a>\n\n  <div *ngIf=\"!isAuthenticated()\">\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.3\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 30%\">Playlists</div>\n    </a>\n\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.2\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 45%\">Playlists</div>\n    </a>\n\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.1\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 40%\">Playlists</div>\n    </a>\n  </div>\n\n</div>\n";
+
+/***/ }),
+/* 353 */
+/***/ (function(module, exports) {
+
+	module.exports = "<section class=\"column\">\n  <view-header>\n    Playlists\n  </view-header>\n\n  <scroll-view>\n\n    <div class=\"card\">\n      <div class=\"well\">\n        <h5>Create a new Playlist</h5>\n        <form>\n          <toggle-switch [(value)]=\"tmpPlaylist.attributes.isPublic\"></toggle-switch>\n          <input type=\"text\" placeholder=\"Playlist\" name=\"playlistName\" [(ngModel)]=\"tmpPlaylist.attributes.title\">\n          <button class=\"btn btn-round btn-primary\" (click)=\"save()\" title=\"Create playlist\"><i class=\"fa fa-plus\"></i></button>\n        </form>\n      </div>\n\n      <div class=\"playlists\">\n        <div *ngFor=\"let playlist of user.get('playlists').models\">\n          <a routerLink=\"/me/playlists/{{playlist.get('id')}}\" dropzone [dropCallback]=\"dropTrack\" [dropItemRef]=\"playlist\">\n            <div class=\"cover\">\n              <img [src]=\"playlist.get('artwork_url').getDefaultSize()\">\n            </div>\n            <div class=\"details\">\n              <p>{{playlist.get('title')}}</p>\n            </div>\n          </a>\n        </div>\n      </div>\n    </div>\n  </scroll-view>\n</section>\n";
+
+/***/ }),
 /* 354 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
@@ -11873,52 +11806,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
+/***/ }),
 /* 355 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(80)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".dummy-playlist-item i,\n.dummy-playlist-item .text,\n.dummy-playlist-item:hover i,\n.dummy-playlist-item:hover .text {\n  background: #cbcbcb;\n  color: transparent !important; }\n\n.playlist-item {\n  transition: background 0.5s ease; }\n  .playlist-item.drag-over {\n    background: #ddd; }\n    .playlist-item.drag-over .text {\n      color: #ff3600 !important; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 356 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"authenticated-user-playlists\">\n\n  <div class=\"nav-item new-playlist\"\n       [class.disabled]=\"!isAuthenticated()\"\n       (click)=\"addNewPlaylist()\">\n    <i class=\"fa fa-plus\" aria-hidden=\"true\"></i>\n    <div class=\"text\">New Playlist</div>\n  </div>\n\n  <div *ngIf=\"isInCreationMode\"\n       class=\"nav-item\">\n    <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\n    <div class=\"text\">\n      <form class=\"form-inline\" (submit)=\"createPlaylist()\">\n        <div class=\"form-group\">\n          <input type=\"text\"\n                 name=\"playlistName\"\n                 class=\"form-control\"\n                 id=\"playlistName\"\n                 placeholder=\"Playlist Name\"\n                 [(ngModel)]=\"tmpPlaylist.attributes.title\"\n                 (blur)=\"cancel()\"\n                 required\n                 #newPlaylistInput\n                 focusInput>\n        </div>\n      </form>\n    </div>\n  </div>\n\n  <a *ngFor=\"let playlist of user.get('playlists').models\"\n     routerLink=\"me/playlists/{{playlist.get('id')}}\"\n     class=\"playlist-item\"\n     [routerLinkActive]=\"['is-active']\"\n\n     dropzone\n     [dropCallback]=\"dropTrack\"\n     [dropItemRef]=\"playlist\">\n    <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n    <div class=\"text\">{{playlist.get('title')}}</div>\n  </a>\n\n  <div *ngIf=\"!isAuthenticated()\">\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.3\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 30%\">Playlists</div>\n    </a>\n\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.2\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 45%\">Playlists</div>\n    </a>\n\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.1\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 40%\">Playlists</div>\n    </a>\n  </div>\n\n</div>\n";
-
-/***/ },
-/* 357 */
-/***/ function(module, exports) {
-
-	module.exports = "<section class=\"column\">\n  <view-header>\n    Playlists\n  </view-header>\n\n  <scroll-view>\n\n    <div class=\"card\">\n      <div class=\"well\">\n        <h5>Create a new Playlist</h5>\n        <form>\n          <toggle-switch [(value)]=\"tmpPlaylist.attributes.isPublic\"></toggle-switch>\n          <input type=\"text\" placeholder=\"Playlist\" name=\"playlistName\" [(ngModel)]=\"tmpPlaylist.attributes.title\">\n          <button class=\"btn btn-round btn-primary\" (click)=\"save()\" title=\"Create playlist\"><i class=\"fa fa-plus\"></i></button>\n        </form>\n      </div>\n\n      <div class=\"playlists\">\n        <div *ngFor=\"let playlist of user.get('playlists').models\">\n          <a routerLink=\"/me/playlists/{{playlist.get('id')}}\" dropzone [dropCallback]=\"dropTrack\" [dropItemRef]=\"playlist\">\n            <div class=\"cover\">\n              <img [src]=\"playlist.get('artwork_url').getDefaultSize()\">\n            </div>\n            <div class=\"details\">\n              <p>{{playlist.get('title')}}</p>\n            </div>\n          </a>\n        </div>\n      </div>\n    </div>\n  </scroll-view>\n</section>\n";
-
-/***/ },
-/* 358 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// css-to-string-loader: transforms styles from css-loader to a string output
-
-	// Get the styles
-	var styles = __webpack_require__(359);
-
-	if (typeof styles === 'string') {
-	  // Return an existing string
-	  module.exports = styles;
-	} else {
-	  // Call the custom toString method from css-loader module
-	  module.exports = styles.toString();
-	}
-
-/***/ },
-/* 359 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -11930,9 +11820,9 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 360 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 356 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11957,8 +11847,8 @@ webpackJsonp([0],[
 	AuthenticatedUserViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'authenticated-user-view',
-	        template: __webpack_require__(361),
-	        styles: [__webpack_require__(362)]
+	        template: __webpack_require__(357),
+	        styles: [__webpack_require__(358)]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _a) || Object])
 	], AuthenticatedUserViewComponent);
@@ -11966,20 +11856,20 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
-/* 361 */
-/***/ function(module, exports) {
+/***/ }),
+/* 357 */
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    Your profile\n  </view-header>\n\n  <scroll-view>\n    <div class=\"card\">\n      <button class=\"btn btn-danger btn-block\"\n              (click)=\"disconnect()\">Sign Out</button>\n    </div>\n  </scroll-view>\n</section>\n";
 
-/***/ },
-/* 362 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(363);
+	var styles = __webpack_require__(359);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11989,9 +11879,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 363 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -12003,68 +11893,9 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 364 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
-	let ShowWhenAuthenticatedComponent = class ShowWhenAuthenticatedComponent {
-	    constructor() {
-	        this.session = session_model_1.Session.getInstance();
-	        this.isAuthenticated = false;
-	    }
-	    setAuthenticated(user) {
-	        if (user.get('authenticated')) {
-	            user.fetch().then(() => {
-	                this.isAuthenticated = true;
-	                user.get('likes').fetch();
-	            });
-	        }
-	        else {
-	            this.isAuthenticated = false;
-	        }
-	    }
-	    ;
-	    ngOnInit() {
-	        this.session.get('user').on('change:authenticated', (user) => {
-	            this.setAuthenticated(user);
-	        });
-	        if (this.session.isValid()) {
-	            this.setAuthenticated(this.session.get('user'));
-	        }
-	    }
-	    ;
-	};
-	ShowWhenAuthenticatedComponent = __decorate([
-	    core_1.Component({
-	        selector: 'show-when-authenticated',
-	        template: __webpack_require__(365),
-	    }), 
-	    __metadata('design:paramtypes', [])
-	], ShowWhenAuthenticatedComponent);
-	exports.ShowWhenAuthenticatedComponent = ShowWhenAuthenticatedComponent;
-
-
-/***/ },
-/* 365 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"show-when-authenticated\">\n  <ng-content *ngIf=\"isAuthenticated\"></ng-content>\n  <connect-btn [auth]=\"isAuthenticated\"></connect-btn>\n</div>\n";
-
-/***/ },
-/* 366 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12078,11 +11909,11 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const tracks_module_1 = __webpack_require__(89);
-	const playlist_routes_1 = __webpack_require__(367);
+	const playlist_routes_1 = __webpack_require__(361);
 	const platform_browser_1 = __webpack_require__(21);
-	const playlist_view_component_1 = __webpack_require__(368);
+	const playlist_view_component_1 = __webpack_require__(362);
 	const shared_module_1 = __webpack_require__(118);
-	const playlist_icon_component_1 = __webpack_require__(372);
+	const playlist_icon_component_1 = __webpack_require__(366);
 	let PlaylistModule = class PlaylistModule {
 	};
 	PlaylistModule = __decorate([
@@ -12106,9 +11937,9 @@ webpackJsonp([0],[
 	exports.PlaylistModule = PlaylistModule;
 
 
-/***/ },
-/* 367 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12122,7 +11953,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const playlist_view_component_1 = __webpack_require__(368);
+	const playlist_view_component_1 = __webpack_require__(362);
 	const routes = [
 	    { path: 'playlists/:id', component: playlist_view_component_1.PlayListViewComponent }
 	];
@@ -12138,9 +11969,9 @@ webpackJsonp([0],[
 	exports.PlaylistsRoutingModule = PlaylistsRoutingModule;
 
 
-/***/ },
-/* 368 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12171,8 +12002,8 @@ webpackJsonp([0],[
 	PlayListViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-list-view',
-	        styles: [__webpack_require__(369)],
-	        template: __webpack_require__(371),
+	        styles: [__webpack_require__(363)],
+	        template: __webpack_require__(365),
 	        providers: [playlist_model_1.Playlist]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof playlist_model_1.Playlist !== 'undefined' && playlist_model_1.Playlist) === 'function' && _b) || Object])
@@ -12181,14 +12012,14 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
-/* 369 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(370);
+	var styles = __webpack_require__(364);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12198,17 +12029,17 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 370 */
+/***/ }),
+/* 364 */
 151,
-/* 371 */
-/***/ function(module, exports) {
+/* 365 */
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    <i class=\"fa fa-heart\" aria-hidden=\"true\"></i> {{playlist.get('title')}}\n  </view-header>\n\n  <scroll-view>\n    <track-list [tracks]=\"playlist.get('tracks')\"></track-list>\n  </scroll-view>\n</section>\n";
 
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12233,8 +12064,8 @@ webpackJsonp([0],[
 	PlayListIconComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-list-icon',
-	        styles: [__webpack_require__(373)],
-	        template: __webpack_require__(375)
+	        styles: [__webpack_require__(367)],
+	        template: __webpack_require__(369)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], PlayListIconComponent);
@@ -12242,14 +12073,14 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
-/* 373 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(374);
+	var styles = __webpack_require__(368);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12259,9 +12090,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 374 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -12273,15 +12104,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 375 */
-/***/ function(module, exports) {
+/***/ }),
+/* 369 */
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"playlist-icon\">\n  <div *ngIf=\"playlist.get('artwork_url').getDefaultSize()\"\n       class=\"cover\">\n    <img [src]=\"playlist.get('artwork_url').getDefaultSize()\">\n  </div>\n  <i *ngIf=\"!playlist.get('artwork_url').getDefaultSize()\"\n     class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\n  <div *ngIf=\"!playlist.get('isPublic')\"\n       class=\"private-badge\">\n    <i class=\"fa fa-lock\" aria-hidden=\"true\"></i>\n  </div>\n</div>\n";
 
-/***/ },
-/* 376 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12331,8 +12162,8 @@ webpackJsonp([0],[
 	SearchFilterComponent = __decorate([
 	    core_1.Component({
 	        selector: 'search-filter',
-	        styles: [__webpack_require__(377)],
-	        template: __webpack_require__(379),
+	        styles: [__webpack_require__(371)],
+	        template: __webpack_require__(373),
 	        animations: [
 	            core_1.trigger('visibilityChanged', [
 	                core_1.state('true', core_1.style({ height: '*', marginBottom: '15px', padding: '15px', })),
@@ -12348,14 +12179,14 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
-/* 377 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 371 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(378);
+	var styles = __webpack_require__(372);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12365,9 +12196,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 378 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 372 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -12379,15 +12210,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 379 */
-/***/ function(module, exports) {
+/***/ }),
+/* 373 */
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"search-filter\">\n  <ul class=\"nav nav-tabs\">\n    <li role=\"presentation\" [class.active]=\"!showFilterForm\"><a (click)=\"toggleFilterForm()\">All Results</a></li>\n    <li role=\"presentation\" [class.active]=\"showFilterForm\"><a (click)=\"toggleFilterForm()\">Filter Result</a></li>\n  </ul>\n  <div class=\"item-amount\">\n    <span class=\"label label-default\">{{collection.length}} Tracks</span>\n  </div>\n  <div class=\"new-filter\" [@visibilityChanged]=\"showFilterForm\">\n    <form class=\"form-horizontal\">\n\n      <div class=\"form-group\">\n        <label class=\"col-sm-2 control-label\">Duration</label>\n        <div class=\"col-sm-10\">\n          <two-range-slider\n            [(minValue)]=\"this.collection.queryParams['duration[from]']\"\n            [(maxValue)]=\"this.collection.queryParams['duration[to]']\"\n            [min]=\"1000\"\n            [max]=\"3600000\"\n            [allowInfinityMin]=\"true\"\n            [allowInfinityMax]=\"true\"\n            [transformDisplayValue]=\"transformProgressBarValues\"\n            (maxValueChanged)=\"reFetch('duration_to')\"\n            (minValueChanged)=\"reFetch('duration_from')\"\n            [step]=\"1000\">\n          </two-range-slider>\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label class=\"col-sm-2 control-label\">BPM</label>\n        <div class=\"col-sm-10\">\n          <two-range-slider\n            [(minValue)]=\"this.collection.queryParams['bpm[from]']\"\n            [(maxValue)]=\"this.collection.queryParams['bpm[to]']\"\n            [min]=\"20\"\n            [max]=\"200\"\n            [allowInfinityMin]=\"true\"\n            [allowInfinityMax]=\"true\"\n            (maxValueChanged)=\"reFetch('bpm_to')\"\n            (minValueChanged)=\"reFetch('bpm_from')\"\n            [step]=\"20\">\n          </two-range-slider>\n        </div>\n      </div>\n\n      <!--<div class=\"form-group\">-->\n        <!--<label class=\"col-sm-2 control-label\">Genre</label>-->\n        <!--<div class=\"col-sm-10\">-->\n          <!--<input type=\"text\"-->\n                 <!--class=\"form-control\"-->\n                 <!--name=\"genres\"-->\n                 <!--[(ngModel)]=\"this.collection.queryParams['genres']\">-->\n        <!--</div>-->\n      <!--</div>-->\n\n      <!--<div class=\"well\">-->\n        <!--<p>Save this filter as a quick filter</p>-->\n        <!--<div class=\"form-group\">-->\n          <!--<label class=\"sr-only\" for=\"exampleInputPassword3\">Password</label>-->\n          <!--<input type=\"text\" class=\"form-control\" id=\"exampleInputPassword3\" placeholder=\"Password\">-->\n        <!--</div>-->\n      <!--</div>-->\n\n    </form>\n  </div>\n</div>\n";
 
-/***/ },
-/* 380 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12430,8 +12261,8 @@ webpackJsonp([0],[
 	MainComponent = __decorate([
 	    core_1.Component({
 	        selector: 'cloud-player',
-	        styles: [__webpack_require__(381)],
-	        template: __webpack_require__(383),
+	        styles: [__webpack_require__(375)],
+	        template: __webpack_require__(377),
 	        encapsulation: core_1.ViewEncapsulation.None
 	    }), 
 	    __metadata('design:paramtypes', [])
@@ -12439,14 +12270,14 @@ webpackJsonp([0],[
 	exports.MainComponent = MainComponent;
 
 
-/***/ },
-/* 381 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(382);
+	var styles = __webpack_require__(376);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12456,9 +12287,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 382 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -12470,15 +12301,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 383 */
-/***/ function(module, exports) {
+/***/ }),
+/* 377 */
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"main\">\n\n  <div class=\"native-bar\"></div>\n\n  <main class=\"flex-container\">\n\n    <nav-sidebar class=\"flex-item\"></nav-sidebar>\n    <audio-player class=\"flex-item\"></audio-player>\n    <div class=\"routes\">\n      <router-outlet class=\"flex-item\"></router-outlet>\n    </div>\n\n  </main>\n\n</section>\n\n<view-change-loader></view-change-loader>\n";
 
-/***/ },
-/* 384 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12492,7 +12323,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const desktop_app_view_component_1 = __webpack_require__(385);
+	const desktop_app_view_component_1 = __webpack_require__(379);
 	const routes = [
 	    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 	    { path: 'desktop-app', component: desktop_app_view_component_1.DesktopAppViewComponent }
@@ -12509,9 +12340,9 @@ webpackJsonp([0],[
 	exports.MainRoutingModule = MainRoutingModule;
 
 
-/***/ },
-/* 385 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12545,8 +12376,8 @@ webpackJsonp([0],[
 	DesktopAppViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'cloud-player',
-	        styles: [__webpack_require__(386)],
-	        template: __webpack_require__(390)
+	        styles: [__webpack_require__(380)],
+	        template: __webpack_require__(384)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _a) || Object])
 	], DesktopAppViewComponent);
@@ -12554,14 +12385,14 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
-/* 386 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(387);
+	var styles = __webpack_require__(381);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12571,53 +12402,53 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 387 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ":host .screenshot {\n  background-position-y: initial;\n  -webkit-background-size: cover;\n  margin-left: -15px;\n  width: calc(100% + 30px);\n  margin-top: -10px;\n  border-radius: 4px 4px 0 0; }\n  :host .screenshot.win {\n    background: url(" + __webpack_require__(388) + ") no-repeat;\n    height: 300px; }\n  :host .screenshot.osx {\n    background: url(" + __webpack_require__(389) + ") no-repeat;\n    height: 300px; }\n\n:host .tutorial .img-holder {\n  text-align: center; }\n", ""]);
+	exports.push([module.id, ":host .screenshot {\n  background-position-y: initial;\n  -webkit-background-size: cover;\n  margin-left: -15px;\n  width: calc(100% + 30px);\n  margin-top: -10px;\n  border-radius: 4px 4px 0 0; }\n  :host .screenshot.win {\n    background: url(" + __webpack_require__(382) + ") no-repeat;\n    height: 300px; }\n  :host .screenshot.osx {\n    background: url(" + __webpack_require__(383) + ") no-repeat;\n    height: 300px; }\n\n:host .tutorial .img-holder {\n  text-align: center; }\n", ""]);
 
 	// exports
 
 
-/***/ },
-/* 388 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "win-screenshot.72c50c881a234637ac1418f6a00c7f3a.png";
 
-/***/ },
-/* 389 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "osx-screenshot.1ea45195d62c85507366f794aaa27816.png";
 
-/***/ },
-/* 390 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 384 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = "<section class=\"column\">\n  <view-header>\n    Desktop App\n  </view-header>\n\n  <scroll-view>\n    <div class=\"card\">\n      <div class=\"screenshot\"\n           [class.win]=\"isWindowsPc()\"\n           [class.osx]=\"isMacPc()\"></div>\n      <div>\n        <h3>Download the native Cloud Player App to install it on your PC.</h3>\n        <ul>\n          <li>Create a shortcut to Cloud Player on your Desktop</li>\n          <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>\n          <li>Have all the other nice features of Cloud Player</li>\n        </ul>\n      </div>\n      <a *ngIf=\"isWindowsPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.setup.exe\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('WIN')\">\n        Download for Windows\n      </a>\n\n      <a *ngIf=\"isMacPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.dmg\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('OSX')\">\n        Download for Mac\n      </a>\n\n      <div *ngIf=\"!isWindowsPc() && !isMacPc()\"\n           class=\"alert alert-info\">\n        Sorry for this platform we don't have a native app yet :(\n      </div>\n    </div>\n\n    <div class=\"card tutorial osx\"\n         *ngIf=\"isMacPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.dmg</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(391) + "\" width=\"400px\"/>\n      </div>\n      <p>After the Download has finished open the dmg file. Drag Cloud Player into the Applications folder</p>\n      <hr>\n      <h3>Start Cloud Player</h3>\n      <p>\n        We could not sign the Player with an official Apple developer certificate. When you try to start it, macOS will tell you\n        that the application is from an unidentified developer.\n        <br>\n        <br>\n        To open the app anyway locate Cloud Player in the applications folder. Control click the Cloud Player app icon\n        and the choose open from the shortcut menu.\n        <br>\n        <br>\n        This has to be done only when you start Cloud Player for the first time.\n        <br>\n        <br>\n        <a href=\"https://support.apple.com/kb/PH25088?locale=en_US\" target=\"_blank\">More information...</a>\n\n      </p>\n    </div>\n\n    <div class=\"card tutorial win\"\n         *ngIf=\"isWindowsPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.setup.exe</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(392) + "\" width=\"400px\"/>\n      </div>\n      <p>\n        After the Download has finished open the exe file.\n      </p>\n      <p>\n        We could not sign the Cloud Player with an official Windows developer certificate. Therefore the Windows\n        Security Agent\n        will prevent starting the installation process\n        <br>\n        <br>\n        To start the installation anyway click on the button \"More Info\" (1). A new button \"Run anyway\" will appear (2).\n        Click\n        on that button to start the installation process\n      </p>\n    </div>\n  </scroll-view>\n</section>\n";
+	module.exports = "<section class=\"column\">\n  <view-header>\n    Desktop App\n  </view-header>\n\n  <scroll-view>\n    <div class=\"card\">\n      <div class=\"screenshot\"\n           [class.win]=\"isWindowsPc()\"\n           [class.osx]=\"isMacPc()\"></div>\n      <div>\n        <h3>Download the native Cloud Player App to install it on your PC.</h3>\n        <ul>\n          <li>Create a shortcut to Cloud Player on your Desktop</li>\n          <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>\n          <li>Have all the other nice features of Cloud Player</li>\n        </ul>\n      </div>\n      <a *ngIf=\"isWindowsPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.setup.exe\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('WIN')\">\n        Download for Windows\n      </a>\n\n      <a *ngIf=\"isMacPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.dmg\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('OSX')\">\n        Download for Mac\n      </a>\n\n      <div *ngIf=\"!isWindowsPc() && !isMacPc()\"\n           class=\"alert alert-info\">\n        Sorry for this platform we don't have a native app yet :(\n      </div>\n    </div>\n\n    <div class=\"card tutorial osx\"\n         *ngIf=\"isMacPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.dmg</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(385) + "\" width=\"400px\"/>\n      </div>\n      <p>After the Download has finished open the dmg file. Drag and drop the Cloud Player app into the <i>Applications</i> folder</p>\n      <hr>\n      <h3>Start Cloud Player</h3>\n      <p>\n        We could not sign the Cloud Player with an official Apple developer certificate. When you try to start it, macOS will tell you\n        that the application is from an unidentified developer.\n        <br>\n        <br>\n        To open the app anyway locate Cloud Player in the <i>Applications</i> folder. Control click the Cloud Player app icon\n        and then choose <i>Open</i> from the shortcut menu.\n        <br>\n        <br>\n        This has to be done only when you start Cloud Player for the first time.\n        <br>\n        <br>\n        <a href=\"https://support.apple.com/kb/PH25088?locale=en_US\" target=\"_blank\">More information...</a>\n\n      </p>\n    </div>\n\n    <div class=\"card tutorial win\"\n         *ngIf=\"isWindowsPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.setup.exe</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(386) + "\" width=\"400px\"/>\n      </div>\n      <p>\n        After the Download has finished open the exe file.\n      </p>\n      <p>\n        We could not sign the Cloud Player with an official Windows developer certificate. Therefore the Windows\n        Security Agent\n        will prevent starting the installation process\n        <br>\n        <br>\n        To start the installation anyway click on the button \"More Info\" (1). A new button \"Run anyway\" will appear (2).\n        Click\n        on that button to start the installation process\n      </p>\n    </div>\n  </scroll-view>\n</section>\n";
 
-/***/ },
-/* 391 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 385 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "osx-dmg.6e033680f5cb65a592061aa159b6e9fa.png";
 
-/***/ },
-/* 392 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 386 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "win-exe.25d192266a404622165f3c54c8982243.png";
 
-/***/ },
-/* 393 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 387 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12632,10 +12463,10 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const forms_1 = __webpack_require__(62);
 	const platform_browser_1 = __webpack_require__(21);
-	const playqueue_component_1 = __webpack_require__(394);
+	const playqueue_component_1 = __webpack_require__(388);
 	const shared_module_1 = __webpack_require__(118);
-	const audio_player_component_1 = __webpack_require__(398);
-	const audio_player_controls_component_1 = __webpack_require__(402);
+	const audio_player_component_1 = __webpack_require__(392);
+	const audio_player_controls_component_1 = __webpack_require__(396);
 	const underscore_1 = __webpack_require__(67);
 	const localforage = __webpack_require__(144);
 	const play_queue_collection_1 = __webpack_require__(123);
@@ -12689,9 +12520,9 @@ webpackJsonp([0],[
 	exports.AudioPlayerModule = AudioPlayerModule;
 
 
-/***/ },
-/* 394 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 388 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12731,8 +12562,8 @@ webpackJsonp([0],[
 	PlayQueueComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-queue',
-	        styles: [__webpack_require__(395)],
-	        template: __webpack_require__(397)
+	        styles: [__webpack_require__(389)],
+	        template: __webpack_require__(391)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _a) || Object])
 	], PlayQueueComponent);
@@ -12740,14 +12571,14 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
-/* 395 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(396);
+	var styles = __webpack_require__(390);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12757,9 +12588,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 396 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -12771,15 +12602,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 397 */
-/***/ function(module, exports) {
+/***/ }),
+/* 391 */
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"play-queue\"\n     dropzone\n     [dropCallback]=\"dropTrack\">\n\n  <div class=\"queued-tracks-list\" *ngIf=\"playQueue.getQueuedItems().length > 0\">\n    <div class=\"divider\">\n      <div class=\"title\">Coming up next</div>\n    </div>\n    <div *ngFor=\"let playQueueItem of playQueue.getQueuedItems()\"\n         class=\"track\"\n         draggable=\"true\"\n         [dragData]=\"playQueueItem.get('track').toJSON()\"\n         [dragImageUrl]=\"playQueueItem.get('track').get('artwork_url').getSmallSize()\"\n         dragEffect=\"copy\">\n      <track-cover [track]=\"playQueueItem.get('track')\" [size]=\"coverSize\"></track-cover>\n      <div class=\"details\"\n           [class.dummy]=\"!playQueueItem.get('track').get('user').get('username')\">\n        <b class=\"title\">{{playQueueItem.get('track').get('title') || 'None'}}</b>\n        <div class=\"artist\">{{playQueueItem.get('track').get('user').get('username')}}</div>\n        <div class=\"stats\">\n          <div class=\"duration\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n            {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}\n          </div>\n          <div *ngIf=\"playQueueItem.get('track').get('genre')\"\n               class=\"genre\">\n            #{{playQueueItem.get('track').get('genre')}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"scheduled-tracks-list\" *ngIf=\"playQueue.getScheduledItems().length > 0\">\n    <div class=\"divider\">\n      <div class=\"title\">Next Songs</div>\n    </div>\n    <div *ngFor=\"let playQueueItem of playQueue.getScheduledItems()\"\n         class=\"track\"\n         draggable=\"true\"\n         [dragData]=\"playQueueItem.get('track').toJSON()\"\n         [dragImageUrl]=\"playQueueItem.get('track').get('artwork_url').getSmallSize()\"\n         dragEffect=\"copy\">\n      <div class=\"cover\">\n        <track-cover [track]=\"playQueueItem.get('track')\" [size]=\"coverSize\"></track-cover>\n      </div>\n      <div class=\"details\"\n           [class.dummy]=\"!playQueueItem.get('track').get('user').get('username')\">\n        <b class=\"title\">{{playQueueItem.get('track').get('title')|| 'None'}}</b>\n        <div class=\"artist\">{{playQueueItem.get('track').get('user').get('username') || 'None'}}</div>\n        <div class=\"stats\">\n          <div class=\"duration\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n            {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}\n          </div>\n          <div *ngIf=\"playQueueItem.get('track').get('genre')\"\n               class=\"genre\">\n            #{{playQueueItem.get('track').get('genre')}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && !playQueue.getCurrentItem()\">\n    <p>No tracks available. <a routerLink=\"/app\">Search</a> for a track and click on it to play it.</p>\n    <p>You can drag and drop tracks here to add them to the play queue</p>\n\n  </div>\n\n  <div *ngIf=\"playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && playQueue.getCurrentItem()\">\n    No more tracks available. <a routerLink=\"/app\">Search</a> for more tracks to keep the party going on.\n  </div>\n\n</div>\n";
 
-/***/ },
-/* 398 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 392 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12813,22 +12644,22 @@ webpackJsonp([0],[
 	AudioPlayerComponent = __decorate([
 	    core_1.Component({
 	        selector: 'audio-player',
-	        styles: [__webpack_require__(399)],
-	        template: __webpack_require__(401)
+	        styles: [__webpack_require__(393)],
+	        template: __webpack_require__(395)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], AudioPlayerComponent);
 	exports.AudioPlayerComponent = AudioPlayerComponent;
 
 
-/***/ },
-/* 399 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(400);
+	var styles = __webpack_require__(394);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12838,9 +12669,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 400 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -12852,15 +12683,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 401 */
-/***/ function(module, exports) {
+/***/ }),
+/* 395 */
+/***/ (function(module, exports) {
 
 	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <audio-player-controls class=\"controls\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
 
-/***/ },
-/* 402 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 396 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13088,8 +12919,8 @@ webpackJsonp([0],[
 	AudioPlayerControlsComponent = __decorate([
 	    core_1.Component({
 	        selector: 'audio-player-controls',
-	        styles: [__webpack_require__(403)],
-	        template: __webpack_require__(405)
+	        styles: [__webpack_require__(397)],
+	        template: __webpack_require__(399)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof cloud_player_logo_service_1.CloudPlayerLogoService !== 'undefined' && cloud_player_logo_service_1.CloudPlayerLogoService) === 'function' && _a) || Object, (typeof (_b = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _b) || Object])
 	], AudioPlayerControlsComponent);
@@ -13097,14 +12928,14 @@ webpackJsonp([0],[
 	var _a, _b;
 
 
-/***/ },
-/* 403 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 397 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(404);
+	var styles = __webpack_require__(398);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -13114,9 +12945,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 404 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 398 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -13128,15 +12959,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 405 */
-/***/ function(module, exports) {
+/***/ }),
+/* 399 */
+/***/ (function(module, exports) {
 
 	module.exports = "<div class=\"audio-player-controls\">\n\n  <div class=\"button-container\">\n    <button class=\"btn prev\"\n            type=\"button\"\n            [disabled]=\"!playQueue.hasPreviousItem() && audio.currentTime < 1\"\n            (click)=\"previousTrack()\">\n      <i class=\"fa fa-backward\" aria-hidden=\"true\"></i>\n    </button>\n\n    <button class=\"btn btn-round btn-brand play\"\n            *ngIf=\"!playQueue.getPlayingItem()\"\n            type=\"button\"\n            [disabled]=\"!playQueue.getCurrentItem() || !playQueue.getCurrentItem().get('track').get('stream_url')\"\n            (click)=\"playTrack()\">\n      <i class=\"fa fa-play\" aria-hidden=\"true\"></i>\n    </button>\n\n    <button class=\"btn btn-round btn-brand pause\"\n            *ngIf=\"playQueue.getPlayingItem()\"\n            type=\"button\"\n            (click)=\"pauseTrack()\">\n      <i class=\"fa fa-pause\" aria-hidden=\"true\"></i>\n    </button>\n\n    <button class=\"btn next\"\n            type=\"button\"\n            [disabled]=\"!playQueue.hasNextItem()\"\n            (click)=\"nextTrack()\">\n      <i class=\"fa fa-forward\" aria-hidden=\"true\"></i>\n    </button>\n  </div>\n\n  <range-slider [min]=\"0\"\n                [max]=\"duration\"\n                [value]=\"timeTick\"\n                [step]=\"0.01\"\n                [isLoading]=\"isBuffering\"\n                [transformDisplayValue]=\"transformProgressBarValues\"\n                [showCurrentValue]=\"true\"\n                (valueChanged)=\"playTrackFromPosition($event)\"\n                class=\"time\">\n  </range-slider>\n\n  <!--<range-slider [min]=\"0\"-->\n                <!--[max]=\"1\"-->\n                <!--[value]=\"audio.volume\"-->\n                <!--[step]=\"0.01\"-->\n                <!--[hideSliderValue]=\"true\"-->\n                <!--(valueChange)=\"setVolume($event)\"-->\n                <!--(valueChanged)=\"saveVolume($event)\"-->\n                <!--class=\"volume\">-->\n  <!--</range-slider>-->\n</div>\n";
 
-/***/ },
-/* 406 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 400 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13151,7 +12982,7 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const platform_browser_1 = __webpack_require__(21);
 	const forms_1 = __webpack_require__(62);
-	const users_routes_1 = __webpack_require__(407);
+	const users_routes_1 = __webpack_require__(401);
 	let UsersModule = class UsersModule {
 	};
 	UsersModule = __decorate([
@@ -13169,9 +13000,9 @@ webpackJsonp([0],[
 	exports.UsersModule = UsersModule;
 
 
-/***/ },
-/* 407 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 401 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13198,9 +13029,9 @@ webpackJsonp([0],[
 	exports.UsersRoutingModule = UsersRoutingModule;
 
 
-/***/ },
-/* 408 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 402 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13263,8 +13094,8 @@ webpackJsonp([0],[
 	NavComponent = __decorate([
 	    core_1.Component({
 	        selector: 'nav-sidebar',
-	        styles: [__webpack_require__(409)],
-	        template: __webpack_require__(411)
+	        styles: [__webpack_require__(403)],
+	        template: __webpack_require__(405)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _a) || Object])
 	], NavComponent);
@@ -13272,14 +13103,14 @@ webpackJsonp([0],[
 	var _a;
 
 
-/***/ },
-/* 409 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 403 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(410);
+	var styles = __webpack_require__(404);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -13289,9 +13120,9 @@ webpackJsonp([0],[
 	  module.exports = styles.toString();
 	}
 
-/***/ },
-/* 410 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 404 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
 	// imports
@@ -13303,15 +13134,15 @@ webpackJsonp([0],[
 	// exports
 
 
-/***/ },
-/* 411 */
-/***/ function(module, exports) {
+/***/ }),
+/* 405 */
+/***/ (function(module, exports) {
 
-	module.exports = "<section class=\"column\">\n\n  <div class=\"sidebar\">\n    <div class=\"cloud-player\">\n      <cloud-player-logo [animate]=\"true\"></cloud-player-logo>\n    </div>\n\n    <div class=\"menu\">\n      <nav>\n        <a routerLink=\"/dashboard\"\n           [routerLinkActive]=\"['is-active']\">\n          <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Search</div>\n        </a>\n\n        <a *ngIf=\"showDesktopAppEntry()\"\n           routerLink=\"/desktop-app\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"desktop-entry\">\n          <i class=\"fa fa-desktop\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Desktop App</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Account</div>\n        </div>\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"/me\"\n           class=\"user\">\n          <img [src]=\"user.get('avatar_url').getLargeSize() || imgUrl\" [alt]=\"user.get('full_name')\" class=\"avatar\">\n          <div class=\"text\">\n            <span>{{user.get('full_name')}}</span>\n          </div>\n        </a>\n\n        <a *ngIf=\"!isAuthenticated\"\n           (click)=\"connect()\"\n           class=\"sc-connect\">\n          <i class=\"fa fa-soundcloud\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Login with SoundCloud</div>\n        </a>\n\n        <a routerLink=\"me/likes\"\n           [routerLinkActive]=\"['is-active']\" [class.disabled]=\"!isAuthenticated\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Likes</div>\n        </a>\n\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"me/playlists\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"visible-xs visible-sm\">\n          <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Playlists</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Playlists</div>\n        </div>\n\n        <authenticated-user-playlists class=\"hidden-xs hidden-sm\" fillHeight></authenticated-user-playlists>\n      </nav>\n    </div>\n\n  </div>\n\n</section>\n";
+	module.exports = "<section class=\"column\">\n\n  <div class=\"sidebar\">\n    <div class=\"cloud-player\">\n      <cloud-player-logo [animate]=\"true\"></cloud-player-logo>\n    </div>\n\n    <div class=\"menu\">\n      <nav>\n        <a routerLink=\"/dashboard\"\n           [routerLinkActive]=\"['is-active']\">\n          <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Search</div>\n        </a>\n\n        <a *ngIf=\"showDesktopAppEntry()\"\n           routerLink=\"/desktop-app\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"desktop-entry\">\n          <i class=\"fa fa-desktop\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Desktop App</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Account</div>\n        </div>\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"/me\"\n           class=\"user\">\n          <img [src]=\"user.get('avatar_url').getLargeSize() || imgUrl\" [alt]=\"user.get('full_name')\" class=\"avatar\">\n          <div class=\"text\">\n            <span>{{user.get('full_name') || user.get('username')}}</span>\n          </div>\n        </a>\n\n        <a *ngIf=\"!isAuthenticated\"\n           (click)=\"connect()\"\n           class=\"sc-connect\">\n          <i class=\"fa fa-soundcloud\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Login with SoundCloud</div>\n        </a>\n\n        <a routerLink=\"me/likes\"\n           [routerLinkActive]=\"['is-active']\" [class.disabled]=\"!isAuthenticated\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Likes</div>\n        </a>\n\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"me/playlists\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"visible-xs visible-sm\">\n          <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Playlists</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Playlists</div>\n        </div>\n\n        <authenticated-user-playlists class=\"hidden-xs hidden-sm\" fillHeight></authenticated-user-playlists>\n      </nav>\n    </div>\n\n  </div>\n\n</section>\n";
 
-/***/ },
-/* 412 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 406 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13325,7 +13156,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const user_analytics_service_1 = __webpack_require__(83);
-	const google_analytics_tracking_provider_model_1 = __webpack_require__(413);
+	const google_analytics_tracking_provider_model_1 = __webpack_require__(407);
 	const router_1 = __webpack_require__(91);
 	let UserAnalyticsModule = class UserAnalyticsModule {
 	    constructor(userAnalyticsService, router, route) {
@@ -13355,9 +13186,9 @@ webpackJsonp([0],[
 	var _a, _b, _c;
 
 
-/***/ },
-/* 413 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 407 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13416,5 +13247,5 @@ webpackJsonp([0],[
 	exports.GoogleAnalyticsTrackingProvider = GoogleAnalyticsTrackingProvider;
 
 
-/***/ }
+/***/ })
 ]);
