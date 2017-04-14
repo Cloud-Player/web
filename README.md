@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mwaylabs/uikit.svg?branch=master)](https://travis-ci.org/mwaylabs/uikit)
+[![Build Status](https://travis-ci.org/Cloud-Player/web.svg?branch=master)](https://travis-ci.org/Cloud-Player/web)
 
 # Cloud Player
 [![Cloud Player Teaser](https://github.com/Cloud-Player/web/blob/master/assets/meta/social/facebook.jpg)](https://cloud-player.io)
