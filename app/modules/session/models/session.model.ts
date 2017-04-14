@@ -4,6 +4,7 @@ import Timer = NodeJS.Timer;
 import {setSession} from '../../shared/session-manager.fn';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import localforage = require('localforage');
+import {Config} from '../../../config/config';
 
 @Injectable()
 export class Session extends SoundcloudModel {
@@ -60,9 +61,10 @@ export class Session extends SoundcloudModel {
 
   refresh(): any {
     if (this.get('refresh_token')) {
-      return this.request('//sc.menu-flow.com/connect/', 'PUT', {
+      return this.request(Config.soundcloudRedirectUrl+'/', 'PUT', {
         data: {
-          refresh_token: this.get('refresh_token')
+          refresh_token: this.get('refresh_token'),
+          version: 2
         }
       }).then((rsp) => {
         let data = rsp.json();

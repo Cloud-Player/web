@@ -3,6 +3,7 @@ import {Session} from '../../session/models/session.model';
 import Timer = NodeJS.Timer;
 import localforage = require('localforage');
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
+import {Config} from '../../../config/config';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
 
   private receiveConnectMessage(event: any): void {
     let origin = event.origin || event.originalEvent.origin;
-    if (origin !== 'http://sc.menu-flow.com') {
+    if (origin !== Config.soundcloudRedirectDomain) {
       return;
     }
     this.connectionSuccessFul(event.data);
@@ -20,16 +21,17 @@ export class AuthService {
 
   getConnectionUrl(): string {
     return '//soundcloud.com/connect?' +
-      'client_id=abb6c1cad3f409112a5995bf922e1d1e&' +
-      'redirect_uri=http://sc.menu-flow.com/connect&' +
-      'response_type=code';
+      'client_id=' + Config.soundcloudClientId + '&' +
+      'redirect_uri=' + Config.soundcloudRedirectUrl + '&' +
+      'response_type=code&' +
+      'state=v2';
   }
 
   connect() {
     this.userAnalyticsService.trackEvent('sc_auth_start', 'click', 'auth-service');
     let popup = window.open(this.getConnectionUrl());
     this.checkInterval = setInterval(() => {
-      popup.postMessage(null, 'http://sc.menu-flow.com');
+      popup.postMessage(null, Config.soundcloudRedirectDomain);
     }, 100);
   }
 
