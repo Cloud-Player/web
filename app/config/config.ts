@@ -1,3 +1,7 @@
+const soundCloudredirectDomain = 'https://sc.menu-flow.com';
+
 export const Config = {
-    soundcloudClientId: 'abb6c1cad3f409112a5995bf922e1d1e'
+  soundcloudClientId: 'mqCVRxAeYDUjlPhqj27Hb1H9kydm9fMm',
+  soundcloudRedirectDomain: soundCloudredirectDomain,
+  soundcloudRedirectUrl: soundCloudredirectDomain + '/connect'
 };
