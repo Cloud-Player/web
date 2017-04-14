@@ -30,7 +30,7 @@
            class="user">
           <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name')" class="avatar">
           <div class="text">
-            <span>{{user.get('full_name')}}</span>
+            <span>{{user.get('full_name') || user.get('username')}}</span>
           </div>
         </a>
 
