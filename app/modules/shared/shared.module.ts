@@ -28,6 +28,10 @@ import {PlayTrackOnEventDirective} from './directives/play-track-on-event.direct
 import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/options-btn/options-btn.component';
 import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
 import {FillHeightDirective} from './directives/fill-height.directive';
+import {MultiLineComponent} from './components/multi-line-text/multi-line.component';
+import {LimitCollectionresultsPipe} from './pipes/limit-collection-results.pipe';
+import {FacebookShareButtonComponent} from './components/facebook-share-button/facebook-share-button.component';
+import {TwitterShareButtonComponent} from './components/twitter-share-button/twitter-share-button.component';
 
 @NgModule({
   imports: [
@@ -38,6 +42,8 @@ import {FillHeightDirective} from './directives/fill-height.directive';
   declarations: [
     CloudPlayerLogoComponent,
     CollectionTextInputSearchComponent,
+    FacebookShareButtonComponent,
+    TwitterShareButtonComponent,
     TrackListComponent,
     ToggleLikedTrackComponent,
     PlayButtonComponent,
@@ -50,6 +56,7 @@ import {FillHeightDirective} from './directives/fill-height.directive';
     ScrollViewComponent,
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
+    MultiLineComponent,
     OptionsBtnComponent,
     OptionsBtnOptionComponent,
     TrackCoverComponent,
@@ -60,11 +67,14 @@ import {FillHeightDirective} from './directives/fill-height.directive';
     PlayTrackOnEventDirective,
     FillHeightDirective,
     HumanReadableSecondsPipe,
-    KMilShortenerPipe
+    KMilShortenerPipe,
+    LimitCollectionresultsPipe
   ],
   exports: [
     CloudPlayerLogoComponent,
     CollectionTextInputSearchComponent,
+    FacebookShareButtonComponent,
+    TwitterShareButtonComponent,
     TrackListComponent,
     ToggleLikedTrackComponent,
     PlayButtonComponent,
@@ -77,6 +87,7 @@ import {FillHeightDirective} from './directives/fill-height.directive';
     ScrollViewComponent,
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
+    MultiLineComponent,
     OptionsBtnComponent,
     OptionsBtnOptionComponent,
     TrackCoverComponent,
@@ -87,7 +98,8 @@ import {FillHeightDirective} from './directives/fill-height.directive';
     PlayTrackOnEventDirective,
     FillHeightDirective,
     HumanReadableSecondsPipe,
-    KMilShortenerPipe
+    KMilShortenerPipe,
+    LimitCollectionresultsPipe
   ],
   providers: [CloudPlayerLogoService]
 })
