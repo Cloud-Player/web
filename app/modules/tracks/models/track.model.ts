@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
+import {Comments} from '../../comments/collections/comments.collection';
 
 @Injectable()
 export class Track extends SoundcloudModel {
@@ -10,7 +11,8 @@ export class Track extends SoundcloudModel {
   nested() {
     return {
       user: User,
-      artwork_url: SoundcloudImageModel
+      artwork_url: SoundcloudImageModel,
+      comments: Comments
     };
   }
 
@@ -22,5 +24,14 @@ export class Track extends SoundcloudModel {
     attrs = super.parse(attrs);
     attrs.likes = attrs.likes_count || attrs.favoritings_count;
     return attrs;
+  }
+
+  initialize(): void{
+    if(this.get('id')){
+      this.get('comments').setTrackId(this.get('id'));
+    }
+    this.on('change:id', ()=>{
+      this.get('comments').setTrackId(this.get('id'));
+    });
   }
 }

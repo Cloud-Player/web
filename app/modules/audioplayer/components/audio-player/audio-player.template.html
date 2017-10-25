@@ -4,7 +4,9 @@
 
     <track-cover [track]="track" class="hidden-xs" [size]="getCoverSize()" [animate]="true"></track-cover>
 
-    <audio-player-controls class="controls"></audio-player-controls>
+    <comments *ngIf="track" [currentTime]="currentPlayingTime" [comments]="track.get('comments')" class="hidden-xs"></comments>
+
+    <audio-player-controls class="controls" (currentTimeChange)="updateCurrentTime($event)"></audio-player-controls>
 
     <div *ngIf="track" class="meta">
       <toggle-liked-track [track]="track" class="hidden-xs"></toggle-liked-track>
