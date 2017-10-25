@@ -5,10 +5,11 @@ import {Track} from '../../../tracks/models/track.model';
 import {CollectionTextInputSearchComponent} from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
 import localforage = require('localforage');
 import {AuthService} from '../../../shared/services/auth.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'my-dashboard',
-  styles: [ require('./index.style.scss') ],
+  styles: [require('./index.style.scss')],
   template: require('./index.template.html')
 })
 
@@ -22,28 +23,28 @@ export class DashboardIndexComponent implements AfterViewInit {
   constructor(private tracks: Tracks<Track>, private authService: AuthService) {
   }
 
-  public connect(){
+  public connect() {
     this.authService.connect();
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.searchBar.focus();
 
-    this.searchBar.valueChange.subscribe((val: string)=>{
+    this.searchBar.valueChange.subscribe((val: string) => {
       localforage.setItem('sc_search_term', val);
     });
 
-    localforage.getItem('sc_search_term').then((val: string)=>{
-      if(val){
+    localforage.getItem('sc_search_term').then((val: string) => {
+      if (val) {
         this.searchBar.search(val);
       }
     });
 
-    this.tracks.on('request', ()=>{
+    this.tracks.on('request', () => {
       this.isFetching = true;
     });
 
-    this.tracks.on('sync error', ()=>{
+    this.tracks.on('sync error', () => {
       this.isFetching = false;
     });
   }
