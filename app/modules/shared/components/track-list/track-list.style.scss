@@ -10,7 +10,6 @@
     display: flex;
     margin: 0 -15px;
     padding: 20px 15px;
-    transition: background 0.5s ease;
 
     &:hover{
       background: $gray-lighter;
@@ -103,9 +102,26 @@
           }
         }
 
-        options-btn{
+        .btn-holder{
+          display: flex;
           align-self: flex-start;
-          margin: 0 0 0 10px;
+
+          .btn{
+            margin: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .next-icon{
+              font-size: 14px;
+              margin-right: -2px
+            }
+          }
+
+          options-btn{
+            margin: 0 0 0 3px;
+          }
         }
       }
 

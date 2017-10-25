@@ -1,6 +1,6 @@
 <div class="tracks-list">
   <sort-tracks [tracks]="tracks"></sort-tracks>
-  <div *ngFor="let track of tracks.models" class="track"
+  <div *ngFor="let track of tracks.models | limitCollectionresults: {limit: 10}" class="track"
        draggable="true"
        [dragData]="track.toJSON()"
        [dragImageUrl]="track.get('artwork_url').getSmallSize()"
@@ -25,17 +25,27 @@
             </span>
           </div>
         </div>
-        <options-btn>
-          <options-btn-option playTrackOn="click" [track]="track" [tracks]="tracks">
-            Play this track and the following ones
-          </options-btn-option>
-          <options-btn-option playTrackOn="click" [track]="track">
-            Play only this track
-          </options-btn-option>
-          <options-btn-option (click)="addToQueue(track)">
-            Add as next track to the playqueue
-          </options-btn-option>
-        </options-btn>
+        <div class="btn-holder">
+          <div class="btn btn-xs btn-default"
+               (click)="addToQueue(track)">
+            <span class="fa fa-arrow-circle-o-right next-icon"></span>
+            <span class="fa fa-play" ></span>
+          </div>
+          <options-btn>
+            <options-btn-option (click)="addToQueue(track)">
+              Add to queue
+            </options-btn-option>
+            <options-btn-option playTrackOn="click" [track]="track" [tracks]="tracks">
+              Play this track and the following ones
+            </options-btn-option>
+            <options-btn-option playTrackOn="click" [track]="track">
+              Play only this track
+            </options-btn-option>
+            <options-btn-option *ngIf="canBeDeleted" (click)="track.destroy()">
+              Remove track
+            </options-btn-option>
+          </options-btn>
+        </div>
       </div>
       <div class="stats">
         <div class="duration label label-default label-light">
