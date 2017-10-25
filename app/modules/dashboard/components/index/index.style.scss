@@ -1,7 +1,11 @@
 @import '../../../../variables';
 :host{
   /deep/ scroll-view .results{
-    padding-top: 10px;
+    margin-top: -8px;
+  }
+
+  social-share-panel{
+    display: block;
   }
 }
 

@@ -8,6 +8,7 @@ import {SessionModule} from '../session/session.module';
 import {BackboneModule} from '../backbone/backbone.module';
 import {SharedModule} from '../shared/shared.module';
 import {SearchFilterComponent} from './components/search-filter/search-filter.component';
+import {SocialSharePanelComponent} from './components/social-share-panel/social-share-panel.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {SearchFilterComponent} from './components/search-filter/search-filter.co
   ],
   declarations: [
     DashboardIndexComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
+    SocialSharePanelComponent
   ]
 })
 
