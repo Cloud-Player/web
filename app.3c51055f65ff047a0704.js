@@ -13288,7 +13288,7 @@ webpackJsonp([0],[
 /* 417 */
 /***/ (function(module, exports) {
 
-	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <comments *ngIf=\"track\" [currentTime]=\"currentPlayingTime\" [comments]=\"track.get('comments')\" class=\"hidden-xs\"></comments>\n\n    <audio-player-controls class=\"controls\" (currentTimeChange)=\"updateCurrentTime($event)\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
+	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <user-comments *ngIf=\"track\" [currentTime]=\"currentPlayingTime\" [comments]=\"track.get('comments')\" class=\"hidden-xs\"></user-comments>\n\n    <audio-player-controls class=\"controls\" (currentTimeChange)=\"updateCurrentTime($event)\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
 
 /***/ }),
 /* 418 */
@@ -13707,7 +13707,7 @@ webpackJsonp([0],[
 	], CommentsComponent.prototype, "comments", null);
 	CommentsComponent = __decorate([
 	    core_1.Component({
-	        selector: 'comments',
+	        selector: 'user-comments',
 	        styles: [__webpack_require__(424)],
 	        template: __webpack_require__(426)
 	    }), 
