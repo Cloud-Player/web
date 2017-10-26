@@ -4,7 +4,7 @@ import {Comment} from '../../models/comment.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 
 @Component({
-  selector: 'comments',
+  selector: 'user-comments',
   styles: [require('./comments.style.scss')],
   template: require('./comments.template.html')
 })
