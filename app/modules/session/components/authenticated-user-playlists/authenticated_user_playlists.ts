@@ -2,6 +2,7 @@ import {Component, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {Playlists} from '../../../playlists/collections/playlists.collection';
 
 @Component({
   selector: 'authenticated-user-playlists',
@@ -21,12 +22,18 @@ export class AuthenticatedUserPlaylists {
 
   public tmpPlaylist = new AuthenticatedUserPlaylist();
 
+  public dropTrack: Function = (dropData: {}, playlist: AuthenticatedUserPlaylist): void => {
+    this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
+    playlist.get('tracks').create(dropData);
+  };
+
   constructor(private userAnalyticsService: UserAnalyticsService){
   }
 
   private fetchPlaylists(): void {
     if (this.user.get('authenticated') && !this.isFetching) {
       this.isFetching = true;
+      let playlist = <Playlists>this.user.get('playlists');
       this.user.get('playlists').fetch().then(()=>{
         this.isFetching = false;
         this.valueChange.emit();
@@ -46,10 +53,6 @@ export class AuthenticatedUserPlaylists {
     });
   }
 
-  dropTrack(dropData: {}, playlist: AuthenticatedUserPlaylist): void {
-    this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
-    playlist.get('tracks').create(dropData);
-  }
 
   cancel(): void {
     if (!this.tmpPlaylist.get('title') || this.tmpPlaylist.get('title').length < 1) {

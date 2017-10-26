@@ -21,6 +21,17 @@ export class PlayQueueItem extends SoundcloudModel {
     });
   }
 
+  unQueue(): void{
+    this.set({
+      status: 'NULL'
+    });
+    if(this.collection){
+      let collection = this.collection;
+      collection.remove(this);
+      collection.add(this);
+    }
+  }
+
   play(): void {
     this.set('status', 'PLAYING');
   }

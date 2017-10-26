@@ -38,9 +38,12 @@ export class DropZoneDirective {
       args.push(event);
       this.dropCallback.apply(this, args);
     }
+    this.leaveTimeout = setTimeout(()=>{
+      this.renderer.setElementClass(this.el.nativeElement, 'drag-over', false);
+    },100);
   }
 
-  private getDragData(event: DragEvent) {
+  private getDragData(event: any) {
     let text = event.dataTransfer.getData('text');
     if (text) {
       return JSON.parse(text);

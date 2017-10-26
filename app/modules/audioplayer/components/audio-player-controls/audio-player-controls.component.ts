@@ -1,7 +1,7 @@
 import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
 declare let MediaMetadata: any;
 
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
@@ -31,6 +31,8 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private humanReadableSecPipe: HumanReadableSecondsPipe;
 
+  @Output() currentTimeChange = new EventEmitter();
+
   constructor(private cloudPlayerLogoService: CloudPlayerLogoService, private userAnalyticsService: UserAnalyticsService) {
     this.audio = new Audio();
     this.playQueue.on('change:status', this.reactOnStatusChange, this);
@@ -54,6 +56,7 @@ export class AudioPlayerControlsComponent implements OnInit {
           currentTime: this.audio.currentTime,
           duration: this.audio.duration
         });
+        this.currentTimeChange.emit(this.audio.currentTime);
       }
     }, 1000);
 
@@ -141,6 +144,9 @@ export class AudioPlayerControlsComponent implements OnInit {
     window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
     window.addEventListener('nextTrackKeyPressed', this.nextTrack.bind(this));
     window.addEventListener('previousTrackKeyPressed', this.previousTrack.bind(this));
+    window.addEventListener('abc', function(){
+      console.log('ABC')
+    });
 
     if (this.playQueue.getPlayingItem()) {
       this.startAudioPlayer(this.playQueue.getPlayingItem());
@@ -240,6 +246,10 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.audio.src = item.get('track').getResourceUrl();
       this.audio.load();
       this.audio.currentTime = currTime;
+    }
+
+    if(item.get('track').get('comments').length===0){
+      item.get('track').get('comments').fetch();
     }
 
     this.timeTick = this.audio.currentTime;

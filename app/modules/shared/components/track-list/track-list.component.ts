@@ -10,7 +10,7 @@ import {ClientDetector} from '../../services/client-detector.service';
 
 @Component({
   selector: 'track-list',
-  styles: [ require('./track-list.style.scss') ],
+  styles: [require('./track-list.style.scss')],
   template: require('./track-list.template.html'),
   providers: [Tracks]
 })
@@ -22,19 +22,20 @@ export class TrackListComponent {
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   gotoDetail(track: Track): void {
     let link = ['/tracks', track.id];
     this.router.navigate(link);
   }
 
-  addToQueue(track: Track){
+  addToQueue(track: Track) {
     this.playQueue.queue({track: track});
   }
 
-  getSize(){
-    if(ClientDetector.isMobileDevice()){
+  getSize() {
+    if (ClientDetector.isMobileDevice()) {
       return CoverSizes.Small;
     } else {
       return CoverSizes.Regular;

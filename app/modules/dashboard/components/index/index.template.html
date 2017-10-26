@@ -7,11 +7,17 @@
   <!--<sort-tracks [tracks]="tracks"></sort-tracks>-->
 
   <scroll-view>
+    <social-share-panel
+      *ngIf="tracks.length !== 0"
+      class="card">
+    </social-share-panel>
+
     <div *ngIf="tracks.length>0"
          class="results">
       <search-filter [collection]="tracks"></search-filter>
       <track-list [tracks]="tracks"></track-list>
     </div>
+
     <div *ngIf="tracks.length === 0 && !isFetching"
          class="card getting-started">
       <h1>Welcome to Cloud Player!</h1>
@@ -21,7 +27,8 @@
         You can search for all songs that are available on SoundCloud
       </p>
       <p>
-        <a (click)="connect()">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They will appear in the menubar
+        <a (click)="connect()">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They
+        will appear in the menubar
         as soon as the connection was successful.
       </p>
       <p>
