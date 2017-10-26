@@ -4,7 +4,7 @@
 
     <track-cover [track]="track" class="hidden-xs" [size]="getCoverSize()" [animate]="true"></track-cover>
 
-    <user-comments *ngIf="track" [currentTime]="currentPlayingTime" [comments]="track.get('comments')" class="hidden-xs"></user-comments>
+    <!--<user-comments *ngIf="track" [currentTime]="currentPlayingTime" [comments]="track.get('comments')" class="hidden-xs"></user-comments>-->
 
     <audio-player-controls class="controls" (currentTimeChange)="updateCurrentTime($event)"></audio-player-controls>
 
