@@ -10,10 +10,10 @@ var serviceWorkerOption = {
     "/osx-screenshot.1ea45195d62c85507366f794aaa27816.png",
     "/osx-dmg.6e033680f5cb65a592061aa159b6e9fa.png",
     "/win-exe.25d192266a404622165f3c54c8982243.png",
-    "/app.6ebc9f7a0021d87f8128.js",
-    "/polyfills.6ebc9f7a0021d87f8128.js",
-    "/vendor.6ebc9f7a0021d87f8128.js",
-    "/vendor.6ebc9f7a0021d87f8128.css"
+    "/app.02fe144654fc1618a660.js",
+    "/polyfills.02fe144654fc1618a660.js",
+    "/vendor.02fe144654fc1618a660.js",
+    "/vendor.02fe144654fc1618a660.css"
   ]
 };
         
@@ -65,7 +65,7 @@ var serviceWorkerOption = {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	var g = global;
-	var cacheVersion = ("1.0.5");
+	var cacheVersion = ("1.0.6");
 	var externalDomainWhiteList = [
 	    'https://fonts.gstatic.com',
 	    'https://fonts.googleapis.com'

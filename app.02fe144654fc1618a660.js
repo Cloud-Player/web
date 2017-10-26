@@ -209,19 +209,19 @@ webpackJsonp([0],[
 	const http_1 = __webpack_require__(65);
 	const backbone_module_1 = __webpack_require__(66);
 	const tracks_module_1 = __webpack_require__(89);
-	const dashboard_module_1 = __webpack_require__(328);
-	const main_component_1 = __webpack_require__(374);
-	const main_routes_1 = __webpack_require__(378);
-	const audio_player_module_1 = __webpack_require__(387);
-	const session_module_1 = __webpack_require__(334);
-	const users_module_1 = __webpack_require__(400);
+	const dashboard_module_1 = __webpack_require__(346);
+	const main_component_1 = __webpack_require__(396);
+	const main_routes_1 = __webpack_require__(400);
+	const audio_player_module_1 = __webpack_require__(409);
+	const session_module_1 = __webpack_require__(352);
+	const users_module_1 = __webpack_require__(427);
 	const common_1 = __webpack_require__(22);
-	const nav_component_1 = __webpack_require__(402);
-	const playlist_module_1 = __webpack_require__(360);
-	const auth_service_1 = __webpack_require__(145);
-	const shared_module_1 = __webpack_require__(118);
-	const desktop_app_view_component_1 = __webpack_require__(379);
-	const user_analytics_module_1 = __webpack_require__(406);
+	const nav_component_1 = __webpack_require__(429);
+	const playlist_module_1 = __webpack_require__(378);
+	const auth_service_1 = __webpack_require__(147);
+	const shared_module_1 = __webpack_require__(121);
+	const desktop_app_view_component_1 = __webpack_require__(401);
+	const user_analytics_module_1 = __webpack_require__(433);
 	let MainModule = class MainModule {
 	};
 	MainModule = __decorate([
@@ -7045,9 +7045,9 @@ webpackJsonp([0],[
 	const platform_browser_1 = __webpack_require__(21);
 	const forms_1 = __webpack_require__(62);
 	const detail_component_1 = __webpack_require__(90);
-	const tracks_routes_1 = __webpack_require__(117);
-	const shared_module_1 = __webpack_require__(118);
-	const tracks_collection_1 = __webpack_require__(121);
+	const tracks_routes_1 = __webpack_require__(120);
+	const shared_module_1 = __webpack_require__(121);
+	const tracks_collection_1 = __webpack_require__(124);
 	let TracksModule = class TracksModule {
 	};
 	TracksModule = __decorate([
@@ -7112,8 +7112,8 @@ webpackJsonp([0],[
 	TracksDetailComponent = __decorate([
 	    core_1.Component({
 	        selector: 'my-track-detail',
-	        styles: [__webpack_require__(114)],
-	        template: __webpack_require__(116),
+	        styles: [__webpack_require__(117)],
+	        template: __webpack_require__(119),
 	        providers: [track_model_1.Track]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof track_model_1.Track !== 'undefined' && track_model_1.Track) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof common_1.Location !== 'undefined' && common_1.Location) === 'function' && _c) || Object])
@@ -7157,6 +7157,7 @@ webpackJsonp([0],[
 	const user_model_1 = __webpack_require__(109);
 	const soundcloud_model_1 = __webpack_require__(110);
 	const soundcloud_image_model_1 = __webpack_require__(113);
+	const comments_collection_1 = __webpack_require__(114);
 	let Track = class Track extends soundcloud_model_1.SoundcloudModel {
 	    constructor() {
 	        super(...arguments);
@@ -7165,7 +7166,8 @@ webpackJsonp([0],[
 	    nested() {
 	        return {
 	            user: user_model_1.User,
-	            artwork_url: soundcloud_image_model_1.SoundcloudImageModel
+	            artwork_url: soundcloud_image_model_1.SoundcloudImageModel,
+	            comments: comments_collection_1.Comments
 	        };
 	    }
 	    getResourceUrl() {
@@ -7175,6 +7177,14 @@ webpackJsonp([0],[
 	        attrs = super.parse(attrs);
 	        attrs.likes = attrs.likes_count || attrs.favoritings_count;
 	        return attrs;
+	    }
+	    initialize() {
+	        if (this.get('id')) {
+	            this.get('comments').setTrackId(this.get('id'));
+	        }
+	        this.on('change:id', () => {
+	            this.get('comments').setTrackId(this.get('id'));
+	        });
 	    }
 	};
 	Track = __decorate([
@@ -7352,336 +7362,39 @@ webpackJsonp([0],[
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	// css-to-string-loader: transforms styles from css-loader to a string output
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const soundcloud_collection_1 = __webpack_require__(115);
+	const comment_model_1 = __webpack_require__(116);
+	let Comments = class Comments extends soundcloud_collection_1.SoundcloudCollection {
+	    constructor() {
+	        super(...arguments);
+	        this.endpoint = '/comments';
+	        this.model = comment_model_1.Comment;
+	        this.comparator = 'timestamp';
+	    }
+	    setTrackId(trackId) {
+	        this.endpoint = `/tracks/${trackId}/comments`;
+	    }
+	};
+	Comments = __decorate([
+	    core_1.Injectable(), 
+	    __metadata('design:paramtypes', [])
+	], Comments);
+	exports.Comments = Comments;
 
-	// Get the styles
-	var styles = __webpack_require__(115);
-
-	if (typeof styles === 'string') {
-	  // Return an existing string
-	  module.exports = styles;
-	} else {
-	  // Call the custom toString method from css-loader module
-	  module.exports = styles.toString();
-	}
 
 /***/ }),
 /* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(80)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "div.cover {\n  width: 100%;\n  max-width: 450px;\n  margin: 0 auto; }\n  div.cover img {\n    width: 100%;\n    height: auto; }\n\ndiv.details {\n  float: left;\n  padding: 15px;\n  text-align: center; }\n  div.details b, div.details p {\n    margin: 5px; }\n", ""]);
-
-	// exports
-
-
-/***/ }),
-/* 116 */
-/***/ (function(module, exports) {
-
-	module.exports = "<section class=\"column\">\n\n  <span (click)=\"goBack()\"><i class=\"fa fa-chevron-left\"></i> Back</span>\n  <h2>Details</h2>\n\n  <hr>\n\n  <div class=\"cover\">\n    <img [src]=\"track.get('artwork_url').getLargeSize()\">\n  </div>\n  <div class=\"details\">\n    <b>{{track.get('title')}}</b>\n    <p>{{track.get('user').get('username')}}</p>\n    <play-button [track]=\"track\"></play-button>\n    <a href=\"{{track.attributes.purchase_url}}\" target=\"_blank\" *ngIf=\"track.attributes.purchase_url\">\n      <button class=\"btn btn-warning\" [class.btn-round]=\"!track.attributes.purchase_title\">\n        <i class=\"fa fa-download\"></i>\n        {{track.attributes.purchase_title}}\n      </button>\n    </a>\n    <a href=\"{{track.attributes.permalink_url}}\" target=\"_blank\" *ngIf=\"track.attributes.permalink_url\">\n      <button class=\"btn btn-success btn-round\">\n        <i class=\"fa fa-share\"></i>\n      </button>\n    </a>\n  </div>\n\n</section>\n\n";
-
-/***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	const router_1 = __webpack_require__(91);
-	const detail_component_1 = __webpack_require__(90);
-	const routes = [
-	    { path: 'tracks/:id', component: detail_component_1.TracksDetailComponent }
-	];
-	let TracksRoutingModule = class TracksRoutingModule {
-	};
-	TracksRoutingModule = __decorate([
-	    core_1.NgModule({
-	        imports: [router_1.RouterModule.forRoot(routes)],
-	        exports: [router_1.RouterModule]
-	    }), 
-	    __metadata('design:paramtypes', [])
-	], TracksRoutingModule);
-	exports.TracksRoutingModule = TracksRoutingModule;
-
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	const h_readable_seconds_pipe_1 = __webpack_require__(119);
-	const track_list_component_1 = __webpack_require__(120);
-	const toggle_liked_track_component_1 = __webpack_require__(133);
-	const play_button_component_1 = __webpack_require__(149);
-	const platform_browser_1 = __webpack_require__(21);
-	const queue_button_component_1 = __webpack_require__(153);
-	const sort_tracks_component_1 = __webpack_require__(157);
-	const backbone_module_1 = __webpack_require__(66);
-	const range_slider_component_1 = __webpack_require__(161);
-	const forms_1 = __webpack_require__(62);
-	const draggable_directive_1 = __webpack_require__(165);
-	const dropzone_directive_1 = __webpack_require__(166);
-	const two_range_slider_component_1 = __webpack_require__(167);
-	const view_header_component_1 = __webpack_require__(171);
-	const scroll_view_component_1 = __webpack_require__(175);
-	const cloud_player_logo_service_1 = __webpack_require__(179);
-	const cloud_player_logo_component_1 = __webpack_require__(180);
-	const toggle_switch_component_1 = __webpack_require__(185);
-	const loading_spinner_component_1 = __webpack_require__(189);
-	const collection_text_input_search_component_1 = __webpack_require__(193);
-	const focus_input_directive_1 = __webpack_require__(197);
-	const view_change_loader_component_1 = __webpack_require__(198);
-	const track_cover_component_1 = __webpack_require__(125);
-	const time_ago_directive_1 = __webpack_require__(202);
-	const play_track_on_event_directive_1 = __webpack_require__(321);
-	const options_btn_component_1 = __webpack_require__(322);
-	const k_mil_shortener_pipe_1 = __webpack_require__(326);
-	const fill_height_directive_1 = __webpack_require__(327);
-	let SharedModule = class SharedModule {
-	};
-	SharedModule = __decorate([
-	    core_1.NgModule({
-	        imports: [
-	            platform_browser_1.BrowserModule,
-	            forms_1.FormsModule,
-	            backbone_module_1.BackboneModule
-	        ],
-	        declarations: [
-	            cloud_player_logo_component_1.CloudPlayerLogoComponent,
-	            collection_text_input_search_component_1.CollectionTextInputSearchComponent,
-	            track_list_component_1.TrackListComponent,
-	            toggle_liked_track_component_1.ToggleLikedTrackComponent,
-	            play_button_component_1.PlayButtonComponent,
-	            queue_button_component_1.QueueButtonComponent,
-	            sort_tracks_component_1.SortTracksComponent,
-	            range_slider_component_1.RangeSliderComponent,
-	            two_range_slider_component_1.TwoRangeSliderComponent,
-	            view_header_component_1.ViewHeaderComponent,
-	            view_change_loader_component_1.ViewChangeLoaderComponent,
-	            scroll_view_component_1.ScrollViewComponent,
-	            toggle_switch_component_1.ToggleSwitchComponent,
-	            loading_spinner_component_1.LoadingSpinnerComponent,
-	            options_btn_component_1.OptionsBtnComponent,
-	            options_btn_component_1.OptionsBtnOptionComponent,
-	            track_cover_component_1.TrackCoverComponent,
-	            draggable_directive_1.DraggableDirective,
-	            dropzone_directive_1.DropZoneDirective,
-	            focus_input_directive_1.FocusInputDirective,
-	            time_ago_directive_1.TimeAgoDirective,
-	            play_track_on_event_directive_1.PlayTrackOnEventDirective,
-	            fill_height_directive_1.FillHeightDirective,
-	            h_readable_seconds_pipe_1.HumanReadableSecondsPipe,
-	            k_mil_shortener_pipe_1.KMilShortenerPipe
-	        ],
-	        exports: [
-	            cloud_player_logo_component_1.CloudPlayerLogoComponent,
-	            collection_text_input_search_component_1.CollectionTextInputSearchComponent,
-	            track_list_component_1.TrackListComponent,
-	            toggle_liked_track_component_1.ToggleLikedTrackComponent,
-	            play_button_component_1.PlayButtonComponent,
-	            queue_button_component_1.QueueButtonComponent,
-	            sort_tracks_component_1.SortTracksComponent,
-	            range_slider_component_1.RangeSliderComponent,
-	            two_range_slider_component_1.TwoRangeSliderComponent,
-	            view_header_component_1.ViewHeaderComponent,
-	            view_change_loader_component_1.ViewChangeLoaderComponent,
-	            scroll_view_component_1.ScrollViewComponent,
-	            toggle_switch_component_1.ToggleSwitchComponent,
-	            loading_spinner_component_1.LoadingSpinnerComponent,
-	            options_btn_component_1.OptionsBtnComponent,
-	            options_btn_component_1.OptionsBtnOptionComponent,
-	            track_cover_component_1.TrackCoverComponent,
-	            draggable_directive_1.DraggableDirective,
-	            dropzone_directive_1.DropZoneDirective,
-	            focus_input_directive_1.FocusInputDirective,
-	            time_ago_directive_1.TimeAgoDirective,
-	            play_track_on_event_directive_1.PlayTrackOnEventDirective,
-	            fill_height_directive_1.FillHeightDirective,
-	            h_readable_seconds_pipe_1.HumanReadableSecondsPipe,
-	            k_mil_shortener_pipe_1.KMilShortenerPipe
-	        ],
-	        providers: [cloud_player_logo_service_1.CloudPlayerLogoService]
-	    }), 
-	    __metadata('design:paramtypes', [])
-	], SharedModule);
-	exports.SharedModule = SharedModule;
-
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	let HumanReadableSecondsPipe = class HumanReadableSecondsPipe {
-	    formatToHHMMSS(input) {
-	        let time = new Date(null);
-	        time.setSeconds(input);
-	        // format time from hh:mm:ss to mm:ss when hh is 0
-	        if (time.getHours() === 1) {
-	            return time.toISOString().substr(14, 5);
-	        }
-	        else {
-	            return time.toISOString().substr(12, 7);
-	        }
-	    }
-	    transform(value, args) {
-	        if (!value) {
-	            return value;
-	        }
-	        else {
-	            return this.formatToHHMMSS(parseInt(value, 10));
-	        }
-	    }
-	};
-	HumanReadableSecondsPipe = __decorate([
-	    core_1.Pipe({ name: 'hReadableSeconds' }), 
-	    __metadata('design:paramtypes', [])
-	], HumanReadableSecondsPipe);
-	exports.HumanReadableSecondsPipe = HumanReadableSecondsPipe;
-
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const core_1 = __webpack_require__(3);
-	const router_1 = __webpack_require__(91);
-	const tracks_collection_1 = __webpack_require__(121);
-	const play_queue_collection_1 = __webpack_require__(123);
-	const track_cover_component_1 = __webpack_require__(125);
-	const client_detector_service_1 = __webpack_require__(129);
-	let TrackListComponent = class TrackListComponent {
-	    constructor(router) {
-	        this.router = router;
-	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
-	    }
-	    gotoDetail(track) {
-	        let link = ['/tracks', track.id];
-	        this.router.navigate(link);
-	    }
-	    addToQueue(track) {
-	        this.playQueue.queue({ track: track });
-	    }
-	    getSize() {
-	        if (client_detector_service_1.ClientDetector.isMobileDevice()) {
-	            return track_cover_component_1.CoverSizes.Small;
-	        }
-	        else {
-	            return track_cover_component_1.CoverSizes.Regular;
-	        }
-	    }
-	};
-	__decorate([
-	    core_1.Input(), 
-	    __metadata('design:type', (typeof (_a = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _a) || Object)
-	], TrackListComponent.prototype, "tracks", void 0);
-	__decorate([
-	    core_1.Input(), 
-	    __metadata('design:type', Boolean)
-	], TrackListComponent.prototype, "canBeDeleted", void 0);
-	TrackListComponent = __decorate([
-	    core_1.Component({
-	        selector: 'track-list',
-	        styles: [__webpack_require__(130)],
-	        template: __webpack_require__(132),
-	        providers: [tracks_collection_1.Tracks]
-	    }), 
-	    __metadata('design:paramtypes', [(typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
-	], TrackListComponent);
-	exports.TrackListComponent = TrackListComponent;
-	var _a, _b;
-
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	const track_model_1 = __webpack_require__(108);
-	const core_1 = __webpack_require__(3);
-	const soundcloud_collection_1 = __webpack_require__(122);
-	let Tracks = class Tracks extends soundcloud_collection_1.SoundcloudCollection {
-	    constructor() {
-	        super(...arguments);
-	        this.endpoint = '/tracks';
-	        this.model = track_model_1.Track;
-	        this.queryParams = {
-	            q: null,
-	            limit: 50,
-	            'duration[from]': 1
-	        };
-	    }
-	    refresh() {
-	        return this.fetch({
-	            search: {
-	                ids: this.pluck('id'),
-	                q: null,
-	                limit: 100
-	            }
-	        });
-	    }
-	};
-	Tracks = __decorate([
-	    core_1.Injectable(), 
-	    __metadata('design:paramtypes', [])
-	], Tracks);
-	exports.Tracks = Tracks;
-
-
-/***/ }),
-/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7730,13 +7443,392 @@ webpackJsonp([0],[
 
 
 /***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const user_model_1 = __webpack_require__(109);
+	const soundcloud_model_1 = __webpack_require__(110);
+	let Comment = class Comment extends soundcloud_model_1.SoundcloudModel {
+	    constructor() {
+	        super(...arguments);
+	        this.endpoint = '/comments';
+	    }
+	    nested() {
+	        return {
+	            user: user_model_1.User
+	        };
+	    }
+	};
+	Comment = __decorate([
+	    core_1.Injectable(), 
+	    __metadata('design:paramtypes', [])
+	], Comment);
+	exports.Comment = Comment;
+
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(118);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "div.cover {\n  width: 100%;\n  max-width: 450px;\n  margin: 0 auto; }\n  div.cover img {\n    width: 100%;\n    height: auto; }\n\ndiv.details {\n  float: left;\n  padding: 15px;\n  text-align: center; }\n  div.details b, div.details p {\n    margin: 5px; }\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports) {
+
+	module.exports = "<section class=\"column\">\n\n  <span (click)=\"goBack()\"><i class=\"fa fa-chevron-left\"></i> Back</span>\n  <h2>Details</h2>\n\n  <hr>\n\n  <div class=\"cover\">\n    <img [src]=\"track.get('artwork_url').getLargeSize()\">\n  </div>\n  <div class=\"details\">\n    <b>{{track.get('title')}}</b>\n    <p>{{track.get('user').get('username')}}</p>\n    <play-button [track]=\"track\"></play-button>\n    <a href=\"{{track.attributes.purchase_url}}\" target=\"_blank\" *ngIf=\"track.attributes.purchase_url\">\n      <button class=\"btn btn-warning\" [class.btn-round]=\"!track.attributes.purchase_title\">\n        <i class=\"fa fa-download\"></i>\n        {{track.attributes.purchase_title}}\n      </button>\n    </a>\n    <a href=\"{{track.attributes.permalink_url}}\" target=\"_blank\" *ngIf=\"track.attributes.permalink_url\">\n      <button class=\"btn btn-success btn-round\">\n        <i class=\"fa fa-share\"></i>\n      </button>\n    </a>\n  </div>\n\n</section>\n\n";
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const router_1 = __webpack_require__(91);
+	const detail_component_1 = __webpack_require__(90);
+	const routes = [
+	    { path: 'tracks/:id', component: detail_component_1.TracksDetailComponent }
+	];
+	let TracksRoutingModule = class TracksRoutingModule {
+	};
+	TracksRoutingModule = __decorate([
+	    core_1.NgModule({
+	        imports: [router_1.RouterModule.forRoot(routes)],
+	        exports: [router_1.RouterModule]
+	    }), 
+	    __metadata('design:paramtypes', [])
+	], TracksRoutingModule);
+	exports.TracksRoutingModule = TracksRoutingModule;
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const h_readable_seconds_pipe_1 = __webpack_require__(122);
+	const track_list_component_1 = __webpack_require__(123);
+	const toggle_liked_track_component_1 = __webpack_require__(135);
+	const play_button_component_1 = __webpack_require__(151);
+	const platform_browser_1 = __webpack_require__(21);
+	const queue_button_component_1 = __webpack_require__(155);
+	const sort_tracks_component_1 = __webpack_require__(159);
+	const backbone_module_1 = __webpack_require__(66);
+	const range_slider_component_1 = __webpack_require__(163);
+	const forms_1 = __webpack_require__(62);
+	const draggable_directive_1 = __webpack_require__(167);
+	const dropzone_directive_1 = __webpack_require__(168);
+	const two_range_slider_component_1 = __webpack_require__(169);
+	const view_header_component_1 = __webpack_require__(173);
+	const scroll_view_component_1 = __webpack_require__(177);
+	const cloud_player_logo_service_1 = __webpack_require__(181);
+	const cloud_player_logo_component_1 = __webpack_require__(182);
+	const toggle_switch_component_1 = __webpack_require__(187);
+	const loading_spinner_component_1 = __webpack_require__(191);
+	const collection_text_input_search_component_1 = __webpack_require__(195);
+	const focus_input_directive_1 = __webpack_require__(199);
+	const view_change_loader_component_1 = __webpack_require__(200);
+	const track_cover_component_1 = __webpack_require__(127);
+	const time_ago_directive_1 = __webpack_require__(204);
+	const play_track_on_event_directive_1 = __webpack_require__(326);
+	const options_btn_component_1 = __webpack_require__(327);
+	const k_mil_shortener_pipe_1 = __webpack_require__(331);
+	const fill_height_directive_1 = __webpack_require__(332);
+	const multi_line_component_1 = __webpack_require__(333);
+	const limit_collection_results_pipe_1 = __webpack_require__(337);
+	const facebook_share_button_component_1 = __webpack_require__(338);
+	const twitter_share_button_component_1 = __webpack_require__(342);
+	let SharedModule = class SharedModule {
+	};
+	SharedModule = __decorate([
+	    core_1.NgModule({
+	        imports: [
+	            platform_browser_1.BrowserModule,
+	            forms_1.FormsModule,
+	            backbone_module_1.BackboneModule
+	        ],
+	        declarations: [
+	            cloud_player_logo_component_1.CloudPlayerLogoComponent,
+	            collection_text_input_search_component_1.CollectionTextInputSearchComponent,
+	            facebook_share_button_component_1.FacebookShareButtonComponent,
+	            twitter_share_button_component_1.TwitterShareButtonComponent,
+	            track_list_component_1.TrackListComponent,
+	            toggle_liked_track_component_1.ToggleLikedTrackComponent,
+	            play_button_component_1.PlayButtonComponent,
+	            queue_button_component_1.QueueButtonComponent,
+	            sort_tracks_component_1.SortTracksComponent,
+	            range_slider_component_1.RangeSliderComponent,
+	            two_range_slider_component_1.TwoRangeSliderComponent,
+	            view_header_component_1.ViewHeaderComponent,
+	            view_change_loader_component_1.ViewChangeLoaderComponent,
+	            scroll_view_component_1.ScrollViewComponent,
+	            toggle_switch_component_1.ToggleSwitchComponent,
+	            loading_spinner_component_1.LoadingSpinnerComponent,
+	            multi_line_component_1.MultiLineComponent,
+	            options_btn_component_1.OptionsBtnComponent,
+	            options_btn_component_1.OptionsBtnOptionComponent,
+	            track_cover_component_1.TrackCoverComponent,
+	            draggable_directive_1.DraggableDirective,
+	            dropzone_directive_1.DropZoneDirective,
+	            focus_input_directive_1.FocusInputDirective,
+	            time_ago_directive_1.TimeAgoDirective,
+	            play_track_on_event_directive_1.PlayTrackOnEventDirective,
+	            fill_height_directive_1.FillHeightDirective,
+	            h_readable_seconds_pipe_1.HumanReadableSecondsPipe,
+	            k_mil_shortener_pipe_1.KMilShortenerPipe,
+	            limit_collection_results_pipe_1.LimitCollectionresultsPipe
+	        ],
+	        exports: [
+	            cloud_player_logo_component_1.CloudPlayerLogoComponent,
+	            collection_text_input_search_component_1.CollectionTextInputSearchComponent,
+	            facebook_share_button_component_1.FacebookShareButtonComponent,
+	            twitter_share_button_component_1.TwitterShareButtonComponent,
+	            track_list_component_1.TrackListComponent,
+	            toggle_liked_track_component_1.ToggleLikedTrackComponent,
+	            play_button_component_1.PlayButtonComponent,
+	            queue_button_component_1.QueueButtonComponent,
+	            sort_tracks_component_1.SortTracksComponent,
+	            range_slider_component_1.RangeSliderComponent,
+	            two_range_slider_component_1.TwoRangeSliderComponent,
+	            view_header_component_1.ViewHeaderComponent,
+	            view_change_loader_component_1.ViewChangeLoaderComponent,
+	            scroll_view_component_1.ScrollViewComponent,
+	            toggle_switch_component_1.ToggleSwitchComponent,
+	            loading_spinner_component_1.LoadingSpinnerComponent,
+	            multi_line_component_1.MultiLineComponent,
+	            options_btn_component_1.OptionsBtnComponent,
+	            options_btn_component_1.OptionsBtnOptionComponent,
+	            track_cover_component_1.TrackCoverComponent,
+	            draggable_directive_1.DraggableDirective,
+	            dropzone_directive_1.DropZoneDirective,
+	            focus_input_directive_1.FocusInputDirective,
+	            time_ago_directive_1.TimeAgoDirective,
+	            play_track_on_event_directive_1.PlayTrackOnEventDirective,
+	            fill_height_directive_1.FillHeightDirective,
+	            h_readable_seconds_pipe_1.HumanReadableSecondsPipe,
+	            k_mil_shortener_pipe_1.KMilShortenerPipe,
+	            limit_collection_results_pipe_1.LimitCollectionresultsPipe
+	        ],
+	        providers: [cloud_player_logo_service_1.CloudPlayerLogoService]
+	    }), 
+	    __metadata('design:paramtypes', [])
+	], SharedModule);
+	exports.SharedModule = SharedModule;
+
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	let HumanReadableSecondsPipe = class HumanReadableSecondsPipe {
+	    formatToHHMMSS(input) {
+	        let time = new Date(null);
+	        time.setSeconds(input);
+	        // format time from hh:mm:ss to mm:ss when hh is 0
+	        if (time.getHours() === 1) {
+	            return time.toISOString().substr(14, 5);
+	        }
+	        else {
+	            return time.toISOString().substr(12, 7);
+	        }
+	    }
+	    transform(value, args) {
+	        if (!value) {
+	            return value;
+	        }
+	        else {
+	            return this.formatToHHMMSS(parseInt(value, 10));
+	        }
+	    }
+	};
+	HumanReadableSecondsPipe = __decorate([
+	    core_1.Pipe({ name: 'hReadableSeconds' }), 
+	    __metadata('design:paramtypes', [])
+	], HumanReadableSecondsPipe);
+	exports.HumanReadableSecondsPipe = HumanReadableSecondsPipe;
+
+
+/***/ }),
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const play_queue_item_model_1 = __webpack_require__(124);
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const router_1 = __webpack_require__(91);
+	const tracks_collection_1 = __webpack_require__(124);
+	const play_queue_collection_1 = __webpack_require__(125);
+	const track_cover_component_1 = __webpack_require__(127);
+	const client_detector_service_1 = __webpack_require__(131);
+	let TrackListComponent = class TrackListComponent {
+	    constructor(router) {
+	        this.router = router;
+	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
+	    }
+	    gotoDetail(track) {
+	        let link = ['/tracks', track.id];
+	        this.router.navigate(link);
+	    }
+	    addToQueue(track) {
+	        this.playQueue.queue({ track: track });
+	    }
+	    getSize() {
+	        if (client_detector_service_1.ClientDetector.isMobileDevice()) {
+	            return track_cover_component_1.CoverSizes.Small;
+	        }
+	        else {
+	            return track_cover_component_1.CoverSizes.Regular;
+	        }
+	    }
+	};
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', (typeof (_a = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _a) || Object)
+	], TrackListComponent.prototype, "tracks", void 0);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', Boolean)
+	], TrackListComponent.prototype, "canBeDeleted", void 0);
+	TrackListComponent = __decorate([
+	    core_1.Component({
+	        selector: 'track-list',
+	        styles: [__webpack_require__(132)],
+	        template: __webpack_require__(134),
+	        providers: [tracks_collection_1.Tracks]
+	    }), 
+	    __metadata('design:paramtypes', [(typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+	], TrackListComponent);
+	exports.TrackListComponent = TrackListComponent;
+	var _a, _b;
+
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const track_model_1 = __webpack_require__(108);
+	const core_1 = __webpack_require__(3);
+	const soundcloud_collection_1 = __webpack_require__(115);
+	let Tracks = class Tracks extends soundcloud_collection_1.SoundcloudCollection {
+	    constructor() {
+	        super(...arguments);
+	        this.endpoint = '/tracks';
+	        this.model = track_model_1.Track;
+	        this.queryParams = {
+	            q: null,
+	            limit: 200,
+	            'duration[from]': 1
+	        };
+	    }
+	    refresh() {
+	        return this.fetch({
+	            search: {
+	                ids: this.pluck('id'),
+	                q: null,
+	                limit: 100
+	            }
+	        });
+	    }
+	};
+	Tracks = __decorate([
+	    core_1.Injectable(), 
+	    __metadata('design:paramtypes', [])
+	], Tracks);
+	exports.Tracks = Tracks;
+
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const play_queue_item_model_1 = __webpack_require__(126);
 	const underscore_1 = __webpack_require__(67);
-	const soundcloud_collection_1 = __webpack_require__(122);
+	const soundcloud_collection_1 = __webpack_require__(115);
 	class PlayQueue extends soundcloud_collection_1.SoundcloudCollection {
 	    constructor() {
 	        super(...arguments);
@@ -7937,7 +8029,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7959,6 +8051,16 @@ webpackJsonp([0],[
 	        this.set({
 	            status: 'QUEUED'
 	        });
+	    }
+	    unQueue() {
+	        this.set({
+	            status: 'NULL'
+	        });
+	        if (this.collection) {
+	            let collection = this.collection;
+	            collection.remove(this);
+	            collection.add(this);
+	        }
 	    }
 	    play() {
 	        this.set('status', 'PLAYING');
@@ -7989,7 +8091,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8052,8 +8154,8 @@ webpackJsonp([0],[
 	TrackCoverComponent = __decorate([
 	    core_1.Component({
 	        selector: 'track-cover',
-	        styles: [__webpack_require__(126)],
-	        template: __webpack_require__(128)
+	        styles: [__webpack_require__(128)],
+	        template: __webpack_require__(130)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], TrackCoverComponent);
@@ -8062,13 +8164,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(127);
+	var styles = __webpack_require__(129);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -8079,7 +8181,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -8093,13 +8195,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"track-cover\" [class.hasNoTrack]=\"!track || !getArtworkUrl()\">\n  <div *ngIf=\"track && getArtworkUrl()\"\n       class=\"cover\">\n    <img [src]=\"getArtworkUrl()\">\n  </div>\n\n  <div *ngIf=\"!track || !getArtworkUrl()\"\n       class=\"no-track\">\n    <cloud-player-logo [animate]=\"animate\"></cloud-player-logo>\n  </div>\n</div>\n";
 
 /***/ }),
-/* 129 */
+/* 131 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -8199,13 +8301,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 130 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(131);
+	var styles = __webpack_require__(133);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -8216,7 +8318,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 131 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -8224,19 +8326,19 @@ webpackJsonp([0],[
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.tracks-list {\n  background: #fcfcfc;\n  padding: 10px 15px;\n  border-radius: 4px;\n  box-shadow: 0 0 8px 0 #c8c8c8; }\n  .tracks-list .track {\n    display: flex;\n    margin: 0 -15px;\n    padding: 20px 15px;\n    transition: background 0.5s ease; }\n    .tracks-list .track:hover {\n      background: #eeeeee; }\n      .tracks-list .track:hover .cover /deep/ play-button .play-button {\n        opacity: 1; }\n    .tracks-list .track:not(:last-child) {\n      border-bottom: 1px solid #eeeeee; }\n    .tracks-list .track .cover {\n      position: relative; }\n      .tracks-list .track .cover track-cover {\n        width: 80px;\n        height: 80px;\n        flex-shrink: 0; }\n      .tracks-list .track .cover play-button {\n        width: 100%;\n        height: 100%; }\n      .tracks-list .track .cover /deep/ play-button .play-button {\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: inherit;\n        height: inherit;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        background: rgba(255, 255, 255, 0.5);\n        opacity: 0;\n        transition: opacity 0.5s ease; }\n        .tracks-list .track .cover /deep/ play-button .play-button.isPlaying {\n          opacity: 1; }\n          .tracks-list .track .cover /deep/ play-button .play-button.isPlaying .btn {\n            background: rgba(255, 255, 255, 0.6);\n            color: #ff3600;\n            border-color: #ff3600; }\n        .tracks-list .track .cover /deep/ play-button .play-button .btn {\n          background: rgba(0, 0, 0, 0.2); }\n          .tracks-list .track .cover /deep/ play-button .play-button .btn:hover {\n            background: rgba(255, 255, 255, 0.6);\n            color: #ff3600;\n            border-color: #ff3600; }\n    .tracks-list .track .details {\n      order: 2;\n      flex: auto;\n      margin-left: 15px;\n      overflow: hidden; }\n      .tracks-list .track .details .track-info {\n        display: flex;\n        align-items: center;\n        margin-bottom: 18px; }\n        .tracks-list .track .details .track-info toggle-liked-track {\n          padding-right: 10px; }\n        .tracks-list .track .details .track-info .meta {\n          text-overflow: ellipsis;\n          overflow: hidden;\n          white-space: nowrap;\n          flex-grow: 1; }\n          .tracks-list .track .details .track-info .meta .created {\n            color: #aaa; }\n            .tracks-list .track .details .track-info .meta .created:before {\n              content: '\\2014';\n              margin-left: -2px;\n              margin-right: 2px; }\n        .tracks-list .track .details .track-info options-btn {\n          align-self: flex-start;\n          margin: 0 0 0 10px; }\n      .tracks-list .track .details .stats .label-light {\n        border: none; }\n  .tracks-list::-webkit-scrollbar {\n    display: none; }\n\n@media (max-width: 992px) {\n  .tracks-list {\n    box-shadow: none;\n    border-radius: 0; } }\n\n@media (max-width: 768px) {\n  .tracks-list .track {\n    position: relative; }\n    .tracks-list .track .cover track-cover {\n      width: 40px;\n      height: 40px; }\n      .tracks-list .track .cover track-cover.hasNoTrack {\n        padding: 2px; }\n    .tracks-list .track .cover /deep/ track-cover .hasNoTrack {\n      padding: 2px; }\n    .tracks-list .track .cover play-button {\n      width: 40px;\n      height: 40px; }\n    .tracks-list .track .cover /deep/ play-button .btn-round {\n      width: 30px;\n      height: 30px;\n      font-size: 12px;\n      padding: 0 0 0 1px; }\n    .tracks-list .track .details .stats {\n      position: absolute;\n      left: 15px;\n      white-space: nowrap;\n      bottom: 10px; }\n      .tracks-list .track .details .stats .label-light:first-child {\n        padding-left: 0; } }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.tracks-list {\n  background: #fcfcfc;\n  padding: 10px 15px;\n  border-radius: 4px;\n  box-shadow: 0 0 8px 0 #c8c8c8; }\n  .tracks-list .track {\n    display: flex;\n    margin: 0 -15px;\n    padding: 20px 15px; }\n    .tracks-list .track:hover {\n      background: #eeeeee; }\n      .tracks-list .track:hover .cover /deep/ play-button .play-button {\n        opacity: 1; }\n    .tracks-list .track:not(:last-child) {\n      border-bottom: 1px solid #eeeeee; }\n    .tracks-list .track .cover {\n      position: relative; }\n      .tracks-list .track .cover track-cover {\n        width: 80px;\n        height: 80px;\n        flex-shrink: 0; }\n      .tracks-list .track .cover play-button {\n        width: 100%;\n        height: 100%; }\n      .tracks-list .track .cover /deep/ play-button .play-button {\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: inherit;\n        height: inherit;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        background: rgba(255, 255, 255, 0.5);\n        opacity: 0;\n        transition: opacity 0.5s ease; }\n        .tracks-list .track .cover /deep/ play-button .play-button.isPlaying {\n          opacity: 1; }\n          .tracks-list .track .cover /deep/ play-button .play-button.isPlaying .btn {\n            background: rgba(255, 255, 255, 0.6);\n            color: #ff3600;\n            border-color: #ff3600; }\n        .tracks-list .track .cover /deep/ play-button .play-button .btn {\n          background: rgba(0, 0, 0, 0.2); }\n          .tracks-list .track .cover /deep/ play-button .play-button .btn:hover {\n            background: rgba(255, 255, 255, 0.6);\n            color: #ff3600;\n            border-color: #ff3600; }\n    .tracks-list .track .details {\n      order: 2;\n      flex: auto;\n      margin-left: 15px;\n      overflow: hidden; }\n      .tracks-list .track .details .track-info {\n        display: flex;\n        align-items: center;\n        margin-bottom: 18px; }\n        .tracks-list .track .details .track-info toggle-liked-track {\n          padding-right: 10px; }\n        .tracks-list .track .details .track-info .meta {\n          text-overflow: ellipsis;\n          overflow: hidden;\n          white-space: nowrap;\n          flex-grow: 1; }\n          .tracks-list .track .details .track-info .meta .created {\n            color: #aaa; }\n            .tracks-list .track .details .track-info .meta .created:before {\n              content: '\\2014';\n              margin-left: -2px;\n              margin-right: 2px; }\n        .tracks-list .track .details .track-info .btn-holder {\n          display: flex;\n          align-self: flex-start; }\n          .tracks-list .track .details .track-info .btn-holder .btn {\n            margin: 0;\n            position: relative;\n            display: flex;\n            align-items: center;\n            justify-content: center; }\n            .tracks-list .track .details .track-info .btn-holder .btn .next-icon {\n              font-size: 14px;\n              margin-right: -2px; }\n          .tracks-list .track .details .track-info .btn-holder options-btn {\n            margin: 0 0 0 3px; }\n      .tracks-list .track .details .stats .label-light {\n        border: none; }\n  .tracks-list::-webkit-scrollbar {\n    display: none; }\n\n@media (max-width: 992px) {\n  .tracks-list {\n    box-shadow: none;\n    border-radius: 0; } }\n\n@media (max-width: 768px) {\n  .tracks-list .track {\n    position: relative; }\n    .tracks-list .track .cover track-cover {\n      width: 40px;\n      height: 40px; }\n      .tracks-list .track .cover track-cover.hasNoTrack {\n        padding: 2px; }\n    .tracks-list .track .cover /deep/ track-cover .hasNoTrack {\n      padding: 2px; }\n    .tracks-list .track .cover play-button {\n      width: 40px;\n      height: 40px; }\n    .tracks-list .track .cover /deep/ play-button .btn-round {\n      width: 30px;\n      height: 30px;\n      font-size: 12px;\n      padding: 0 0 0 1px; }\n    .tracks-list .track .details .stats {\n      position: absolute;\n      left: 15px;\n      white-space: nowrap;\n      bottom: 10px; }\n      .tracks-list .track .details .stats .label-light:first-child {\n        padding-left: 0; } }\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 132 */
+/* 134 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"tracks-list\">\n  <sort-tracks [tracks]=\"tracks\"></sort-tracks>\n  <div *ngFor=\"let track of tracks.models\" class=\"track\"\n       draggable=\"true\"\n       [dragData]=\"track.toJSON()\"\n       [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n       dragEffect=\"copy\">\n    <div class=\"cover\">\n      <track-cover [track]=\"track\" [size]=\"getSize()\"></track-cover>\n      <play-button [track]=\"track\" [tracks]=\"tracks\"></play-button>\n    </div>\n    <div class=\"details\">\n      <div class=\"track-info\">\n        <toggle-liked-track [track]=\"track\"></toggle-liked-track>\n        <div class=\"meta\"\n             playTrackOn\n             [events]=\"['click']\"\n             [track]=\"track\"\n             [tracks]=\"tracks\">\n          <b class=\"track-title\">{{track.get('title')}}</b>\n          <div class=\"artist\">\n            <span>{{track.get('user').get('username')}}</span>\n            <span class=\"created\">created\n              <span [timeAgo]=\"track.get('created_at')\">{{track.get('created_at')}}</span>\n            </span>\n          </div>\n        </div>\n        <options-btn>\n          <options-btn-option playTrackOn=\"click\" [track]=\"track\" [tracks]=\"tracks\">\n            Play this track and the following ones\n          </options-btn-option>\n          <options-btn-option playTrackOn=\"click\" [track]=\"track\">\n            Play only this track\n          </options-btn-option>\n          <options-btn-option (click)=\"addToQueue(track)\">\n            Add as next track to the playqueue\n          </options-btn-option>\n        </options-btn>\n      </div>\n      <div class=\"stats\">\n        <div class=\"duration label label-default label-light\">\n          <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n          {{track.get('duration')/1000 | hReadableSeconds}}\n        </div>\n        <div class=\"favs label label-default label-light\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\" alt=\"favouites count\"></i> {{track.get('likes') | kMilShortener}}\n        </div>\n        <div class=\"plays label label-default label-light\">\n          <i class=\"fa fa-play-circle\" aria-hidden=\"true\" alt=\"play count\"></i> {{track.get('playback_count') | kMilShortener}}\n        </div>\n        <div *ngIf=\"track.get('genre')\"\n             class=\"genre label label-default label-light\">\n          #{{track.get('genre')}}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+	module.exports = "<div class=\"tracks-list\">\n  <sort-tracks [tracks]=\"tracks\"></sort-tracks>\n  <div *ngFor=\"let track of tracks.models | limitCollectionresults: {limit: 10}\" class=\"track\"\n       draggable=\"true\"\n       [dragData]=\"track.toJSON()\"\n       [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n       dragEffect=\"copy\">\n    <div class=\"cover\">\n      <track-cover [track]=\"track\" [size]=\"getSize()\"></track-cover>\n      <play-button [track]=\"track\" [tracks]=\"tracks\"></play-button>\n    </div>\n    <div class=\"details\">\n      <div class=\"track-info\">\n        <toggle-liked-track [track]=\"track\"></toggle-liked-track>\n        <div class=\"meta\"\n             playTrackOn\n             [events]=\"['click']\"\n             [track]=\"track\"\n             [tracks]=\"tracks\">\n          <b class=\"track-title\">{{track.get('title')}}</b>\n          <div class=\"artist\">\n            <span>{{track.get('user').get('username')}}</span>\n            <span class=\"created\">created\n              <span [timeAgo]=\"track.get('created_at')\">{{track.get('created_at')}}</span>\n            </span>\n          </div>\n        </div>\n        <div class=\"btn-holder\">\n          <div class=\"btn btn-xs btn-default\"\n               (click)=\"addToQueue(track)\">\n            <span class=\"fa fa-arrow-circle-o-right next-icon\"></span>\n            <span class=\"fa fa-play\" ></span>\n          </div>\n          <options-btn>\n            <options-btn-option (click)=\"addToQueue(track)\">\n              Add to queue\n            </options-btn-option>\n            <options-btn-option playTrackOn=\"click\" [track]=\"track\" [tracks]=\"tracks\">\n              Play this track and the following ones\n            </options-btn-option>\n            <options-btn-option playTrackOn=\"click\" [track]=\"track\">\n              Play only this track\n            </options-btn-option>\n            <options-btn-option *ngIf=\"canBeDeleted\" (click)=\"track.destroy()\">\n              Remove track\n            </options-btn-option>\n          </options-btn>\n        </div>\n      </div>\n      <div class=\"stats\">\n        <div class=\"duration label label-default label-light\">\n          <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n          {{track.get('duration')/1000 | hReadableSeconds}}\n        </div>\n        <div class=\"favs label label-default label-light\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\" alt=\"favouites count\"></i> {{track.get('likes') | kMilShortener}}\n        </div>\n        <div class=\"plays label label-default label-light\">\n          <i class=\"fa fa-play-circle\" aria-hidden=\"true\" alt=\"play count\"></i> {{track.get('playback_count') | kMilShortener}}\n        </div>\n        <div *ngIf=\"track.get('genre')\"\n             class=\"genre label label-default label-light\">\n          #{{track.get('genre')}}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
-/* 133 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8251,8 +8353,8 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const track_model_1 = __webpack_require__(108);
-	const session_model_1 = __webpack_require__(134);
-	const auth_service_1 = __webpack_require__(145);
+	const session_model_1 = __webpack_require__(136);
+	const auth_service_1 = __webpack_require__(147);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let ToggleLikedTrackComponent = class ToggleLikedTrackComponent {
 	    constructor(authService, userAnalyticsService) {
@@ -8307,8 +8409,8 @@ webpackJsonp([0],[
 	ToggleLikedTrackComponent = __decorate([
 	    core_1.Component({
 	        selector: 'toggle-liked-track',
-	        styles: [__webpack_require__(146)],
-	        template: __webpack_require__(148),
+	        styles: [__webpack_require__(148)],
+	        template: __webpack_require__(150),
 	        animations: [
 	            core_1.trigger('visibilityChanged', [
 	                core_1.state('true', core_1.style({ width: '*', opacity: 1 })),
@@ -8325,7 +8427,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 134 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8339,10 +8441,10 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const authenticated_user_model_1 = __webpack_require__(135);
+	const authenticated_user_model_1 = __webpack_require__(137);
 	const session_manager_fn_1 = __webpack_require__(112);
 	const soundcloud_model_1 = __webpack_require__(110);
-	const localforage = __webpack_require__(144);
+	const localforage = __webpack_require__(146);
 	const config_1 = __webpack_require__(111);
 	let Session_1 = class Session extends soundcloud_model_1.SoundcloudModel {
 	    constructor() {
@@ -8458,7 +8560,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 135 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8474,8 +8576,8 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const user_model_1 = __webpack_require__(109);
 	const underscore_1 = __webpack_require__(67);
-	const authenticated_user_liked_tracks_collection_1 = __webpack_require__(136);
-	const authenticated_user_playlists_collection_1 = __webpack_require__(138);
+	const authenticated_user_liked_tracks_collection_1 = __webpack_require__(138);
+	const authenticated_user_playlists_collection_1 = __webpack_require__(140);
 	let AuthenticatedUser = class AuthenticatedUser extends user_model_1.User {
 	    constructor() {
 	        super(...arguments);
@@ -8501,7 +8603,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 136 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8515,8 +8617,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const authenticated_user_liked_track_model_1 = __webpack_require__(137);
-	const soundcloud_collection_1 = __webpack_require__(122);
+	const authenticated_user_liked_track_model_1 = __webpack_require__(139);
+	const soundcloud_collection_1 = __webpack_require__(115);
 	let AuthenticatedUserLikedTracks = class AuthenticatedUserLikedTracks extends soundcloud_collection_1.SoundcloudCollection {
 	    constructor() {
 	        super(...arguments);
@@ -8532,7 +8634,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 137 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8561,7 +8663,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 138 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8575,8 +8677,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const playlists_collection_1 = __webpack_require__(139);
-	const authenticated_user_playlist_model_1 = __webpack_require__(141);
+	const playlists_collection_1 = __webpack_require__(141);
+	const authenticated_user_playlist_model_1 = __webpack_require__(143);
 	let AuthenticatedUserPlaylists = class AuthenticatedUserPlaylists extends playlists_collection_1.Playlists {
 	    constructor() {
 	        super(...arguments);
@@ -8592,7 +8694,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 139 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8605,9 +8707,9 @@ webpackJsonp([0],[
 	var __metadata = (this && this.__metadata) || function (k, v) {
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
-	const playlist_model_1 = __webpack_require__(140);
+	const playlist_model_1 = __webpack_require__(142);
 	const core_1 = __webpack_require__(3);
-	const soundcloud_collection_1 = __webpack_require__(122);
+	const soundcloud_collection_1 = __webpack_require__(115);
 	let Playlists = class Playlists extends soundcloud_collection_1.SoundcloudCollection {
 	    constructor() {
 	        super(...arguments);
@@ -8623,7 +8725,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 140 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8638,7 +8740,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const user_model_1 = __webpack_require__(109);
-	const tracks_collection_1 = __webpack_require__(121);
+	const tracks_collection_1 = __webpack_require__(124);
 	const underscore_1 = __webpack_require__(67);
 	const soundcloud_model_1 = __webpack_require__(110);
 	const soundcloud_image_model_1 = __webpack_require__(113);
@@ -8695,7 +8797,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 141 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8709,9 +8811,9 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const playlist_model_1 = __webpack_require__(140);
+	const playlist_model_1 = __webpack_require__(142);
 	const underscore_1 = __webpack_require__(67);
-	const authenticated_user_playlist_tracks_collection_1 = __webpack_require__(142);
+	const authenticated_user_playlist_tracks_collection_1 = __webpack_require__(144);
 	let AuthenticatedUserPlaylist = class AuthenticatedUserPlaylist extends playlist_model_1.Playlist {
 	    constructor() {
 	        super(...arguments);
@@ -8744,7 +8846,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 142 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8758,8 +8860,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const tracks_collection_1 = __webpack_require__(121);
-	const authenticated_user_playlist_track_model_1 = __webpack_require__(143);
+	const tracks_collection_1 = __webpack_require__(124);
+	const authenticated_user_playlist_track_model_1 = __webpack_require__(145);
 	let AuthenticatedUserPlaylistTracks = class AuthenticatedUserPlaylistTracks extends tracks_collection_1.Tracks {
 	    constructor() {
 	        super(...arguments);
@@ -8789,7 +8891,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 143 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8832,8 +8934,8 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 144 */,
-/* 145 */
+/* 146 */,
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8847,8 +8949,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
-	const localforage = __webpack_require__(144);
+	const session_model_1 = __webpack_require__(136);
+	const localforage = __webpack_require__(146);
 	const user_analytics_service_1 = __webpack_require__(83);
 	const config_1 = __webpack_require__(111);
 	let AuthService = class AuthService {
@@ -8912,13 +9014,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 146 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(147);
+	var styles = __webpack_require__(149);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -8929,7 +9031,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 147 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -8943,13 +9045,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 148 */
+/* 150 */
 /***/ (function(module, exports) {
 
 	module.exports = "<span class=\"toggle-liked-track\">\n  <i class=\"fa\"\n     [class.fa-heart]=\"hasLikedTrack()\"\n     [class.fa-heart-o]=\"!hasLikedTrack()\"\n     aria-hidden=\"true\"\n     (click)=\"toggleLike()\"></i>\n\n  <div class=\"not-authenticated\" [@visibilityChanged]=\"showAuthenticateTooltip\">\n    <a (click)=\"connect()\">Connect with SoundCloud</a> to like tracks\n  </div>\n</span>\n";
 
 /***/ }),
-/* 149 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8964,8 +9066,8 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const track_model_1 = __webpack_require__(108);
-	const tracks_collection_1 = __webpack_require__(121);
-	const play_queue_collection_1 = __webpack_require__(123);
+	const tracks_collection_1 = __webpack_require__(124);
+	const play_queue_collection_1 = __webpack_require__(125);
 	let PlayButtonComponent = class PlayButtonComponent {
 	    constructor() {
 	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
@@ -8986,8 +9088,8 @@ webpackJsonp([0],[
 	PlayButtonComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-button',
-	        styles: [__webpack_require__(150)],
-	        template: __webpack_require__(152)
+	        styles: [__webpack_require__(152)],
+	        template: __webpack_require__(154)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], PlayButtonComponent);
@@ -8996,13 +9098,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 150 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(151);
+	var styles = __webpack_require__(153);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9013,7 +9115,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 151 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -9027,13 +9129,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 152 */
+/* 154 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"play-button\"\n     [class.isPlaying]=\"isPlaying()\"\n     playTrackOn=\"click\"\n     [track]=\"track\"\n     [tracks]=\"tracks\">\n  <button class=\"btn btn-round btn-brand\" *ngIf=\"!isPlaying()\">\n    <i class=\"fa fa-play play\"></i>\n  </button>\n  <button class=\"btn btn-round btn-brand\" *ngIf=\"isPlaying()\">\n    <i class=\"fa fa-pause\"></i>\n  </button>\n</div>\n";
 
 /***/ }),
-/* 153 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9048,8 +9150,8 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const track_model_1 = __webpack_require__(108);
-	const tracks_collection_1 = __webpack_require__(121);
-	const play_queue_collection_1 = __webpack_require__(123);
+	const tracks_collection_1 = __webpack_require__(124);
+	const play_queue_collection_1 = __webpack_require__(125);
 	let QueueButtonComponent = class QueueButtonComponent {
 	    constructor() {
 	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
@@ -9080,8 +9182,8 @@ webpackJsonp([0],[
 	QueueButtonComponent = __decorate([
 	    core_1.Component({
 	        selector: 'queue-button',
-	        styles: [__webpack_require__(154)],
-	        template: __webpack_require__(156)
+	        styles: [__webpack_require__(156)],
+	        template: __webpack_require__(158)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], QueueButtonComponent);
@@ -9090,13 +9192,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 154 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(155);
+	var styles = __webpack_require__(157);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9107,15 +9209,15 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 155 */
-151,
-/* 156 */
+/* 157 */
+153,
+/* 158 */
 /***/ (function(module, exports) {
 
 	module.exports = "<button class=\"btn btn-round btn-primary\" *ngIf=\"!isQueued()\" (click)=\"queue()\" title=\"Add to Queue\">\n  <i class=\"fa fa-history\"></i>\n</button>\n";
 
 /***/ }),
-/* 157 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9129,7 +9231,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const tracks_collection_1 = __webpack_require__(121);
+	const tracks_collection_1 = __webpack_require__(124);
 	let SortTracksComponent = class SortTracksComponent {
 	};
 	__decorate([
@@ -9139,8 +9241,8 @@ webpackJsonp([0],[
 	SortTracksComponent = __decorate([
 	    core_1.Component({
 	        selector: 'sort-tracks',
-	        styles: [__webpack_require__(158)],
-	        template: __webpack_require__(160)
+	        styles: [__webpack_require__(160)],
+	        template: __webpack_require__(162)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], SortTracksComponent);
@@ -9149,13 +9251,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 158 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(159);
+	var styles = __webpack_require__(161);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9166,7 +9268,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 159 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -9180,13 +9282,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 160 */
+/* 162 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"sort-tracks\">\n  <span class=\"sort-by visible-xs\">\n    <i class=\"fa fa-sort\" aria-hidden=\"true\"></i>\n  </span>\n  <span class=\"sort-by sort-by-tracks hidden-xs\">\n    Sort tracks by:\n  </span>\n  <collection-sort [collection]=\"tracks\" [label]=\"'None'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'duration'\" [label]=\"'Duration'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'likes'\" [label]=\"'Likes'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'playback_count'\" [label]=\"'Plays'\"></collection-sort>\n  |\n  <collection-sort [collection]=\"tracks\" [comparator]=\"'created_at'\" [label]=\"'Created'\"></collection-sort>\n</div>\n";
 
 /***/ }),
-/* 161 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9348,8 +9450,8 @@ webpackJsonp([0],[
 	RangeSliderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'range-slider',
-	        styles: [__webpack_require__(162)],
-	        template: __webpack_require__(164)
+	        styles: [__webpack_require__(164)],
+	        template: __webpack_require__(166)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_d = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _d) || Object])
 	], RangeSliderComponent);
@@ -9358,13 +9460,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 162 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(163);
+	var styles = __webpack_require__(165);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9375,7 +9477,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 163 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -9389,13 +9491,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 164 */
+/* 166 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"range-slider-component\" [class.is-loading]=\"showLoadingSpinner\" [class.is-dragging]=\"dragInProgress\">\n  <div *ngIf=\"!hideSliderValue && min !== null\"\n       class=\"min-value\">\n    <span *ngIf=\"showCurrentValue\">\n      {{getDisplayValue(value)}}\n    </span>\n    <span *ngIf=\"!showCurrentValue\">\n      {{getDisplayValue(min)}}\n    </span>\n  </div>\n\n  <div #progressBar class=\"progress-bar\">\n    <div #progressLine class=\"progress-line\"></div>\n    <div #handle class=\"visible-dragger\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">{{dragDisplayValue}}</span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n    <input type=\"range\" [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpValue\" [step]=\"step\">\n  </div>\n\n  <div *ngIf=\"!hideSliderValue && max !== null\"\n       class=\"max-value\">\n    {{getDisplayValue(max)}}\n  </div>\n</div>\n";
 
 /***/ }),
-/* 165 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9487,7 +9589,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 166 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9529,6 +9631,9 @@ webpackJsonp([0],[
 	            args.push(event);
 	            this.dropCallback.apply(this, args);
 	        }
+	        this.leaveTimeout = setTimeout(() => {
+	            this.renderer.setElementClass(this.el.nativeElement, 'drag-over', false);
+	        }, 100);
 	    }
 	    getDragData(event) {
 	        let text = event.dataTransfer.getData('text');
@@ -9581,7 +9686,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 167 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9823,8 +9928,8 @@ webpackJsonp([0],[
 	TwoRangeSliderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'two-range-slider',
-	        styles: [__webpack_require__(168)],
-	        template: __webpack_require__(170)
+	        styles: [__webpack_require__(170)],
+	        template: __webpack_require__(172)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_g = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _g) || Object])
 	], TwoRangeSliderComponent);
@@ -9833,13 +9938,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 168 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(169);
+	var styles = __webpack_require__(171);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9850,7 +9955,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 169 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -9864,13 +9969,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 170 */
+/* 172 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"two-range-slider-component\" [class.is-loading]=\"showLoadingSpinner\" [class.is-dragging]=\"dragInProgress\">\n  <div *ngIf=\"!hideSliderValue && min !== null\"\n       class=\"min-value\">\n    {{getDisplayValue(min)}}\n  </div>\n\n  <div #progressBar class=\"progress-bar\">\n    <div #progressLine class=\"progress-line\"></div>\n\n    <div #handleOne class=\"visible-dragger handle-one\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">\n        <span *ngIf=\"allowInfinityMin && dragHandleMinDisplayValue === null\">None</span>\n        <span *ngIf=\"!allowInfinityMin || dragHandleMinDisplayValue !== null\">{{dragHandleMinDisplayValue}}</span>\n      </span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n\n    <div #handleTwo class=\"visible-dragger handle-two\" [class.display-value]=\"!hideSliderValue\">\n      <span *ngIf=\"dragInProgress && !hideSliderValue\">\n        <span *ngIf=\"allowInfinityMax && dragHandleMaxDisplayValue === null\">None</span>\n        <span *ngIf=\"!allowInfinityMax || dragHandleMaxDisplayValue !== null\">{{dragHandleMaxDisplayValue}}</span>\n      </span>\n      <div class=\"loading-spinner\"></div>\n    </div>\n\n    <input type=\"range\" #sliderOne [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpMinValue\" [step]=\"step\">\n    <input type=\"range\" #sliderTwo [min]=\"min\" [max]=\"max\" [(ngModel)]=\"tmpMaxValue\" [step]=\"step\">\n  </div>\n\n  <div *ngIf=\"!hideSliderValue && max !== null\"\n       class=\"max-value\">\n    {{getDisplayValue(max)}}\n  </div>\n</div>\n";
 
 /***/ }),
-/* 171 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9889,8 +9994,8 @@ webpackJsonp([0],[
 	ViewHeaderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'view-header',
-	        styles: [__webpack_require__(172)],
-	        template: __webpack_require__(174)
+	        styles: [__webpack_require__(174)],
+	        template: __webpack_require__(176)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], ViewHeaderComponent);
@@ -9898,13 +10003,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 172 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(173);
+	var styles = __webpack_require__(175);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9915,7 +10020,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 173 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -9929,13 +10034,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 174 */
+/* 176 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"view-header\">\n  <ng-content></ng-content>\n</div>\n";
 
 /***/ }),
-/* 175 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9954,8 +10059,8 @@ webpackJsonp([0],[
 	ScrollViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'scroll-view',
-	        styles: [__webpack_require__(176)],
-	        template: __webpack_require__(178)
+	        styles: [__webpack_require__(178)],
+	        template: __webpack_require__(180)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], ScrollViewComponent);
@@ -9963,13 +10068,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 176 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(177);
+	var styles = __webpack_require__(179);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -9980,7 +10085,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 177 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -9994,13 +10099,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"scroll-view\">\n  <ng-content></ng-content>\n</div>\n";
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10038,7 +10143,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10052,7 +10157,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const cloud_player_logo_service_1 = __webpack_require__(179);
+	const cloud_player_logo_service_1 = __webpack_require__(181);
 	let CloudPlayerLogoComponent = class CloudPlayerLogoComponent {
 	    constructor(cloudPlayerLogoService) {
 	        this.cloudPlayerLogoService = cloudPlayerLogoService;
@@ -10107,8 +10212,8 @@ webpackJsonp([0],[
 	CloudPlayerLogoComponent = __decorate([
 	    core_1.Component({
 	        selector: 'cloud-player-logo',
-	        styles: [__webpack_require__(181)],
-	        template: __webpack_require__(183),
+	        styles: [__webpack_require__(183)],
+	        template: __webpack_require__(185),
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_b = typeof cloud_player_logo_service_1.CloudPlayerLogoService !== 'undefined' && cloud_player_logo_service_1.CloudPlayerLogoService) === 'function' && _b) || Object])
 	], CloudPlayerLogoComponent);
@@ -10117,13 +10222,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(182);
+	var styles = __webpack_require__(184);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -10134,7 +10239,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -10148,19 +10253,19 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"cloud-player-logo\">\n  <object type=\"image/svg+xml\" data=\"" + __webpack_require__(184) + "\" #svgObject>\n    <img src=\"" + __webpack_require__(184) + "\" alt=\"Cloud Player\">\n  </object>\n</div>\n";
+	module.exports = "<div class=\"cloud-player-logo\">\n  <object type=\"image/svg+xml\" data=\"" + __webpack_require__(186) + "\" #svgObject>\n    <img src=\"" + __webpack_require__(186) + "\" alt=\"Cloud Player\">\n  </object>\n</div>\n";
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "ebd7bf47dcdbd9ebebea93f422e84dd1.svg";
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10214,8 +10319,8 @@ webpackJsonp([0],[
 	ToggleSwitchComponent = __decorate([
 	    core_1.Component({
 	        selector: 'toggle-switch',
-	        styles: [__webpack_require__(186)],
-	        template: __webpack_require__(188),
+	        styles: [__webpack_require__(188)],
+	        template: __webpack_require__(190),
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], ToggleSwitchComponent);
@@ -10223,13 +10328,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(187);
+	var styles = __webpack_require__(189);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -10240,7 +10345,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -10254,13 +10359,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"toggle-switch\" [class.on]=\"isOn()\" [class.off]=\"!isOn()\">\n  <div class=\"left\" [class.active]=\"!isOn()\" (click)=\"turnOff()\">\n    <i class=\"fa fa-lock\" aria-hidden=\"true\"></i>\n  </div>\n\n  <div class=\"right\" [class.active]=\"isOn()\" (click)=\"turnOn()\">\n    <i class=\"fa fa-globe\" aria-hidden=\"true\"></i>\n  </div>\n\n  <div class=\"indicator\" (click)=\"toggle()\"></div>\n</div>\n";
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10291,8 +10396,8 @@ webpackJsonp([0],[
 	LoadingSpinnerComponent = __decorate([
 	    core_1.Component({
 	        selector: 'loading-spinner',
-	        styles: [__webpack_require__(190)],
-	        template: __webpack_require__(192)
+	        styles: [__webpack_require__(192)],
+	        template: __webpack_require__(194)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], LoadingSpinnerComponent);
@@ -10300,13 +10405,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(191);
+	var styles = __webpack_require__(193);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -10317,7 +10422,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -10331,13 +10436,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"idle-dots\" *ngIf=\"isIdle && !isLoading\">\n  <div class=\"dot one\"></div>\n  <div class=\"dot two\"></div>\n  <div class=\"dot three\"></div>\n</div>\n\n<div class=\"loading-spinner\" *ngIf=\"isLoading\">\n  <div class=\"load-circle-line-mask\">\n    <div class=\"load-line\"></div>\n  </div>\n</div>\n";
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10354,7 +10459,7 @@ webpackJsonp([0],[
 	const Observable_1 = __webpack_require__(7);
 	const Subject_1 = __webpack_require__(6);
 	const base_collection_1 = __webpack_require__(76);
-	const client_detector_service_1 = __webpack_require__(129);
+	const client_detector_service_1 = __webpack_require__(131);
 	let CollectionTextInputSearchComponent = class CollectionTextInputSearchComponent {
 	    constructor() {
 	        this.searchTerms = new Subject_1.Subject();
@@ -10425,8 +10530,8 @@ webpackJsonp([0],[
 	CollectionTextInputSearchComponent = __decorate([
 	    core_1.Component({
 	        selector: 'collection-text-input-search',
-	        styles: [__webpack_require__(194)],
-	        template: __webpack_require__(196)
+	        styles: [__webpack_require__(196)],
+	        template: __webpack_require__(198)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], CollectionTextInputSearchComponent);
@@ -10435,13 +10540,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(195);
+	var styles = __webpack_require__(197);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -10452,7 +10557,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -10466,13 +10571,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"collection-search\">\n  <form class=\"input-group\"\n        autocomplete=\"off\"\n        (submit)=\"search(); searchInput.blur()\">\n    <span class=\"input-group-addon\" id=\"basic-addon3\"><i class=\"fa fa-search\"></i></span>\n    <input type=\"text\"\n           class=\"form-control\"\n           aria-describedby=\"basic-addon3\"\n           name=\"search\"\n           placeholder=\"Search\"\n           [(ngModel)]=\"query\"\n           (ngModelChange)=\"searchOnInput()\"\n           #searchInput>\n    <loading-spinner [isIdle]=\"isIdle\" [isLoading]=\"isLoading\"></loading-spinner>\n  </form>\n</div>\n";
 
 /***/ }),
-/* 197 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10505,7 +10610,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 198 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10558,8 +10663,8 @@ webpackJsonp([0],[
 	ViewChangeLoaderComponent = __decorate([
 	    core_1.Component({
 	        selector: 'view-change-loader',
-	        styles: [__webpack_require__(199)],
-	        template: __webpack_require__(201),
+	        styles: [__webpack_require__(201)],
+	        template: __webpack_require__(203),
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _d) || Object])
 	], ViewChangeLoaderComponent);
@@ -10568,13 +10673,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 199 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(200);
+	var styles = __webpack_require__(202);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -10585,7 +10690,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -10599,13 +10704,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"view-change-loader\">\n  <loading-spinner></loading-spinner>\n</div>\n";
 
 /***/ }),
-/* 202 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10619,7 +10724,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const moment = __webpack_require__(203);
+	const moment = __webpack_require__(205);
 	let TimeAgoDirective = class TimeAgoDirective {
 	    constructor(el) {
 	        this.el = el;
@@ -10655,8 +10760,6 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 203 */,
-/* 204 */,
 /* 205 */,
 /* 206 */,
 /* 207 */,
@@ -10773,7 +10876,12 @@ webpackJsonp([0],[
 /* 318 */,
 /* 319 */,
 /* 320 */,
-/* 321 */
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10788,8 +10896,8 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const track_model_1 = __webpack_require__(108);
-	const tracks_collection_1 = __webpack_require__(121);
-	const play_queue_collection_1 = __webpack_require__(123);
+	const tracks_collection_1 = __webpack_require__(124);
+	const play_queue_collection_1 = __webpack_require__(125);
 	let PlayTrackOnEventDirective = class PlayTrackOnEventDirective {
 	    constructor(el) {
 	        this.el = el;
@@ -10869,7 +10977,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 322 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10950,8 +11058,8 @@ webpackJsonp([0],[
 	OptionsBtnComponent = __decorate([
 	    core_1.Component({
 	        selector: 'options-btn',
-	        styles: [__webpack_require__(323)],
-	        template: __webpack_require__(325)
+	        styles: [__webpack_require__(328)],
+	        template: __webpack_require__(330)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_c = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _c) || Object])
 	], OptionsBtnComponent);
@@ -10974,13 +11082,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 323 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(324);
+	var styles = __webpack_require__(329);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -10991,7 +11099,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 324 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -11005,13 +11113,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 325 */
+/* 330 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"options-btn\">\n  <div class=\"btn btn-xs btn-default\" (click)=\"toggleOpen()\" #toggler>\n    <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\" alt=\"Options\"></i>\n  </div>\n  <ul [hidden]=\"!optionsAreVisible\"\n      class=\"options-list\"\n      #optionsHolder>\n    <ng-content></ng-content>\n  </ul>\n</div>\n";
 
 /***/ }),
-/* 326 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11054,7 +11162,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 327 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11089,7 +11197,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 328 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11103,15 +11211,408 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const index_component_1 = __webpack_require__(329);
+	let MultiLineComponent = class MultiLineComponent {
+	    constructor() {
+	        this.lines = [];
+	        this.lineAmountChanged = new core_1.EventEmitter();
+	    }
+	    calculateLines(text, maxWidth) {
+	        let words = text.split(' ');
+	        words.forEach(function (word) {
+	            var wordWidth = this._ctx.measureText(word + ' ').width, line = this.lines[this.lines.length - 1];
+	            if (line && line.width + wordWidth <= maxWidth) {
+	                line.text += ' ' + word;
+	                line.width += wordWidth;
+	            }
+	            else if (!this.maxLines || this.lines.length <= this.maxLines) {
+	                this.lines.push({ width: wordWidth + (this.paddingLeft + this.paddingRight), text: word });
+	            }
+	        }.bind(this));
+	        this.lineAmountChanged.emit(this.lines.length);
+	    }
+	    ngOnInit() {
+	        this._ctx = this.canvas.nativeElement.getContext('2d');
+	        this._ctx.font = this.font || '300 12.5px Raleway';
+	        this.calculateLines(this.text, this.maxWidth);
+	    }
+	    ngOnDestroy() {
+	        this.lineAmountChanged.emit(this.lines.length * -1);
+	    }
+	};
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', String)
+	], MultiLineComponent.prototype, "text", void 0);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', String)
+	], MultiLineComponent.prototype, "font", void 0);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', Number)
+	], MultiLineComponent.prototype, "paddingLeft", void 0);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', Number)
+	], MultiLineComponent.prototype, "paddingRight", void 0);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', Number)
+	], MultiLineComponent.prototype, "maxWidth", void 0);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', Number)
+	], MultiLineComponent.prototype, "maxLines", void 0);
+	__decorate([
+	    core_1.Output(), 
+	    __metadata('design:type', Object)
+	], MultiLineComponent.prototype, "lineAmountChanged", void 0);
+	__decorate([
+	    core_1.ViewChild('canvas'), 
+	    __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
+	], MultiLineComponent.prototype, "canvas", void 0);
+	MultiLineComponent = __decorate([
+	    core_1.Component({
+	        selector: 'multi-line',
+	        styles: [__webpack_require__(334)],
+	        template: __webpack_require__(336)
+	    }), 
+	    __metadata('design:paramtypes', [])
+	], MultiLineComponent);
+	exports.MultiLineComponent = MultiLineComponent;
+	var _a;
+
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(335);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ":host canvas {\n  display: none; }\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 336 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"multi-line\">\n  <canvas #canvas width=\"0\" height=\"0\"></canvas>\n  <div class=\"lines\" [class.multiLines]=\"lines.length>1\">\n    <div class=\"line\" *ngFor=\"let line of lines\" [style.width]=\"line.width+'px'\" [style.font]=\"font\">\n      {{line.text}}\n    </div>\n  </div>\n</div>\n";
+
+/***/ }),
+/* 337 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const underscore_1 = __webpack_require__(67);
+	let LimitCollectionresultsPipe = class LimitCollectionresultsPipe {
+	    constructor() {
+	        this.valueChange = new core_1.EventEmitter();
+	        this._throttledScrollHandler = underscore_1.throttle(this._increaseLimitOnBottomReached.bind(this), 500);
+	        document.addEventListener('scroll', this._throttledScrollHandler, true);
+	    }
+	    _increaseLimitOnBottomReached(ev) {
+	        let srcEl = ev.srcElement;
+	        if (srcEl.scrollTop / (srcEl.scrollHeight - srcEl.offsetHeight) > 0.8) {
+	            if (this._limit) {
+	                this._limit += this._orgLimit;
+	            }
+	            else {
+	                this._limit = this._orgLimit * 2;
+	            }
+	            this.valueChange.emit(this._limit);
+	        }
+	    }
+	    transform(items, args = { limit: null }) {
+	        if (this._limit && this._limit > items.length) {
+	            document.removeEventListener('scroll', this._throttledScrollHandler, true);
+	            return items;
+	        }
+	        if (items && args.limit && items.length > args.limit) {
+	            this._orgLimit = args.limit;
+	            return items.slice(0, this._limit || this._orgLimit);
+	        }
+	        else {
+	            return items;
+	        }
+	    }
+	    ngOnDestroy() {
+	        document.removeEventListener('scroll', this._throttledScrollHandler, true);
+	    }
+	};
+	LimitCollectionresultsPipe = __decorate([
+	    core_1.Pipe({ name: 'limitCollectionresults', pure: false }), 
+	    __metadata('design:paramtypes', [])
+	], LimitCollectionresultsPipe);
+	exports.LimitCollectionresultsPipe = LimitCollectionresultsPipe;
+
+
+/***/ }),
+/* 338 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	let FacebookShareButtonComponent = class FacebookShareButtonComponent {
+	    constructor(el) {
+	        this.el = el;
+	        this.click = new core_1.EventEmitter();
+	    }
+	    initFacebookJsSdk() {
+	        return new Promise((resolve, reject) => {
+	            const facebookElId = 'facebookJsSdk';
+	            const facebookScriptEl = document.getElementById(facebookElId);
+	            if (facebookScriptEl) {
+	                resolve();
+	            }
+	            else {
+	                let js;
+	                const scripts = document.getElementsByTagName('script')[0];
+	                js = document.createElement('script');
+	                js.id = facebookElId;
+	                js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=124527247643897';
+	                scripts.parentNode.insertBefore(js, facebookScriptEl);
+	                js.onload = () => {
+	                    resolve();
+	                };
+	            }
+	        });
+	    }
+	    ;
+	    initClickListener() {
+	        let fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
+	        let monitor = setInterval(() => {
+	            if (!fbIframe) {
+	                fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
+	            }
+	            let activeEl = document.activeElement;
+	            if (activeEl === fbIframe) {
+	                clearInterval(monitor);
+	                this.click.emit();
+	            }
+	        }, 1000);
+	    }
+	    ngOnInit() {
+	        this.initFacebookJsSdk().then(() => {
+	            this.initClickListener();
+	        });
+	    }
+	};
+	__decorate([
+	    core_1.Output(), 
+	    __metadata('design:type', Object)
+	], FacebookShareButtonComponent.prototype, "click", void 0);
+	FacebookShareButtonComponent = __decorate([
+	    core_1.Component({
+	        selector: 'facebook-share-button',
+	        styles: [__webpack_require__(339)],
+	        template: __webpack_require__(341)
+	    }), 
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
+	], FacebookShareButtonComponent);
+	exports.FacebookShareButtonComponent = FacebookShareButtonComponent;
+	var _a;
+
+
+/***/ }),
+/* 339 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(340);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 340 */
+153,
+/* 341 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"facebook-share-button\" (click)=\"share($event)\">\n  <div class=\"fb-share-button\"\n       data-href=\"https://cloud-player.io\"\n       data-layout=\"button_count\"\n       data-size=\"large\"\n       data-mobile-iframe=\"true\">\n    <a class=\"fb-xfbml-parse-ignore\"\n       target=\"_blank\"\n       href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcloud-player.io%2F&amp;src=sdkpreparse\">\n      Share\n    </a>\n  </div>\n</div>\n";
+
+/***/ }),
+/* 342 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	let TwitterShareButtonComponent = class TwitterShareButtonComponent {
+	    constructor(el) {
+	        this.el = el;
+	        this.click = new core_1.EventEmitter();
+	    }
+	    build() {
+	        window.twttr.widgets.createShareButton('https://cloud-player.io', document.querySelector('.twitter-share-button'), {
+	            via: 'cldplayer',
+	            size: 'large',
+	            text: 'Check out this free music player'
+	        });
+	    }
+	    initTwitterJsSdk() {
+	        return new Promise((resolve, reject) => {
+	            const twitterElId = 'twitterJsSdk';
+	            const twitterScriptEl = document.getElementById(twitterElId);
+	            if (twitterScriptEl) {
+	                resolve();
+	            }
+	            else {
+	                let js;
+	                const scripts = document.getElementsByTagName('script')[0];
+	                js = document.createElement('script');
+	                js.id = twitterElId;
+	                js.src = '//platform.twitter.com/widgets.js';
+	                scripts.parentNode.insertBefore(js, twitterScriptEl);
+	                js.onload = () => {
+	                    resolve();
+	                };
+	            }
+	        });
+	    }
+	    ;
+	    initClickListener() {
+	        let fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
+	        let monitor = setInterval(() => {
+	            if (!fbIframe) {
+	                fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
+	            }
+	            let activeEl = document.activeElement;
+	            if (activeEl === fbIframe) {
+	                clearInterval(monitor);
+	                this.click.emit();
+	            }
+	        }, 1000);
+	    }
+	    ngOnInit() {
+	        this.initTwitterJsSdk().then(() => {
+	            this.build();
+	            this.initClickListener();
+	        });
+	    }
+	};
+	__decorate([
+	    core_1.Output(), 
+	    __metadata('design:type', Object)
+	], TwitterShareButtonComponent.prototype, "click", void 0);
+	TwitterShareButtonComponent = __decorate([
+	    core_1.Component({
+	        selector: 'twitter-share-button',
+	        styles: [__webpack_require__(343)],
+	        template: __webpack_require__(345)
+	    }), 
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
+	], TwitterShareButtonComponent);
+	exports.TwitterShareButtonComponent = TwitterShareButtonComponent;
+	var _a;
+
+
+/***/ }),
+/* 343 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(344);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 344 */
+153,
+/* 345 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"twitter-share-button\"></div>\n";
+
+/***/ }),
+/* 346 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const index_component_1 = __webpack_require__(347);
 	const tracks_module_1 = __webpack_require__(89);
-	const dashboard_routes_1 = __webpack_require__(333);
+	const dashboard_routes_1 = __webpack_require__(351);
 	const platform_browser_1 = __webpack_require__(21);
 	const forms_1 = __webpack_require__(62);
-	const session_module_1 = __webpack_require__(334);
+	const session_module_1 = __webpack_require__(352);
 	const backbone_module_1 = __webpack_require__(66);
-	const shared_module_1 = __webpack_require__(118);
-	const search_filter_component_1 = __webpack_require__(370);
+	const shared_module_1 = __webpack_require__(121);
+	const search_filter_component_1 = __webpack_require__(388);
+	const social_share_panel_component_1 = __webpack_require__(392);
 	let DashboardModule = class DashboardModule {
 	};
 	DashboardModule = __decorate([
@@ -11127,7 +11628,8 @@ webpackJsonp([0],[
 	        ],
 	        declarations: [
 	            index_component_1.DashboardIndexComponent,
-	            search_filter_component_1.SearchFilterComponent
+	            search_filter_component_1.SearchFilterComponent,
+	            social_share_panel_component_1.SocialSharePanelComponent
 	        ]
 	    }), 
 	    __metadata('design:paramtypes', [])
@@ -11136,7 +11638,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 329 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11150,10 +11652,10 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const tracks_collection_1 = __webpack_require__(121);
-	const collection_text_input_search_component_1 = __webpack_require__(193);
-	const localforage = __webpack_require__(144);
-	const auth_service_1 = __webpack_require__(145);
+	const tracks_collection_1 = __webpack_require__(124);
+	const collection_text_input_search_component_1 = __webpack_require__(195);
+	const localforage = __webpack_require__(146);
+	const auth_service_1 = __webpack_require__(147);
 	let DashboardIndexComponent = class DashboardIndexComponent {
 	    constructor(tracks, authService) {
 	        this.tracks = tracks;
@@ -11189,8 +11691,8 @@ webpackJsonp([0],[
 	DashboardIndexComponent = __decorate([
 	    core_1.Component({
 	        selector: 'my-dashboard',
-	        styles: [__webpack_require__(330)],
-	        template: __webpack_require__(332)
+	        styles: [__webpack_require__(348)],
+	        template: __webpack_require__(350)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_b = typeof tracks_collection_1.Tracks !== 'undefined' && tracks_collection_1.Tracks) === 'function' && _b) || Object, (typeof (_c = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _c) || Object])
 	], DashboardIndexComponent);
@@ -11199,13 +11701,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 330 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(331);
+	var styles = __webpack_require__(349);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11216,7 +11718,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 331 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -11224,19 +11726,19 @@ webpackJsonp([0],[
 
 
 	// module
-	exports.push([module.id, ":host /deep/ scroll-view .results {\n  padding-top: 10px; }\n", ""]);
+	exports.push([module.id, ":host /deep/ scroll-view .results {\n  margin-top: -8px; }\n\n:host social-share-panel {\n  display: block; }\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 332 */
+/* 350 */
 /***/ (function(module, exports) {
 
-	module.exports = "<section class=\"column\">\n  <view-header>\n    <collection-text-input-search [collection]=\"tracks\" [queryParam]=\"'q'\" #searchBar></collection-text-input-search>\n  </view-header>\n\n  <!--<collection-range-input-search [collection]=\"tracks\" [queryParam]=\"'duration[from]'\"></collection-range-input-search>-->\n  <!--<sort-tracks [tracks]=\"tracks\"></sort-tracks>-->\n\n  <scroll-view>\n    <div *ngIf=\"tracks.length>0\"\n         class=\"results\">\n      <search-filter [collection]=\"tracks\"></search-filter>\n      <track-list [tracks]=\"tracks\"></track-list>\n    </div>\n    <div *ngIf=\"tracks.length === 0 && !isFetching\"\n         class=\"card getting-started\">\n      <h1>Welcome to Cloud Player!</h1>\n      <p>\n        Cloud player is an unofficial SoundCloud player to play songs from SoundCloud.\n        <br>\n        You can search for all songs that are available on SoundCloud\n      </p>\n      <p>\n        <a (click)=\"connect()\">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They will appear in the menubar\n        as soon as the connection was successful.\n      </p>\n      <p>\n        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply\n        drag and drop tracks on it.\n      </p>\n      <p>Cloud Player is also available as <a routerLink=\"/desktop-app\">native App for your PC.</a></p>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && isFetching\"\n         class=\"card\">\n      Searching for tracks that match your query \"{{tracks.queryParams.q}}\"\n    </div>\n  </scroll-view>\n</section>\n";
+	module.exports = "<section class=\"column\">\n  <view-header>\n    <collection-text-input-search [collection]=\"tracks\" [queryParam]=\"'q'\" #searchBar></collection-text-input-search>\n  </view-header>\n\n  <!--<collection-range-input-search [collection]=\"tracks\" [queryParam]=\"'duration[from]'\"></collection-range-input-search>-->\n  <!--<sort-tracks [tracks]=\"tracks\"></sort-tracks>-->\n\n  <scroll-view>\n    <social-share-panel\n      *ngIf=\"tracks.length !== 0\"\n      class=\"card\">\n    </social-share-panel>\n\n    <div *ngIf=\"tracks.length>0\"\n         class=\"results\">\n      <search-filter [collection]=\"tracks\"></search-filter>\n      <track-list [tracks]=\"tracks\"></track-list>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && !isFetching\"\n         class=\"card getting-started\">\n      <h1>Welcome to Cloud Player!</h1>\n      <p>\n        Cloud player is an unofficial SoundCloud player to play songs from SoundCloud.\n        <br>\n        You can search for all songs that are available on SoundCloud\n      </p>\n      <p>\n        <a (click)=\"connect()\">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They\n        will appear in the menubar\n        as soon as the connection was successful.\n      </p>\n      <p>\n        You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply\n        drag and drop tracks on it.\n      </p>\n      <p>Cloud Player is also available as <a routerLink=\"/desktop-app\">native App for your PC.</a></p>\n    </div>\n\n    <div *ngIf=\"tracks.length === 0 && isFetching\"\n         class=\"card\">\n      Searching for tracks that match your query \"{{tracks.queryParams.q}}\"\n    </div>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 333 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11251,7 +11753,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const index_component_1 = __webpack_require__(329);
+	const index_component_1 = __webpack_require__(347);
 	const routes = [
 	    { path: 'dashboard', component: index_component_1.DashboardIndexComponent }
 	];
@@ -11268,7 +11770,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 334 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11284,15 +11786,15 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const platform_browser_1 = __webpack_require__(21);
 	const forms_1 = __webpack_require__(62);
-	const session_routes_1 = __webpack_require__(335);
-	const soundcloud_callback_component_1 = __webpack_require__(336);
-	const authenticated_user_playlists_1 = __webpack_require__(349);
-	const liked_tracks_view_component_1 = __webpack_require__(340);
-	const shared_module_1 = __webpack_require__(118);
-	const user_playlist_view_component_1 = __webpack_require__(344);
-	const authenticated_user_playlists_view_component_1 = __webpack_require__(348);
-	const playlist_module_1 = __webpack_require__(360);
-	const authenticated_user_view_component_1 = __webpack_require__(356);
+	const session_routes_1 = __webpack_require__(353);
+	const soundcloud_callback_component_1 = __webpack_require__(354);
+	const authenticated_user_playlists_1 = __webpack_require__(367);
+	const liked_tracks_view_component_1 = __webpack_require__(358);
+	const shared_module_1 = __webpack_require__(121);
+	const user_playlist_view_component_1 = __webpack_require__(362);
+	const authenticated_user_playlists_view_component_1 = __webpack_require__(366);
+	const playlist_module_1 = __webpack_require__(378);
+	const authenticated_user_view_component_1 = __webpack_require__(374);
 	let SessionModule = class SessionModule {
 	};
 	SessionModule = __decorate([
@@ -11323,7 +11825,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 335 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11338,11 +11840,11 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const soundcloud_callback_component_1 = __webpack_require__(336);
-	const liked_tracks_view_component_1 = __webpack_require__(340);
-	const user_playlist_view_component_1 = __webpack_require__(344);
-	const authenticated_user_playlists_view_component_1 = __webpack_require__(348);
-	const authenticated_user_view_component_1 = __webpack_require__(356);
+	const soundcloud_callback_component_1 = __webpack_require__(354);
+	const liked_tracks_view_component_1 = __webpack_require__(358);
+	const user_playlist_view_component_1 = __webpack_require__(362);
+	const authenticated_user_playlists_view_component_1 = __webpack_require__(366);
+	const authenticated_user_view_component_1 = __webpack_require__(374);
 	const routes = [
 	    { path: 'connect', component: soundcloud_callback_component_1.SoundcloudCallbackComponent },
 	    { path: 'me', component: authenticated_user_view_component_1.AuthenticatedUserViewComponent },
@@ -11363,7 +11865,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 336 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11378,7 +11880,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const session_model_1 = __webpack_require__(134);
+	const session_model_1 = __webpack_require__(136);
 	let SoundcloudCallbackComponent = class SoundcloudCallbackComponent {
 	    constructor(route, router) {
 	        this.route = route;
@@ -11403,8 +11905,8 @@ webpackJsonp([0],[
 	SoundcloudCallbackComponent = __decorate([
 	    core_1.Component({
 	        selector: 'soundcloud-callback',
-	        styles: [__webpack_require__(337)],
-	        template: __webpack_require__(339)
+	        styles: [__webpack_require__(355)],
+	        template: __webpack_require__(357)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
 	], SoundcloudCallbackComponent);
@@ -11413,13 +11915,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 337 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(338);
+	var styles = __webpack_require__(356);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11430,15 +11932,15 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 338 */
-151,
-/* 339 */
+/* 356 */
+153,
+/* 357 */
 /***/ (function(module, exports) {
 
 	module.exports = "<h1>The authentication with Soundcloud was successful!</h1>\n";
 
 /***/ }),
-/* 340 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11452,8 +11954,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
-	const playlist_model_1 = __webpack_require__(140);
+	const session_model_1 = __webpack_require__(136);
+	const playlist_model_1 = __webpack_require__(142);
 	let LikedTracksViewComponent = class LikedTracksViewComponent {
 	    constructor() {
 	        this.session = session_model_1.Session.getInstance();
@@ -11468,8 +11970,8 @@ webpackJsonp([0],[
 	LikedTracksViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'liked-track-view',
-	        styles: [__webpack_require__(341)],
-	        template: __webpack_require__(343),
+	        styles: [__webpack_require__(359)],
+	        template: __webpack_require__(361),
 	        providers: [playlist_model_1.Playlist]
 	    }), 
 	    __metadata('design:paramtypes', [])
@@ -11478,13 +11980,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 341 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(342);
+	var styles = __webpack_require__(360);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11495,15 +11997,15 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 342 */
-151,
-/* 343 */
+/* 360 */
+153,
+/* 361 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    <i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Liked Tracks\n  </view-header>\n\n  <scroll-view>\n    <track-list [tracks]=\"user.get('likes')\"></track-list>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 344 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11518,8 +12020,8 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const session_model_1 = __webpack_require__(134);
-	const authenticated_user_playlist_model_1 = __webpack_require__(141);
+	const session_model_1 = __webpack_require__(136);
+	const authenticated_user_playlist_model_1 = __webpack_require__(143);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let UserPlayListViewComponent = class UserPlayListViewComponent {
 	    constructor(route, router, userAnalyticsService) {
@@ -11588,8 +12090,8 @@ webpackJsonp([0],[
 	UserPlayListViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'user-play-list-view',
-	        template: __webpack_require__(345),
-	        styles: [__webpack_require__(346)]
+	        template: __webpack_require__(363),
+	        styles: [__webpack_require__(364)]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _c) || Object])
 	], UserPlayListViewComponent);
@@ -11598,19 +12100,19 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 345 */
+/* 363 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <form (submit)=\"save()\">\n    <view-header>\n      <div *ngIf=\"isInEditMode\"\n           class=\"title edit-mode form-inline\">\n        <toggle-switch [(value)]=\"playlist.attributes.isPublic\"></toggle-switch>\n        <div class=\"form-group\">\n          <input type=\"text\"\n                 name=\"playlistName\"\n                 class=\"form-control\"\n                 id=\"playlistName\"\n                 placeholder=\"Playlist Name\"\n                 [(ngModel)]=\"playlist.attributes.title\"\n                 required\n                 focusInput>\n        </div>\n        <div class=\"button-group\">\n          <input type=\"button\" class=\"btn btn-danger\" (click)=\"cancel()\" value=\"Cancel\"/>\n          <input type=\"submit\" class=\"btn btn-success\" value=\"Save\"/>\n        </div>\n      </div>\n\n      <div *ngIf=\"!isInEditMode\" class=\"title\">\n        <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n        <span class=\"text\">{{playlist.get('title')}}</span>\n        <div class=\"button-group\">\n          <button class=\"btn btn-default\" (click)=\"isInEditMode = true\">\n            <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i>\n          </button>\n          <button class=\"btn btn-default btn-danger\" (click)=\"destroy()\">\n            <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i>\n          </button>\n        </div>\n      </div>\n\n    </view-header>\n  </form>\n\n  <scroll-view>\n    <track-list [tracks]=\"playlist.get('tracks')\" [canBeDeleted]=\"true\"></track-list>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 346 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(347);
+	var styles = __webpack_require__(365);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11621,7 +12123,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 347 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -11635,7 +12137,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 348 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11649,14 +12151,14 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const authenticated_user_playlists_1 = __webpack_require__(349);
+	const authenticated_user_playlists_1 = __webpack_require__(367);
 	let AuthenticatedUserPlaylistsViewComponent = class AuthenticatedUserPlaylistsViewComponent extends authenticated_user_playlists_1.AuthenticatedUserPlaylists {
 	};
 	AuthenticatedUserPlaylistsViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'authenticated-user-playlists-view',
-	        template: __webpack_require__(353),
-	        styles: [__webpack_require__(354)]
+	        template: __webpack_require__(371),
+	        styles: [__webpack_require__(372)]
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], AuthenticatedUserPlaylistsViewComponent);
@@ -11664,7 +12166,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 349 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11678,8 +12180,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
-	const authenticated_user_playlist_model_1 = __webpack_require__(141);
+	const session_model_1 = __webpack_require__(136);
+	const authenticated_user_playlist_model_1 = __webpack_require__(143);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let AuthenticatedUserPlaylists = class AuthenticatedUserPlaylists {
 	    constructor(userAnalyticsService) {
@@ -11690,10 +12192,15 @@ webpackJsonp([0],[
 	        this.isFetching = false;
 	        this.isInCreationMode = false;
 	        this.tmpPlaylist = new authenticated_user_playlist_model_1.AuthenticatedUserPlaylist();
+	        this.dropTrack = (dropData, playlist) => {
+	            this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
+	            playlist.get('tracks').create(dropData);
+	        };
 	    }
 	    fetchPlaylists() {
 	        if (this.user.get('authenticated') && !this.isFetching) {
 	            this.isFetching = true;
+	            let playlist = this.user.get('playlists');
 	            this.user.get('playlists').fetch().then(() => {
 	                this.isFetching = false;
 	                this.valueChange.emit();
@@ -11711,10 +12218,6 @@ webpackJsonp([0],[
 	        newPlaylist.save().then(() => {
 	            this.tmpPlaylist.clear();
 	        });
-	    }
-	    dropTrack(dropData, playlist) {
-	        this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
-	        playlist.get('tracks').create(dropData);
 	    }
 	    cancel() {
 	        if (!this.tmpPlaylist.get('title') || this.tmpPlaylist.get('title').length < 1) {
@@ -11737,8 +12240,8 @@ webpackJsonp([0],[
 	AuthenticatedUserPlaylists = __decorate([
 	    core_1.Component({
 	        selector: 'authenticated-user-playlists',
-	        styles: [__webpack_require__(350)],
-	        template: __webpack_require__(352),
+	        styles: [__webpack_require__(368)],
+	        template: __webpack_require__(370),
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _a) || Object])
 	], AuthenticatedUserPlaylists);
@@ -11747,13 +12250,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 350 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(351);
+	var styles = __webpack_require__(369);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11764,7 +12267,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 351 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -11778,25 +12281,25 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 352 */
+/* 370 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"authenticated-user-playlists\">\n\n  <div class=\"nav-item new-playlist\"\n       [class.disabled]=\"!isAuthenticated()\"\n       (click)=\"addNewPlaylist()\">\n    <i class=\"fa fa-plus\" aria-hidden=\"true\"></i>\n    <div class=\"text\">New Playlist</div>\n  </div>\n\n  <div *ngIf=\"isInCreationMode\"\n       class=\"nav-item\">\n    <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\n    <div class=\"text\">\n      <form class=\"form-inline\" (submit)=\"createPlaylist()\">\n        <div class=\"form-group\">\n          <input type=\"text\"\n                 name=\"playlistName\"\n                 class=\"form-control\"\n                 id=\"playlistName\"\n                 placeholder=\"Playlist Name\"\n                 [(ngModel)]=\"tmpPlaylist.attributes.title\"\n                 (blur)=\"cancel()\"\n                 required\n                 #newPlaylistInput\n                 focusInput>\n        </div>\n      </form>\n    </div>\n  </div>\n\n  <a *ngFor=\"let playlist of user.get('playlists').models\"\n     routerLink=\"me/playlists/{{playlist.get('id')}}\"\n     class=\"playlist-item\"\n     [routerLinkActive]=\"['is-active']\"\n\n     dropzone\n     [dropCallback]=\"dropTrack\"\n     [dropItemRef]=\"playlist\">\n    <play-list-icon [playlist]=\"playlist\"></play-list-icon>\n    <div class=\"text\">{{playlist.get('title')}}</div>\n  </a>\n\n  <div *ngIf=\"!isAuthenticated()\">\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.3\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 30%\">Playlists</div>\n    </a>\n\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.2\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 45%\">Playlists</div>\n    </a>\n\n    <a class=\"dummy-playlist-item disabled\" style=\"opacity: 0.1\">\n      <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n      <div class=\"text\" style=\"width: 40%\">Playlists</div>\n    </a>\n  </div>\n\n</div>\n";
 
 /***/ }),
-/* 353 */
+/* 371 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    Playlists\n  </view-header>\n\n  <scroll-view>\n\n    <div class=\"card\">\n      <div class=\"well\">\n        <h5>Create a new Playlist</h5>\n        <form>\n          <toggle-switch [(value)]=\"tmpPlaylist.attributes.isPublic\"></toggle-switch>\n          <input type=\"text\" placeholder=\"Playlist\" name=\"playlistName\" [(ngModel)]=\"tmpPlaylist.attributes.title\">\n          <button class=\"btn btn-round btn-primary\" (click)=\"save()\" title=\"Create playlist\"><i class=\"fa fa-plus\"></i></button>\n        </form>\n      </div>\n\n      <div class=\"playlists\">\n        <div *ngFor=\"let playlist of user.get('playlists').models\">\n          <a routerLink=\"/me/playlists/{{playlist.get('id')}}\" dropzone [dropCallback]=\"dropTrack\" [dropItemRef]=\"playlist\">\n            <div class=\"cover\">\n              <img [src]=\"playlist.get('artwork_url').getDefaultSize()\">\n            </div>\n            <div class=\"details\">\n              <p>{{playlist.get('title')}}</p>\n            </div>\n          </a>\n        </div>\n      </div>\n    </div>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 354 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(355);
+	var styles = __webpack_require__(373);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11807,7 +12310,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 355 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -11821,7 +12324,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 356 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11835,7 +12338,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const auth_service_1 = __webpack_require__(145);
+	const auth_service_1 = __webpack_require__(147);
 	let AuthenticatedUserViewComponent = class AuthenticatedUserViewComponent {
 	    constructor(authService) {
 	        this.authService = authService;
@@ -11847,8 +12350,8 @@ webpackJsonp([0],[
 	AuthenticatedUserViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'authenticated-user-view',
-	        template: __webpack_require__(357),
-	        styles: [__webpack_require__(358)]
+	        template: __webpack_require__(375),
+	        styles: [__webpack_require__(376)]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _a) || Object])
 	], AuthenticatedUserViewComponent);
@@ -11857,19 +12360,19 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 357 */
+/* 375 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    Your profile\n  </view-header>\n\n  <scroll-view>\n    <div class=\"card\">\n      <button class=\"btn btn-danger btn-block\"\n              (click)=\"disconnect()\">Sign Out</button>\n    </div>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 358 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(359);
+	var styles = __webpack_require__(377);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -11880,7 +12383,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 359 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -11894,7 +12397,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 360 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11909,11 +12412,11 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const tracks_module_1 = __webpack_require__(89);
-	const playlist_routes_1 = __webpack_require__(361);
+	const playlist_routes_1 = __webpack_require__(379);
 	const platform_browser_1 = __webpack_require__(21);
-	const playlist_view_component_1 = __webpack_require__(362);
-	const shared_module_1 = __webpack_require__(118);
-	const playlist_icon_component_1 = __webpack_require__(366);
+	const playlist_view_component_1 = __webpack_require__(380);
+	const shared_module_1 = __webpack_require__(121);
+	const playlist_icon_component_1 = __webpack_require__(384);
 	let PlaylistModule = class PlaylistModule {
 	};
 	PlaylistModule = __decorate([
@@ -11938,7 +12441,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 361 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11953,7 +12456,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const playlist_view_component_1 = __webpack_require__(362);
+	const playlist_view_component_1 = __webpack_require__(380);
 	const routes = [
 	    { path: 'playlists/:id', component: playlist_view_component_1.PlayListViewComponent }
 	];
@@ -11970,7 +12473,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 362 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11985,7 +12488,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const playlist_model_1 = __webpack_require__(140);
+	const playlist_model_1 = __webpack_require__(142);
 	let PlayListViewComponent = class PlayListViewComponent {
 	    constructor(route, playlist) {
 	        this.route = route;
@@ -12002,8 +12505,8 @@ webpackJsonp([0],[
 	PlayListViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-list-view',
-	        styles: [__webpack_require__(363)],
-	        template: __webpack_require__(365),
+	        styles: [__webpack_require__(381)],
+	        template: __webpack_require__(383),
 	        providers: [playlist_model_1.Playlist]
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof playlist_model_1.Playlist !== 'undefined' && playlist_model_1.Playlist) === 'function' && _b) || Object])
@@ -12013,13 +12516,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 363 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(364);
+	var styles = __webpack_require__(382);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12030,15 +12533,15 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 364 */
-151,
-/* 365 */
+/* 382 */
+153,
+/* 383 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n  <view-header>\n    <i class=\"fa fa-heart\" aria-hidden=\"true\"></i> {{playlist.get('title')}}\n  </view-header>\n\n  <scroll-view>\n    <track-list [tracks]=\"playlist.get('tracks')\"></track-list>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 366 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12052,7 +12555,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const playlist_model_1 = __webpack_require__(140);
+	const playlist_model_1 = __webpack_require__(142);
 	let PlayListIconComponent = class PlayListIconComponent {
 	    constructor() {
 	    }
@@ -12064,8 +12567,8 @@ webpackJsonp([0],[
 	PlayListIconComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-list-icon',
-	        styles: [__webpack_require__(367)],
-	        template: __webpack_require__(369)
+	        styles: [__webpack_require__(385)],
+	        template: __webpack_require__(387)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], PlayListIconComponent);
@@ -12074,13 +12577,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 367 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(368);
+	var styles = __webpack_require__(386);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12091,7 +12594,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 368 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12105,13 +12608,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 369 */
+/* 387 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"playlist-icon\">\n  <div *ngIf=\"playlist.get('artwork_url').getDefaultSize()\"\n       class=\"cover\">\n    <img [src]=\"playlist.get('artwork_url').getDefaultSize()\">\n  </div>\n  <i *ngIf=\"!playlist.get('artwork_url').getDefaultSize()\"\n     class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\n  <div *ngIf=\"!playlist.get('isPublic')\"\n       class=\"private-badge\">\n    <i class=\"fa fa-lock\" aria-hidden=\"true\"></i>\n  </div>\n</div>\n";
 
 /***/ }),
-/* 370 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12126,7 +12629,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const base_collection_1 = __webpack_require__(76);
-	const h_readable_seconds_pipe_1 = __webpack_require__(119);
+	const h_readable_seconds_pipe_1 = __webpack_require__(122);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let SearchFilterComponent = class SearchFilterComponent {
 	    constructor(userAnalyticsService) {
@@ -12162,8 +12665,8 @@ webpackJsonp([0],[
 	SearchFilterComponent = __decorate([
 	    core_1.Component({
 	        selector: 'search-filter',
-	        styles: [__webpack_require__(371)],
-	        template: __webpack_require__(373),
+	        styles: [__webpack_require__(389)],
+	        template: __webpack_require__(391),
 	        animations: [
 	            core_1.trigger('visibilityChanged', [
 	                core_1.state('true', core_1.style({ height: '*', marginBottom: '15px', padding: '15px', })),
@@ -12180,13 +12683,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 371 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(372);
+	var styles = __webpack_require__(390);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12197,7 +12700,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 372 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12205,19 +12708,19 @@ webpackJsonp([0],[
 
 
 	// module
-	exports.push([module.id, ".search-filter {\n  position: relative; }\n  .search-filter .nav-tabs {\n    z-index: 1;\n    position: relative;\n    margin-bottom: -2px;\n    border-bottom: none; }\n    .search-filter .nav-tabs li a {\n      border: none; }\n      .search-filter .nav-tabs li a:hover, .search-filter .nav-tabs li a:focus {\n        background: none; }\n    .search-filter .nav-tabs li.active a {\n      background: #fcfcfc; }\n  .search-filter .item-amount {\n    position: absolute;\n    right: 0;\n    top: 9px; }\n    .search-filter .item-amount .label {\n      background: transparent;\n      border: 1px solid #666;\n      color: #666; }\n  .search-filter .new-filter {\n    position: relative;\n    background: #fcfcfc;\n    width: 100%;\n    padding: 30px 15px 15px;\n    margin-bottom: 15px;\n    overflow: hidden; }\n\n@media (max-width: 992px) {\n  .search-filter {\n    padding-left: 15px;\n    padding-right: 15px; }\n    .search-filter .item-amount {\n      right: 15px; } }\n", ""]);
+	exports.push([module.id, ".search-filter {\n  position: relative; }\n  .search-filter .nav-tabs {\n    z-index: 1;\n    position: relative;\n    margin-bottom: -2px;\n    border-bottom: none; }\n    .search-filter .nav-tabs li a {\n      border: none; }\n      .search-filter .nav-tabs li a:hover, .search-filter .nav-tabs li a:focus {\n        background: none; }\n    .search-filter .nav-tabs li.active a {\n      background: #fcfcfc; }\n  .search-filter .item-amount {\n    position: absolute;\n    right: 0;\n    top: 9px; }\n    .search-filter .item-amount .label {\n      background: transparent;\n      border: 1px solid #666;\n      color: #666; }\n  .search-filter .new-filter {\n    position: relative;\n    background: #fcfcfc;\n    width: 100%;\n    padding: 30px 15px 15px;\n    margin-bottom: 15px;\n    overflow: hidden;\n    border-radius: 4px; }\n\n@media (max-width: 992px) {\n  .search-filter {\n    padding-left: 15px;\n    padding-right: 15px; }\n    .search-filter .item-amount {\n      right: 15px; } }\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 373 */
+/* 391 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"search-filter\">\n  <ul class=\"nav nav-tabs\">\n    <li role=\"presentation\" [class.active]=\"!showFilterForm\"><a (click)=\"toggleFilterForm()\">All Results</a></li>\n    <li role=\"presentation\" [class.active]=\"showFilterForm\"><a (click)=\"toggleFilterForm()\">Filter Result</a></li>\n  </ul>\n  <div class=\"item-amount\">\n    <span class=\"label label-default\">{{collection.length}} Tracks</span>\n  </div>\n  <div class=\"new-filter\" [@visibilityChanged]=\"showFilterForm\">\n    <form class=\"form-horizontal\">\n\n      <div class=\"form-group\">\n        <label class=\"col-sm-2 control-label\">Duration</label>\n        <div class=\"col-sm-10\">\n          <two-range-slider\n            [(minValue)]=\"this.collection.queryParams['duration[from]']\"\n            [(maxValue)]=\"this.collection.queryParams['duration[to]']\"\n            [min]=\"1000\"\n            [max]=\"3600000\"\n            [allowInfinityMin]=\"true\"\n            [allowInfinityMax]=\"true\"\n            [transformDisplayValue]=\"transformProgressBarValues\"\n            (maxValueChanged)=\"reFetch('duration_to')\"\n            (minValueChanged)=\"reFetch('duration_from')\"\n            [step]=\"1000\">\n          </two-range-slider>\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <label class=\"col-sm-2 control-label\">BPM</label>\n        <div class=\"col-sm-10\">\n          <two-range-slider\n            [(minValue)]=\"this.collection.queryParams['bpm[from]']\"\n            [(maxValue)]=\"this.collection.queryParams['bpm[to]']\"\n            [min]=\"20\"\n            [max]=\"200\"\n            [allowInfinityMin]=\"true\"\n            [allowInfinityMax]=\"true\"\n            (maxValueChanged)=\"reFetch('bpm_to')\"\n            (minValueChanged)=\"reFetch('bpm_from')\"\n            [step]=\"20\">\n          </two-range-slider>\n        </div>\n      </div>\n\n      <!--<div class=\"form-group\">-->\n        <!--<label class=\"col-sm-2 control-label\">Genre</label>-->\n        <!--<div class=\"col-sm-10\">-->\n          <!--<input type=\"text\"-->\n                 <!--class=\"form-control\"-->\n                 <!--name=\"genres\"-->\n                 <!--[(ngModel)]=\"this.collection.queryParams['genres']\">-->\n        <!--</div>-->\n      <!--</div>-->\n\n      <!--<div class=\"well\">-->\n        <!--<p>Save this filter as a quick filter</p>-->\n        <!--<div class=\"form-group\">-->\n          <!--<label class=\"sr-only\" for=\"exampleInputPassword3\">Password</label>-->\n          <!--<input type=\"text\" class=\"form-control\" id=\"exampleInputPassword3\" placeholder=\"Password\">-->\n        <!--</div>-->\n      <!--</div>-->\n\n    </form>\n  </div>\n</div>\n";
 
 /***/ }),
-/* 374 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12231,7 +12734,100 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
+	const user_analytics_service_1 = __webpack_require__(83);
+	const localforage = __webpack_require__(146);
+	let SocialSharePanelComponent = class SocialSharePanelComponent {
+	    constructor(el, userAnalyticsService) {
+	        this.el = el;
+	        this.userAnalyticsService = userAnalyticsService;
+	    }
+	    shared(type) {
+	        this.dismiss();
+	        this.userAnalyticsService.trackEvent('social_shared_on_' + type, 'click', 'social-share-panel-component');
+	        localforage.setItem('shared_cp', type);
+	    }
+	    notShared() {
+	        this.dismiss();
+	        this.userAnalyticsService.trackEvent('social_not_shared', 'click', 'social-share-panel-component');
+	        localforage.setItem('shared_cp', "none");
+	    }
+	    dismiss() {
+	        this.el.nativeElement.remove();
+	    }
+	    ngOnInit() {
+	        this.el.nativeElement.style.display = 'none';
+	        localforage.getItem('shared_cp').then((value) => {
+	            if (!value) {
+	                this.el.nativeElement.style.display = 'block';
+	            }
+	        });
+	    }
+	};
+	SocialSharePanelComponent = __decorate([
+	    core_1.Component({
+	        selector: 'social-share-panel',
+	        styles: [__webpack_require__(393)],
+	        template: __webpack_require__(395)
+	    }), 
+	    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _b) || Object])
+	], SocialSharePanelComponent);
+	exports.SocialSharePanelComponent = SocialSharePanelComponent;
+	var _a, _b;
+
+
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(394);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ":host .social-button-holder {\n  display: flex;\n  justify-content: flex-start; }\n  :host .social-button-holder > * {\n    margin-right: 5px; }\n    :host .social-button-holder > *:last-child {\n      margin-right: 0; }\n\n:host .nope-btn {\n  margin: 0;\n  height: 29px;\n  border-radius: 4px;\n  padding: 0 10px;\n  display: flex;\n  align-items: center; }\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 395 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"social-share-panel\">\n  <h3>Thanks for using Cloudplayer</h3>\n  <p>When you like our player you can do us a favor and share Cloudplayer to support further development. Thank you :)</p>\n  <div class=\"social-button-holder\">\n    <facebook-share-button (click)=\"shared('FB')\"></facebook-share-button>\n    <twitter-share-button (click)=\"shared('TW')\"></twitter-share-button>\n    <div class=\"btn btn-default nope-btn\" (click)=\"notShared()\">Nah, I'm fine</div>\n  </div>\n</div>\n";
+
+/***/ }),
+/* 396 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const session_model_1 = __webpack_require__(136);
 	let MainComponent = class MainComponent {
 	    constructor() {
 	        this.isAuthenticated = false;
@@ -12261,8 +12857,8 @@ webpackJsonp([0],[
 	MainComponent = __decorate([
 	    core_1.Component({
 	        selector: 'cloud-player',
-	        styles: [__webpack_require__(375)],
-	        template: __webpack_require__(377),
+	        styles: [__webpack_require__(397)],
+	        template: __webpack_require__(399),
 	        encapsulation: core_1.ViewEncapsulation.None
 	    }), 
 	    __metadata('design:paramtypes', [])
@@ -12271,13 +12867,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 375 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(376);
+	var styles = __webpack_require__(398);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12288,7 +12884,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 376 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12302,13 +12898,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 377 */
+/* 399 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"main\">\n\n  <div class=\"native-bar\"></div>\n\n  <main class=\"flex-container\">\n\n    <nav-sidebar class=\"flex-item\"></nav-sidebar>\n    <audio-player class=\"flex-item\"></audio-player>\n    <div class=\"routes\">\n      <router-outlet class=\"flex-item\"></router-outlet>\n    </div>\n\n  </main>\n\n</section>\n\n<view-change-loader></view-change-loader>\n";
 
 /***/ }),
-/* 378 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12323,7 +12919,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const router_1 = __webpack_require__(91);
-	const desktop_app_view_component_1 = __webpack_require__(379);
+	const desktop_app_view_component_1 = __webpack_require__(401);
 	const routes = [
 	    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 	    { path: 'desktop-app', component: desktop_app_view_component_1.DesktopAppViewComponent }
@@ -12341,7 +12937,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 379 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12355,7 +12951,7 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const client_detector_service_1 = __webpack_require__(129);
+	const client_detector_service_1 = __webpack_require__(131);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let DesktopAppViewComponent = class DesktopAppViewComponent {
 	    constructor(userAnalyticsService) {
@@ -12376,8 +12972,8 @@ webpackJsonp([0],[
 	DesktopAppViewComponent = __decorate([
 	    core_1.Component({
 	        selector: 'cloud-player',
-	        styles: [__webpack_require__(380)],
-	        template: __webpack_require__(384)
+	        styles: [__webpack_require__(402)],
+	        template: __webpack_require__(406)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _a) || Object])
 	], DesktopAppViewComponent);
@@ -12386,13 +12982,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 380 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(381);
+	var styles = __webpack_require__(403);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12403,7 +12999,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 381 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12411,43 +13007,43 @@ webpackJsonp([0],[
 
 
 	// module
-	exports.push([module.id, ":host .screenshot {\n  background-position-y: initial;\n  -webkit-background-size: cover;\n  margin-left: -15px;\n  width: calc(100% + 30px);\n  margin-top: -10px;\n  border-radius: 4px 4px 0 0; }\n  :host .screenshot.win {\n    background: url(" + __webpack_require__(382) + ") no-repeat;\n    height: 300px; }\n  :host .screenshot.osx {\n    background: url(" + __webpack_require__(383) + ") no-repeat;\n    height: 300px; }\n\n:host .tutorial .img-holder {\n  text-align: center; }\n", ""]);
+	exports.push([module.id, ":host .screenshot {\n  background-position-y: initial;\n  -webkit-background-size: cover;\n  margin-left: -15px;\n  width: calc(100% + 30px);\n  margin-top: -10px;\n  border-radius: 4px 4px 0 0; }\n  :host .screenshot.win {\n    background: url(" + __webpack_require__(404) + ") no-repeat;\n    height: 300px; }\n  :host .screenshot.osx {\n    background: url(" + __webpack_require__(405) + ") no-repeat;\n    height: 300px; }\n\n:host .tutorial .img-holder {\n  text-align: center; }\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 382 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "win-screenshot.72c50c881a234637ac1418f6a00c7f3a.png";
 
 /***/ }),
-/* 383 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "osx-screenshot.1ea45195d62c85507366f794aaa27816.png";
 
 /***/ }),
-/* 384 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = "<section class=\"column\">\n  <view-header>\n    Desktop App\n  </view-header>\n\n  <scroll-view>\n    <div class=\"card\">\n      <div class=\"screenshot\"\n           [class.win]=\"isWindowsPc()\"\n           [class.osx]=\"isMacPc()\"></div>\n      <div>\n        <h3>Download the native Cloud Player App to install it on your PC.</h3>\n        <ul>\n          <li>Create a shortcut to Cloud Player on your Desktop</li>\n          <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>\n          <li>Have all the other nice features of Cloud Player</li>\n        </ul>\n      </div>\n      <a *ngIf=\"isWindowsPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.setup.exe\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('WIN')\">\n        Download for Windows\n      </a>\n\n      <a *ngIf=\"isMacPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.dmg\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('OSX')\">\n        Download for Mac\n      </a>\n\n      <div *ngIf=\"!isWindowsPc() && !isMacPc()\"\n           class=\"alert alert-info\">\n        Sorry for this platform we don't have a native app yet :(\n      </div>\n    </div>\n\n    <div class=\"card tutorial osx\"\n         *ngIf=\"isMacPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.dmg</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(385) + "\" width=\"400px\"/>\n      </div>\n      <p>After the Download has finished open the dmg file. Drag and drop the Cloud Player app into the <i>Applications</i> folder</p>\n      <hr>\n      <h3>Start Cloud Player</h3>\n      <p>\n        We could not sign the Cloud Player with an official Apple developer certificate. When you try to start it, macOS will tell you\n        that the application is from an unidentified developer.\n        <br>\n        <br>\n        To open the app anyway locate Cloud Player in the <i>Applications</i> folder. Control click the Cloud Player app icon\n        and then choose <i>Open</i> from the shortcut menu.\n        <br>\n        <br>\n        This has to be done only when you start Cloud Player for the first time.\n        <br>\n        <br>\n        <a href=\"https://support.apple.com/kb/PH25088?locale=en_US\" target=\"_blank\">More information...</a>\n\n      </p>\n    </div>\n\n    <div class=\"card tutorial win\"\n         *ngIf=\"isWindowsPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.setup.exe</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(386) + "\" width=\"400px\"/>\n      </div>\n      <p>\n        After the Download has finished open the exe file.\n      </p>\n      <p>\n        We could not sign the Cloud Player with an official Windows developer certificate. Therefore the Windows\n        Security Agent\n        will prevent starting the installation process\n        <br>\n        <br>\n        To start the installation anyway click on the button \"More Info\" (1). A new button \"Run anyway\" will appear (2).\n        Click\n        on that button to start the installation process\n      </p>\n    </div>\n  </scroll-view>\n</section>\n";
+	module.exports = "<section class=\"column\">\n  <view-header>\n    Desktop App\n  </view-header>\n\n  <scroll-view>\n    <div class=\"card\">\n      <div class=\"screenshot\"\n           [class.win]=\"isWindowsPc()\"\n           [class.osx]=\"isMacPc()\"></div>\n      <div>\n        <h3>Download the native Cloud Player App to install it on your PC.</h3>\n        <ul>\n          <li>Create a shortcut to Cloud Player on your Desktop</li>\n          <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>\n          <li>Have all the other nice features of Cloud Player</li>\n        </ul>\n      </div>\n      <a *ngIf=\"isWindowsPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.setup.exe\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('WIN')\">\n        Download for Windows\n      </a>\n\n      <a *ngIf=\"isMacPc()\"\n         href=\"https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.dmg\"\n         class=\"btn btn-primary btn-block\"\n         (click)=\"download('OSX')\">\n        Download for Mac\n      </a>\n\n      <div *ngIf=\"!isWindowsPc() && !isMacPc()\"\n           class=\"alert alert-info\">\n        Sorry for this platform we don't have a native app yet :(\n      </div>\n    </div>\n\n    <div class=\"card tutorial osx\"\n         *ngIf=\"isMacPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.dmg</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(407) + "\" width=\"400px\"/>\n      </div>\n      <p>After the Download has finished open the dmg file. Drag and drop the Cloud Player app into the <i>Applications</i> folder</p>\n      <hr>\n      <h3>Start Cloud Player</h3>\n      <p>\n        We could not sign the Cloud Player with an official Apple developer certificate. When you try to start it, macOS will tell you\n        that the application is from an unidentified developer.\n        <br>\n        <br>\n        To open the app anyway locate Cloud Player in the <i>Applications</i> folder. Control click the Cloud Player app icon\n        and then choose <i>Open</i> from the shortcut menu.\n        <br>\n        <br>\n        This has to be done only when you start Cloud Player for the first time.\n        <br>\n        <br>\n        <a href=\"https://support.apple.com/kb/PH25088?locale=en_US\" target=\"_blank\">More information...</a>\n\n      </p>\n    </div>\n\n    <div class=\"card tutorial win\"\n         *ngIf=\"isWindowsPc()\">\n      <h2>How to Install</h2>\n      <h3>Open the downloaded <i>cloud-player.setup.exe</i> file</h3>\n      <div class=\"img-holder\">\n        <img src=\"" + __webpack_require__(408) + "\" width=\"400px\"/>\n      </div>\n      <p>\n        After the Download has finished open the exe file.\n      </p>\n      <p>\n        We could not sign the Cloud Player with an official Windows developer certificate. Therefore the Windows\n        Security Agent\n        will prevent starting the installation process\n        <br>\n        <br>\n        To start the installation anyway click on the button \"More Info\" (1). A new button \"Run anyway\" will appear (2).\n        Click\n        on that button to start the installation process\n      </p>\n    </div>\n  </scroll-view>\n</section>\n";
 
 /***/ }),
-/* 385 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "osx-dmg.6e033680f5cb65a592061aa159b6e9fa.png";
 
 /***/ }),
-/* 386 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "win-exe.25d192266a404622165f3c54c8982243.png";
 
 /***/ }),
-/* 387 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12463,14 +13059,15 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const forms_1 = __webpack_require__(62);
 	const platform_browser_1 = __webpack_require__(21);
-	const playqueue_component_1 = __webpack_require__(388);
-	const shared_module_1 = __webpack_require__(118);
-	const audio_player_component_1 = __webpack_require__(392);
-	const audio_player_controls_component_1 = __webpack_require__(396);
+	const playqueue_component_1 = __webpack_require__(410);
+	const shared_module_1 = __webpack_require__(121);
+	const audio_player_component_1 = __webpack_require__(414);
+	const audio_player_controls_component_1 = __webpack_require__(418);
 	const underscore_1 = __webpack_require__(67);
-	const localforage = __webpack_require__(144);
-	const play_queue_collection_1 = __webpack_require__(123);
-	const tracks_collection_1 = __webpack_require__(121);
+	const localforage = __webpack_require__(146);
+	const play_queue_collection_1 = __webpack_require__(125);
+	const tracks_collection_1 = __webpack_require__(124);
+	const comments_module_1 = __webpack_require__(422);
 	let AudioPlayerModule = class AudioPlayerModule {
 	    constructor() {
 	        let playQueue = play_queue_collection_1.PlayQueue.getInstance();
@@ -12504,7 +13101,8 @@ webpackJsonp([0],[
 	        imports: [
 	            platform_browser_1.BrowserModule,
 	            forms_1.FormsModule,
-	            shared_module_1.SharedModule
+	            shared_module_1.SharedModule,
+	            comments_module_1.CommentsModule
 	        ],
 	        declarations: [
 	            audio_player_controls_component_1.AudioPlayerControlsComponent,
@@ -12521,7 +13119,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 388 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12535,8 +13133,8 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const play_queue_collection_1 = __webpack_require__(123);
-	const track_cover_component_1 = __webpack_require__(125);
+	const play_queue_collection_1 = __webpack_require__(125);
+	const track_cover_component_1 = __webpack_require__(127);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let PlayQueueComponent = class PlayQueueComponent {
 	    constructor(userAnalyticsService) {
@@ -12562,8 +13160,8 @@ webpackJsonp([0],[
 	PlayQueueComponent = __decorate([
 	    core_1.Component({
 	        selector: 'play-queue',
-	        styles: [__webpack_require__(389)],
-	        template: __webpack_require__(391)
+	        styles: [__webpack_require__(411)],
+	        template: __webpack_require__(413)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _a) || Object])
 	], PlayQueueComponent);
@@ -12572,13 +13170,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 389 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(390);
+	var styles = __webpack_require__(412);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12589,7 +13187,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 390 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12603,13 +13201,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 391 */
+/* 413 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"play-queue\"\n     dropzone\n     [dropCallback]=\"dropTrack\">\n\n  <div class=\"queued-tracks-list\" *ngIf=\"playQueue.getQueuedItems().length > 0\">\n    <div class=\"divider\">\n      <div class=\"title\">Coming up next</div>\n    </div>\n    <div *ngFor=\"let playQueueItem of playQueue.getQueuedItems()\"\n         class=\"track\"\n         draggable=\"true\"\n         [dragData]=\"playQueueItem.get('track').toJSON()\"\n         [dragImageUrl]=\"playQueueItem.get('track').get('artwork_url').getSmallSize()\"\n         dragEffect=\"copy\">\n      <track-cover [track]=\"playQueueItem.get('track')\" [size]=\"coverSize\"></track-cover>\n      <div class=\"details\"\n           [class.dummy]=\"!playQueueItem.get('track').get('user').get('username')\">\n        <b class=\"title\">{{playQueueItem.get('track').get('title') || 'None'}}</b>\n        <div class=\"artist\">{{playQueueItem.get('track').get('user').get('username')}}</div>\n        <div class=\"stats\">\n          <div class=\"duration\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n            {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}\n          </div>\n          <div *ngIf=\"playQueueItem.get('track').get('genre')\"\n               class=\"genre\">\n            #{{playQueueItem.get('track').get('genre')}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"scheduled-tracks-list\" *ngIf=\"playQueue.getScheduledItems().length > 0\">\n    <div class=\"divider\">\n      <div class=\"title\">Next Songs</div>\n    </div>\n    <div *ngFor=\"let playQueueItem of playQueue.getScheduledItems()\"\n         class=\"track\"\n         draggable=\"true\"\n         [dragData]=\"playQueueItem.get('track').toJSON()\"\n         [dragImageUrl]=\"playQueueItem.get('track').get('artwork_url').getSmallSize()\"\n         dragEffect=\"copy\">\n      <div class=\"cover\">\n        <track-cover [track]=\"playQueueItem.get('track')\" [size]=\"coverSize\"></track-cover>\n      </div>\n      <div class=\"details\"\n           [class.dummy]=\"!playQueueItem.get('track').get('user').get('username')\">\n        <b class=\"title\">{{playQueueItem.get('track').get('title')|| 'None'}}</b>\n        <div class=\"artist\">{{playQueueItem.get('track').get('user').get('username') || 'None'}}</div>\n        <div class=\"stats\">\n          <div class=\"duration\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n            {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}\n          </div>\n          <div *ngIf=\"playQueueItem.get('track').get('genre')\"\n               class=\"genre\">\n            #{{playQueueItem.get('track').get('genre')}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && !playQueue.getCurrentItem()\">\n    <p>No tracks available. <a routerLink=\"/app\">Search</a> for a track and click on it to play it.</p>\n    <p>You can drag and drop tracks here to add them to the play queue</p>\n\n  </div>\n\n  <div *ngIf=\"playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && playQueue.getCurrentItem()\">\n    No more tracks available. <a routerLink=\"/app\">Search</a> for more tracks to keep the party going on.\n  </div>\n\n</div>\n";
+	module.exports = "<div class=\"play-queue\"\n     dropzone\n     [dropCallback]=\"dropTrack\">\n\n  <div class=\"queued-tracks-list\" *ngIf=\"playQueue.getQueuedItems().length > 0\">\n    <div class=\"divider\">\n      <div class=\"title\">Coming up next</div>\n    </div>\n    <div *ngFor=\"let playQueueItem of playQueue.getQueuedItems()\"\n         class=\"track\"\n         draggable=\"true\"\n         [dragData]=\"playQueueItem.get('track').toJSON()\"\n         [dragImageUrl]=\"playQueueItem.get('track').get('artwork_url').getSmallSize()\"\n         dragEffect=\"copy\">\n      <track-cover [track]=\"playQueueItem.get('track')\" [size]=\"coverSize\"></track-cover>\n      <div class=\"details\"\n           [class.dummy]=\"!playQueueItem.get('track').get('user').get('username')\">\n        <div style=\"display: flex; align-items: center\">\n          <b class=\"title\"\n             style=\"flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;\">\n            {{playQueueItem.get('track').get('title')|| 'None'}}\n          </b>\n          <button class=\"btn btn-xs btn-default\" (click)=\"playQueueItem.unQueue()\">\n            <span class=\"fa fa-trash\"></span>\n          </button>\n        </div>\n        <div class=\"artist\">{{playQueueItem.get('track').get('user').get('username')}}</div>\n        <div class=\"stats\">\n          <div class=\"duration\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n            {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}\n          </div>\n          <div *ngIf=\"playQueueItem.get('track').get('genre')\"\n               class=\"genre\">\n            #{{playQueueItem.get('track').get('genre')}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"scheduled-tracks-list\" *ngIf=\"playQueue.getScheduledItems().length > 0\">\n    <div class=\"divider\">\n      <div class=\"title\">Next Songs</div>\n    </div>\n    <div *ngFor=\"let playQueueItem of playQueue.getScheduledItems()\"\n         class=\"track\"\n         draggable=\"true\"\n         [dragData]=\"playQueueItem.get('track').toJSON()\"\n         [dragImageUrl]=\"playQueueItem.get('track').get('artwork_url').getSmallSize()\"\n         dragEffect=\"copy\">\n      <div class=\"cover\">\n        <track-cover [track]=\"playQueueItem.get('track')\" [size]=\"coverSize\"></track-cover>\n      </div>\n      <div class=\"details\"\n           [class.dummy]=\"!playQueueItem.get('track').get('user').get('username')\">\n        <b class=\"title\">\n          {{playQueueItem.get('track').get('title')|| 'None'}}\n        </b>\n        <div class=\"artist\">{{playQueueItem.get('track').get('user').get('username') || 'None'}}</div>\n        <div class=\"stats\">\n          <div class=\"duration\">\n            <i class=\"fa fa-clock-o\" aria-hidden=\"true\" alt=\"play count\"></i>\n            {{playQueueItem.get('track').get('duration')/1000 | hReadableSeconds}}\n          </div>\n          <div *ngIf=\"playQueueItem.get('track').get('genre')\"\n               class=\"genre\">\n            #{{playQueueItem.get('track').get('genre')}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && !playQueue.getCurrentItem()\">\n    <p>No tracks available. <a routerLink=\"/app\">Search</a> for a track and click on it to play it.</p>\n    <p>You can drag and drop tracks here to add them to the play queue</p>\n\n  </div>\n\n  <div *ngIf=\"playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && playQueue.getCurrentItem()\">\n    No more tracks available. <a routerLink=\"/app\">Search</a> for more tracks to keep the party going on.\n  </div>\n\n</div>\n";
 
 /***/ }),
-/* 392 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12623,11 +13221,14 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const play_queue_collection_1 = __webpack_require__(123);
-	const track_cover_component_1 = __webpack_require__(125);
+	const play_queue_collection_1 = __webpack_require__(125);
+	const track_cover_component_1 = __webpack_require__(127);
 	let AudioPlayerComponent = class AudioPlayerComponent {
 	    getCoverSize() {
 	        return track_cover_component_1.CoverSizes.Large;
+	    }
+	    updateCurrentTime(val) {
+	        this.currentPlayingTime = val;
 	    }
 	    ngOnInit() {
 	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
@@ -12644,8 +13245,8 @@ webpackJsonp([0],[
 	AudioPlayerComponent = __decorate([
 	    core_1.Component({
 	        selector: 'audio-player',
-	        styles: [__webpack_require__(393)],
-	        template: __webpack_require__(395)
+	        styles: [__webpack_require__(415)],
+	        template: __webpack_require__(417)
 	    }), 
 	    __metadata('design:paramtypes', [])
 	], AudioPlayerComponent);
@@ -12653,13 +13254,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 393 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(394);
+	var styles = __webpack_require__(416);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12670,7 +13271,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 394 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12684,13 +13285,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 395 */
+/* 417 */
 /***/ (function(module, exports) {
 
-	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <audio-player-controls class=\"controls\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
+	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <comments *ngIf=\"track\" [currentTime]=\"currentPlayingTime\" [comments]=\"track.get('comments')\" class=\"hidden-xs\"></comments>\n\n    <audio-player-controls class=\"controls\" (currentTimeChange)=\"updateCurrentTime($event)\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
 
 /***/ }),
-/* 396 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12704,11 +13305,11 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const play_queue_collection_1 = __webpack_require__(123);
+	const play_queue_collection_1 = __webpack_require__(125);
 	const underscore_1 = __webpack_require__(67);
-	const localforage = __webpack_require__(144);
-	const h_readable_seconds_pipe_1 = __webpack_require__(119);
-	const cloud_player_logo_service_1 = __webpack_require__(179);
+	const localforage = __webpack_require__(146);
+	const h_readable_seconds_pipe_1 = __webpack_require__(122);
+	const cloud_player_logo_service_1 = __webpack_require__(181);
 	const user_analytics_service_1 = __webpack_require__(83);
 	let AudioPlayerControlsComponent = class AudioPlayerControlsComponent {
 	    constructor(cloudPlayerLogoService, userAnalyticsService) {
@@ -12717,6 +13318,7 @@ webpackJsonp([0],[
 	        this.playQueue = play_queue_collection_1.PlayQueue.getInstance();
 	        this.hadError = false;
 	        this.isBuffering = false;
+	        this.currentTimeChange = new core_1.EventEmitter();
 	        this.transformProgressBarValues = function (input) {
 	            return this.humanReadableSecPipe.transform(input, null);
 	        }.bind(this);
@@ -12740,6 +13342,7 @@ webpackJsonp([0],[
 	                    currentTime: this.audio.currentTime,
 	                    duration: this.audio.duration
 	                });
+	                this.currentTimeChange.emit(this.audio.currentTime);
 	            }
 	        }, 1000);
 	        this.audio.addEventListener('timeupdate', throttledTimeUpdater);
@@ -12818,6 +13421,9 @@ webpackJsonp([0],[
 	        window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
 	        window.addEventListener('nextTrackKeyPressed', this.nextTrack.bind(this));
 	        window.addEventListener('previousTrackKeyPressed', this.previousTrack.bind(this));
+	        window.addEventListener('abc', function () {
+	            console.log('ABC');
+	        });
 	        if (this.playQueue.getPlayingItem()) {
 	            this.startAudioPlayer(this.playQueue.getPlayingItem());
 	        }
@@ -12902,6 +13508,9 @@ webpackJsonp([0],[
 	            this.audio.load();
 	            this.audio.currentTime = currTime;
 	        }
+	        if (item.get('track').get('comments').length === 0) {
+	            item.get('track').get('comments').fetch();
+	        }
 	        this.timeTick = this.audio.currentTime;
 	        this.audio.play();
 	        this.setMobileMediaNotification(item.get('track'));
@@ -12916,11 +13525,15 @@ webpackJsonp([0],[
 	        delete this.audio.src;
 	    }
 	};
+	__decorate([
+	    core_1.Output(), 
+	    __metadata('design:type', Object)
+	], AudioPlayerControlsComponent.prototype, "currentTimeChange", void 0);
 	AudioPlayerControlsComponent = __decorate([
 	    core_1.Component({
 	        selector: 'audio-player-controls',
-	        styles: [__webpack_require__(397)],
-	        template: __webpack_require__(399)
+	        styles: [__webpack_require__(419)],
+	        template: __webpack_require__(421)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof cloud_player_logo_service_1.CloudPlayerLogoService !== 'undefined' && cloud_player_logo_service_1.CloudPlayerLogoService) === 'function' && _a) || Object, (typeof (_b = typeof user_analytics_service_1.UserAnalyticsService !== 'undefined' && user_analytics_service_1.UserAnalyticsService) === 'function' && _b) || Object])
 	], AudioPlayerControlsComponent);
@@ -12929,13 +13542,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 397 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(398);
+	var styles = __webpack_require__(420);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -12946,7 +13559,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 398 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -12960,13 +13573,189 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 399 */
+/* 421 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"audio-player-controls\">\n\n  <div class=\"button-container\">\n    <button class=\"btn prev\"\n            type=\"button\"\n            [disabled]=\"!playQueue.hasPreviousItem() && audio.currentTime < 1\"\n            (click)=\"previousTrack()\">\n      <i class=\"fa fa-backward\" aria-hidden=\"true\"></i>\n    </button>\n\n    <button class=\"btn btn-round btn-brand play\"\n            *ngIf=\"!playQueue.getPlayingItem()\"\n            type=\"button\"\n            [disabled]=\"!playQueue.getCurrentItem() || !playQueue.getCurrentItem().get('track').get('stream_url')\"\n            (click)=\"playTrack()\">\n      <i class=\"fa fa-play\" aria-hidden=\"true\"></i>\n    </button>\n\n    <button class=\"btn btn-round btn-brand pause\"\n            *ngIf=\"playQueue.getPlayingItem()\"\n            type=\"button\"\n            (click)=\"pauseTrack()\">\n      <i class=\"fa fa-pause\" aria-hidden=\"true\"></i>\n    </button>\n\n    <button class=\"btn next\"\n            type=\"button\"\n            [disabled]=\"!playQueue.hasNextItem()\"\n            (click)=\"nextTrack()\">\n      <i class=\"fa fa-forward\" aria-hidden=\"true\"></i>\n    </button>\n  </div>\n\n  <range-slider [min]=\"0\"\n                [max]=\"duration\"\n                [value]=\"timeTick\"\n                [step]=\"0.01\"\n                [isLoading]=\"isBuffering\"\n                [transformDisplayValue]=\"transformProgressBarValues\"\n                [showCurrentValue]=\"true\"\n                (valueChanged)=\"playTrackFromPosition($event)\"\n                class=\"time\">\n  </range-slider>\n\n  <!--<range-slider [min]=\"0\"-->\n                <!--[max]=\"1\"-->\n                <!--[value]=\"audio.volume\"-->\n                <!--[step]=\"0.01\"-->\n                <!--[hideSliderValue]=\"true\"-->\n                <!--(valueChange)=\"setVolume($event)\"-->\n                <!--(valueChanged)=\"saveVolume($event)\"-->\n                <!--class=\"volume\">-->\n  <!--</range-slider>-->\n</div>\n";
 
 /***/ }),
-/* 400 */
+/* 422 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const forms_1 = __webpack_require__(62);
+	const platform_browser_1 = __webpack_require__(21);
+	const shared_module_1 = __webpack_require__(121);
+	const comments_component_1 = __webpack_require__(423);
+	let CommentsModule = class CommentsModule {
+	};
+	CommentsModule = __decorate([
+	    core_1.NgModule({
+	        imports: [
+	            platform_browser_1.BrowserModule,
+	            forms_1.FormsModule,
+	            shared_module_1.SharedModule
+	        ],
+	        declarations: [
+	            comments_component_1.CommentsComponent
+	        ],
+	        exports: [
+	            comments_component_1.CommentsComponent
+	        ]
+	    }), 
+	    __metadata('design:paramtypes', [])
+	], CommentsModule);
+	exports.CommentsModule = CommentsModule;
+
+
+/***/ }),
+/* 423 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	const core_1 = __webpack_require__(3);
+	const comments_collection_1 = __webpack_require__(114);
+	const h_readable_seconds_pipe_1 = __webpack_require__(122);
+	let CommentsComponent = class CommentsComponent {
+	    constructor() {
+	        this._commentsMap = {};
+	        this._queueItemAliceTimeSecs = 5;
+	        this.visibleCommentLines = 0;
+	        this.canShowMoreComments = true;
+	        this._humanReadableSecPipe = new h_readable_seconds_pipe_1.HumanReadableSecondsPipe();
+	        this.commentsQueue = new comments_collection_1.Comments();
+	    }
+	    _setCommentsTimeMap(comments) {
+	        this._commentsMap = {};
+	        this.commentsQueue.reset();
+	        comments.each((comment) => {
+	            let secs = Math.round(comment.get('timestamp') / 1000);
+	            if (this._commentsMap[secs]) {
+	                this._commentsMap[secs].push(comment);
+	            }
+	            else {
+	                this._commentsMap[secs] = [comment];
+	            }
+	        });
+	    }
+	    cleanUpHandler(currentTime) {
+	        var removeQueueItems = this.commentsQueue.filter((commentQueueItem) => {
+	            return (commentQueueItem.get('timestamp') / 1000) + this._queueItemAliceTimeSecs < currentTime;
+	        });
+	        removeQueueItems.forEach((item) => {
+	            this.commentsQueue.remove(item);
+	        });
+	    }
+	    get currentTime() {
+	        return this._currentTime;
+	    }
+	    set currentTime(val) {
+	        this._currentTime = Math.round(val);
+	        if (this._commentsMap[this._currentTime]) {
+	            this._commentsMap[this._currentTime].forEach((comment) => {
+	                if (this.visibleCommentLines < 9) {
+	                    this.commentsQueue.push(comment);
+	                }
+	            });
+	        }
+	        this.cleanUpHandler(val);
+	    }
+	    get comments() {
+	        return this.comments;
+	    }
+	    set comments(comments) {
+	        if (this._comments) {
+	            this._comments.off('update', this._setCommentsTimeMap, this);
+	        }
+	        this._comments = comments;
+	        this._setCommentsTimeMap(this._comments);
+	        this._comments.on('update', this._setCommentsTimeMap, this);
+	    }
+	    updateVisibleLines(val) {
+	        this.visibleCommentLines += val;
+	        if (val > 0 && !this.canShowMoreComments) {
+	            this.canShowMoreComments = this.visibleCommentLines < 15;
+	        }
+	    }
+	};
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', Number)
+	], CommentsComponent.prototype, "currentTime", null);
+	__decorate([
+	    core_1.Input(), 
+	    __metadata('design:type', (typeof (_a = typeof comments_collection_1.Comments !== 'undefined' && comments_collection_1.Comments) === 'function' && _a) || Object)
+	], CommentsComponent.prototype, "comments", null);
+	CommentsComponent = __decorate([
+	    core_1.Component({
+	        selector: 'comments',
+	        styles: [__webpack_require__(424)],
+	        template: __webpack_require__(426)
+	    }), 
+	    __metadata('design:paramtypes', [])
+	], CommentsComponent);
+	exports.CommentsComponent = CommentsComponent;
+	var _a;
+
+
+/***/ }),
+/* 424 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// css-to-string-loader: transforms styles from css-loader to a string output
+
+	// Get the styles
+	var styles = __webpack_require__(425);
+
+	if (typeof styles === 'string') {
+	  // Return an existing string
+	  module.exports = styles;
+	} else {
+	  // Call the custom toString method from css-loader module
+	  module.exports = styles.toString();
+	}
+
+/***/ }),
+/* 425 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ":host {\n  position: absolute;\n  top: 0;\n  height: 290px;\n  margin-top: 15px;\n  overflow: hidden; }\n  :host ul {\n    list-style: none;\n    margin: 0;\n    padding: 0; }\n  :host .comment {\n    margin-bottom: 1px;\n    display: flex; }\n    :host .comment .user-image {\n      margin-right: 1px; }\n      :host .comment .user-image img {\n        width: 18px;\n        height: 18px; }\n    :host .comment .text {\n      font-size: 12.5px; }\n      :host .comment .text .line,\n      :host .comment .text multi-line /deep/ .line {\n        margin-bottom: 1px;\n        white-space: nowrap;\n        overflow: hidden;\n        color: #ff3600;\n        background: white;\n        padding: 0 5px;\n        max-width: 298px;\n        margin-top: 1px;\n        height: 18px;\n        display: flex;\n        align-items: center; }\n      :host .comment .text multi-line /deep/ .multiLines {\n        border-left: 1px solid #ff3600; }\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 426 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"comments\">\n\n  <ul>\n    <li *ngFor=\"let comment of commentsQueue.models\"\n        class=\"comment\">\n      <div class=\"user-image\">\n        <img [src]=\"comment.get('user').get('avatar_url').getImageByFormat('tiny')\">\n      </div>\n      <div class=\"text\">\n        <multi-line\n          [text]=\"comment.get('body')\"\n          font=\"300 12px Raleway\"\n          [maxLines]=\"2\"\n          [maxWidth]=\"288\"\n          [paddingLeft]=\"5\"\n          [paddingRight]=\"5\"\n          (lineAmountChanged)=\"updateVisibleLines($event)\"></multi-line>\n      </div>\n    </li>\n  </ul>\n\n</div>\n\n";
+
+/***/ }),
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12982,7 +13771,7 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const platform_browser_1 = __webpack_require__(21);
 	const forms_1 = __webpack_require__(62);
-	const users_routes_1 = __webpack_require__(401);
+	const users_routes_1 = __webpack_require__(428);
 	let UsersModule = class UsersModule {
 	};
 	UsersModule = __decorate([
@@ -13001,7 +13790,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 401 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -13030,7 +13819,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 402 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -13044,9 +13833,9 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	const core_1 = __webpack_require__(3);
-	const session_model_1 = __webpack_require__(134);
-	const auth_service_1 = __webpack_require__(145);
-	const client_detector_service_1 = __webpack_require__(129);
+	const session_model_1 = __webpack_require__(136);
+	const auth_service_1 = __webpack_require__(147);
+	const client_detector_service_1 = __webpack_require__(131);
 	let NavComponent = class NavComponent {
 	    constructor(authService) {
 	        this.authService = authService;
@@ -13094,8 +13883,8 @@ webpackJsonp([0],[
 	NavComponent = __decorate([
 	    core_1.Component({
 	        selector: 'nav-sidebar',
-	        styles: [__webpack_require__(403)],
-	        template: __webpack_require__(405)
+	        styles: [__webpack_require__(430)],
+	        template: __webpack_require__(432)
 	    }), 
 	    __metadata('design:paramtypes', [(typeof (_a = typeof auth_service_1.AuthService !== 'undefined' && auth_service_1.AuthService) === 'function' && _a) || Object])
 	], NavComponent);
@@ -13104,13 +13893,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 403 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// css-to-string-loader: transforms styles from css-loader to a string output
 
 	// Get the styles
-	var styles = __webpack_require__(404);
+	var styles = __webpack_require__(431);
 
 	if (typeof styles === 'string') {
 	  // Return an existing string
@@ -13121,7 +13910,7 @@ webpackJsonp([0],[
 	}
 
 /***/ }),
-/* 404 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(80)();
@@ -13129,19 +13918,19 @@ webpackJsonp([0],[
 
 
 	// module
-	exports.push([module.id, ":host .column {\n  background: #efefef;\n  height: calc(100vh); }\n\n.sidebar {\n  width: 95px;\n  overflow: hidden;\n  transition: all 0.4s ease; }\n  .sidebar .menu {\n    min-width: 250px;\n    padding-left: 15px;\n    transition: transform 0.4s ease; }\n  .sidebar .cloud-player {\n    background: #fcfcfc;\n    padding: 0;\n    text-align: center;\n    margin: 15px 15px 15px 15px;\n    border-radius: 4px;\n    height: 60px; }\n    .sidebar .cloud-player img {\n      width: 58px; }\n  .sidebar .menu a,\n  .sidebar .menu .nav-item,\n  .sidebar /deep/ authenticated-user-playlists a,\n  .sidebar /deep/ authenticated-user-playlists .nav-item {\n    margin: 20px 15px;\n    display: flex;\n    align-items: center;\n    text-align: center;\n    width: 100%;\n    text-decoration: none;\n    cursor: pointer; }\n    .sidebar .menu a img,\n    .sidebar .menu .nav-item img,\n    .sidebar /deep/ authenticated-user-playlists a img,\n    .sidebar /deep/ authenticated-user-playlists .nav-item img {\n      margin: 0 13px 0 0;\n      width: 30px;\n      height: 30px;\n      border-radius: 50%; }\n    .sidebar .menu a i,\n    .sidebar .menu .nav-item i,\n    .sidebar /deep/ authenticated-user-playlists a i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item i {\n      border: 1px solid;\n      border-radius: 50%;\n      width: 30px;\n      height: 30px;\n      margin-right: 13px;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 12px; }\n      .sidebar .menu a i.fa-search,\n      .sidebar .menu .nav-item i.fa-search,\n      .sidebar /deep/ authenticated-user-playlists a i.fa-search,\n      .sidebar /deep/ authenticated-user-playlists .nav-item i.fa-search {\n        font-size: 14px; }\n    .sidebar .menu a .text,\n    .sidebar .menu .nav-item .text,\n    .sidebar /deep/ authenticated-user-playlists a .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item .text {\n      display: block; }\n  .sidebar .menu a, .sidebar .menu .nav-item,\n  .sidebar /deep/ authenticated-user-playlists a,\n  .sidebar /deep/ authenticated-user-playlists .nav-item {\n    text-decoration: none; }\n    .sidebar .menu a .text,\n    .sidebar .menu a i, .sidebar .menu .nav-item .text,\n    .sidebar .menu .nav-item i,\n    .sidebar /deep/ authenticated-user-playlists a .text,\n    .sidebar /deep/ authenticated-user-playlists a i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item i {\n      transition: color 0.6s ease; }\n    .sidebar .menu a i, .sidebar .menu .nav-item i,\n    .sidebar /deep/ authenticated-user-playlists a i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item i {\n      color: #222222;\n      transition: color 0.6s ease; }\n    .sidebar .menu a .text, .sidebar .menu .nav-item .text,\n    .sidebar /deep/ authenticated-user-playlists a .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item .text {\n      color: #cbcbcb; }\n    .sidebar .menu a.disabled .text,\n    .sidebar .menu a.disabled i, .sidebar .menu .nav-item.disabled .text,\n    .sidebar .menu .nav-item.disabled i,\n    .sidebar /deep/ authenticated-user-playlists a.disabled .text,\n    .sidebar /deep/ authenticated-user-playlists a.disabled i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.disabled .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.disabled i {\n      color: #cbcbcb; }\n    .sidebar .menu a:hover .text,\n    .sidebar .menu a:hover i, .sidebar .menu .nav-item:hover .text,\n    .sidebar .menu .nav-item:hover i,\n    .sidebar /deep/ authenticated-user-playlists a:hover .text,\n    .sidebar /deep/ authenticated-user-playlists a:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover i {\n      color: #ff3600; }\n    .sidebar .menu a:hover i, .sidebar .menu .nav-item:hover i,\n    .sidebar /deep/ authenticated-user-playlists a:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover i {\n      border-color: #222222;\n      color: #ff3600; }\n    .sidebar .menu a:hover .private-badge i, .sidebar .menu .nav-item:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover .private-badge i {\n      color: #222222; }\n    .sidebar .menu a:hover .private-badge i, .sidebar .menu .nav-item:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover .private-badge i {\n      border-color: #222222 !important;\n      color: #222222 !important; }\n    .sidebar .menu a.is-active .text,\n    .sidebar .menu a.is-active i, .sidebar .menu a.is-active:hover .text,\n    .sidebar .menu a.is-active:hover i, .sidebar .menu .nav-item.is-active .text,\n    .sidebar .menu .nav-item.is-active i, .sidebar .menu .nav-item.is-active:hover .text,\n    .sidebar .menu .nav-item.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .text,\n    .sidebar /deep/ authenticated-user-playlists a.is-active i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .text,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover i {\n      font-weight: bold; }\n    .sidebar .menu a.is-active i,\n    .sidebar .menu a.is-active .cover, .sidebar .menu a.is-active:hover i,\n    .sidebar .menu a.is-active:hover .cover, .sidebar .menu .nav-item.is-active i,\n    .sidebar .menu .nav-item.is-active .cover, .sidebar .menu .nav-item.is-active:hover i,\n    .sidebar .menu .nav-item.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .cover {\n      color: #ff3600 !important;\n      border-color: #ff3600 !important; }\n    .sidebar .menu a.is-active .cover, .sidebar .menu a.is-active:hover .cover, .sidebar .menu .nav-item.is-active .cover, .sidebar .menu .nav-item.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .cover {\n      border: 1px solid; }\n    .sidebar .menu a.is-active .private-badge i, .sidebar .menu a.is-active:hover .private-badge i, .sidebar .menu .nav-item.is-active .private-badge i, .sidebar .menu .nav-item.is-active:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .private-badge i {\n      border-color: #222222 !important;\n      color: #222222 !important; }\n  .sidebar:hover {\n    width: 250px; }\n    .sidebar:hover .menu a .text, .sidebar:hover .menu .nav-item .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item .text {\n      color: #222222; }\n    .sidebar:hover .menu a.disabled .text,\n    .sidebar:hover .menu a.disabled i, .sidebar:hover .menu .nav-item.disabled .text,\n    .sidebar:hover .menu .nav-item.disabled i,\n    .sidebar:hover /deep/ authenticated-user-playlists a.disabled .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a.disabled i,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item.disabled .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item.disabled i {\n      color: #cbcbcb; }\n    .sidebar:hover .menu a:hover .text,\n    .sidebar:hover .menu a:hover i, .sidebar:hover .menu .nav-item:hover .text,\n    .sidebar:hover .menu .nav-item:hover i,\n    .sidebar:hover /deep/ authenticated-user-playlists a:hover .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a:hover i,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item:hover .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item:hover i {\n      color: #ff3600; }\n    .sidebar:hover .menu a.is-active .text, .sidebar:hover .menu .nav-item.is-active .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a.is-active .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item.is-active .text {\n      color: #222222 !important; }\n  @media (min-width: 1200px) {\n    .sidebar {\n      width: 250px; }\n      .sidebar .menu a .text,\n      .sidebar .menu a i, .sidebar .menu .nav-item .text,\n      .sidebar .menu .nav-item i,\n      .sidebar /deep/ authenticated-user-playlists a .text,\n      .sidebar /deep/ authenticated-user-playlists a i,\n      .sidebar /deep/ authenticated-user-playlists .nav-item .text,\n      .sidebar /deep/ authenticated-user-playlists .nav-item i {\n        color: #222222; }\n      .sidebar .menu a.disabled .text,\n      .sidebar .menu a.disabled i, .sidebar .menu .nav-item.disabled .text,\n      .sidebar .menu .nav-item.disabled i,\n      .sidebar /deep/ authenticated-user-playlists a.disabled .text,\n      .sidebar /deep/ authenticated-user-playlists a.disabled i,\n      .sidebar /deep/ authenticated-user-playlists .nav-item.disabled .text,\n      .sidebar /deep/ authenticated-user-playlists .nav-item.disabled i {\n        color: #cbcbcb; } }\n  @media (min-width: 1380px) {\n    .sidebar {\n      width: 300px; }\n      .sidebar:hover {\n        width: 300px; } }\n\n@media (max-width: 991px) {\n  :host {\n    width: 100vw;\n    position: fixed;\n    bottom: 0;\n    height: 40px;\n    z-index: 1;\n    box-shadow: 0 0 8px 0 #c8c8c8;\n    z-index: 999; }\n    :host .sidebar,\n    :host /deep/ authenticated-user-playlists {\n      min-width: 100%;\n      padding: 0; }\n      :host .sidebar .menu,\n      :host /deep/ authenticated-user-playlists .menu {\n        min-width: 100%;\n        padding-left: 0; }\n      :host .sidebar .divider,\n      :host .sidebar .cloud-player,\n      :host /deep/ authenticated-user-playlists .divider,\n      :host /deep/ authenticated-user-playlists .cloud-player {\n        display: none; }\n      :host .sidebar .user,\n      :host /deep/ authenticated-user-playlists .user {\n        order: 4; }\n      :host .sidebar nav,\n      :host /deep/ authenticated-user-playlists nav {\n        display: flex;\n        font-size: 13px;\n        margin: 0; }\n        :host .sidebar nav a,\n        :host .sidebar nav .nav-item,\n        :host /deep/ authenticated-user-playlists nav a,\n        :host /deep/ authenticated-user-playlists nav .nav-item {\n          display: block;\n          margin: 0;\n          border-left: 1px solid #dad9d9;\n          padding: 7px; }\n          :host .sidebar nav a.is-active,\n          :host .sidebar nav .nav-item.is-active,\n          :host /deep/ authenticated-user-playlists nav a.is-active,\n          :host /deep/ authenticated-user-playlists nav .nav-item.is-active {\n            background: #dad9d9; }\n            :host .sidebar nav a.is-active i,\n            :host .sidebar nav .nav-item.is-active i,\n            :host /deep/ authenticated-user-playlists nav a.is-active i,\n            :host /deep/ authenticated-user-playlists nav .nav-item.is-active i {\n              color: #ff3600; }\n          :host .sidebar nav a.disabled,\n          :host .sidebar nav .nav-item.disabled,\n          :host /deep/ authenticated-user-playlists nav a.disabled,\n          :host /deep/ authenticated-user-playlists nav .nav-item.disabled {\n            display: none; }\n          :host .sidebar nav a i,\n          :host .sidebar nav .nav-item i,\n          :host /deep/ authenticated-user-playlists nav a i,\n          :host /deep/ authenticated-user-playlists nav .nav-item i {\n            margin: 0 auto;\n            font-size: 20px;\n            padding: 0;\n            border: none;\n            background: transparent; }\n            :host .sidebar nav a i.fa-search,\n            :host .sidebar nav .nav-item i.fa-search,\n            :host /deep/ authenticated-user-playlists nav a i.fa-search,\n            :host /deep/ authenticated-user-playlists nav .nav-item i.fa-search {\n              font-size: 18px; }\n          :host .sidebar nav a img,\n          :host .sidebar nav .nav-item img,\n          :host /deep/ authenticated-user-playlists nav a img,\n          :host /deep/ authenticated-user-playlists nav .nav-item img {\n            width: 27px;\n            height: 27px; }\n          :host .sidebar nav a .text,\n          :host .sidebar nav .nav-item .text,\n          :host /deep/ authenticated-user-playlists nav a .text,\n          :host /deep/ authenticated-user-playlists nav .nav-item .text {\n            display: none; }\n          :host .sidebar nav a.sc-connect,\n          :host .sidebar nav .nav-item.sc-connect,\n          :host /deep/ authenticated-user-playlists nav a.sc-connect,\n          :host /deep/ authenticated-user-playlists nav .nav-item.sc-connect {\n            display: flex; }\n            :host .sidebar nav a.sc-connect i,\n            :host .sidebar nav .nav-item.sc-connect i,\n            :host /deep/ authenticated-user-playlists nav a.sc-connect i,\n            :host /deep/ authenticated-user-playlists nav .nav-item.sc-connect i {\n              margin-right: 5px; }\n            :host .sidebar nav a.sc-connect .text,\n            :host .sidebar nav .nav-item.sc-connect .text,\n            :host /deep/ authenticated-user-playlists nav a.sc-connect .text,\n            :host /deep/ authenticated-user-playlists nav .nav-item.sc-connect .text {\n              display: block;\n              margin-right: auto;\n              color: #222222;\n              font-size: 10px; } }\n", ""]);
+	exports.push([module.id, ":host .column {\n  background: #efefef;\n  height: calc(100vh); }\n\n.sidebar {\n  width: 95px;\n  overflow: hidden;\n  transition: all 0.4s ease; }\n  .sidebar .menu {\n    min-width: 250px;\n    padding-left: 15px; }\n  .sidebar .cloud-player {\n    background: #fcfcfc;\n    padding: 0;\n    text-align: center;\n    margin: 15px 15px 15px 15px;\n    border-radius: 4px;\n    height: 60px; }\n    .sidebar .cloud-player img {\n      width: 58px; }\n  .sidebar .menu a,\n  .sidebar .menu .nav-item,\n  .sidebar /deep/ authenticated-user-playlists a,\n  .sidebar /deep/ authenticated-user-playlists .nav-item {\n    margin: 20px 15px;\n    display: flex;\n    align-items: center;\n    text-align: center;\n    width: 100%;\n    text-decoration: none;\n    cursor: pointer; }\n    .sidebar .menu a img,\n    .sidebar .menu .nav-item img,\n    .sidebar /deep/ authenticated-user-playlists a img,\n    .sidebar /deep/ authenticated-user-playlists .nav-item img {\n      margin: 0 13px 0 0;\n      width: 30px;\n      height: 30px;\n      border-radius: 50%; }\n    .sidebar .menu a i,\n    .sidebar .menu .nav-item i,\n    .sidebar /deep/ authenticated-user-playlists a i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item i {\n      border: 1px solid;\n      border-radius: 50%;\n      width: 30px;\n      height: 30px;\n      margin-right: 13px;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      font-size: 12px; }\n      .sidebar .menu a i.fa-search,\n      .sidebar .menu .nav-item i.fa-search,\n      .sidebar /deep/ authenticated-user-playlists a i.fa-search,\n      .sidebar /deep/ authenticated-user-playlists .nav-item i.fa-search {\n        font-size: 14px; }\n    .sidebar .menu a .text,\n    .sidebar .menu .nav-item .text,\n    .sidebar /deep/ authenticated-user-playlists a .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item .text {\n      display: block; }\n  .sidebar .menu a, .sidebar .menu .nav-item,\n  .sidebar /deep/ authenticated-user-playlists a,\n  .sidebar /deep/ authenticated-user-playlists .nav-item {\n    text-decoration: none; }\n    .sidebar .menu a .text,\n    .sidebar .menu a i, .sidebar .menu .nav-item .text,\n    .sidebar .menu .nav-item i,\n    .sidebar /deep/ authenticated-user-playlists a .text,\n    .sidebar /deep/ authenticated-user-playlists a i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item i {\n      transition: color 0.6s ease; }\n    .sidebar .menu a i, .sidebar .menu .nav-item i,\n    .sidebar /deep/ authenticated-user-playlists a i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item i {\n      color: #222222;\n      transition: color 0.6s ease; }\n    .sidebar .menu a .text, .sidebar .menu .nav-item .text,\n    .sidebar /deep/ authenticated-user-playlists a .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item .text {\n      color: #cbcbcb; }\n    .sidebar .menu a.disabled .text,\n    .sidebar .menu a.disabled i, .sidebar .menu .nav-item.disabled .text,\n    .sidebar .menu .nav-item.disabled i,\n    .sidebar /deep/ authenticated-user-playlists a.disabled .text,\n    .sidebar /deep/ authenticated-user-playlists a.disabled i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.disabled .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.disabled i {\n      color: #cbcbcb; }\n    .sidebar .menu a:hover .text,\n    .sidebar .menu a:hover i, .sidebar .menu .nav-item:hover .text,\n    .sidebar .menu .nav-item:hover i,\n    .sidebar /deep/ authenticated-user-playlists a:hover .text,\n    .sidebar /deep/ authenticated-user-playlists a:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover i {\n      color: #ff3600; }\n    .sidebar .menu a:hover i, .sidebar .menu .nav-item:hover i,\n    .sidebar /deep/ authenticated-user-playlists a:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover i {\n      border-color: #222222;\n      color: #ff3600; }\n    .sidebar .menu a:hover .private-badge i, .sidebar .menu .nav-item:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover .private-badge i {\n      color: #222222; }\n    .sidebar .menu a:hover .private-badge i, .sidebar .menu .nav-item:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item:hover .private-badge i {\n      border-color: #222222 !important;\n      color: #222222 !important; }\n    .sidebar .menu a.is-active .text,\n    .sidebar .menu a.is-active i, .sidebar .menu a.is-active:hover .text,\n    .sidebar .menu a.is-active:hover i, .sidebar .menu .nav-item.is-active .text,\n    .sidebar .menu .nav-item.is-active i, .sidebar .menu .nav-item.is-active:hover .text,\n    .sidebar .menu .nav-item.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .text,\n    .sidebar /deep/ authenticated-user-playlists a.is-active i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .text,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .text,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover i {\n      font-weight: bold; }\n    .sidebar .menu a.is-active i,\n    .sidebar .menu a.is-active .cover, .sidebar .menu a.is-active:hover i,\n    .sidebar .menu a.is-active:hover .cover, .sidebar .menu .nav-item.is-active i,\n    .sidebar .menu .nav-item.is-active .cover, .sidebar .menu .nav-item.is-active:hover i,\n    .sidebar .menu .nav-item.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .cover {\n      color: #ff3600 !important;\n      border-color: #ff3600 !important; }\n    .sidebar .menu a.is-active .cover, .sidebar .menu a.is-active:hover .cover, .sidebar .menu .nav-item.is-active .cover, .sidebar .menu .nav-item.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .cover,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .cover {\n      border: 1px solid; }\n    .sidebar .menu a.is-active .private-badge i, .sidebar .menu a.is-active:hover .private-badge i, .sidebar .menu .nav-item.is-active .private-badge i, .sidebar .menu .nav-item.is-active:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists a.is-active:hover .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active .private-badge i,\n    .sidebar /deep/ authenticated-user-playlists .nav-item.is-active:hover .private-badge i {\n      border-color: #222222 !important;\n      color: #222222 !important; }\n  .sidebar:hover {\n    width: 250px; }\n    .sidebar:hover .menu a .text, .sidebar:hover .menu .nav-item .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item .text {\n      color: #222222; }\n    .sidebar:hover .menu a.disabled .text,\n    .sidebar:hover .menu a.disabled i, .sidebar:hover .menu .nav-item.disabled .text,\n    .sidebar:hover .menu .nav-item.disabled i,\n    .sidebar:hover /deep/ authenticated-user-playlists a.disabled .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a.disabled i,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item.disabled .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item.disabled i {\n      color: #cbcbcb; }\n    .sidebar:hover .menu a:hover .text,\n    .sidebar:hover .menu a:hover i, .sidebar:hover .menu .nav-item:hover .text,\n    .sidebar:hover .menu .nav-item:hover i,\n    .sidebar:hover /deep/ authenticated-user-playlists a:hover .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a:hover i,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item:hover .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item:hover i {\n      color: #ff3600; }\n    .sidebar:hover .menu a.is-active .text, .sidebar:hover .menu .nav-item.is-active .text,\n    .sidebar:hover /deep/ authenticated-user-playlists a.is-active .text,\n    .sidebar:hover /deep/ authenticated-user-playlists .nav-item.is-active .text {\n      color: #222222 !important; }\n  @media (min-width: 1200px) {\n    .sidebar {\n      width: 250px; }\n      .sidebar .menu a .text,\n      .sidebar .menu a i, .sidebar .menu .nav-item .text,\n      .sidebar .menu .nav-item i,\n      .sidebar /deep/ authenticated-user-playlists a .text,\n      .sidebar /deep/ authenticated-user-playlists a i,\n      .sidebar /deep/ authenticated-user-playlists .nav-item .text,\n      .sidebar /deep/ authenticated-user-playlists .nav-item i {\n        color: #222222; }\n      .sidebar .menu a.disabled .text,\n      .sidebar .menu a.disabled i, .sidebar .menu .nav-item.disabled .text,\n      .sidebar .menu .nav-item.disabled i,\n      .sidebar /deep/ authenticated-user-playlists a.disabled .text,\n      .sidebar /deep/ authenticated-user-playlists a.disabled i,\n      .sidebar /deep/ authenticated-user-playlists .nav-item.disabled .text,\n      .sidebar /deep/ authenticated-user-playlists .nav-item.disabled i {\n        color: #cbcbcb; } }\n  @media (min-width: 1380px) {\n    .sidebar {\n      width: 300px; }\n      .sidebar:hover {\n        width: 300px; } }\n\n@media (max-width: 991px) {\n  :host {\n    width: 100vw;\n    position: fixed;\n    bottom: 0;\n    height: 40px;\n    z-index: 1;\n    box-shadow: 0 0 8px 0 #c8c8c8;\n    z-index: 999; }\n    :host .sidebar,\n    :host /deep/ authenticated-user-playlists {\n      min-width: 100%;\n      padding: 0; }\n      :host .sidebar .menu,\n      :host /deep/ authenticated-user-playlists .menu {\n        min-width: 100%;\n        padding-left: 0; }\n      :host .sidebar .divider,\n      :host .sidebar .cloud-player,\n      :host /deep/ authenticated-user-playlists .divider,\n      :host /deep/ authenticated-user-playlists .cloud-player {\n        display: none; }\n      :host .sidebar .user,\n      :host /deep/ authenticated-user-playlists .user {\n        order: 4; }\n      :host .sidebar nav,\n      :host /deep/ authenticated-user-playlists nav {\n        display: flex;\n        font-size: 13px;\n        margin: 0; }\n        :host .sidebar nav a,\n        :host .sidebar nav .nav-item,\n        :host /deep/ authenticated-user-playlists nav a,\n        :host /deep/ authenticated-user-playlists nav .nav-item {\n          display: block;\n          margin: 0;\n          border-left: 1px solid #dad9d9;\n          padding: 7px; }\n          :host .sidebar nav a.is-active,\n          :host .sidebar nav .nav-item.is-active,\n          :host /deep/ authenticated-user-playlists nav a.is-active,\n          :host /deep/ authenticated-user-playlists nav .nav-item.is-active {\n            background: #dad9d9; }\n            :host .sidebar nav a.is-active i,\n            :host .sidebar nav .nav-item.is-active i,\n            :host /deep/ authenticated-user-playlists nav a.is-active i,\n            :host /deep/ authenticated-user-playlists nav .nav-item.is-active i {\n              color: #ff3600; }\n          :host .sidebar nav a.disabled,\n          :host .sidebar nav .nav-item.disabled,\n          :host /deep/ authenticated-user-playlists nav a.disabled,\n          :host /deep/ authenticated-user-playlists nav .nav-item.disabled {\n            display: none; }\n          :host .sidebar nav a i,\n          :host .sidebar nav .nav-item i,\n          :host /deep/ authenticated-user-playlists nav a i,\n          :host /deep/ authenticated-user-playlists nav .nav-item i {\n            margin: 0 auto;\n            font-size: 20px;\n            padding: 0;\n            border: none;\n            background: transparent; }\n            :host .sidebar nav a i.fa-search,\n            :host .sidebar nav .nav-item i.fa-search,\n            :host /deep/ authenticated-user-playlists nav a i.fa-search,\n            :host /deep/ authenticated-user-playlists nav .nav-item i.fa-search {\n              font-size: 18px; }\n          :host .sidebar nav a img,\n          :host .sidebar nav .nav-item img,\n          :host /deep/ authenticated-user-playlists nav a img,\n          :host /deep/ authenticated-user-playlists nav .nav-item img {\n            width: 27px;\n            height: 27px; }\n          :host .sidebar nav a .text,\n          :host .sidebar nav .nav-item .text,\n          :host /deep/ authenticated-user-playlists nav a .text,\n          :host /deep/ authenticated-user-playlists nav .nav-item .text {\n            display: none; }\n          :host .sidebar nav a.sc-connect,\n          :host .sidebar nav .nav-item.sc-connect,\n          :host /deep/ authenticated-user-playlists nav a.sc-connect,\n          :host /deep/ authenticated-user-playlists nav .nav-item.sc-connect {\n            display: flex; }\n            :host .sidebar nav a.sc-connect i,\n            :host .sidebar nav .nav-item.sc-connect i,\n            :host /deep/ authenticated-user-playlists nav a.sc-connect i,\n            :host /deep/ authenticated-user-playlists nav .nav-item.sc-connect i {\n              margin-right: 5px; }\n            :host .sidebar nav a.sc-connect .text,\n            :host .sidebar nav .nav-item.sc-connect .text,\n            :host /deep/ authenticated-user-playlists nav a.sc-connect .text,\n            :host /deep/ authenticated-user-playlists nav .nav-item.sc-connect .text {\n              display: block;\n              margin-right: auto;\n              color: #222222;\n              font-size: 10px; } }\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 405 */
+/* 432 */
 /***/ (function(module, exports) {
 
 	module.exports = "<section class=\"column\">\n\n  <div class=\"sidebar\">\n    <div class=\"cloud-player\">\n      <cloud-player-logo [animate]=\"true\"></cloud-player-logo>\n    </div>\n\n    <div class=\"menu\">\n      <nav>\n        <a routerLink=\"/dashboard\"\n           [routerLinkActive]=\"['is-active']\">\n          <i class=\"fa fa-search\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Search</div>\n        </a>\n\n        <a *ngIf=\"showDesktopAppEntry()\"\n           routerLink=\"/desktop-app\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"desktop-entry\">\n          <i class=\"fa fa-desktop\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Desktop App</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Account</div>\n        </div>\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"/me\"\n           class=\"user\">\n          <img [src]=\"user.get('avatar_url').getLargeSize() || imgUrl\" [alt]=\"user.get('full_name')\" class=\"avatar\">\n          <div class=\"text\">\n            <span>{{user.get('full_name') || user.get('username')}}</span>\n          </div>\n        </a>\n\n        <a *ngIf=\"!isAuthenticated\"\n           (click)=\"connect()\"\n           class=\"sc-connect\">\n          <i class=\"fa fa-soundcloud\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Login with SoundCloud</div>\n        </a>\n\n        <a routerLink=\"me/likes\"\n           [routerLinkActive]=\"['is-active']\" [class.disabled]=\"!isAuthenticated\">\n          <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Likes</div>\n        </a>\n\n\n        <a *ngIf=\"isAuthenticated\"\n           routerLink=\"me/playlists\"\n           [routerLinkActive]=\"['is-active']\"\n           class=\"visible-xs visible-sm\">\n          <i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n          <div class=\"text\">Playlists</div>\n        </a>\n\n        <div class=\"divider\">\n          <div class=\"title\">Playlists</div>\n        </div>\n\n        <authenticated-user-playlists class=\"hidden-xs hidden-sm\" fillHeight></authenticated-user-playlists>\n      </nav>\n    </div>\n\n  </div>\n\n</section>\n";
 
 /***/ }),
-/* 406 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -13156,7 +13945,7 @@ webpackJsonp([0],[
 	};
 	const core_1 = __webpack_require__(3);
 	const user_analytics_service_1 = __webpack_require__(83);
-	const google_analytics_tracking_provider_model_1 = __webpack_require__(407);
+	const google_analytics_tracking_provider_model_1 = __webpack_require__(434);
 	const router_1 = __webpack_require__(91);
 	let UserAnalyticsModule = class UserAnalyticsModule {
 	    constructor(userAnalyticsService, router, route) {
@@ -13187,7 +13976,7 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 407 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
