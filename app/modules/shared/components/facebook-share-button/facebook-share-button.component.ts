@@ -25,7 +25,7 @@ export class FacebookShareButtonComponent implements OnInit {
         const scripts = document.getElementsByTagName('script')[0];
         js = document.createElement('script');
         js.id = facebookElId;
-        js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=124527247643897';
+        js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=146645615953816';
         scripts.parentNode.insertBefore(js, facebookScriptEl);
         js.onload = () => {
           resolve();
