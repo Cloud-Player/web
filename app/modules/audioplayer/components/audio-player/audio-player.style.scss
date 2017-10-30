@@ -99,6 +99,10 @@
         }
       }
 
+      user-comments{
+        display: none;
+      }
+
       /deep/ audio-player-controls {
         .button-container {
           padding: 0;
