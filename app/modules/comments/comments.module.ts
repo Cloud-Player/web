@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {SharedModule} from '../shared/shared.module';
-import {CommentsComponent} from './components/comments/comments.component';
+import {UserCommentsComponent} from './components/user-comments/user-comments.component';
 
 @NgModule({
   imports: [
@@ -11,10 +11,10 @@ import {CommentsComponent} from './components/comments/comments.component';
     SharedModule
   ],
   declarations: [
-    CommentsComponent
+    UserCommentsComponent
   ],
   exports: [
-    CommentsComponent
+    UserCommentsComponent
   ]
 })
 

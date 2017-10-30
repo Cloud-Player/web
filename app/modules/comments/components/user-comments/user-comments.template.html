@@ -1,10 +1,10 @@
-<div class="comments">
+<div class="user-comments">
 
   <ul>
     <li *ngFor="let comment of commentsQueue.models"
         class="comment">
       <div class="user-image">
-        <img [src]="comment.get('user').get('avatar_url').getImageByFormat('tiny')">
+        <img [src]="comment.get('user').get('avatar_url').getImageByFormat('tiny')"/>
       </div>
       <div class="text">
         <multi-line
@@ -14,7 +14,8 @@
           [maxWidth]="288"
           [paddingLeft]="5"
           [paddingRight]="5"
-          (lineAmountChanged)="updateVisibleLines($event)"></multi-line>
+          (lineAmountChanged)="updateVisibleLines($event)">
+        </multi-line>
       </div>
     </li>
   </ul>

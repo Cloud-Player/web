@@ -5,11 +5,11 @@ import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds
 
 @Component({
   selector: 'user-comments',
-  styles: [require('./comments.style.scss')],
-  template: require('./comments.template.html')
+  styles: [require('./user-comments.style.scss')],
+  template: require('./user-comments.template.html')
 })
 
-export class CommentsComponent {
+export class UserCommentsComponent {
   private _currentTime: number;
   private _commentsMap: any = {};
   private _comments: Comments<Comment>;
