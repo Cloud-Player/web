@@ -11318,7 +11318,7 @@ webpackJsonp([0],[
 /* 336 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"multi-line\">\n  <canvas #canvas width=\"0\" height=\"0\"></canvas>\n  <div class=\"lines\" [class.multiLines]=\"lines.length>1\">\n    <div class=\"line\" *ngFor=\"let line of lines\" [style.width]=\"line.width+'px'\" [style.font]=\"font\">\n      {{line.text}}\n    </div>\n  </div>\n</div>\n";
+	module.exports = "<div class=\"multi-line\">\n  <canvas #canvas width=\"0\" height=\"0\"></canvas>\n  <div class=\"lines\"\n       [class.multiLines]=\"lines.length>1\">\n    <div *ngFor=\"let line of lines\"\n         class=\"line\"\n         [style.width]=\"line.width+'px'\"\n         [style.font]=\"font\">\n      {{line.text}}\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 /* 337 */
@@ -13279,7 +13279,7 @@ webpackJsonp([0],[
 
 
 	// module
-	exports.push([module.id, "@media only screen and (min-width: 320px) {\n  .audio-player {\n    width: 320px;\n    position: relative;\n    box-shadow: 0 8px 8px 0 #c8c8c8;\n    z-index: 99; }\n    .audio-player .track-item {\n      box-shadow: 0 2px 8px 0 #c8c8c8;\n      position: relative;\n      z-index: 1;\n      background: white; }\n      .audio-player .track-item .meta {\n        display: flex;\n        align-items: center;\n        margin: 5px 0;\n        padding-right: 10px;\n        padding-bottom: 15px; }\n        .audio-player .track-item .meta toggle-liked-track {\n          padding: 10px; }\n        .audio-player .track-item .meta .details {\n          overflow: hidden;\n          text-overflow: ellipsis; }\n          .audio-player .track-item .meta .details .track-title,\n          .audio-player .track-item .meta .details .artist {\n            white-space: nowrap; }\n      .audio-player .track-item .dummy i {\n        padding: 10px;\n        color: #ccc; }\n      .audio-player .track-item .dummy .track-title,\n      .audio-player .track-item .dummy .artist {\n        background: #efefef;\n        color: transparent;\n        display: block;\n        height: 17px; }\n      .audio-player .track-item .dummy .track-title {\n        width: 250px;\n        margin-bottom: 4px; }\n      .audio-player .track-item .dummy .artist {\n        width: 100px; } }\n\n@media (max-width: 767px) {\n  :host {\n    position: fixed;\n    bottom: 40px;\n    width: 100vw;\n    z-index: 2; }\n    :host .audio-player {\n      width: 100%;\n      box-shadow: none; }\n      :host .audio-player .track-item {\n        height: 48px; }\n      :host .audio-player .play-track {\n        width: 30px;\n        height: 30px;\n        border-radius: 50%;\n        border: 1px solid;\n        margin: 0 8px; }\n        :host .audio-player .play-track i {\n          font-size: 16px;\n          padding: 6px 9px; }\n      :host .audio-player .meta {\n        padding: 5px 5px 5px 54px !important; }\n        :host .audio-player .meta .artist {\n          display: block; }\n      :host .audio-player /deep/ audio-player-controls .button-container {\n        padding: 0; }\n        :host .audio-player /deep/ audio-player-controls .button-container .prev,\n        :host .audio-player /deep/ audio-player-controls .button-container .next {\n          display: none; }\n        :host .audio-player /deep/ audio-player-controls .button-container .play,\n        :host .audio-player /deep/ audio-player-controls .button-container .pause {\n          width: 30px;\n          height: 30px;\n          border-radius: 50%;\n          border: 1px solid;\n          margin: 0 8px;\n          font-size: inherit;\n          padding: 0;\n          color: inherit;\n          background: none;\n          position: absolute;\n          left: 5px;\n          top: 9px; }\n          :host .audio-player /deep/ audio-player-controls .button-container .play i,\n          :host .audio-player /deep/ audio-player-controls .button-container .pause i {\n            font-size: 16px;\n            padding: 6px 9px; }\n        :host .audio-player /deep/ audio-player-controls .button-container .pause i {\n          padding: 6px 0; }\n      :host .audio-player /deep/ audio-player-controls /deep/ range-slider {\n        top: -10px;\n        position: absolute;\n        width: 100%;\n        left: 0; }\n        :host .audio-player /deep/ audio-player-controls /deep/ range-slider .min-value,\n        :host .audio-player /deep/ audio-player-controls /deep/ range-slider .max-value {\n          display: none; }\n      :host .audio-player.noTrack {\n        display: none; } }\n", ""]);
+	exports.push([module.id, "@media only screen and (min-width: 320px) {\n  .audio-player {\n    width: 320px;\n    position: relative;\n    box-shadow: 0 8px 8px 0 #c8c8c8;\n    z-index: 99; }\n    .audio-player .track-item {\n      box-shadow: 0 2px 8px 0 #c8c8c8;\n      position: relative;\n      z-index: 1;\n      background: white; }\n      .audio-player .track-item .meta {\n        display: flex;\n        align-items: center;\n        margin: 5px 0;\n        padding-right: 10px;\n        padding-bottom: 15px; }\n        .audio-player .track-item .meta toggle-liked-track {\n          padding: 10px; }\n        .audio-player .track-item .meta .details {\n          overflow: hidden;\n          text-overflow: ellipsis; }\n          .audio-player .track-item .meta .details .track-title,\n          .audio-player .track-item .meta .details .artist {\n            white-space: nowrap; }\n      .audio-player .track-item .dummy i {\n        padding: 10px;\n        color: #ccc; }\n      .audio-player .track-item .dummy .track-title,\n      .audio-player .track-item .dummy .artist {\n        background: #efefef;\n        color: transparent;\n        display: block;\n        height: 17px; }\n      .audio-player .track-item .dummy .track-title {\n        width: 250px;\n        margin-bottom: 4px; }\n      .audio-player .track-item .dummy .artist {\n        width: 100px; } }\n\n@media (max-width: 767px) {\n  :host {\n    position: fixed;\n    bottom: 40px;\n    width: 100vw;\n    z-index: 2; }\n    :host .audio-player {\n      width: 100%;\n      box-shadow: none; }\n      :host .audio-player .track-item {\n        height: 48px; }\n      :host .audio-player .play-track {\n        width: 30px;\n        height: 30px;\n        border-radius: 50%;\n        border: 1px solid;\n        margin: 0 8px; }\n        :host .audio-player .play-track i {\n          font-size: 16px;\n          padding: 6px 9px; }\n      :host .audio-player .meta {\n        padding: 5px 5px 5px 54px !important; }\n        :host .audio-player .meta .artist {\n          display: block; }\n      :host .audio-player user-comments {\n        display: none; }\n      :host .audio-player /deep/ audio-player-controls .button-container {\n        padding: 0; }\n        :host .audio-player /deep/ audio-player-controls .button-container .prev,\n        :host .audio-player /deep/ audio-player-controls .button-container .next {\n          display: none; }\n        :host .audio-player /deep/ audio-player-controls .button-container .play,\n        :host .audio-player /deep/ audio-player-controls .button-container .pause {\n          width: 30px;\n          height: 30px;\n          border-radius: 50%;\n          border: 1px solid;\n          margin: 0 8px;\n          font-size: inherit;\n          padding: 0;\n          color: inherit;\n          background: none;\n          position: absolute;\n          left: 5px;\n          top: 9px; }\n          :host .audio-player /deep/ audio-player-controls .button-container .play i,\n          :host .audio-player /deep/ audio-player-controls .button-container .pause i {\n            font-size: 16px;\n            padding: 6px 9px; }\n        :host .audio-player /deep/ audio-player-controls .button-container .pause i {\n          padding: 6px 0; }\n      :host .audio-player /deep/ audio-player-controls /deep/ range-slider {\n        top: -10px;\n        position: absolute;\n        width: 100%;\n        left: 0; }\n        :host .audio-player /deep/ audio-player-controls /deep/ range-slider .min-value,\n        :host .audio-player /deep/ audio-player-controls /deep/ range-slider .max-value {\n          display: none; }\n      :host .audio-player.noTrack {\n        display: none; } }\n", ""]);
 
 	// exports
 
@@ -13288,7 +13288,7 @@ webpackJsonp([0],[
 /* 417 */
 /***/ (function(module, exports) {
 
-	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <!--<user-comments *ngIf=\"track\" [currentTime]=\"currentPlayingTime\" [comments]=\"track.get('comments')\" class=\"hidden-xs\"></user-comments>-->\n\n    <audio-player-controls class=\"controls\" (currentTimeChange)=\"updateCurrentTime($event)\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
+	module.exports = "<section class=\"audio-player\" [class.noTrack]=\"!track\">\n\n  <div class=\"track-item\">\n\n    <track-cover [track]=\"track\" class=\"hidden-xs\" [size]=\"getCoverSize()\" [animate]=\"true\"></track-cover>\n\n    <user-comments *ngIf=\"track\"\n                   [currentTime]=\"currentPlayingTime\"\n                   [comments]=\"track.get('comments')\">\n    </user-comments>\n\n    <audio-player-controls class=\"controls\" (currentTimeChange)=\"updateCurrentTime($event)\"></audio-player-controls>\n\n    <div *ngIf=\"track\" class=\"meta\">\n      <toggle-liked-track [track]=\"track\" class=\"hidden-xs\"></toggle-liked-track>\n      <div class=\"details\"\n           draggable=\"true\"\n           [dragData]=\"track.toJSON()\"\n           [dragImageUrl]=\"track.get('artwork_url').getSmallSize()\"\n           dragEffect=\"copy\">\n        <b class=\"track-title\">{{track.get('title')}}</b>\n        <div class=\"artist\">{{track.get('user').get('username')}}</div>\n      </div>\n    </div>\n\n    <div *ngIf=\"!track\"\n         class=\"dummy meta\">\n      <i class=\"fa fa-heart-o\"\n         aria-hidden=\"true\"></i>\n      <div class=\"details\">\n        <b class=\"track-title\">abc</b>\n        <div class=\"artist\">abc</div>\n      </div>\n    </div>\n  </div>\n\n  <play-queue class=\"queue\"></play-queue>\n</section>\n";
 
 /***/ }),
 /* 418 */
@@ -13596,7 +13596,7 @@ webpackJsonp([0],[
 	const forms_1 = __webpack_require__(62);
 	const platform_browser_1 = __webpack_require__(21);
 	const shared_module_1 = __webpack_require__(121);
-	const comments_component_1 = __webpack_require__(423);
+	const user_comments_component_1 = __webpack_require__(423);
 	let CommentsModule = class CommentsModule {
 	};
 	CommentsModule = __decorate([
@@ -13607,10 +13607,10 @@ webpackJsonp([0],[
 	            shared_module_1.SharedModule
 	        ],
 	        declarations: [
-	            comments_component_1.CommentsComponent
+	            user_comments_component_1.UserCommentsComponent
 	        ],
 	        exports: [
-	            comments_component_1.CommentsComponent
+	            user_comments_component_1.UserCommentsComponent
 	        ]
 	    }), 
 	    __metadata('design:paramtypes', [])
@@ -13635,7 +13635,7 @@ webpackJsonp([0],[
 	const core_1 = __webpack_require__(3);
 	const comments_collection_1 = __webpack_require__(114);
 	const h_readable_seconds_pipe_1 = __webpack_require__(122);
-	let CommentsComponent = class CommentsComponent {
+	let UserCommentsComponent = class UserCommentsComponent {
 	    constructor() {
 	        this._commentsMap = {};
 	        this._queueItemAliceTimeSecs = 5;
@@ -13700,20 +13700,20 @@ webpackJsonp([0],[
 	__decorate([
 	    core_1.Input(), 
 	    __metadata('design:type', Number)
-	], CommentsComponent.prototype, "currentTime", null);
+	], UserCommentsComponent.prototype, "currentTime", null);
 	__decorate([
 	    core_1.Input(), 
 	    __metadata('design:type', (typeof (_a = typeof comments_collection_1.Comments !== 'undefined' && comments_collection_1.Comments) === 'function' && _a) || Object)
-	], CommentsComponent.prototype, "comments", null);
-	CommentsComponent = __decorate([
+	], UserCommentsComponent.prototype, "comments", null);
+	UserCommentsComponent = __decorate([
 	    core_1.Component({
 	        selector: 'user-comments',
 	        styles: [__webpack_require__(424)],
 	        template: __webpack_require__(426)
 	    }), 
 	    __metadata('design:paramtypes', [])
-	], CommentsComponent);
-	exports.CommentsComponent = CommentsComponent;
+	], UserCommentsComponent);
+	exports.UserCommentsComponent = UserCommentsComponent;
 	var _a;
 
 
@@ -13752,7 +13752,7 @@ webpackJsonp([0],[
 /* 426 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"comments\">\n\n  <ul>\n    <li *ngFor=\"let comment of commentsQueue.models\"\n        class=\"comment\">\n      <div class=\"user-image\">\n        <img [src]=\"comment.get('user').get('avatar_url').getImageByFormat('tiny')\">\n      </div>\n      <div class=\"text\">\n        <multi-line\n          [text]=\"comment.get('body')\"\n          font=\"300 12px Raleway\"\n          [maxLines]=\"2\"\n          [maxWidth]=\"288\"\n          [paddingLeft]=\"5\"\n          [paddingRight]=\"5\"\n          (lineAmountChanged)=\"updateVisibleLines($event)\"></multi-line>\n      </div>\n    </li>\n  </ul>\n\n</div>\n\n";
+	module.exports = "<div class=\"user-comments\">\n\n  <ul>\n    <li *ngFor=\"let comment of commentsQueue.models\"\n        class=\"comment\">\n      <div class=\"user-image\">\n        <img [src]=\"comment.get('user').get('avatar_url').getImageByFormat('tiny')\"/>\n      </div>\n      <div class=\"text\">\n        <multi-line\n          [text]=\"comment.get('body')\"\n          font=\"300 12px Raleway\"\n          [maxLines]=\"2\"\n          [maxWidth]=\"288\"\n          [paddingLeft]=\"5\"\n          [paddingRight]=\"5\"\n          (lineAmountChanged)=\"updateVisibleLines($event)\">\n        </multi-line>\n      </div>\n    </li>\n  </ul>\n\n</div>\n\n";
 
 /***/ }),
 /* 427 */
