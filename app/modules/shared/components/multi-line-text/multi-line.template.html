@@ -1,7 +1,11 @@
 <div class="multi-line">
   <canvas #canvas width="0" height="0"></canvas>
-  <div class="lines" [class.multiLines]="lines.length>1">
-    <div class="line" *ngFor="let line of lines" [style.width]="line.width+'px'" [style.font]="font">
+  <div class="lines"
+       [class.multiLines]="lines.length>1">
+    <div *ngFor="let line of lines"
+         class="line"
+         [style.width]="line.width+'px'"
+         [style.font]="font">
       {{line.text}}
     </div>
   </div>
