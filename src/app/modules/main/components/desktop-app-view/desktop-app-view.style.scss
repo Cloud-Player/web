@@ -1,0 +1,28 @@
+@import 'variables';
+
+:host{
+  .screenshot{
+    background-position-y: initial;
+    -webkit-background-size: cover;
+    margin-left: -15px;
+    width: calc(100% + 30px);
+    margin-top: -10px;
+    border-radius: 4px 4px 0 0;
+
+    &.win{
+      background: url(/assets/desktop-app/win-screenshot.png) no-repeat;
+      height: 300px;
+    }
+
+    &.osx{
+      background: url(/assets/desktop-app/osx-screenshot.png) no-repeat;
+      height: 300px;
+    }
+  }
+
+  .tutorial{
+    .img-holder{
+      text-align: center;
+    }
+  }
+}

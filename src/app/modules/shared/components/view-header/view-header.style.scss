@@ -1,0 +1,87 @@
+@import 'variables';
+
+:host {
+  display: block;
+  position: relative;
+  z-index: 9;
+  height: 60px;
+  font-size: 35px;
+
+  .view-header {
+    width: inherit;
+    border-radius: 4px 4px 0 0;
+    padding: 6px 15px;
+    display: flex;
+    align-items: center;
+    color: #555;
+    height: 100%;
+
+    /deep/ > i {
+      font-size: 20px;
+      margin-right: 15px;
+      color: #555;
+    }
+
+    /deep/ > img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+  }
+
+  :after {
+    content: "";
+    position: absolute;
+    width: 102%;
+    height: 25px;
+    background: #efefef;
+    top: -25px;
+    left: -1%;
+  }
+
+  /deep/ app-collection-text-input-search {
+    width: 100%;
+
+    .input-group {
+      padding: 4px 15px;
+      background: $light-white;
+      margin-left: -15px;
+      box-sizing: initial;
+      width: 100%;
+      border-radius: 4px;
+
+      .input-group-addon {
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        padding: 0;
+      }
+
+      input {
+        border: none;
+        font-size: 35px;
+        width: 100%;
+        font-weight: lighter;
+        height: initial;
+        background: transparent;
+        padding: 0 16px;
+        box-shadow: none;
+      }
+    }
+  }
+
+  @media (max-width: $screen-sm-max) {
+    .view-header {
+      padding-top: 0;
+      border-bottom: 2px solid $brand-primary;
+
+      /deep/ app-collection-text-input-search {
+        .input-group {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
+

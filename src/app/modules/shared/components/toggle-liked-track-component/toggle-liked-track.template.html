@@ -1,0 +1,11 @@
+<span class="toggle-liked-track">
+  <i class="fa"
+     [class.fa-heart]="hasLikedTrack()"
+     [class.fa-heart-o]="!hasLikedTrack()"
+     aria-hidden="true"
+     (click)="toggleLike()"></i>
+
+  <div class="not-authenticated" *ngIf="showAuthenticateTooltip">
+    <a (click)="connect()">Connect with SoundCloud</a> to like tracks
+  </div>
+</span>

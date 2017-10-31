@@ -1,0 +1,69 @@
+<section class="column">
+
+  <div class="sidebar">
+    <div class="cloud-player">
+      <app-cloud-player-logo [animate]="true"></app-cloud-player-logo>
+    </div>
+
+    <div class="menu">
+      <nav>
+        <a routerLink="/dashboard"
+           [routerLinkActive]="['is-active']">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <div class="text">Search</div>
+        </a>
+
+        <a *ngIf="showDesktopAppEntry()"
+           routerLink="/desktop-app"
+           [routerLinkActive]="['is-active']"
+           class="desktop-entry">
+          <i class="fa fa-desktop" aria-hidden="true"></i>
+          <div class="text">Desktop App</div>
+        </a>
+
+        <div class="divider">
+          <div class="title">Account</div>
+        </div>
+
+        <a *ngIf="isAuthenticated"
+           routerLink="/me"
+           class="user">
+          <img [src]="user.get('avatar_url').getLargeSize() || imgUrl" [alt]="user.get('full_name')" class="avatar">
+          <div class="text">
+            <span>{{user.get('full_name') || user.get('username')}}</span>
+          </div>
+        </a>
+
+        <a *ngIf="!isAuthenticated"
+           (click)="connect()"
+           class="sc-connect">
+          <i class="fa fa-soundcloud" aria-hidden="true"></i>
+          <div class="text">Login with SoundCloud</div>
+        </a>
+
+        <a routerLink="me/likes"
+           [routerLinkActive]="['is-active']" [class.disabled]="!isAuthenticated">
+          <i class="fa fa-heart" aria-hidden="true"></i>
+          <div class="text">Likes</div>
+        </a>
+
+
+        <a *ngIf="isAuthenticated"
+           routerLink="me/playlists"
+           [routerLinkActive]="['is-active']"
+           class="visible-xs visible-sm">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <div class="text">Playlists</div>
+        </a>
+
+        <div class="divider">
+          <div class="title">Playlists</div>
+        </div>
+
+        <app-authenticated-user-playlists class="hidden-xs hidden-sm" appFillHeight></app-authenticated-user-playlists>
+      </nav>
+    </div>
+
+  </div>
+
+</section>

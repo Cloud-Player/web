@@ -1,0 +1,295 @@
+@import 'variables';
+
+:host .column {
+  background: #efefef;
+  height: calc(100vh);
+}
+
+.sidebar {
+  width: 95px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+
+  .menu {
+    min-width: 250px;
+    padding-left: 15px;
+  }
+
+  .cloud-player {
+    background: $light-white;
+    padding: 0;
+    text-align: center;
+    margin: 15px 15px 15px 15px;
+    border-radius: 4px;
+    height: 60px;
+
+    img {
+      width: 58px;
+    }
+  }
+
+  .menu,
+  /deep/ app-authenticated-user-playlists {
+
+    a,
+    .nav-item {
+      margin: 20px 15px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      text-decoration: none;
+      cursor: pointer;
+
+      img {
+        margin: 0 13px 0 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      i {
+        border: 1px solid;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+
+        &.fa-search {
+          font-size: 14px;
+        }
+      }
+
+      .text {
+        display: block;
+      }
+    }
+
+    a, .nav-item {
+      text-decoration: none;
+
+      .text,
+      i {
+        transition: color 0.6s ease;
+      }
+
+      i {
+        color: $gray-darker;
+        transition: color 0.6s ease;
+      }
+
+      .text {
+        color: #cbcbcb;
+      }
+
+      &.disabled {
+        .text,
+        i {
+          color: #cbcbcb;
+        }
+      }
+
+      &:hover {
+        .text,
+        i {
+          color: $brand-primary;
+        }
+
+        i {
+          border-color: $gray-darker;
+          color: $brand-primary;
+        }
+
+        .private-badge i{
+          color: $gray-darker;
+        }
+
+        .private-badge i{
+          border-color: $gray-darker !important;
+          color: $gray-darker !important;
+        }
+      }
+
+      &.is-active,
+      &.is-active:hover {
+        .text,
+        i {
+          font-weight: bold;
+        }
+
+        i,
+        .cover{
+          color: $brand-primary !important;
+          border-color: $brand-primary !important;
+        }
+
+        .cover{
+          border: 1px solid;
+        }
+
+        .private-badge i{
+          border-color: $gray-darker !important;
+          color: $gray-darker !important;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    width: 250px;
+
+    .menu,
+    /deep/ app-authenticated-user-playlists {
+      a, .nav-item {
+        .text {
+          color: $gray-darker;
+        }
+
+        &.disabled {
+          .text,
+          i {
+            color: #cbcbcb;
+          }
+        }
+
+        &:hover {
+          .text,
+          i {
+            color: $brand-primary;
+          }
+        }
+
+        &.is-active{
+          .text{
+            color: $gray-darker !important;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: $screen-lg-min) {
+    width: 250px;
+
+    .menu,
+    /deep/ app-authenticated-user-playlists {
+      a, .nav-item {
+        .text,
+        i {
+          color: $gray-darker;
+        }
+
+        &.disabled {
+          .text,
+          i {
+            color: #cbcbcb;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1380px) {
+    width: 300px;
+    &:hover {
+      width: 300px;
+    }
+  }
+}
+
+@media (max-width: $screen-sm-max) {
+  :host {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    z-index: 1;
+    box-shadow: $light-boxshadow;
+    z-index: 999;
+
+    .sidebar,
+    /deep/ app-authenticated-user-playlists {
+      min-width: 100%;
+      padding: 0;
+
+      .menu {
+        min-width: 100%;
+        padding-left: 0;
+      }
+
+      .divider,
+      .cloud-player {
+        display: none;
+      }
+
+      .user {
+        order: 4;
+      }
+
+      nav {
+        display: flex;
+        font-size: 13px;
+        margin: 0;
+
+        a,
+        .nav-item {
+          display: block;
+          margin: 0;
+          border-left: 1px solid #dad9d9;
+          padding: 7px;
+
+          &.is-active {
+            background: #dad9d9;
+
+            i {
+              color: $brand-primary;
+            }
+          }
+
+          &.disabled{
+            display: none;
+          }
+
+          i {
+            margin: 0 auto;
+            font-size: 20px;
+            padding: 0;
+            border: none;
+            background: transparent;
+
+            &.fa-search{
+              font-size: 18px;
+            }
+          }
+
+          img {
+            width: 27px;
+            height: 27px;
+          }
+
+          .text {
+            display: none;
+          }
+
+          &.sc-connect {
+            display: flex;
+
+            i{
+              margin-right: 5px;
+            }
+            .text{
+              display: block;
+              margin-right: auto;
+              color: $gray-darker;
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

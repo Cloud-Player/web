@@ -1,0 +1,40 @@
+@import 'variables';
+
+:host{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  height: 320px;
+
+  .track-cover{
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+
+    &.hasNoTrack{
+      padding: 10px;
+    }
+
+    .cover {
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .no-track{
+      background: #efefef;
+      padding: 20%;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+
+      /deep/ app-cloud-player-logo{
+        object {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

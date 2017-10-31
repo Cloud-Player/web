@@ -1,0 +1,9 @@
+<section class="column">
+  <app-view-header>
+    <i class="fa fa-heart" aria-hidden="true"></i> Liked Tracks
+  </app-view-header>
+
+  <app-scroll-view>
+    <app-track-list [tracks]="user.get('likes')"></app-track-list>
+  </app-scroll-view>
+</section>

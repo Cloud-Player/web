@@ -1,0 +1,11 @@
+<div class="track-cover" [class.hasNoTrack]="!track || !getArtworkUrl()">
+  <div *ngIf="track && getArtworkUrl()"
+       class="cover">
+    <img [src]="getArtworkUrl()">
+  </div>
+
+  <div *ngIf="!track || !getArtworkUrl()"
+       class="no-track">
+    <app-cloud-player-logo [animate]="animate"></app-cloud-player-logo>
+  </div>
+</div>

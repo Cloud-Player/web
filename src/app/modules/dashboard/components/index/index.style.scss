@@ -1,0 +1,12 @@
+@import 'variables';
+:host{
+  /deep/ app-scroll-view .results{
+    margin-top: -8px;
+  }
+
+  app-social-share-panel{
+    display: block;
+  }
+}
+
+

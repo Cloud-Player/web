@@ -1,0 +1,88 @@
+<section class="column">
+  <app-view-header>
+    Desktop App
+  </app-view-header>
+
+  <app-scroll-view>
+    <div class="card">
+      <div class="screenshot"
+           [class.win]="isWindowsPc()"
+           [class.osx]="isMacPc()"></div>
+      <div>
+        <h3>Download the native Cloud Player App to install it on your PC.</h3>
+        <ul>
+          <li>Create a shortcut to Cloud Player on your Desktop</li>
+          <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>
+          <li>Have all the other nice features of Cloud Player</li>
+        </ul>
+      </div>
+      <a *ngIf="isWindowsPc()"
+         href="https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.setup.exe"
+         class="btn btn-primary btn-block"
+         (click)="download('WIN')">
+        Download for Windows
+      </a>
+
+      <a *ngIf="isMacPc()"
+         href="https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.dmg"
+         class="btn btn-primary btn-block"
+         (click)="download('OSX')">
+        Download for Mac
+      </a>
+
+      <div *ngIf="!isWindowsPc() && !isMacPc()"
+           class="alert alert-info">
+        Sorry for this platform we don't have a native app yet :(
+      </div>
+    </div>
+
+    <div class="card tutorial osx"
+         *ngIf="isMacPc()">
+      <h2>How to Install</h2>
+      <h3>Open the downloaded <i>cloud-player.dmg</i> file</h3>
+      <div class="img-holder">
+        <img src="assets/desktop-app/osx-dmg.png" width="400px"/>
+      </div>
+      <p>After the Download has finished open the dmg file. Drag and drop the Cloud Player app into the <i>Applications</i> folder</p>
+      <hr>
+      <h3>Start Cloud Player</h3>
+      <p>
+        We could not sign the Cloud Player with an official Apple developer certificate. When you try to start it, macOS will tell you
+        that the application is from an unidentified developer.
+        <br>
+        <br>
+        To open the app anyway locate Cloud Player in the <i>Applications</i> folder. Control click the Cloud Player app icon
+        and then choose <i>Open</i> from the shortcut menu.
+        <br>
+        <br>
+        This has to be done only when you start Cloud Player for the first time.
+        <br>
+        <br>
+        <a href="https://support.apple.com/kb/PH25088?locale=en_US" target="_blank">More information...</a>
+
+      </p>
+    </div>
+
+    <div class="card tutorial win"
+         *ngIf="isWindowsPc()">
+      <h2>How to Install</h2>
+      <h3>Open the downloaded <i>cloud-player.setup.exe</i> file</h3>
+      <div class="img-holder">
+        <img src="assets/desktop-app/win-exe.png" width="400px"/>
+      </div>
+      <p>
+        After the Download has finished open the exe file.
+      </p>
+      <p>
+        We could not sign the Cloud Player with an official Windows developer certificate. Therefore the Windows
+        Security Agent
+        will prevent starting the installation process
+        <br>
+        <br>
+        To start the installation anyway click on the button "More Info" (1). A new button "Run anyway" will appear (2).
+        Click
+        on that button to start the installation process
+      </p>
+    </div>
+  </app-scroll-view>
+</section>

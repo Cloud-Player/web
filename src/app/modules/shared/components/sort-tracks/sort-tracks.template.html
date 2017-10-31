@@ -1,0 +1,17 @@
+<div class="sort-tracks">
+  <span class="sort-by visible-xs">
+    <i class="fa fa-sort" aria-hidden="true"></i>
+  </span>
+  <span class="sort-by sort-by-tracks hidden-xs">
+    Sort tracks by:
+  </span>
+  <app-collection-sort [collection]="tracks" [label]="'None'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="tracks" [comparator]="'duration'" [label]="'Duration'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="tracks" [comparator]="'likes'" [label]="'Likes'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="tracks" [comparator]="'playback_count'" [label]="'Plays'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="tracks" [comparator]="'created_at'" [label]="'Created'"></app-collection-sort>
+</div>

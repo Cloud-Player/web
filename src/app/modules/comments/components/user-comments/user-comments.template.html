@@ -1,0 +1,24 @@
+<div class="user-comments">
+
+  <ul>
+    <li *ngFor="let comment of commentsQueue.models"
+        class="comment">
+      <div class="user-image">
+        <img [src]="comment.get('user').get('avatar_url').getImageByFormat('tiny')"/>
+      </div>
+      <div class="text">
+        <app-multi-line
+          [text]="comment.get('body')"
+          font="300 12px Raleway"
+          [maxLines]="2"
+          [maxWidth]="288"
+          [paddingLeft]="5"
+          [paddingRight]="5"
+          (lineAmountChanged)="updateVisibleLines($event)">
+        </app-multi-line>
+      </div>
+    </li>
+  </ul>
+
+</div>
+

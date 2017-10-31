@@ -1,0 +1,26 @@
+@import 'variables';
+:host{
+  .social-button-holder{
+    display: flex;
+    justify-content: flex-start;
+
+    > * {
+      margin-right: 5px;
+
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+
+  .nope-btn{
+    margin: 0;
+    height: 29px;
+    border-radius: 4px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+
