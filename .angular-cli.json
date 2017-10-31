@@ -8,6 +8,7 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
+        "CNAME",
         "assets",
         "favicon.ico",
         "service-worker.js"
