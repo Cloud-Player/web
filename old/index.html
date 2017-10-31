@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="./">
+  <title>Cloud Player</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="keywords" content="audio player, soundcloud, music">
+  <meta name="description"
+        content="This is an alternative SoundCloud player to play songs from SoundCloud and manage playlists that you have created. Listen to awesome music by awesome artists!">
+  <meta name="subject" content="Awesome music by awesome artists">
+  <meta name="language" content="EN">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Language" content="en">
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" type="image/ico" href="assets/meta/icons/favicons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/meta/icons/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/meta/icons/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/meta/icons/favicons/favicon-16x16.png">
+
+  <!-- Android -->
+  <meta name="theme-color" content="#ff3600">
+  <link rel="icon" type="image/png" sizes="192x192"  href="assets/meta/icons/android/android-icon-192x192.png">
+  <link rel="manifest" href="assets/meta/manifest.json">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="Cloud Player">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/meta/icons/ios/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/meta/icons/ios/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/meta/icons/ios/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/meta/icons/ios/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/meta/icons/ios/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/meta/icons/ios/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/meta/icons/ios/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/meta/icons/ios/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/meta/icons/ios/apple-icon-180x180.png">
+
+  <!-- Windows -->
+  <meta name="msapplication-TileColor" content="#ff3600">
+  <meta name="msapplication-TileImage" content="assets/meta/icons/windows/ms-icon-144x144.png">
+
+  <!-- Twitter -->
+  <meta content="https://cloud-player.io/assets/meta/social/twitter.jpg" name="twitter:image:src"/>
+  <meta content="@cldplayer" name="twitter:site"/>
+  <meta content="summary" name="twitter:card"/>
+  <meta content="Cloud Player" name="twitter:title"/>
+  <meta content="Alternative SoundCloud player—Listen to awesome music by awesome artists!" name="twitter:description"/>
+
+  <!-- Facebook -->
+  <meta content="https://cloud-player.io/assets/meta/social/facebook.jpg" property="og:image"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="Cloud Player" property="og:site_name"/>
+  <meta content="object" property="og:type"/>
+  <meta content="Cloud Player" property="og:title"/>
+  <meta content="https://cloud-player.io" property="og:url"/>
+  <meta content="Alternative SoundCloud player—Listen to awesome music by awesome artists!" property="og:description"/>
+
+  <!-- Fluid App -->
+  <link rel="fluid-icon" type="image/png" href="assets/logo.png" title="Cloud Player">
+
+  <!-- Style during initialization of the application -->
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #initScreen {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      background: #efefef;
+    }
+
+    #loader {
+      margin: auto;
+      text-align: center;
+    }
+
+    #loader img {
+      margin-bottom: 20px;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+
+    #loader p {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: lighter;
+      color: #999;
+      font-size: 18px;
+      margin: 0;
+    }
+
+    #loadCircle {
+      position: absolute;
+      margin: auto;
+      left: calc(50% - 300px);
+      top: calc(50% - 300px);
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+
+    #loadCircleLineMask {
+      position: absolute;
+      left: calc(50% - 300px);
+      top: calc(50% - 300px);
+      width: 300px;
+      height: 600px;
+      overflow: hidden;
+      -webkit-transform-origin: 300px;
+      transform-origin: 300px;
+      -webkit-mask-image: -webkit-linear-gradient(top, #000000, transparent);
+      mask-image: linear-gradient(#000 0%, transparent 100%);
+      animation: rotate 1.4s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95);
+    }
+
+    #loadLine {
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 2px rgba(255, 54, 0, 0.8);
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px){
+      #loadCircle{
+        left: calc(50% - 150px);
+        top: calc(50% - 150px);
+        width: 300px;
+        height: 300px;
+      }
+
+      #loadCircleLineMask {
+        width: 300px;
+        height: 300px;
+        left: calc(50% - 150px);
+        top: calc(50% - 150px);
+        -webkit-transform-origin: 150px;
+        transform-origin: 150px;
+      }
+
+      #loadLine{
+        width: 300px;
+        height: 300px;
+        box-shadow: inset 0 0 0 1px rgba(255, 54, 0, 0.8);
+      }
+
+      #loader img{
+        width: 80px;
+        height: 80px;
+        margin: -10px 0 10px 0;
+      }
+
+      #loader p{
+        font-size: 14px
+      }
+    }
+  </style>
+
+<link href="vendor.4f59dd4d77a3cd63fed0.css" rel="stylesheet"></head>
+
+<body>
+<cloud-player>
+  <div id="initScreen">
+    <div id="loader">
+      <div id="loadCircle"></div>
+      <div id="loadCircleLineMask">
+        <div id="loadLine"></div>
+      </div>
+      <img src="ebd7bf47dcdbd9ebebea93f422e84dd1.svg">
+      <p id="statusText">Initialising Cloud Player...</p>
+    </div>
+  </div>
+</cloud-player>
+<script type="text/javascript" src="polyfills.4f59dd4d77a3cd63fed0.js"></script><script type="text/javascript" src="vendor.4f59dd4d77a3cd63fed0.js"></script><script type="text/javascript" src="app.4f59dd4d77a3cd63fed0.js"></script></body>
+
+</html>
