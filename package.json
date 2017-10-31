@@ -7,7 +7,7 @@
     "preinstall": "npm install -g webpack",
     "lint": "tslint -c ./tslint.json 'app/**/*.ts'",
     "start": "webpack-dev-server --display-error-details --inline --progress --port 8080 --host 0.0.0.0",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail --display-error-details && cp ./CNAME ./dist/ && cp -r ./assets ./dist"
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail --display-error-details && cp ./CNAME ./dist/ && cp -r ./assets ./dist",
   },
   "keywords": [],
   "contributors": [
