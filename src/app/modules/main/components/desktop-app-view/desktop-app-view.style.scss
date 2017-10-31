@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 
 :host{
   .screenshot{
@@ -10,12 +10,12 @@
     border-radius: 4px 4px 0 0;
 
     &.win{
-      background: url(./assets/win-screenshot.png) no-repeat;
+      background: url(/assets/desktop-app/win-screenshot.png) no-repeat;
       height: 300px;
     }
 
     &.osx{
-      background: url(./assets/osx-screenshot.png) no-repeat;
+      background: url(/assets/desktop-app/osx-screenshot.png) no-repeat;
       height: 300px;
     }
   }

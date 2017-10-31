@@ -10,9 +10,9 @@ export enum CoverSizes {
 }
 
 @Component({
-  selector: 'track-cover',
-  styles: [require('./track-cover.style.scss')],
-  template: require('./track-cover.template.html')
+  selector: 'app-track-cover',
+  styleUrls: ['./track-cover.style.scss'],
+  templateUrl: './track-cover.template.html'
 })
 
 export class TrackCoverComponent {
@@ -23,11 +23,11 @@ export class TrackCoverComponent {
   public size: CoverSizes;
 
   @Input()
-  public animate: boolean = false;
+  public animate = false;
 
-  private getArtworkUrl(): string {
-    if(this.track){
-      let artwork: SoundcloudImageModel = this.track.get('artwork_url');
+  public getArtworkUrl(): string {
+    if (this.track) {
+      const artwork: SoundcloudImageModel = this.track.get('artwork_url');
       let artworkUrl: string;
       switch (this.size) {
         case CoverSizes.Small:

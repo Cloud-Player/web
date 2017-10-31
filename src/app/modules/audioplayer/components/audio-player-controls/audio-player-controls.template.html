@@ -31,18 +31,18 @@
     </button>
   </div>
 
-  <range-slider [min]="0"
-                [max]="duration"
-                [value]="timeTick"
-                [step]="0.01"
-                [isLoading]="isBuffering"
-                [transformDisplayValue]="transformProgressBarValues"
-                [showCurrentValue]="true"
-                (valueChanged)="playTrackFromPosition($event)"
-                class="time">
-  </range-slider>
+  <app-range-slider [min]="0"
+                    [max]="duration"
+                    [value]="timeTick"
+                    [step]="0.01"
+                    [isLoading]="isBuffering"
+                    [transformDisplayValue]="transformProgressBarValues"
+                    [showCurrentValue]="true"
+                    (valueChanged)="playTrackFromPosition($event)"
+                    class="time">
+  </app-range-slider>
 
-  <!--<range-slider [min]="0"-->
+  <!--<app-range-slider [min]="0"-->
                 <!--[max]="1"-->
                 <!--[value]="audio.volume"-->
                 <!--[step]="0.01"-->
@@ -50,5 +50,5 @@
                 <!--(valueChange)="setVolume($event)"-->
                 <!--(valueChanged)="saveVolume($event)"-->
                 <!--class="volume">-->
-  <!--</range-slider>-->
+  <!--</app-range-slider>-->
 </div>

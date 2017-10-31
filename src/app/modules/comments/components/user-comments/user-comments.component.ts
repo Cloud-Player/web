@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Comments} from '../../collections/comments.collection';
 import {Comment} from '../../models/comment.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 
 @Component({
-  selector: 'user-comments',
-  styles: [require('./user-comments.style.scss')],
-  template: require('./user-comments.template.html')
+  selector: 'app-user-comments',
+  styleUrls: ['./user-comments.style.scss'],
+  templateUrl: './user-comments.template.html'
 })
 
 export class UserCommentsComponent {
@@ -14,9 +14,9 @@ export class UserCommentsComponent {
   private _commentsMap: any = {};
   private _comments: Comments<Comment>;
   private _humanReadableSecPipe: HumanReadableSecondsPipe;
-  private _queueItemAliceTimeSecs: number = 5;
+  private _queueItemAliceTimeSecs = 5;
 
-  public visibleCommentLines: number = 0;
+  public visibleCommentLines = 0;
   public commentsQueue: Comments<Comment>;
   public canShowMoreComments = true;
 
@@ -29,7 +29,7 @@ export class UserCommentsComponent {
     this._commentsMap = {};
     this.commentsQueue.reset();
     comments.each((comment: Comment) => {
-      let secs = Math.round(comment.get('timestamp') / 1000);
+      const secs = Math.round(comment.get('timestamp') / 1000);
       if (this._commentsMap[secs]) {
         this._commentsMap[secs].push(comment);
       } else {
@@ -39,10 +39,10 @@ export class UserCommentsComponent {
   }
 
   private cleanUpHandler(currentTime: number) {
-    var removeQueueItems = this.commentsQueue.filter((commentQueueItem: Comment) => {
+    const removeQueueItems = this.commentsQueue.filter((commentQueueItem: Comment) => {
       return (commentQueueItem.get('timestamp') / 1000) + this._queueItemAliceTimeSecs < currentTime;
     });
-    removeQueueItems.forEach((item)=>{
+    removeQueueItems.forEach((item) => {
       this.commentsQueue.remove(item);
     });
   }
@@ -56,7 +56,7 @@ export class UserCommentsComponent {
     this._currentTime = Math.round(val);
     if (this._commentsMap[this._currentTime]) {
       this._commentsMap[this._currentTime].forEach((comment: Comment) => {
-        if(this.visibleCommentLines<9){
+        if (this.visibleCommentLines < 9) {
           this.commentsQueue.push(comment);
         }
       });
@@ -78,10 +78,10 @@ export class UserCommentsComponent {
     this._comments.on('update', this._setCommentsTimeMap, this);
   }
 
-  public updateVisibleLines(val: number){
+  public updateVisibleLines(val: number) {
     this.visibleCommentLines += val;
-    if(val>0 && !this.canShowMoreComments){
-      this.canShowMoreComments =  this.visibleCommentLines<15;
+    if (val > 0 && !this.canShowMoreComments) {
+      this.canShowMoreComments = this.visibleCommentLines < 15;
     }
   }
 }

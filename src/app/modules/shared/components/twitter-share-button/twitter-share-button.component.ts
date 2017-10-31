@@ -1,9 +1,9 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'twitter-share-button',
-  styles: [require('./twitter-share-button.style.scss')],
-  template: require('./twitter-share-button.template.html')
+  selector: 'app-twitter-share-button',
+  styleUrls: ['./twitter-share-button.style.scss'],
+  templateUrl: './twitter-share-button.template.html'
 })
 
 export class TwitterShareButtonComponent implements OnInit {
@@ -42,15 +42,15 @@ export class TwitterShareButtonComponent implements OnInit {
         };
       }
     });
-  };
+  }
 
   private initClickListener() {
     let fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
-    let monitor = setInterval(() => {
+    const monitor = setInterval(() => {
       if (!fbIframe) {
         fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
       }
-      let activeEl = document.activeElement;
+      const activeEl = document.activeElement;
       if (activeEl === fbIframe) {
         clearInterval(monitor);
         this.click.emit();

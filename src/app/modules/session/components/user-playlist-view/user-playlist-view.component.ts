@@ -5,16 +5,16 @@ import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlis
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
-  selector: 'user-play-list-view',
-  template: require('./user-playlist-view.template.html'),
-  styles: [require('./user-playlist-view.style.scss')]
+  selector: 'app-user-play-list-view',
+  styleUrls: ['./user-playlist-view.style.scss'],
+  templateUrl: './user-playlist-view.template.html'
 })
 
 export class UserPlayListViewComponent implements OnInit {
   playlist: AuthenticatedUserPlaylist = new AuthenticatedUserPlaylist();
   session = Session.getInstance();
 
-  public isInEditMode: boolean = false;
+  public isInEditMode = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private userAnalyticsService: UserAnalyticsService) {
   }
@@ -25,34 +25,34 @@ export class UserPlayListViewComponent implements OnInit {
     }
   }
 
-  public cancel(): void{
+  public cancel(): void {
     this.playlist.fetch();
     this.isInEditMode = false;
   }
 
-  public save(): void{
+  public save(): void {
     this.userAnalyticsService.trackEvent('saved_playlist', 'click', 'user-playlist-cmp');
-    this.playlist.save().then(()=>{
+    this.playlist.save().then(() => {
       this.isInEditMode = false;
     });
   }
 
-  public destroy(): void{
+  public destroy(): void {
     this.userAnalyticsService.trackEvent('destroyed_playlist', 'click', 'user-playlist-cmp');
-    let userPlaylists = this.session.get('user').get('playlists');
-    let indexOfPlaylist = userPlaylists.indexOf(this.playlist);
+    const userPlaylists = this.session.get('user').get('playlists');
+    const indexOfPlaylist = userPlaylists.indexOf(this.playlist);
     let otherPlaylistId: number;
 
 
-    this.playlist.destroy().then(()=>{
-      if(userPlaylists.at(indexOfPlaylist)){
+    this.playlist.destroy().then(() => {
+      if (userPlaylists.at(indexOfPlaylist)) {
         otherPlaylistId = userPlaylists.at(indexOfPlaylist).get('id');
-      } else if(userPlaylists.at(indexOfPlaylist-1)){
-        otherPlaylistId = userPlaylists.at(indexOfPlaylist-1).get('id');
+      } else if (userPlaylists.at(indexOfPlaylist - 1)) {
+        otherPlaylistId = userPlaylists.at(indexOfPlaylist - 1).get('id');
       }
 
-      if(otherPlaylistId){
-        this.router.navigate(['../', otherPlaylistId], { relativeTo: this.route });
+      if (otherPlaylistId) {
+        this.router.navigate(['../', otherPlaylistId], {relativeTo: this.route});
       } else {
         this.router.navigateByUrl('/');
       }
@@ -60,9 +60,9 @@ export class UserPlayListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let userPlaylists = this.session.get('user').get('playlists');
+    const userPlaylists = this.session.get('user').get('playlists');
     this.route.params.forEach((params: any) => {
-      if(userPlaylists.get(params.id)){
+      if (userPlaylists.get(params.id)) {
         this.playlist = this.session.get('user').get('playlists').get(params.id);
       } else {
         this.playlist.clear();
@@ -70,8 +70,8 @@ export class UserPlayListViewComponent implements OnInit {
         this.fetchPlaylist();
       }
 
-      userPlaylists.on('update', ()=>{
-        if(userPlaylists.get(params.id)){
+      userPlaylists.on('update', () => {
+        if (userPlaylists.get(params.id)) {
           this.playlist = userPlaylists.get(params.id);
         }
       });

@@ -4,15 +4,15 @@ import {ActivatedRoute} from '@angular/router';
 import {Playlist} from '../../models/playlist.model';
 
 @Component({
-  selector: 'play-list-view',
-  styles: [ require('./playlist-view.style.scss') ],
-  template: require('./playlist-view.template.html'),
-  providers: [Playlist]
+  selector: 'app-play-list-view',
+  styleUrls: ['./playlist-view.style.scss'],
+  templateUrl: './playlist-view.template.html'
 })
 
 export class PlayListViewComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private playlist: Playlist) {
+  playlist: Playlist;
+  constructor(private route: ActivatedRoute) {
+    this.playlist = new Playlist();
   }
 
   ngOnInit(): void {

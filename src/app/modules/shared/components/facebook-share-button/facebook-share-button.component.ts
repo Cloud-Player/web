@@ -1,11 +1,10 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'facebook-share-button',
-  styles: [require('./facebook-share-button.style.scss')],
-  template: require('./facebook-share-button.template.html')
+  selector: 'app-facebook-share-button',
+  styleUrls: ['./facebook-share-button.style.scss'],
+  templateUrl: './facebook-share-button.template.html'
 })
-
 export class FacebookShareButtonComponent implements OnInit {
   constructor(private el: ElementRef) {
 
@@ -32,15 +31,15 @@ export class FacebookShareButtonComponent implements OnInit {
         };
       }
     });
-  };
+  }
 
-  private initClickListener(){
+  private initClickListener() {
     let fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
-    let monitor = setInterval(() => {
+    const monitor = setInterval(() => {
       if (!fbIframe) {
         fbIframe = this.el.nativeElement.querySelectorAll('iframe')[0];
       }
-      let activeEl = document.activeElement;
+      const activeEl = document.activeElement;
       if (activeEl === fbIframe) {
         clearInterval(monitor);
         this.click.emit();

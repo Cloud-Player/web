@@ -5,11 +5,10 @@ import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection'
 import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
 
 @Component({
-  selector: 'play-button',
-  styles: [require('./play_button.style.scss')],
-  template: require('./play_button.template.html')
+  selector: 'app-play-button',
+  styleUrls: ['./play_button.style.scss'],
+  templateUrl: './play_button.template.html'
 })
-
 export class PlayButtonComponent {
 
   @Input() track: Track;
@@ -19,7 +18,7 @@ export class PlayButtonComponent {
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
   isPlaying(): boolean {
-    let playingItem = this.playQueue.getPlayingItem();
+    const playingItem = this.playQueue.getPlayingItem();
     return (playingItem && playingItem.get('track').get('id') === this.track.get('id'));
   }
 }

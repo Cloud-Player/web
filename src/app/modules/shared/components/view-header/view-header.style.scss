@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 
 :host {
   display: block;
@@ -16,13 +16,13 @@
     color: #555;
     height: 100%;
 
-    /deep/ > i{
+    /deep/ > i {
       font-size: 20px;
       margin-right: 15px;
       color: #555;
     }
 
-    /deep/ > img{
+    /deep/ > img {
       width: 30px;
       height: 30px;
       border-radius: 50%;
@@ -30,7 +30,7 @@
     }
   }
 
-  :after{
+  :after {
     content: "";
     position: absolute;
     width: 102%;
@@ -40,10 +40,10 @@
     left: -1%;
   }
 
-  /deep/ collection-text-input-search {
+  /deep/ app-collection-text-input-search {
     width: 100%;
 
-    .input-group{
+    .input-group {
       padding: 4px 15px;
       background: $light-white;
       margin-left: -15px;
@@ -51,14 +51,14 @@
       width: 100%;
       border-radius: 4px;
 
-      .input-group-addon{
+      .input-group-addon {
         background: transparent;
         border: none;
         font-size: 20px;
         padding: 0;
       }
 
-      input{
+      input {
         border: none;
         font-size: 35px;
         width: 100%;
@@ -76,8 +76,8 @@
       padding-top: 0;
       border-bottom: 2px solid $brand-primary;
 
-      /deep/ collection-text-input-search {
-        .input-group{
+      /deep/ app-collection-text-input-search {
+        .input-group {
           border-radius: 0;
         }
       }

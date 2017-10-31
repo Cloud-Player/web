@@ -6,15 +6,15 @@ import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
 
 @Component({
-  selector: 'collection-range-input-search',
-  styles: [ require('./collection-range-input-search.style.scss') ],
-  template: require('./collection-range-input-search.template.html')
+  selector: 'app-collection-range-input-search',
+  styleUrls: [ './collection-range-input-search.style.scss' ],
+  templateUrl: './collection-range-input-search.template.html'
 })
 
 export class CollectionRangeInputSearchComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
-  private query: string;
+  public query: string;
 
   @Input() collection: BaseCollection<BaseModel>;
 

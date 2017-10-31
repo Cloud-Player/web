@@ -11,7 +11,6 @@ import {PlayQueue} from './collections/play_queue.collection';
 import {Tracks} from '../tracks/collections/tracks.collection';
 import {Track} from '../tracks/models/track.model';
 import {PlayQueueItem} from './models/play_queue_item.model';
-import {TracksModule} from '../tracks/tracks.module';
 import {CommentsModule} from '../comments/comments.module';
 
 @NgModule({
@@ -34,20 +33,20 @@ import {CommentsModule} from '../comments/comments.module';
 export class AudioPlayerModule {
 
   constructor() {
-    let playQueue = PlayQueue.getInstance();
+    const playQueue = PlayQueue.getInstance();
 
     localforage.getItem('sc_playqueue').then((playQueueItems: Array<any>) => {
       playQueue.add(playQueueItems);
 
-      if (playQueue.length>0) {
-        let playQueueItemTracks = playQueue.map((item: PlayQueueItem) => {
+      if (playQueue.length > 0) {
+        const playQueueItemTracks = playQueue.map((item: PlayQueueItem) => {
           return {
             id: item.id
           };
         });
-        let tmpTracks = new Tracks();
+        const tmpTracks = new Tracks();
         tmpTracks.add(playQueueItemTracks);
-        if(tmpTracks.length>0){
+        if (tmpTracks.length > 0) {
           tmpTracks.refresh().then(function (tracks) {
             tracks.forEach((track: Track) => {
               playQueue.add({track: track}, {merge: true, silent: true});
@@ -57,7 +56,7 @@ export class AudioPlayerModule {
       }
     });
 
-    let debouncedPlayQueueSave = debounce(() => {
+    const debouncedPlayQueueSave = debounce(() => {
       localforage.setItem('sc_playqueue', playQueue.getScheduledItemsJSON(30));
     }, 1000);
     playQueue.on('add remove reset change:status', debouncedPlayQueueSave);

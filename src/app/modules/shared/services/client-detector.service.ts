@@ -1,12 +1,12 @@
 export interface Result {
-  name: OsNames|ClientNames;
+  name: OsNames | ClientNames;
   version?: number;
 }
 
 export interface Test {
-  s: OsNames|ClientNames,
-  v?: number,
-  r: RegExp
+  s: OsNames | ClientNames;
+  v?: number;
+  r: RegExp;
 }
 
 export enum OsNames {
@@ -79,7 +79,7 @@ export class ClientDetector {
   ];
 
   static test<T extends Result>(array: Array<Test>): T {
-    let result: T = <T>{};
+    const result: T = <T>{};
 
     array.forEach((osItem: any) => {
       if (osItem.r.test(navigator.userAgent) && !result.name) {
@@ -98,13 +98,13 @@ export class ClientDetector {
     return ClientDetector.test(ClientDetector.clientStrings);
   }
 
-  static isMobileDevice(): boolean{
+  static isMobileDevice(): boolean {
     return ClientDetector.getOs().name === OsNames.Android ||
       ClientDetector.getOs().name === OsNames.iOS ||
-      ClientDetector.getOs().name === OsNames.WindowsMobile
+      ClientDetector.getOs().name === OsNames.WindowsMobile;
   }
 
-  static isPhone(): boolean{
-    return ClientDetector.isMobileDevice() && window.screen.width<770;
+  static isPhone(): boolean {
+    return ClientDetector.isMobileDevice() && window.screen.width < 770;
   }
 }

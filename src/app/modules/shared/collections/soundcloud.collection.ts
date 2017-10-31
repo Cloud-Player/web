@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
-import {Config} from '../../../config/config';
+import {Globals} from '../../../../globals';
 import {BaseCollection} from '../../backbone/collections/base.collection';
 import {SoundcloudModel} from '../models/soundcloud.model';
 import {getSession} from '../session-manager.fn';
 
-@Injectable()
 export class SoundcloudCollection<TModel extends SoundcloudModel> extends BaseCollection<TModel> {
-  clientId = Config.soundcloudClientId;
+  clientId = Globals.soundcloudClientId;
 
   model: any = SoundcloudModel;
 
   hostName(): string {
     return '//api.soundcloud.com';
-  };
+  }
 
   sync(method: string, model: any, options: any = {}) {
     this.queryParams['client_id'] = this.clientId;
-    let session = getSession();
+    const session = getSession();
     if (session && session.isValid()) {
       this.queryParams['oauth_token'] = session.get('access_token');
     }
@@ -25,7 +24,7 @@ export class SoundcloudCollection<TModel extends SoundcloudModel> extends BaseCo
 
   parse(rsp: any) {
     return rsp.data || rsp;
-  };
+  }
 }
 
 

@@ -2,15 +2,16 @@ import {Component} from '@angular/core';
 import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
-  selector: 'authenticated-user-view',
-  template: require('./authenticated-user-view.template.html'),
-  styles: [require('./authenticated-user-view.style.scss')]
+  selector: 'app-authenticated-user-view',
+  styleUrls: ['./authenticated-user-view.style.scss'],
+  templateUrl: './authenticated-user-view.template.html'
 })
 export class AuthenticatedUserViewComponent {
-  constructor(private authService: AuthService){
+  constructor(private authService: AuthService) {
 
   }
-  disconnect(): void{
+
+  disconnect(): void {
     this.authService.disconnect();
   }
 }

@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 
 
 @Component({
-  selector: 'view-header',
-  styles: [require('./view-header.style.scss')],
-  template: require('./view-header.template.html')
+  selector: 'app-view-header',
+  styleUrls: ['./view-header.style.scss'],
+  templateUrl: './view-header.template.html'
 })
 
 export class ViewHeaderComponent {

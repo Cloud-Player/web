@@ -1,21 +1,21 @@
 <section class="column">
-  <view-header>
-    <collection-text-input-search [collection]="tracks" [queryParam]="'q'" #searchBar></collection-text-input-search>
-  </view-header>
+  <app-view-header>
+    <app-collection-text-input-search [collection]="tracks" [queryParam]="'q'" #searchBar></app-collection-text-input-search>
+  </app-view-header>
 
-  <!--<collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></collection-range-input-search>-->
-  <!--<sort-tracks [tracks]="tracks"></sort-tracks>-->
+  <!--<app-collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></app-collection-range-input-search>-->
+  <!--<app-sort-tracks [tracks]="tracks"></app-sort-tracks>-->
 
-  <scroll-view>
-    <social-share-panel
+  <app-scroll-view>
+    <app-social-share-panel
       *ngIf="tracks.length !== 0"
       class="card">
-    </social-share-panel>
+    </app-social-share-panel>
 
     <div *ngIf="tracks.length>0"
          class="results">
-      <search-filter [collection]="tracks"></search-filter>
-      <track-list [tracks]="tracks"></track-list>
+      <app-search-filter [collection]="tracks"></app-search-filter>
+      <app-track-list [tracks]="tracks"></app-track-list>
     </div>
 
     <div *ngIf="tracks.length === 0 && !isFetching"
@@ -42,5 +42,5 @@
          class="card">
       Searching for tracks that match your query "{{tracks.queryParams.q}}"
     </div>
-  </scroll-view>
+  </app-scroll-view>
 </section>

@@ -1,9 +1,9 @@
 <section class="column">
   <form (submit)="save()">
-    <view-header>
+    <app-view-header>
       <div *ngIf="isInEditMode"
            class="title edit-mode form-inline">
-        <toggle-switch [(value)]="playlist.attributes.isPublic"></toggle-switch>
+        <app-toggle-switch [(value)]="playlist.attributes.isPublic"></app-toggle-switch>
         <div class="form-group">
           <input type="text"
                  name="playlistName"
@@ -12,7 +12,7 @@
                  placeholder="Playlist Name"
                  [(ngModel)]="playlist.attributes.title"
                  required
-                 focusInput>
+                 appFocusInput>
         </div>
         <div class="button-group">
           <input type="button" class="btn btn-danger" (click)="cancel()" value="Cancel"/>
@@ -21,7 +21,7 @@
       </div>
 
       <div *ngIf="!isInEditMode" class="title">
-        <play-list-icon [playlist]="playlist"></play-list-icon>
+        <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
         <span class="text">{{playlist.get('title')}}</span>
         <div class="button-group">
           <button class="btn btn-default" (click)="isInEditMode = true">
@@ -33,10 +33,10 @@
         </div>
       </div>
 
-    </view-header>
+    </app-view-header>
   </form>
 
-  <scroll-view>
-    <track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></track-list>
-  </scroll-view>
+  <app-scroll-view>
+    <app-track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></app-track-list>
+  </app-scroll-view>
 </section>

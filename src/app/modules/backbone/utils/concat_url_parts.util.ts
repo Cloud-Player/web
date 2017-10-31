@@ -1,7 +1,8 @@
 import {toArray, compact, each} from 'underscore';
 
 export function concatUrlParts(...args: Array<string>) {
-  let urlParts: any = toArray(arguments), cleanedUrlParts: Array<string> = [];
+  let urlParts: any = toArray(arguments);
+  const cleanedUrlParts: Array<string> = [];
 
   // remove empty strings
   urlParts = compact(urlParts);

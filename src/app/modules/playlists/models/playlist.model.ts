@@ -5,7 +5,6 @@ import {map} from 'underscore';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
 
-@Injectable()
 export class Playlist extends SoundcloudModel {
   endpoint = '/playlists';
 
@@ -14,7 +13,7 @@ export class Playlist extends SoundcloudModel {
       title: '',
       isPublic: false
     };
-  };
+  }
 
   nested() {
     return {
@@ -22,7 +21,7 @@ export class Playlist extends SoundcloudModel {
       tracks: Tracks,
       artwork_url: SoundcloudImageModel
     };
-  };
+  }
 
   parse(attrs: any) {
     if (attrs.sharing === 'public') {

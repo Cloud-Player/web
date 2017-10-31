@@ -1,10 +1,9 @@
-import {Directive, ElementRef, HostListener, Input, Renderer} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
 
 @Directive({
-  selector: '[draggable]'
+  selector: '[appDraggable]'
 })
-export class DraggableDirective {
-
+export class DraggableDirective implements OnInit {
   private image: HTMLImageElement;
 
   private imageIsLoaded: boolean;
@@ -15,8 +14,9 @@ export class DraggableDirective {
 
   @Input('dragEffect') dragEffect: string;
 
-  @HostListener('dragstart', ['$event']) onDragStart(event: any) {
-    let transfer = <any>event.dataTransfer;
+  @HostListener('dragstart', ['$event'])
+  onDragStart(event: any) {
+    const transfer = <any>event.dataTransfer;
     if (this.dragData) {
       try {
         transfer.setData('text', JSON.stringify(this.dragData));
@@ -30,14 +30,16 @@ export class DraggableDirective {
     if (this.dragEffect) {
       transfer.effectAllowed = this.dragEffect;
     }
-    this.renderer.setElementClass(this.el.nativeElement, 'drag-in-progress', true);
+    this.el.nativeElement.classList.add('drag-in-progress');
   }
 
-  @HostListener('dragend') onDragEnd() {
-    this.renderer.setElementClass(this.el.nativeElement, 'drag-in-progress', false);
+  @HostListener('dragend')
+  onDragEnd() {
+    this.el.nativeElement.classList.remove('drag-in-progress');
   }
 
-  @HostListener('mouseover') onMouseOver() {
+  @HostListener('mouseover')
+  onMouseOver() {
     if (this.dragImageUrl && (!this.image || this.image.src !== this.dragImageUrl)) {
       this.image = new Image();
       this.image.src = this.dragImageUrl;
@@ -48,7 +50,11 @@ export class DraggableDirective {
     }
   }
 
-  constructor(private el: ElementRef, private renderer: Renderer) {
+  constructor(private el: ElementRef) {
+  }
+
+  ngOnInit(): void {
+    this.el.nativeElement.setAttribute('draggable', true);
   }
 
 }

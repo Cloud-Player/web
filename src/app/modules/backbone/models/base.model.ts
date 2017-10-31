@@ -4,24 +4,26 @@ import {getUrl} from '../utils/get_url.util';
 import {request} from '../utils/request.util';
 import {extend} from 'underscore';
 import {prepareSearchParams} from '../utils/prepare_search_params';
+import {SelectableModel} from './selectable.model';
+import {serverKey} from '../decorators/server-key.decorator';
 
-@Injectable()
-export class BaseModel extends NestedModel {
+export class BaseModel extends SelectableModel {
+
   queryParams: Object = {};
 
   endpoint: string = null;
 
   urlRoot: Function = (): string => {
     return getUrl(this);
-  };
+  }
 
   hostName(): string {
     return '';
-  };
+  }
 
   basePath(): string {
     return '';
-  };
+  }
 
   request(url: string, method: string, options?: any) {
     return request(url, method, options, this);

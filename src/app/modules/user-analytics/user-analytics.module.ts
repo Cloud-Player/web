@@ -8,7 +8,7 @@ import {NavigationEnd, Router, ActivatedRoute} from '@angular/router';
 })
 
 export class UserAnalyticsModule {
-  constructor(private userAnalyticsService: UserAnalyticsService, private router: Router, private route:ActivatedRoute){
+  constructor(private userAnalyticsService: UserAnalyticsService, private router: Router, private route: ActivatedRoute) {
     userAnalyticsService.addProvider(new GoogleAnalyticsTrackingProvider('UA-96117674-1'));
     userAnalyticsService.setProperty('anonymizeIp', true);
 

@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 
 :host{
   .form-group{
@@ -12,7 +12,7 @@
     margin-right: 5px;
   }
 
-  /deep/ view-header{
+  /deep/ app-view-header{
     .default-playlist-img{
       border: 1px solid;
       border-radius: 50%;

@@ -3,24 +3,24 @@ import {Component, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
 import {Track} from '../../../tracks/models/track.model';
 import {CollectionTextInputSearchComponent} from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
-import localforage = require('localforage');
+import * as localforage from 'localforage';
 import {AuthService} from '../../../shared/services/auth.service';
 import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
-  selector: 'my-dashboard',
-  styles: [require('./index.style.scss')],
-  template: require('./index.template.html')
+  selector: 'app-my-dashboard',
+  styleUrls: ['./index.style.scss'],
+  templateUrl: './index.template.html'
 })
 
 export class DashboardIndexComponent implements AfterViewInit {
-  title = 'Search Tracks';
-
-  public isFetching: boolean = false;
+  public tracks: Tracks<Track>;
+  public isFetching = false;
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
 
-  constructor(private tracks: Tracks<Track>, private authService: AuthService) {
+  constructor(private authService: AuthService) {
+    this.tracks = new Tracks();
   }
 
   public connect() {

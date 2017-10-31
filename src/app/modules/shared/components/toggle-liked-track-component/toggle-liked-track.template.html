@@ -5,7 +5,7 @@
      aria-hidden="true"
      (click)="toggleLike()"></i>
 
-  <div class="not-authenticated" [@visibilityChanged]="showAuthenticateTooltip">
+  <div class="not-authenticated" *ngIf="showAuthenticateTooltip">
     <a (click)="connect()">Connect with SoundCloud</a> to like tracks
   </div>
 </span>

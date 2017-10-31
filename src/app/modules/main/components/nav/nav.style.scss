@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 
 :host .column {
   background: #efefef;
@@ -29,7 +29,7 @@
   }
 
   .menu,
-  /deep/ authenticated-user-playlists {
+  /deep/ app-authenticated-user-playlists {
 
     a,
     .nav-item {
@@ -143,7 +143,7 @@
     width: 250px;
 
     .menu,
-    /deep/ authenticated-user-playlists {
+    /deep/ app-authenticated-user-playlists {
       a, .nav-item {
         .text {
           color: $gray-darker;
@@ -176,7 +176,7 @@
     width: 250px;
 
     .menu,
-    /deep/ authenticated-user-playlists {
+    /deep/ app-authenticated-user-playlists {
       a, .nav-item {
         .text,
         i {
@@ -212,7 +212,7 @@
     z-index: 999;
 
     .sidebar,
-    /deep/ authenticated-user-playlists {
+    /deep/ app-authenticated-user-playlists {
       min-width: 100%;
       padding: 0;
 

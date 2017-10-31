@@ -13,7 +13,7 @@ export class PlayQueueItem extends SoundcloudModel {
     return {
       track: Track
     };
-  };
+  }
 
   queue(): void {
     this.set({
@@ -21,12 +21,12 @@ export class PlayQueueItem extends SoundcloudModel {
     });
   }
 
-  unQueue(): void{
+  unQueue(): void {
     this.set({
       status: 'NULL'
     });
-    if(this.collection){
-      let collection = this.collection;
+    if (this.collection) {
+      const collection = this.collection;
       collection.remove(this);
       collection.add(this);
     }

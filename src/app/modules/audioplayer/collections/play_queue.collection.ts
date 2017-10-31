@@ -19,7 +19,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   private getMiniItem(playQueueItem: PlayQueueItem): {} {
-    let mini = playQueueItem.toJSON(true);
+    const mini = playQueueItem.toJSON(true);
     mini.track = {
       id: mini.track.id
     };
@@ -40,7 +40,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getScheduledItemsJSON(maxItems: number): Array<{}> {
-    let allItems: Array<{}> = [],
+    const allItems: Array<{}> = [],
       queuedItems = this.getQueuedItems(),
       scheduledItems = this.getScheduledItems();
 
@@ -72,11 +72,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getItem(): TModel {
-    let pausedItem = this.getPausedItem();
+    const pausedItem = this.getPausedItem();
     if (pausedItem) {
       return pausedItem;
     }
-    let queuedItems = this.getQueuedItems();
+    const queuedItems = this.getQueuedItems();
     if (queuedItems.length > 0) {
       return queuedItems[0];
     } else {
@@ -87,7 +87,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   hasNextItem(): boolean {
-    return this.playIndex < this.length-1;
+    return this.playIndex < this.length - 1;
   }
 
   hasPreviousItem(): boolean {
@@ -110,13 +110,13 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     }
   }
 
-  addAndPlay(item: TModel|any): TModel {
-    let addItem: TModel = this.add(item, {merge: true});
+  addAndPlay(item: TModel | any): TModel {
+    const addItem = this.add(item, {merge: true});
     addItem.play();
     return addItem;
   }
 
-  queue(item: TModel|any): TModel {
+  queue(item: TModel | any): TModel {
     if (!(item instanceof PlayQueueItem)) {
       item = new PlayQueueItem(item);
     }
@@ -132,7 +132,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   setPlayIndex(): number {
-    let currentPlaylingItem = this.getCurrentItem();
+    const currentPlaylingItem = this.getCurrentItem();
     if (currentPlaylingItem) {
       this.playIndex = this.indexOf(currentPlaylingItem);
     }
@@ -140,8 +140,8 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   ensureQueuingOrder(): void {
-    let queuedItems = this.getQueuedItems();
-    let incr = this.getCurrentItem() ? 1 : 0;
+    const queuedItems = this.getQueuedItems();
+    const incr = this.getCurrentItem() ? 1 : 0;
     queuedItems.forEach((item: TModel, index: number) => {
       this.remove(item, {silent: true});
       this.setPlayIndex();
@@ -150,7 +150,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   stopScheduledItemsBeforeCurrentItem(): void {
-    let scheduledItem = this.find((item: TModel) => {
+    const scheduledItem = this.find((item: TModel) => {
       return item.isScheduled();
     });
     if (scheduledItem && this.indexOf(scheduledItem) < this.playIndex) {
@@ -161,7 +161,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
 
   scheduleStoppedItemsAfterCurrentItem(scheduledItem: TModel): void {
     if (scheduledItem && scheduledItem.isStopped()) {
-      let index = this.indexOf(scheduledItem);
+      const index = this.indexOf(scheduledItem);
       if (index > this.playIndex) {
         scheduledItem.set('status', 'NULL');
         this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
@@ -172,19 +172,19 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   private prepareItem(item: any): PlayQueueItem {
     if (!item.id && item instanceof PlayQueueItem) {
       item.set('id', item.get('track').get('id'));
-    } else if(!item.id){
+    } else if (!item.id) {
       item.id = item.track.id;
     }
     return item;
   }
 
-  add(item: TModel|TModel[]|{}, options: any = {}): any {
+  add(item: TModel | TModel[] | {}, options: any = {}): any {
     if (options.doNothing || !item) {
       return super.add(item, options);
     }
 
     if (isArray(item)) {
-      let addedItems: Array<PlayQueueItem> = [];
+      const addedItems: Array<PlayQueueItem> = [];
       item.forEach((obj: any) => {
         addedItems.push(this.prepareItem(obj));
       });

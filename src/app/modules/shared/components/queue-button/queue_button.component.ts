@@ -5,9 +5,9 @@ import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection'
 import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
 
 @Component({
-  selector: 'queue-button',
-  styles: [ require('./queue_button.style.scss') ],
-  template: require('./queue_button.template.html')
+  selector: 'app-queue-button',
+  styleUrls: ['./queue_button.style.scss'],
+  templateUrl: './queue_button.template.html'
 })
 
 export class QueueButtonComponent {
@@ -19,7 +19,7 @@ export class QueueButtonComponent {
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
   isQueued(): boolean {
-    let queuedItems = this.playQueue.getQueuedItems();
+    const queuedItems = this.playQueue.getQueuedItems();
     if (queuedItems && queuedItems.find((item: PlayQueueItem) => {
         return item.get('track').get('id') === this.track.id;
       })) {

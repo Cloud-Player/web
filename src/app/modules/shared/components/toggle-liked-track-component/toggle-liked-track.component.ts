@@ -5,33 +5,33 @@ import {AuthService} from '../../services/auth.service';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
-  selector: 'toggle-liked-track',
-  styles: [require('./toggle-liked-track.style.scss')],
-  template: require('./toggle-liked-track.template.html'),
-  animations: [
-    trigger('visibilityChanged', [
-      state('true', style({width: '*', opacity: 1})),
-      state('false', style({width: 0, display: 'none', opacity: 0})),
-      state('void', style({width: 0, display: 'none', opacity: 0})),
-      transition('* => *', animate('300ms ease-in-out'))
-    ])
-  ]
+  selector: 'app-toggle-liked-track',
+  styleUrls: ['./toggle-liked-track.style.scss'],
+  templateUrl: './toggle-liked-track.template.html',
+  // animations: [
+  //   trigger('visibilityChanged', [
+  //     state('true', style({width: '*', opacity: 1})),
+  //     state('false', style({width: 0, display: 'none', opacity: 0})),
+  //     state('void', style({width: 0, display: 'none', opacity: 0})),
+  //     transition('* => *', animate('300ms ease-in-out'))
+  //   ])
+  // ]
 })
 export class ToggleLikedTrackComponent {
   private session = Session.getInstance();
 
   @Input() track: Track;
 
-  public showAuthenticateTooltip: boolean = false;
+  public showAuthenticateTooltip = false;
 
   constructor(private authService: AuthService, private userAnalyticsService: UserAnalyticsService) {
   }
 
   showConnectTooltip() {
     this.showAuthenticateTooltip = true;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.showAuthenticateTooltip = false;
-    }, 2000)
+    }, 2000);
   }
 
   hasLikedTrack(): boolean {

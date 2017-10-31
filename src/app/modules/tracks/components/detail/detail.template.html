@@ -11,7 +11,7 @@
   <div class="details">
     <b>{{track.get('title')}}</b>
     <p>{{track.get('user').get('username')}}</p>
-    <play-button [track]="track"></play-button>
+    <app-play-button [track]="track"></app-play-button>
     <a href="{{track.attributes.purchase_url}}" target="_blank" *ngIf="track.attributes.purchase_url">
       <button class="btn btn-warning" [class.btn-round]="!track.attributes.purchase_title">
         <i class="fa fa-download"></i>

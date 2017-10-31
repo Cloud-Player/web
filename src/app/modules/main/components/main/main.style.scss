@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,600');
-@import '../../../../variables';
-@import '../../../../bootstrap';
 /* Global styles */
+@import 'variables';
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
 
 h2 {
   font-size: 28px;

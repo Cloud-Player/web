@@ -6,7 +6,7 @@ export class NestedModel extends Model {
 
   nested() {
     return {};
-  };
+  }
 
   constructor(attributes?: any, options: any = {}) {
     options._prepareNesting = true;
@@ -14,12 +14,12 @@ export class NestedModel extends Model {
   }
 
   private _prepare(): Object {
-    let nestedAttributes = this.nested(),
+    const nestedAttributes = this.nested(),
       instanceObject = {};
 
-    for (let key in nestedAttributes) {
+    for (const key in nestedAttributes) {
       if (typeof nestedAttributes[key] === 'function') {
-        let instance = new nestedAttributes[key]();
+        const instance = new nestedAttributes[key]();
         instance.parent = this;
         instanceObject[key] = instance;
       } else {
@@ -28,38 +28,38 @@ export class NestedModel extends Model {
     }
 
     return instanceObject;
-  };
+  }
 
-  private _setNestedModel(key: string, value: string| any): void {
+  private _setNestedModel(key: string, value: string | any): void {
     if (isObject(value)) {
       this.get(key).set(value);
     } else {
-      let id = this.get(key).idAttribute;
+      const id = this.get(key).idAttribute;
       this.get(key).set(id, value);
     }
-  };
+  }
 
-  private _setNestedCollection(key: string, value: string|any): void {
+  private _setNestedCollection(key: string, value: string | any): void {
     if (isObject(value) && !isArray(value)) {
       this.get(key).add(value);
     } else if (isArray(value)) {
-      value.forEach(function (val: string|any) {
+      value.forEach(function (val: string | any) {
         this._setNestedCollection(key, val);
       }.bind(this));
     } else {
-      let id = this.get(key).model.prototype.idAttribute,
+      const id = this.get(key).model.prototype.idAttribute,
         obj = {};
 
       obj[id] = value;
       this.get(key).add(obj);
     }
-  };
+  }
 
   private _setNestedAttributes(obj: any): any {
 
-    for (let key in obj) {
+    for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        let nestedAttrs = this.nested(),
+        const nestedAttrs = this.nested(),
           value = obj[key],
           nestedValue = nestedAttrs[key];
 
@@ -77,7 +77,7 @@ export class NestedModel extends Model {
     }
 
     return obj;
-  };
+  }
 
   private _nestedModelToJson(model: Model): any {
     let result: any;
@@ -89,20 +89,20 @@ export class NestedModel extends Model {
     }
 
     return result;
-  };
+  }
 
   private _prepareDataForServer() {
-    let attrs = extend({}, this.attributes),
+    const attrs = extend({}, this.attributes),
       nestedAttrs = this.nested();
 
-    for (let key in nestedAttrs) {
+    for (const key in nestedAttrs) {
       if (nestedAttrs.hasOwnProperty(key)) {
-        let nestedAttr = this.get(key);
+        const nestedAttr = this.get(key);
 
         if (nestedAttr instanceof Model) {
           attrs[key] = this._nestedModelToJson(nestedAttr);
         } else if (nestedAttr instanceof Collection) {
-          let result: Array<any> = [];
+          const result: Array<any> = [];
 
           nestedAttr.each(function (model: Model) {
             result.push(this._nestedModelToJson(model));
@@ -114,7 +114,7 @@ export class NestedModel extends Model {
     }
 
     return this.compose(attrs);
-  };
+  }
 
   set(attributes: any, options: any = {}) {
     let obj = {};
@@ -136,11 +136,11 @@ export class NestedModel extends Model {
     obj = this._setNestedAttributes(obj);
 
     return super.set.call(this, obj, options);
-  };
+  }
 
   compose(attrs: any): any {
     return attrs;
-  };
+  }
 
   toJSON(options?: any): any {
     // When options are set toJSON is called from the sync method so it is called before the object is send to the server
@@ -151,12 +151,12 @@ export class NestedModel extends Model {
     } else {
       return super.toJSON.apply(this, arguments);
     }
-  };
+  }
 
   clear(options?: any): any {
-    let attrs = {};
+    const attrs = {};
 
-    for (let key in this.attributes) {
+    for (const key in this.attributes) {
       if (this.get(key) instanceof Model) {
         this.get(key).clear();
       } else if (this.get(key) instanceof Collection) {
@@ -167,5 +167,5 @@ export class NestedModel extends Model {
     }
 
     return super.set(attrs, extend({}, options, {unset: true}));
-  };
+  }
 }

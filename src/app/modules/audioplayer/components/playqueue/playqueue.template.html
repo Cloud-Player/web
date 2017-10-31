@@ -1,5 +1,5 @@
 <div class="play-queue"
-     dropzone
+     appDropzone
      [dropCallback]="dropTrack">
 
   <div class="queued-tracks-list" *ngIf="playQueue.getQueuedItems().length > 0">
@@ -8,11 +8,11 @@
     </div>
     <div *ngFor="let playQueueItem of playQueue.getQueuedItems()"
          class="track"
-         draggable="true"
+         appDraggable="true"
          [dragData]="playQueueItem.get('track').toJSON()"
          [dragImageUrl]="playQueueItem.get('track').get('artwork_url').getSmallSize()"
          dragEffect="copy">
-      <track-cover [track]="playQueueItem.get('track')" [size]="coverSize"></track-cover>
+      <app-track-cover [track]="playQueueItem.get('track')" [size]="coverSize"></app-track-cover>
       <div class="details"
            [class.dummy]="!playQueueItem.get('track').get('user').get('username')">
         <div style="display: flex; align-items: center">
@@ -43,14 +43,14 @@
     <div class="divider">
       <div class="title">Next Songs</div>
     </div>
-    <div *ngFor="let playQueueItem of playQueue.getScheduledItems()"
+    <div *ngFor="let playQueueItem of playQueue.getScheduledItems() | limitCollectionresults: {limit: 10}"
          class="track"
-         draggable="true"
+         appDraggable="true"
          [dragData]="playQueueItem.get('track').toJSON()"
          [dragImageUrl]="playQueueItem.get('track').get('artwork_url').getSmallSize()"
          dragEffect="copy">
       <div class="cover">
-        <track-cover [track]="playQueueItem.get('track')" [size]="coverSize"></track-cover>
+        <app-track-cover [track]="playQueueItem.get('track')" [size]="coverSize"></app-track-cover>
       </div>
       <div class="details"
            [class.dummy]="!playQueueItem.get('track').get('user').get('username')">

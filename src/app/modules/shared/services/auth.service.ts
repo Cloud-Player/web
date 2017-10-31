@@ -1,19 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Session} from '../../session/models/session.model';
-import Timer = NodeJS.Timer;
-import localforage = require('localforage');
+import * as localforage from 'localforage';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
-import {Config} from '../../../config/config';
+import {Globals} from '../../../../globals';
 
 @Injectable()
 export class AuthService {
 
   private session = Session.getInstance();
-  private checkInterval: Timer;
+  private checkInterval: number;
 
   private receiveConnectMessage(event: any): void {
-    let origin = event.origin || event.originalEvent.origin;
-    if (origin !== Config.soundcloudRedirectDomain) {
+    const origin = event.origin || event.originalEvent.origin;
+    if (origin !== Globals.soundcloudRedirectDomain) {
       return;
     }
     this.connectionSuccessFul(event.data);
@@ -21,17 +20,17 @@ export class AuthService {
 
   getConnectionUrl(): string {
     return '//soundcloud.com/connect?' +
-      'client_id=' + Config.soundcloudClientId + '&' +
-      'redirect_uri=' + Config.soundcloudRedirectUrl + '&' +
+      'client_id=' + Globals.soundcloudClientId + '&' +
+      'redirect_uri=' + Globals.soundcloudRedirectUrl + '&' +
       'response_type=code&' +
       'state=v2';
   }
 
   connect() {
     this.userAnalyticsService.trackEvent('sc_auth_start', 'click', 'auth-service');
-    let popup = window.open(this.getConnectionUrl());
-    this.checkInterval = setInterval(() => {
-      popup.postMessage(null, Config.soundcloudRedirectDomain);
+    const popup = window.open(this.getConnectionUrl());
+    this.checkInterval = window.setInterval(() => {
+      popup.postMessage(null, Globals.soundcloudRedirectDomain);
     }, 100);
   }
 

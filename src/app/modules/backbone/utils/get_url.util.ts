@@ -2,7 +2,7 @@ import {Model, Collection} from 'backbone';
 import {result} from 'underscore';
 import {concatUrlParts} from './concat_url_parts.util';
 
-export function getUrl(instance: Model|Collection<Model>) {
+export function getUrl(instance: Model | Collection<Model>) {
   let hostName: string, basePath: string, endpoint: string;
 
   if (instance instanceof Model || instance instanceof Collection) {
@@ -18,4 +18,4 @@ export function getUrl(instance: Model|Collection<Model>) {
   }
 
   return concatUrlParts(hostName, basePath, endpoint);
-};
+}

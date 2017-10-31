@@ -22,7 +22,7 @@
                  (blur)="cancel()"
                  required
                  #newPlaylistInput
-                 focusInput>
+                 appFocusInput>
         </div>
       </form>
     </div>
@@ -33,10 +33,10 @@
      class="playlist-item"
      [routerLinkActive]="['is-active']"
 
-     dropzone
+     appDropzone
      [dropCallback]="dropTrack"
      [dropItemRef]="playlist">
-    <play-list-icon [playlist]="playlist"></play-list-icon>
+    <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
     <div class="text">{{playlist.get('title')}}</div>
   </a>
 

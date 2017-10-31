@@ -8,15 +8,15 @@ export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
   private _throttledScrollHandler: any;
   private valueChange = new EventEmitter();
 
-  constructor(){
-    this._throttledScrollHandler = throttle(this._increaseLimitOnBottomReached.bind(this), 500)
+  constructor() {
+    this._throttledScrollHandler = throttle(this._increaseLimitOnBottomReached.bind(this), 500);
     document.addEventListener('scroll', this._throttledScrollHandler, true);
   }
 
-  private _increaseLimitOnBottomReached(ev: MouseWheelEvent){
-    let srcEl: any = ev.srcElement;
-    if(srcEl.scrollTop/ (srcEl.scrollHeight-srcEl.offsetHeight) > 0.8){
-      if(this._limit){
+  private _increaseLimitOnBottomReached(ev: MouseWheelEvent) {
+    const srcEl: any = ev.srcElement;
+    if (srcEl.scrollTop / (srcEl.scrollHeight - srcEl.offsetHeight) > 0.8) {
+      if (this._limit) {
         this._limit += this._orgLimit;
       } else {
         this._limit = this._orgLimit * 2;
@@ -25,14 +25,14 @@ export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
     }
   }
 
-  transform(items: Array<any>, args: {limit: number} = {limit: null}): any {
+  transform(items: Array<any>, args: { limit: number } = {limit: null}): any {
 
-    if(this._limit && this._limit > items.length){
+    if (this._limit && this._limit > items.length) {
       document.removeEventListener('scroll', this._throttledScrollHandler, true);
       return items;
     }
 
-    if(items && args.limit && items.length>args.limit){
+    if (items && args.limit && items.length > args.limit) {
       this._orgLimit = args.limit;
       return items.slice(0, this._limit || this._orgLimit);
     } else {

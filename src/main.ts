@@ -1,38 +1,21 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {enableProdMode} from '@angular/core';
-let runtime = require('serviceworker-webpack-plugin/lib/runtime');
-let registerEvents = require('serviceworker-webpack-plugin/lib/browser/registerEvents');
+import 'vendor';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import {MainModule} from './modules/main/main.module';
+import { MainModule } from './app/modules/main/main.module';
+import { environment } from './environments/environment';
 
-if (process.env.ENV === 'prod') {
+if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(MainModule);
+platformBrowserDynamic().bootstrapModule(MainModule)
+  .catch(err => console.log(err));
 
-if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
-  const registration = runtime.register();
-
-  registerEvents(registration, {
-    onInstalled: () => {
-      console.log('[SW] onInstalled');
-    },
-    onUpdateReady: () => {
-      console.log('[SW] onUpdateReady');
-    },
-
-    onUpdating: () => {
-      console.log('[SW] onUpdating');
-    },
-    onUpdateFailed: () => {
-      console.log('[SW] onUpdateFailed');
-    },
-    onUpdated: () => {
-      console.log('[SW] onUpdated');
-    },
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+    console.log('Service Worker registered');
+  }).catch(function(err) {
+    console.log('Service Worker registration failed: ', err);
   });
-
-} else {
-  console.log('serviceWorker not available');
 }

@@ -1,4 +1,4 @@
-import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
+
 declare let MediaMetadata: any;
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
@@ -10,28 +10,30 @@ import {Track} from '../../../tracks/models/track.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
+
 
 @Component({
-  selector: 'audio-player-controls',
-  styles: [require('./audio-player-controls.style.scss')],
-  template: require('./audio-player-controls.template.html')
+  selector: 'app-audio-player-controls',
+  styleUrls: ['./audio-player-controls.style.scss'],
+  templateUrl: './audio-player-controls.template.html'
 })
 
 export class AudioPlayerControlsComponent implements OnInit {
-
-  private audio: HTMLAudioElement;
-  private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
-
-  private timeTick: number;
-  private duration: number;
-
-  private hadError: boolean = false;
-
-  private isBuffering: boolean = false;
-
+  private hadError = false;
   private humanReadableSecPipe: HumanReadableSecondsPipe;
 
+  playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
+  isBuffering = false;
+  timeTick: number;
+  duration: number;
+  audio: HTMLAudioElement;
+
   @Output() currentTimeChange = new EventEmitter();
+
+  public transformProgressBarValues = function (input: any) {
+    return this.humanReadableSecPipe.transform(input, null);
+  }.bind(this);
 
   constructor(private cloudPlayerLogoService: CloudPlayerLogoService, private userAnalyticsService: UserAnalyticsService) {
     this.audio = new Audio();
@@ -48,7 +50,7 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.isBuffering = false;
     });
 
-    let throttledTimeUpdater = throttle(() => {
+    const throttledTimeUpdater = throttle(() => {
       this.timeTick = this.audio.currentTime;
       if (this.playQueue.getCurrentItem()) {
         localforage.setItem('sc_current_track', {
@@ -71,7 +73,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     });
 
     this.audio.addEventListener('error', () => {
-      this.userAnalyticsService.trackEvent('playback_err', 'click', 'audio-player-cmp');
+      this.userAnalyticsService.trackEvent('playback_err', 'click', 'app-audio-player-cmp');
       this.hadError = true;
       this.pauseTrack();
     });
@@ -87,7 +89,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   private initializeLastPlayingTrack(lastTrack: any) {
-    let item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0});
+    const item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0});
     item.get('track').fetch().then((track: Track) => {
       this.audio.src = track.getResourceUrl();
     });
@@ -98,8 +100,8 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   private setMobileMediaNotification(track: Track) {
     if ('mediaSession' in navigator) {
-      let nv: any = navigator;
-      let artwork: SoundcloudImageModel = track.get('artwork_url');
+      const nv: any = navigator;
+      const artwork: SoundcloudImageModel = track.get('artwork_url');
       nv.mediaSession.metadata = new MediaMetadata({
         title: track.get('title'),
         artist: track.get('user').get('username'),
@@ -112,15 +114,15 @@ export class AudioPlayerControlsComponent implements OnInit {
           {src: artwork.getLargeSize(), sizes: '512x512', type: 'image/jpg'},
         ]
       });
-      this.userAnalyticsService.trackEvent('set_notification_chrome_mob', 'click', 'audio-player-cmp');
+      this.userAnalyticsService.trackEvent('set_notification_chrome_mob', 'click', 'app-audio-player-cmp');
       if (this.playQueue.hasPreviousItem()) {
         nv.mediaSession.setActionHandler('previoustrack', () => {
-          this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'audio-player-cmp');
+          this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'app-audio-player-cmp');
           this.previousTrack();
         });
       }
       if (this.playQueue.hasNextItem()) {
-        this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'audio-player-cmp');
+        this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'app-audio-player-cmp');
         nv.mediaSession.setActionHandler('nexttrack', () => {
           this.nextTrack();
         });
@@ -144,9 +146,6 @@ export class AudioPlayerControlsComponent implements OnInit {
     window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
     window.addEventListener('nextTrackKeyPressed', this.nextTrack.bind(this));
     window.addEventListener('previousTrackKeyPressed', this.previousTrack.bind(this));
-    window.addEventListener('abc', function(){
-      console.log('ABC')
-    });
 
     if (this.playQueue.getPlayingItem()) {
       this.startAudioPlayer(this.playQueue.getPlayingItem());
@@ -168,21 +167,17 @@ export class AudioPlayerControlsComponent implements OnInit {
     }
   }
 
-  private transformProgressBarValues = function (input: any) {
-    return this.humanReadableSecPipe.transform(input, null);
-  }.bind(this);
+  // setVolume(volume: number) {
+  //   this.audio.volume = volume;
+  // }
+  //
+  // saveVolume(volume: number) {
+  //   const roundedVolumeStr = (Math.round(volume * 10) / 10).toString();
+  //   localforage.setItem('sc_volume', roundedVolumeStr);
+  // }
 
-  setVolume(volume: number) {
-    this.audio.volume = volume;
-  }
-
-  saveVolume(volume: number) {
-    let roundedVolumeStr = (Math.round(volume * 10) / 10).toString();
-    localforage.setItem('sc_volume', roundedVolumeStr);
-  }
-
-  playTrack(playQueueItem: PlayQueueItem|null): void {
-    this.userAnalyticsService.trackEvent('play_track', 'click', 'audio-player-cmp');
+  playTrack(playQueueItem: PlayQueueItem | null): void {
+    this.userAnalyticsService.trackEvent('play_track', 'click', 'app-audio-player-cmp');
     playQueueItem = playQueueItem || this.playQueue.getItem();
     if (playQueueItem) {
       playQueueItem.play();
@@ -195,8 +190,8 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   pauseTrack(): void {
-    this.userAnalyticsService.trackEvent('pause_track', 'click', 'audio-player-cmp');
-    let track = this.playQueue.getPlayingItem();
+    this.userAnalyticsService.trackEvent('pause_track', 'click', 'app-audio-player-cmp');
+    const track = this.playQueue.getPlayingItem();
     if (track) {
       track.pause();
     }
@@ -204,7 +199,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   togglePlayPause(): void {
-    let currItem = this.playQueue.getCurrentItem();
+    const currItem = this.playQueue.getCurrentItem();
     if (currItem) {
       if (currItem.isPlaying()) {
         currItem.pause();
@@ -215,7 +210,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   previousTrack(): void {
-    this.userAnalyticsService.trackEvent('next_track', 'click', 'audio-player-cmp');
+    this.userAnalyticsService.trackEvent('next_track', 'click', 'app-audio-player-cmp');
     if (this.audio && this.audio.currentTime && this.audio.currentTime > 1) {
       this.playTrackFromPosition(0);
     } else {
@@ -227,7 +222,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   nextTrack(): void {
-    this.userAnalyticsService.trackEvent('previous_track', 'click', 'audio-player-cmp');
+    this.userAnalyticsService.trackEvent('previous_track', 'click', 'app-audio-player-cmp');
     if (this.playQueue.hasNextItem()) {
       this.timeTick = 0;
       this.playTrack(this.playQueue.getNextItem());
@@ -235,7 +230,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   startAudioPlayer(item: PlayQueueItem): void {
-    let currTime = this.audio.currentTime;
+    const currTime = this.audio.currentTime;
 
     if (this.audio.src !== item.get('track').getResourceUrl()) {
       this.audio.src = item.get('track').getResourceUrl();
@@ -248,7 +243,7 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.audio.currentTime = currTime;
     }
 
-    if(item.get('track').get('comments').length===0){
+    if (item.get('track').get('comments').length === 0) {
       item.get('track').get('comments').fetch();
     }
 

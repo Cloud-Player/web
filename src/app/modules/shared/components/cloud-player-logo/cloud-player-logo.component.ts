@@ -2,15 +2,15 @@ import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
 import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
 
 @Component({
-  selector: 'cloud-player-logo',
-  styles: [require('./cloud-player-logo.style.scss')],
-  template: require('./cloud-player-logo.template.html'),
+  selector: 'app-cloud-player-logo',
+  styleUrls: ['./cloud-player-logo.style.scss'],
+  templateUrl: './cloud-player-logo.template.html',
 })
 
 export class CloudPlayerLogoComponent implements OnInit {
 
   @Input()
-  public animate: boolean = false;
+  public animate = false;
 
   @ViewChild('svgObject') svgObject: ElementRef;
   private mainAnimation: Array<SVGSVGElement>;
@@ -29,8 +29,8 @@ export class CloudPlayerLogoComponent implements OnInit {
 
   ngOnInit(): void {
     this.svgObject.nativeElement.addEventListener('load', () => {
-      let svgObj = <HTMLObjectElement>this.svgObject.nativeElement;
-      let content = <any>svgObj.contentDocument;
+      const svgObj = <HTMLObjectElement>this.svgObject.nativeElement;
+      const content = <any>svgObj.contentDocument;
       this.mainAnimation = content.querySelectorAll('.main-animation');
       this.iconAnimationToPlay = content.querySelectorAll('.icon-animation-to-play');
       this.iconAnimationToPause = content.querySelectorAll('.icon-animation-to-pause');
@@ -39,10 +39,10 @@ export class CloudPlayerLogoComponent implements OnInit {
 
   play(): void {
     if (this.mainAnimation && this.animate) {
-      this.mainAnimation.forEach((el: any)=>{
+      this.mainAnimation.forEach((el: any) => {
         el.beginElement(el.getCurrentTime());
       });
-      this.iconAnimationToPause.forEach((el: any)=>{
+      this.iconAnimationToPause.forEach((el: any) => {
         el.beginElement();
       });
 
@@ -51,10 +51,10 @@ export class CloudPlayerLogoComponent implements OnInit {
 
   pause(): void {
     if (this.mainAnimation && this.animate) {
-      this.mainAnimation.forEach((el: any)=>{
+      this.mainAnimation.forEach((el: any) => {
         el.endElement();
       });
-      this.iconAnimationToPlay.forEach((el: any)=>{
+      this.iconAnimationToPlay.forEach((el: any) => {
         el.beginElement();
       });
     }

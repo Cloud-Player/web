@@ -1,53 +1,54 @@
-import {Component, ViewChild, ElementRef, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Session} from '../../models/session.model';
 import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlist.model';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {Playlists} from '../../../playlists/collections/playlists.collection';
+import {Playlist} from '../../../playlists/models/playlist.model';
 
 @Component({
-  selector: 'authenticated-user-playlists',
-  styles: [require('./authenticated_user_playlists.style.scss')],
-  template: require('./authenticated_user_playlists.template.html'),
+  selector: 'app-authenticated-user-playlists',
+  styleUrls: ['./authenticated_user_playlists.style.scss'],
+  templateUrl: './authenticated_user_playlists.template.html'
 })
-export class AuthenticatedUserPlaylists {
+export class AuthenticatedUserPlaylistsComponent implements OnInit {
   private session = Session.getInstance();
-
-  private user = this.session.get('user');
 
   private valueChange = new EventEmitter();
 
-  private isFetching: boolean = false;
+  private isFetching = false;
 
-  public isInCreationMode: boolean = false;
+  public user = this.session.get('user');
+
+  public isInCreationMode = false;
 
   public tmpPlaylist = new AuthenticatedUserPlaylist();
 
-  public dropTrack: Function = (dropData: {}, playlist: AuthenticatedUserPlaylist): void => {
+  public dropTrack = (dropData: {}, playlist: AuthenticatedUserPlaylist): void => {
     this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
     playlist.get('tracks').create(dropData);
-  };
+  }
 
-  constructor(private userAnalyticsService: UserAnalyticsService){
+  constructor(private userAnalyticsService: UserAnalyticsService) {
   }
 
   private fetchPlaylists(): void {
     if (this.user.get('authenticated') && !this.isFetching) {
       this.isFetching = true;
-      let playlist = <Playlists>this.user.get('playlists');
-      this.user.get('playlists').fetch().then(()=>{
+      const playlist = <Playlists<Playlist>>this.user.get('playlists');
+      this.user.get('playlists').fetch().then(() => {
         this.isFetching = false;
         this.valueChange.emit();
       });
     }
-  };
+  }
 
   ngOnInit(): void {
     this.user.on('change:authenticated', this.fetchPlaylists.bind(this));
     this.fetchPlaylists();
-  };
+  }
 
   save(): void {
-    let newPlaylist = this.user.get('playlists').add(this.tmpPlaylist.toJSON());
+    const newPlaylist = this.user.get('playlists').add(this.tmpPlaylist.toJSON());
     newPlaylist.save().then(() => {
       this.tmpPlaylist.clear();
     });
@@ -71,7 +72,7 @@ export class AuthenticatedUserPlaylists {
     this.tmpPlaylist.clear();
   }
 
-  isAuthenticated(): boolean{
+  isAuthenticated(): boolean {
     return this.session.get('user').get('authenticated');
   }
 }

@@ -1,9 +1,9 @@
 <section class="column">
-  <view-header>
+  <app-view-header>
     <i class="fa fa-heart" aria-hidden="true"></i> {{playlist.get('title')}}
-  </view-header>
+  </app-view-header>
 
-  <scroll-view>
-    <track-list [tracks]="playlist.get('tracks')"></track-list>
-  </scroll-view>
+  <app-scroll-view>
+    <app-track-list [tracks]="playlist.get('tracks')"></app-track-list>
+  </app-scroll-view>
 </section>

@@ -1,21 +1,22 @@
-import {Component, Input, Output, ViewChild, ElementRef, EventEmitter} from '@angular/core';
+import {Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit} from '@angular/core';
 
 @Component({
-  selector: 'range-slider',
-  styles: [ require('./range-slider.style.scss') ],
-  template: require('./range-slider.template.html')
+  selector: 'app-range-slider',
+  styleUrls: ['./range-slider.style.scss'],
+  templateUrl: './range-slider.template.html'
 })
+export class RangeSliderComponent implements AfterContentInit {
+  private tmpVal = 0;
+  private val = 0;
+  private minVal = 0;
+  private maxVal = 0;
+  private stepVal = 0.1;
 
-export class RangeSliderComponent {
-  private tmpVal: number = 0;
-  private val: number = 0;
-  private minVal: number = 0;
-  private maxVal: number = 0;
-  private stepVal: number = 0.1;
-  private showLoadingSpinner: boolean = false;
-  public dragInProgress: boolean = false;
-  public dragDisplayValue: number = 0;
-  private draggerWidth = 0;
+  showLoadingSpinner = false;
+  dragInProgress = false;
+  dragDisplayValue = 0;
+  draggerWidth = 0;
+
   @Output() valueChange = new EventEmitter();
   @Output() valueChanged = new EventEmitter();
 
@@ -100,8 +101,8 @@ export class RangeSliderComponent {
   constructor(private el: ElementRef) {
   }
 
-  public getDisplayValue(value: number){
-    if(value && typeof this.transformDisplayValue === "function"){
+  public getDisplayValue(value: number) {
+    if (value && typeof this.transformDisplayValue === 'function') {
       return this.transformDisplayValue(value);
     } else {
       return value;
@@ -109,7 +110,7 @@ export class RangeSliderComponent {
   }
 
   private setDragPosFromVal() {
-    let pos = (((this.tmpVal - this.min) / (this.max - this.min)) * 100);
+    const pos = (((this.tmpVal - this.min) / (this.max - this.min)) * 100);
     this.handle.nativeElement.style.left = pos + '%';
     this.handle.nativeElement.style.transform = 'translateX(-' + ((this.draggerWidth / 100) * pos) + 'px)';
     this.progressBarLine.nativeElement.style.width = pos + '%';
@@ -129,6 +130,6 @@ export class RangeSliderComponent {
     });
 
     this.setDragPosFromVal();
-  };
+  }
 
 }

@@ -2,19 +2,19 @@
 
   <div class="track-item">
 
-    <track-cover [track]="track" class="hidden-xs" [size]="getCoverSize()" [animate]="true"></track-cover>
+    <app-track-cover [track]="track" class="hidden-xs" [size]="getCoverSize()" [animate]="true"></app-track-cover>
 
-    <user-comments *ngIf="track"
-                   [currentTime]="currentPlayingTime"
-                   [comments]="track.get('comments')">
-    </user-comments>
+    <app-user-comments *ngIf="track"
+                       [currentTime]="currentPlayingTime"
+                       [comments]="track.get('comments')">
+    </app-user-comments>
 
-    <audio-player-controls class="controls" (currentTimeChange)="updateCurrentTime($event)"></audio-player-controls>
+    <app-audio-player-controls class="controls" (currentTimeChange)="updateCurrentTime($event)"></app-audio-player-controls>
 
     <div *ngIf="track" class="meta">
-      <toggle-liked-track [track]="track" class="hidden-xs"></toggle-liked-track>
+      <app-toggle-liked-track [track]="track" class="hidden-xs"></app-toggle-liked-track>
       <div class="details"
-           draggable="true"
+           appDraggable="true"
            [dragData]="track.toJSON()"
            [dragImageUrl]="track.get('artwork_url').getSmallSize()"
            dragEffect="copy">
@@ -34,5 +34,5 @@
     </div>
   </div>
 
-  <play-queue class="queue"></play-queue>
+  <app-play-queue class="queue"></app-play-queue>
 </section>

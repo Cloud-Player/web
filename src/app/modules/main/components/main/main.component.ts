@@ -3,14 +3,14 @@ import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 
 @Component({
-  selector: 'cloud-player',
-  styles: [require('./main.style.scss')],
-  template: require('./main.template.html'),
+  selector: 'app-cloud-player',
+  templateUrl: './main.template.html',
+  styleUrls: ['./main.style.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
 export class MainComponent implements OnInit {
-  private isAuthenticated: boolean = false;
+  private isAuthenticated = false;
   private session: Session;
 
   constructor() {
@@ -36,5 +36,5 @@ export class MainComponent implements OnInit {
     } else {
       this.isAuthenticated = false;
     }
-  };
+  }
 }

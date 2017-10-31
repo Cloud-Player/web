@@ -1,19 +1,19 @@
 <div class="tracks-list">
-  <sort-tracks [tracks]="tracks"></sort-tracks>
+  <app-sort-tracks [tracks]="tracks"></app-sort-tracks>
   <div *ngFor="let track of tracks.models | limitCollectionresults: {limit: 10}" class="track"
-       draggable="true"
+       appDraggable
        [dragData]="track.toJSON()"
        [dragImageUrl]="track.get('artwork_url').getSmallSize()"
        dragEffect="copy">
     <div class="cover">
-      <track-cover [track]="track" [size]="getSize()"></track-cover>
-      <play-button [track]="track" [tracks]="tracks"></play-button>
+      <app-track-cover [track]="track" [size]="getSize()"></app-track-cover>
+      <app-play-button [track]="track" [tracks]="tracks"></app-play-button>
     </div>
     <div class="details">
       <div class="track-info">
-        <toggle-liked-track [track]="track"></toggle-liked-track>
+        <app-toggle-liked-track [track]="track"></app-toggle-liked-track>
         <div class="meta"
-             playTrackOn
+             appPlayTrackOn
              [events]="['click']"
              [track]="track"
              [tracks]="tracks">
@@ -21,7 +21,7 @@
           <div class="artist">
             <span>{{track.get('user').get('username')}}</span>
             <span class="created">created
-              <span [timeAgo]="track.get('created_at')">{{track.get('created_at')}}</span>
+              <span [appTimeAgo]="track.get('created_at')">{{track.get('created_at')}}</span>
             </span>
           </div>
         </div>
@@ -31,20 +31,20 @@
             <span class="fa fa-arrow-circle-o-right next-icon"></span>
             <span class="fa fa-play" ></span>
           </div>
-          <options-btn>
-            <options-btn-option (click)="addToQueue(track)">
+          <app-options-btn>
+            <app-options-btn-option (click)="addToQueue(track)">
               Add to queue
-            </options-btn-option>
-            <options-btn-option playTrackOn="click" [track]="track" [tracks]="tracks">
+            </app-options-btn-option>
+            <app-options-btn-option appPlayTrackOn="click" [track]="track" [tracks]="tracks">
               Play this track and the following ones
-            </options-btn-option>
-            <options-btn-option playTrackOn="click" [track]="track">
+            </app-options-btn-option>
+            <app-options-btn-option appPlayTrackOn="click" [track]="track">
               Play only this track
-            </options-btn-option>
-            <options-btn-option *ngIf="canBeDeleted" (click)="track.destroy()">
+            </app-options-btn-option>
+            <app-options-btn-option *ngIf="canBeDeleted" (click)="track.destroy()">
               Remove track
-            </options-btn-option>
-          </options-btn>
+            </app-options-btn-option>
+          </app-options-btn>
         </div>
       </div>
       <div class="stats">

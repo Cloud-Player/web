@@ -1,9 +1,9 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
-  selector: 'toggle-switch',
-  styles: [require('./toggle-switch.style.scss')],
-  template: require('./toggle-switch.template.html'),
+  selector: 'app-toggle-switch',
+  styleUrls: ['./toggle-switch.style.scss'],
+  templateUrl: './toggle-switch.template.html',
 })
 
 export class ToggleSwitchComponent {

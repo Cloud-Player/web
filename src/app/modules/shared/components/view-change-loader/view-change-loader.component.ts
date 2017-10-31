@@ -2,9 +2,9 @@ import {Component, OnInit, EventEmitter, Output, NgZone, Renderer, ElementRef} f
 import {Router, NavigationStart, NavigationEnd, NavigationError, NavigationCancel} from '@angular/router';
 
 @Component({
-  selector: 'view-change-loader',
-  styles: [require('./view-change-loader.style.scss')],
-  template: require('./view-change-loader.template.html'),
+  selector: 'app-view-change-loader',
+  styleUrls: ['./view-change-loader.style.scss'],
+  templateUrl: './view-change-loader.template.html',
 })
 
 export class ViewChangeLoaderComponent {

@@ -7,18 +7,16 @@ import {BaseModel} from '../../../backbone/models/base.model';
 import {ClientDetector} from '../../services/client-detector.service';
 
 @Component({
-  selector: 'collection-text-input-search',
-  styles: [ require('./collection-text-input-search.style.scss') ],
-  template: require('./collection-text-input-search.template.html')
+  selector: 'app-collection-text-input-search',
+  styleUrls: ['./collection-text-input-search.style.scss'],
+  templateUrl: './collection-text-input-search.template.html'
 })
-
 export class CollectionTextInputSearchComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
-  private query: string;
-
-  public isLoading: boolean = false;
-  public isIdle: boolean = false;
+  public query: string;
+  public isLoading = false;
+  public isIdle = false;
 
   @ViewChild('searchInput') searchBar: ElementRef;
 
@@ -28,36 +26,36 @@ export class CollectionTextInputSearchComponent implements OnInit {
 
   @Output() valueChange = new EventEmitter();
 
-  public isMobileDevice(){
-   return ClientDetector.isMobileDevice();
+  public isMobileDevice() {
+    return ClientDetector.isMobileDevice();
   }
 
-  searchOnInput(): void{
-    if(!this.isMobileDevice()){
+  searchOnInput(): void {
+    if (!this.isMobileDevice()) {
       this.search();
     }
   }
 
   // Push a search term into the observable stream.
   search(query?: string): void {
-    if(query){
+    if (query) {
       this.query = query;
     }
     this.isIdle = true;
     this.searchTerms.next(this.query);
   }
 
-  focus(): void{
+  focus(): void {
     this.searchBar.nativeElement.focus();
   }
 
   ngOnInit(): void {
-    this.collection.on('request', ()=>{
+    this.collection.on('request', () => {
       this.isLoading = true;
       this.isIdle = false;
     });
 
-    this.collection.on('sync error', ()=>{
+    this.collection.on('sync error', () => {
       this.isLoading = false;
     });
 

@@ -1,19 +1,15 @@
 import {Directive, ElementRef, OnInit, Input} from '@angular/core';
-import moment = require('moment');
-import Timer = NodeJS.Timer;
 import {Track} from '../../tracks/models/track.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
 import {PlayQueue} from '../../audioplayer/collections/play_queue.collection';
 import {PlayQueueItem} from '../../audioplayer/models/play_queue_item.model';
 
 @Directive({
-  selector: '[playTrackOn]'
+  selector: '[appPlayTrackOn]'
 })
 export class PlayTrackOnEventDirective implements OnInit {
-  private interval: Timer;
-
   @Input()
-  playTrackOn: any;
+  appPlayTrackOn: any;
 
   @Input()
   track: Track;
@@ -40,7 +36,7 @@ export class PlayTrackOnEventDirective implements OnInit {
   }
 
   isPlaying(): boolean {
-    let playingItem = this.playQueue.getPlayingItem();
+    const playingItem = this.playQueue.getPlayingItem();
     return (playingItem && playingItem.get('track').get('id') === this.track.get('id'));
   }
 
@@ -59,7 +55,7 @@ export class PlayTrackOnEventDirective implements OnInit {
       });
     }
 
-    let playQueueItem = this.playQueue.add({track: this.track});
+    const playQueueItem = this.playQueue.add({track: this.track});
     playQueueItem.play();
   }
 
@@ -71,13 +67,12 @@ export class PlayTrackOnEventDirective implements OnInit {
 
   ngOnInit(): void {
     this.el.nativeElement.style.cursor = 'pointer';
-    if (this.playTrackOn) {
-      this.registerListener(this.playTrackOn);
+    if (this.appPlayTrackOn) {
+      this.registerListener(this.appPlayTrackOn);
     } else if (this.events) {
       this.events.forEach((ev: String) => {
         this.registerListener(ev);
       });
     }
-
   }
 }

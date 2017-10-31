@@ -4,7 +4,6 @@ import {extend} from 'underscore';
 import {AuthenticatedUserLikedTracks} from '../collections/authenticated_user_liked_tracks.collection';
 import {AuthenticatedUserPlaylists} from '../collections/authenticated_user_playlists.collection';
 
-@Injectable()
 export class AuthenticatedUser extends User {
   endpoint = '/me';
 

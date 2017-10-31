@@ -1,24 +1,24 @@
-import {Component, Input, Output, ViewChild, ElementRef, EventEmitter} from '@angular/core';
+import {Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit} from '@angular/core';
 import {isNumber} from 'underscore';
 
 @Component({
-  selector: 'two-range-slider',
-  styles: [require('./two-range-slider.style.scss')],
-  template: require('./two-range-slider.template.html')
+  selector: 'app-two-range-slider',
+  styleUrls: ['./two-range-slider.style.scss'],
+  templateUrl: './two-range-slider.template.html'
 })
 
-export class TwoRangeSliderComponent {
-  private _tmpMinValue: number = 0;
-  private _tmpMaxValue: number = 0;
-  private _minValue: number = 0;
-  private _maxValue: number = 0;
-  private _min: number = 0;
-  private _max: number = 0;
-  private _step: number = 0.1;
-  private showLoadingSpinner: boolean = false;
-  public dragInProgress: boolean = false;
-  public dragHandleMinDisplayValue: number = 0;
-  public dragHandleMaxDisplayValue: number = 0;
+export class TwoRangeSliderComponent implements AfterContentInit {
+  private _tmpMinValue = 0;
+  private _tmpMaxValue = 0;
+  private _minValue = 0;
+  private _maxValue = 0;
+  private _min = 0;
+  private _max = 0;
+  private _step = 0.1;
+  public showLoadingSpinner = false;
+  public dragInProgress = false;
+  public dragHandleMinDisplayValue = 0;
+  public dragHandleMaxDisplayValue = 0;
   private draggerWidth = 0;
   @Output() minValueChange = new EventEmitter();
   @Output() minValueChanged = new EventEmitter();
@@ -37,7 +37,7 @@ export class TwoRangeSliderComponent {
   }
 
   set tmpMinValue(val: number) {
-    let maxVal = isNumber(this.tmpMaxValue) ? this.tmpMaxValue : this.max;
+    const maxVal = isNumber(this.tmpMaxValue) ? this.tmpMaxValue : this.max;
     if (val >= maxVal) {
       return;
     }
@@ -59,7 +59,7 @@ export class TwoRangeSliderComponent {
   }
 
   set tmpMaxValue(val: number) {
-    let minVal = isNumber(this.tmpMinValue) ? this.tmpMinValue : this.min;
+    const minVal = isNumber(this.tmpMinValue) ? this.tmpMinValue : this.min;
     if (val <= minVal) {
       return;
     }
@@ -156,8 +156,8 @@ export class TwoRangeSliderComponent {
   constructor(private el: ElementRef) {
   }
 
-  public getDisplayValue(value: number){
-    if(value && typeof this.transformDisplayValue === "function"){
+  public getDisplayValue(value: number) {
+    if (value && typeof this.transformDisplayValue === 'function') {
       return this.transformDisplayValue(value);
     } else {
       return value;
@@ -165,11 +165,11 @@ export class TwoRangeSliderComponent {
   }
 
   private setDragPosFromVal() {
-    let minVal = isNumber(this.tmpMinValue) ? this.tmpMinValue : this.min;
-    let posMin = (((minVal - this.min) / (this.max - this.min)) * 100);
+    const minVal = isNumber(this.tmpMinValue) ? this.tmpMinValue : this.min;
+    const posMin = (((minVal - this.min) / (this.max - this.min)) * 100);
 
-    let maxVal = isNumber(this.tmpMaxValue) ? this.tmpMaxValue : this.max;
-    let posMax = (((maxVal - this.min) / (this.max - this.min)) * 100);
+    const maxVal = isNumber(this.tmpMaxValue) ? this.tmpMaxValue : this.max;
+    const posMax = (((maxVal - this.min) / (this.max - this.min)) * 100);
 
     this.handleOne.nativeElement.style.left = posMin + '%';
     this.handleOne.nativeElement.style.transform = 'translateX(-' + ((this.draggerWidth / 100) * posMin) + 'px)';
@@ -205,6 +205,6 @@ export class TwoRangeSliderComponent {
     });
 
     this.setDragPosFromVal();
-  };
+  }
 
 }

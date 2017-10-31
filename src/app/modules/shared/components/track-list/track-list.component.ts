@@ -9,10 +9,9 @@ import {CoverSizes} from '../track-cover/track-cover.component';
 import {ClientDetector} from '../../services/client-detector.service';
 
 @Component({
-  selector: 'track-list',
-  styles: [require('./track-list.style.scss')],
-  template: require('./track-list.template.html'),
-  providers: [Tracks]
+  selector: 'app-track-list',
+  styleUrls: ['./track-list.style.scss'],
+  templateUrl: './track-list.template.html'
 })
 export class TrackListComponent {
 
@@ -26,7 +25,7 @@ export class TrackListComponent {
   }
 
   gotoDetail(track: Track): void {
-    let link = ['/tracks', track.id];
+    const link = ['/tracks', track.id];
     this.router.navigate(link);
   }
 

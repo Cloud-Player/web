@@ -1,56 +1,59 @@
-import {Directive, ElementRef, HostListener, Input, Renderer} from '@angular/core';
-import Timer = NodeJS.Timer;
+import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 
 @Directive({
-  selector: '[dropzone]'
+  selector: '[appDropzone]'
 })
 export class DropZoneDirective {
 
-  private leaveTimeout: Timer;
+  private leaveTimeout: number;
 
   @Input('dropCallback') dropCallback: Function;
 
   @Input('dropItemRef') dropItemRef: any;
 
-  @HostListener('dragenter', ['$event']) onDragEnter() {
-    this.renderer.setElementClass(this.el.nativeElement, 'drag-over', true);
+  @HostListener('dragenter', ['$event'])
+  onDragEnter() {
+    this.el.nativeElement.classList.add('drag-over');
     clearTimeout(this.leaveTimeout);
   }
 
-  @HostListener('dragover', ['$event']) onDragOver(event: any) {
+  @HostListener('dragover', ['$event'])
+  onDragOver(event: any) {
     event.preventDefault();
-    this.renderer.setElementClass(this.el.nativeElement, 'drag-over', true);
+    this.el.nativeElement.classList.add('drag-over');
     clearTimeout(this.leaveTimeout);
   }
 
-  @HostListener('dragleave') onDragLeave() {
-    this.leaveTimeout = setTimeout(()=>{
-      this.renderer.setElementClass(this.el.nativeElement, 'drag-over', false);
-    },100);
+  @HostListener('dragleave')
+  onDragLeave() {
+    this.leaveTimeout = window.setTimeout(() => {
+      this.el.nativeElement.classList.remove('drag-over');
+    }, 100);
   }
 
-  @HostListener('drop', ['$event']) onMouseOver(event: any) {
+  @HostListener('drop', ['$event'])
+  onMouseOver(event: any) {
     if (this.dropCallback) {
-      let args = [this.getDragData(event)];
+      const args = [this.getDragData(event)];
       if (this.dropItemRef) {
         args.push(this.dropItemRef);
       }
       args.push(event);
       this.dropCallback.apply(this, args);
     }
-    this.leaveTimeout = setTimeout(()=>{
-      this.renderer.setElementClass(this.el.nativeElement, 'drag-over', false);
-    },100);
+    this.leaveTimeout = window.setTimeout(() => {
+      this.el.nativeElement.classList.remove('drag-over');
+    }, 100);
   }
 
   private getDragData(event: any) {
-    let text = event.dataTransfer.getData('text');
+    const text = event.dataTransfer.getData('text');
     if (text) {
       return JSON.parse(text);
     }
-  };
+  }
 
-  constructor(private el: ElementRef, private renderer: Renderer) {
+  constructor(private el: ElementRef) {
   }
 
 }

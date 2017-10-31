@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'options-btn',
-  styles: [require('./options-btn.style.scss')],
-  template: require('./options-btn.template.html')
+  selector: 'app-options-btn',
+  styleUrls: ['./options-btn.style.scss'],
+  templateUrl: './options-btn.template.html'
 })
 export class OptionsBtnComponent implements OnInit {
   public options: Array<OptionsBtnOptionComponent> = [];
@@ -17,7 +17,7 @@ export class OptionsBtnComponent implements OnInit {
   }
 
   private getScrollOffset(): number {
-    let scrollViewContainer = document.querySelector('scroll-view');
+    const scrollViewContainer = document.querySelector('app-scroll-view');
     if (scrollViewContainer) {
       return scrollViewContainer.scrollTop;
     } else {
@@ -26,8 +26,8 @@ export class OptionsBtnComponent implements OnInit {
   }
 
   private registerCloseListeners() {
-    let close = (ev: MouseEvent) => {
-      if(!this.toggler.nativeElement.contains(ev.target)){
+    const close = (ev: MouseEvent) => {
+      if (!this.toggler.nativeElement.contains(ev.target)) {
         this.close();
       }
       document.removeEventListener('scroll', close, true);
@@ -67,7 +67,7 @@ export class OptionsBtnComponent implements OnInit {
 }
 
 @Component({
-  selector: 'options-btn-option',
+  selector: 'app-options-btn-option',
   template: '<li class="option-btn-option"><ng-content></ng-content></li>'
 })
 export class OptionsBtnOptionComponent {

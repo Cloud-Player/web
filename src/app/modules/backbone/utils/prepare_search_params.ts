@@ -3,7 +3,7 @@ import {isObject, extend, pairs} from 'underscore';
 
 function setSearchParams(searchParams: URLSearchParams, queryParams: {} = {}): URLSearchParams {
   pairs(queryParams).forEach((pair: any) => {
-    let key = pair[0],
+    const key = pair[0],
       value = pair[1];
 
     searchParams.set(key, value);

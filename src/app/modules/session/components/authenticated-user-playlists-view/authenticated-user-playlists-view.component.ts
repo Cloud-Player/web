@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {AuthenticatedUserPlaylists} from '../authenticated-user-playlists/authenticated_user_playlists';
+import {AuthenticatedUserPlaylistsComponent} from '../authenticated-user-playlists/authenticated_user_playlists';
 
 @Component({
-  selector: 'authenticated-user-playlists-view',
-  template: require('./authenticated-user-playlists-view.template.html'),
-  styles: [require('./authenticated-user-playlists-view.style.scss')]
+  selector: 'app-authenticated-user-playlists-view',
+  styleUrls: ['./authenticated-user-playlists-view.style.scss'],
+  templateUrl: './authenticated-user-playlists-view.template.html'
 })
-export class AuthenticatedUserPlaylistsViewComponent extends AuthenticatedUserPlaylists {
+export class AuthenticatedUserPlaylistsViewComponent extends AuthenticatedUserPlaylistsComponent {
 }

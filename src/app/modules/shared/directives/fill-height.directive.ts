@@ -1,7 +1,7 @@
 import {Directive, ElementRef, OnInit} from '@angular/core';
 
 @Directive({
-  selector: '[fillHeight]'
+  selector: '[appFillHeight]'
 })
 export class FillHeightDirective implements OnInit {
 
@@ -10,7 +10,7 @@ export class FillHeightDirective implements OnInit {
 
 
   ngOnInit(): void {
-    let offsetTop = this.el.nativeElement.offsetTop;
+    const offsetTop = this.el.nativeElement.offsetTop;
     this.el.nativeElement.style.height = `calc(100vh - ${offsetTop}px)`;
     this.el.nativeElement.classList.add('scrollable');
   }

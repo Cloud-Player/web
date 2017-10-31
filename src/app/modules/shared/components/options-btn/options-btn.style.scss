@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 :host {
   position: relative;
 
@@ -20,7 +20,7 @@
     margin-left: -135px;
     z-index: 999;
 
-    /deep/ options-btn-option{
+    /deep/ app-options-btn-option{
       padding: 10px 5px;
       display: block;
       border-bottom: 1px solid $gray-lighter;

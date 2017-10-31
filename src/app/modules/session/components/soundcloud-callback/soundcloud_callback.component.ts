@@ -3,16 +3,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Session} from '../../models/session.model';
 
 @Component({
-  selector: 'soundcloud-callback',
-  styles: [ require('./soundcloud_callback.style.scss') ],
-  template: require('./soundcloud_callback.template.html')
+  selector: 'app-soundcloud-callback',
+  styleUrls: ['./soundcloud_callback.style.scss'],
+  templateUrl: './soundcloud_callback.template.html'
 })
 export class SoundcloudCallbackComponent implements OnInit {
   private session = Session.getInstance();
 
   constructor(private route: ActivatedRoute, private router: Router) {
-
-  };
+  }
 
   ngOnInit(): void {
     this.session.get('user').on('change:authenticated', () => {

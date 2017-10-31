@@ -3,9 +3,9 @@ import {Result, ClientDetector, OsNames} from '../../../shared/services/client-d
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
-  selector: 'cloud-player',
-  styles: [require('./desktop-app-view.style.scss')],
-  template: require('./desktop-app-view.template.html')
+  selector: 'app-desktop-app-view',
+  styleUrls: ['./desktop-app-view.style.scss'],
+  templateUrl: './desktop-app-view.template.html'
 })
 
 export class DesktopAppViewComponent {
@@ -14,20 +14,20 @@ export class DesktopAppViewComponent {
   }
 
   isWindowsPc(): boolean {
-    let os: Result = ClientDetector.getOs();
+    const os: Result = ClientDetector.getOs();
     return (
       os.name === OsNames.Windows && os.version >= 7
     );
   }
 
   isMacPc(): boolean {
-    let os: Result = ClientDetector.getOs();
+    const os: Result = ClientDetector.getOs();
     return (
       os.name === OsNames.MacOs && os.version > 0
     );
   }
 
   download(platform: string) {
-    this.userAnalyticsService.trackEvent(`download_desktop_app_${platform}`, 'click', 'desktop-app-view');
+    this.userAnalyticsService.trackEvent(`download_desktop_app_${platform}`, 'click', 'app-desktop-app-view');
   }
 }

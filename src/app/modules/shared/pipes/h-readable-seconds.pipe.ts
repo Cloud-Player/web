@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class HumanReadableSecondsPipe implements PipeTransform {
 
   private formatToHHMMSS(input: number): string {
-    let time = new Date(null);
+    const time = new Date(null);
     time.setSeconds(input);
     // format time from hh:mm:ss to mm:ss when hh is 0
     if (time.getHours() === 1) {

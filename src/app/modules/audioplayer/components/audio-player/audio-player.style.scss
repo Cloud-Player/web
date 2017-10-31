@@ -1,4 +1,4 @@
-@import '../../../../_variables.scss';
+@import 'variables';
 
 @media only screen and (min-width: 320px) {
   .audio-player {
@@ -20,7 +20,7 @@
         padding-right: 10px;
         padding-bottom: 15px;
 
-        toggle-liked-track {
+        app-toggle-liked-track {
           padding: 10px;
         }
 
@@ -99,11 +99,11 @@
         }
       }
 
-      user-comments{
+      app-user-comments{
         display: none;
       }
 
-      /deep/ audio-player-controls {
+      /deep/ app-audio-player-controls {
         .button-container {
           padding: 0;
           .prev,
@@ -137,7 +137,7 @@
           }
         }
 
-        /deep/ range-slider {
+        /deep/ app-range-slider {
           top: -10px;
           position: absolute;
           width: 100%;

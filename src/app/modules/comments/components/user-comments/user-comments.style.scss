@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 
 :host{
   position: absolute;
@@ -30,7 +30,7 @@
       font-size: 12.5px;
 
       .line,
-       multi-line /deep/ .line{
+       app-multi-line /deep/ .line{
         margin-bottom: 1px;
         white-space: nowrap;
         overflow: hidden;
@@ -44,7 +44,7 @@
         align-items: center;
       }
 
-      multi-line /deep/ .multiLines{
+      app-multi-line /deep/ .multiLines{
         border-left: 1px solid $brand-primary;
       }
     }

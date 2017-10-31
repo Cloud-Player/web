@@ -1,9 +1,9 @@
-import {Directive, ElementRef, Renderer, OnInit} from '@angular/core';
+import {Directive, ElementRef, OnInit} from '@angular/core';
 
 @Directive({
-  selector: '[focusInput]'
+  selector: '[appFocusInput]'
 })
-export class FocusInputDirective implements OnInit{
+export class FocusInputDirective implements OnInit {
 
   constructor(private el: ElementRef) {
   }

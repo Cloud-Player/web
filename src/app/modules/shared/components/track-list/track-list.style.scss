@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import 'variables';
 
 .tracks-list {
   background: $light-white;
@@ -14,7 +14,7 @@
     &:hover{
       background: $gray-lighter;
 
-      .cover /deep/ play-button .play-button{
+      .cover /deep/ app-play-button .play-button{
         opacity: 1;
       }
     }
@@ -26,18 +26,18 @@
     .cover{
       position: relative;
 
-      track-cover{
+      app-track-cover{
         width: 80px;
         height: 80px;
         flex-shrink: 0;
       }
 
-      play-button{
+      app-play-button{
         width: 100%;
         height: 100%;
       }
 
-      /deep/ play-button .play-button{
+      /deep/ app-play-button .play-button{
         position: absolute;
         top: 0;
         left: 0;
@@ -82,7 +82,7 @@
         align-items: center;
         margin-bottom: 18px;
 
-        toggle-liked-track{
+        app-toggle-liked-track{
           padding-right: 10px;
         }
 
@@ -119,7 +119,7 @@
             }
           }
 
-          options-btn{
+          app-options-btn{
             margin: 0 0 0 3px;
           }
         }
@@ -151,7 +151,7 @@
     .track{
       position: relative;
       .cover{
-        track-cover{
+        app-track-cover{
           width: 40px;
           height: 40px;
 
@@ -160,18 +160,18 @@
           }
         }
 
-        /deep/ track-cover{
+        /deep/ app-track-cover{
           .hasNoTrack{
             padding: 2px;
           }
         }
 
-        play-button{
+        app-play-button{
           width: 40px;
           height: 40px;
         }
 
-        /deep/ play-button{
+        /deep/ app-play-button{
           .btn-round{
             width: 30px;
             height: 30px;

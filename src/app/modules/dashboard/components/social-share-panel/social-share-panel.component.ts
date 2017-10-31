@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import localforage = require('localforage');
+import * as localforage from 'localforage';
 
 @Component({
-  selector: 'social-share-panel',
-  styles: [require('./social-share-panel.style.scss')],
-  template: require('./social-share-panel.template.html')
+  selector: 'app-social-share-panel',
+  styleUrls: ['./social-share-panel.style.scss'],
+  templateUrl: './social-share-panel.template.html'
 })
 
 export class SocialSharePanelComponent implements OnInit {
@@ -14,14 +14,14 @@ export class SocialSharePanelComponent implements OnInit {
 
   public shared(type: string) {
     this.dismiss();
-    this.userAnalyticsService.trackEvent('social_shared_on_' + type, 'click', 'social-share-panel-component');
+    this.userAnalyticsService.trackEvent('social_shared_on_' + type, 'click', 'app-social-share-panel-component');
     localforage.setItem('shared_cp', type);
   }
 
   public notShared() {
     this.dismiss();
-    this.userAnalyticsService.trackEvent('social_not_shared', 'click', 'social-share-panel-component');
-    localforage.setItem('shared_cp', "none");
+    this.userAnalyticsService.trackEvent('social_not_shared', 'click', 'app-social-share-panel-component');
+    localforage.setItem('shared_cp', 'none');
   }
 
   public dismiss() {
@@ -30,7 +30,7 @@ export class SocialSharePanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.el.nativeElement.style.display = 'none';
-    localforage.getItem('shared_cp').then((value: string)=>{
+    localforage.getItem('shared_cp').then((value: string) => {
       if (!value) {
         this.el.nativeElement.style.display = 'block';
       }

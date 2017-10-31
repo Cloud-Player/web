@@ -3,18 +3,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {UsersRoutingModule} from './users.routes';
 
-@NgModule ({
+@NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     UsersRoutingModule
   ],
-  declarations: [
-
-  ],
-  exports: [
-
-  ]
+  declarations: [],
+  exports: []
 })
 
 export class UsersModule {

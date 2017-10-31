@@ -5,21 +5,21 @@ import {Location} from '@angular/common';
 import {Track} from '../../models/track.model';
 
 @Component({
-  selector: 'my-track-detail',
-  styles: [require('./detail.style.scss')],
-  template: require('./detail.template.html'),
-  providers: [Track]
+  selector: 'app-my-track-detail',
+  styleUrls: ['./detail.style.scss'],
+  templateUrl: './detail.template.html'
 })
 
 export class TracksDetailComponent implements OnInit {
-  constructor(private track: Track,
-              private route: ActivatedRoute,
+  public track: Track;
+  constructor(private route: ActivatedRoute,
               private location: Location) {
+    this.track = new Track();
   }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
-      let id = +params['id'];
+      const id = +params['id'];
       this.track.set('id', id);
       this.track.fetch();
     });

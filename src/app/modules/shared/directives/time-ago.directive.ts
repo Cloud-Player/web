@@ -1,28 +1,26 @@
-import {Directive, ElementRef, Renderer, OnInit, Input, SimpleChanges, OnDestroy} from '@angular/core';
-import moment = require('moment');
-import {TimeInterval} from 'rxjs';
-import Timer = NodeJS.Timer;
+import {Directive, ElementRef, OnInit, Input, OnDestroy} from '@angular/core';
+import * as moment from 'moment';
 
 @Directive({
-  selector: '[timeAgo]'
+  selector: '[appTimeAgo]'
 })
-export class TimeAgoDirective implements OnInit, OnDestroy{
-  private interval: Timer;
+export class TimeAgoDirective implements OnInit, OnDestroy {
+  private interval: number;
 
   @Input()
-  timeAgo: any;
+  appTimeAgo: any;
 
   constructor(private el: ElementRef) {
   }
 
-  setTime(dateVal: any): void{
-    let date = new Date(dateVal);
+  setTime(dateVal: any): void {
+    const date = new Date(dateVal);
     this.el.nativeElement.textContent = (moment(date).fromNow());
   }
 
   ngOnInit(): void {
-    this.setTime(this.timeAgo);
-    // this.interval = setInterval(()=>{
+    this.setTime(this.appTimeAgo);
+    // this.interval = window.setInterval(()=>{
     //   this.setTime(this.timeAgo);
     // }, 1000 * 60 * 2);
   }

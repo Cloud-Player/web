@@ -1,4 +1,4 @@
-import {NgModule}             from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DesktopAppViewComponent} from './components/desktop-app-view/desktop-app-view.component';
 

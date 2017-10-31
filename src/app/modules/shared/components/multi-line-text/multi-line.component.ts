@@ -1,14 +1,14 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 
 interface Line {
-  width: number,
-  text: String
+  width: number;
+  text: String;
 }
 
 @Component({
-  selector: 'multi-line',
-  styles: [require('./multi-line.style.scss')],
-  template: require('./multi-line.template.html')
+  selector: 'app-multi-line',
+  styleUrls: ['./multi-line.style.scss'],
+  templateUrl: './multi-line.template.html'
 })
 export class MultiLineComponent implements OnInit, OnDestroy {
   private _ctx: CanvasRenderingContext2D;
@@ -29,10 +29,10 @@ export class MultiLineComponent implements OnInit, OnDestroy {
   @ViewChild('canvas') canvas: ElementRef;
 
   public calculateLines(text: string, maxWidth: number): void {
-    let words = text.split(' ');
+    const words = text.split(' ');
 
     words.forEach(function (word: string) {
-      var wordWidth = this._ctx.measureText(word + ' ').width,
+      const wordWidth = this._ctx.measureText(word + ' ').width,
         line: Line = this.lines[this.lines.length - 1];
 
       if (line && line.width + wordWidth <= maxWidth) {

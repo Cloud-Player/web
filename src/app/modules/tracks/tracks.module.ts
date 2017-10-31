@@ -15,9 +15,6 @@ import {Tracks} from './collections/tracks.collection';
   ],
   declarations: [
     TracksDetailComponent
-  ],
-  providers: [
-    Tracks
   ]
 })
 

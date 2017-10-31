@@ -1,30 +1,26 @@
-import {Component, trigger, state, style, transition, animate, ContentChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../../shared/services/auth.service';
 import {ClientDetector, OsNames, Result, ClientNames} from '../../../shared/services/client-detector.service';
 
 @Component({
-  selector: 'nav-sidebar',
-  styles: [require('./nav.style.scss')],
-  template: require('./nav.template.html')
+  selector: 'app-nav-sidebar',
+  styleUrls: ['./nav.style.scss'],
+  templateUrl: './nav.template.html'
 })
 
-export class NavComponent {
+export class NavComponent implements OnInit {
 
   private user: User;
   private session: Session;
-  private isAuthenticated: boolean;
-  private toggleState: string = 'in';
-  private imgUrl: string = 'https://a-v2.sndcdn.com/assets/images/header/cloud@2x-e5fba4.png';
+  private toggleState = 'in';
+
+  isAuthenticated: boolean;
 
   constructor(private authService: AuthService) {
     this.session = Session.getInstance();
     this.user = this.session.get('user');
-  }
-
-  toggle() {
-    this.toggleState = this.toggleState === 'out' ? 'in' : 'out';
   }
 
   connect() {
@@ -45,7 +41,7 @@ export class NavComponent {
     } else {
       this.isAuthenticated = false;
     }
-  };
+  }
 
   ngOnInit(): void {
     this.session.get('user').on('change:authenticated', (user: User) => {
@@ -55,13 +51,13 @@ export class NavComponent {
     if (this.session.isValid()) {
       this.setAuthenticated(this.session.get('user'));
     }
-  };
+  }
 
   showDesktopAppEntry(): boolean {
-    let os: Result = ClientDetector.getOs(),
-        client: Result = ClientDetector.getClient();
+    const os: Result = ClientDetector.getOs(),
+      client: Result = ClientDetector.getClient();
     return (
-     client.name !== ClientNames.Electron &&
+      client.name !== ClientNames.Electron &&
       ( (os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7) )
     );
   }

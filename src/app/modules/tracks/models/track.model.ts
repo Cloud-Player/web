@@ -1,10 +1,8 @@
-import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
 import {Comments} from '../../comments/collections/comments.collection';
 
-@Injectable()
 export class Track extends SoundcloudModel {
   endpoint = '/tracks';
 
@@ -26,11 +24,11 @@ export class Track extends SoundcloudModel {
     return attrs;
   }
 
-  initialize(): void{
-    if(this.get('id')){
+  initialize(): void {
+    if (this.get('id')) {
       this.get('comments').setTrackId(this.get('id'));
     }
-    this.on('change:id', ()=>{
+    this.on('change:id', () => {
       this.get('comments').setTrackId(this.get('id'));
     });
   }

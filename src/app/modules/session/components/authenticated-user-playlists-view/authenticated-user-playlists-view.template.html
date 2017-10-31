@@ -1,15 +1,15 @@
 <section class="column">
-  <view-header>
+  <app-view-header>
     Playlists
-  </view-header>
+  </app-view-header>
 
-  <scroll-view>
+  <app-scroll-view>
 
     <div class="card">
       <div class="well">
         <h5>Create a new Playlist</h5>
         <form>
-          <toggle-switch [(value)]="tmpPlaylist.attributes.isPublic"></toggle-switch>
+          <app-toggle-switch [(value)]="tmpPlaylist.attributes.isPublic"></app-toggle-switch>
           <input type="text" placeholder="Playlist" name="playlistName" [(ngModel)]="tmpPlaylist.attributes.title">
           <button class="btn btn-round btn-primary" (click)="save()" title="Create playlist"><i class="fa fa-plus"></i></button>
         </form>
@@ -17,7 +17,7 @@
 
       <div class="playlists">
         <div *ngFor="let playlist of user.get('playlists').models">
-          <a routerLink="/me/playlists/{{playlist.get('id')}}" dropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
+          <a routerLink="/me/playlists/{{playlist.get('id')}}" appDropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
             <div class="cover">
               <img [src]="playlist.get('artwork_url').getDefaultSize()">
             </div>
@@ -28,5 +28,5 @@
         </div>
       </div>
     </div>
-  </scroll-view>
+  </app-scroll-view>
 </section>
