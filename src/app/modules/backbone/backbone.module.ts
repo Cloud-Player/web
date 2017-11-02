@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
-import {Http, RequestOptions, Headers, Response, URLSearchParams, HttpModule} from '@angular/http';
+import {Http, RequestOptions, Headers, Response, URLSearchParams} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {isUndefined} from 'underscore';
@@ -8,6 +8,7 @@ import 'backbone';
 import {Model, Collection} from 'backbone';
 import {CollectionSortComponent} from './components/collection-sort-component/collection-sort.component';
 import {CollectionRangeInputSearchComponent} from './components/collection-range-input-search/collection-range-input-search.component';
+import {HttpClient, HttpClientModule, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 
 declare namespace Backbone {
   export function sync(method: string, model: Model | Collection<Model>, options?: any): any;
@@ -16,7 +17,7 @@ declare namespace Backbone {
 }
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
   exports: [
     CollectionSortComponent,
     CollectionRangeInputSearchComponent
@@ -29,25 +30,24 @@ declare namespace Backbone {
 })
 
 export class BackboneModule {
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     Backbone.ajax = (options: any) => {
-      const searchParams = options.search || new URLSearchParams();
-      const requestOption = new RequestOptions({
+      const requestOption = {
         method: options.type,
         body: options.data,
-        headers: new Headers(options.headers),
-        search: searchParams,
+        headers: new HttpHeaders(options.headers),
+        params: options.params,
         url: options.url
-      });
-      requestOption.headers.append('content-type', 'application/json');
-      return http.request(options.url, requestOption)
+      };
+      requestOption.headers.set('content-type', 'application/json');
+      return http.request(options.type, options.url, requestOption)
         .toPromise()
-        .then(function (resp: Response) {
+        .then(function (resp: HttpResponse<{}>) {
           if (options.success && typeof options.success === 'function') {
-            options.success(resp.json(), resp.statusText, this);
+            options.success(resp, resp.statusText, this);
           }
           return resp;
-        }, function (resp: Response) {
+        }, function (resp: HttpResponse<{}>) {
           if (options.error && typeof options.error === 'function') {
             options.error(this, resp.statusText, resp.toString());
           }

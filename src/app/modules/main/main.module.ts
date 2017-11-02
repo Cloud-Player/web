@@ -2,7 +2,6 @@ import './rxjs-extensions';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {BackboneModule} from '../backbone/backbone.module';
 import {TracksModule} from '../tracks/tracks.module';
 import {DashboardModule} from '../dashboard/dashboard.module';
@@ -18,12 +17,13 @@ import {AuthService} from '../shared/services/auth.service';
 import {SharedModule} from '../shared/shared.module';
 import {DesktopAppViewComponent} from './components/desktop-app-view/desktop-app-view.component';
 import {UserAnalyticsModule} from '../user-analytics/user-analytics.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     BackboneModule,
     TracksModule,
     DashboardModule,

@@ -3,9 +3,8 @@ import {Injectable} from '@angular/core';
 import {getUrl} from '../utils/get_url.util';
 import {request} from '../utils/request.util';
 import {extend} from 'underscore';
-import {prepareSearchParams} from '../utils/prepare_search_params';
+import {prepareParams} from '../utils/prepare_params';
 import {SelectableModel} from './selectable.model';
-import {serverKey} from '../decorators/server-key.decorator';
 
 export class BaseModel extends SelectableModel {
 
@@ -34,7 +33,7 @@ export class BaseModel extends SelectableModel {
     if (options.queryParams) {
       queryParams = extend({}, this.queryParams, options.queryParams);
     }
-    options.search = prepareSearchParams(options.search, queryParams);
+    options.params = prepareParams(options.params, queryParams);
     return super.sync(method, model, options);
   }
 }
