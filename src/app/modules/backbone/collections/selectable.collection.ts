@@ -1,9 +1,5 @@
 import {Collection} from 'backbone';
-import {BaseModel} from '../models/base.model';
-import {Injectable} from '@angular/core';
-import {getUrl} from '../utils/get_url.util';
 import {isUndefined, extend} from 'underscore';
-import {prepareSearchParams} from '../utils/prepare_search_params';
 import {Selectable} from './selectable';
 import {SelectableModel} from '../models/selectable.model';
 
