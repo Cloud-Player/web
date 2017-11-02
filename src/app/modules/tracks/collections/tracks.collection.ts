@@ -12,7 +12,7 @@ export class Tracks<TModel extends Track> extends SoundcloudCollection<TModel> {
 
   refresh() {
     return this.fetch(<any>{
-      search: {
+      params: {
         ids: this.pluck('id'),
         q: null,
         limit: 100

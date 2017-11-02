@@ -1,9 +1,8 @@
 import {BaseModel} from '../models/base.model';
 import {getUrl} from '../utils/get_url.util';
 import {extend} from 'underscore';
-import {prepareSearchParams} from '../utils/prepare_search_params';
+import {prepareParams} from '../utils/prepare_params';
 import {SelectableCollection} from './selectable.collection';
-import {Injectable} from '@angular/core';
 
 export class BaseCollection<TModel extends BaseModel> extends SelectableCollection<TModel> {
   model: any = BaseModel;
@@ -31,7 +30,7 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
     if (options.queryParams) {
       queryParams = extend({}, this.queryParams, options.queryParams);
     }
-    options.search = prepareSearchParams(options.search, queryParams);
+    options.params = prepareParams(options.params, queryParams);
     return super.sync(method, model, options);
   }
 
