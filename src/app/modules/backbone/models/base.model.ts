@@ -1,5 +1,3 @@
-import {NestedModel} from './nested.model';
-import {Injectable} from '@angular/core';
 import {getUrl} from '../utils/get_url.util';
 import {request} from '../utils/request.util';
 import {extend} from 'underscore';
