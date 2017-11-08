@@ -102,13 +102,12 @@ export class NestedModel extends Model {
         if (nestedAttr instanceof Model) {
           attrs[key] = this._nestedModelToJson(nestedAttr);
         } else if (nestedAttr instanceof Collection) {
-          const result: Array<any> = [];
-
+          const jsonArr: Array<any> = [];
           nestedAttr.each(function (model: Model) {
-            result.push(this._nestedModelToJson(model));
+            jsonArr.push(this._nestedModelToJson(model));
           }.bind(this));
 
-          attrs[key] = result;
+          attrs[key] = jsonArr;
         }
       }
     }
