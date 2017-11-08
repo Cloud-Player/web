@@ -7,7 +7,7 @@ export class SoundcloudModel extends BaseModel {
   clientId = Globals.soundcloudClientId;
 
   hostName(): string {
-    return '//api.soundcloud.com';
+    return 'https://api.soundcloud.com';
   }
 
   sync(method: string, model: any, options: any = {}) {

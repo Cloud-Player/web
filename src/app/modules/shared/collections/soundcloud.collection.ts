@@ -10,7 +10,7 @@ export class SoundcloudCollection<TModel extends SoundcloudModel> extends BaseCo
   model: any = SoundcloudModel;
 
   hostName(): string {
-    return '//api.soundcloud.com';
+    return 'https://api.soundcloud.com';
   }
 
   sync(method: string, model: any, options: any = {}) {
