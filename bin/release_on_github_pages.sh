@@ -49,11 +49,9 @@ else
 fi
 git fetch origin_gh
 
-echo "##########################################"
-echo "#                                        #"
-echo "# Releasing...                           #"
-echo "#                                        #"
-echo "##########################################"
+echo "############################################"
+echo "# Releasing version on gh-pages...         #"
+echo "############################################"
 
 # Calls function when script exits (error and success)
 trap reset EXIT
@@ -90,7 +88,5 @@ git commit -am 'Release new Version'
 git push origin_gh $RELEASE_BRANCH --no-verify > /dev/null 2>&1 || exit_with_error "Could not push to branch $RELEASE_BRANCH"
 
 echo "##########################################"
-echo "#                                        #"
 echo "# Page is released!                      #"
-echo "#                                        #"
 echo "##########################################"
