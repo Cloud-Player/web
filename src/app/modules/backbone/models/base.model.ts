@@ -29,6 +29,17 @@ export class BaseModel extends SelectableModel {
     return request(url, method, options, this);
   }
 
+  trigger(evType: string, value: string, model: BaseModel) {
+    const changedAttr = evType.split(':')[1];
+    if (changedAttr && this.attributesMap) {
+      if (this.attributesMap[changedAttr] && this.attributesMap[changedAttr] !== changedAttr) {
+        const mappedChangeEvent = `change:${this.attributesMap[changedAttr]}`;
+        super.trigger.call(this, mappedChangeEvent, value, model);
+      }
+    }
+    return super.trigger.apply(this, arguments);
+  }
+
   sync(method: string, model: any, options: any = {}) {
     let queryParams = this.queryParams;
     if (options.queryParams) {
