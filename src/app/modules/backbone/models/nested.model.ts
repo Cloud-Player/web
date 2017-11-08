@@ -1,5 +1,5 @@
 import {Model, Collection} from 'backbone';
-import {isObject, isArray, extend, isString} from 'underscore';
+import {result, isObject, isArray, extend, isString} from 'underscore';
 
 
 export class NestedModel extends Model {
@@ -14,7 +14,7 @@ export class NestedModel extends Model {
   }
 
   private _prepare(): Object {
-    const nestedAttributes = this.nested(),
+    const nestedAttributes = result(this, 'nested'),
       instanceObject = {};
 
     for (const key in nestedAttributes) {
@@ -59,7 +59,7 @@ export class NestedModel extends Model {
 
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        const nestedAttrs = this.nested(),
+        const nestedAttrs = result(this, 'nested'),
           value = obj[key],
           nestedValue = nestedAttrs[key];
 
@@ -93,7 +93,7 @@ export class NestedModel extends Model {
 
   private _prepareDataForServer() {
     const attrs = extend({}, this.attributes),
-      nestedAttrs = this.nested();
+      nestedAttrs = result(this, 'nested');
 
     for (const key in nestedAttrs) {
       if (nestedAttrs.hasOwnProperty(key)) {
