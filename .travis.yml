@@ -11,12 +11,12 @@ before_deploy:
 - npm run release
 deploy:
   - provider: script
-    script: ./bin/release.sh
+    script: ./bin/release_on_github.sh
     skip_cleanup: true
     on:
       branch: master
   - provider: script
-    script: ./bin/github_pages_release.sh
+    script: ./bin/release_on_github_pages.sh
     skip_cleanup: true
     on:
       tags: true
