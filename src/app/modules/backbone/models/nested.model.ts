@@ -80,15 +80,15 @@ export class NestedModel extends Model {
   }
 
   private _nestedModelToJson(model: Model): any {
-    let result: any;
+    let json: any;
 
     if (model instanceof NestedModel) {
-      result = model._prepareDataForServer();
+      json = model._prepareDataForServer();
     } else {
-      result = model.toJSON();
+      json = super.toJSON.apply(model, arguments);
     }
 
-    return result;
+    return json;
   }
 
   private _prepareDataForServer() {
@@ -141,15 +141,8 @@ export class NestedModel extends Model {
     return attrs;
   }
 
-  toJSON(options?: any): any {
-    // When options are set toJSON is called from the sync method so it is called before the object is send to the server
-    // We use this to transform our data before we are sending it to the server
-    // It is the counterpart of parse for the server
-    if (options) {
-      return this._prepareDataForServer();
-    } else {
-      return super.toJSON.apply(this, arguments);
-    }
+  toJSON(): any {
+    return this._prepareDataForServer();
   }
 
   clear(options?: any): any {
