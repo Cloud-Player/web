@@ -19,7 +19,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   private getMiniItem(playQueueItem: PlayQueueItem): {} {
-    const mini = playQueueItem.toJSON(true);
+    const mini = playQueueItem.toJSON();
     mini.track = {
       id: mini.track.id
     };

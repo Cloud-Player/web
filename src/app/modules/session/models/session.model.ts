@@ -45,7 +45,7 @@ export class Session extends SoundcloudModel {
   }
 
   saveLocal(options?: any): void {
-    localforage.setItem('sc_session', this.toJSON({}));
+    localforage.setItem('sc_session', this.toJSON());
   }
 
   fetchLocal(options?: any): Session {
