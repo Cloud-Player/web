@@ -7,6 +7,7 @@ import {prepareParams} from '../utils/prepare_params';
 import {SelectableModel} from './selectable.model';
 
 export class BaseModel extends SelectableModel {
+  attributesMap: Object;
 
   queryParams: Object = {};
 
