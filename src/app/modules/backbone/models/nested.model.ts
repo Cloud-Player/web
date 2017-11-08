@@ -116,26 +116,25 @@ export class NestedModel extends Model {
     return this.compose(attrs);
   }
 
-  set(attributes: any, options: any = {}) {
+  set(key: any, value?: any, options: any = {}) {
+    let _options;
     let obj = {};
 
-    if (options && options._prepareNesting) {
+    if (isString(key)) {
+      obj[key] = value;
+      _options = options;
+    } else {
+      obj = key;
+      _options = value || options;
+    }
+
+    if (_options && _options._prepareNesting) {
       extend(this.attributes, this._prepare());
-    }
-
-    if (isString(attributes)) {
-      obj[attributes] = options;
-    } else if (isObject(attributes)) {
-      obj = attributes;
-    }
-
-    if (!isObject(options)) {
-      options = null;
     }
 
     obj = this._setNestedAttributes(obj);
 
-    return super.set.call(this, obj, options);
+    return super.set.call(this, obj, _options);
   }
 
   compose(attrs: any): any {
