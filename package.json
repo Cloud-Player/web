@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod && npm run sw",
+    "build": "ng build",
+    "release": "ng build --prod && npm run sw && cop CNAME ./dist",
     "lint": "ng lint",
     "sw": "sw-precache --root=dist --config=swconfig.js"
   },

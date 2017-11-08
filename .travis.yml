@@ -8,10 +8,35 @@ env:
 before_install:
 - npm install -g @angular/cli
 before_deploy:
-- npm run build
+- npm run release
 deploy:
   - provider: script
-    script: ./bin/github_pages_release.sh
-    skip_cleanup: true 
-    on: 
+    script: ./bin/release.sh
+    skip_cleanup: true
+    on:
       branch: master
+  - provider: script
+    script: ./bin/github_pages_release.sh
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: script
+    script: ./bin/zip_version.sh
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: releases
+    api_key:
+      secure: l+pHQnd2tLse8PptmF3B4iA3gtK9Uqm93RDOPMLeaeUX7eSs9aV+YY0b0Fk/uTYo8DJycY627uyGd01Hk69NIf2vaOpjHEm1X7r3bZSB5EGRvInQSZWknLVjbVa1drQugB/I2VO16oScHqi1F6s1VEqFbPjewwv+q/4DQe8a3qXFJAj82qpukLK3bSeimBsooU7BelYafcl8aR5f8xnhHvt5wbBYQebiM/ZY1s0SIAvcJXYCKAplCysFD7T1EJRuVij86LMDNQ2tRkLYouGyfdD0C5gW0gpzLwOMwIhp5k1m8WKSmfhE+4SXMyHex075etRAAgHzAgF7FY3Hy74wv2ieQrZxxJPeV+bgp/i7ixtAzVfvU9ALyhPFj7KJPv1NdDaEln+hURfnV+syKxXok8rg9NA3Iu35yj0KyGntsh6rC2kji+jiunMZkn4V+uPWt5et2qpwkxE63Q9sPTxVoF7+/LG4uvPSwMpS24qQ+VRs+auzXxgfrA2XyHPsRgc+HX2wW4GZi6f4vsOUuwzD1HuQ4XP6ZddILHaz4baKFZvYr7NcNb3xeCHj9EJKI3c6MmtFl1pudl/OANQsIU+hM9EdAAEVRQg1oEaVK40+lOTVYj1HGZ+2jBprCJsGB3yOOk7/1IoZ5SFTHMshi1AknujmhHZgvhOze9uyR3i216M=
+    file: zip/*.zip
+    skip_cleanup: true
+    file_glob: true
+    on:
+      tags: true
+  - provider: npm
+    email: hello@cloud-player.io
+    api_key:
+      secure: "dM6YjRZAOdeN7w8I1MI3ltrE11j9peger0Ui40FTSzcDjZHKCC7hYnYKCUWzcJj2MAqLAYS377dQZVDSiFqh+ebl8Vi6AhdTkTPgiuDJhOOLdF2ZBB+LGiX+xLzF7QLLpA799vMnMqMwJF8QF4wgN6flAqAr3PZxGve8okCn+C9V0gHYP+xfnywPGHvlJrsG7MK28cnzE43ir4p6OH0dcH/AtAELpkuRyV4lBKk/XdP575bZtXtpwy+mAfcIRiO08i/DVP4uy2lH+lozEbcj0wbZuIvy+njmuIysM2TqDWuNgSwLxSOCwLJlTBg9Jm2AeT2tl9RtAMCa6vfbcCDZIAFR+JTAoWai2Snle3wju3ZGwIlxs5wRwkmfFpCHJE4RLet1yAFqYsG0g64aZk0ugpBnxQ89Q7TdJY1rf939xKXanx/DjgKpfK1cu4i1MpIyGHIvo8Yse/NuLbZrthWs5FCwn/9QbrH9adX1Q0AzRM3S3rNkAl7EwB/zGgEk7KW9wcKL1XgnkIxizOnAiVCkUNOtnWLxiOH41l5gMa5JCN/smw8WTgeXRamOOz8c8ZjlVDqUiRQVsbaJ9K/Kx3kAbTuuKEM6EcXmU0/KDsQ35CRtHtaZrctYfvjfE/IMuQagAyVbZ+2kooP2pKpaB3rMiDOUdUhrGQx6Fw+bmx61FDE="
+    skip_cleanup: true
+    on:
+      tags: true
