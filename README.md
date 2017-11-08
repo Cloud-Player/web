@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/Cloud-Player/web.svg?branch=master)](https://travis-ci.org/mwaylabs/uikit)
+[![Build Status](https://travis-ci.org/Cloud-Player/web.svg?branch=master)](https://travis-ci.org/Cloud-Player/web)
 
 # Cloud Player
-[![Cloud Player Teaser](https://github.com/Cloud-Player/web/blob/master/src/assets/meta/social/facebook.jpg)](https://cloud-player.io)
+[![Cloud Player Teaser](https://raw.githubusercontent.com/Cloud-Player/web/master/src/assets/meta/social/facebook.jpg)](https://cloud-player.io)
 
 Cloud Player is an alternative SoundCloud player. It is using the official [SoundCloud API](https://developers.soundcloud.com/docs/api). 
 
