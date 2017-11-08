@@ -4,6 +4,7 @@ import {AuthenticatedUserPlaylist} from '../../models/authenticated_user_playlis
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {Playlists} from '../../../playlists/collections/playlists.collection';
 import {Playlist} from '../../../playlists/models/playlist.model';
+import {AuthenticatedUserPlaylistTrack} from '../../models/authenticated_user_playlist_track.model';
 
 @Component({
   selector: 'app-authenticated-user-playlists',
@@ -25,7 +26,7 @@ export class AuthenticatedUserPlaylistsComponent implements OnInit {
 
   public dropTrack = (dropData: {}, playlist: AuthenticatedUserPlaylist): void => {
     this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'menu-playlist-bar');
-    playlist.get('tracks').create(dropData);
+    playlist.tracks.create(new AuthenticatedUserPlaylistTrack(dropData));
   }
 
   constructor(private userAnalyticsService: UserAnalyticsService) {

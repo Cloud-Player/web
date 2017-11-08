@@ -9,8 +9,8 @@
       <div class="well">
         <h5>Create a new Playlist</h5>
         <form>
-          <app-toggle-switch [(value)]="tmpPlaylist.attributes.isPublic"></app-toggle-switch>
-          <input type="text" placeholder="Playlist" name="playlistName" [(ngModel)]="tmpPlaylist.attributes.title">
+          <app-toggle-switch [(value)]="tmpPlaylist.isPublic"></app-toggle-switch>
+          <input type="text" placeholder="Playlist" name="playlistName" [(ngModel)]="tmpPlaylist.title">
           <button class="btn btn-round btn-primary" (click)="save()" title="Create playlist"><i class="fa fa-plus"></i></button>
         </form>
       </div>
@@ -19,10 +19,10 @@
         <div *ngFor="let playlist of user.get('playlists').models">
           <a routerLink="/me/playlists/{{playlist.get('id')}}" appDropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
             <div class="cover">
-              <img [src]="playlist.get('artwork_url').getDefaultSize()">
+              <img [src]="playlist.artworkUrl.getDefaultSize()">
             </div>
             <div class="details">
-              <p>{{playlist.get('title')}}</p>
+              <p>{{playlist.title}}</p>
             </div>
           </a>
         </div>

@@ -4,24 +4,33 @@ import {Tracks} from '../../tracks/collections/tracks.collection';
 import {map} from 'underscore';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
+import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {defaultValue} from '../../backbone/decorators/default-value.decorator';
+import {nested} from '../../backbone/decorators/nested.decorator';
+import {Track} from '../../tracks/models/track.model';
 
 export class Playlist extends SoundcloudModel {
   endpoint = '/playlists';
 
-  defaults() {
-    return {
-      title: '',
-      isPublic: false
-    };
-  }
+  @attributesKey('isPublic')
+  @defaultValue(false)
+  isPublic: boolean;
 
-  nested() {
-    return {
-      user: User,
-      tracks: Tracks,
-      artwork_url: SoundcloudImageModel
-    };
-  }
+  @attributesKey('title')
+  @defaultValue('')
+  title: boolean;
+
+  @attributesKey('user')
+  @nested()
+  user: User;
+
+  @attributesKey('tracks')
+  @nested()
+  tracks: Tracks<Track>;
+
+  @attributesKey('artwork_url')
+  @nested()
+  artworkUrl: SoundcloudImageModel;
 
   parse(attrs: any) {
     if (attrs.sharing === 'public') {

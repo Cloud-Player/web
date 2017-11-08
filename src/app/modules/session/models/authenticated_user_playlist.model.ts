@@ -1,25 +1,24 @@
-import {Injectable} from '@angular/core';
 import {Playlist} from '../../playlists/models/playlist.model';
-import {extend} from 'underscore';
 import {AuthenticatedUserPlaylistTracks} from '../collections/authenticated_user_playlist_tracks.collection';
+import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {AuthenticatedUserPlaylistTrack} from './authenticated_user_playlist_track.model';
+import {nested} from '../../backbone/decorators/nested.decorator';
 
 export class AuthenticatedUserPlaylist extends Playlist {
   endpoint = '/me/playlists';
 
-  nested() {
-    return extend(super.nested(), {
-      tracks: AuthenticatedUserPlaylistTracks
-    });
-  }
+  @attributesKey('tracks')
+  @nested()
+  tracks: AuthenticatedUserPlaylistTracks<AuthenticatedUserPlaylistTrack>
 
   private setTracksEndpoint() {
     if (this.id) {
-      this.get('tracks').setEndpoint(this.id);
+      this.tracks.setEndpoint(this.id);
     }
   }
 
   initialize() {
-    this.get('tracks').on('save', () => {
+    this.tracks.on('save', () => {
       this.save();
     });
 
