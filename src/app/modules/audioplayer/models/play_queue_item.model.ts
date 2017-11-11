@@ -1,5 +1,12 @@
 import {Track} from '../../tracks/models/track.model';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+export enum Status {
+  Playing = 'PLAYING',
+  Paused = 'PAUSED',
+  Stopped = 'STOPPED',
+  Queued = 'QUEUED',
+  Scheduled = 'NULL'
+}
 
 export class PlayQueueItem extends SoundcloudModel {
 
