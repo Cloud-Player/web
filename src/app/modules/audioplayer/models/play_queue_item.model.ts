@@ -1,5 +1,9 @@
 import {Track} from '../../tracks/models/track.model';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {defaultValue} from '../../backbone/decorators/default-value.decorator';
+import {nested} from '../../backbone/decorators/nested.decorator';
+
 export enum Status {
   Playing = 'PLAYING',
   Paused = 'PAUSED',
@@ -10,28 +14,20 @@ export enum Status {
 
 export class PlayQueueItem extends SoundcloudModel {
 
-  defaults() {
-    return {
-      status: 'NULL'
-    };
-  }
+  @attributesKey('status')
+  @defaultValue(Status.Scheduled)
+  status: Status;
 
-  nested() {
-    return {
-      track: Track
-    };
-  }
+  @attributesKey('track')
+  @nested()
+  track: Track;
 
   queue(): void {
-    this.set({
-      status: 'QUEUED'
-    });
+    this.status = Status.Queued;
   }
 
   unQueue(): void {
-    this.set({
-      status: 'NULL'
-    });
+    this.status = Status.Scheduled;
     if (this.collection) {
       const collection = this.collection;
       collection.remove(this);
@@ -40,34 +36,34 @@ export class PlayQueueItem extends SoundcloudModel {
   }
 
   play(): void {
-    this.set('status', 'PLAYING');
+    this.status = Status.Playing;
   }
 
   pause(): void {
-    this.set('status', 'PAUSED');
+    this.status = Status.Paused;
   }
 
   stop(): void {
-    this.set('status', 'STOPPED');
+    this.status = Status.Stopped;
   }
 
   isQueued(): boolean {
-    return this.get('status') === 'QUEUED';
+    return this.status === Status.Queued;
   }
 
   isPlaying(): boolean {
-    return this.get('status') === 'PLAYING';
+    return this.status === Status.Playing;
   }
 
   isPaused(): boolean {
-    return this.get('status') === 'PAUSED';
+    return this.status === Status.Paused;
   }
 
   isStopped(): boolean {
-    return this.get('status') === 'STOPPED';
+    return this.status === Status.Stopped;
   }
 
   isScheduled(): boolean {
-    return this.get('status') === 'NULL';
+    return this.status === Status.Scheduled;
   }
 }

@@ -14,7 +14,7 @@ export class SoundcloudModel extends BaseModel {
     this.queryParams['client_id'] = this.clientId;
     const session = getSession();
     if (session && session.isValid()) {
-      this.queryParams['oauth_token'] = session.get('access_token');
+      this.queryParams['oauth_token'] = session.accessToken;
     }
     return super.sync(method, model, options);
   }

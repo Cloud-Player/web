@@ -9,7 +9,7 @@ export class AuthenticatedUserPlaylist extends Playlist {
 
   @attributesKey('tracks')
   @nested()
-  tracks: AuthenticatedUserPlaylistTracks<AuthenticatedUserPlaylistTrack>
+  tracks: AuthenticatedUserPlaylistTracks<AuthenticatedUserPlaylistTrack>;
 
   private setTracksEndpoint() {
     if (this.id) {

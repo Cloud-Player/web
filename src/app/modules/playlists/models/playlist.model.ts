@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {User} from '../../users/models/user.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
 import {map} from 'underscore';
@@ -18,7 +17,7 @@ export class Playlist extends SoundcloudModel {
 
   @attributesKey('title')
   @defaultValue('')
-  title: boolean;
+  title: string;
 
   @attributesKey('user')
   @nested()
@@ -30,14 +29,10 @@ export class Playlist extends SoundcloudModel {
 
   @attributesKey('artwork_url')
   @nested()
-  artworkUrl: SoundcloudImageModel;
+  image: SoundcloudImageModel;
 
   parse(attrs: any) {
-    if (attrs.sharing === 'public') {
-      attrs.isPublic = true;
-    } else {
-      attrs.isPublic = false;
-    }
+    attrs.isPublic = (attrs.sharing === 'public');
     delete attrs.sharing;
 
     if (!attrs.artwork_url && attrs.tracks.length > 0) {
@@ -52,7 +47,7 @@ export class Playlist extends SoundcloudModel {
       playlist: {
         title: attrs.title,
         sharing: attrs.isPublic ? 'public' : 'private',
-        tracks: map(this.get('tracks').toJSON(), (obj: any) => {
+        tracks: map(this.tracks.toJSON(), (obj: any) => {
           return {id: obj.id};
         })
       }
