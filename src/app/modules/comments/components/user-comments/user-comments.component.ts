@@ -29,7 +29,7 @@ export class UserCommentsComponent {
     this._commentsMap = {};
     this.commentsQueue.reset();
     comments.each((comment: Comment) => {
-      const secs = Math.round(comment.get('timestamp') / 1000);
+      const secs = Math.round(comment.timestamp / 1000);
       if (this._commentsMap[secs]) {
         this._commentsMap[secs].push(comment);
       } else {
@@ -40,7 +40,7 @@ export class UserCommentsComponent {
 
   private cleanUpHandler(currentTime: number) {
     const removeQueueItems = this.commentsQueue.filter((commentQueueItem: Comment) => {
-      return (commentQueueItem.get('timestamp') / 1000) + this._queueItemAliceTimeSecs < currentTime;
+      return (commentQueueItem.timestamp / 1000) + this._queueItemAliceTimeSecs < currentTime;
     });
     removeQueueItems.forEach((item) => {
       this.commentsQueue.remove(item);

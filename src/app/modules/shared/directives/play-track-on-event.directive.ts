@@ -37,7 +37,7 @@ export class PlayTrackOnEventDirective implements OnInit {
 
   isPlaying(): boolean {
     const playingItem = this.playQueue.getPlayingItem();
-    return (playingItem && playingItem.get('track').get('id') === this.track.get('id'));
+    return (playingItem && playingItem.track.id === this.track.id);
   }
 
   play(): void {

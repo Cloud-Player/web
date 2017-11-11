@@ -6,7 +6,7 @@
 
     <app-user-comments *ngIf="track"
                        [currentTime]="currentPlayingTime"
-                       [comments]="track.get('comments')">
+                       [comments]="track.comments">
     </app-user-comments>
 
     <app-audio-player-controls class="controls" (currentTimeChange)="updateCurrentTime($event)"></app-audio-player-controls>
@@ -16,10 +16,10 @@
       <div class="details"
            appDraggable="true"
            [dragData]="track.toJSON()"
-           [dragImageUrl]="track.get('artwork_url').getSmallSize()"
+           [dragImageUrl]="track.image.getSmallSize()"
            dragEffect="copy">
-        <b class="track-title">{{track.get('title')}}</b>
-        <div class="artist">{{track.get('user').get('username')}}</div>
+        <b class="track-title">{{track.title}}</b>
+        <div class="artist">{{track.user.username}}</div>
       </div>
     </div>
 

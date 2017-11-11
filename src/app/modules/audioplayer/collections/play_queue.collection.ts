@@ -1,4 +1,4 @@
-import {PlayQueueItem} from '../models/play_queue_item.model';
+import {Status, PlayQueueItem} from '../models/play_queue_item.model';
 import {isArray} from 'underscore';
 import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
 
@@ -23,8 +23,8 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     mini.track = {
       id: mini.track.id
     };
-    if (mini.status === 'PLAYING') {
-      mini.status = 'PAUSED';
+    if (mini.status === Status.Playing) {
+      mini.status = Status.Paused;
     }
     return mini;
   }
@@ -50,7 +50,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getQueuedItems(): TModel[] {
-    return this.where({status: 'QUEUED'});
+    return this.where({status: Status.Queued});
   }
 
   getScheduledItems(): TModel[] {
@@ -60,15 +60,15 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getPlayingItem(): TModel {
-    return this.findWhere({status: 'PLAYING'});
+    return this.findWhere({status: Status.Playing});
   }
 
   getPausedItem(): TModel {
-    return this.findWhere({status: 'PAUSED'});
+    return this.findWhere({status: Status.Paused});
   }
 
   getCurrentItem(): TModel {
-    return this.findWhere({status: 'PLAYING'}) || this.findWhere({status: 'PAUSED'});
+    return this.findWhere({status: Status.Playing}) || this.findWhere({status: Status.Paused});
   }
 
   getItem(): TModel {
@@ -163,7 +163,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     if (scheduledItem && scheduledItem.isStopped()) {
       const index = this.indexOf(scheduledItem);
       if (index > this.playIndex) {
-        scheduledItem.set('status', 'NULL');
+        scheduledItem.set('status', Status.Scheduled);
         this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
       }
     }
@@ -171,7 +171,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
 
   private prepareItem(item: any): PlayQueueItem {
     if (!item.id && item instanceof PlayQueueItem) {
-      item.set('id', item.get('track').get('id'));
+      item.set('id', item.track.id);
     } else if (!item.id) {
       item.id = item.track.id;
     }

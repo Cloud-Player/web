@@ -21,7 +21,7 @@ export class QueueButtonComponent {
   isQueued(): boolean {
     const queuedItems = this.playQueue.getQueuedItems();
     if (queuedItems && queuedItems.find((item: PlayQueueItem) => {
-        return item.get('track').get('id') === this.track.id;
+        return item.track.id === this.track.id;
       })) {
       return true;
     } else {

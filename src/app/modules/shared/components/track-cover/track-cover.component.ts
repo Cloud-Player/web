@@ -27,7 +27,7 @@ export class TrackCoverComponent {
 
   public getArtworkUrl(): string {
     if (this.track) {
-      const artwork: SoundcloudImageModel = this.track.get('artwork_url');
+      const artwork: SoundcloudImageModel = this.track.image;
       let artworkUrl: string;
       switch (this.size) {
         case CoverSizes.Small:

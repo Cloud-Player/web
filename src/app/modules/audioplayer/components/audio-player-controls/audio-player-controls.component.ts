@@ -3,7 +3,7 @@ declare let MediaMetadata: any;
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem} from '../../models/play_queue_item.model';
+import {PlayQueueItem, Status} from '../../models/play_queue_item.model';
 import {throttle} from 'underscore';
 import * as localforage from 'localforage';
 import {Track} from '../../../tracks/models/track.model';
@@ -54,7 +54,7 @@ export class AudioPlayerControlsComponent implements OnInit {
       this.timeTick = this.audio.currentTime;
       if (this.playQueue.getCurrentItem()) {
         localforage.setItem('sc_current_track', {
-          id: this.playQueue.getCurrentItem().get('track').id,
+          id: this.playQueue.getCurrentItem().track.id,
           currentTime: this.audio.currentTime,
           duration: this.audio.duration
         });
@@ -89,8 +89,8 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   private initializeLastPlayingTrack(lastTrack: any) {
-    const item: PlayQueueItem = this.playQueue.add({status: 'PAUSED', track: {id: lastTrack.id}}, {at: 0});
-    item.get('track').fetch().then((track: Track) => {
+    const item: PlayQueueItem = this.playQueue.add({status: Status.Paused, track: {id: lastTrack.id}}, {at: 0});
+    item.track.fetch().then((track: Track) => {
       this.audio.src = track.getResourceUrl();
     });
     this.audio.currentTime = lastTrack.currentTime;
@@ -101,10 +101,10 @@ export class AudioPlayerControlsComponent implements OnInit {
   private setMobileMediaNotification(track: Track) {
     if ('mediaSession' in navigator) {
       const nv: any = navigator;
-      const artwork: SoundcloudImageModel = track.get('artwork_url');
+      const artwork: SoundcloudImageModel = track.image;
       nv.mediaSession.metadata = new MediaMetadata({
-        title: track.get('title'),
-        artist: track.get('user').get('username'),
+        title: track.title,
+        artist: track.user.username,
         artwork: [
           {src: artwork.getDefaultSize(), sizes: '96x96', type: 'image/jpg'},
           {src: artwork.getDefaultSize(), sizes: '128x128', type: 'image/jpg'},
@@ -154,14 +154,14 @@ export class AudioPlayerControlsComponent implements OnInit {
 
 
   private reactOnStatusChange(item: PlayQueueItem): void {
-    switch (item.get('status')) {
-      case 'PLAYING':
+    switch (item.status) {
+      case Status.Playing:
         this.startAudioPlayer(item);
         break;
-      case 'STOPPED':
+      case Status.Stopped:
         this.stopAudioPlayer();
         break;
-      case 'PAUSED':
+      case Status.Paused:
         this.pauseAudioPlayer();
         break;
     }
@@ -232,26 +232,26 @@ export class AudioPlayerControlsComponent implements OnInit {
   startAudioPlayer(item: PlayQueueItem): void {
     const currTime = this.audio.currentTime;
 
-    if (this.audio.src !== item.get('track').getResourceUrl()) {
-      this.audio.src = item.get('track').getResourceUrl();
+    if (this.audio.src !== item.track.getResourceUrl()) {
+      this.audio.src = item.track.getResourceUrl();
       this.audio.currentTime = 0;
     }
 
     if (this.hadError) {
-      this.audio.src = item.get('track').getResourceUrl();
+      this.audio.src = item.track.getResourceUrl();
       this.audio.load();
       this.audio.currentTime = currTime;
     }
 
-    if (item.get('track').get('comments').length === 0) {
-      item.get('track').get('comments').fetch();
+    if (item.track.comments.length === 0) {
+      item.track.comments.fetch();
     }
 
     this.timeTick = this.audio.currentTime;
 
     this.audio.play();
 
-    this.setMobileMediaNotification(item.get('track'));
+    this.setMobileMediaNotification(item.track);
   }
 
   pauseAudioPlayer(): void {

@@ -39,16 +39,16 @@ export class UserPlayListViewComponent implements OnInit {
 
   public destroy(): void {
     this.userAnalyticsService.trackEvent('destroyed_playlist', 'click', 'user-playlist-cmp');
-    const userPlaylists = this.session.get('user').get('playlists');
+    const userPlaylists = this.session.user.playlists;
     const indexOfPlaylist = userPlaylists.indexOf(this.playlist);
     let otherPlaylistId: number;
 
 
     this.playlist.destroy().then(() => {
       if (userPlaylists.at(indexOfPlaylist)) {
-        otherPlaylistId = userPlaylists.at(indexOfPlaylist).get('id');
+        otherPlaylistId = userPlaylists.at(indexOfPlaylist).id;
       } else if (userPlaylists.at(indexOfPlaylist - 1)) {
-        otherPlaylistId = userPlaylists.at(indexOfPlaylist - 1).get('id');
+        otherPlaylistId = userPlaylists.at(indexOfPlaylist - 1).id;
       }
 
       if (otherPlaylistId) {
@@ -60,10 +60,10 @@ export class UserPlayListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userPlaylists = this.session.get('user').get('playlists');
+    const userPlaylists = this.session.user.playlists;
     this.route.params.forEach((params: any) => {
       if (userPlaylists.get(params.id)) {
-        this.playlist = this.session.get('user').get('playlists').get(params.id);
+        this.playlist = this.session.user.playlists.get(params.id);
       } else {
         this.playlist.clear();
         this.playlist.set({id: params.id});
@@ -77,7 +77,7 @@ export class UserPlayListViewComponent implements OnInit {
       });
     });
 
-    this.session.get('user').on('change:authenticated', this.fetchPlaylist(), this);
+    this.session.user.on('change:authenticated', this.fetchPlaylist, this);
   }
 
 }
