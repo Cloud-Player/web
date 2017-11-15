@@ -15,6 +15,10 @@ export class PlayQueueItem extends SoundcloudModel {
   @nested()
   track: Track;
 
+  @attributesKey('provider')
+  @defaultValue('SOUNDCLOUD')
+  provider: string;
+
   queue(): void {
     this.status = PlayQueueItemStatus.Queued;
   }
