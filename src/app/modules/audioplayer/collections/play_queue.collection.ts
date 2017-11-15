@@ -1,6 +1,7 @@
-import {Status, PlayQueueItem} from '../models/play_queue_item.model';
+import {PlayQueueItem} from '../models/play_queue_item.model';
 import {isArray} from 'underscore';
 import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
+import {PlayQueueItemStatus} from '../enums/playqueue-item-status';
 
 export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
   private static instance: PlayQueue<PlayQueueItem>;
@@ -23,8 +24,8 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     mini.track = {
       id: mini.track.id
     };
-    if (mini.status === Status.Playing) {
-      mini.status = Status.Paused;
+    if (mini.status === PlayQueueItemStatus.Playing) {
+      mini.status = PlayQueueItemStatus.Paused;
     }
     return mini;
   }
@@ -50,7 +51,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getQueuedItems(): TModel[] {
-    return this.where({status: Status.Queued});
+    return this.where({status: PlayQueueItemStatus.Queued});
   }
 
   getScheduledItems(): TModel[] {
@@ -60,15 +61,15 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getPlayingItem(): TModel {
-    return this.findWhere({status: Status.Playing});
+    return this.findWhere({status: PlayQueueItemStatus.Playing});
   }
 
   getPausedItem(): TModel {
-    return this.findWhere({status: Status.Paused});
+    return this.findWhere({status: PlayQueueItemStatus.Paused});
   }
 
   getCurrentItem(): TModel {
-    return this.findWhere({status: Status.Playing}) || this.findWhere({status: Status.Paused});
+    return this.findWhere({status: PlayQueueItemStatus.Playing}) || this.findWhere({status: PlayQueueItemStatus.Paused});
   }
 
   getItem(): TModel {
@@ -163,7 +164,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     if (scheduledItem && scheduledItem.isStopped()) {
       const index = this.indexOf(scheduledItem);
       if (index > this.playIndex) {
-        scheduledItem.set('status', Status.Scheduled);
+        scheduledItem.set('status', PlayQueueItemStatus.Scheduled);
         this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
       }
     }
