@@ -3,31 +3,24 @@ import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
-
-export enum Status {
-  Playing = 'PLAYING',
-  Paused = 'PAUSED',
-  Stopped = 'STOPPED',
-  Queued = 'QUEUED',
-  Scheduled = 'NULL'
-}
+import {PlayQueueItemStatus} from '../enums/playqueue-item-status';
 
 export class PlayQueueItem extends SoundcloudModel {
 
   @attributesKey('status')
-  @defaultValue(Status.Scheduled)
-  status: Status;
+  @defaultValue(PlayQueueItemStatus.Scheduled)
+  status: PlayQueueItemStatus;
 
   @attributesKey('track')
   @nested()
   track: Track;
 
   queue(): void {
-    this.status = Status.Queued;
+    this.status = PlayQueueItemStatus.Queued;
   }
 
   unQueue(): void {
-    this.status = Status.Scheduled;
+    this.status = PlayQueueItemStatus.Scheduled;
     if (this.collection) {
       const collection = this.collection;
       collection.remove(this);
@@ -36,34 +29,34 @@ export class PlayQueueItem extends SoundcloudModel {
   }
 
   play(): void {
-    this.status = Status.Playing;
+    this.status = PlayQueueItemStatus.Playing;
   }
 
   pause(): void {
-    this.status = Status.Paused;
+    this.status = PlayQueueItemStatus.Paused;
   }
 
   stop(): void {
-    this.status = Status.Stopped;
+    this.status = PlayQueueItemStatus.Stopped;
   }
 
   isQueued(): boolean {
-    return this.status === Status.Queued;
+    return this.status === PlayQueueItemStatus.Queued;
   }
 
   isPlaying(): boolean {
-    return this.status === Status.Playing;
+    return this.status === PlayQueueItemStatus.Playing;
   }
 
   isPaused(): boolean {
-    return this.status === Status.Paused;
+    return this.status === PlayQueueItemStatus.Paused;
   }
 
   isStopped(): boolean {
-    return this.status === Status.Stopped;
+    return this.status === PlayQueueItemStatus.Stopped;
   }
 
   isScheduled(): boolean {
-    return this.status === Status.Scheduled;
+    return this.status === PlayQueueItemStatus.Scheduled;
   }
 }
