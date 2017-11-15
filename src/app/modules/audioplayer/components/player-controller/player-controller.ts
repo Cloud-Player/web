@@ -68,15 +68,6 @@ export class PlayerControllerComponent implements OnInit {
       });
   }
 
-  private prepareUpcoming(item: PlayQueueItem) {
-    const existingPlayer = this.getPlayerComponent(item);
-    if (!existingPlayer) {
-      this.addPlayerComponent(this.createPlayerComponent(item));
-    } else if (!existingPlayer.instance.isInitialised) {
-      existingPlayer.instance.initialise();
-    }
-  }
-
   private addPlayerComponent(playerComponent: ComponentRef<IPlayer>) {
     this.playerComponents.push(playerComponent);
   }
