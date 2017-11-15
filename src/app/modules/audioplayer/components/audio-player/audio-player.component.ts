@@ -11,7 +11,7 @@ import {CoverSizes} from '../../../shared/components/track-cover/track-cover.com
 })
 
 export class AudioPlayerComponent implements OnInit {
-  private playQueue: PlayQueue<PlayQueueItem>;
+  public playQueue: PlayQueue<PlayQueueItem>;
   track: Track;
   currentPlayingTime: number;
 
