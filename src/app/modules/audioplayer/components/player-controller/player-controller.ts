@@ -82,7 +82,7 @@ export class PlayerControllerComponent implements OnInit {
   }
 
   private createPlayerComponent(item: PlayQueueItem): ComponentRef<IPlayer> {
-    const factory: ComponentFactory<IPlayer> = this.resolver.resolveComponentFactory(SoundcloudPlayerComponent);
+    const factory: ComponentFactory<IPlayer> = this.resolver.resolveComponentFactory(this.playerComponentMap[item.provider]);
     const playerComponent: ComponentRef<IPlayer> = this.container.createComponent(factory);
     playerComponent.instance.track = item.track;
     playerComponent.instance.initialise();
