@@ -18,6 +18,10 @@ import index from '@angular/cli/lib/cli';
 })
 
 export class PlayerControllerComponent implements OnInit {
+  private playerComponentMap = {
+    SOUNDCLOUD: SoundcloudPlayerComponent
+  };
+
   public playerComponents: ComponentRef<IPlayer>[];
 
   @Input()
