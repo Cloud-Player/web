@@ -35,14 +35,14 @@ export class PlayerControllerComponent implements OnInit {
 
   private reactOnPlayQueueChange(item: PlayQueueItem): void {
     switch (item.status) {
-      case Status.Playing:
+      case PlayQueueItemStatus.Playing:
         this.play(item);
         break;
-      case Status.Stopped:
+      case PlayQueueItemStatus.Stopped:
         this.removePlayerComponent(this.getPlayerComponent(item));
         break;
-      case Status.Paused:
-        this.play(item);
+      case PlayQueueItemStatus.Paused:
+        this.pause();
         break;
     }
   }
@@ -134,7 +134,7 @@ export class PlayerControllerComponent implements OnInit {
       playerComponent = this.createPlayerComponent(playQueueItem);
       this.addPlayerComponent(playerComponent);
     }
-    playQueueItem.set('status', Status.Playing, {silent: true});
+    playQueueItem.set('status', PlayQueueItemStatus.Playing, {silent: true});
     this.activatePlayerComponent(playerComponent, from);
   }
 
@@ -143,7 +143,7 @@ export class PlayerControllerComponent implements OnInit {
     const currentPlayingItem = this.playQueue.getPlayingItem();
 
     if (currentPlayingItem) {
-      currentPlayingItem.set('status', Status.Paused, {silent: true});
+      currentPlayingItem.set('status', PlayQueueItemStatus.Paused, {silent: true});
     }
 
     if (currentPlayer && currentPlayer.instance.status === PlayerStatus.Playing) {
@@ -164,7 +164,7 @@ export class PlayerControllerComponent implements OnInit {
 
   public previous(): void {
     const currItem = this.playQueue.getCurrentItem();
-    if (currItem && currItem.status === Status.Playing) {
+    if (currItem && currItem.status === PlayQueueItemStatus.Playing) {
       this.play(currItem, 0);
     } else {
       if (this.playQueue.hasPreviousItem()) {
