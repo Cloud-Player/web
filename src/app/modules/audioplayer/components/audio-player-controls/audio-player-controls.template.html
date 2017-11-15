@@ -11,7 +11,7 @@
     <button class="btn btn-round btn-brand play"
             *ngIf="!playQueue.getPlayingItem()"
             type="button"
-            [disabled]="!playQueue.getCurrentItem() || !playQueue.getCurrentItem().get('track').get('stream_url')"
+            [disabled]="!playQueue.getCurrentItem() || !playQueue.getCurrentItem().track.getResourceUrl()"
             (click)="playTrack()">
       <i class="fa fa-play" aria-hidden="true"></i>
     </button>

@@ -1,5 +1,5 @@
 import {Model, Collection} from 'backbone';
-import {isObject, isArray, extend, isString} from 'underscore';
+import {result, isObject, isArray, extend, isString} from 'underscore';
 
 
 export class NestedModel extends Model {
@@ -14,7 +14,7 @@ export class NestedModel extends Model {
   }
 
   private _prepare(): Object {
-    const nestedAttributes = this.nested(),
+    const nestedAttributes = result(this, 'nested'),
       instanceObject = {};
 
     for (const key in nestedAttributes) {
@@ -59,7 +59,7 @@ export class NestedModel extends Model {
 
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        const nestedAttrs = this.nested(),
+        const nestedAttrs = result(this, 'nested'),
           value = obj[key],
           nestedValue = nestedAttrs[key];
 
@@ -80,20 +80,20 @@ export class NestedModel extends Model {
   }
 
   private _nestedModelToJson(model: Model): any {
-    let result: any;
+    let json: any;
 
     if (model instanceof NestedModel) {
-      result = model._prepareDataForServer();
+      json = model._prepareDataForServer();
     } else {
-      result = model.toJSON();
+      json = super.toJSON.apply(model, arguments);
     }
 
-    return result;
+    return json;
   }
 
   private _prepareDataForServer() {
     const attrs = extend({}, this.attributes),
-      nestedAttrs = this.nested();
+      nestedAttrs = result(this, 'nested');
 
     for (const key in nestedAttrs) {
       if (nestedAttrs.hasOwnProperty(key)) {
@@ -102,13 +102,12 @@ export class NestedModel extends Model {
         if (nestedAttr instanceof Model) {
           attrs[key] = this._nestedModelToJson(nestedAttr);
         } else if (nestedAttr instanceof Collection) {
-          const result: Array<any> = [];
-
+          const jsonArr: Array<any> = [];
           nestedAttr.each(function (model: Model) {
-            result.push(this._nestedModelToJson(model));
+            jsonArr.push(this._nestedModelToJson(model));
           }.bind(this));
 
-          attrs[key] = result;
+          attrs[key] = jsonArr;
         }
       }
     }
@@ -116,41 +115,33 @@ export class NestedModel extends Model {
     return this.compose(attrs);
   }
 
-  set(attributes: any, options: any = {}) {
+  set(key: any, value?: any, options: any = {}) {
+    let _options;
     let obj = {};
 
-    if (options && options._prepareNesting) {
+    if (isString(key)) {
+      obj[key] = value;
+      _options = options;
+    } else {
+      obj = key;
+      _options = value || options;
+    }
+
+    if (_options && _options._prepareNesting) {
       extend(this.attributes, this._prepare());
-    }
-
-    if (isString(attributes)) {
-      obj[attributes] = options;
-    } else if (isObject(attributes)) {
-      obj = attributes;
-    }
-
-    if (!isObject(options)) {
-      options = null;
     }
 
     obj = this._setNestedAttributes(obj);
 
-    return super.set.call(this, obj, options);
+    return super.set.call(this, obj, _options);
   }
 
   compose(attrs: any): any {
     return attrs;
   }
 
-  toJSON(options?: any): any {
-    // When options are set toJSON is called from the sync method so it is called before the object is send to the server
-    // We use this to transform our data before we are sending it to the server
-    // It is the counterpart of parse for the server
-    if (options) {
-      return this._prepareDataForServer();
-    } else {
-      return super.toJSON.apply(this, arguments);
-    }
+  toJSON(): any {
+    return this._prepareDataForServer();
   }
 
   clear(options?: any): any {

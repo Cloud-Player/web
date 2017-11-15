@@ -3,7 +3,7 @@
   <div *ngFor="let track of tracks.models | limitCollectionresults: {limit: 10}" class="track"
        appDraggable
        [dragData]="track.toJSON()"
-       [dragImageUrl]="track.get('artwork_url').getSmallSize()"
+       [dragImageUrl]="track.image.getSmallSize()"
        dragEffect="copy">
     <div class="cover">
       <app-track-cover [track]="track" [size]="getSize()"></app-track-cover>
@@ -17,11 +17,11 @@
              [events]="['click']"
              [track]="track"
              [tracks]="tracks">
-          <b class="track-title">{{track.get('title')}}</b>
+          <b class="track-title">{{track.title}}</b>
           <div class="artist">
-            <span>{{track.get('user').get('username')}}</span>
+            <span>{{track.user.username}}</span>
             <span class="created">created
-              <span [appTimeAgo]="track.get('created_at')">{{track.get('created_at')}}</span>
+              <span [appTimeAgo]="track.createdAt">{{track.createdAt}}</span>
             </span>
           </div>
         </div>
@@ -50,17 +50,17 @@
       <div class="stats">
         <div class="duration label label-default label-light">
           <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-          {{track.get('duration')/1000 | hReadableSeconds}}
+          {{track.duration/1000 | hReadableSeconds}}
         </div>
         <div class="favs label label-default label-light">
-          <i class="fa fa-heart" aria-hidden="true" alt="favouites count"></i> {{track.get('likes') | kMilShortener}}
+          <i class="fa fa-heart" aria-hidden="true" alt="favouites count"></i> {{track.likes | kMilShortener}}
         </div>
         <div class="plays label label-default label-light">
-          <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.get('playback_count') | kMilShortener}}
+          <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.clicks | kMilShortener}}
         </div>
-        <div *ngIf="track.get('genre')"
+        <div *ngIf="track.genre"
              class="genre label label-default label-light">
-          #{{track.get('genre')}}
+          #{{track.genre}}
         </div>
       </div>
     </div>

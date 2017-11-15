@@ -28,8 +28,8 @@
     </div>
   </div>
 
-  <a *ngFor="let playlist of user.get('playlists').models"
-     routerLink="me/playlists/{{playlist.get('id')}}"
+  <a *ngFor="let playlist of user.playlists.models"
+     routerLink="me/playlists/{{playlist.id}}"
      class="playlist-item"
      [routerLinkActive]="['is-active']"
 
@@ -37,7 +37,7 @@
      [dropCallback]="dropTrack"
      [dropItemRef]="playlist">
     <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
-    <div class="text">{{playlist.get('title')}}</div>
+    <div class="text">{{playlist.title}}</div>
   </a>
 
   <div *ngIf="!isAuthenticated()">

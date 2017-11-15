@@ -2,20 +2,52 @@ import {User} from '../../users/models/user.model';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
 import {Comments} from '../../comments/collections/comments.collection';
+import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {nested} from '../../backbone/decorators/nested.decorator';
+import {Comment} from '../../comments/models/comment.model';
 
 export class Track extends SoundcloudModel {
   endpoint = '/tracks';
 
-  nested() {
-    return {
-      user: User,
-      artwork_url: SoundcloudImageModel,
-      comments: Comments
-    };
-  }
+  @attributesKey('user')
+  @nested()
+  user: User;
+
+  @attributesKey('artwork_url')
+  @nested()
+  image: SoundcloudImageModel;
+
+  @attributesKey('comments')
+  @nested()
+  comments: Comments<Comment>;
+
+  @attributesKey('title')
+  title: string;
+
+  @attributesKey('duration')
+  duration: number;
+
+  @attributesKey('genre')
+  genre: string;
+
+  @attributesKey('created_at')
+  createdAt: number;
+
+  @attributesKey('likes')
+  likes: number;
+
+  @attributesKey('playback_count')
+  clicks: number;
+
+  @attributesKey('stream_url')
+  streamUrl: string;
 
   getResourceUrl(): string {
-    return `${this.get('stream_url')}?client_id=${this.clientId}`;
+    if (this.streamUrl) {
+      return `${this.streamUrl}?client_id=${this.clientId}`;
+    } else {
+      return null;
+    }
   }
 
   parse(attrs: any) {
@@ -25,11 +57,11 @@ export class Track extends SoundcloudModel {
   }
 
   initialize(): void {
-    if (this.get('id')) {
-      this.get('comments').setTrackId(this.get('id'));
+    if (this.id) {
+      this.comments.setTrackId(this.id);
     }
     this.on('change:id', () => {
-      this.get('comments').setTrackId(this.get('id'));
+      this.comments.setTrackId(this.id);
     });
   }
 }

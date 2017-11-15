@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {Track} from '../../tracks/models/track.model';
 
 export class AuthenticatedUserLikedTrack extends Track {

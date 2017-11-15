@@ -35,8 +35,8 @@ export class ToggleLikedTrackComponent {
   }
 
   hasLikedTrack(): boolean {
-    if (this.track && this.track.get('id') && Session.getInstance().get('user').get('likes').length > 0) {
-      return !!Session.getInstance().get('user').get('likes').findWhere({id: this.track.id});
+    if (this.track && this.track.id && Session.getInstance().user.likes.length > 0) {
+      return !!Session.getInstance().user.likes.findWhere({id: this.track.id});
     }
   }
 
@@ -46,7 +46,7 @@ export class ToggleLikedTrackComponent {
 
   like(): void {
     if (this.session.isValid()) {
-      Session.getInstance().get('user').get('likes').create(this.track.toJSON());
+      Session.getInstance().user.likes.create(this.track.toJSON());
       this.userAnalyticsService.trackEvent('like_track', 'click', 'toggle-like-cmp');
     } else {
       this.showConnectTooltip();
@@ -54,7 +54,7 @@ export class ToggleLikedTrackComponent {
   }
 
   dislike(): void {
-    let likedTrack = Session.getInstance().get('user').get('likes').get(this.track.toJSON());
+    const likedTrack = Session.getInstance().user.likes.get(this.track.toJSON());
     if (likedTrack) {
       this.userAnalyticsService.trackEvent('dislike_track', 'click', 'toggle-like-cmp');
       likedTrack.destroy();

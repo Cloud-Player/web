@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
+import {AuthenticatedUser} from '../../../session/models/authenticated_user.model';
 
 @Component({
   selector: 'app-cloud-player',
@@ -18,20 +19,20 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.session.get('user').on('change:authenticated', (user: User) => {
+    this.session.user.on('change:authenticated', (user: AuthenticatedUser) => {
       this.setAuthenticated(user);
     });
 
     if (this.session.isValid()) {
-      this.setAuthenticated(this.session.get('user'));
+      this.setAuthenticated(this.session.user);
     }
   }
 
-  private setAuthenticated(user: User) {
-    if (user.get('authenticated')) {
+  private setAuthenticated(user: AuthenticatedUser) {
+    if (user.authenticated) {
       user.fetch().then(() => {
         this.isAuthenticated = true;
-        user.get('likes').fetch();
+        user.likes.fetch();
       });
     } else {
       this.isAuthenticated = false;

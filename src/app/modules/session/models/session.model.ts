@@ -4,6 +4,8 @@ import {setSession} from '../../shared/session-manager.fn';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import * as localforage from 'localforage';
 import {Globals} from '../../../../globals';
+import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {nested} from '../../backbone/decorators/nested.decorator';
 
 export class Session extends SoundcloudModel {
   private static instance: Session;
@@ -12,24 +14,24 @@ export class Session extends SoundcloudModel {
 
   idAttribute = 'access_token';
 
+  @attributesKey('user')
+  @nested()
+  user: AuthenticatedUser;
+
+  @attributesKey('refresh_token')
+  refreshToken: string;
+
+  @attributesKey('access_token')
+  accessToken: string;
+
+  @attributesKey('expires_on')
+  expiresOn: number;
+
   static getInstance(): Session {
     if (!Session.instance) {
       Session.instance = new Session();
     }
     return Session.instance;
-  }
-
-  defaults(): Object {
-    return {
-      expires_on: null,
-      refresh_token: null
-    };
-  }
-
-  nested() {
-    return {
-      user: AuthenticatedUser
-    };
   }
 
   parse(attrs: any = {}) {
@@ -45,7 +47,7 @@ export class Session extends SoundcloudModel {
   }
 
   saveLocal(options?: any): void {
-    localforage.setItem('sc_session', this.toJSON({}));
+    localforage.setItem('sc_session', this.toJSON());
   }
 
   fetchLocal(options?: any): Session {
@@ -58,10 +60,10 @@ export class Session extends SoundcloudModel {
   }
 
   refresh(): any {
-    if (this.get('refresh_token')) {
+    if (this.refreshToken) {
       return this.request(Globals.soundcloudRedirectUrl + '/', 'PUT', {
         data: {
-          refresh_token: this.get('refresh_token'),
+          refresh_token: this.refreshToken,
           version: 2
         }
       }).then((rsp) => {
@@ -75,7 +77,7 @@ export class Session extends SoundcloudModel {
   }
 
   getExpiresIn(): number {
-    return this.get('expires_on') - (+new Date());
+    return this.expiresOn - (+new Date());
   }
 
   isNotExpired(): boolean {
@@ -83,20 +85,20 @@ export class Session extends SoundcloudModel {
   }
 
   initialize() {
-    this.on('change:access_token', () => {
-      if (this.get('access_token')) {
+    this.on('change:accessToken', () => {
+      if (this.accessToken) {
         if (this.isNotExpired()) {
-          this.get('user').set('authenticated', true);
+          this.user.authenticated = true;
         } else {
           this.refresh();
         }
       } else {
-        this.get('user').set('authenticated', false);
+        this.user.authenticated = false;
       }
       this.saveLocal();
     });
 
-    this.on('change:expires_on', () => {
+    this.on('change:expiresOn', () => {
       if (this.refreshTimer) {
         clearTimeout(this.refreshTimer);
       }
@@ -109,7 +111,7 @@ export class Session extends SoundcloudModel {
   }
 
   isValid(): boolean {
-    return this.get('access_token') && this.isNotExpired();
+    return this.accessToken && this.isNotExpired();
   }
 }
 

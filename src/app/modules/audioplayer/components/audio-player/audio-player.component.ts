@@ -29,7 +29,7 @@ export class AudioPlayerComponent implements OnInit {
       if (this.playQueue.hasCurrentItem()) {
         const item = this.playQueue.getCurrentItem();
         if (item) {
-          this.track = item.get('track');
+          this.track = item.track;
         }
       }
     });

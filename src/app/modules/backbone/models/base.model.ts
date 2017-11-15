@@ -1,5 +1,3 @@
-import {NestedModel} from './nested.model';
-import {Injectable} from '@angular/core';
 import {getUrl} from '../utils/get_url.util';
 import {request} from '../utils/request.util';
 import {extend} from 'underscore';
@@ -7,6 +5,7 @@ import {prepareParams} from '../utils/prepare_params';
 import {SelectableModel} from './selectable.model';
 
 export class BaseModel extends SelectableModel {
+  attributesMap: Object;
 
   queryParams: Object = {};
 
@@ -26,6 +25,17 @@ export class BaseModel extends SelectableModel {
 
   request(url: string, method: string, options?: any) {
     return request(url, method, options, this);
+  }
+
+  trigger(evType: string, value: string, model: BaseModel) {
+    const changedAttr = evType.split(':')[1];
+    if (changedAttr && this.attributesMap) {
+      if (this.attributesMap[changedAttr] && this.attributesMap[changedAttr] !== changedAttr) {
+        const mappedChangeEvent = `change:${this.attributesMap[changedAttr]}`;
+        super.trigger.call(this, mappedChangeEvent, value, model);
+      }
+    }
+    return super.trigger.apply(this, arguments);
   }
 
   sync(method: string, model: any, options: any = {}) {

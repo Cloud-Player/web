@@ -22,7 +22,7 @@
 
       <div *ngIf="!isInEditMode" class="title">
         <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
-        <span class="text">{{playlist.get('title')}}</span>
+        <span class="text">{{playlist.title}}</span>
         <div class="button-group">
           <button class="btn btn-default" (click)="isInEditMode = true">
             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -37,6 +37,6 @@
   </form>
 
   <app-scroll-view>
-    <app-track-list [tracks]="playlist.get('tracks')" [canBeDeleted]="true"></app-track-list>
+    <app-track-list [tracks]="playlist.tracks" [canBeDeleted]="true"></app-track-list>
   </app-scroll-view>
 </section>

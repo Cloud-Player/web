@@ -14,7 +14,7 @@ export class SoundcloudCallbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.session.get('user').on('change:authenticated', () => {
+    this.session.user.on('change:authenticated', () => {
       this.router.navigate(['/']);
     });
 
@@ -25,5 +25,5 @@ export class SoundcloudCallbackComponent implements OnInit {
         refresh_token: params.refresh_token
       });
     });
-  };
+  }
 }

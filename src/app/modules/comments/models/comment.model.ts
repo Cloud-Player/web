@@ -1,12 +1,18 @@
 import {User} from '../../users/models/user.model';
 import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {nested} from '../../backbone/decorators/nested.decorator';
 
 export class Comment extends SoundcloudModel {
   endpoint = '/comments';
 
-  nested() {
-    return {
-      user: User
-    };
-  }
+  @attributesKey('user')
+  @nested()
+  user: User;
+
+  @attributesKey('timestamp')
+  timestamp: number;
+
+  @attributesKey('body')
+  body: string;
 }

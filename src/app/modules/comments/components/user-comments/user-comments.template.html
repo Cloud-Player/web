@@ -4,11 +4,11 @@
     <li *ngFor="let comment of commentsQueue.models"
         class="comment">
       <div class="user-image">
-        <img [src]="comment.get('user').get('avatar_url').getImageByFormat('tiny')"/>
+        <img [src]="comment.user.image.getImageByFormat('tiny')"/>
       </div>
       <div class="text">
         <app-multi-line
-          [text]="comment.get('body')"
+          [text]="comment.body"
           font="300 12px Raleway"
           [maxLines]="2"
           [maxWidth]="288"

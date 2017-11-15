@@ -10,14 +10,14 @@ export class SoundcloudCollection<TModel extends SoundcloudModel> extends BaseCo
   model: any = SoundcloudModel;
 
   hostName(): string {
-    return '//api.soundcloud.com';
+    return 'https://api.soundcloud.com';
   }
 
   sync(method: string, model: any, options: any = {}) {
     this.queryParams['client_id'] = this.clientId;
     const session = getSession();
     if (session && session.isValid()) {
-      this.queryParams['oauth_token'] = session.get('access_token');
+      this.queryParams['oauth_token'] = session.accessToken;
     }
     return super.sync(method, model, options);
   }
