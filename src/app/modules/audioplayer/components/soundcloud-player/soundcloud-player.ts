@@ -1,36 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer, Renderer2} from '@angular/core';
 import {Track} from '../../../tracks/models/track.model';
-import {forEach} from '@angular/router/src/utils/collection';
-
-export enum PlayerStatus {
-  Waiting,
-  Ready,
-  Playing,
-  Stopped,
-  Paused,
-  Ended,
-  Error
-}
-
-export interface IPlayer {
-  readonly duration: number;
-  readonly status: number;
-  readonly currentTime: number;
-  readonly isBuffering: boolean;
-  readonly isInitialised: boolean;
-  durationChange: EventEmitter<{}>;
-  statusChange: EventEmitter<{}>;
-  currentTimeChange: EventEmitter<{}>;
-  track: Track;
-
-  initialise(): void;
-
-  play(from?: number): void;
-
-  pause(): void;
-
-  stop();
-}
+import {PlayerStatus} from '../../enums/player-status';
+import {IPlayer} from '../../interfaces/player';
 
 @Component({
   selector: 'app-soundcloud-player',
