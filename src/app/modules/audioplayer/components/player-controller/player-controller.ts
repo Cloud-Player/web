@@ -1,12 +1,13 @@
 import {
-  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, OnInit, Output, ViewChild,
+  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnInit, ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem, Status} from '../../models/play_queue_item.model';
-import {IPlayer, PlayerStatus, SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
-import {CloudPlayerLogoComponent} from '../../../shared/components/cloud-player-logo/cloud-player-logo.component';
-import index from '@angular/cli/lib/cli';
+import {PlayQueueItem} from '../../models/play_queue_item.model';
+import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
+import {IPlayer} from '../../interfaces/player';
+import {PlayerStatus} from '../../enums/player-status';
+import {PlayQueueItemStatus} from '../../enums/playqueue-item-status';
 
 @Component({
   selector: 'app-player-controller',
