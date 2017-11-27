@@ -53,6 +53,12 @@ export class PlayQueueItem extends SoundcloudModel {
 
   stop(): void {
     this.status = PlayQueueItemStatus.Stopped;
+    this.progress = 0;
+  }
+
+  restart(): void {
+    this.stop();
+    this.play();
   }
 
   isQueued(): boolean {
