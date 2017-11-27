@@ -19,6 +19,14 @@ export class PlayQueueItem extends SoundcloudModel {
   @defaultValue('SOUNDCLOUD')
   provider: string;
 
+  @attributesKey('progress')
+  @defaultValue(0)
+  progress: number;
+
+  @attributesKey('duration')
+  @defaultValue(0)
+  duration: number;
+
   queue(): void {
     this.status = PlayQueueItemStatus.Queued;
   }
