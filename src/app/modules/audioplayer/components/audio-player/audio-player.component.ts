@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
-import {CoverSizes} from '../../../shared/components/track-cover/track-cover.component';
+import {PlayerStatus} from '../../enums/player-status';
+import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
+import * as localforage from 'localforage';
+import {PlayQueueItemStatus} from '../../enums/playqueue-item-status';
+import {debounce, throttle} from 'underscore';
 
 @Component({
   selector: 'app-audio-player',
@@ -12,27 +15,68 @@ import {CoverSizes} from '../../../shared/components/track-cover/track-cover.com
 
 export class AudioPlayerComponent implements OnInit {
   public playQueue: PlayQueue<PlayQueueItem>;
-  track: Track;
-  currentPlayingTime: number;
+  public isPlaying: boolean;
+  public isBuffering: boolean;
 
-  getCoverSize(): CoverSizes {
-    return CoverSizes.Large;
+  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
+
   }
 
-  updateCurrentTime(val: number): void {
-    this.currentPlayingTime = val;
+  public changePlayerStatus(playerStatus: PlayerStatus): void {
+    switch (playerStatus) {
+      case PlayerStatus.Waiting:
+        this.isBuffering = true;
+        break;
+      case PlayerStatus.Ready:
+      case PlayerStatus.Paused:
+      case PlayerStatus.Playing:
+        this.isBuffering = false;
+        break;
+    }
+
+    switch (playerStatus) {
+      case PlayerStatus.Waiting:
+      case PlayerStatus.Paused:
+      case PlayerStatus.Stopped:
+        this.cloudPlayerLogoService.pause();
+        break;
+      case PlayerStatus.Playing:
+        this.cloudPlayerLogoService.play();
+        break;
+    }
   }
 
   ngOnInit(): void {
     this.playQueue = PlayQueue.getInstance();
-    this.playQueue.on('add change:status', () => {
-      if (this.playQueue.hasCurrentItem()) {
-        const item = this.playQueue.getCurrentItem();
-        if (item) {
-          this.track = item.track;
-        }
+
+    const playQueue = PlayQueue.getInstance();
+
+    localforage.getItem('sc_playqueue').then((lastPlayingQueue: Array<any>) => {
+      if (lastPlayingQueue) {
+        this.playQueue.add(lastPlayingQueue);
       }
     });
+
+    localforage.getItem('sc_currentItem').then((lastPlayingItem: any) => {
+      if (lastPlayingItem) {
+        lastPlayingItem.status = PlayQueueItemStatus.Paused;
+        this.playQueue.add(lastPlayingItem, {at: 0});
+      }
+    });
+
+    const debouncedPlayQueueSave = debounce(() => {
+      localforage.setItem('sc_playqueue', this.playQueue.getScheduledItemsJSON(30));
+    }, 1000);
+
+    const throttledCurrentItemSave = throttle((currentItem) => {
+      if (currentItem) {
+        localforage.setItem('sc_currentItem', currentItem.toMiniJSON());
+      }
+    }, 10000);
+
+    this.playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
+    this.playQueue.on('change:progress', throttledCurrentItemSave);
+
   }
 
 }

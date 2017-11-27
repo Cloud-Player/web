@@ -31,35 +31,4 @@ import {CommentsModule} from '../comments/comments.module';
 })
 
 export class AudioPlayerModule {
-
-  constructor() {
-    const playQueue = PlayQueue.getInstance();
-
-    localforage.getItem('sc_playqueue').then((playQueueItems: Array<any>) => {
-      playQueue.add(playQueueItems);
-
-      if (playQueue.length > 0) {
-        const playQueueItemTracks = playQueue.map((item: PlayQueueItem) => {
-          return {
-            id: item.id
-          };
-        });
-        const tmpTracks = new Tracks();
-        tmpTracks.add(playQueueItemTracks);
-        if (tmpTracks.length > 0) {
-          tmpTracks.refresh().then(function (tracks) {
-            tracks.forEach((track: Track) => {
-              playQueue.add({track: track}, {merge: true, silent: true});
-            });
-          });
-        }
-      }
-    });
-
-    const debouncedPlayQueueSave = debounce(() => {
-      localforage.setItem('sc_playqueue', playQueue.getScheduledItemsJSON(30));
-    }, 1000);
-    playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
-  }
-
 }
