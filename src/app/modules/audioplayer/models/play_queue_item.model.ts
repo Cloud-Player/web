@@ -40,7 +40,10 @@ export class PlayQueueItem extends SoundcloudModel {
     }
   }
 
-  play(): void {
+  play(startTime?: number): void {
+    if (startTime) {
+      this.progress = startTime;
+    }
     this.status = PlayQueueItemStatus.Playing;
   }
 
