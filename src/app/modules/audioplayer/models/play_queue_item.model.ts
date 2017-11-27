@@ -63,4 +63,10 @@ export class PlayQueueItem extends SoundcloudModel {
   isScheduled(): boolean {
     return this.status === PlayQueueItemStatus.Scheduled;
   }
+
+  toMiniJSON() {
+    const item = this.toJSON();
+    item.track = this.track.toMiniJSON();
+    return item;
+  }
 }

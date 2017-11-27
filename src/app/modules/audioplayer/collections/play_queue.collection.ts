@@ -19,23 +19,12 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     }
   }
 
-  private getMiniItem(playQueueItem: PlayQueueItem): {} {
-    const mini = playQueueItem.toJSON();
-    mini.track = {
-      id: mini.track.id
-    };
-    if (mini.status === PlayQueueItemStatus.Playing) {
-      mini.status = PlayQueueItemStatus.Paused;
-    }
-    return mini;
-  }
-
   private pushMiniItems(items: Array<PlayQueueItem>, allItems: Array<any>, maxItems?: number): Array<any> {
     items.forEach((item: PlayQueueItem) => {
       if (maxItems && allItems.length > maxItems) {
         return;
       }
-      allItems.push(this.getMiniItem(item));
+      allItems.push(item.toMiniJSON());
     });
     return allItems;
   }
