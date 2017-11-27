@@ -222,6 +222,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
       }
 
       if (queueItem.isStopped()) {
+        queueItem.progress = 0;
         this.scheduleStoppedItemsAfterCurrentItem(queueItem);
       }
     });
