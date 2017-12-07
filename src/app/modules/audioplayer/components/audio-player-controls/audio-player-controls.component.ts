@@ -44,13 +44,13 @@ export class AudioPlayerControlsComponent implements OnInit {
       if (this.playQueue.hasPreviousItem()) {
         nv.mediaSession.setActionHandler('previoustrack', () => {
           this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'app-audio-player-controls-cmp');
-          this.next();
+          this.previous();
         });
       }
       if (this.playQueue.hasNextItem()) {
         nv.mediaSession.setActionHandler('nexttrack', () => {
           this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'app-audio-player-controls-cmp');
-          this.previous();
+          this.next();
         });
       }
     }
