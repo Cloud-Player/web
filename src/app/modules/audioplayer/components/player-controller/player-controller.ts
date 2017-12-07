@@ -1,17 +1,17 @@
 import {
-  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, OnInit, Output, Type,
+  Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, OnInit, Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
-import {IPlayer} from '../../interfaces/player';
-import {PlayerStatus} from '../../enums/player-status';
-import {PlayQueueItemStatus} from '../../enums/playqueue-item-status';
-import {Players} from '../../collections/players';
-import {PlayerModel} from '../../models/player';
 import {Subscription} from 'rxjs/Subscription';
+import {PlayerStatus} from '../../src/player-status.enum';
+import {IPlayer} from '../../src/player.interface';
+import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
+import {PlayerFactory} from '../../src/player-factory.class';
+import {Track} from '../../../tracks/models/track.model';
 
 @Component({
   selector: 'app-player-controller',
@@ -23,14 +23,18 @@ import {Subscription} from 'rxjs/Subscription';
 })
 
 export class PlayerControllerComponent implements OnInit {
-  private _fadeInDuration = 10;
-  private _fadeOutDuration = 10;
+  private _fadeDuration = 10;
   private _prepareTime = 30;
   private _volume = 1;
   private _playerStatus;
   private _errorOccured = false;
   private _playerSubscriptions;
+  private _playerFactory: PlayerFactory;
+  private _activePlayer: ComponentRef<IPlayer>;
+  private _upcomingPlayer: ComponentRef<IPlayer>;
 
+  @ViewChild('playerContainer', {read: ViewContainerRef})
+  private container: ViewContainerRef;
 
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
@@ -38,16 +42,46 @@ export class PlayerControllerComponent implements OnInit {
   @Output()
   public playerStatusChange: EventEmitter<PlayerStatus> = new EventEmitter();
 
-  @ViewChild('playerContainer', {read: ViewContainerRef}) private container;
-
   constructor(private resolver: ComponentFactoryResolver) {
     this._playerSubscriptions = new Subscription();
     this._playerFactory = new PlayerFactory(this.resolver);
   }
 
-  private bindListeners(player: IPlayer): void {
+  private handlePlayerStatusChange(newStatus: PlayerStatus) {
+    switch (newStatus) {
+      case PlayerStatus.Playing:
+        this._errorOccured = false;
+        this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Playing;
+        break;
+      case PlayerStatus.Paused:
+        this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Paused;
+        break;
+      case PlayerStatus.Stopped:
+        this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Stopped;
+        break;
+      case PlayerStatus.Ended:
+        if (this.playQueue.hasNextItem()) {
+          this.playQueue.getNextItem().play();
+        } else {
+          this.playQueue.getCurrentItem().stop();
+        }
+        break;
+      case PlayerStatus.Error:
+        this._errorOccured = true;
+        this.playQueue.getCurrentItem().pause();
+        break;
+    }
+    this._playerStatus = status;
+    this.playerStatusChange.emit(newStatus);
+  }
+
+  private unBindListeners() {
     this._playerSubscriptions.unsubscribe();
     this._playerSubscriptions = new Subscription();
+  }
+
+  private bindListeners(player: IPlayer): void {
+    this.unBindListeners();
 
     this._playerSubscriptions.add(player.currentTimeChange
       .subscribe(currentTime => {
@@ -58,8 +92,8 @@ export class PlayerControllerComponent implements OnInit {
     this._playerSubscriptions.add(
       player.currentTimeChange
         .filter((currentTime: number) => {
-          if (player.duration) {
-            return currentTime >= (player.duration - this._prepareTime);
+          if (player.getDuration()) {
+            return currentTime >= (player.getDuration() - this._prepareTime);
           }
         })
         .subscribe(currentTime => {
@@ -70,15 +104,13 @@ export class PlayerControllerComponent implements OnInit {
     const crossFadeSubscription = this._playerSubscriptions.add(
       player.currentTimeChange
         .filter(currentTime => {
-          const maxFadeDuration = Math.max(this._fadeInDuration, this._fadeOutDuration);
-
-          if (player.duration > maxFadeDuration) {
-            return currentTime >= player.duration - maxFadeDuration;
+          if (player.getDuration() > this._fadeDuration) {
+            return currentTime >= player.getDuration() - this._fadeDuration;
           } else {
             return false;
           }
         })
-        .subscribe(currentTime => {
+        .subscribe(() => {
           crossFadeSubscription.unsubscribe();
           this.crossFade();
         })
@@ -87,163 +119,175 @@ export class PlayerControllerComponent implements OnInit {
     this._playerSubscriptions.add(
       player.statusChange
         .subscribe((status: PlayerStatus) => {
-          if (!this.players.get(player.track.id)) {
-            console.warn('WRONG LISTENER');
-            return;
-          }
-          switch (status) {
-            case PlayerStatus.Playing:
-              this._errorOccured = false;
-              this.playQueue.getCurrentItem().play();
-              break;
-            case PlayerStatus.Paused:
-              this.playQueue.getCurrentItem().pause();
-              break;
-            case PlayerStatus.Ended:
-              if (this.playQueue.hasNextItem()) {
-                this.playQueue.getNextItem().play();
-              } else {
-                this.playQueue.getCurrentItem().stop();
-              }
-              break;
-            case PlayerStatus.Error:
-              this._errorOccured = true;
-              this.playQueue.getCurrentItem().pause();
-              break;
-          }
-          this._playerStatus = status;
-          this.playerStatusChange.emit(status);
+          this.handlePlayerStatusChange(status);
         })
     );
 
-    if (player.duration > 0) {
-      this.playQueue.get(player.track.id).duration = player.duration;
-    } else {
-      this._playerSubscriptions.add(
-        player.durationChange
-          .subscribe(() => {
-            this.playQueue.get(player.track.id).duration = player.duration;
-          })
-      );
-    }
+    this._playerSubscriptions.add(
+      player.durationChange
+        .subscribe(() => {
+          this.playQueue.get(player.track.id).duration = player.getDuration();
+        })
+    );
+
+    this.playQueue.get(player.track.id).duration = player.getDuration();
+    this.handlePlayerStatusChange(player.getStatus());
   }
 
   private crossFade() {
-    const currentPlayer = this.players.first();
-    const nextPlayer = this.players.at(1);
+    const currentPlayer = this._activePlayer;
+    const nextPlayer = this._upcomingPlayer;
 
-    if (nextPlayer && nextPlayer.instance.canPlay) {
-      const maxDurationTime = Math.max(this._fadeOutDuration, this._fadeInDuration);
-      const minDurationTime = Math.min(this._fadeOutDuration, this._fadeInDuration);
-      const waitTimeFadeIn = this._fadeInDuration === maxDurationTime ? 0 : maxDurationTime - minDurationTime;
-      const waitTimeFadeOut = this._fadeOutDuration === maxDurationTime ? 0 : maxDurationTime - minDurationTime;
-
-      setTimeout(() => {
-        currentPlayer.instance.fadeOut(this._fadeOutDuration * 1000);
-      }, waitTimeFadeOut);
-
-      setTimeout(() => {
-        nextPlayer.instance.play();
-        nextPlayer.instance.fadeIn(this._fadeInDuration * 1000);
-      }, waitTimeFadeIn);
-    } else {
-      console.warn('NEXT PALYER IS NOT READY');
+    if (nextPlayer && nextPlayer.instance.isAbleToPlay()) {
+      nextPlayer.instance.play().then(() => {
+        nextPlayer.instance.setVolume(this._volume);
+        nextPlayer.instance.fadeIn(this._fadeDuration * 1000);
+        currentPlayer.instance.fadeOut(this._fadeDuration * 1000);
+      });
     }
   }
-
 
   private prepareNextPlayer() {
     const upcoming: PlayQueueItem = this.playQueue.getNextItem();
-    if (upcoming && !this.players.get(upcoming.id)) {
-      let nextPlayer = this.players.get(upcoming.id);
-      if (!nextPlayer) {
-        nextPlayer = this.createPlayer(upcoming);
+
+    if (upcoming) {
+      if (this._upcomingPlayer && this._upcomingPlayer.instance.track.id === upcoming.track.id) {
+        // Player is already prepared for the next track so do nothig
+        return;
+      } else {
+        if (this._upcomingPlayer) {
+          // Upcoming track has been changed so remove the previous prepared player
+          this.removePlayer(this._upcomingPlayer);
+        }
+        this._upcomingPlayer = this._playerFactory.createPlayer(upcoming);
+        this._upcomingPlayer.instance.addClass('upcoming');
       }
-      this.players.addAsNext(nextPlayer);
     }
   }
 
+  private setPlayQueueItemToStopped(track: Track) {
+    const playQueueItem = this.playQueue.get(track.id);
+    if (playQueueItem && playQueueItem.status === PlayQueueItemStatus.RequestedStop) {
+      playQueueItem.status = PlayQueueItemStatus.Stopped;
     }
+  }
+
+  private activatePlayer(newPlayer: ComponentRef<IPlayer>, oldPlayer?: ComponentRef<IPlayer>, startTime?: number, canPlay: boolean = true) {
+    this.unBindListeners();
+
+    if (oldPlayer) {
+      this.removePlayer(oldPlayer);
+    }
+
+    newPlayer.instance.setVolume(this._volume);
+
+    if (canPlay) {
+      newPlayer.instance.play(startTime);
+    } else {
+      newPlayer.instance.seekTo(startTime);
+    }
+
+    newPlayer.instance.removeClass('upcoming');
+    newPlayer.instance.addClass('active');
+
+    this.bindListeners(newPlayer.instance);
+
+    this._activePlayer = newPlayer;
+    this._upcomingPlayer = null;
+  }
+
+  private reusePlayer(existingPlayer: ComponentRef<IPlayer>, playQueueItem: PlayQueueItem, startTime?: number) {
+    this.setPlayQueueItemToStopped(existingPlayer.instance.track);
+    existingPlayer.instance.updateTrack(playQueueItem.track).then(() => {
+      this.activatePlayer(existingPlayer, this._upcomingPlayer, startTime);
+    });
+  }
+
+  private removePlayer(player: ComponentRef<IPlayer>) {
+    this.setPlayQueueItemToStopped(player.instance.track);
+    player.instance.removeClass('upcoming');
+    player.instance.removeClass('active');
+    this._playerFactory.destroyPlayer(player);
   }
 
   private startPlayerFor(playQueueItem: PlayQueueItem, startTime: number = 0) {
-    const activePlayer = this.players.first();
-    let player: PlayerModel = this.players.get(playQueueItem.id);
+    const activePlayer: ComponentRef<IPlayer> = this._activePlayer;
+    const nextPlayer: ComponentRef<IPlayer> = this._upcomingPlayer;
 
-    // For continuous playback we have to reuse the same playerinstance
-    // Browsers don't allow to start a new audio/video player when the tab is in the background
-    if (this.shallReusePlayerInstance(activePlayer, player)) {
-      this._playerSubscriptions.unsubscribe();
-      activePlayer.instance.updateTrack(playQueueItem.track);
-      this.bindListeners(activePlayer.instance);
-      return;
-    }
-
-    // No player instance is available so create a new component
-    if (!player) {
-      player = this.createPlayer(playQueueItem);
-      this.players.add(player);
-    }
-
-    // Another player is currently active so it has to be stopped
-    if (activePlayer && activePlayer !== player) {
-      if (this._playerSubscriptions) {
-        this._playerSubscriptions.unsubscribe();
-      }
-      activePlayer.instance.deInitialize();
-      activePlayer.component.destroy();
-      this.players.remove(activePlayer);
-    }
-
-    if (this._errorOccured) {
-      player.instance.deInitialize();
-      player.instance.initialise();
-    }
-
-    // Set new player active
-    this.players.setActive(player);
-    if (player.instance.status !== PlayerStatus.Playing) {
-      player.instance.play(startTime);
-    }
-    this.bindListeners(player.instance);
-  }
-
-  private pausePlayerFor(playQueueItem: PlayQueueItem) {
-    const player = this.players.get(playQueueItem.id);
-    if (player) {
-      player.instance.pause();
+    if (activePlayer && activePlayer.instance.track.id === playQueueItem.track.id) {
+      /*
+       * 1. PlayQueueItem track id is the one from current player -> just trigger play
+       */
+      activePlayer.instance.setVolume(this._volume);
+      activePlayer.instance.play(startTime);
+      activePlayer.instance.addClass('active');
+    } else if (nextPlayer && nextPlayer.instance.track.id === playQueueItem.track.id && nextPlayer.instance.isAbleToPlay()) {
+      /*
+       * 2. NextPlayer for PlayQueueTrack does exist and is able to play so start that one
+       */
+      this.activatePlayer(nextPlayer, activePlayer);
+    } else if (activePlayer && this._playerFactory.canReusePlayer(activePlayer, playQueueItem)) {
+      /*
+       * 3. Existing player does exist and can be reused
+       */
+      this.reusePlayer(activePlayer, playQueueItem, startTime);
+    } else {
+      /*
+       * 4. Create a new player
+       */
+      const newPlayer = this._playerFactory.createPlayer(playQueueItem);
+      this.activatePlayer(newPlayer, activePlayer, startTime);
     }
   }
 
-  private stopPlayerFor(playQueueItem: PlayQueueItem) {
-    const player = this.players.get(playQueueItem.id);
-    if (player) {
-      player.instance.stop();
+  private pausePlayer() {
+    if (this._activePlayer) {
+      this._activePlayer.instance.pause();
+    }
+
+    // In case pause is triggered during the crossfade progress
+    // make sure that the upcoming player ist stopped so it starts from the beginning when
+    if (this._upcomingPlayer) {
+      this._upcomingPlayer.instance.stop();
+    }
+  }
+
+  private stopPlayer() {
+    if (this._activePlayer) {
+      this._activePlayer.instance.stop();
     }
   }
 
   private reactOnPlayQueueChange(item: PlayQueueItem): void {
     switch (item.status) {
-      case PlayQueueItemStatus.Playing:
+      case PlayQueueItemStatus.RequestedPlaying:
         this.startPlayerFor(item, item.progress);
         break;
-      case PlayQueueItemStatus.Stopped:
-        this.stopPlayerFor(item);
+      case PlayQueueItemStatus.RequestedStop:
+        this.stopPlayer();
         break;
-      case PlayQueueItemStatus.Paused:
-        this.pausePlayerFor(item);
+      case PlayQueueItemStatus.RequestedPause:
+        this.pausePlayer();
         break;
     }
   }
 
+  public hasActivePlayer(): boolean {
+    return !!this._activePlayer;
+  }
+
   ngOnInit(): void {
+    this._playerFactory.setContainer(this.container);
+
+    this.playQueue.setLoopPlayQueue(true);
     this.playQueue.on('change:status', this.reactOnPlayQueueChange, this);
     this.playQueue.on('add', () => {
-      const currentItem = this.playQueue.getCurrentItem();
-      if (currentItem && this.players.length === 0) {
-        const player = this.createPlayer(currentItem);
-        this.players.add(player);
+      const firstPlayQueueItem = this.playQueue.getPausedItem() || this.playQueue.getPlayingItem();
+      if (!this._activePlayer && firstPlayQueueItem) {
+        const firstPlayer = this._playerFactory.createPlayer(firstPlayQueueItem);
+        this.activatePlayer(firstPlayer, this._activePlayer, firstPlayQueueItem.progress, false);
       }
     });
+
   }
 }
