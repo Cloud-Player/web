@@ -67,11 +67,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getPlayingItem(): TModel {
-    return this.findWhere({status: PlayQueueItemStatus.Playing});
+    return this.find(item => item.isPlaying());
   }
 
   getPausedItem(): TModel {
-    return this.findWhere({status: PlayQueueItemStatus.Paused});
+    return this.find(item => item.isPaused());
   }
 
   getCurrentItem(): TModel {
