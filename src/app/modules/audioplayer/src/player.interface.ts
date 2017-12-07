@@ -18,11 +18,11 @@ export interface IPlayer {
 
   initialisePlayer(): Promise<any>;
 
+  initialise(): Promise<any>;
+
   bindListeners(): void;
 
   unBindListeners(): void;
-
-  initialise(): void;
 
   deInitialize(): void;
 
