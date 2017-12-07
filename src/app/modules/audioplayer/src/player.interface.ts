@@ -1,44 +1,46 @@
-import {EventEmitter} from '@angular/core';
+import {ElementRef, EventEmitter} from '@angular/core';
 import {Track} from '../../tracks/models/track.model';
 import {Observable} from 'rxjs/Observable';
 
 export interface IPlayer {
-  readonly duration: number;
-  readonly status: number;
-  readonly currentTime: number;
-  readonly isInitialised: boolean;
-  readonly canPlay: boolean;
   durationChange: EventEmitter<{}>;
   statusChange: EventEmitter<{}>;
   currentTimeChange: EventEmitter<{}>;
   track: Track;
-  volume: number;
 
-  initialisePlayerSDK(): Promise<any>;
+  getDuration(): number;
 
-  initialisePlayer(): Promise<any>;
+  getStatus(): number;
 
-  initialise(): Promise<any>;
+  getCurrentTime(): number;
 
-  bindListeners(): void;
+  isAbleToPlay(): boolean;
 
-  unBindListeners(): void;
+  initialise(options?: { preload: boolean }): Promise<any>;
 
   deInitialize(): void;
 
   preload(): void;
 
-  play(from?: number): void;
+  play(from?: number): Promise<any>;
 
-  pause(): void;
+  pause(): Promise<any>;
 
-  stop();
+  stop(): Promise<any>;
 
-  seekTo(to: number): void;
+  seekTo(to: number): Promise<any>;
+
+  setVolume(volume: number): void;
+
+  getVolume(volume: number): void;
 
   fadeIn(duration: number): Observable<number>;
 
   fadeOut(duration: number): Observable<number>;
 
-  updateTrack(track: Track);
+  updateTrack(track: Track): Promise<any>;
+
+  addClass(className: string): void;
+
+  removeClass(className: string|RegExp): void;
 }
