@@ -109,6 +109,12 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     return !!this.getCurrentItem();
   }
 
+  getRequestedPlayingItem() {
+    return this.find((playQueueItem) => {
+      return playQueueItem.status === PlayQueueItemStatus.RequestedPlaying;
+    });
+  }
+
   getNextItem(): PlayQueueItem {
     if (this.hasNextItem()) {
       const total = this.length;
