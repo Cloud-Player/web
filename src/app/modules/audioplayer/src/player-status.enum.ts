@@ -1,11 +1,12 @@
 export enum PlayerStatus {
   NotInitialised,
-  Idle,
+  Initialised,
   Waiting,
   Ready,
   Playing,
   Stopped,
   Paused,
   Ended,
+  Updating,
   Error
 }
