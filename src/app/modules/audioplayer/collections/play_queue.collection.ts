@@ -102,7 +102,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   hasPreviousItem(): boolean {
-    return this.playIndex > 0;
+    return this._playIndex > 0;
   }
 
   hasCurrentItem(): boolean {
@@ -119,7 +119,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
 
   getPreviousItem(): PlayQueueItem {
     if (this.hasPreviousItem()) {
-      return this.at(this.playIndex - 1);
+      return this.at(this._playIndex - 1);
     }
   }
 
@@ -158,7 +158,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     const scheduledItem = this.find((item: TModel) => {
       return item.isScheduled();
     });
-    if (scheduledItem && this.indexOf(scheduledItem) < this.playIndex) {
+    if (scheduledItem && this.indexOf(scheduledItem) < this._playIndex) {
       scheduledItem.stop();
       this.stopScheduledItemsBeforeCurrentItem();
     }
@@ -167,7 +167,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   scheduleStoppedItemsAfterCurrentItem(scheduledItem: TModel): void {
     if (scheduledItem && scheduledItem.isStopped()) {
       const index = this.indexOf(scheduledItem);
-      if (index > this.playIndex) {
+      if (index > this._playIndex) {
         scheduledItem.set('status', PlayQueueItemStatus.Scheduled);
         this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
       }
