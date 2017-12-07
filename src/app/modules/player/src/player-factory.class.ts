@@ -9,6 +9,7 @@ import {keys} from 'underscore';
 import {PlayerStore} from '../collections/player-store';
 import {PlayerStoreItem} from '../models/player-store-item';
 import {PlayQueueItem} from '../models/play-queue-item';
+import {YoutubePlayerComponent} from '../components/youtube-player/youtube-player';
 
 @Injectable()
 export class PlayerFactory {
@@ -21,7 +22,8 @@ export class PlayerFactory {
     this._resolver = resolver;
 
     this._playerComponentMap = {
-      SOUNDCLOUD: SoundcloudPlayerComponent
+      SOUNDCLOUD: SoundcloudPlayerComponent,
+      YOUTUBE: YoutubePlayerComponent
     };
   }
 

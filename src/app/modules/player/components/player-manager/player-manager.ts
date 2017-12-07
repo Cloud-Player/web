@@ -12,13 +12,15 @@ import {PlayerFactory} from '../../src/player-factory.class';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
+import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 
 @Component({
   selector: 'app-player-manager',
   styleUrls: ['./player-manager.scss'],
   templateUrl: './player-manager.html',
   entryComponents: [
-    SoundcloudPlayerComponent
+    SoundcloudPlayerComponent,
+    YoutubePlayerComponent
   ]
 })
 export class PlayerManagerComponent implements OnInit {

@@ -8,6 +8,7 @@ import {PlayerControlsComponent} from './components/player-controls/player-contr
 import {PlayerComponent} from './components/player/player';
 import {PlayerManagerComponent} from './components/player-manager/player-manager';
 import {PlayQueueComponent} from './components/playqueue/playqueue';
+import {YoutubePlayerComponent} from './components/youtube-player/youtube-player';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import {PlayQueueComponent} from './components/playqueue/playqueue';
     PlayerControlsComponent,
     PlayQueueComponent,
     SoundcloudPlayerComponent,
+    YoutubePlayerComponent,
     PlayerManagerComponent,
     PlayerComponent
   ],
