@@ -36,4 +36,10 @@
       }
     }
   }
+
+  .no-items{
+    .track-item{
+      display: none;
+    }
+  }
 }
