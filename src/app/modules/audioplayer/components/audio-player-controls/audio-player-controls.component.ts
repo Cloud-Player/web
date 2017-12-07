@@ -84,8 +84,9 @@ export class AudioPlayerControlsComponent implements OnInit {
   }
 
   public previous(): void {
-    if (this.currentItem && this.currentItem.progress > 1) {
-      this.currentItem.restart();
+    const playingItem = this.playQueue.getPlayingItem();
+    if (playingItem && playingItem.progress > 3) {
+      playingItem.restart();
       this.userAnalyticsService.trackEvent('restart_track', 'click', 'app-audio-player-controls-cmp');
     } else if (this.playQueue.hasPreviousItem()) {
       this.playQueue.getPreviousItem().play();
