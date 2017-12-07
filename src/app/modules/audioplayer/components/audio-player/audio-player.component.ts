@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
-import {PlayerStatus} from '../../enums/player-status';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import * as localforage from 'localforage';
-import {PlayQueueItemStatus} from '../../enums/playqueue-item-status';
 import {debounce, throttle} from 'underscore';
+import {PlayerStatus} from '../../src/player-status.enum';
+import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 
 @Component({
   selector: 'app-audio-player',
