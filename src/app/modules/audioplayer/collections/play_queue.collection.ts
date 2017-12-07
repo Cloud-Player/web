@@ -1,7 +1,7 @@
 import {PlayQueueItem} from '../models/play_queue_item.model';
 import {isArray} from 'underscore';
 import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
-import {PlayQueueItemStatus} from '../enums/playqueue-item-status';
+import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 
 export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
   private static _instance: PlayQueue<PlayQueueItem>;
