@@ -59,7 +59,7 @@ export class AudioPlayerControlsComponent implements OnInit {
   public play(): void {
     const currItem = this.playQueue.getCurrentItem();
     if (currItem) {
-      currItem.play();
+      currItem.play(currItem.progress);
       this.userAnalyticsService.trackEvent('play_track', 'click', 'app-audio-player-controls-cmp');
     }
   }
