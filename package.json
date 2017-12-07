@@ -69,6 +69,7 @@
     "@types/node": "^6.0.92",
     "@types/reflect-metadata": "0.0.5",
     "@types/underscore": "^1.7.33",
+    "@types/youtube": "0.0.31",
     "codelyzer": "~4.0.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
