@@ -23,9 +23,6 @@ import {Subscription} from 'rxjs/Subscription';
 })
 
 export class PlayerControllerComponent implements OnInit {
-  private _playerComponentMap = {
-    SOUNDCLOUD: SoundcloudPlayerComponent
-  };
   private _fadeInDuration = 10;
   private _fadeOutDuration = 10;
   private _prepareTime = 30;
@@ -34,11 +31,6 @@ export class PlayerControllerComponent implements OnInit {
   private _errorOccured = false;
   private _playerSubscriptions;
 
-  public players: Players<PlayerModel>;
-
-  public get playerStatus(): PlayerStatus {
-    return this._playerStatus;
-  }
 
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
@@ -49,8 +41,8 @@ export class PlayerControllerComponent implements OnInit {
   @ViewChild('playerContainer', {read: ViewContainerRef}) private container;
 
   constructor(private resolver: ComponentFactoryResolver) {
-    this.players = new Players();
     this._playerSubscriptions = new Subscription();
+    this._playerFactory = new PlayerFactory(this.resolver);
   }
 
   private bindListeners(player: IPlayer): void {
@@ -159,23 +151,6 @@ export class PlayerControllerComponent implements OnInit {
     }
   }
 
-  private createPlayerComponent(item: PlayQueueItem): ComponentRef<IPlayer> {
-    const component: Type<IPlayer> = this._playerComponentMap[item.provider];
-    const factory: ComponentFactory<IPlayer> = this.resolver.resolveComponentFactory(component);
-    const playerComponent: ComponentRef<IPlayer> = this.container.createComponent(factory);
-    playerComponent.instance.track = item.track;
-    playerComponent.instance.volume = this._volume;
-    return playerComponent;
-  }
-
-  private createPlayer(playQueueItem: PlayQueueItem): PlayerModel {
-    const playerComponent: ComponentRef<IPlayer> = this.createPlayerComponent(playQueueItem);
-    const player = new PlayerModel();
-    player.trackId = playQueueItem.id;
-    player.component = playerComponent;
-    player.instance = playerComponent.instance;
-    return player;
-  }
 
   private prepareNextPlayer() {
     const upcoming: PlayQueueItem = this.playQueue.getNextItem();
@@ -188,17 +163,6 @@ export class PlayerControllerComponent implements OnInit {
     }
   }
 
-  private shallReusePlayerInstance(currentPlayer: PlayerModel, nextPlayer: PlayerModel) {
-    if (currentPlayer && nextPlayer && currentPlayer.instance) {
-      const currentPlayerInstance = currentPlayer.instance;
-      const nextPlayerInstance = nextPlayer.instance;
-      return (
-        currentPlayerInstance instanceof nextPlayerInstance.constructor &&
-        currentPlayerInstance.track.id !== nextPlayerInstance.track.id &&
-        nextPlayerInstance.status !== PlayerStatus.Playing
-      );
-    } else {
-      return false;
     }
   }
 
