@@ -6,6 +6,7 @@ import {PlayQueueItemStatus} from '../enums/playqueue-item-status';
 export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
   private static _instance: PlayQueue<PlayQueueItem>;
   private _playIndex = 0;
+  private _loopPlayQueue = false;
 
   model: any = PlayQueueItem;
 
@@ -93,7 +94,11 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   hasNextItem(): boolean {
-    return this.playIndex < this.length - 1;
+    if (this._loopPlayQueue) {
+      return true;
+    } else {
+      return this._playIndex < this.length - 1;
+    }
   }
 
   hasPreviousItem(): boolean {
@@ -106,7 +111,9 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
 
   getNextItem(): PlayQueueItem {
     if (this.hasNextItem()) {
-      return this.at(this.playIndex + 1);
+      const total = this.length;
+      const next = (total + this._playIndex + 1) % total;
+      return this.at(next);
     }
   }
 
@@ -167,6 +174,8 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     }
   }
 
+  setLoopPlayQueue(allowedToLoop: boolean) {
+    this._loopPlayQueue = allowedToLoop;
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {
