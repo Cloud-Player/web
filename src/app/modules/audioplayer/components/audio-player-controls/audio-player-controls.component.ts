@@ -1,13 +1,13 @@
 declare let MediaMetadata: any;
 
 import {Component, Input, OnInit} from '@angular/core';
-import {PlayQueueItemStatus} from '../../enums/playqueue-item-status';
 import {PlayQueue} from '../../collections/play_queue.collection';
 import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {Track} from '../../../tracks/models/track.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
+import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 
 @Component({
   selector: 'app-audio-player-controls',
