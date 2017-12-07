@@ -4,18 +4,17 @@ import {SoundcloudCollection} from '../../shared/collections/soundcloud.collecti
 import {PlayQueueItemStatus} from '../enums/playqueue-item-status';
 
 export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
-  private static instance: PlayQueue<PlayQueueItem>;
-
-  private playIndex = 0;
+  private static _instance: PlayQueue<PlayQueueItem>;
+  private _playIndex = 0;
 
   model: any = PlayQueueItem;
 
   static getInstance(): PlayQueue<PlayQueueItem> {
-    if (PlayQueue.instance) {
-      return PlayQueue.instance;
+    if (PlayQueue._instance) {
+      return PlayQueue._instance;
     } else {
-      PlayQueue.instance = new PlayQueue();
-      return PlayQueue.instance;
+      PlayQueue._instance = new PlayQueue();
+      return PlayQueue._instance;
     }
   }
 
