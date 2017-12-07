@@ -114,7 +114,7 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this.playQueue.on('change:status', (model: PlayQueueItem, status: PlayQueueItemStatus) => {
-      if (status === PlayQueueItemStatus.Playing) {
+      if (status === PlayQueueItemStatus.RequestedPlaying) {
         this.currentItem = this.playQueue.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
       }
