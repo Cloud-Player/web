@@ -41,22 +41,27 @@ export class PlayTrackOnEventDirective implements OnInit {
   }
 
   play(): void {
-    this.playQueue.filter((model) => {
-      return !model.isQueued();
-    }).forEach((model) => {
-      this.playQueue.remove(model);
-    });
-
-    if (this.tracks) {
-      this.tracks.forEach((track: Track) => {
-        if (!this.playQueue.get(track)) {
-          this.playQueue.add({track: track});
-        }
+    const existingPlayQueueItem = this.playQueue.get(this.track.id);
+    if (existingPlayQueueItem) {
+      existingPlayQueueItem.play();
+    } else {
+      this.playQueue.filter((model) => {
+        return !model.isQueued();
+      }).forEach((model) => {
+        this.playQueue.remove(model);
       });
-    }
 
-    const playQueueItem = this.playQueue.add({track: this.track});
-    playQueueItem.play();
+      if (this.tracks) {
+        this.tracks.forEach((track: Track, index) => {
+          if (!this.playQueue.get(track)) {
+            this.playQueue.add({track: track});
+          }
+        });
+      }
+
+      const playQueueItem: PlayQueueItem = this.playQueue.add({track: this.track});
+      playQueueItem.play();
+    }
   }
 
   pause(): void {
