@@ -107,8 +107,9 @@ export class AudioPlayerControlsComponent implements OnInit {
 
   public playTrackFromPosition(from: number) {
     const currItem = this.playQueue.getCurrentItem();
-    currItem.pause();
-    currItem.play(from);
+    if (currItem) {
+      currItem.seekTo(from);
+    }
   }
 
   ngOnInit(): void {
