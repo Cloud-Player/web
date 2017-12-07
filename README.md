@@ -60,3 +60,6 @@ Thanks to the new [chrome mobile session API](https://developers.google.com/web/
 ## Disclaimer
 We are neither related to SoundCloud nor was this build on behalf of SoundCloud
 
+## License
+[GNU GPLv3](./LICENSE.md)
+
