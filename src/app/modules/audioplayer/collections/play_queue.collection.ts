@@ -29,6 +29,23 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     return allItems;
   }
 
+  private prepareItem(item: any): PlayQueueItem {
+    if (!item.id && item instanceof PlayQueueItem) {
+      item.set('id', item.track.id);
+    } else if (!item.id) {
+      item.id = item.track.id;
+    }
+    return item;
+  }
+
+  private setPlayIndex(): number {
+    const currentPlaylingItem = this.getPlayingItem();
+    if (currentPlaylingItem) {
+      this._playIndex = this.indexOf(currentPlaylingItem);
+    }
+    return this._playIndex;
+  }
+
   getScheduledItemsJSON(maxItems: number): Array<{}> {
     const allItems: Array<{}> = [],
       queuedItems = this.getQueuedItems(),
@@ -129,15 +146,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getPlayIndex(): number {
-    return this.playIndex;
-  }
-
-  setPlayIndex(): number {
-    const currentPlaylingItem = this.getCurrentItem();
-    if (currentPlaylingItem) {
-      this.playIndex = this.indexOf(currentPlaylingItem);
-    }
-    return this.playIndex;
+    return this._playIndex;
   }
 
   ensureQueuingOrder(): void {
@@ -170,13 +179,6 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     }
   }
 
-  private prepareItem(item: any): PlayQueueItem {
-    if (!item.id && item instanceof PlayQueueItem) {
-      item.set('id', item.track.id);
-    } else if (!item.id) {
-      item.id = item.track.id;
-    }
-    return item;
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {
