@@ -3,9 +3,11 @@ import {SoundcloudModel} from '../../shared/models/soundcloud.model';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
-import {PlayQueueItemStatus} from '../enums/playqueue-item-status';
+import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
+import {isNumber} from 'underscore';
 
 export class PlayQueueItem extends SoundcloudModel {
+  private _promisePerState = {};
 
   @attributesKey('status')
   @defaultValue(PlayQueueItemStatus.Scheduled)
@@ -27,6 +29,28 @@ export class PlayQueueItem extends SoundcloudModel {
   @defaultValue(0)
   duration: number;
 
+  private resolveOnStatus(requestedStatus): Promise<any> {
+    if (!this._promisePerState[requestedStatus]) {
+      this._promisePerState[requestedStatus] = new Promise(resolve => {
+        if (this.status === requestedStatus) {
+          resolve();
+          this._promisePerState[requestedStatus] = null;
+        } else {
+          const statusListener = () => {
+            if (this.status === requestedStatus) {
+              this.off('change:status', statusListener, this);
+              resolve();
+              this._promisePerState[requestedStatus] = null;
+            }
+          };
+          this.on('change:status', statusListener, this);
+        }
+      });
+    }
+
+    return this._promisePerState[requestedStatus];
+  }
+
   queue(): void {
     this.status = PlayQueueItemStatus.Queued;
   }
@@ -35,30 +59,42 @@ export class PlayQueueItem extends SoundcloudModel {
     this.status = PlayQueueItemStatus.Scheduled;
     if (this.collection) {
       const collection = this.collection;
-      collection.remove(this);
-      collection.add(this);
+      collection.remove(this, {silent: true});
+      collection.add(this, {silent: true});
     }
   }
 
-  play(startTime?: number): void {
-    if (startTime) {
+  play(startTime?: number): Promise<any> {
+    if (isNumber(startTime)) {
       this.progress = startTime;
     }
-    this.status = PlayQueueItemStatus.Playing;
+    this.status = PlayQueueItemStatus.RequestedPlaying;
+    return this.resolveOnStatus(PlayQueueItemStatus.Playing);
   }
 
-  pause(): void {
-    this.status = PlayQueueItemStatus.Paused;
+  pause(): Promise<any> {
+    this.status = PlayQueueItemStatus.RequestedPause;
+    return this.resolveOnStatus(PlayQueueItemStatus.Paused);
   }
 
-  stop(): void {
-    this.status = PlayQueueItemStatus.Stopped;
+  stop(): Promise<any> {
+    this.status = PlayQueueItemStatus.RequestedStop;
     this.progress = 0;
+    return this.resolveOnStatus(PlayQueueItemStatus.Stopped);
   }
 
-  restart(): void {
-    this.stop();
-    this.play();
+  seekTo(to: number): Promise<any> {
+    if (this.isPlaying()) {
+      return this.pause().then(() => {
+        return this.play(to);
+      });
+    } else {
+      return this.play(to);
+    }
+  }
+
+  restart(): Promise<any> {
+    return this.seekTo(0);
   }
 
   isQueued(): boolean {
@@ -66,15 +102,15 @@ export class PlayQueueItem extends SoundcloudModel {
   }
 
   isPlaying(): boolean {
-    return this.status === PlayQueueItemStatus.Playing;
+    return this.status === PlayQueueItemStatus.Playing || this.status === PlayQueueItemStatus.RequestedPlaying;
   }
 
   isPaused(): boolean {
-    return this.status === PlayQueueItemStatus.Paused;
+    return this.status === PlayQueueItemStatus.Paused || this.status === PlayQueueItemStatus.RequestedPause;
   }
 
   isStopped(): boolean {
-    return this.status === PlayQueueItemStatus.Stopped;
+    return this.status === PlayQueueItemStatus.Stopped || this.status === PlayQueueItemStatus.RequestedStop;
   }
 
   isScheduled(): boolean {
