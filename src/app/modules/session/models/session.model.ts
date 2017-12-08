@@ -67,8 +67,7 @@ export class Session extends SoundcloudModel {
           version: 2
         }
       }).then((rsp) => {
-        const data = rsp.json();
-        this.set(data);
+        this.set(rsp);
         return this;
       });
     } else {

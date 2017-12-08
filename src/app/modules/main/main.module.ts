@@ -7,7 +7,7 @@ import {TracksModule} from '../tracks/tracks.module';
 import {DashboardModule} from '../dashboard/dashboard.module';
 import {MainComponent} from './components/main/main.component';
 import {MainRoutingModule} from './main.routes';
-import {AudioPlayerModule} from '../audioplayer/audio-player.module';
+import {PlayerModule} from '../player/player.module';
 import {SessionModule} from '../session/session.module';
 import {UsersModule} from '../users/users.module';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
@@ -25,10 +25,10 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     BackboneModule,
+    PlayerModule,
     TracksModule,
     DashboardModule,
     MainRoutingModule,
-    AudioPlayerModule,
     SessionModule,
     UsersModule,
     PlaylistModule,

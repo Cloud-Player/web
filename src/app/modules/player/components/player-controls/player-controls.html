@@ -1,0 +1,67 @@
+<div class="audio-player-controls">
+
+  <div class="button-container">
+    <button class="btn prev"
+            type="button"
+            [disabled]="!playQueue.hasPreviousItem() && currentItem.progress < 1"
+            (click)="previous()">
+      <i class="fa fa-backward" aria-hidden="true"></i>
+    </button>
+
+    <button class="btn btn-round btn-brand play"
+            *ngIf="!playQueue.getPlayingItem()"
+            type="button"
+            [disabled]="!playQueue.getCurrentItem()"
+            (click)="play()">
+      <i class="fa fa-play" aria-hidden="true"></i>
+    </button>
+
+    <button class="btn btn-round btn-brand pause"
+            *ngIf="playQueue.getPlayingItem()"
+            type="button"
+            (click)="pause()">
+      <i class="fa fa-pause" aria-hidden="true"></i>
+    </button>
+
+    <button class="btn next"
+            type="button"
+            [disabled]="!playQueue.hasNextItem()"
+            (click)="next()">
+      <i class="fa fa-forward" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <app-range-slider class="time"
+                    [min]="0"
+                    [max]="currentItem.duration"
+                    [value]="currentItem.progress"
+                    [step]="0.01"
+                    [transformDisplayValue]="transformProgressBarValues"
+                    [showCurrentValue]="true"
+                    [isLoading]="isBuffering"
+                    (valueChanged)="playTrackFromPosition($event)">
+  </app-range-slider>
+
+  <div *ngIf="currentItem.track.id" class="meta">
+    <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
+    <div class="details"
+         appDraggable="true"
+         [dragData]="currentItem.track.toJSON()"
+         [dragImageUrl]="currentItem.track.image.getSmallSize()"
+         dragEffect="copy">
+      <b class="track-title">{{currentItem.track.title}}</b>
+      <div class="artist">{{currentItem.track.user.username}}</div>
+    </div>
+  </div>
+
+  <div *ngIf="!currentItem.track.id"
+       class="dummy meta">
+    <i class="fa fa-heart-o"
+       aria-hidden="true"></i>
+    <div class="details">
+      <b class="track-title"></b>
+      <div class="artist"></div>
+    </div>
+  </div>
+
+</div>

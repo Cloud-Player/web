@@ -32,6 +32,7 @@ import {MultiLineComponent} from './components/multi-line-text/multi-line.compon
 import {LimitCollectionresultsPipe} from './pipes/limit-collection-results.pipe';
 import {FacebookShareButtonComponent} from './components/facebook-share-button/facebook-share-button.component';
 import {TwitterShareButtonComponent} from './components/twitter-share-button/twitter-share-button.component';
+import {EaseService} from './services/ease.service';
 
 @NgModule({
   imports: [
@@ -101,7 +102,10 @@ import {TwitterShareButtonComponent} from './components/twitter-share-button/twi
     KMilShortenerPipe,
     LimitCollectionresultsPipe
   ],
-  providers: [CloudPlayerLogoService]
+  providers: [
+    HumanReadableSecondsPipe,
+    CloudPlayerLogoService
+  ]
 })
 export class SharedModule {
 }

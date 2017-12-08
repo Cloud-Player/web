@@ -4,7 +4,7 @@
   "description": "Free alternative Soundcloud music player based on Angular",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "release": "ng build --prod && npm run sw && cp CNAME ./dist",
     "lint": "ng lint",

@@ -1,0 +1,9 @@
+@import 'variables';
+
+:host{
+  @media (max-width: $screen-xs-max) {
+    app-user-comments{
+      display: none;
+    }
+  }
+}

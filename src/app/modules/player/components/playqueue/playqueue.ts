@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {CoverSizes} from '../../../shared/components/track-cover/track-cover.component';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {PlayQueue} from '../../collections/play-queue';
+import {PlayQueueItem} from '../../models/play-queue-item';
 
 @Component({
   selector: 'app-play-queue',
-  styleUrls: ['./playqueue.style.scss'],
-  templateUrl: './playqueue.template.html'
+  styleUrls: ['./playqueue.scss'],
+  templateUrl: './playqueue.html'
 })
 export class PlayQueueComponent {
   playQueue: PlayQueue<PlayQueueItem>;

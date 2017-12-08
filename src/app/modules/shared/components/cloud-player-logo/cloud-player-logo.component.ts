@@ -16,6 +16,7 @@ export class CloudPlayerLogoComponent implements OnInit {
   private mainAnimation: Array<SVGSVGElement>;
   private iconAnimationToPlay: any;
   private iconAnimationToPause: any;
+  private isPlaying = false;
 
   constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
     cloudPlayerLogoService.logoState$.subscribe((status: string) => {
@@ -38,25 +39,26 @@ export class CloudPlayerLogoComponent implements OnInit {
   }
 
   play(): void {
-    if (this.mainAnimation && this.animate) {
+    if (this.mainAnimation && this.animate && !this.isPlaying) {
       this.mainAnimation.forEach((el: any) => {
         el.beginElement(el.getCurrentTime());
       });
       this.iconAnimationToPause.forEach((el: any) => {
         el.beginElement();
       });
-
+      this.isPlaying = true;
     }
   }
 
   pause(): void {
-    if (this.mainAnimation && this.animate) {
+    if (this.mainAnimation && this.animate && this.isPlaying) {
       this.mainAnimation.forEach((el: any) => {
         el.endElement();
       });
       this.iconAnimationToPlay.forEach((el: any) => {
         el.beginElement();
       });
+      this.isPlaying = false;
     }
   }
 }

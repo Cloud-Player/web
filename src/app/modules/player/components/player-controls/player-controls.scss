@@ -1,0 +1,170 @@
+@import 'variables';
+
+:host {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  padding: 0 10px;
+  position: relative;
+
+  .button-container {
+    padding-top: 12px;
+
+    .next, .prev {
+      border: none;
+      font-size: 24px;
+      background: none;
+      vertical-align: middle;
+      box-shadow: none;
+
+      &:hover {
+        color: grey;
+      }
+
+      &:disabled {
+        pointer-events: none;
+      }
+    }
+
+    .play, .pause {
+      width: 60px;
+      height: 60px;
+      border: none;
+      font-size: 28px;
+      border-radius: 30px;
+
+      &:disabled {
+        pointer-events: none;
+      }
+    }
+
+    .play i {
+      padding-left: 3px;
+    }
+  }
+
+  app-range-slider {
+    display: block;
+    margin-top: -5px;
+  }
+
+  div.volume, div.time {
+    display: flex;
+    justify-content: space-around;
+
+    span, i, div {
+      flex: auto;
+      text-align: center;
+    }
+
+    i {
+      font-size: 22px;
+    }
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    padding-right: 10px;
+    padding-bottom: 15px;
+    text-align: left;
+
+    app-toggle-liked-track {
+      padding: 10px;
+    }
+
+    .details {
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      .track-title,
+      .artist {
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .dummy {
+    i {
+      padding: 10px;
+      color: #ccc;
+    }
+
+    .track-title,
+    .artist {
+      background: #efefef;
+      color: transparent;
+      display: block;
+      height: 17px;
+    }
+
+    .track-title {
+      width: 250px;
+      margin-bottom: 4px;
+    }
+
+    .artist {
+      width: 100px;
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    padding-right: 0;
+
+    .button-container {
+      padding: 0;
+
+      .prev,
+      .next {
+        display: none;
+      }
+
+      .play,
+      .pause {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        margin: 0 8px;
+        font-size: inherit;
+        padding: 0;
+        color: inherit;
+        background: none;
+        position: absolute;
+        left: 5px;
+        top: 9px;
+
+        i {
+          font-size: 16px;
+          padding: 6px 9px;
+        }
+      }
+
+      .pause i {
+        padding: 6px 0;
+      }
+    }
+
+    /deep/ app-range-slider {
+      top: -10px;
+      position: absolute;
+      width: 100%;
+      left: 0;
+
+      .min-value,
+      .max-value {
+        display: none;
+      }
+    }
+
+    .meta {
+      padding: 5px 5px 5px 44px !important;
+
+      .artist {
+        display: block;
+      }
+    }
+  }
+}

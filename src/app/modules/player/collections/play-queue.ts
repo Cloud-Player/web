@@ -1,32 +1,22 @@
-import {Status, PlayQueueItem} from '../models/play_queue_item.model';
 import {isArray} from 'underscore';
 import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
+import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
+import {PlayQueueItem} from '../models/play-queue-item';
 
 export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
-  private static instance: PlayQueue<PlayQueueItem>;
-
-  private playIndex = 0;
+  private static _instance: PlayQueue<PlayQueueItem>;
+  private _playIndex = 0;
+  private _loopPlayQueue = false;
 
   model: any = PlayQueueItem;
 
   static getInstance(): PlayQueue<PlayQueueItem> {
-    if (PlayQueue.instance) {
-      return PlayQueue.instance;
+    if (PlayQueue._instance) {
+      return PlayQueue._instance;
     } else {
-      PlayQueue.instance = new PlayQueue();
-      return PlayQueue.instance;
+      PlayQueue._instance = new PlayQueue();
+      return PlayQueue._instance;
     }
-  }
-
-  private getMiniItem(playQueueItem: PlayQueueItem): {} {
-    const mini = playQueueItem.toJSON();
-    mini.track = {
-      id: mini.track.id
-    };
-    if (mini.status === Status.Playing) {
-      mini.status = Status.Paused;
-    }
-    return mini;
   }
 
   private pushMiniItems(items: Array<PlayQueueItem>, allItems: Array<any>, maxItems?: number): Array<any> {
@@ -34,9 +24,26 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
       if (maxItems && allItems.length > maxItems) {
         return;
       }
-      allItems.push(this.getMiniItem(item));
+      allItems.push(item.toMiniJSON());
     });
     return allItems;
+  }
+
+  private prepareItem(item: any): PlayQueueItem {
+    if (!item.id && item instanceof PlayQueueItem) {
+      item.set('id', item.track.id);
+    } else if (!item.id) {
+      item.id = item.track.id;
+    }
+    return item;
+  }
+
+  private setPlayIndex(): number {
+    const currentPlaylingItem = this.getPlayingItem();
+    if (currentPlaylingItem) {
+      this._playIndex = this.indexOf(currentPlaylingItem);
+    }
+    return this._playIndex;
   }
 
   getScheduledItemsJSON(maxItems: number): Array<{}> {
@@ -50,7 +57,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getQueuedItems(): TModel[] {
-    return this.where({status: Status.Queued});
+    return this.where({status: PlayQueueItemStatus.Queued});
   }
 
   getScheduledItems(): TModel[] {
@@ -60,15 +67,15 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getPlayingItem(): TModel {
-    return this.findWhere({status: Status.Playing});
+    return this.find(item => item.isPlaying());
   }
 
   getPausedItem(): TModel {
-    return this.findWhere({status: Status.Paused});
+    return this.find(item => item.isPaused());
   }
 
   getCurrentItem(): TModel {
-    return this.findWhere({status: Status.Playing}) || this.findWhere({status: Status.Paused});
+    return this.at(this._playIndex);
   }
 
   getItem(): TModel {
@@ -87,26 +94,38 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   hasNextItem(): boolean {
-    return this.playIndex < this.length - 1;
+    if (this._loopPlayQueue) {
+      return true;
+    } else {
+      return this._playIndex < this.length - 1;
+    }
   }
 
   hasPreviousItem(): boolean {
-    return this.playIndex > 0;
+    return this._playIndex > 0;
   }
 
   hasCurrentItem(): boolean {
     return !!this.getCurrentItem();
   }
 
+  getRequestedPlayingItem() {
+    return this.find((playQueueItem) => {
+      return playQueueItem.status === PlayQueueItemStatus.RequestedPlaying;
+    });
+  }
+
   getNextItem(): PlayQueueItem {
     if (this.hasNextItem()) {
-      return this.at(this.playIndex + 1);
+      const total = this.length;
+      const next = (total + this._playIndex + 1) % total;
+      return this.at(next);
     }
   }
 
   getPreviousItem(): PlayQueueItem {
     if (this.hasPreviousItem()) {
-      return this.at(this.playIndex - 1);
+      return this.at(this._playIndex - 1);
     }
   }
 
@@ -128,15 +147,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   }
 
   getPlayIndex(): number {
-    return this.playIndex;
-  }
-
-  setPlayIndex(): number {
-    const currentPlaylingItem = this.getCurrentItem();
-    if (currentPlaylingItem) {
-      this.playIndex = this.indexOf(currentPlaylingItem);
-    }
-    return this.playIndex;
+    return this._playIndex;
   }
 
   ensureQueuingOrder(): void {
@@ -153,7 +164,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
     const scheduledItem = this.find((item: TModel) => {
       return item.isScheduled();
     });
-    if (scheduledItem && this.indexOf(scheduledItem) < this.playIndex) {
+    if (scheduledItem && this.indexOf(scheduledItem) < this._playIndex) {
       scheduledItem.stop();
       this.stopScheduledItemsBeforeCurrentItem();
     }
@@ -162,20 +173,15 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
   scheduleStoppedItemsAfterCurrentItem(scheduledItem: TModel): void {
     if (scheduledItem && scheduledItem.isStopped()) {
       const index = this.indexOf(scheduledItem);
-      if (index > this.playIndex) {
-        scheduledItem.set('status', Status.Scheduled);
+      if (index > this._playIndex) {
+        scheduledItem.set('status', PlayQueueItemStatus.Scheduled);
         this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
       }
     }
   }
 
-  private prepareItem(item: any): PlayQueueItem {
-    if (!item.id && item instanceof PlayQueueItem) {
-      item.set('id', item.track.id);
-    } else if (!item.id) {
-      item.id = item.track.id;
-    }
-    return item;
+  setLoopPlayQueue(allowedToLoop: boolean) {
+    this._loopPlayQueue = allowedToLoop;
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {
@@ -221,6 +227,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollectio
       }
 
       if (queueItem.isStopped()) {
+        queueItem.progress = 0;
         this.scheduleStoppedItemsAfterCurrentItem(queueItem);
       }
     });

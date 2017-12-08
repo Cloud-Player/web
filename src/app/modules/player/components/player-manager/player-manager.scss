@@ -1,0 +1,24 @@
+@import 'variables';
+
+:host {
+  .player-controller {
+    height: 0;
+    overflow: hidden;
+
+    &.has-players {
+      height: 320px;
+    }
+
+    /deep/ .player {
+      display: none;
+
+      &.active{
+        display: block;
+      }
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+}

@@ -1,0 +1,45 @@
+@import 'variables';
+
+:host{
+  @media only screen and (min-width: 320px) {
+    .player {
+      width: 320px;
+      position: relative;
+      box-shadow: 0 8px 8px 0 #c8c8c8;
+      z-index: 99;
+
+      .track-item {
+        box-shadow: 0 2px 8px 0 #c8c8c8;
+        position: relative;
+        z-index: 1;
+        background: white;
+      }
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    position: fixed;
+    bottom: 40px;
+    width: 100vw;
+    z-index: 2;
+
+    .player {
+      width: 100%;
+      box-shadow: none;
+
+      .track-item{
+        height: 48px;
+      }
+
+      &.noTrack{
+        display: none;
+      }
+    }
+
+    .no-items{
+      .track-item{
+        display: none;
+      }
+    }
+  }
+}

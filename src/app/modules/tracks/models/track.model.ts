@@ -56,6 +56,19 @@ export class Track extends SoundcloudModel {
     return attrs;
   }
 
+  toMiniJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      duration: this.duration,
+      stream_url: this.streamUrl,
+      artwork_url: this.image.getDefaultSize(),
+      user: {
+        username: this.user.username
+      }
+    };
+  }
+
   initialize(): void {
     if (this.id) {
       this.comments.setTrackId(this.id);

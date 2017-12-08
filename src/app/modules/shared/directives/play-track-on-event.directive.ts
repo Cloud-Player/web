@@ -1,8 +1,8 @@
 import {Directive, ElementRef, OnInit, Input} from '@angular/core';
 import {Track} from '../../tracks/models/track.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
-import {PlayQueue} from '../../audioplayer/collections/play_queue.collection';
-import {PlayQueueItem} from '../../audioplayer/models/play_queue_item.model';
+import {PlayQueue} from '../../player/collections/play-queue';
+import {PlayQueueItem} from '../../player/models/play-queue-item';
 
 @Directive({
   selector: '[appPlayTrackOn]'
@@ -41,22 +41,27 @@ export class PlayTrackOnEventDirective implements OnInit {
   }
 
   play(): void {
-    this.playQueue.filter((model) => {
-      return !model.isQueued();
-    }).forEach((model) => {
-      this.playQueue.remove(model);
-    });
-
-    if (this.tracks) {
-      this.tracks.forEach((track: Track) => {
-        if (!this.playQueue.get(track)) {
-          this.playQueue.add({track: track});
-        }
+    const existingPlayQueueItem = this.playQueue.get(this.track.id);
+    if (existingPlayQueueItem) {
+      existingPlayQueueItem.play();
+    } else {
+      this.playQueue.filter((model) => {
+        return !model.isQueued();
+      }).forEach((model) => {
+        this.playQueue.remove(model);
       });
-    }
 
-    const playQueueItem = this.playQueue.add({track: this.track});
-    playQueueItem.play();
+      if (this.tracks) {
+        this.tracks.forEach((track: Track, index) => {
+          if (!this.playQueue.get(track)) {
+            this.playQueue.add({track: track});
+          }
+        });
+      }
+
+      const playQueueItem: PlayQueueItem = this.playQueue.add({track: this.track});
+      playQueueItem.play();
+    }
   }
 
   pause(): void {
