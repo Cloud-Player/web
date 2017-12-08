@@ -3,19 +3,19 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {IPlayer} from './player.interface';
-import {PlayQueueItem} from '../models/play_queue_item.model';
 import {SoundcloudPlayerComponent} from '../components/soundcloud-player/soundcloud-player';
-import {Players} from '../collections/players';
-import {PlayerModel} from '../models/player';
 import {PlayerStatus} from './player-status.enum';
 import {keys} from 'underscore';
+import {PlayerStore} from '../collections/player-store';
+import {PlayerStoreItem} from '../models/player-store-item';
+import {PlayQueueItem} from '../models/play-queue-item';
 
 @Injectable()
 export class PlayerFactory {
   private _resolver: ComponentFactoryResolver;
   private _container: ViewContainerRef;
   private _playerComponentMap;
-  private _players: Players<PlayerModel>;
+  private _playerStore: PlayerStore<PlayerStoreItem>;
 
   constructor(resolver: ComponentFactoryResolver) {
     this._resolver = resolver;
@@ -33,11 +33,11 @@ export class PlayerFactory {
     }
   }
 
-  private createNewPlayer(item: PlayQueueItem): PlayerModel {
+  private createNewPlayer(item: PlayQueueItem): PlayerStoreItem {
     const component: Type<IPlayer> = this.getComponentForType(item.provider);
     const factory: ComponentFactory<IPlayer> = this._resolver.resolveComponentFactory(component);
     const playerComponent: ComponentRef<IPlayer> = this._container.createComponent(factory);
-    const player = new PlayerModel({
+    const player = new PlayerStoreItem({
       component: playerComponent,
       provider: item.provider
     });
@@ -47,8 +47,8 @@ export class PlayerFactory {
     return player;
   }
 
-  private getReusablePlayer(playQueueItem: PlayQueueItem): PlayerModel {
-    const applicablePlayer = this._players.find((player: PlayerModel) => {
+  private getReusablePlayer(playQueueItem: PlayQueueItem): PlayerStoreItem {
+    const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
       return player.provider === playQueueItem.provider &&
         player.component.instance.getStatus() === PlayerStatus.NotInitialised ||
         player.component.instance.getStatus() === PlayerStatus.Stopped;
@@ -59,14 +59,14 @@ export class PlayerFactory {
 
   private cleanUp() {
     keys(this._playerComponentMap).forEach((providerKey) => {
-      const playersForProvider = this._players.where({provider: providerKey});
+      const playersForProvider = this._playerStore.where({provider: providerKey});
       while (playersForProvider.length > 2) {
         const player = playersForProvider.pop();
         const playerInstance = player.component.instance;
         const playerStatus = playerInstance.getStatus();
         if (playerStatus === PlayerStatus.NotInitialised || playerStatus === PlayerStatus.Stopped) {
           player.component.destroy();
-          this._players.remove(player);
+          this._playerStore.remove(player);
         }
       }
     });
@@ -74,11 +74,11 @@ export class PlayerFactory {
 
   public setContainer(container: ViewContainerRef) {
     this._container = container;
-    this._players = new Players();
+    this._playerStore = new PlayerStore();
   }
 
   public canReusePlayer(playerComponent: ComponentRef<IPlayer>, playQueueItem: PlayQueueItem) {
-    const applicablePlayer = this._players.find((player: PlayerModel) => {
+    const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
       return player.component === playerComponent && player.provider === playQueueItem.provider;
     });
 
@@ -104,7 +104,7 @@ export class PlayerFactory {
       }
     } else {
       const newPlayer = this.createNewPlayer(item);
-      this._players.add(newPlayer);
+      this._playerStore.add(newPlayer);
       // Make sure that there are maximum 2 instances of each player
       this.cleanUp();
       return newPlayer.component;

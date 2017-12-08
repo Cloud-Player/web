@@ -3,8 +3,6 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
 import {Subscription} from 'rxjs/Subscription';
 import {PlayerStatus} from '../../src/player-status.enum';
@@ -12,17 +10,18 @@ import {IPlayer} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
 import {Track} from '../../../tracks/models/track.model';
+import {PlayQueue} from '../../collections/play-queue';
+import {PlayQueueItem} from '../../models/play-queue-item';
 
 @Component({
-  selector: 'app-player-controller',
-  styleUrls: ['./player-controller.scss'],
-  templateUrl: './player-controller.html',
+  selector: 'app-player-manager',
+  styleUrls: ['./player-manager.scss'],
+  templateUrl: './player-manager.html',
   entryComponents: [
     SoundcloudPlayerComponent
   ]
 })
-
-export class PlayerControllerComponent implements OnInit {
+export class PlayerManagerComponent implements OnInit {
   private _fadeDuration = 10;
   private _prepareTime = 30;
   private _volume = 1;

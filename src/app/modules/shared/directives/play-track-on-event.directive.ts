@@ -1,8 +1,8 @@
 import {Directive, ElementRef, OnInit, Input} from '@angular/core';
 import {Track} from '../../tracks/models/track.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
-import {PlayQueue} from '../../audioplayer/collections/play_queue.collection';
-import {PlayQueueItem} from '../../audioplayer/models/play_queue_item.model';
+import {PlayQueue} from '../../player/collections/play-queue';
+import {PlayQueueItem} from '../../player/models/play-queue-item';
 
 @Directive({
   selector: '[appPlayTrackOn]'

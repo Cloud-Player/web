@@ -4,7 +4,7 @@ import {attributesKey} from '../../backbone/decorators/attributes-key.decorator'
 import {IPlayer} from '../src/player.interface';
 import {PlayerStatus} from '../src/player-status.enum';
 
-export class PlayerModel extends BaseModel {
+export class PlayerStoreItem extends BaseModel {
   @attributesKey('component')
   component: ComponentRef<IPlayer>;
 

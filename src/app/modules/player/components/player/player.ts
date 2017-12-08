@@ -1,19 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
 import {PlayerStatus} from '../../src/player-status.enum';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
+import {PlayQueue} from '../../collections/play-queue';
+import {PlayQueueItem} from '../../models/play-queue-item';
 
 @Component({
-  selector: 'app-audio-player',
-  styleUrls: ['./audio-player.style.scss'],
-  templateUrl: './audio-player.template.html'
+  selector: 'app-player',
+  styleUrls: ['./player.scss'],
+  templateUrl: './player.html'
 })
-
-export class AudioPlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit {
   public playQueue: PlayQueue<PlayQueueItem>;
   public isPlaying: boolean;
   public isBuffering: boolean;

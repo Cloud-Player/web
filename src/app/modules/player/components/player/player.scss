@@ -2,7 +2,7 @@
 
 :host{
   @media only screen and (min-width: 320px) {
-    .audio-player {
+    .player {
       width: 320px;
       position: relative;
       box-shadow: 0 8px 8px 0 #c8c8c8;
@@ -23,7 +23,7 @@
     width: 100vw;
     z-index: 2;
 
-    .audio-player {
+    .player {
       width: 100%;
       box-shadow: none;
 

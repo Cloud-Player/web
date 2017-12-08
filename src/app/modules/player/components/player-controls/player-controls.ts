@@ -1,21 +1,21 @@
+import {PlayQueueItem} from '../../models/play-queue-item';
+
 declare let MediaMetadata: any;
 
 import {Component, Input, OnInit} from '@angular/core';
-import {PlayQueue} from '../../collections/play_queue.collection';
-import {PlayQueueItem} from '../../models/play_queue_item.model';
 import {Track} from '../../../tracks/models/track.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
+import {PlayQueue} from '../../collections/play-queue';
 
 @Component({
-  selector: 'app-audio-player-controls',
-  styleUrls: ['./audio-player-controls.style.scss'],
-  templateUrl: './audio-player-controls.template.html'
+  selector: 'app-player-controls',
+  styleUrls: ['./player-controls.scss'],
+  templateUrl: './player-controls.html'
 })
-
-export class AudioPlayerControlsComponent implements OnInit {
+export class PlayerControlsComponent implements OnInit {
   public playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
   public currentItem: PlayQueueItem = new PlayQueueItem();
 
@@ -44,13 +44,13 @@ export class AudioPlayerControlsComponent implements OnInit {
       });
       if (this.playQueue.hasPreviousItem()) {
         nv.mediaSession.setActionHandler('previoustrack', () => {
-          this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'app-audio-player-controls-cmp');
+          this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'app-player-controls-cmp');
           this.previous();
         });
       }
       if (this.playQueue.hasNextItem()) {
         nv.mediaSession.setActionHandler('nexttrack', () => {
-          this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'app-audio-player-controls-cmp');
+          this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'app-player-controls-cmp');
           this.next();
         });
       }
@@ -61,7 +61,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     const currItem = this.playQueue.getCurrentItem();
     if (currItem) {
       currItem.play(currItem.progress);
-      this.userAnalyticsService.trackEvent('play_track', 'click', 'app-audio-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('play_track', 'click', 'app-player-controls-cmp');
     }
   }
 
@@ -69,7 +69,7 @@ export class AudioPlayerControlsComponent implements OnInit {
     const currItem = this.playQueue.getPlayingItem();
     if (currItem) {
       currItem.pause();
-      this.userAnalyticsService.trackEvent('pause_track', 'click', 'app-audio-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('pause_track', 'click', 'app-player-controls-cmp');
     }
   }
 
@@ -88,17 +88,17 @@ export class AudioPlayerControlsComponent implements OnInit {
     const playingItem = this.playQueue.getPlayingItem();
     if (playingItem && playingItem.progress > 3) {
       playingItem.restart();
-      this.userAnalyticsService.trackEvent('restart_track', 'click', 'app-audio-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('restart_track', 'click', 'app-player-controls-cmp');
     } else if (this.playQueue.hasPreviousItem()) {
       this.playQueue.getPreviousItem().play();
-      this.userAnalyticsService.trackEvent('previous_track', 'click', 'app-audio-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('previous_track', 'click', 'app-player-controls-cmp');
     }
   }
 
   public next(): void {
     if (this.playQueue.hasNextItem()) {
       this.playQueue.getNextItem().play();
-      this.userAnalyticsService.trackEvent('next_track', 'click', 'app-audio-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('next_track', 'click', 'app-player-controls-cmp');
     }
   }
 

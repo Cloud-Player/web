@@ -3,10 +3,10 @@ import {Router} from '@angular/router';
 
 import {Track} from '../../../tracks/models/track.model';
 import {Tracks} from '../../../tracks/collections/tracks.collection';
-import {PlayQueue} from '../../../audioplayer/collections/play_queue.collection';
-import {PlayQueueItem} from '../../../audioplayer/models/play_queue_item.model';
 import {CoverSizes} from '../track-cover/track-cover.component';
 import {ClientDetector} from '../../services/client-detector.service';
+import {PlayQueueItem} from '../../../player/models/play-queue-item';
+import {PlayQueue} from '../../../player/collections/play-queue';
 
 @Component({
   selector: 'app-track-list',
