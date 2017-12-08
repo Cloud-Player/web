@@ -29,16 +29,17 @@ export class AudioPlayerControlsComponent implements OnInit {
     if ('mediaSession' in navigator) {
       const nv: any = navigator;
       const artwork: SoundcloudImageModel = track.image;
+      const fallbackImg = 'assets/meta/icons/ios/apple-icon-180x180.png';
       nv.mediaSession.metadata = new MediaMetadata({
         title: track.title,
         artist: track.user.username,
         artwork: [
-          {src: artwork.getDefaultSize(), sizes: '96x96', type: 'image/jpg'},
-          {src: artwork.getDefaultSize(), sizes: '128x128', type: 'image/jpg'},
-          {src: artwork.getDefaultSize(), sizes: '192x192', type: 'image/jpg'},
-          {src: artwork.getImageByFormat('t300x300'), sizes: '256x256', type: 'image/jpg'},
-          {src: artwork.getImageByFormat('crop'), sizes: '384x384', type: 'image/jpg'},
-          {src: artwork.getLargeSize(), sizes: '512x512', type: 'image/jpg'},
+          {src: artwork.getDefaultSize() || fallbackImg, sizes: '96x96', type: 'image/jpg'},
+          {src: artwork.getDefaultSize() || fallbackImg, sizes: '128x128', type: 'image/jpg'},
+          {src: artwork.getDefaultSize() || fallbackImg, sizes: '192x192', type: 'image/jpg'},
+          {src: artwork.getImageByFormat('t300x300') || fallbackImg, sizes: '256x256', type: 'image/jpg'},
+          {src: artwork.getImageByFormat('crop') || fallbackImg, sizes: '384x384', type: 'image/jpg'},
+          {src: artwork.getLargeSize() || fallbackImg, sizes: '512x512', type: 'image/jpg'},
         ]
       });
       if (this.playQueue.hasPreviousItem()) {
