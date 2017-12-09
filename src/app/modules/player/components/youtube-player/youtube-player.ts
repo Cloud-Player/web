@@ -59,7 +59,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
         this.onEnded();
         break;
       case YT.PlayerState.UNSTARTED:
-        this.onStopped();
+        this.onPaused();
         break;
     }
   }
