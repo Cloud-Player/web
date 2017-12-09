@@ -125,20 +125,6 @@ export abstract class AbstractPlayer implements OnInit {
     return this._ableToPlay;
   }
 
-  protected onInitialised() {
-    this.setStatus(PlayerStatus.Initialised);
-    this._initialised = true;
-    if (this._seekTo) {
-      this.seekPlayerTo(this._seekTo);
-      delete this._seekTo;
-    }
-    if (this.isAllowedToPlay()) {
-      this.startPlayer();
-    } else {
-      this.pausePlayer();
-    }
-  }
-
   protected onDurationUpdate(duration: number) {
     this.setDuration(duration);
   }
