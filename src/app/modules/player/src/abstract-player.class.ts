@@ -257,13 +257,15 @@ export abstract class AbstractPlayer implements OnInit {
           this._playerIsInitialised = true;
 
           this.bindListeners();
-          if (options.preload) {
-            this.preload();
-          }
           if (isNumber(this.getVolume())) {
             this.setPlayerVolume(this.getVolume());
           }
-          this.onInitialised();
+          this._initialiseCallbacks.forEach((callback: Function) => {
+            callback.apply(this);
+          });
+          this._initialiseCallbacks = [];
+          this.setStatus(PlayerStatus.Initialised);
+          this._initialised = true;
           resolve();
         });
       });
