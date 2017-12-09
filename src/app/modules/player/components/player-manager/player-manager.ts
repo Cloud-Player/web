@@ -180,11 +180,11 @@ export class PlayerManagerComponent implements OnInit {
       this.removePlayer(oldPlayer);
     }
 
-    newPlayer.instance.setVolume(this._volume);
-
     if (canPlay) {
+      newPlayer.instance.setVolume(this._volume);
       newPlayer.instance.play(startTime);
     } else {
+      newPlayer.instance.setVolume(0);
       newPlayer.instance.seekTo(startTime);
     }
 
