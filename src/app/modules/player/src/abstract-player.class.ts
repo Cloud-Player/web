@@ -55,7 +55,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   protected abstract seekPlayerTo(to: number): void;
 
-  protected abstract preloadTrack(track: Track): void;
+  protected abstract preloadTrack(track: Track, startTime?: number): void;
 
   protected abstract getPlayerEl(): ElementRef;
 

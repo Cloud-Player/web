@@ -138,17 +138,16 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
 
   protected deInitialisePlayer(): void {
     clearTimeout(this._timePoller);
-    this.setDuration(0);
   }
 
   protected setPlayerVolume(volume: number) {
     this._ytPlayer.setVolume(volume * 100);
   }
 
-  protected preloadTrack(track: Track) {
+  protected preloadTrack(track: Track, startTime: number = 0) {
     this._ytPlayer.loadVideoById({
       videoId: track.id,
-      startSeconds: 0
+      startSeconds: startTime
     });
   }
 

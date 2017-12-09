@@ -45,6 +45,7 @@ export class PlayerFactory {
     });
     playerComponent.instance.track = item.track;
     playerComponent.instance.initialise();
+    playerComponent.instance.preload(item.progress);
     playerComponent.instance.addClass('player');
     return player;
   }
