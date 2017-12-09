@@ -283,6 +283,7 @@ export abstract class AbstractPlayer implements OnInit {
     this.setDuration(0);
     this._initialised = false;
     this._initialisePromise = null;
+    this.setAllowedToPlay(false);
     this.setStatus(PlayerStatus.NotInitialised);
   }
 
@@ -306,7 +307,6 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public pause(): Promise<any> {
-    this.setAllowedToPlay(false);
     if (this._initialised) {
       this.pausePlayer();
       return this.resolveOnOneOfStatus([PlayerStatus.Stopped, PlayerStatus.Paused]);
