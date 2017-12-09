@@ -21,6 +21,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _ngOnInitCompleted = false;
   private _playerIsInitialised = false;
   private _playerSdkIsInitialised = false;
+  private _initialiseCallbacks: Function[] = [];
 
   @Input()
   public track: Track;
@@ -240,7 +241,15 @@ export abstract class AbstractPlayer implements OnInit {
     return this._viewReadyPromise;
   }
 
-  public initialise(options: { preload: boolean } = {preload: true}): Promise<any> {
+  private executeOnInitialised(callback: Function) {
+    if (this._initialised) {
+      callback.apply(this);
+    } else {
+      this._initialiseCallbacks.push(callback.bind(this));
+    }
+  }
+
+  public initialise(): Promise<any> {
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
@@ -291,29 +300,22 @@ export abstract class AbstractPlayer implements OnInit {
     this.setStatus(PlayerStatus.NotInitialised);
   }
 
-  public preload(): void {
-    this.preloadTrack(this.track);
-    const subscription =
-      this.statusChange
-        .filter(status => status === PlayerStatus.Playing)
-        .subscribe(() => {
-          subscription.unsubscribe();
-          this.onIsAbleToPlay();
-          if (!this.isAllowedToPlay()) {
-            this.pause();
-          }
-        });
+  public preload(startTime?: number): void {
+    this.setCurrentTime(startTime);
+    this.executeOnInitialised(() => {
+      this.preloadTrack(this.track, startTime);
+    });
   }
 
   public play(from?): Promise<any> {
+    this.setCurrentTime(from);
     this.setAllowedToPlay(true);
-    if (isNumber(from)) {
-      this.seekTo(from);
-    } else if (this._initialised) {
+    this.executeOnInitialised(() => {
+      if (isNumber(from)) {
+        this.seekTo(from);
+      }
       this.startPlayer();
-    } else if (!this._initialised) {
-      this.initialise();
-    }
+    });
     return this.resolveOnStatus(PlayerStatus.Playing);
   }
 
@@ -338,13 +340,9 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public seekTo(to: number): Promise<any> {
-    if (this._initialised) {
+    this.executeOnInitialised(() => {
       this.seekPlayerTo(to);
-      this.startPlayer();
-    } else {
-      this._seekTo = to;
-      this.initialise();
-    }
+    });
     return this.resolveOnStatus(PlayerStatus.Playing);
   }
 
