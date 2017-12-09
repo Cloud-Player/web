@@ -13,6 +13,7 @@ import {Track} from '../../../tracks/models/track.model';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
+import {isNumber} from 'underscore';
 
 @Component({
   selector: 'app-player-manager',
@@ -131,7 +132,10 @@ export class PlayerManagerComponent implements OnInit {
         })
     );
 
-    this.playQueue.get(player.track.id).duration = player.getDuration();
+    const currentDuration = player.getDuration();
+    if (isNumber(currentDuration) && currentDuration > 0) {
+      this.playQueue.get(player.track.id).duration = player.getDuration();
+    }
     this.handlePlayerStatusChange(player.getStatus());
   }
 
