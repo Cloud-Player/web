@@ -54,7 +54,6 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
     return new Promise((resolve) => {
       this._audio = new Audio();
       this._audio.src = this.track.getResourceUrl();
-      this.track.comments.fetch();
       resolve(true);
     });
   }
@@ -62,7 +61,6 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   protected deInitialisePlayer(): void {
     this._audio.src = '';
     this.track.comments.reset();
-    this.setDuration(0);
   }
 
   protected setPlayerVolume(volume: number) {
@@ -72,6 +70,7 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   protected preloadTrack(track: Track) {
     this._audio.src = track.getResourceUrl();
     this._audio.load();
+    this.track.comments.fetch();
   }
 
   protected startPlayer(): void {
