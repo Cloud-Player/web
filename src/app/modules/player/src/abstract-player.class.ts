@@ -66,8 +66,10 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setDuration(duration: number) {
-    this._duration = duration;
-    this.durationChange.emit(duration);
+    if (isNumber(duration) && duration > 0) {
+      this._duration = duration;
+      this.durationChange.emit(duration);
+    }
   }
 
   public getDuration(): number {
@@ -75,8 +77,10 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setCurrentTime(currentTime: number): void {
-    this._currentTime = currentTime;
-    this.currentTimeChange.emit(currentTime);
+    if (isNumber(currentTime) && currentTime > 0) {
+      this._currentTime = currentTime;
+      this.currentTimeChange.emit(currentTime);
+    }
   }
 
   public getCurrentTime(): number {
