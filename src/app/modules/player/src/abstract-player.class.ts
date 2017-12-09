@@ -11,16 +11,15 @@ export abstract class AbstractPlayer implements OnInit {
   private _volume: number;
   private _status: PlayerStatus;
   private _ableToPlay: boolean;
-  private _allowedToPlay: boolean;
   private _initialised = false;
   private _initialisePromise: Promise<any>;
-  private _seekTo: number;
   private _subscriptionsPerState = {};
   private _viewReadyPromise: Promise<any>;
   private _viewReadyResolver: Function;
   private _ngOnInitCompleted = false;
   private _playerIsInitialised = false;
   private _playerSdkIsInitialised = false;
+  private _allowedToPlay = false;
   private _initialiseCallbacks: Function[] = [];
 
   @Input()
@@ -170,11 +169,9 @@ export abstract class AbstractPlayer implements OnInit {
     if (!navigator.onLine) {
       const onlineListener = () => {
         window.removeEventListener('online', onlineListener);
-        if (this.isAllowedToPlay()) {
-          this.preload();
-          this.seekPlayerTo(this.getCurrentTime());
-          this.play();
-        }
+        this.preload();
+        this.seekPlayerTo(this.getCurrentTime());
+        this.play();
       };
       window.addEventListener('online', onlineListener.bind(this));
       this.setStatus(PlayerStatus.Waiting);
