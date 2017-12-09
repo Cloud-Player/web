@@ -159,7 +159,12 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected onPlaying() {
-    this.setStatus(PlayerStatus.Playing);
+    this.setAbleToPlay(true);
+    if (!this.isAllowedToPlay()) {
+      this.pause();
+    } else {
+      this.setStatus(PlayerStatus.Playing);
+    }
   }
 
   protected onPaused() {
