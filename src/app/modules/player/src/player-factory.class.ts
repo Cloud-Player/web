@@ -100,7 +100,7 @@ export class PlayerFactory {
       } else {
         const reusablePlayerComponent = reusablePlayer.component;
         if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
-          reusablePlayerComponent.instance.initialise({preload: false});
+          reusablePlayerComponent.instance.initialise();
         }
         reusablePlayerComponent.instance.updateTrack(item.track);
         return reusablePlayerComponent;
