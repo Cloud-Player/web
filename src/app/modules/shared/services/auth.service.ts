@@ -42,6 +42,7 @@ export class AuthService {
 
   connectionSuccessFul(params: any) {
     this.userAnalyticsService.trackEvent('sc_auth_success', 'click', 'auth-service');
+    window.clearInterval(this.checkInterval);
     this.session.set({
       access_token: params.access_token,
       expires_on: params.expires_on,
