@@ -113,6 +113,13 @@ button:focus {
     overflow: auto;
   }
 
+  > .version {
+    position: fixed;
+    color: #cbcbcb;
+    bottom: 5px;
+    left: 15px;
+  }
+
 }
 
 body.native.desktop {

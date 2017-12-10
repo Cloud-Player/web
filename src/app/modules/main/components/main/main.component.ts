@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {User} from '../../../users/models/user.model';
 import {Session} from '../../../session/models/session.model';
 import {AuthenticatedUser} from '../../../session/models/authenticated_user.model';
+const packageJSON = require('../../../../../../package.json');
 
 @Component({
   selector: 'app-cloud-player',
@@ -15,6 +16,7 @@ export class MainComponent implements OnInit {
   private session: Session;
 
   constructor() {
+  public version = packageJSON.version;
     this.session = Session.getInstance();
   }
 
