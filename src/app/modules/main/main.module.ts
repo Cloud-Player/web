@@ -15,9 +15,9 @@ import {NavComponent} from './components/nav/nav.component';
 import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthService} from '../shared/services/auth.service';
 import {SharedModule} from '../shared/shared.module';
-import {DesktopAppViewComponent} from './components/desktop-app-view/desktop-app-view.component';
 import {UserAnalyticsModule} from '../user-analytics/user-analytics.module';
 import {HttpClientModule} from '@angular/common/http';
+import {NativeAppModule} from '../native-app/native-app.module';
 
 @NgModule({
   imports: [
@@ -33,12 +33,12 @@ import {HttpClientModule} from '@angular/common/http';
     UsersModule,
     PlaylistModule,
     SharedModule,
-    UserAnalyticsModule
+    UserAnalyticsModule,
+    NativeAppModule
   ],
   declarations: [
     MainComponent,
-    NavComponent,
-    DesktopAppViewComponent
+    NavComponent
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, AuthService],
   bootstrap: [MainComponent]
