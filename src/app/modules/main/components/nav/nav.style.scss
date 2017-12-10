@@ -1,7 +1,6 @@
 @import 'variables';
 
 :host .column {
-  background: #efefef;
   height: calc(100vh);
 }
 
@@ -207,7 +206,7 @@
     position: fixed;
     bottom: 0;
     height: 40px;
-    z-index: 1;
+    background: $light-white;
     box-shadow: $light-boxshadow;
     z-index: 999;
 
