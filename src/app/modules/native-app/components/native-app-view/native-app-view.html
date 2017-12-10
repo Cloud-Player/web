@@ -16,21 +16,14 @@
           <li>Have all the other nice features of Cloud Player</li>
         </ul>
       </div>
-      <a *ngIf="isWindowsPc()"
-         href="https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.setup.exe"
+      <a *ngIf="downloadLink"
+         [href]="downloadLink"
          class="btn btn-primary btn-block"
-         (click)="download('WIN')">
-        Download for Windows
+         (click)="download()">
+        {{getDownloadLabel()}}
       </a>
 
-      <a *ngIf="isMacPc()"
-         href="https://github.com/Cloud-Player/desktop-app/releases/download/v0.1.8/cloud-player.dmg"
-         class="btn btn-primary btn-block"
-         (click)="download('OSX')">
-        Download for Mac
-      </a>
-
-      <div *ngIf="!isWindowsPc() && !isMacPc()"
+      <div *ngIf="!downloadLink"
            class="alert alert-info">
         Sorry for this platform we don't have a native app yet :(
       </div>
@@ -39,7 +32,7 @@
     <div class="card tutorial osx"
          *ngIf="isMacPc()">
       <h2>How to Install</h2>
-      <h3>Open the downloaded <i>cloud-player.dmg</i> file</h3>
+      <h3>Open the downloaded <i>Cloud Player.dmg</i> file</h3>
       <div class="img-holder">
         <img src="assets/desktop-app/osx-dmg.png" width="400px"/>
       </div>
@@ -47,8 +40,8 @@
       <hr>
       <h3>Start Cloud Player</h3>
       <p>
-        We could not sign the Cloud Player with an official Apple developer certificate. When you try to start it, macOS will tell you
-        that the application is from an unidentified developer.
+        As this is a student project we don't have an Apple developer certificate. Therefore we could not sign the application.
+        When you try to start it, macOS will tell you that the application is from an unidentified developer.
         <br>
         <br>
         To open the app anyway locate Cloud Player in the <i>Applications</i> folder. Control click the Cloud Player app icon
@@ -59,14 +52,14 @@
         <br>
         <br>
         <a href="https://support.apple.com/kb/PH25088?locale=en_US" target="_blank">More information...</a>
-
+        | <a href="https://github.com/Cloud Player/desktop-app" target="_blank">The native application is open source as well</a>
       </p>
     </div>
 
     <div class="card tutorial win"
          *ngIf="isWindowsPc()">
       <h2>How to Install</h2>
-      <h3>Open the downloaded <i>cloud-player.setup.exe</i> file</h3>
+      <h3>Open the downloaded <i>Cloud Player.setup.exe</i> file</h3>
       <div class="img-holder">
         <img src="assets/desktop-app/win-exe.png" width="400px"/>
       </div>
@@ -74,14 +67,16 @@
         After the Download has finished open the exe file.
       </p>
       <p>
-        We could not sign the Cloud Player with an official Windows developer certificate. Therefore the Windows
-        Security Agent
-        will prevent starting the installation process
+        As this is a student project we don't have an Windows developer certificate. Therefore we could not sign the application.
+        The Windows Security Agent will prevent starting the installation process
         <br>
         <br>
         To start the installation anyway click on the button "More Info" (1). A new button "Run anyway" will appear (2).
         Click
         on that button to start the installation process
+        <br>
+        <br>
+        <a href="https://github.com/Cloud Player/desktop-app" target="_blank">The native application is open source as well</a>
       </p>
     </div>
   </app-scroll-view>
