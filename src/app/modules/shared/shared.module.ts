@@ -33,6 +33,9 @@ import {LimitCollectionresultsPipe} from './pipes/limit-collection-results.pipe'
 import {FacebookShareButtonComponent} from './components/facebook-share-button/facebook-share-button.component';
 import {TwitterShareButtonComponent} from './components/twitter-share-button/twitter-share-button.component';
 import {EaseService} from './services/ease.service';
+import {ToastsComponent} from './components/toasts/toasts';
+import {ToastService} from './services/toast';
+import {ToastComponent} from './components/toast/toast';
 
 @NgModule({
   imports: [
@@ -61,6 +64,8 @@ import {EaseService} from './services/ease.service';
     OptionsBtnComponent,
     OptionsBtnOptionComponent,
     TrackCoverComponent,
+    ToastComponent,
+    ToastsComponent,
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
@@ -92,6 +97,7 @@ import {EaseService} from './services/ease.service';
     OptionsBtnComponent,
     OptionsBtnOptionComponent,
     TrackCoverComponent,
+    ToastsComponent,
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
@@ -104,7 +110,8 @@ import {EaseService} from './services/ease.service';
   ],
   providers: [
     HumanReadableSecondsPipe,
-    CloudPlayerLogoService
+    CloudPlayerLogoService,
+    ToastService
   ]
 })
 export class SharedModule {

@@ -10,20 +10,20 @@ export interface Test {
 }
 
 export enum OsNames {
-  Windows,
-  WindowsMobile,
-  Android,
-  OpenBSD,
-  SunOs,
-  Linux,
-  iOS,
-  MacOs,
-  QNX,
-  UNIX,
-  BeOS,
-  OS2,
-  SearchBot,
-  Electron
+  Windows = 'Windows',
+  WindowsMobile = 'Windows Mobile',
+  Android = 'Android',
+  OpenBSD = 'OpenBSD',
+  SunOs = 'SunOS',
+  Linux = 'Linux',
+  iOS = 'iOS',
+  MacOs = 'MacOs',
+  QNX = 'QNX',
+  UNIX = 'Unix',
+  BeOS = 'BeOS',
+  OS2 = 'OS2',
+  SearchBot = 'SearchBot',
+  Electron = 'Electron'
 }
 
 export enum ClientNames {
@@ -106,5 +106,19 @@ export class ClientDetector {
 
   static isPhone(): boolean {
     return ClientDetector.isMobileDevice() && window.screen.width < 770;
+  }
+
+  static isWindowsPC(): boolean {
+    const os: Result = ClientDetector.getOs();
+    return (
+      os.name === OsNames.Windows && os.version >= 7
+    );
+  }
+
+  static isMacPC(): boolean {
+    const os: Result = ClientDetector.getOs();
+    return (
+      os.name === OsNames.MacOs && os.version > 0
+    );
   }
 }

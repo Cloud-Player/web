@@ -30,16 +30,6 @@
     }
   }
 
-  :after {
-    content: "";
-    position: absolute;
-    width: 102%;
-    height: 25px;
-    background: #efefef;
-    top: -25px;
-    left: -1%;
-  }
-
   /deep/ app-collection-text-input-search {
     width: 100%;
 

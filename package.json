@@ -66,7 +66,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/jquery": "^2.0.33",
     "@types/localforage": "0.0.33",
-    "@types/node": "~6.0.60",
+    "@types/node": "^6.0.92",
     "@types/reflect-metadata": "0.0.5",
     "@types/underscore": "^1.7.33",
     "codelyzer": "~4.0.1",

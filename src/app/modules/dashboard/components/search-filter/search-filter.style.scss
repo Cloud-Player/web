@@ -10,7 +10,9 @@
     border-bottom: none;
 
 
-    li{
+    > li{
+      margin-bottom: 2px;
+
       a{
         border: none;
 
@@ -42,7 +44,7 @@
 
   .new-filter{
     position: relative;
-    background: #fcfcfc;
+    background: $light-white;
     width: 100%;
     padding: 30px 15px 15px;
     margin-bottom: 15px;

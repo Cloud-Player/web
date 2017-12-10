@@ -1,17 +1,21 @@
 <section class="main">
 
-  <div class="native-bar"></div>
+  <div class="native-bar">
+    <div class="darwin-btns"></div>
+  </div>
 
   <main class="flex-container">
 
     <app-nav-sidebar class="flex-item"></app-nav-sidebar>
     <app-player class="flex-item"></app-player>
     <div class="routes">
+      <app-toasts></app-toasts>
       <router-outlet class="flex-item"></router-outlet>
     </div>
 
   </main>
 
+  <div class="version">v{{version}}</div>
 </section>
 
 <app-view-change-loader></app-view-change-loader>
