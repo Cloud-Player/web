@@ -20,6 +20,12 @@ export class ToastComponent {
     this.toastService.removeToast(this.toast);
   }
 
+  public executeButtonAction() {
+    if (typeof this.toast.buttonAction === 'function') {
+      this.toast.buttonAction();
+    }
+  }
+
   public getIcon(): string {
     if (this.toast.icon) {
       return this.toast.icon;

@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="toast.buttonAction"
          class="action-button btn btn-primary"
-         (click)="toast.buttonAction">
+         (click)="executeButtonAction()">
       {{toast.buttonLabel}}
     </div>
     <a *ngIf="toast.buttonLink"
