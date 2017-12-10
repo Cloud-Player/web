@@ -1,0 +1,30 @@
+<div class="card toast {{toast.type}}">
+  <div *ngIf="getIcon()"
+       class="icon-holder">
+    <span class="icon {{getIcon()}}"></span>
+  </div>
+  <div class="content">
+    <h3 *ngIf="toast.title && toast.title.length>1"
+        class="title">
+      {{toast.title}}
+    </h3>
+    <div class="message">
+      {{toast.message}}
+    </div>
+    <div *ngIf="toast.buttonAction"
+         class="action-button btn btn-primary"
+         (click)="toast.buttonAction">
+      {{toast.buttonLabel}}
+    </div>
+    <a *ngIf="toast.buttonLink"
+       class="action-button btn btn-primary"
+       [href]="toast.buttonLink"
+       [target]="toast.buttonLinkTarget">
+      {{toast.buttonLabel}}
+    </a>
+  </div>
+  <div class="closer clickable"
+       (click)="closeToast()">
+    <span class="fa fa-times"></span>
+  </div>
+</div>
