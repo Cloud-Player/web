@@ -13,8 +13,8 @@ CURRENT_BRANCH=$TRAVIS_BRANCH
 
 # Sets everything back to the beginning, before the release process has been started
 reset () {
-    git checkout $CURRENT_BRANCH
-    git reset --hard origin/$CURRENT_BRANCH
+    git checkout $CURRENT_BRANCH > /dev/null 2>&1 || echo "[RESET] Checkout of branch ${$CURRENT_BRANCH} failed"
+    git reset --hard origin/$CURRENT_BRANCH > /dev/null 2>&1 || echo "[RESET] Reset of branch ${$CURRENT_BRANCH} failed"
     git config user.name "$CURRENT_GIT_USER"
     git config user.email "$CURRENT_GIT_USERMAIL"
     git remote remove origin_gh
@@ -25,11 +25,6 @@ exit_with_error () {
     echo $1
     exit 1
 }
-
-# Set current branch as $CURRENT_BRANCH when it is not exposed by travis
-if [ -z "$CURRENT_BRANCH" ]; then
-  CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
-fi
 
 # Check if there are any local changes that are not committed yet
 if [ -n "$(git status --porcelain)" ]; then
@@ -43,6 +38,11 @@ then
   exit_with_error "In order to release the env variables GH_REF and GH_TOKEN have to be set!"
 fi
 
+# When Current Branch is not set use current git branch
+if [ -z "$CURRENT_BRANCH" ]; then
+  CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+fi
+
 # Set or add the remote url for the github repo with the GH_TOKEN
 # The GH_TOKEN is a github personal access token https://github.com/settings/tokens
 # It is encrypted with travis `$ travis encrypt GH_TOKEN=<GH_PERSONAL_TOKEN>` and set as global env via the .travis.yml
@@ -54,9 +54,11 @@ else
 fi
 git fetch origin_gh
 
-echo "############################################"
-echo "# Releasing version on gh-pages...         #"
-echo "############################################"
+echo "##########################################"
+echo "#                                        #"
+echo "# Releasing...                           #"
+echo "#                                        #"
+echo "##########################################"
 
 # Calls function when script exits (error and success)
 trap reset EXIT
@@ -89,9 +91,21 @@ fi
 rm -rf *
 cp -R $TMP_RELEASE_FOLDER/* .
 git add -Af *
-git commit -am 'Release new Version'
-git push origin_gh $RELEASE_BRANCH --no-verify > /dev/null 2>&1 || exit_with_error "Could not push to branch $RELEASE_BRANCH"
 
-echo "##########################################"
-echo "# Page is released!                      #"
-echo "##########################################"
+# Check if there are changes to commit
+if [ -n "$(git status --porcelain)" ]; then
+  git commit -am 'Release new Version'
+  git push origin_gh $RELEASE_BRANCH --no-verify > /dev/null 2>&1 || exit_with_error "Could not push to branch $RELEASE_BRANCH"
+
+  echo "##########################################"
+  echo "#                                        #"
+  echo "# Page is released!                      #"
+  echo "#                                        #"
+  echo "##########################################"
+else
+  echo "#################################################"
+  echo "#                                               #"
+  echo "# Skipping release because there are no changes #"
+  echo "#                                               #"
+  echo "#################################################"
+fi
