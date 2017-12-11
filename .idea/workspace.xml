@@ -1,0 +1,999 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6ee9c14e-d069-4099-8bc6-c1d7b37ccbfb" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/bin/release_on_github_pages.sh" afterPath="$PROJECT_DIR$/bin/release_on_github_pages.sh" />
+    </list>
+    <ignored path="cloud-player.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="cloud-player" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name=".yt-playqueue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.yt-playqueue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="109" column="8" lean-forward="false" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="release_on_github.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/release_on_github.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="31" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="15" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="release_on_github_pages.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bin/release_on_github_pages.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="28" column="40" lean-forward="false" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>setAc</find>
+      <find>play</find>
+      <find>playT</find>
+      <find>ngCla</find>
+      <find>app-audio-player</find>
+      <find>player-manager.ts</find>
+      <find>play_queue_item.model</find>
+      <find>play_queue.collection.ts</find>
+      <find>5.1.0</find>
+      <find>.initialise(</find>
+      <find>seek</find>
+      <find>.ini</find>
+      <find>isAllowedToPlay</find>
+      <find>setDura</find>
+      <find>this.progress</find>
+      <find>.progress =</find>
+      <find>console</find>
+      <find>unAu</find>
+      <find>background: #efefef;</find>
+      <find>.main</find>
+      <find>.nav-tabs</find>
+      <find>.new-filter</find>
+      <find>_allowedToPlay</find>
+      <find>isAllow</find>
+      <find>.card</find>
+      <find>mixin</find>
+      <find>clic</find>
+      <find>Cloud-Player</find>
+      <find>RELEASE_BRANCH</find>
+      <find>CURRENT_BRANCH</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>#ff3600</replace>
+      <replace>~4.0.0-rc.4</replace>
+      <replace>main-animation</replace>
+      <replace>isArray(res)</replace>
+      <replace>/assets/meta</replace>
+      <replace>/assets/meta/icons/android</replace>
+      <replace>commentsQueue</replace>
+      <replace>PlayQueueItemStatus</replace>
+      <replace>app-audio-player-controls-cmp</replace>
+      <replace>Cloud Player</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/app/modules</dir>
+      <dir>$PROJECT_DIR$/app/modules/shared</dir>
+      <dir>$PROJECT_DIR$/app</dir>
+      <dir>$PROJECT_DIR$/src/app/modules/audioplayer</dir>
+      <dir>$PROJECT_DIR$/src/app/modules/audioplayer/components</dir>
+      <dir>$PROJECT_DIR$/src/app/modules/player/components</dir>
+      <dir>$PROJECT_DIR$/src/app/modules</dir>
+      <dir>$PROJECT_DIR$</dir>
+      <dir>$PROJECT_DIR$/src/app/modules/player</dir>
+      <dir>$PROJECT_DIR$/src/app</dir>
+      <dir>$PROJECT_DIR$/src</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/app/modules/player/src/player.interface.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/src/player-factory.class.ts" />
+        <option value="$PROJECT_DIR$/.yt-playqueue" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/collections/play-queue.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/models/play-queue-item.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/components/youtube-player/youtube-player.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/components/player-controls/player-controls.html" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/components/player-controls/player-controls.ts" />
+        <option value="$PROJECT_DIR$/.angular-cli.json" />
+        <option value="$PROJECT_DIR$/tsconfig.json" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/view-header/view-header.style.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/dashboard/components/search-filter/search-filter.style.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/src/abstract-player.class.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/components/player-manager/player-manager.ts" />
+        <option value="$PROJECT_DIR$/src/_variables.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/components/nav/nav.style.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/collections/toasts.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/services/toast.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/components/main/main.template.html" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/shared.module.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/toasts/toasts.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/toasts/toasts.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/toasts/toasts.html" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/src/toast-types.enum.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/components/main/main.style.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/models/toast.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/native-app-view/native-app-view.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/native-app-module.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/main.routes.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/components/nav/nav.template.html" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/native-app.routes.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/native-app.module.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/services/client-detector.service.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/components/native-app-view/native-app-view.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/components/native-app-view/native-app-view.html" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/services/auth.service.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/native-app/services/native-app-handler.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/toast/toast.scss" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/toast/toast.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/toast/toast.html" />
+        <option value="$PROJECT_DIR$/src/main.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/components/main/main.component.ts" />
+        <option value="$PROJECT_DIR$/src/tsconfig.app.json" />
+        <option value="$PROJECT_DIR$/src/app/modules/main/main.module.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/pipes/limit-collection-results.pipe.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/two-range-slider/two-range-slider.component.ts" />
+        <option value="$PROJECT_DIR$/src/app/modules/shared/components/range-slider/range-slider.component.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/CHANGELOG.md" />
+        <option value="$PROJECT_DIR$/src/app/modules/player/components/player/player.ts" />
+        <option value="$PROJECT_DIR$/bin/release_on_github_pages.sh" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="1005" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>AngularJS</id>
+          </State>
+          <State>
+            <id>Bitwise operation issuesJavaScript</id>
+          </State>
+          <State>
+            <id>CSS</id>
+          </State>
+          <State>
+            <id>Code quality toolsJavaScript</id>
+          </State>
+          <State>
+            <id>Code style issuesCSS</id>
+          </State>
+          <State>
+            <id>Code style issuesJavaScript</id>
+          </State>
+          <State>
+            <id>DOM issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Error handlingJavaScript</id>
+          </State>
+          <State>
+            <id>File Watchers</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>GeneralJavaScript</id>
+          </State>
+          <State>
+            <id>HTML</id>
+          </State>
+          <State>
+            <id>Handlebars/Mustache</id>
+          </State>
+          <State>
+            <id>Internationalization issues</id>
+          </State>
+          <State>
+            <id>Invalid elementsCSS</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Node.jsJavaScript</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsJavaScript</id>
+          </State>
+          <State>
+            <id>Probable bugsJavaScript</id>
+          </State>
+          <State>
+            <id>Spelling</id>
+          </State>
+          <State>
+            <id>TypeScript</id>
+          </State>
+          <State>
+            <id>XML</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>TsLint</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cloud-player" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cloud-player" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cloud-player" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cloud-player" type="462c0819:PsiDirectoryNode" />
+              <item name="bin" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ng2-tour-of-heroes-refactored" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="js-tslint-nodeInterpreter" value="/usr/local/bin/node" />
+    <property name="js-tslint-package" value="$PROJECT_DIR$/node_modules/tslint" />
+    <property name="editor.config.accepted" value="true" />
+    <property name="js.eslint.eslintPackage" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.tslint" value="$PROJECT_DIR$/node_modules/tslint" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/modules/native-app/components" />
+      <recent name="$PROJECT_DIR$/src/app/modules/native-app" />
+      <recent name="$PROJECT_DIR$/src/app/modules/shared/directives" />
+      <recent name="$PROJECT_DIR$/src/app/modules/audioplayer/directives" />
+      <recent name="$PROJECT_DIR$/src/app/modules/audioplayer/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/modules/native-app" />
+      <recent name="$PROJECT_DIR$/src/app/modules/shared/components" />
+      <recent name="$PROJECT_DIR$/src/app/modules/shared/collections" />
+      <recent name="$PROJECT_DIR$/src/app/modules/shared/models" />
+      <recent name="$PROJECT_DIR$/src/app/modules/shared/services" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6ee9c14e-d069-4099-8bc6-c1d7b37ccbfb" name="Default" comment="" />
+      <created>1477600136199</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1477600136199</updated>
+      <workItem from="1477600137497" duration="1838000" />
+      <workItem from="1478084646161" duration="9245000" />
+      <workItem from="1478165727806" duration="9442000" />
+      <workItem from="1478248627590" duration="1368000" />
+      <workItem from="1478276071325" duration="572000" />
+      <workItem from="1478431166368" duration="14982000" />
+      <workItem from="1478457178864" duration="13683000" />
+      <workItem from="1478709511219" duration="7552000" />
+      <workItem from="1478877251668" duration="7608000" />
+      <workItem from="1478957560003" duration="10384000" />
+      <workItem from="1479052666927" duration="3684000" />
+      <workItem from="1479113016212" duration="6459000" />
+      <workItem from="1479229043925" duration="2521000" />
+      <workItem from="1479245095204" duration="1466000" />
+      <workItem from="1479400438067" duration="1707000" />
+      <workItem from="1479855022595" duration="56000" />
+      <workItem from="1479890533649" duration="17569000" />
+      <workItem from="1480511863038" duration="7419000" />
+      <workItem from="1480688571304" duration="20968000" />
+      <workItem from="1480930591440" duration="30000" />
+      <workItem from="1480930649123" duration="60000" />
+      <workItem from="1480930751727" duration="281000" />
+      <workItem from="1481015726352" duration="1835000" />
+      <workItem from="1481056881383" duration="1457000" />
+      <workItem from="1481102061831" duration="11159000" />
+      <workItem from="1481144715649" duration="10510000" />
+      <workItem from="1481383082736" duration="1722000" />
+      <workItem from="1481707353017" duration="12893000" />
+      <workItem from="1481732481576" duration="3921000" />
+      <workItem from="1481821980971" duration="7310000" />
+      <workItem from="1481877774254" duration="963000" />
+      <workItem from="1482588279093" duration="3739000" />
+      <workItem from="1482937069575" duration="1769000" />
+      <workItem from="1483457283241" duration="30734000" />
+      <workItem from="1483565141638" duration="21881000" />
+      <workItem from="1483662706077" duration="1196000" />
+      <workItem from="1483732570361" duration="1000" />
+      <workItem from="1483732606911" duration="6905000" />
+      <workItem from="1483804651246" duration="36155000" />
+      <workItem from="1484053700759" duration="18138000" />
+      <workItem from="1484128891238" duration="1897000" />
+      <workItem from="1484149950597" duration="6014000" />
+      <workItem from="1484245695907" duration="4767000" />
+      <workItem from="1484304270554" duration="20000" />
+      <workItem from="1484318269875" duration="611000" />
+      <workItem from="1484319122367" duration="24587000" />
+      <workItem from="1484492517169" duration="23242000" />
+      <workItem from="1484556661660" duration="584000" />
+      <workItem from="1484563055132" duration="989000" />
+      <workItem from="1484590541922" duration="1637000" />
+      <workItem from="1484677294661" duration="6969000" />
+      <workItem from="1484731239349" duration="47863000" />
+      <workItem from="1485003797331" duration="15580000" />
+      <workItem from="1485159119170" duration="3367000" />
+      <workItem from="1485181191887" duration="600000" />
+      <workItem from="1485276536502" duration="4095000" />
+      <workItem from="1485335494417" duration="591000" />
+      <workItem from="1485342719302" duration="13760000" />
+      <workItem from="1485420449034" duration="33021000" />
+      <workItem from="1485707406859" duration="7683000" />
+      <workItem from="1485788607510" duration="3235000" />
+      <workItem from="1485850435257" duration="4518000" />
+      <workItem from="1486056694586" duration="3327000" />
+      <workItem from="1487165666251" duration="3091000" />
+      <workItem from="1487430191290" duration="1261000" />
+      <workItem from="1487525072002" duration="5247000" />
+      <workItem from="1487673767365" duration="4885000" />
+      <workItem from="1487929562352" duration="2386000" />
+      <workItem from="1488035082570" duration="592000" />
+      <workItem from="1488730832017" duration="7646000" />
+      <workItem from="1488828924101" duration="91000" />
+      <workItem from="1488829022326" duration="9192000" />
+      <workItem from="1488916207776" duration="8255000" />
+      <workItem from="1488927195212" duration="3458000" />
+      <workItem from="1489002035211" duration="9848000" />
+      <workItem from="1489166111198" duration="7299000" />
+      <workItem from="1489407784711" duration="14110000" />
+      <workItem from="1489424136839" duration="10915000" />
+      <workItem from="1489446501225" duration="2282000" />
+      <workItem from="1489501197411" duration="298000" />
+      <workItem from="1489504017662" duration="78634000" />
+      <workItem from="1489773006312" duration="1168000" />
+      <workItem from="1489843812357" duration="16574000" />
+      <workItem from="1489879447378" duration="5530000" />
+      <workItem from="1489915795265" duration="25743000" />
+      <workItem from="1490112551155" duration="2271000" />
+      <workItem from="1490120501206" duration="2903000" />
+      <workItem from="1490172811528" duration="913000" />
+      <workItem from="1490438221873" duration="75154000" />
+      <workItem from="1491425756361" duration="4173000" />
+      <workItem from="1491473642000" duration="14312000" />
+      <workItem from="1491489265980" duration="14366000" />
+      <workItem from="1491589031597" duration="26666000" />
+      <workItem from="1491994276693" duration="3512000" />
+      <workItem from="1492011352310" duration="10007000" />
+      <workItem from="1492025468153" duration="5448000" />
+      <workItem from="1492068095881" duration="1170000" />
+      <workItem from="1492164484931" duration="10102000" />
+      <workItem from="1492349519173" duration="1306000" />
+      <workItem from="1492356327716" duration="2839000" />
+      <workItem from="1492394444250" duration="2377000" />
+      <workItem from="1492435664422" duration="28000" />
+      <workItem from="1492537027940" duration="1377000" />
+      <workItem from="1492701067281" duration="11000" />
+      <workItem from="1492702558095" duration="551000" />
+      <workItem from="1492791316961" duration="607000" />
+      <workItem from="1492860748277" duration="5000" />
+      <workItem from="1492974963432" duration="3192000" />
+      <workItem from="1493019862620" duration="40000" />
+      <workItem from="1493019927102" duration="411000" />
+      <workItem from="1493020460960" duration="44000" />
+      <workItem from="1493020519328" duration="563000" />
+      <workItem from="1493035844206" duration="27000" />
+      <workItem from="1493045379916" duration="38000" />
+      <workItem from="1493107122352" duration="1433000" />
+      <workItem from="1493108959939" duration="1058000" />
+      <workItem from="1493144168369" duration="4577000" />
+      <workItem from="1493197010651" duration="1375000" />
+      <workItem from="1493290212111" duration="9077000" />
+      <workItem from="1493299880511" duration="9509000" />
+      <workItem from="1495446063444" duration="1696000" />
+      <workItem from="1495459260234" duration="556000" />
+      <workItem from="1497119598617" duration="610000" />
+      <workItem from="1497615760221" duration="1212000" />
+      <workItem from="1497891760957" duration="596000" />
+      <workItem from="1499947520968" duration="142000" />
+      <workItem from="1507984583955" duration="5428000" />
+      <workItem from="1508318834974" duration="129000" />
+      <workItem from="1508334180934" duration="121000" />
+      <workItem from="1508334513174" duration="61000" />
+      <workItem from="1508335281978" duration="2356000" />
+      <workItem from="1508842068162" duration="9430000" />
+      <workItem from="1508918691478" duration="10549000" />
+      <workItem from="1509094385842" duration="540000" />
+      <workItem from="1509356482221" duration="6832000" />
+      <workItem from="1509379441891" duration="5034000" />
+      <workItem from="1509468961444" duration="2002000" />
+      <workItem from="1509486431553" duration="10733000" />
+      <workItem from="1509616996752" duration="1200000" />
+      <workItem from="1509652445533" duration="3656000" />
+      <workItem from="1509792453964" duration="12390000" />
+      <workItem from="1510070355639" duration="1569000" />
+      <workItem from="1510151773595" duration="4826000" />
+      <workItem from="1510163837002" duration="4863000" />
+      <workItem from="1510416613552" duration="6624000" />
+      <workItem from="1510496637070" duration="27380000" />
+      <workItem from="1510752694790" duration="21088000" />
+      <workItem from="1510956574584" duration="1979000" />
+      <workItem from="1511007857382" duration="7176000" />
+      <workItem from="1511104474442" duration="13931000" />
+      <workItem from="1511215718163" duration="1060000" />
+      <workItem from="1511280600239" duration="18293000" />
+      <workItem from="1511337900215" duration="16759000" />
+      <workItem from="1511427828817" duration="2943000" />
+      <workItem from="1511543503071" duration="2856000" />
+      <workItem from="1511608687671" duration="8944000" />
+      <workItem from="1511721323037" duration="16286000" />
+      <workItem from="1511821307138" duration="1430000" />
+      <workItem from="1511857756297" duration="6715000" />
+      <workItem from="1511979937247" duration="8147000" />
+      <workItem from="1512046574042" duration="309000" />
+      <workItem from="1512047004848" duration="46000" />
+      <workItem from="1512049405336" duration="10263000" />
+      <workItem from="1512127392012" duration="24164000" />
+      <workItem from="1512310237005" duration="1271000" />
+      <workItem from="1512405353318" duration="11285000" />
+      <workItem from="1512480820983" duration="14714000" />
+      <workItem from="1512552193946" duration="12869000" />
+      <workItem from="1512598180361" duration="4289000" />
+      <workItem from="1512639699512" duration="24000" />
+      <workItem from="1512639783845" duration="19742000" />
+      <workItem from="1512734391755" duration="769000" />
+      <workItem from="1512735170012" duration="2568000" />
+      <workItem from="1512740693619" duration="10713000" />
+      <workItem from="1512780568454" duration="1356000" />
+      <workItem from="1512818642108" duration="12279000" />
+      <workItem from="1512910407829" duration="1390000" />
+      <workItem from="1512912503789" duration="581000" />
+      <workItem from="1512913346375" duration="537000" />
+      <workItem from="1512914208438" duration="5702000" />
+      <workItem from="1512921309234" duration="1083000" />
+      <workItem from="1512922766206" duration="3834000" />
+      <workItem from="1512926941810" duration="4198000" />
+      <workItem from="1512931533419" duration="6587000" />
+      <workItem from="1512987475398" duration="4250000" />
+      <workItem from="1512997079668" duration="3774000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1356825000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1920" height="1005" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5208333" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29910478" sideWeight="0.56593406" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32637364" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.223802" sideWeight="0.43406594" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36923078" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5208333" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31571528" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36951753" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.php" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="5" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/app/modules/dashboard/components/social-share-panel/social-share-panel.template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/dashboard/components/index/index.template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="29" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="12" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/dashboard/components/index/index.style.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/main/components/main/main.template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/toasts/toasts.scss" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/toasts/toasts.html" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/player/src/player-status.enum.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/player/src/playqueue-item-status.enum.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/player/player.module.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/src/toast-types.enum.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/range-slider/range-slider.style.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/_alerts.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/toasts/toasts.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/main/components/main/main.style.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="74" column="12" lean-forward="false" selection-start-line="74" selection-start-column="12" selection-end-line="74" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/collections/toasts.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/main/main.routes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="53" lean-forward="false" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/main/components/nav/nav.template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="30" lean-forward="false" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/playlists/playlist.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="16" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/playlists/playlist.routes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/native-app/native-app.routes.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/services/toast.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/native-app/native-app.module.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/services/client-detector.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="23" lean-forward="false" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/native-app/components/native-app-view/native-app-view.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/native-app/components/native-app-view/native-app-view.html" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/session/session.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/services/auth.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="44" column="45" lean-forward="false" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/native-app/services/native-app-handler.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/shared.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="62" column="10" lean-forward="false" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/models/toast.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/toast/toast.scss" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/toast/toast.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/toast/toast.html" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/main/components/main/main.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="26" column="7" lean-forward="false" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tsconfig.app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="12" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.releaseignore" />
+    <entry file="file://$PROJECT_DIR$/src/app/modules/player/components/player-controls/player-controls.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/main/main.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="62" column="1" lean-forward="false" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/pipes/limit-collection-results.pipe.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/two-range-slider/two-range-slider.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3060">
+          <caret line="208" column="28" lean-forward="false" selection-start-line="208" selection-start-column="28" selection-end-line="208" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/shared/components/range-slider/range-slider.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1770">
+          <caret line="121" column="27" lean-forward="false" selection-start-line="121" selection-start-column="27" selection-end-line="121" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="764">
+            <caret line="63" column="1" lean-forward="false" selection-start-line="63" selection-start-column="1" selection-end-line="63" selection-end-column="10" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="39" lean-forward="false" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/modules/player/components/player/player.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="708">
+          <caret line="75" column="17" lean-forward="false" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" column="46" lean-forward="true" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.yt-playqueue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="109" column="8" lean-forward="false" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/release_on_github.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="31" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="15" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/release_on_github_pages.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="28" column="40" lean-forward="false" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

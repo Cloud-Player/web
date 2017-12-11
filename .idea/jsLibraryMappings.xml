@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <excludedPredefinedLibrary name="cloud-player/dist/bundle/native/osx/Cloud-Player-darwin-x64/Cloud-Player.app/Contents/Resources/app/node_modules" />
+    <excludedPredefinedLibrary name="cloud-player/dist/bundle/native/win/Cloud-Player-win32-ia32/resources/app/node_modules" />
+  </component>
+</project>

@@ -1,0 +1,146 @@
+setTimeout(() => {
+    playQueue.addAndPlay({
+      provider: 'SOUNDCLOUD',
+      track: {
+        stream_url: 'https://api.soundcloud.com/tracks/66600130/stream',
+        id: 66600130,
+        title: 'Jojo'
+      }
+    });
+    playQueue.addAndPlay({
+      track: {
+        stream_url: 'https://api.soundcloud.com/tracks/66600130/stream',
+        id: 66600130,
+        title: 'Jojo'
+      }
+    });
+    playQueue.add({
+      provider: 'YOUTUBE',
+      track: {
+        id: '-Y9dWAnOR40',
+        title: 'Bedouin'
+      }
+    });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'l1A-YOT6VmU',
+       title: 'Max Cooper',
+
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: '_mXD2L0MfW4',
+       title: 'Max Cooper',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'rKeMJDxDtCY',
+       title: 'Max Cooper 2',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: '_7wKjTf_RlI',
+       title: 'Max Cooper 3',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'VGfayDKveAs',
+       title: 'Max Cooper 4',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'Djw12KoW5q0',
+       title: 'Max Cooper 5',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'N5XsQeXF0RY',
+       title: 'Max Cooper 6',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'D6mkplLZL84',
+       title: 'Max Cooper 7',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'E7GRLcqzd0o',
+       title: 'Max Cooper 8',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'Iy1-Eg--Zjo',
+       title: 'Max Cooper 9',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+   playQueue.add({
+     provider: 'YOUTUBE',
+     track: {
+       id: 'kKqw8nY6-Eg',
+       title: 'Max Cooper - Organa (official video by Sabine Volkert)',
+       duration: 1000,
+       user: {
+         username: 'Max Cooper'
+       }
+     }
+   });
+}, 2000);
