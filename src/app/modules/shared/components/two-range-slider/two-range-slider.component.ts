@@ -1,4 +1,7 @@
-import {Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit} from '@angular/core';
+import {
+  Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
+  OnDestroy
+} from '@angular/core';
 import {isNumber} from 'underscore';
 
 @Component({
@@ -7,7 +10,7 @@ import {isNumber} from 'underscore';
   templateUrl: './two-range-slider.template.html'
 })
 
-export class TwoRangeSliderComponent implements AfterContentInit {
+export class TwoRangeSliderComponent implements OnDestroy, AfterContentInit {
   private _tmpMinValue = 0;
   private _tmpMaxValue = 0;
   private _minValue = 0;
@@ -213,4 +216,11 @@ export class TwoRangeSliderComponent implements AfterContentInit {
     this.setDragPosFromVal();
   }
 
+  ngOnDestroy(): void {
+    this.el.nativeElement.removeEventListener('mousedown', this.dragStart.bind(this));
+    this.el.nativeElement.removeEventListener('touchstart', this.dragStart.bind(this));
+
+    this.el.nativeElement.removeEventListener('mouseup', this.dragEnd.bind(this));
+    this.el.nativeElement.removeEventListener('touchend', this.dragEnd.bind(this));
+  }
 }

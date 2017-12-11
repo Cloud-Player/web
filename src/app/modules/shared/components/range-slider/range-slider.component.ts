@@ -1,11 +1,14 @@
-import {Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit} from '@angular/core';
+import {
+  Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
+  OnDestroy
+} from '@angular/core';
 
 @Component({
   selector: 'app-range-slider',
   styleUrls: ['./range-slider.style.scss'],
   templateUrl: './range-slider.template.html'
 })
-export class RangeSliderComponent implements AfterContentInit {
+export class RangeSliderComponent implements OnDestroy, AfterContentInit {
   private tmpVal = 0;
   private val = 0;
   private minVal = 0;
@@ -136,6 +139,14 @@ export class RangeSliderComponent implements AfterContentInit {
     this.el.nativeElement.addEventListener('touchend', this.dragEnd.bind(this));
 
     this.setDragPosFromVal();
+  }
+
+  ngOnDestroy(): void {
+    this.el.nativeElement.removeEventListener('mousedown', this.dragStart.bind(this));
+    this.el.nativeElement.removeEventListener('touchstart', this.dragStart.bind(this));
+
+    this.el.nativeElement.removeEventListener('mouseup', this.dragEnd.bind(this));
+    this.el.nativeElement.removeEventListener('touchend', this.dragEnd.bind(this));
   }
 
 }
