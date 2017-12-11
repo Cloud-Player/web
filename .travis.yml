@@ -8,6 +8,7 @@ env:
 before_install:
 - npm install -g @angular/cli
 before_deploy:
+- npm install
 - npm run release
 deploy:
   - provider: script
