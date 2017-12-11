@@ -14,7 +14,7 @@ export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
   }
 
   private _increaseLimitOnBottomReached(ev: MouseWheelEvent) {
-    const srcEl: any = ev.srcElement;
+    const srcEl: any = ev.srcElement || ev.target;
     if (srcEl.scrollTop / (srcEl.scrollHeight - srcEl.offsetHeight) > 0.8) {
       if (this._limit) {
         this._limit += this._orgLimit;
