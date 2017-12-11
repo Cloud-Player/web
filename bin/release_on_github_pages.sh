@@ -9,10 +9,11 @@ TMP_RELEASE_FOLDER="/tmp/releases/cloud-player"
 
 CURRENT_GIT_USER=`git config user.name`
 CURRENT_GIT_USERMAIL=`git config user.email`
-CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+CURRENT_BRANCH=$TRAVIS_BRANCH
 
 # Sets everything back to the beginning, before the release process has been started
 reset () {
+    git checkout $CURRENT_BRANCH
     git reset --hard origin/$CURRENT_BRANCH
     git config user.name "$CURRENT_GIT_USER"
     git config user.email "$CURRENT_GIT_USERMAIL"
@@ -24,6 +25,11 @@ exit_with_error () {
     echo $1
     exit 1
 }
+
+# Set current branch as $CURRENT_BRANCH when it is not exposed by travis
+if [ -z "$CURRENT_BRANCH" ]; then
+  CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+fi
 
 # Check if there are any local changes that are not committed yet
 if [ -n "$(git status --porcelain)" ]; then
