@@ -181,28 +181,34 @@ export class TwoRangeSliderComponent implements AfterContentInit {
     this.progressLine.nativeElement.style.width = (posMax - posMin) + '%';
   }
 
+  private dragStart(): void {
+    this.draggerWidth = this.handleOne.nativeElement.offsetWidth;
+    this.dragInProgress = true;
+  }
 
-  ngAfterContentInit() {
-    this.el.nativeElement.addEventListener('mousedown', () => {
-      this.draggerWidth = this.handleOne.nativeElement.offsetWidth;
-      this.dragInProgress = true;
-    });
+  private dragEnd(): void {
+    this.dragInProgress = false;
+    if (this.minValue !== this.tmpMinValue) {
+      this.minValue = this.tmpMinValue;
+      this.minValueChanged.emit(this.minValue);
+    }
 
-    this.el.nativeElement.addEventListener('mouseup', () => {
-      this.dragInProgress = false;
-      if (this.minValue !== this.tmpMinValue) {
-        this.minValue = this.tmpMinValue;
-        this.minValueChanged.emit(this.minValue);
-      }
+    if (this.maxValue !== this.tmpMaxValue) {
+      this.maxValue = this.tmpMaxValue;
+      this.maxValueChanged.emit(this.maxValue);
+    }
 
-      if (this.maxValue !== this.tmpMaxValue) {
-        this.maxValue = this.tmpMaxValue;
-        this.maxValueChanged.emit(this.maxValue);
-      }
+    this.sliderOne.nativeElement.value = isNumber(this._tmpMinValue) ? this._tmpMinValue : this.min;
+    this.sliderTwo.nativeElement.value = isNumber(this._tmpMaxValue) ? this._tmpMaxValue : this.max;
+  }
 
-      this.sliderOne.nativeElement.value = isNumber(this._tmpMinValue) ? this._tmpMinValue : this.min;
-      this.sliderTwo.nativeElement.value = isNumber(this._tmpMaxValue) ? this._tmpMaxValue : this.max;
-    });
+
+  ngAfterContentInit(): void {
+    this.el.nativeElement.addEventListener('mousedown', this.dragStart.bind(this));
+    this.el.nativeElement.addEventListener('touchstart', this.dragStart.bind(this));
+
+    this.el.nativeElement.addEventListener('mouseup', this.dragEnd.bind(this));
+    this.el.nativeElement.addEventListener('touchend', this.dragEnd.bind(this));
 
     this.setDragPosFromVal();
   }
