@@ -13,8 +13,8 @@ CURRENT_BRANCH=$TRAVIS_BRANCH
 
 # Sets everything back to the beginning, before the release process has been started
 reset () {
-    git checkout $CURRENT_BRANCH > /dev/null 2>&1 || echo "[RESET] Checkout of branch ${$CURRENT_BRANCH} failed"
-    git reset --hard origin/$CURRENT_BRANCH > /dev/null 2>&1 || echo "[RESET] Reset of branch ${$CURRENT_BRANCH} failed"
+    git checkout $CURRENT_BRANCH > /dev/null 2>&1 || echo "[RESET] Checkout of branch $CURRENT_BRANCH failed"
+    git reset --hard origin/$CURRENT_BRANCH > /dev/null 2>&1 || echo "[RESET] Reset of branch $CURRENT_BRANCH failed"
     git config user.name "$CURRENT_GIT_USER"
     git config user.email "$CURRENT_GIT_USERMAIL"
     git remote remove origin_gh
