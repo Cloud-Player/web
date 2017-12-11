@@ -18,6 +18,8 @@ import {SharedModule} from '../shared/shared.module';
 import {UserAnalyticsModule} from '../user-analytics/user-analytics.module';
 import {HttpClientModule} from '@angular/common/http';
 import {NativeAppModule} from '../native-app/native-app.module';
+import * as localforage from 'localforage';
+import {ClientDetector, ClientNames} from '../shared/services/client-detector.service';
 
 @NgModule({
   imports: [
@@ -44,4 +46,18 @@ import {NativeAppModule} from '../native-app/native-app.module';
   bootstrap: [MainComponent]
 })
 export class MainModule {
+
+  constructor() {
+    /* TODO remove when it is working again
+     * With the latest version of localforage Firefox can not use indexDB
+     * "A mutation operation was attempted on a database that did not allow mutations."
+     * Therefor we have to use localstorage until it is fixed
+     */
+    if (ClientDetector.getClient().name === ClientNames.Firefox) {
+      localforage.config({
+        driver: localforage.LOCALSTORAGE
+      });
+    }
+  }
+
 }
