@@ -1,5 +1,5 @@
-import {ElementRef, EventEmitter, OnDestroy, Pipe, PipeTransform} from '@angular/core';
-import {throttle} from 'underscore';
+import {EventEmitter, OnDestroy, Pipe, PipeTransform} from '@angular/core';
+import {debounce} from 'underscore';
 
 @Pipe({name: 'limitCollectionresults', pure: false})
 export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
@@ -9,12 +9,12 @@ export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
   private valueChange = new EventEmitter();
 
   constructor() {
-    this._throttledScrollHandler = throttle(this._increaseLimitOnBottomReached.bind(this), 500);
+    this._throttledScrollHandler = debounce(this._increaseLimitOnBottomReached.bind(this), 200);
     document.addEventListener('scroll', this._throttledScrollHandler, true);
   }
 
   private _increaseLimitOnBottomReached(ev: MouseWheelEvent) {
-    const srcEl: any = ev.srcElement;
+    const srcEl: any = ev.srcElement || ev.target;
     if (srcEl.scrollTop / (srcEl.scrollHeight - srcEl.offsetHeight) > 0.8) {
       if (this._limit) {
         this._limit += this._orgLimit;
