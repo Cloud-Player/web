@@ -1,3 +1,24 @@
+# v3.0.0
+- Add continuous playback. Preload next track so it does not have to be buffered when it is set to playing
+- Add crossfade of 10 seconds when track is going to end and next track is availabe and can be played
+Known issue: When the browser does not allow starting a new player instance (e.g. tab is inactive) 
+crossfade does not work yet.
+- Fix [#33](https://github.com/Cloud-Player/web/pull/33): Could not set playback head on mobile devices
+- Fix [#45](https://github.com/Cloud-Player/web/pull/45): Client-Pagination did not work in Firefox
+- Display toast when a new version is available
+- Display current app version
+- Change style for native client
+- Refactor code:
+  - Add backbone decorators
+  - Use properties instead of calling `model.get()|.set()` for backbone models that are mapped 
+  on the backbone model setter and getter by the @attributesKey decorators
+  - Refactor player module and prepare support for other players e.g. Youtube
+  - Make player completely controllable by PlayQueueItem so that the playQueueItem can 
+  request play, pause, stop and seek on the actual player. 
+  Set status (playing, paused, stopped) and progress from player on PlayQueueItem
+- Update dependencies to latest version
+- Add license GNU GPLv3 
+
 # v2.1.0
 - Upgrade to Angular 5
 
