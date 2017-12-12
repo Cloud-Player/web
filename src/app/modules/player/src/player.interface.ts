@@ -20,7 +20,7 @@ export interface IPlayer {
 
   deInitialize(): void;
 
-  preload(): void;
+  preload(startTime?: number): void;
 
   play(from?: number): Promise<any>;
 

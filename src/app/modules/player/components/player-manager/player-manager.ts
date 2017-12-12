@@ -12,13 +12,16 @@ import {PlayerFactory} from '../../src/player-factory.class';
 import {Track} from '../../../tracks/models/track.model';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
+import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
+import {isNumber} from 'underscore';
 
 @Component({
   selector: 'app-player-manager',
   styleUrls: ['./player-manager.scss'],
   templateUrl: './player-manager.html',
   entryComponents: [
-    SoundcloudPlayerComponent
+    SoundcloudPlayerComponent,
+    YoutubePlayerComponent
   ]
 })
 export class PlayerManagerComponent implements OnInit {
@@ -129,7 +132,10 @@ export class PlayerManagerComponent implements OnInit {
         })
     );
 
-    this.playQueue.get(player.track.id).duration = player.getDuration();
+    const currentDuration = player.getDuration();
+    if (isNumber(currentDuration) && currentDuration > 0) {
+      this.playQueue.get(player.track.id).duration = player.getDuration();
+    }
     this.handlePlayerStatusChange(player.getStatus());
   }
 
@@ -178,11 +184,11 @@ export class PlayerManagerComponent implements OnInit {
       this.removePlayer(oldPlayer);
     }
 
-    newPlayer.instance.setVolume(this._volume);
-
     if (canPlay) {
+      newPlayer.instance.setVolume(this._volume);
       newPlayer.instance.play(startTime);
     } else {
+      newPlayer.instance.setVolume(0);
       newPlayer.instance.seekTo(startTime);
     }
 

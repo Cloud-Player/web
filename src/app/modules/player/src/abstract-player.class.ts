@@ -11,16 +11,16 @@ export abstract class AbstractPlayer implements OnInit {
   private _volume: number;
   private _status: PlayerStatus;
   private _ableToPlay: boolean;
-  private _allowedToPlay: boolean;
   private _initialised = false;
   private _initialisePromise: Promise<any>;
-  private _seekTo: number;
   private _subscriptionsPerState = {};
   private _viewReadyPromise: Promise<any>;
   private _viewReadyResolver: Function;
   private _ngOnInitCompleted = false;
   private _playerIsInitialised = false;
   private _playerSdkIsInitialised = false;
+  private _allowedToPlay = false;
+  private _initialiseCallbacks: Function[] = [];
 
   @Input()
   public track: Track;
@@ -54,7 +54,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   protected abstract seekPlayerTo(to: number): void;
 
-  protected abstract preloadTrack(track: Track): void;
+  protected abstract preloadTrack(track: Track, startTime?: number): void;
 
   protected abstract getPlayerEl(): ElementRef;
 
@@ -66,8 +66,10 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setDuration(duration: number) {
-    this._duration = duration;
-    this.durationChange.emit(duration);
+    if (isNumber(duration) && duration > 0) {
+      this._duration = duration;
+      this.durationChange.emit(duration);
+    }
   }
 
   public getDuration(): number {
@@ -75,8 +77,10 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setCurrentTime(currentTime: number): void {
-    this._currentTime = currentTime;
-    this.currentTimeChange.emit(currentTime);
+    if (isNumber(currentTime) && currentTime > 0) {
+      this._currentTime = currentTime;
+      this.currentTimeChange.emit(currentTime);
+    }
   }
 
   public getCurrentTime(): number {
@@ -120,20 +124,6 @@ export abstract class AbstractPlayer implements OnInit {
     return this._ableToPlay;
   }
 
-  protected onInitialised() {
-    this.setStatus(PlayerStatus.Initialised);
-    this._initialised = true;
-    if (this._seekTo) {
-      this.seekPlayerTo(this._seekTo);
-      delete this._seekTo;
-    }
-    if (this.isAllowedToPlay()) {
-      this.startPlayer();
-    } else {
-      this.pausePlayer();
-    }
-  }
-
   protected onDurationUpdate(duration: number) {
     this.setDuration(duration);
   }
@@ -155,7 +145,12 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected onPlaying() {
-    this.setStatus(PlayerStatus.Playing);
+    this.setAbleToPlay(true);
+    if (!this.isAllowedToPlay()) {
+      this.pause();
+    } else {
+      this.setStatus(PlayerStatus.Playing);
+    }
   }
 
   protected onPaused() {
@@ -174,11 +169,9 @@ export abstract class AbstractPlayer implements OnInit {
     if (!navigator.onLine) {
       const onlineListener = () => {
         window.removeEventListener('online', onlineListener);
-        if (this.isAllowedToPlay()) {
-          this.preload();
-          this.seekPlayerTo(this.getCurrentTime());
-          this.play();
-        }
+        this.preload();
+        this.seekPlayerTo(this.getCurrentTime());
+        this.play();
       };
       window.addEventListener('online', onlineListener.bind(this));
       this.setStatus(PlayerStatus.Waiting);
@@ -231,7 +224,15 @@ export abstract class AbstractPlayer implements OnInit {
     return this._viewReadyPromise;
   }
 
-  public initialise(options: { preload: boolean } = {preload: true}): Promise<any> {
+  private executeOnInitialised(callback: Function) {
+    if (this._initialised) {
+      callback.apply(this);
+    } else {
+      this._initialiseCallbacks.push(callback.bind(this));
+    }
+  }
+
+  public initialise(): Promise<any> {
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
@@ -253,13 +254,15 @@ export abstract class AbstractPlayer implements OnInit {
           this._playerIsInitialised = true;
 
           this.bindListeners();
-          if (options.preload) {
-            this.preload();
-          }
           if (isNumber(this.getVolume())) {
             this.setPlayerVolume(this.getVolume());
           }
-          this.onInitialised();
+          this._initialiseCallbacks.forEach((callback: Function) => {
+            callback.apply(this);
+          });
+          this._initialiseCallbacks = [];
+          this.setStatus(PlayerStatus.Initialised);
+          this._initialised = true;
           resolve();
         });
       });
@@ -277,37 +280,30 @@ export abstract class AbstractPlayer implements OnInit {
     this.setDuration(0);
     this._initialised = false;
     this._initialisePromise = null;
+    this.setAllowedToPlay(false);
     this.setStatus(PlayerStatus.NotInitialised);
   }
 
-  public preload(): void {
-    this.preloadTrack(this.track);
-    const subscription =
-      this.statusChange
-        .filter(status => status === PlayerStatus.Playing)
-        .subscribe(() => {
-          subscription.unsubscribe();
-          this.onIsAbleToPlay();
-          if (!this.isAllowedToPlay()) {
-            this.pause();
-          }
-        });
+  public preload(startTime?: number): void {
+    this.setCurrentTime(startTime);
+    this.executeOnInitialised(() => {
+      this.preloadTrack(this.track, startTime);
+    });
   }
 
   public play(from?): Promise<any> {
+    this.setCurrentTime(from);
     this.setAllowedToPlay(true);
-    if (isNumber(from)) {
-      this.seekTo(from);
-    } else if (this._initialised) {
+    this.executeOnInitialised(() => {
+      if (isNumber(from)) {
+        this.seekTo(from);
+      }
       this.startPlayer();
-    } else if (!this._initialised) {
-      this.initialise();
-    }
+    });
     return this.resolveOnStatus(PlayerStatus.Playing);
   }
 
   public pause(): Promise<any> {
-    this.setAllowedToPlay(false);
     if (this._initialised) {
       this.pausePlayer();
       return this.resolveOnOneOfStatus([PlayerStatus.Stopped, PlayerStatus.Paused]);
@@ -327,13 +323,9 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public seekTo(to: number): Promise<any> {
-    if (this._initialised) {
+    this.executeOnInitialised(() => {
       this.seekPlayerTo(to);
-      this.startPlayer();
-    } else {
-      this._seekTo = to;
-      this.initialise();
-    }
+    });
     return this.resolveOnStatus(PlayerStatus.Playing);
   }
 

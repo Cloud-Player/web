@@ -9,6 +9,7 @@ import {keys} from 'underscore';
 import {PlayerStore} from '../collections/player-store';
 import {PlayerStoreItem} from '../models/player-store-item';
 import {PlayQueueItem} from '../models/play-queue-item';
+import {YoutubePlayerComponent} from '../components/youtube-player/youtube-player';
 
 @Injectable()
 export class PlayerFactory {
@@ -21,7 +22,8 @@ export class PlayerFactory {
     this._resolver = resolver;
 
     this._playerComponentMap = {
-      SOUNDCLOUD: SoundcloudPlayerComponent
+      SOUNDCLOUD: SoundcloudPlayerComponent,
+      YOUTUBE: YoutubePlayerComponent
     };
   }
 
@@ -43,6 +45,7 @@ export class PlayerFactory {
     });
     playerComponent.instance.track = item.track;
     playerComponent.instance.initialise();
+    playerComponent.instance.preload(item.progress);
     playerComponent.instance.addClass('player');
     return player;
   }
@@ -97,7 +100,7 @@ export class PlayerFactory {
       } else {
         const reusablePlayerComponent = reusablePlayer.component;
         if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
-          reusablePlayerComponent.instance.initialise({preload: false});
+          reusablePlayerComponent.instance.initialise();
         }
         reusablePlayerComponent.instance.updateTrack(item.track);
         return reusablePlayerComponent;

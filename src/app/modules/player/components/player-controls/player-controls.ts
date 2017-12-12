@@ -16,11 +16,13 @@ import {PlayQueue} from '../../collections/play-queue';
   templateUrl: './player-controls.html'
 })
 export class PlayerControlsComponent implements OnInit {
-  public playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
   public currentItem: PlayQueueItem = new PlayQueueItem();
 
   @Input()
   public isBuffering: boolean;
+
+  @Input()
+  public playQueue: PlayQueue<PlayQueueItem>;
 
   constructor(private humanReadableSecPipe: HumanReadableSecondsPipe, private userAnalyticsService: UserAnalyticsService) {
   }

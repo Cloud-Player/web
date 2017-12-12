@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CoverSizes} from '../../../shared/components/track-cover/track-cover.component';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueue} from '../../collections/play-queue';
@@ -9,18 +9,13 @@ import {PlayQueueItem} from '../../models/play-queue-item';
   styleUrls: ['./playqueue.scss'],
   templateUrl: './playqueue.html'
 })
-export class PlayQueueComponent {
-  playQueue: PlayQueue<PlayQueueItem>;
+export class PlayQueueComponent implements OnInit{
   coverSize = CoverSizes.Medium;
 
-  constructor(private userAnalyticsService: UserAnalyticsService) {
-    this.playQueue = PlayQueue.getInstance();
+  @Input()
+  public playQueue: PlayQueue<PlayQueueItem>;
 
-    this.playQueue.on('add', (playQueueItem: PlayQueueItem) => {
-      if (playQueueItem.isQueued()) {
-        this.userAnalyticsService.trackEvent('queue_track', 'add', 'app-play-queue');
-      }
-    });
+  constructor(private userAnalyticsService: UserAnalyticsService) {
   }
 
   dropTrack = (dropData: {}) => {
@@ -30,5 +25,13 @@ export class PlayQueueComponent {
     } else {
       this.playQueue.addAndPlay({track: dropData});
     }
+  }
+
+  ngOnInit(){
+    this.playQueue.on('add', (playQueueItem: PlayQueueItem) => {
+      if (playQueueItem.isQueued()) {
+        this.userAnalyticsService.trackEvent('queue_track', 'add', 'app-play-queue');
+      }
+    });
   }
 }
