@@ -1,10 +1,16 @@
 import {Model, Collection} from 'backbone';
 import {result, isObject, isArray, extend, isString} from 'underscore';
-
+import {BaseCollection} from '../collections/base.collection';
+import {BaseModel} from './base.model';
+import {IDynamicInstanceDefinition, IDynamicInstances, IModelOrCollectionConstructor, INestedDefinition} from '../utils/interfaces';
+import {InstanceResolver} from '../utils/instance-resolver';
 
 export class NestedModel extends Model {
+  nested(): INestedDefinition {
+    return {};
+  }
 
-  nested() {
+  dynamicInstances(): IDynamicInstances {
     return {};
   }
 
@@ -13,21 +19,46 @@ export class NestedModel extends Model {
     super(attributes, options);
   }
 
-  private _prepare(): Object {
+  private _prepare(attributes: {} = {}): Object {
     const nestedAttributes = result(this, 'nested'),
       instanceObject = {};
 
+    if (attributes instanceof Model || attributes instanceof Collection) {
+      return this.attributes;
+    }
+
     for (const key in nestedAttributes) {
-      if (typeof nestedAttributes[key] === 'function') {
-        const instance = new nestedAttributes[key]();
-        instance.parent = this;
-        instanceObject[key] = instance;
-      } else {
-        throw new Error('Nested attribute ' + key + ' is not a valid constructor. Do not set an instance as nested attribute.');
+      if (nestedAttributes.hasOwnProperty(key) && !instanceObject[key]) {
+        const instance = InstanceResolver.getInstance(nestedAttributes[key]);
+
+        if (instance) {
+          instanceObject[key] = instance;
+        } else {
+          throw new Error('Nested attribute ' + key + ' is not a valid constructor. Do not set an instance as nested attribute.');
+        }
       }
     }
 
     return instanceObject;
+  }
+
+  private _setDynamicInstance(attributes: {} = {}) {
+    const dynamicInstances = result(this, 'dynamicInstances');
+
+    for (const key in dynamicInstances) {
+      if (dynamicInstances.hasOwnProperty(key) &&
+        !(attributes[key] instanceof Model || attributes[key] instanceof Collection)) {
+
+        const instance =
+          InstanceResolver.getDynamicInstance(dynamicInstances, key, attributes);
+
+        if (instance) {
+          this.attributes[key] = instance;
+        }
+      }
+    }
+
+    return attributes;
   }
 
   private _setNestedModel(key: string, value: string | any): void {
@@ -56,14 +87,19 @@ export class NestedModel extends Model {
   }
 
   private _setNestedAttributes(obj: any): any {
-
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const nestedAttrs = result(this, 'nested'),
+          dynamicInstances = result(this, 'dynamicInstances'),
           value = obj[key],
-          nestedValue = nestedAttrs[key];
+          nestedValue = nestedAttrs[key],
+          dynamicInstanceValue = dynamicInstances[key];
 
-        if (nestedValue && !(value instanceof nestedValue) && this.get(key)) {
+        if (
+          (nestedValue || dynamicInstanceValue) &&
+          !(value instanceof Model || value instanceof Collection) &&
+          this.get(key)
+        ) {
 
           if (this.get(key) instanceof Model) {
             this._setNestedModel(key, value);
@@ -128,8 +164,10 @@ export class NestedModel extends Model {
     }
 
     if (_options && _options._prepareNesting) {
-      extend(this.attributes, this._prepare());
+      extend(this.attributes, this._prepare(obj));
     }
+
+    this._setDynamicInstance(obj);
 
     obj = this._setNestedAttributes(obj);
 
