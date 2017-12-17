@@ -1,0 +1,63 @@
+import {IDynamicInstanceDefinition, IDynamicInstances, IModelOrCollectionConstructor} from './interfaces';
+import {isObject} from 'underscore';
+import {Collection, Model} from 'backbone';
+
+export class InstanceResolver {
+  private static isModelOrCollectionConstructor(type: IModelOrCollectionConstructor): boolean {
+    if (type) {
+      return type.prototype instanceof Model || type.prototype instanceof Collection;
+    } else {
+      return false;
+    }
+  }
+
+  private static getDynamicConstructorForIdentifierKeyValue(dynamicInstanceDefinition: IDynamicInstanceDefinition,
+                                                            key: string | number): IModelOrCollectionConstructor {
+    return dynamicInstanceDefinition.identifierKeyValueMap[key];
+  }
+
+  public static getDynamicConstructor(dynamicInstances: IDynamicInstances,
+                                      key: string | number,
+                                      attributes: Object = {}): IModelOrCollectionConstructor {
+
+    const dynamicInstanceDefinition = dynamicInstances[key];
+
+    if (isObject(dynamicInstanceDefinition) && !dynamicInstanceDefinition.identifierKey) {
+      throw new Error('IdentifierKey is missing on dynamicInstance definition!');
+    } else if (isObject(dynamicInstanceDefinition)) {
+      const identifierValue =
+        attributes[dynamicInstanceDefinition.identifierKey] ||
+        isObject(attributes[key]) ? attributes[key][dynamicInstanceDefinition.identifierKey] : null;
+
+      if (identifierValue) {
+        return this.getDynamicConstructorForIdentifierKeyValue(
+          dynamicInstanceDefinition,
+          identifierValue
+        );
+      }
+    }
+
+    return null;
+  }
+
+  public static getDynamicInstance(dynamicInstances: IDynamicInstances,
+                                   key: string | number,
+                                   attributes: Object = {}): Collection<Model> | Model {
+
+    const availableDynamicConstructor = this.getDynamicConstructor(dynamicInstances, key, attributes);
+
+    if (availableDynamicConstructor) {
+      return new availableDynamicConstructor();
+    } else {
+      return null;
+    }
+  }
+
+  public static getInstance(type: IModelOrCollectionConstructor): Collection<Model> | Model {
+    if (this.isModelOrCollectionConstructor(type)) {
+      return new type();
+    } else {
+      return null;
+    }
+  }
+}
