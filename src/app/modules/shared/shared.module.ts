@@ -33,6 +33,8 @@ import {EaseService} from './services/ease.service';
 import {ToastsComponent} from './components/toasts/toasts';
 import {ToastService} from './services/toast';
 import {ToastComponent} from './components/toast/toast';
+import {TabBarComponent} from './components/tab-bar/tab-bar';
+import {TabPaneComponent} from './components/tab-pane/tab-pane';
 
 @NgModule({
   imports: [
@@ -61,6 +63,8 @@ import {ToastComponent} from './components/toast/toast';
     TrackCoverComponent,
     ToastComponent,
     ToastsComponent,
+    TabBarComponent,
+    TabPaneComponent,
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
@@ -90,6 +94,8 @@ import {ToastComponent} from './components/toast/toast';
     OptionsBtnOptionComponent,
     TrackCoverComponent,
     ToastsComponent,
+    TabBarComponent,
+    TabPaneComponent,
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
