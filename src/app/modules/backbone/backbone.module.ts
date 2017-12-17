@@ -1,14 +1,12 @@
 import {NgModule} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
-import {Http, RequestOptions, Headers, Response, URLSearchParams} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {isUndefined} from 'underscore';
-import 'backbone';
 import {Model, Collection} from 'backbone';
 import {CollectionSortComponent} from './components/collection-sort-component/collection-sort.component';
 import {CollectionRangeInputSearchComponent} from './components/collection-range-input-search/collection-range-input-search.component';
-import {HttpClient, HttpClientModule, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpClientModule, HttpHeaders, HttpResponse} from '@angular/common/http';
 
 declare namespace Backbone {
   export function sync(method: string, model: Model | Collection<Model>, options?: any): any;
