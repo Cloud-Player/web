@@ -1,17 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Track} from '../../../tracks/models/track.model';
-import {Tracks} from '../../../tracks/collections/tracks.collection';
-import {CoverSizes} from '../track-cover/track-cover.component';
-import {ClientDetector} from '../../services/client-detector.service';
-import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {PlayQueue} from '../../../player/collections/play-queue';
+import {Tracks} from '../../collections/tracks';
+import {Track} from '../../models/track';
+import {PlayQueueItem} from '../../../player/models/play-queue-item';
+import {ClientDetector} from '../../../shared/services/client-detector.service';
+import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 
 @Component({
   selector: 'app-track-list',
-  styleUrls: ['./track-list.style.scss'],
-  templateUrl: './track-list.template.html'
+  styleUrls: ['./track-list.scss'],
+  templateUrl: './track-list.html'
 })
 export class TrackListComponent {
 
@@ -35,9 +35,9 @@ export class TrackListComponent {
 
   getSize() {
     if (ClientDetector.isMobileDevice()) {
-      return CoverSizes.Small;
+      return ImageSizes.Small;
     } else {
-      return CoverSizes.Regular;
+      return ImageSizes.Medium;
     }
   }
 }

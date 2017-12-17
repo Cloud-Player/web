@@ -1,4 +1,4 @@
-import {Session} from '../session/models/session.model';
+import {Session} from './models/session.model';
 
 let _session: Session = null;
 

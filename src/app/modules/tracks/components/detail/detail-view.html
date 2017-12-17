@@ -6,12 +6,12 @@
   <hr>
 
   <div class="cover">
-    <img [src]="track.image.getLargeSize()">
+    <img [src]="track.image.getLargeSizeUrl()">
   </div>
   <div class="details">
     <b>{{track.title}}</b>
-    <p>{{track.user.username}}</p>
-    <app-play-button [track]="track"></app-play-button>
+    <p>{{track.artist.username}}</p>
+    <app-track-play-button [track]="track"></app-track-play-button>
   </div>
 
 </section>

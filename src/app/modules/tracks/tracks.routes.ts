@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TracksDetailComponent } from './components/detail/detail.component';
+import {TrackDetailViewComponent} from './components/detail/detail-view';
 
 const routes: Routes = [
-    { path: 'tracks/:id', component: TracksDetailComponent }
+    { path: 'tracks/:id', component: TrackDetailViewComponent }
 ];
 
 @NgModule({

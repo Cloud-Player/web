@@ -3,23 +3,23 @@
   <div *ngFor="let track of tracks.models | limitCollectionresults: {limit: 10}" class="track"
        appDraggable
        [dragData]="track.toJSON()"
-       [dragImageUrl]="track.image.getSmallSize()"
+       [dragImageUrl]="track.image.getSmallSizeUrl()"
        dragEffect="copy">
     <div class="cover">
       <app-track-cover [track]="track" [size]="getSize()"></app-track-cover>
-      <app-play-button [track]="track" [tracks]="tracks"></app-play-button>
+      <app-track-play-button [track]="track" [tracks]="tracks"></app-track-play-button>
     </div>
     <div class="details">
       <div class="track-info">
         <app-toggle-liked-track [track]="track"></app-toggle-liked-track>
         <div class="meta"
-             appPlayTrackOn
+             appTrackPlayOn
              [events]="['click']"
              [track]="track"
              [tracks]="tracks">
           <b class="track-title">{{track.title}}</b>
           <div class="artist">
-            <span>{{track.user.username}}</span>
+            <span>{{track.artist.getFullName()}}</span>
             <span class="created">created
               <span [appTimeAgo]="track.createdAt">{{track.createdAt}}</span>
             </span>
@@ -35,10 +35,10 @@
             <app-options-btn-option (click)="addToQueue(track)">
               Add to queue
             </app-options-btn-option>
-            <app-options-btn-option appPlayTrackOn="click" [track]="track" [tracks]="tracks">
+            <app-options-btn-option appTrackPlayOn="click" [track]="track" [tracks]="tracks">
               Play this track and the following ones
             </app-options-btn-option>
-            <app-options-btn-option appPlayTrackOn="click" [track]="track">
+            <app-options-btn-option appTrackPlayOn="click" [track]="track">
               Play only this track
             </app-options-btn-option>
             <app-options-btn-option *ngIf="canBeDeleted" (click)="track.destroy()">

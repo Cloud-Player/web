@@ -1,13 +1,13 @@
 import {Directive, ElementRef, OnInit, Input, OnDestroy} from '@angular/core';
-import {Track} from '../../tracks/models/track.model';
-import {Tracks} from '../../tracks/collections/tracks.collection';
+import {Tracks} from '../collections/tracks';
+import {Track} from '../models/track';
 import {PlayQueue} from '../../player/collections/play-queue';
 import {PlayQueueItem} from '../../player/models/play-queue-item';
 
 @Directive({
-  selector: '[appPlayTrackOn]'
+  selector: '[appTrackPlayOn]'
 })
-export class PlayTrackOnEventDirective implements OnInit, OnDestroy {
+export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
   @Input()
   appTrackPlayOn: String;
 

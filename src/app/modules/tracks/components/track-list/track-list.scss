@@ -14,7 +14,7 @@
     &:hover{
       background: $gray-lighter;
 
-      .cover /deep/ app-play-button .play-button{
+      .cover /deep/ app-track-play-button .play-button{
         opacity: 1;
       }
     }
@@ -32,12 +32,12 @@
         flex-shrink: 0;
       }
 
-      app-play-button{
+      app-track-play-button{
         width: 100%;
         height: 100%;
       }
 
-      /deep/ app-play-button .play-button{
+      /deep/ app-track-play-button .play-button{
         position: absolute;
         top: 0;
         left: 0;
@@ -166,12 +166,12 @@
           }
         }
 
-        app-play-button{
+        app-track-play-button{
           width: 40px;
           height: 40px;
         }
 
-        /deep/ app-play-button{
+        /deep/ app-track-play-button{
           .btn-round{
             width: 30px;
             height: 30px;

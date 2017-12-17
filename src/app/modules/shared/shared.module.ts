@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HumanReadableSecondsPipe} from './pipes/h-readable-seconds.pipe';
-import {TrackListComponent} from './components/track-list/track-list.component';
 import {ToggleLikedTrackComponent} from './components/toggle-liked-track-component/toggle-liked-track.component';
-import {PlayButtonComponent} from './components/play-button/play_button.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {QueueButtonComponent} from './components/queue-button/queue_button.component';
 import {SortTracksComponent} from './components/sort-tracks/sort-tracks.component';
@@ -24,7 +22,6 @@ import {FocusInputDirective} from './directives/focus-input.directive';
 import {ViewChangeLoaderComponent} from './components/view-change-loader/view-change-loader.component';
 import {TrackCoverComponent} from './components/track-cover/track-cover.component';
 import {TimeAgoDirective} from './directives/time-ago.directive';
-import {PlayTrackOnEventDirective} from './directives/play-track-on-event.directive';
 import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/options-btn/options-btn.component';
 import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
 import {FillHeightDirective} from './directives/fill-height.directive';
@@ -48,9 +45,7 @@ import {ToastComponent} from './components/toast/toast';
     CollectionTextInputSearchComponent,
     FacebookShareButtonComponent,
     TwitterShareButtonComponent,
-    TrackListComponent,
     ToggleLikedTrackComponent,
-    PlayButtonComponent,
     QueueButtonComponent,
     SortTracksComponent,
     RangeSliderComponent,
@@ -70,7 +65,6 @@ import {ToastComponent} from './components/toast/toast';
     DropZoneDirective,
     FocusInputDirective,
     TimeAgoDirective,
-    PlayTrackOnEventDirective,
     FillHeightDirective,
     HumanReadableSecondsPipe,
     KMilShortenerPipe,
@@ -81,9 +75,7 @@ import {ToastComponent} from './components/toast/toast';
     CollectionTextInputSearchComponent,
     FacebookShareButtonComponent,
     TwitterShareButtonComponent,
-    TrackListComponent,
     ToggleLikedTrackComponent,
-    PlayButtonComponent,
     QueueButtonComponent,
     SortTracksComponent,
     RangeSliderComponent,
@@ -102,7 +94,6 @@ import {ToastComponent} from './components/toast/toast';
     DropZoneDirective,
     FocusInputDirective,
     TimeAgoDirective,
-    PlayTrackOnEventDirective,
     FillHeightDirective,
     HumanReadableSecondsPipe,
     KMilShortenerPipe,
