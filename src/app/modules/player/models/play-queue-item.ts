@@ -1,12 +1,10 @@
 import {Track} from '../../tracks/models/track';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
-import {nested} from '../../backbone/decorators/nested.decorator';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {isNumber} from 'underscore';
 import {dynamicInstance} from '../../backbone/decorators/dynamic-instance.decorator';
 import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
-import {TrackYoutube} from '../../tracks/models/track-youtube';
 import {BaseModel} from '../../backbone/models/base.model';
 
 export class PlayQueueItem extends BaseModel {
@@ -17,12 +15,13 @@ export class PlayQueueItem extends BaseModel {
   status: PlayQueueItemStatus;
 
   @attributesKey('track')
-  @nested()
+  @dynamicInstance({
+    identifierKey: 'provider',
+    identifierKeyValueMap: {
+      'SOUNDCLOUD': TrackSoundcloud
+    }
+  })
   track: Track;
-
-  @attributesKey('provider')
-  @defaultValue('SOUNDCLOUD')
-  provider: string;
 
   @attributesKey('progress')
   @defaultValue(0)
