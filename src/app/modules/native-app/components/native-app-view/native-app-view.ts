@@ -27,9 +27,9 @@ export class NativeAppViewComponent implements OnInit {
     return `Download for ${ClientDetector.getOs().name}`;
   }
 
-  public download(platform: string) {
+  public download() {
     this.userAnalyticsService.trackEvent(
-      `download_desktop_app_${ClientDetector.getOs()}`,
+      `download_desktop_app_${ClientDetector.getOs().name}`,
       'click',
       'app-desktop-app-view'
     );
