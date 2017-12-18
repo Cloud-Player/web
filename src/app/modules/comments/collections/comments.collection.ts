@@ -1,4 +1,4 @@
-import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
+import {SoundcloudCollection} from '../../shared/collections/soundcloud';
 import {Comment} from '../models/comment.model';
 
 export class Comments<TModel extends Comment> extends SoundcloudCollection<TModel> {
