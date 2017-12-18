@@ -22,4 +22,8 @@ export class User extends SoundcloudModel {
   @attributesKey('full_name')
   @defaultValue('')
   fullName: string;
+
+  getFullName(): string {
+    return this.fullName || this.username;
+  }
 }
