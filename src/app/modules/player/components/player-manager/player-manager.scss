@@ -6,7 +6,8 @@
     overflow: hidden;
 
     &.has-players {
-      height: 320px;
+      height: 100%;
+      transition: height 0.5s ease;
     }
 
     /deep/ .player {

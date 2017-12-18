@@ -1,5 +1,5 @@
 import {
-  Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, OnInit, Output,
+  Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, OnInit, Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -14,6 +14,7 @@ import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 import {isNumber} from 'underscore';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'app-player-manager',
@@ -44,9 +45,18 @@ export class PlayerManagerComponent implements OnInit {
   @Output()
   public playerStatusChange: EventEmitter<PlayerStatus> = new EventEmitter();
 
-  constructor(private resolver: ComponentFactoryResolver) {
+  constructor(private resolver: ComponentFactoryResolver, private el: ElementRef, private userAnalyticsService: UserAnalyticsService) {
     this._playerSubscriptions = new Subscription();
     this._playerFactory = new PlayerFactory(this.resolver);
+  }
+
+  private setHeight(height: number) {
+    const playerCtrlEl = this.el.nativeElement.querySelector('.player-controller');
+    if (playerCtrlEl) {
+      playerCtrlEl.style.height = `${height}px`;
+    } else {
+      console.warn('[PlayerManager:setHeight] No player controller element was found');
+    }
   }
 
   private handlePlayerStatusChange(newStatus: PlayerStatus) {
@@ -183,6 +193,10 @@ export class PlayerManagerComponent implements OnInit {
     if (oldPlayer) {
       this.removePlayer(oldPlayer);
     }
+
+    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.track);
+    newPlayer.instance.setSize(playerSize);
+    this.setHeight(playerSize.height);
 
     if (canPlay) {
       newPlayer.instance.setVolume(this._volume);
