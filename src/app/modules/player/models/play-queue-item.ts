@@ -6,6 +6,7 @@ import {isNumber} from 'underscore';
 import {dynamicInstance} from '../../backbone/decorators/dynamic-instance.decorator';
 import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
 import {BaseModel} from '../../backbone/models/base.model';
+import {TrackYoutube} from '../../tracks/models/track-youtube';
 
 export class PlayQueueItem extends BaseModel {
   private _promisePerState = {};
@@ -18,7 +19,8 @@ export class PlayQueueItem extends BaseModel {
   @dynamicInstance({
     identifierKey: 'provider',
     identifierKeyValueMap: {
-      'SOUNDCLOUD': TrackSoundcloud
+      'SOUNDCLOUD': TrackSoundcloud,
+      'YOUTUBE': TrackYoutube
     }
   })
   track: Track;

@@ -2,12 +2,13 @@
 import {
   Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2
 } from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
+import {Track} from '../../../tracks/models/track';
 import {uniqueId} from 'underscore';
-import {IPlayer} from '../../src/player.interface';
+import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {Events} from 'backbone';
 import {extend} from 'underscore';
 import {AbstractPlayer} from '../../src/abstract-player.class';
+import {TrackYoutube} from '../../../tracks/models/track-youtube';
 
 @Component({
   selector: 'app-youtube-player',
@@ -19,6 +20,9 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   private _timePoller: number;
   private _ytApiReady = false;
   private _eventHandler;
+
+  @Input()
+  public track: TrackYoutube;
 
   constructor(private el: ElementRef) {
     super();
