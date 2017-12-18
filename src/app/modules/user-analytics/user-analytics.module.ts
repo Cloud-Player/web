@@ -21,5 +21,11 @@ export class UserAnalyticsModule {
         }
         userAnalyticsService.trackPage(currentRoute.snapshot.routeConfig.path);
       });
+
+    // Disable tracking for localhost
+    const currentOrigin = document.location.origin;
+    if (currentOrigin && currentOrigin.match(/localhost/)) {
+      userAnalyticsService.setActive(false);
+    }
   }
 }
