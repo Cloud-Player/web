@@ -80,6 +80,7 @@ export class PlayerManagerComponent implements OnInit {
         break;
       case PlayerStatus.Error:
         this._errorOccured = true;
+        this.userAnalyticsService.trackEvent('player_error', 'any', this._activePlayer.instance.getError());
         this.playQueue.getCurrentItem().pause();
         break;
     }
