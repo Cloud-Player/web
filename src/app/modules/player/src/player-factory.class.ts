@@ -2,7 +2,7 @@ import {
   ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type,
   ViewContainerRef
 } from '@angular/core';
-import {IPlayer} from './player.interface';
+import {IPlayer, IPlayerSize} from './player.interface';
 import {SoundcloudPlayerComponent} from '../components/soundcloud-player/soundcloud-player';
 import {PlayerStatus} from './player-status.enum';
 import {keys} from 'underscore';
@@ -14,6 +14,8 @@ import {Track} from '../../tracks/models/track';
 
 @Injectable()
 export class PlayerFactory {
+  public static playerWidth = 320;
+
   private _resolver: ComponentFactoryResolver;
   private _container: ViewContainerRef;
   private _playerComponentMap;
@@ -28,6 +30,13 @@ export class PlayerFactory {
     };
   }
 
+  public static getPlayerSize(track: Track): IPlayerSize {
+    return {
+      width: this.playerWidth,
+      height: this.playerWidth / track.aspectRatio
+    };
+  }
+
   private getComponentForType(type: string) {
     if (this._playerComponentMap[type]) {
       return this._playerComponentMap[type];
@@ -37,15 +46,16 @@ export class PlayerFactory {
   }
 
   private createNewPlayer(item: PlayQueueItem): PlayerStoreItem {
-    const component: Type<IPlayer> = this.getComponentForType(item.provider);
+    const component: Type<IPlayer> = this.getComponentForType(item.track.provider);
     const factory: ComponentFactory<IPlayer> = this._resolver.resolveComponentFactory(component);
     const playerComponent: ComponentRef<IPlayer> = this._container.createComponent(factory);
     const player = new PlayerStoreItem({
       component: playerComponent,
-      provider: item.provider
+      provider: item.track.provider
     });
+    const playerSize = PlayerFactory.getPlayerSize(item.track);
     playerComponent.instance.track = item.track;
-    playerComponent.instance.initialise();
+    playerComponent.instance.initialise({size: playerSize});
     playerComponent.instance.preload(item.progress);
     playerComponent.instance.addClass('player');
     return player;
@@ -53,7 +63,7 @@ export class PlayerFactory {
 
   private getReusablePlayer(playQueueItem: PlayQueueItem): PlayerStoreItem {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
-      return player.provider === playQueueItem.provider &&
+      return player.provider === playQueueItem.track.provider &&
         player.component.instance.getStatus() === PlayerStatus.NotInitialised ||
         player.component.instance.getStatus() === PlayerStatus.Stopped;
     });
@@ -83,7 +93,7 @@ export class PlayerFactory {
 
   public canReusePlayer(playerComponent: ComponentRef<IPlayer>, playQueueItem: PlayQueueItem) {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
-      return player.component === playerComponent && player.provider === playQueueItem.provider;
+      return player.component === playerComponent && player.provider === playQueueItem.track.provider;
     });
 
     return !!applicablePlayer;
@@ -101,7 +111,8 @@ export class PlayerFactory {
       } else {
         const reusablePlayerComponent = reusablePlayer.component;
         if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
-          reusablePlayerComponent.instance.initialise();
+          const playerSize = PlayerFactory.getPlayerSize(item.track);
+          reusablePlayerComponent.instance.initialise({size: playerSize});
         }
         reusablePlayerComponent.instance.updateTrack(item.track);
         return reusablePlayerComponent;
