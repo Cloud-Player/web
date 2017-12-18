@@ -1,18 +1,20 @@
-import {Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {BaseCollection} from '../../../backbone/collections/base.collection';
 import {BaseModel} from '../../../backbone/models/base.model';
 import {ClientDetector} from '../../services/client-detector.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-collection-text-input-search',
   styleUrls: ['./collection-text-input-search.style.scss'],
   templateUrl: './collection-text-input-search.template.html'
 })
-export class CollectionTextInputSearchComponent implements OnInit {
+export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, OnChanges {
   private searchTerms = new Subject<string>();
+  private searchTermsSubscription: Subscription;
 
   public query: string;
   public isLoading = false;
@@ -26,8 +28,65 @@ export class CollectionTextInputSearchComponent implements OnInit {
 
   @Output() valueChange = new EventEmitter();
 
+  private onRequest(): void {
+    this.isLoading = true;
+    this.isIdle = false;
+  }
+
+  private onRequestComplete(): void {
+    this.isLoading = false;
+  }
+
+  private initCollection(collection) {
+    collection.on('request', this.onRequest.bind(this));
+    collection.on('sync error', this.onRequestComplete.bind(this));
+
+    this.searchTermsSubscription =
+      this.searchTerms
+        .debounceTime(600)        // wait for 300ms pause in events
+        .distinctUntilChanged()   // ignore if next search term is same as previous
+        .switchMap(term => {
+          if (term) {
+            this.collection.queryParams[this.queryParam] = term;
+          } else {
+            this.collection.queryParams[this.queryParam] = null;
+          }
+          this.collection.fetch({reset: true});
+          this.valueChange.emit(term);
+          return Observable.of<BaseCollection<BaseModel>>(this.collection);
+        }).subscribe();
+
+    if (collection.queryParams[this.queryParam] !== this.query) {
+      this.search();
+    }
+  }
+
+  private deInitCollection(collection) {
+    collection.off('request', this.onRequest.bind(this));
+    collection.off('sync error', this.onRequestComplete.bind(this));
+
+    this.searchTermsSubscription.unsubscribe();
+  }
+
   public isMobileDevice() {
     return ClientDetector.isMobileDevice();
+  }
+
+  // Push a search term into the observable stream.
+  public search(query?: string): void {
+    if (query) {
+      this.query = query;
+    }
+
+    if (this.query) {
+      this.isIdle = true;
+      console.log(this.query);
+      this.searchTerms.next(this.query);
+    }
+  }
+
+  public focus(): void {
+    this.searchBar.nativeElement.focus();
   }
 
   searchOnInput(): void {
@@ -36,44 +95,21 @@ export class CollectionTextInputSearchComponent implements OnInit {
     }
   }
 
-  // Push a search term into the observable stream.
-  search(query?: string): void {
-    if (query) {
-      this.query = query;
-    }
-    this.isIdle = true;
-    this.searchTerms.next(this.query);
-  }
-
-  focus(): void {
-    this.searchBar.nativeElement.focus();
-  }
-
   ngOnInit(): void {
-    this.collection.on('request', () => {
-      this.isLoading = true;
-      this.isIdle = false;
-    });
-
-    this.collection.on('sync error', () => {
-      this.isLoading = false;
-    });
-
-    this.searchTerms
-      .debounceTime(600)        // wait for 300ms pause in events
-      .distinctUntilChanged()   // ignore if next search term is same as previous
-      .switchMap(term => {
-        if (term) {
-          this.collection.queryParams[this.queryParam] = term;
-        } else {
-          this.collection.queryParams[this.queryParam] = null;
-        }
-        this.collection.fetch({reset: true});
-        this.valueChange.emit(term);
-        return Observable.of<BaseCollection<BaseModel>>(this.collection);
-      }).toPromise();
-
     this.query = this.collection.queryParams[this.queryParam];
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.collection) {
+      if (changes.collection.previousValue) {
+        this.deInitCollection(changes.collection.previousValue);
+      }
+      this.initCollection(changes.collection.currentValue);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.deInitCollection(this.collection);
   }
 
 }
