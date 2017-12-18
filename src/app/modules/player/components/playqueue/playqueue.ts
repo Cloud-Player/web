@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CoverSizes} from '../../../shared/components/track-cover/track-cover.component';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
+import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 
 @Component({
   selector: 'app-play-queue',
   styleUrls: ['./playqueue.scss'],
   templateUrl: './playqueue.html'
 })
-export class PlayQueueComponent implements OnInit{
-  coverSize = CoverSizes.Medium;
+export class PlayQueueComponent implements OnInit {
+  coverSize = ImageSizes.Medium;
 
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
