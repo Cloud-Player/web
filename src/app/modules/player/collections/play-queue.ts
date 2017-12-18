@@ -35,6 +35,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     } else if (!item.id) {
       item.id = item.track.id;
     }
+
     return item;
   }
 
