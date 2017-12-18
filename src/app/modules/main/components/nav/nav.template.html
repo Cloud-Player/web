@@ -28,7 +28,7 @@
         <a *ngIf="isAuthenticated"
            routerLink="/me"
            class="user">
-          <img [src]="user.image.getLargeSize() || imgUrl" [alt]="user.fullName" class="avatar">
+          <img [src]="user.image.getSmallSizeUrl()" [alt]="user.fullName" class="avatar">
           <div class="text">
             <span>{{user.fullName || user.username}}</span>
           </div>

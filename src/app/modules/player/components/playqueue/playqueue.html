@@ -10,11 +10,11 @@
          class="track"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"
-         [dragImageUrl]="playQueueItem.track.image.getSmallSize()"
+         [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
       <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
       <div class="details"
-           [class.dummy]="!playQueueItem.track.user.username">
+           [class.dummy]="!playQueueItem.track.artist.getFullName()">
         <div style="display: flex; align-items: center">
           <b class="title"
              style="flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;">
@@ -24,7 +24,7 @@
             <span class="fa fa-trash"></span>
           </button>
         </div>
-        <div class="artist">{{playQueueItem.track.user.username}}</div>
+        <div class="artist">{{playQueueItem.track.artist.getFullName()}}</div>
         <div class="stats">
           <div class="duration">
             <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
@@ -47,17 +47,17 @@
          class="track"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"
-         [dragImageUrl]="playQueueItem.track.image.getSmallSize()"
+         [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
       <div class="cover">
         <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
       </div>
       <div class="details"
-           [class.dummy]="!playQueueItem.track.user.username">
+           [class.dummy]="!playQueueItem.track.artist.getFullName()">
         <b class="title">
           {{playQueueItem.track.title || 'None'}}
         </b>
-        <div class="artist">{{playQueueItem.track.user.username || 'None'}}</div>
+        <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
         <div class="stats">
           <div class="duration">
             <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
