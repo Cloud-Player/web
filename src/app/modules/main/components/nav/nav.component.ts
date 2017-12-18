@@ -12,10 +12,10 @@ import {AuthenticatedUser} from '../../../session/models/authenticated_user.mode
 })
 
 export class NavComponent implements OnInit {
-
-  private user: User;
   private session: Session;
   private toggleState = 'in';
+
+  public user: User;
 
   isAuthenticated: boolean;
 
