@@ -1,21 +1,28 @@
 import {User} from '../../users/models/user.model';
-import {SoundcloudModel} from '../../shared/models/soundcloud.model';
-import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
+import {ImageSoundcloudModel} from '../../shared/models/image-soundcloud';
 import {Comments} from '../../comments/collections/comments.collection';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {Comment} from '../../comments/models/comment.model';
+import {Track} from './track';
+import {Globals} from '../../../../globals';
+import {defaultValue} from '../../backbone/decorators/default-value.decorator';
+import {SoundcloudModel} from '../../shared/models/soundcloud';
 
-export class Track extends SoundcloudModel {
+export class TrackSoundcloud extends Track {
   endpoint = '/tracks';
+
+  @attributesKey('provider')
+  @defaultValue('SOUNDCLOUD')
+  provider: string;
 
   @attributesKey('user')
   @nested()
-  user: User;
+  artist: User;
 
   @attributesKey('artwork_url')
   @nested()
-  image: SoundcloudImageModel;
+  image: ImageSoundcloudModel;
 
   @attributesKey('comments')
   @nested()
@@ -42,9 +49,21 @@ export class Track extends SoundcloudModel {
   @attributesKey('stream_url')
   streamUrl: string;
 
+  @attributesKey('aspectRatio')
+  @defaultValue(1)
+  aspectRatio: number;
+
+  hostName(): string {
+    return SoundcloudModel.prototype.hostName.apply(this);
+  }
+
+  sync(...args) {
+    return SoundcloudModel.prototype.sync.apply(this, args);
+  }
+
   getResourceUrl(): string {
     if (this.streamUrl) {
-      return `${this.streamUrl}?client_id=${this.clientId}`;
+      return `${this.streamUrl}?client_id=${Globals.soundcloudClientId}`;
     } else {
       return null;
     }
@@ -56,16 +75,9 @@ export class Track extends SoundcloudModel {
     return attrs;
   }
 
-  toMiniJSON() {
+  getAdditionalMiniJSONAttrs() {
     return {
-      id: this.id,
-      title: this.title,
-      duration: this.duration,
-      stream_url: this.streamUrl,
-      artwork_url: this.image.getDefaultSize(),
-      user: {
-        username: this.user.username
-      }
+      stream_url: this.streamUrl
     };
   }
 
