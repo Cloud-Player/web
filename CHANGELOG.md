@@ -1,3 +1,8 @@
+# v3.1.0
+- Fix memory leak in tracks list by unbinding event listeners in playTrackOn directive
+- Add youtube-player to play youtube tracks in youtube html5 player iframe
+- Update native client image for OSX
+
 # v3.0.0
 - Add continuous playback. Preload next track so it does not have to be buffered when it is set to playing
 - Add crossfade of 10 seconds when track is going to end and next track is availabe and can be played
