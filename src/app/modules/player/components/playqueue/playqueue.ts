@@ -19,7 +19,11 @@ export class PlayQueueComponent implements OnInit{
   }
 
   dropTrack = (dropData: {}) => {
-    this.userAnalyticsService.trackEvent('drop_track', 'drag-and-drop', 'app-play-queue');
+    this.userAnalyticsService.trackEvent(
+      'drop_track',
+      'drag-and-drop',
+      'app-play-queue'
+    );
     if (this.playQueue.length > 0) {
       this.playQueue.queue({track: dropData});
     } else {
@@ -27,7 +31,7 @@ export class PlayQueueComponent implements OnInit{
     }
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.playQueue.on('add', (playQueueItem: PlayQueueItem) => {
       if (playQueueItem.isQueued()) {
         this.userAnalyticsService.trackEvent('queue_track', 'add', 'app-play-queue');
