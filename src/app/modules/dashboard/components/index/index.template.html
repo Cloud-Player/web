@@ -1,6 +1,6 @@
 <section class="column">
   <app-view-header>
-    <app-collection-text-input-search [collection]="tracks" [queryParam]="'q'" #searchBar></app-collection-text-input-search>
+    <app-collection-text-input-search [collection]="searchCollection" [queryParam]="'q'" #searchBar></app-collection-text-input-search>
   </app-view-header>
 
   <!--<app-collection-range-input-search [collection]="tracks" [queryParam]="'duration[from]'"></app-collection-range-input-search>-->
@@ -8,17 +8,41 @@
 
   <app-scroll-view>
     <app-social-share-panel
-      *ngIf="tracks.length !== 0"
+      *ngIf="tracksSoundCloud.length !== 0"
       class="card">
     </app-social-share-panel>
 
-    <div *ngIf="tracks.length>0"
-         class="results">
-      <app-search-filter [collection]="tracks"></app-search-filter>
-      <app-track-list [tracks]="tracks"></app-track-list>
-    </div>
+    <button (click)="activeTab='SOUNDCLOUD'"
+            [ngClass]="{'btn-success': activeTab==='SOUNDCLOUD'}">
+      Soundcloud
+    </button>
+    <button (click)="activeTab='YOUTUBE'"
+            [ngClass]="{'btn-success': activeTab==='YOUTUBE'}">
+      Youtube
+    </button>
 
-    <div *ngIf="tracks.length === 0 && !isFetching"
+    <app-tab-bar [showTabBar]="false" [activeTabId]="activeTab" #tabBar>
+      <app-tab-pane id="SOUNDCLOUD" title="Soundcloud">
+
+        <div *ngIf="tracksSoundCloud.length>0"
+             class="results">
+          <app-search-filter [collection]="tracksSoundCloud"></app-search-filter>
+          <app-track-list [tracks]="tracksSoundCloud"></app-track-list>
+        </div>
+
+      </app-tab-pane>
+      <app-tab-pane id="YOUTUBE" title="Youtube">
+
+        <div *ngIf="tracksYoutube.length>0"
+             class="results">
+          <app-search-filter [collection]="tracksYoutube"></app-search-filter>
+          <app-track-list [tracks]="tracksYoutube"></app-track-list>
+        </div>
+
+      </app-tab-pane>
+    </app-tab-bar>
+
+    <div *ngIf="tracksSoundCloud.length === 0 && !isFetching"
          class="card getting-started">
       <h1>Welcome to Cloud Player!</h1>
       <p>
@@ -38,9 +62,9 @@
       <p>Cloud Player is also available as <a routerLink="/desktop-app">native App for your PC.</a></p>
     </div>
 
-    <div *ngIf="tracks.length === 0 && isFetching"
+    <div *ngIf="tracksSoundCloud.length === 0 && isFetching"
          class="card">
-      Searching for tracks that match your query "{{tracks.queryParams.q}}"
+      Searching for tracks that match your query "{{tracksSoundCloud.queryParams.q}}"
     </div>
   </app-scroll-view>
 </section>
