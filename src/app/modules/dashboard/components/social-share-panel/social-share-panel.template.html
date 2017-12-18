@@ -1,9 +1,15 @@
 <div class="social-share-panel">
-  <h3>Thanks for using Cloudplayer</h3>
-  <p>When you like our player you can do us a favor and share Cloudplayer to support further development. Thank you :)</p>
+  <h3>Stay in touch with us</h3>
+  <p>We are working hard on Cloud Player to add new features for you. Follow us on Twitter to get notified when we are releasing a new version.</p>
+  <p>Big changes are about to come!</p>
   <div class="social-button-holder">
-    <app-facebook-share-button (click)="shared('FB')"></app-facebook-share-button>
-    <app-twitter-share-button (click)="shared('TW')"></app-twitter-share-button>
-    <div class="btn btn-default nope-btn" (click)="notShared()">Nah, I'm fine</div>
+    <a href="https://twitter.com/cldplayer"
+       target="_blank"
+       class="btn btn-default tw-follow-btn"
+       (click)="followed()">
+      <span class="fa fa-twitter"></span>
+      Follow us on Twitter
+    </a>
+    <div class="btn btn-default nope-btn" (click)="notShared()">Nah, I'm not on Twitter</div>
   </div>
 </div>

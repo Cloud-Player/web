@@ -1,4 +1,4 @@
-import {Directive, ElementRef, OnInit, Input} from '@angular/core';
+import {Directive, ElementRef, OnInit, Input, OnDestroy} from '@angular/core';
 import {Track} from '../../tracks/models/track.model';
 import {Tracks} from '../../tracks/collections/tracks.collection';
 import {PlayQueue} from '../../player/collections/play-queue';
@@ -7,9 +7,9 @@ import {PlayQueueItem} from '../../player/models/play-queue-item';
 @Directive({
   selector: '[appPlayTrackOn]'
 })
-export class PlayTrackOnEventDirective implements OnInit {
+export class PlayTrackOnEventDirective implements OnInit, OnDestroy {
   @Input()
-  appPlayTrackOn: any;
+  appTrackPlayOn: String;
 
   @Input()
   track: Track;
@@ -25,22 +25,29 @@ export class PlayTrackOnEventDirective implements OnInit {
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  private registerListener(event: String) {
-    this.el.nativeElement.addEventListener(event, () => {
-      if (this.isPlaying()) {
-        this.pause();
-      } else {
-        this.play();
-      }
-    });
+  private togglePlay() {
+
+    if (this.isPlaying()) {
+      this.pause();
+    } else {
+      this.play();
+    }
   }
 
-  isPlaying(): boolean {
+  private registerListener(event: String) {
+    this.el.nativeElement.addEventListener(event, this.togglePlay.bind(this));
+  }
+
+  private unRegisterListener(event: String) {
+    this.el.nativeElement.removeEventListener(event, this.togglePlay.bind(this));
+  }
+
+  private isPlaying(): boolean {
     const playingItem = this.playQueue.getPlayingItem();
     return (playingItem && playingItem.track.id === this.track.id);
   }
 
-  play(): void {
+  private play(): void {
     const existingPlayQueueItem = this.playQueue.get(this.track.id);
     if (existingPlayQueueItem) {
       existingPlayQueueItem.play();
@@ -64,7 +71,7 @@ export class PlayTrackOnEventDirective implements OnInit {
     }
   }
 
-  pause(): void {
+  private pause(): void {
     if (this.isPlaying()) {
       PlayQueue.getInstance().getPlayingItem().pause();
     }
@@ -72,11 +79,21 @@ export class PlayTrackOnEventDirective implements OnInit {
 
   ngOnInit(): void {
     this.el.nativeElement.style.cursor = 'pointer';
-    if (this.appPlayTrackOn) {
-      this.registerListener(this.appPlayTrackOn);
+    if (this.appTrackPlayOn) {
+      this.registerListener(this.appTrackPlayOn);
     } else if (this.events) {
       this.events.forEach((ev: String) => {
         this.registerListener(ev);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.appTrackPlayOn) {
+      this.unRegisterListener(this.appTrackPlayOn);
+    } else if (this.events) {
+      this.events.forEach((ev: String) => {
+        this.unRegisterListener(ev);
       });
     }
   }
