@@ -1,9 +1,9 @@
 import {isArray} from 'underscore';
-import {SoundcloudCollection} from '../../shared/collections/soundcloud.collection';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {PlayQueueItem} from '../models/play-queue-item';
+import {BaseCollection} from '../../backbone/collections/base.collection';
 
-export class PlayQueue<TModel extends PlayQueueItem> extends SoundcloudCollection<TModel> {
+export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TModel> {
   private static _instance: PlayQueue<PlayQueueItem>;
   private _playIndex = 0;
   private _loopPlayQueue = false;

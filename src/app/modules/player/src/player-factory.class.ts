@@ -10,6 +10,7 @@ import {PlayerStore} from '../collections/player-store';
 import {PlayerStoreItem} from '../models/player-store-item';
 import {PlayQueueItem} from '../models/play-queue-item';
 import {YoutubePlayerComponent} from '../components/youtube-player/youtube-player';
+import {Track} from '../../tracks/models/track';
 
 @Injectable()
 export class PlayerFactory {

@@ -1,5 +1,5 @@
 import {ElementRef, EventEmitter} from '@angular/core';
-import {Track} from '../../tracks/models/track.model';
+import {Track} from '../../tracks/models/track';
 import {Observable} from 'rxjs/Observable';
 
 export interface IPlayer {

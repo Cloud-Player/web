@@ -2,7 +2,7 @@ import {Observable} from 'rxjs/Observable';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {isNumber} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
-import {Track} from '../../tracks/models/track.model';
+import {Track} from '../../tracks/models/track';
 import {EaseService} from '../../shared/services/ease.service';
 
 export abstract class AbstractPlayer implements OnInit {

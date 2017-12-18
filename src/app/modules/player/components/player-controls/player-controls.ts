@@ -3,12 +3,12 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 declare let MediaMetadata: any;
 
 import {Component, Input, OnInit} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
+import {Track} from '../../../tracks/models/track';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayQueue} from '../../collections/play-queue';
+import {ImageModel} from '../../../shared/models/image';
 
 @Component({
   selector: 'app-player-controls',

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
-import {Tracks} from '../../../tracks/collections/tracks.collection';
+import {Track} from '../../../tracks/models/track';
+import {Tracks} from '../../../tracks/collections/tracks';
 import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {PlayQueue} from '../../../player/collections/play-queue';
 

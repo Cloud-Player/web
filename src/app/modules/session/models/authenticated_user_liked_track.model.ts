@@ -1,5 +1,5 @@
-import {Track} from '../../tracks/models/track.model';
+import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
 
-export class AuthenticatedUserLikedTrack extends Track {
+export class AuthenticatedUserLikedTrack extends TrackSoundcloud {
   endpoint = '/me/favorites';
 }

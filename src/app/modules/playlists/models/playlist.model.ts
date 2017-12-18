@@ -1,12 +1,13 @@
 import {User} from '../../users/models/user.model';
-import {Tracks} from '../../tracks/collections/tracks.collection';
+import {Tracks} from '../../tracks/collections/tracks';
 import {map} from 'underscore';
-import {SoundcloudModel} from '../../shared/models/soundcloud.model';
-import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
-import {Track} from '../../tracks/models/track.model';
+import {Track} from '../../tracks/models/track';
+import {ImageModel} from '../../shared/models/image';
+import {ImageSoundcloudModel} from '../../shared/models/image-soundcloud';
 
 export class Playlist extends SoundcloudModel {
   endpoint = '/playlists';
@@ -29,7 +30,7 @@ export class Playlist extends SoundcloudModel {
 
   @attributesKey('artwork_url')
   @nested()
-  image: SoundcloudImageModel;
+  image: ImageSoundcloudModel;
 
   parse(attrs: any) {
     attrs.isPublic = (attrs.sharing === 'public');

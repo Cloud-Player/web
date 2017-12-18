@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Tracks} from '../../../tracks/collections/tracks.collection';
-import {Track} from '../../../tracks/models/track.model';
+import {Tracks} from '../../../tracks/collections/tracks';
+import {Track} from '../../../tracks/models/track';
 
 @Component({
   selector: 'app-sort-tracks',

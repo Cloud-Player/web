@@ -1,15 +1,15 @@
-import {SoundcloudModel} from '../../shared/models/soundcloud.model';
-import {SoundcloudImageModel} from '../../shared/models/soundcloud-image.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
+import {ImageSoundcloudModel} from '../../shared/models/image-soundcloud';
 
 export class User extends SoundcloudModel {
   endpoint = '/users';
 
   @attributesKey('avatar_url')
   @nested()
-  image: SoundcloudImageModel;
+  image: ImageSoundcloudModel;
 
   @attributesKey('name')
   @defaultValue('')

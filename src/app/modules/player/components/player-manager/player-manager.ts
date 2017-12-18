@@ -9,7 +9,7 @@ import {PlayerStatus} from '../../src/player-status.enum';
 import {IPlayer} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
-import {Track} from '../../../tracks/models/track.model';
+import {Track} from '../../../tracks/models/track';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
