@@ -105,15 +105,21 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
     this._eventHandler.trigger.apply(this._eventHandler, args);
   }
 
-  protected initialisePlayer(): Promise<YT.Player> {
+  protected initialisePlayer(options: IPlayerOptions): Promise<YT.Player> {
     return new Promise((resolve) => {
       if (!document.getElementById(this.id)) {
         throw new Error('Youtube player element is not attached to the dom!');
       }
+      let width = 0;
+      let height = 0;
+      if (options && options.size) {
+        width = options.size.width;
+        height = options.size.height;
+      }
       const player = new YT.Player(this.id, {
         videoId: this.track.id,
-        width: 320,
-        height: 320,
+        width: width,
+        height: height,
         playerVars: {
           controls: 0,
           disablekb: 1,
