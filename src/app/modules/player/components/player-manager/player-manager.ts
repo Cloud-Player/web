@@ -176,6 +176,7 @@ export class PlayerManagerComponent implements OnInit {
           this.removePlayer(this._upcomingPlayer);
         }
         this._upcomingPlayer = this._playerFactory.createPlayer(upcoming);
+        this._upcomingPlayer.instance.setVolume(0);
         this._upcomingPlayer.instance.addClass('upcoming');
       }
     }
