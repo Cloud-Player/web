@@ -5,11 +5,19 @@ import {Track} from './track';
 import {ImageYoutubeModel} from '../../shared/models/image-youtube';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {YoutubeModel} from '../../shared/models/youtube';
+import {TracksYoutubeCategories} from '../collections/tracks-youtube-categories';
+import {TracksYoutubeCategory} from './tracks-youtube-category';
+import {BaseCollection} from '../../backbone/collections/base.collection';
+import {BaseModel} from '../../backbone/models/base.model';
+import {TracksYoutubeTopics} from '../collections/tracks-youtube-topics';
+import {TracksYoutubeTopic} from './tracks-youtube-topic';
 
 export class TrackYoutube extends Track {
+  private _topics: TracksYoutubeTopics<TracksYoutubeTopic>;
   endpoint = '/videos';
 
   isLikeable = false;
+
   @attributesKey('provider')
   @defaultValue('YOUTUBE')
   provider: string;
@@ -43,6 +51,10 @@ export class TrackYoutube extends Track {
   @attributesKey('aspectRatio')
   @defaultValue(1)
   aspectRatio: number;
+
+  @attributesKey('categoryIds')
+  @nested()
+  categoryIds: BaseCollection<BaseModel>;
 
   // Parses the youtube duration string e.g. PT4M25S, PT10H4M25S, PT4M
   public static getParsedDuration(ytDuration: string) {
@@ -82,6 +94,17 @@ export class TrackYoutube extends Track {
     }
 
     return aspectRatio;
+  }
+
+  private setGenre() {
+    if (this.categoryIds.length > 0) {
+      this.categoryIds.each((id, index) => {
+        const topic = this._topics.get(id);
+        if (!topic.isParent || index === this.categoryIds.length) {
+          this.genre = topic.title;
+        }
+      });
+    }
   }
 
   hostName(): string {
@@ -124,7 +147,19 @@ export class TrackYoutube extends Track {
       parsedTrack.clicks = parseInt(attributes.statistics.viewCount, 10);
     }
 
+    if (attributes.topicDetails) {
+      parsedTrack.categoryIds = attributes.topicDetails.relevantTopicIds;
+    }
+
     return parsedTrack;
+  }
+
+  initialize() {
+    this._topics = TracksYoutubeTopics.getInstance();
+    this._topics.once('add', this.setGenre.bind(this));
+    this.categoryIds.on('add remove reset', () => {
+      this.setGenre();
+    });
   }
 
   getAdditionalMiniJSONAttrs() {
@@ -132,5 +167,4 @@ export class TrackYoutube extends Track {
       aspectRatio: this.aspectRatio
     };
   }
-
 }

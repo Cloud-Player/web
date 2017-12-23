@@ -16,7 +16,7 @@ export class TracksYoutube<TModel extends TrackYoutube> extends Tracks<TModel> {
     return this.request(url, 'GET', {
       params: {
         key: Globals.youtubeClientId,
-        part: 'statistics,contentDetails,player',
+        part: 'statistics,contentDetails,player,topicDetails',
         id: this.pluck('id').join(',')
       }
     }).then((rsp: any) => {
@@ -33,6 +33,7 @@ export class TracksYoutube<TModel extends TrackYoutube> extends Tracks<TModel> {
     this.queryParams.part = 'snippet';
     this.queryParams.type = 'video';
     this.queryParams.maxResults = 50;
+    this.queryParams.videoEmbeddable = true;
     return YoutubeCollection.prototype.sync.apply(this, args);
   }
 
