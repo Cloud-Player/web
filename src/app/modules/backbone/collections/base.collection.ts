@@ -11,7 +11,9 @@ import {request} from '../utils/request.util';
 export class BaseCollection<TModel extends BaseModel> extends SelectableCollection<TModel> {
   model: IModelConstructor = BaseModel;
 
-  queryParams: Object = {};
+  queryParams: {
+    [key: string]: string | number | boolean
+  } = {};
 
   endpoint: string = null;
 
@@ -45,7 +47,7 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   url = () => {
     return getUrl(this);
-  };
+  }
 
   sync(method: string, model: any, options: any = {}) {
     let queryParams = this.queryParams;
