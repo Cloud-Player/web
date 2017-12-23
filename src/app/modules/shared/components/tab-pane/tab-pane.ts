@@ -13,6 +13,9 @@ export class TabPaneComponent implements OnInit {
   public title: string;
 
   @Input()
+  public icon: string;
+
+  @Input()
   public id: string;
 
   constructor(private tabBar: TabBarComponent) {
