@@ -39,6 +39,7 @@
                     [transformDisplayValue]="transformProgressBarValues"
                     [showCurrentValue]="true"
                     [isLoading]="isBuffering"
+                    [allowInfinity]="false"
                     (valueChanged)="playTrackFromPosition($event)">
   </app-range-slider>
 
