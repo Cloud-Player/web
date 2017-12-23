@@ -1,12 +1,11 @@
-import {Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 
 @Directive({
   selector: '[appDraggable]'
 })
-export class DraggableDirective implements OnInit {
-  private image: HTMLImageElement;
-
-  private imageIsLoaded: boolean;
+export class DraggableDirective implements OnInit, OnDestroy {
+  private _image: HTMLImageElement;
+  private _imageIsLoaded: boolean;
 
   @Input('dragData') dragData: any;
 
@@ -14,8 +13,11 @@ export class DraggableDirective implements OnInit {
 
   @Input('dragEffect') dragEffect: string;
 
-  @HostListener('dragstart', ['$event'])
-  onDragStart(event: any) {
+  constructor(private el: ElementRef) {
+
+  }
+
+  private onDragStart(event: any) {
     const transfer = <any>event.dataTransfer;
     if (this.dragData) {
       try {
@@ -24,8 +26,8 @@ export class DraggableDirective implements OnInit {
         throw new Error('DragData has to be a JSON object!');
       }
     }
-    if (this.image && this.imageIsLoaded) {
-      transfer.setDragImage(this.image, 10, 10);
+    if (this._image && this._imageIsLoaded) {
+      transfer.setDragImage(this._image, 10, 10);
     }
     if (this.dragEffect) {
       transfer.effectAllowed = this.dragEffect;
@@ -33,28 +35,32 @@ export class DraggableDirective implements OnInit {
     this.el.nativeElement.classList.add('drag-in-progress');
   }
 
-  @HostListener('dragend')
-  onDragEnd() {
+  private onDragEnd() {
     this.el.nativeElement.classList.remove('drag-in-progress');
   }
 
-  @HostListener('mouseover')
-  onMouseOver() {
-    if (this.dragImageUrl && (!this.image || this.image.src !== this.dragImageUrl)) {
-      this.image = new Image();
-      this.image.src = this.dragImageUrl;
-      this.imageIsLoaded = false;
-      this.image.onload = () => {
-        this.imageIsLoaded = true;
+  private onMouseOver() {
+    if (this.dragImageUrl && (!this._image || this._image.src !== this.dragImageUrl)) {
+      this._image = new Image();
+      this._image.src = this.dragImageUrl;
+      this._imageIsLoaded = false;
+      this._image.onload = () => {
+        this._imageIsLoaded = true;
       };
     }
   }
 
-  constructor(private el: ElementRef) {
-  }
-
   ngOnInit(): void {
     this.el.nativeElement.setAttribute('draggable', true);
+    this.el.nativeElement.addEventListener('mouseover', this.onMouseOver.bind(this));
+    this.el.nativeElement.addEventListener('dragstart', this.onDragStart.bind(this));
+    this.el.nativeElement.addEventListener('dragend', this.onDragEnd.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    this.el.nativeElement.removeEventListener('mouseover', this.onMouseOver.bind(this));
+    this.el.nativeElement.removeEventListener('dragstart', this.onDragStart.bind(this));
+    this.el.nativeElement.removeEventListener('dragend', this.onDragEnd.bind(this));
   }
 
 }
