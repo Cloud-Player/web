@@ -81,7 +81,6 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
 
     if (this.query) {
       this.isIdle = true;
-      console.log(this.query);
       this.searchTerms.next(this.query);
     }
   }

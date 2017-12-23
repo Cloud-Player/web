@@ -239,7 +239,6 @@ export class EaseService {
         this.ease(startValue, endValue, duration, easingFn, subscriber, startTime, +new Date());
       });
     } else {
-      console.log('DONE AFTER ', (+new Date) - startTime);
       subscriber.next(endValue);
       subscriber.complete();
     }
