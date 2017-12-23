@@ -25,6 +25,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _size: IPlayerSize = {width: 0, height: 0};
   private _error: string;
   private _throttledTimeUpdate = throttle(this.emitTimeChange.bind(this), 900);
+  private _forcePlayStart = false;
 
   @Input()
   public track: Track;
@@ -167,13 +168,18 @@ export abstract class AbstractPlayer implements OnInit {
     if (!this.isAllowedToPlay()) {
       this.pause();
     } else {
+      this._forcePlayStart = false;
       this.setStatus(PlayerStatus.Playing);
     }
     this._error = null;
   }
 
   protected onPaused() {
-    this.setStatus(PlayerStatus.Paused);
+    if (this._forcePlayStart) {
+      this.play();
+    } else {
+      this.setStatus(PlayerStatus.Paused);
+    }
   }
 
   protected onEnded() {
@@ -260,7 +266,7 @@ export abstract class AbstractPlayer implements OnInit {
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
-        console.log(this);
+
         if (!this._ngOnInitCompleted) {
           promiseQueue.push(this.waitForViewReady);
         }
@@ -321,6 +327,7 @@ export abstract class AbstractPlayer implements OnInit {
     this.setCurrentTime(from);
     this.setAllowedToPlay(true);
     this.executeOnInitialised(() => {
+      this._forcePlayStart = true;
       if (isNumber(from)) {
         this.seekTo(from);
       }
