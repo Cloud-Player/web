@@ -44,7 +44,10 @@
 
         <div *ngIf="tracksYoutube.length>0"
              class="results">
-          <app-filter-form [collection]="tracksYoutube"></app-filter-form>
+          <app-filter-form [collection]="tracksYoutube">
+            <app-youtube-duration-filter label="Duration"
+                                         filterProperty="videoDuration"></app-youtube-duration-filter>
+          </app-filter-form>
           <app-track-list [tracks]="tracksYoutube"></app-track-list>
         </div>
 

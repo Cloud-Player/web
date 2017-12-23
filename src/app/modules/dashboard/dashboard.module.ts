@@ -12,6 +12,7 @@ import {SocialSharePanelComponent} from './components/social-share-panel/social-
 import {InputFilterComponent} from './components/filter-form/input-filter/input-filter';
 import {RangeFilterComponent} from './components/filter-form/range-filter/range-filter';
 import {MinMaxRangeFilterComponent} from './components/filter-form/min-max-range-filter/min-max-range-filter';
+import {YoutubeDurationFilterComponent} from './components/filter-form/youtube-duration-filter/youtube-duration-filter';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import {MinMaxRangeFilterComponent} from './components/filter-form/min-max-range
     InputFilterComponent,
     RangeFilterComponent,
     MinMaxRangeFilterComponent,
+    YoutubeDurationFilterComponent,
     SocialSharePanelComponent
   ]
 })

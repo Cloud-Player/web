@@ -1,0 +1,31 @@
+<div class="form-group">
+  <label *ngIf="label"
+         class="col-sm-2 control-label">
+    {{label}}
+  </label>
+  <div class="col-md-10 selector">
+    <span [class.active]="!value"
+          (click)="value = null">
+      None
+    </span>
+    |
+    <span [class.active]="(value === 'short')"
+          (click)="value = 'short'">
+      < 4min
+    </span>
+    |
+    <span [class.active]="(value === 'medium')"
+          (click)="value = 'medium'">
+      4min - 20min
+    </span>
+    |
+    <span [class.active]="(value === 'long')"
+          (click)="value = 'long'">
+      > 20min
+    </span>
+  </div>
+  <input #ngControl="ngModel"
+         type="hidden"
+         name="durationFilter"
+         [(ngModel)]="value">
+</div>
