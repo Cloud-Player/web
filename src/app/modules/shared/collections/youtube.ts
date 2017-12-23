@@ -23,7 +23,7 @@ export class YoutubeCollection<TModel extends YoutubeModel> extends BaseCollecti
   }
 
   parse(rsp: any) {
-    return rsp.data.items || rsp;
+    return rsp.items || rsp;
   }
 }
 
