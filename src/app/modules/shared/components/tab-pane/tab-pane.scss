@@ -1,11 +1,5 @@
-:host{
-  .toasts{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    z-index: 9999;
-    bottom: -15px;
-    right: 15px;
+:host {
+  .tab-pane {
+    padding: 10px 0;
   }
 }

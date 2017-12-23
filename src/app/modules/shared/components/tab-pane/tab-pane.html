@@ -1,3 +1,4 @@
-<div class="tab-pane">
-  <ng-content *ngIf="isActive()"></ng-content>
+<div *ngIf="isActive()"
+     class="tab-pane">
+  <ng-content></ng-content>
 </div>
