@@ -57,6 +57,7 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
         }).subscribe();
 
     if (collection.queryParams[this.queryParam] !== this.query) {
+      this.collection.reset();
       this.search();
     }
   }
