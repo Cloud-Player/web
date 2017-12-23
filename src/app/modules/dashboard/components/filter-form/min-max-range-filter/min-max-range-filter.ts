@@ -44,11 +44,12 @@ export class MinMaxRangeFilterComponent implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.value.min = this.filterForm.collection.queryParams[this.minFilterProperty];
-    this.value.max = this.filterForm.collection.queryParams[this.maxFilterProperty];
+    this.value.min = <number>this.filterForm.collection.queryParams[this.minFilterProperty];
+    this.value.max = <number>this.filterForm.collection.queryParams[this.maxFilterProperty];
     this.ngControl.valueChanges.subscribe((value: ITwoRangeSliderValue) => {
       this.filterForm.setFilter(this.minFilterProperty, value.min);
       this.filterForm.setFilter(this.maxFilterProperty, value.max);
+      this.filterForm.fetchCollection();
     });
   }
 }
