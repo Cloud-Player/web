@@ -147,8 +147,10 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
     }
 
     this.value = value;
-    this.tmpMinValue = value.min || this.getValueInMinRange(value.min);
-    this.tmpMaxValue = value.max || this.getValueInMaxRange(value.max);
+    if (!this.dragInProgress) {
+      this.tmpMinValue = value.min || this.getValueInMinRange(value.min);
+      this.tmpMaxValue = value.max || this.getValueInMaxRange(value.max);
+    }
 
     this.sliderOne.nativeElement.value = this.tmpMinValue;
     this.sliderTwo.nativeElement.value = this.tmpMaxValue;
@@ -245,7 +247,9 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
   writeValue(value: ITwoRangeSliderValue): void {
     if (value) {
       this.updateValue(value);
-      this.setDragPosFromVal();
+      if (this.dragInProgress) {
+        this.setDragPosFromVal();
+      }
     }
   }
 
@@ -262,7 +266,9 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
       this.updateValue(changes.value.currentValue);
     }
 
-    this.setDragPosFromVal();
+    if (!this.dragInProgress) {
+      this.setDragPosFromVal();
+    }
   }
 
   ngAfterContentInit(): void {

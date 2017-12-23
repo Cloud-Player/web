@@ -92,7 +92,10 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
     }
 
     this.value = value;
-    this.tmpValue = value || this.getValueInMinMaxRange(value);
+
+    if (!this.dragInProgress) {
+      this.tmpValue = value || this.getValueInMinMaxRange(value);
+    }
 
     if (this._onChange) {
       this._onChange(this.value);
@@ -152,10 +155,11 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
   }
 
   writeValue(value: number): void {
-    if (value && value !== this.value) {
-      value = this.getValueInMinMaxRange(value);
-      this.value = value;
-      this.tmpValue = value;
+    if (value) {
+      this.updateValue(value);
+      if (this.dragInProgress) {
+        this.setDragPosFromVal();
+      }
     }
   }
 
@@ -172,7 +176,9 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
       this.updateValue(changes.value.currentValue);
     }
 
-    this.setDragPosFromVal();
+    if (!this.dragInProgress) {
+      this.setDragPosFromVal();
+    }
   }
 
   ngAfterContentInit(): void {
