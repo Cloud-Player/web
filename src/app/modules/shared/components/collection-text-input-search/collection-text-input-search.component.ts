@@ -96,7 +96,7 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
   }
 
   ngOnInit(): void {
-    this.query = this.collection.queryParams[this.queryParam];
+    this.query = <string>this.collection.queryParams[this.queryParam];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
