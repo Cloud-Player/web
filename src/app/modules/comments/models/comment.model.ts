@@ -1,5 +1,5 @@
 import {User} from '../../users/models/user.model';
-import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 

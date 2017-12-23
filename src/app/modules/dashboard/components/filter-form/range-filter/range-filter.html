@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label *ngIf="label"
+         class="col-sm-2 control-label">
+    {{label}}
+  </label>
+  <div class="col-md-10">
+    <app-range-slider #ngControl="ngModel"
+                      [min]="min"
+                      [max]="max"
+                      [step]="step"
+                      [allowInfinity]="true"
+                      [showSliderValue]="true"
+                      [transformDisplayValue]="transformDisplayValue"
+                      [(ngModel)]="value">
+    </app-range-slider>
+    {{value}}
+  </div>
+</div>

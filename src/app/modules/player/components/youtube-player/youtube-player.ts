@@ -2,12 +2,13 @@
 import {
   Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2
 } from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
+import {Track} from '../../../tracks/models/track';
 import {uniqueId} from 'underscore';
-import {IPlayer} from '../../src/player.interface';
+import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {Events} from 'backbone';
 import {extend} from 'underscore';
 import {AbstractPlayer} from '../../src/abstract-player.class';
+import {TrackYoutube} from '../../../tracks/models/track-youtube';
 
 @Component({
   selector: 'app-youtube-player',
@@ -19,6 +20,9 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   private _timePoller: number;
   private _ytApiReady = false;
   private _eventHandler;
+
+  @Input()
+  public track: TrackYoutube;
 
   constructor(private el: ElementRef) {
     super();
@@ -101,15 +105,21 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
     this._eventHandler.trigger.apply(this._eventHandler, args);
   }
 
-  protected initialisePlayer(): Promise<YT.Player> {
+  protected initialisePlayer(options: IPlayerOptions): Promise<YT.Player> {
     return new Promise((resolve) => {
       if (!document.getElementById(this.id)) {
         throw new Error('Youtube player element is not attached to the dom!');
       }
+      let width = 0;
+      let height = 0;
+      if (options && options.size) {
+        width = options.size.width;
+        height = options.size.height;
+      }
       const player = new YT.Player(this.id, {
         videoId: this.track.id,
-        width: 320,
-        height: 320,
+        width: width,
+        height: height,
         playerVars: {
           controls: 0,
           disablekb: 1,
@@ -142,6 +152,10 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
 
   protected setPlayerVolume(volume: number) {
     this._ytPlayer.setVolume(volume * 100);
+  }
+
+  protected setPlayerSize(size: IPlayerSize) {
+    this._ytPlayer.setSize(size.width, size.height);
   }
 
   protected preloadTrack(track: Track, startTime: number = 0) {

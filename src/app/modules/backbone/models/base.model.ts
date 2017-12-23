@@ -7,13 +7,15 @@ import {SelectableModel} from './selectable.model';
 export class BaseModel extends SelectableModel {
   attributesMap: Object;
 
-  queryParams: Object = {};
+  queryParams: {
+    [key: string]: string | number | boolean
+  } = {};
 
   endpoint: string = null;
 
   urlRoot: Function = (): string => {
     return getUrl(this);
-  }
+  };
 
   hostName(): string {
     return '';

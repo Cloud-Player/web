@@ -1,8 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Track} from '../../tracks/models/track.model';
 import {AuthenticatedUserPlaylistTracks} from '../collections/authenticated_user_playlist_tracks.collection';
+import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
 
-export class AuthenticatedUserPlaylistTrack extends Track {
+export class AuthenticatedUserPlaylistTrack extends TrackSoundcloud {
   endpoint = '/me/playlists';
   collection: AuthenticatedUserPlaylistTracks<AuthenticatedUserPlaylistTrack>;
 

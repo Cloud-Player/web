@@ -1,0 +1,75 @@
+<div class="tracks-list">
+  <app-sort-tracks [tracks]="tracks"></app-sort-tracks>
+  <div *ngFor="let track of tracks.models | limitCollectionresults: {limit: 10}" class="track"
+       appDraggable
+       [dragData]="track.toJSON()"
+       [dragImageUrl]="track.image.getSmallSizeUrl()"
+       dragEffect="copy">
+    <div class="cover">
+      <app-track-cover [track]="track" [size]="getSize()"></app-track-cover>
+      <app-track-play-button [track]="track" [tracks]="tracks"></app-track-play-button>
+    </div>
+    <div class="details">
+      <div class="track-info">
+        <app-toggle-liked-track [track]="track"></app-toggle-liked-track>
+        <div class="meta"
+             appTrackPlayOn
+             [events]="['click']"
+             [track]="track"
+             [tracks]="tracks">
+          <b class="track-title">{{track.title}}</b>
+          <div class="artist">
+            <span>{{track.artist.getFullName()}}</span>
+            <span class="created">created
+              <span [appTimeAgo]="track.createdAt">{{track.createdAt}}</span>
+            </span>
+          </div>
+        </div>
+        <div class="btn-holder">
+          <div class="btn btn-xs btn-default"
+               (click)="addToQueue(track)">
+            <span class="fa fa-arrow-circle-o-right next-icon"></span>
+            <span class="fa fa-play" ></span>
+          </div>
+          <app-options-btn>
+            <app-options-btn-option (click)="addToQueue(track)">
+              Add to queue
+            </app-options-btn-option>
+            <app-options-btn-option appTrackPlayOn="click" [track]="track" [tracks]="tracks">
+              Play this track and the following ones
+            </app-options-btn-option>
+            <app-options-btn-option appTrackPlayOn="click" [track]="track">
+              Play only this track
+            </app-options-btn-option>
+            <app-options-btn-option *ngIf="canBeDeleted" (click)="track.destroy()">
+              Remove track
+            </app-options-btn-option>
+          </app-options-btn>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="duration label label-default label-light">
+          <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
+          <span *ngIf="track.duration">
+            {{track.duration/1000 | hReadableSeconds}}
+          </span>
+          <span *ngIf="!track.duration">
+            <app-loading-spinner [isLoading]="true"></app-loading-spinner>
+          </span>
+        </div>
+        <div *ngIf="track.likes"
+             class="favs label label-default label-light">
+          <i class="fa fa-heart" aria-hidden="true" alt="favouites count"></i> {{track.likes | kMilShortener}}
+        </div>
+        <div *ngIf="track.clicks"
+             class="plays label label-default label-light">
+          <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.clicks | kMilShortener}}
+        </div>
+        <div *ngIf="track.genre"
+             class="genre label label-default label-light">
+          #{{track.genre}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

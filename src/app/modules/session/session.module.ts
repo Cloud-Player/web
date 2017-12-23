@@ -10,8 +10,7 @@ import {UserPlayListViewComponent} from './components/user-playlist-view/user-pl
 import {AuthenticatedUserPlaylistsViewComponent} from './components/authenticated-user-playlists-view/authenticated-user-playlists-view.component';
 import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthenticatedUserViewComponent} from './components/authenticated-user-view/authenticated-user-view.component';
-import {Session} from './models/session.model';
-import * as localforage from 'localforage';
+import {TracksModule} from '../tracks/tracks.module';
 
 @NgModule({
   imports: [
@@ -19,6 +18,7 @@ import * as localforage from 'localforage';
     FormsModule,
     SessionRoutingModule,
     PlaylistModule,
+    TracksModule,
     SharedModule
   ],
   declarations: [

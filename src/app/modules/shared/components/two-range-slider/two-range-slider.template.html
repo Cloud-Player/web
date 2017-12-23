@@ -1,4 +1,7 @@
-<div class="two-range-slider-component" [class.is-loading]="showLoadingSpinner" [class.is-dragging]="dragInProgress">
+<div class="two-range-slider-component"
+     [class.show-value]="showSliderValue"
+     [class.is-loading]="isLoading"
+     [class.is-dragging]="dragInProgress">
   <div *ngIf="!hideSliderValue && min !== null"
        class="min-value">
     {{getDisplayValue(min)}}
@@ -7,24 +10,44 @@
   <div #progressBar class="progress-bar">
     <div #progressLine class="progress-line"></div>
 
-    <div #handleOne class="visible-dragger handle-one" [class.display-value]="!hideSliderValue">
-      <span *ngIf="dragInProgress && !hideSliderValue">
-        <span *ngIf="allowInfinityMin && dragHandleMinDisplayValue === null">None</span>
-        <span *ngIf="!allowInfinityMin || dragHandleMinDisplayValue !== null">{{dragHandleMinDisplayValue}}</span>
+    <div #handleOne
+         class="visible-dragger handle-one"
+         [class.display-value]="!hideSliderValue"
+         [style.width]="draggerSize+'px'"
+         [style.height]="draggerSize+'px'"
+         [style.top]="draggerCenterOffset+'px'">
+      <span class="slider-value">
+        {{getMinSliderDisplayValue()}}
       </span>
       <div class="loading-spinner"></div>
     </div>
 
-    <div #handleTwo class="visible-dragger handle-two" [class.display-value]="!hideSliderValue">
-      <span *ngIf="dragInProgress && !hideSliderValue">
-        <span *ngIf="allowInfinityMax && dragHandleMaxDisplayValue === null">None</span>
-        <span *ngIf="!allowInfinityMax || dragHandleMaxDisplayValue !== null">{{dragHandleMaxDisplayValue}}</span>
+    <div #handleTwo
+         class="visible-dragger handle-two"
+         [class.display-value]="!hideSliderValue"
+         [style.width]="draggerSize+'px'"
+         [style.height]="draggerSize+'px'"
+         [style.top]="draggerCenterOffset+'px'">
+      <span class="slider-value">
+        {{getMaxSliderDisplayValue()}}
       </span>
       <div class="loading-spinner"></div>
     </div>
 
-    <input type="range" #sliderOne [min]="min" [max]="max" [(ngModel)]="tmpMinValue" [step]="step">
-    <input type="range" #sliderTwo [min]="min" [max]="max" [(ngModel)]="tmpMaxValue" [step]="step">
+    <input #sliderOne
+           type="range"
+           [min]="min"
+           [max]="max"
+           [step]="step"
+           [(ngModel)]="tmpMinValue"
+           (ngModelChange)="updateMinValue()">
+    <input #sliderTwo
+           type="range"
+           [min]="min"
+           [max]="max"
+           [step]="step"
+           [(ngModel)]="tmpMaxValue"
+           (ngModelChange)="updateMaxValue()">
   </div>
 
   <div *ngIf="!hideSliderValue && max !== null"

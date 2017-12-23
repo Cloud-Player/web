@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {AuthenticatedUser} from './authenticated_user.model';
-import {setSession} from '../../shared/session-manager.fn';
-import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import {SoundcloudModel} from '../../shared/models/soundcloud';
 import * as localforage from 'localforage';
 import {Globals} from '../../../../globals';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
+import {setSession} from '../session-manager.fn';
 
 export class Session extends SoundcloudModel {
   private static instance: Session;

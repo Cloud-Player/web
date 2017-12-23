@@ -1,12 +1,14 @@
-import {Track} from '../../tracks/models/track.model';
-import {SoundcloudModel} from '../../shared/models/soundcloud.model';
+import {Track} from '../../tracks/models/track';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
-import {nested} from '../../backbone/decorators/nested.decorator';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {isNumber} from 'underscore';
+import {dynamicInstance} from '../../backbone/decorators/dynamic-instance.decorator';
+import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
+import {BaseModel} from '../../backbone/models/base.model';
+import {TrackYoutube} from '../../tracks/models/track-youtube';
 
-export class PlayQueueItem extends SoundcloudModel {
+export class PlayQueueItem extends BaseModel {
   private _promisePerState = {};
 
   @attributesKey('status')
@@ -14,12 +16,14 @@ export class PlayQueueItem extends SoundcloudModel {
   status: PlayQueueItemStatus;
 
   @attributesKey('track')
-  @nested()
+  @dynamicInstance({
+    identifierKey: 'provider',
+    identifierKeyValueMap: {
+      'SOUNDCLOUD': TrackSoundcloud,
+      'YOUTUBE': TrackYoutube
+    }
+  })
   track: Track;
-
-  @attributesKey('provider')
-  @defaultValue('SOUNDCLOUD')
-  provider: string;
 
   @attributesKey('progress')
   @defaultValue(0)

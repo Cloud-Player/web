@@ -3,12 +3,12 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 declare let MediaMetadata: any;
 
 import {Component, Input, OnInit} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
+import {Track} from '../../../tracks/models/track';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import {SoundcloudImageModel} from '../../../shared/models/soundcloud-image.model';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayQueue} from '../../collections/play-queue';
+import {ImageModel} from '../../../shared/models/image';
 
 @Component({
   selector: 'app-player-controls',
@@ -30,18 +30,18 @@ export class PlayerControlsComponent implements OnInit {
   private setMobileMediaNotification(track: Track) {
     if ('mediaSession' in navigator) {
       const nv: any = navigator;
-      const artwork: SoundcloudImageModel = track.image;
+      const artwork: ImageModel = track.image;
       const fallbackImg = 'assets/meta/icons/ios/apple-icon-180x180.png';
       nv.mediaSession.metadata = new MediaMetadata({
         title: track.title,
-        artist: track.user.username,
+        artist: track.artist.username,
         artwork: [
-          {src: artwork.getDefaultSize() || fallbackImg, sizes: '96x96', type: 'image/jpg'},
-          {src: artwork.getDefaultSize() || fallbackImg, sizes: '128x128', type: 'image/jpg'},
-          {src: artwork.getDefaultSize() || fallbackImg, sizes: '192x192', type: 'image/jpg'},
-          {src: artwork.getImageByFormat('t300x300') || fallbackImg, sizes: '256x256', type: 'image/jpg'},
-          {src: artwork.getImageByFormat('crop') || fallbackImg, sizes: '384x384', type: 'image/jpg'},
-          {src: artwork.getLargeSize() || fallbackImg, sizes: '512x512', type: 'image/jpg'},
+          {src: artwork.getSmallSizeUrl() || fallbackImg, sizes: '96x96', type: 'image/jpg'},
+          {src: artwork.getSmallSizeUrl() || fallbackImg, sizes: '128x128', type: 'image/jpg'},
+          {src: artwork.getMediumSizeUrl() || fallbackImg, sizes: '192x192', type: 'image/jpg'},
+          {src: artwork.getMediumSizeUrl() || fallbackImg, sizes: '256x256', type: 'image/jpg'},
+          {src: artwork.getLargeSizeUrl() || fallbackImg, sizes: '384x384', type: 'image/jpg'},
+          {src: artwork.getLargeSizeUrl() || fallbackImg, sizes: '512x512', type: 'image/jpg'},
         ]
       });
       if (this.playQueue.hasPreviousItem()) {

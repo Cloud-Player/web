@@ -39,22 +39,23 @@
                     [transformDisplayValue]="transformProgressBarValues"
                     [showCurrentValue]="true"
                     [isLoading]="isBuffering"
+                    [allowInfinity]="false"
                     (valueChanged)="playTrackFromPosition($event)">
   </app-range-slider>
 
-  <div *ngIf="currentItem.track.id" class="meta">
+  <div *ngIf="currentItem.track" class="meta">
     <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
     <div class="details"
          appDraggable="true"
          [dragData]="currentItem.track.toJSON()"
-         [dragImageUrl]="currentItem.track.image.getSmallSize()"
+         [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
       <b class="track-title">{{currentItem.track.title}}</b>
-      <div class="artist">{{currentItem.track.user.username}}</div>
+      <div class="artist">{{currentItem.track.artist.username}}</div>
     </div>
   </div>
 
-  <div *ngIf="!currentItem.track.id"
+  <div *ngIf="!currentItem.track"
        class="dummy meta">
     <i class="fa fa-heart-o"
        aria-hidden="true"></i>

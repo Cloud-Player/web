@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Track} from '../../tracks/models/track.model';
-import {Tracks} from '../../tracks/collections/tracks.collection';
+import {Track} from '../../tracks/models/track';
+import {Tracks} from '../../tracks/collections/tracks';
 import {AuthenticatedUserPlaylistTrack} from '../models/authenticated_user_playlist_track.model';
+import {TracksSoundcloud} from '../../tracks/collections/tracks-soundcloud';
+import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
 
-export class AuthenticatedUserPlaylistTracks<TModel extends Track> extends Tracks<TModel> {
+export class AuthenticatedUserPlaylistTracks<TModel extends TrackSoundcloud> extends TracksSoundcloud<TModel> {
   model: any = AuthenticatedUserPlaylistTrack;
 
   queryParams = <any>{};

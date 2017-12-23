@@ -1,5 +1,5 @@
 import {Component, Input, trigger, state, transition, style, animate} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
+import {Track} from '../../../tracks/models/track';
 import {Session} from '../../../session/models/session.model';
 import {AuthService} from '../../services/auth.service';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';

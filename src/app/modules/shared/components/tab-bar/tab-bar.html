@@ -1,0 +1,11 @@
+<ul *ngIf="showTabBar"
+    class="tab-bar">
+  <li *ngFor="let tab of tabs"
+      class="tab clickable"
+      [ngClass]="{active: tab.isActive()}"
+      (click)="selectTab(tab)">
+    <span *ngIf="tab.icon" class="{{tab.icon}}"></span>
+    {{tab.title}}
+  </li>
+</ul>
+<ng-content></ng-content>

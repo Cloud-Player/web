@@ -7,8 +7,12 @@ import {FormsModule} from '@angular/forms';
 import {SessionModule} from '../session/session.module';
 import {BackboneModule} from '../backbone/backbone.module';
 import {SharedModule} from '../shared/shared.module';
-import {SearchFilterComponent} from './components/search-filter/search-filter.component';
+import {FilterFormComponent} from './components/filter-form/filter-form';
 import {SocialSharePanelComponent} from './components/social-share-panel/social-share-panel.component';
+import {InputFilterComponent} from './components/filter-form/input-filter/input-filter';
+import {RangeFilterComponent} from './components/filter-form/range-filter/range-filter';
+import {MinMaxRangeFilterComponent} from './components/filter-form/min-max-range-filter/min-max-range-filter';
+import {YoutubeDurationFilterComponent} from './components/filter-form/youtube-duration-filter/youtube-duration-filter';
 
 @NgModule({
   imports: [
@@ -22,7 +26,11 @@ import {SocialSharePanelComponent} from './components/social-share-panel/social-
   ],
   declarations: [
     DashboardIndexComponent,
-    SearchFilterComponent,
+    FilterFormComponent,
+    InputFilterComponent,
+    RangeFilterComponent,
+    MinMaxRangeFilterComponent,
+    YoutubeDurationFilterComponent,
     SocialSharePanelComponent
   ]
 })

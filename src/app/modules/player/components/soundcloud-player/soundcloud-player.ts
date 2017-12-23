@@ -1,10 +1,10 @@
 import {
-  Component, ElementRef, OnDestroy, OnInit, Renderer2
+  Component, ElementRef, Input, OnDestroy, OnInit, Renderer2
 } from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
-import {CoverSizes} from '../../../shared/components/track-cover/track-cover.component';
-import {IPlayer} from '../../src/player.interface';
+import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
+import {TrackSoundcloud} from '../../../tracks/models/track-soundcloud';
+import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 
 @Component({
   selector: 'app-soundcloud-player',
@@ -14,6 +14,9 @@ import {AbstractPlayer} from '../../src/abstract-player.class';
 export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer, OnDestroy {
   private _listeners: Function[] = [];
   private _audio: HTMLAudioElement;
+
+  @Input()
+  public track: TrackSoundcloud;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
     super();
@@ -67,17 +70,21 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
     this._audio.volume = volume;
   }
 
-  protected preloadTrack(track: Track) {
+  protected setPlayerSize(size: IPlayerSize) {
+  }
+
+  protected preloadTrack(track: TrackSoundcloud) {
     this._audio.src = track.getResourceUrl();
     this._audio.load();
     this.track.comments.fetch();
   }
 
   protected startPlayer(): void {
-    this._audio.play().then(null, () => {
-      console.warn('Audio Element could not be started!');
+    this._audio.play().then(null, (err) => {
+      console.warn('Audio Element could not be started!', err);
       this.setAbleToPlay(false);
-      this.onStopped();
+      this.onPaused();
+      this.onError(err);
     });
   }
 
@@ -94,8 +101,8 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
     this._audio.currentTime = to;
   }
 
-  public getCoverSize(): CoverSizes {
-    return CoverSizes.Large;
+  public getCoverSize(): ImageSizes {
+    return ImageSizes.Large;
   }
 
   public getPlayerEl(): ElementRef {

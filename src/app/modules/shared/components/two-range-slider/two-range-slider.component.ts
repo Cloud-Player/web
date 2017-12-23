@@ -1,165 +1,202 @@
 import {
   Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
-  OnDestroy
+  OnDestroy, forwardRef, SimpleChanges, OnChanges, AfterViewInit
 } from '@angular/core';
-import {isNumber} from 'underscore';
+import {isUndefined, isNumber} from 'underscore';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
+export interface ITwoRangeSliderValue {
+  min: number;
+  max: number;
+}
 
 @Component({
   selector: 'app-two-range-slider',
   styleUrls: ['./two-range-slider.style.scss'],
-  templateUrl: './two-range-slider.template.html'
+  templateUrl: './two-range-slider.template.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TwoRangeSliderComponent),
+      multi: true
+    }
+  ]
 })
+export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor, OnDestroy, AfterContentInit {
+  private _onChange: Function;
+  private _onTouch: Function;
 
-export class TwoRangeSliderComponent implements OnDestroy, AfterContentInit {
-  private _tmpMinValue = 0;
-  private _tmpMaxValue = 0;
-  private _minValue = 0;
-  private _maxValue = 0;
-  private _min = 0;
-  private _max = 0;
-  private _step = 0.1;
-  public showLoadingSpinner = false;
-  public dragInProgress = false;
-  public dragHandleMinDisplayValue = 0;
-  public dragHandleMaxDisplayValue = 0;
-  private draggerWidth = 0;
-  @Output() minValueChange = new EventEmitter();
-  @Output() minValueChanged = new EventEmitter();
-  @Output() maxValueChange = new EventEmitter();
-  @Output() maxValueChanged = new EventEmitter();
+  dragInProgress = false;
+  tmpMinValue: number;
+  tmpMaxValue: number;
+  draggerSize = 14;
+  draggerCenterOffset = -1 * ((this.draggerSize / 2) - 2);
 
-  @ViewChild('progressBar') progressBar: ElementRef;
-  @ViewChild('progressLine') progressLine: ElementRef;
-  @ViewChild('handleOne') handleOne: ElementRef;
-  @ViewChild('handleTwo') handleTwo: ElementRef;
-  @ViewChild('sliderOne') sliderOne: ElementRef;
-  @ViewChild('sliderTwo') sliderTwo: ElementRef;
+  @ViewChild('progressBar')
+  protected progressBar: ElementRef;
 
-  get tmpMinValue(): number {
-    return this._tmpMinValue;
-  }
+  @ViewChild('progressLine')
+  protected progressLine: ElementRef;
 
-  set tmpMinValue(val: number) {
-    const maxVal = isNumber(this.tmpMaxValue) ? this.tmpMaxValue : this.max;
-    if (val >= maxVal) {
-      return;
-    }
+  @ViewChild('handleOne')
+  protected handleOne: ElementRef;
 
-    if (this.allowInfinityMin && val === this.min) {
-      val = null;
-    }
+  @ViewChild('handleTwo')
+  protected handleTwo: ElementRef;
 
-    this._tmpMinValue = val;
-    this.setDragPosFromVal();
+  @ViewChild('sliderOne')
+  protected sliderOne: ElementRef;
 
-    this.dragHandleMinDisplayValue = this.getDisplayValue(val);
-
-    this.minValueChange.emit(val);
-  }
-
-  get tmpMaxValue(): number {
-    return this._tmpMaxValue;
-  }
-
-  set tmpMaxValue(val: number) {
-    const minVal = isNumber(this.tmpMinValue) ? this.tmpMinValue : this.min;
-    if (val <= minVal) {
-      return;
-    }
-
-    if (this.allowInfinityMax && val === this.max) {
-      val = null;
-    }
-
-    this._tmpMaxValue = val;
-    this.setDragPosFromVal();
-
-    this.dragHandleMaxDisplayValue = this.getDisplayValue(val);
-
-    this.maxValueChange.emit(val);
-  }
+  @ViewChild('sliderTwo')
+  protected sliderTwo: ElementRef;
 
   @Input()
   public transformDisplayValue: Function;
+
   @Input()
   public hideSliderValue: boolean;
+
+  @Input()
+  public showSliderValue: boolean;
+
   @Input()
   public allowInfinityMin: boolean;
+
   @Input()
   public allowInfinityMax: boolean;
 
   @Input()
-  get minValue(): number {
-    return this._minValue;
-  }
-
-  set minValue(val: number) {
-    if (!this.dragInProgress) {
-      this._minValue = val;
-      this.tmpMinValue = val;
-    }
-  }
+  public value: ITwoRangeSliderValue;
 
   @Input()
-  get maxValue(): number {
-    return this._maxValue;
-  }
-
-  set maxValue(val: number) {
-    if (!this.dragInProgress) {
-      this._maxValue = val;
-      this.tmpMaxValue = val;
-    }
-  }
+  public minValue: number;
 
   @Input()
-  get max(): number {
-    return this._max;
-  }
-
-  set max(val: number) {
-    if (val) {
-      this._max = val;
-      this.setDragPosFromVal();
-    }
-  }
+  public maxValue: number;
 
   @Input()
-  get min(): number {
-    return this._min;
-  }
-
-  set min(val: number) {
-    if (val) {
-      this._min = val;
-      this.setDragPosFromVal();
-    }
-  }
+  public max: number;
 
   @Input()
-  get step(): number {
-    return this._step;
-  }
-
-  set step(val: number) {
-    if (val) {
-      this._step = val;
-    }
-  }
+  public min: number;
 
   @Input()
-  get isLoading(): boolean {
-    return this.showLoadingSpinner;
-  }
+  public step = 1;
 
-  set isLoading(val: boolean) {
-    this.showLoadingSpinner = val;
-  }
+  @Input()
+  public isLoading: boolean;
+
+  @Output()
+  public minValueChange = new EventEmitter();
+
+  @Output()
+  public minValueChanged = new EventEmitter();
+
+  @Output()
+  public maxValueChange = new EventEmitter();
+
+  @Output()
+  public maxValueChanged = new EventEmitter();
 
   constructor(private el: ElementRef) {
+    this.value = this.value || {
+      min: null,
+      max: null
+    };
   }
 
-  public getDisplayValue(value: number) {
+  private getValueInMinRange(value: number) {
+    if (!isUndefined(this.min) && (!value || value < this.min)) {
+      value = this.min;
+    }
+    return value;
+  }
+
+  private getValueInMaxRange(value: number) {
+    if (!isUndefined(this.max) && (!value || value > this.max)) {
+      value = this.max;
+    }
+    return value;
+  }
+
+  private getValueInMinMaxRange(value: ITwoRangeSliderValue) {
+    value.min = this.getValueInMinRange(value.min);
+    value.max = this.getValueInMinRange(value.max);
+    return value;
+  }
+
+  private isInfinityMin(value: number) {
+    return (this.allowInfinityMin && (!value || value <= this.min));
+  }
+
+  private isInfinityMax(value: number) {
+    return (this.allowInfinityMin && (!value || value >= this.max));
+  }
+
+  private updateValue(value: ITwoRangeSliderValue) {
+    if (this.isInfinityMin(value.min)) {
+      value.min = undefined;
+    } else if (isUndefined(value.min)) {
+      value.min = this.getValueInMinRange(value.min);
+    }
+
+    if (this.isInfinityMax(value.max)) {
+      value.max = undefined;
+    } else if (isUndefined(value.max)) {
+      value.max = this.getValueInMaxRange(value.max);
+    }
+
+    this.value = value;
+    this.tmpMinValue = value.min || this.getValueInMinRange(value.min);
+    this.tmpMaxValue = value.max || this.getValueInMaxRange(value.max);
+
+    this.sliderOne.nativeElement.value = this.tmpMinValue;
+    this.sliderTwo.nativeElement.value = this.tmpMaxValue;
+
+    if (this._onChange) {
+      this._onChange(this.value);
+    }
+  }
+
+  private setDragPosFromVal() {
+    const minVal = this.tmpMinValue;
+    const posMin = (((minVal - this.min) / (this.max - this.min)) * 100);
+
+    const maxVal = this.tmpMaxValue;
+    const posMax = (((maxVal - this.min) / (this.max - this.min)) * 100);
+
+    this.handleOne.nativeElement.style.left = posMin + '%';
+    this.handleOne.nativeElement.style.transform = 'translateX(-' + ((this.draggerSize / 100) * posMin) + 'px)';
+
+    this.handleTwo.nativeElement.style.left = posMax + '%';
+    this.handleTwo.nativeElement.style.transform = 'translateX(-' + ((this.draggerSize / 100) * posMax) + 'px)';
+
+    this.progressLine.nativeElement.style.left = posMin + '%';
+    this.progressLine.nativeElement.style.width = (posMax - posMin) + '%';
+  }
+
+  private dragStart(): void {
+    this.dragInProgress = true;
+
+    if (this._onTouch) {
+      this._onTouch();
+    }
+  }
+
+  private dragEnd(): void {
+    const value: ITwoRangeSliderValue = {
+      min: this.tmpMinValue,
+      max: this.tmpMaxValue
+    };
+
+    this.updateValue(value);
+    this.dragInProgress = false;
+
+    this.minValueChanged.emit(this.value.min);
+    this.maxValueChanged.emit(this.value.max);
+  }
+
+  getDisplayValue(value: number) {
     if (value && typeof this.transformDisplayValue === 'function') {
       return this.transformDisplayValue(value);
     } else {
@@ -167,46 +204,78 @@ export class TwoRangeSliderComponent implements OnDestroy, AfterContentInit {
     }
   }
 
-  private setDragPosFromVal() {
-    const minVal = isNumber(this.tmpMinValue) ? this.tmpMinValue : this.min;
-    const posMin = (((minVal - this.min) / (this.max - this.min)) * 100);
+  getMinSliderDisplayValue() {
+    const value = this.tmpMinValue;
 
-    const maxVal = isNumber(this.tmpMaxValue) ? this.tmpMaxValue : this.max;
-    const posMax = (((maxVal - this.min) / (this.max - this.min)) * 100);
-
-    this.handleOne.nativeElement.style.left = posMin + '%';
-    this.handleOne.nativeElement.style.transform = 'translateX(-' + ((this.draggerWidth / 100) * posMin) + 'px)';
-
-    this.handleTwo.nativeElement.style.left = posMax + '%';
-    this.handleTwo.nativeElement.style.transform = 'translateX(-' + ((this.draggerWidth / 100) * posMax) + 'px)';
-
-    this.progressLine.nativeElement.style.left = posMin + '%';
-    this.progressLine.nativeElement.style.width = (posMax - posMin) + '%';
+    if (this.isInfinityMin(value)) {
+      return 'None';
+    } else {
+      return this.getDisplayValue(value);
+    }
   }
 
-  private dragStart(): void {
-    this.draggerWidth = this.handleOne.nativeElement.offsetWidth;
-    this.dragInProgress = true;
+  getMaxSliderDisplayValue() {
+    const value = this.tmpMaxValue;
+
+    if (this.isInfinityMax(value)) {
+      return 'None';
+    } else {
+      return this.getDisplayValue(value);
+    }
   }
 
-  private dragEnd(): void {
-    this.dragInProgress = false;
-    if (this.minValue !== this.tmpMinValue) {
-      this.minValue = this.tmpMinValue;
-      this.minValueChanged.emit(this.minValue);
+  updateMinValue() {
+    this.setDragPosFromVal();
+    if (this.isInfinityMin(this.tmpMinValue)) {
+      this.minValueChange.emit(null);
+    } else {
+      this.minValueChange.emit(this.tmpMinValue);
+    }
+  }
+
+  updateMaxValue() {
+    this.setDragPosFromVal();
+    if (this.isInfinityMax(this.tmpMaxValue)) {
+      this.maxValueChange.emit(null);
+    } else {
+      this.maxValueChange.emit(this.tmpMaxValue);
+    }
+  }
+
+  writeValue(value: ITwoRangeSliderValue): void {
+    if (value) {
+      this.updateValue(value);
+      this.setDragPosFromVal();
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this._onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this._onTouch = fn;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.value) {
+      this.updateValue(changes.value.currentValue);
     }
 
-    if (this.maxValue !== this.tmpMaxValue) {
-      this.maxValue = this.tmpMaxValue;
-      this.maxValueChanged.emit(this.maxValue);
-    }
-
-    this.sliderOne.nativeElement.value = isNumber(this._tmpMinValue) ? this._tmpMinValue : this.min;
-    this.sliderTwo.nativeElement.value = isNumber(this._tmpMaxValue) ? this._tmpMaxValue : this.max;
+    this.setDragPosFromVal();
   }
-
 
   ngAfterContentInit(): void {
+    if (!this.isInfinityMin(this.value.min)) {
+      this.value.min = this.getValueInMinRange(this.value.min);
+    }
+
+    if (!this.isInfinityMax(this.value.max)) {
+      this.value.max = this.getValueInMaxRange(this.value.max);
+    }
+
+    this.updateValue(this.value);
+
     this.el.nativeElement.addEventListener('mousedown', this.dragStart.bind(this));
     this.el.nativeElement.addEventListener('touchstart', this.dragStart.bind(this));
 

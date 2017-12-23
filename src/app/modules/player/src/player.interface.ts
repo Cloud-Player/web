@@ -1,6 +1,14 @@
 import {ElementRef, EventEmitter} from '@angular/core';
-import {Track} from '../../tracks/models/track.model';
+import {Track} from '../../tracks/models/track';
 import {Observable} from 'rxjs/Observable';
+
+export interface IPlayerSize {
+  height: number;
+  width: number;
+}
+export interface IPlayerOptions {
+  size: IPlayerSize;
+}
 
 export interface IPlayer {
   durationChange: EventEmitter<{}>;
@@ -16,7 +24,7 @@ export interface IPlayer {
 
   isAbleToPlay(): boolean;
 
-  initialise(options?: { preload: boolean }): Promise<any>;
+  initialise(options?: IPlayerOptions): Promise<any>;
 
   deInitialize(): void;
 
@@ -42,5 +50,9 @@ export interface IPlayer {
 
   addClass(className: string): void;
 
-  removeClass(className: string|RegExp): void;
+  removeClass(className: string | RegExp): void;
+
+  getError(): string;
+
+  setSize(size: IPlayerSize): void;
 }

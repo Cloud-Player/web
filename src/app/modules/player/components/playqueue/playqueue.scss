@@ -1,75 +1,80 @@
 @import 'variables';
 
-.play-queue {
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 10px 15px;
-  margin-top: -5px;
-  height: calc(100vh - 490px);
-  background: $light-white;
+:host{
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 
-  .queued-tracks-list,
-  .scheduled-tracks-list {
-    .divider{
-      margin: 5px -15px 10px -15px;
-    }
+  .play-queue {
+    padding: 10px 15px;
+    margin-top: -5px;
+    background: $light-white;
+    flex-grow: 1;
 
-    .track{
-      display: flex;
-      margin-bottom: 10px;
-
-      app-track-cover{
-        width: 60px;
-        height: 60px;
-        flex-shrink:0;
-        margin-right: 10px;
+    .queued-tracks-list,
+    .scheduled-tracks-list {
+      .divider{
+        margin: 5px -15px 10px -15px;
       }
 
-      .details{
-        flex-grow: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      .track{
+        display: flex;
+        margin-bottom: 10px;
 
-        &.dummy{
-          .title,
-          .artist{
-            background: $gray-lighter;
-            color: transparent;
-          }
+        app-track-cover{
+          width: 60px;
+          height: 60px;
+          flex-shrink:0;
+          margin-right: 10px;
+        }
 
-          .title{
-            width: 90%;
-          }
+        .details{
+          flex-grow: 1;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
 
-          .artist{
-            width: 70%;
+          &.dummy{
+            .title,
+            .artist{
+              background: $gray-lighter;
+              color: transparent;
+            }
+
+            .title{
+              width: 90%;
+            }
+
+            .artist{
+              width: 70%;
+            }
+
+            .stats{
+              display: none;
+            }
           }
 
           .stats{
-            display: none;
-          }
-        }
+            margin-top: 5px;
 
-        .stats{
-          margin-top: 5px;
-
-          > div{
-            display: inline-block;
-            font-size: 11px;
-            color: $gray-light;
+            > div{
+              display: inline-block;
+              font-size: 11px;
+              color: $gray-light;
+            }
           }
         }
       }
     }
-  }
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
+  }
 }
-
 @media (max-width: $screen-xs-max) {
   :host{
     display: none;

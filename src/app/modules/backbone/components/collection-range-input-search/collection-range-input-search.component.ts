@@ -37,7 +37,7 @@ export class CollectionRangeInputSearchComponent implements OnInit {
         }
       }).toPromise();
 
-    this.query = this.collection.queryParams[this.queryParam];
+    this.query = <string>this.collection.queryParams[this.queryParam];
   }
 
 }

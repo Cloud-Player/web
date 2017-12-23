@@ -4,25 +4,34 @@ import {TrackingProviders} from '../collections/tracking-providers.collection';
 
 @Injectable()
 export class UserAnalyticsService {
-  trackingProviders: TrackingProviders<TrackingProviderModel> = new TrackingProviders();
+  private _trackingProviders: TrackingProviders<TrackingProviderModel> = new TrackingProviders();
+  private _isActive = true;
 
-  addProvider(provider: TrackingProviderModel): void {
-    this.trackingProviders.add(provider);
+  public addProvider(provider: TrackingProviderModel): void {
+    this._trackingProviders.add(provider);
   }
 
-  trackEvent(eventName: string, eventAction: string, msg: string) {
-    this.trackingProviders.trackEvent(eventName, eventAction, msg);
+  public trackEvent(eventName: string, eventAction: string, msg: string) {
+    if (this._isActive) {
+      this._trackingProviders.trackEvent(eventName, eventAction, msg);
+    }
   }
 
-  trackPage(page: string) {
-    this.trackingProviders.trackPage(page);
+  public trackPage(page: string) {
+    if (this._isActive) {
+      this._trackingProviders.trackPage(page);
+    }
   }
 
-  setUserId(userId: string) {
-    this.trackingProviders.setUserId(userId);
+  public setUserId(userId: string) {
+    this._trackingProviders.setUserId(userId);
   }
 
-  setProperty(property: string, value: any) {
-    this.trackingProviders.setProperty(property, value);
+  public setProperty(property: string, value: any) {
+    this._trackingProviders.setProperty(property, value);
+  }
+
+  public setActive(isActive: boolean) {
+    this._isActive = isActive;
   }
 }

@@ -1,0 +1,12 @@
+<div class="play-button"
+     [class.isPlaying]="isPlaying()"
+     appTrackPlayOn="click"
+     [track]="track"
+     [tracks]="tracks">
+  <button class="btn btn-round btn-brand" *ngIf="!isPlaying()">
+    <i class="fa fa-play play"></i>
+  </button>
+  <button class="btn btn-round btn-brand" *ngIf="isPlaying()">
+    <i class="fa fa-pause"></i>
+  </button>
+</div>

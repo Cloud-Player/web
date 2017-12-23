@@ -19,7 +19,7 @@
         <div *ngFor="let playlist of user.playlists.models">
           <a routerLink="/me/playlists/{{playlist.id}}" appDropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
             <div class="cover">
-              <img [src]="playlist.artworkUrl.getDefaultSize()">
+              <img [src]="playlist.image.getDefaultSizeUrl()">
             </div>
             <div class="details">
               <p>{{playlist.title}}</p>

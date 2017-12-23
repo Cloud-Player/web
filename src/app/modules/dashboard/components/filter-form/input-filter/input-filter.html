@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label *ngIf="label"
+         class="col-sm-2 control-label">
+    {{label}}
+  </label>
+  <div class="col-md-10">
+    <input [type]="type" [name]="filterProperty" [(ngModel)]="value" #ngControl="ngModel">
+  </div>
+</div>

@@ -1,9 +1,10 @@
 import {Observable} from 'rxjs/Observable';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {isNumber} from 'underscore';
+import {throttle, isNumber} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
-import {Track} from '../../tracks/models/track.model';
+import {Track} from '../../tracks/models/track';
 import {EaseService} from '../../shared/services/ease.service';
+import {IPlayerOptions, IPlayerSize} from './player.interface';
 
 export abstract class AbstractPlayer implements OnInit {
   private _duration: number;
@@ -21,6 +22,11 @@ export abstract class AbstractPlayer implements OnInit {
   private _playerSdkIsInitialised = false;
   private _allowedToPlay = false;
   private _initialiseCallbacks: Function[] = [];
+  private _size: IPlayerSize = {width: 0, height: 0};
+  private _error: string;
+  private _throttledTimeUpdate = throttle(this.emitTimeChange.bind(this), 900);
+  private _forcePlayStart = false;
+  private _forcePlayStartTry = 0;
 
   @Input()
   public track: Track;
@@ -36,7 +42,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   protected abstract initialisePlayerSDK(): Promise<any>;
 
-  protected abstract initialisePlayer(): Promise<any>;
+  protected abstract initialisePlayer(options?: IPlayerOptions): Promise<any>;
 
   protected abstract deInitialisePlayer(): void;
 
@@ -45,6 +51,8 @@ export abstract class AbstractPlayer implements OnInit {
   protected abstract unBindListeners(): void;
 
   protected abstract setPlayerVolume(volume: number): void;
+
+  protected abstract setPlayerSize(size: IPlayerSize): void;
 
   protected abstract startPlayer(): void;
 
@@ -76,10 +84,14 @@ export abstract class AbstractPlayer implements OnInit {
     return this._duration;
   }
 
+  private emitTimeChange(time: number) {
+    this.currentTimeChange.emit(time);
+  }
+
   protected setCurrentTime(currentTime: number): void {
     if (isNumber(currentTime) && currentTime > 0) {
       this._currentTime = currentTime;
-      this.currentTimeChange.emit(currentTime);
+      this._throttledTimeUpdate(currentTime);
     }
   }
 
@@ -88,8 +100,10 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setStatus(status: PlayerStatus) {
-    this._status = status;
-    this.statusChange.emit(status);
+    if (this._status !== status) {
+      this._status = status;
+      this.statusChange.emit(status);
+    }
   }
 
   public getStatus(): PlayerStatus {
@@ -107,6 +121,12 @@ export abstract class AbstractPlayer implements OnInit {
     return this._volume;
   }
 
+  public setSize(size: IPlayerSize) {
+    this._size = size;
+    this.executeOnInitialised(() => {
+      this.setPlayerSize(size);
+    });
+  }
 
   protected setAllowedToPlay(isAllowed: boolean): void {
     this._allowedToPlay = isAllowed;
@@ -149,12 +169,21 @@ export abstract class AbstractPlayer implements OnInit {
     if (!this.isAllowedToPlay()) {
       this.pause();
     } else {
+      this._forcePlayStart = false;
+      this._forcePlayStartTry = 0;
       this.setStatus(PlayerStatus.Playing);
     }
+    this._error = null;
   }
 
   protected onPaused() {
-    this.setStatus(PlayerStatus.Paused);
+    if (this._forcePlayStart && this._forcePlayStartTry < 5) {
+      this._forcePlayStartTry++;
+      this.play();
+    } else {
+      this._forcePlayStartTry = 0;
+      this.setStatus(PlayerStatus.Paused);
+    }
   }
 
   protected onEnded() {
@@ -165,7 +194,7 @@ export abstract class AbstractPlayer implements OnInit {
     this.setStatus(PlayerStatus.Stopped);
   }
 
-  protected onError() {
+  protected onError(err?: string) {
     if (!navigator.onLine) {
       const onlineListener = () => {
         window.removeEventListener('online', onlineListener);
@@ -176,6 +205,11 @@ export abstract class AbstractPlayer implements OnInit {
       window.addEventListener('online', onlineListener.bind(this));
       this.setStatus(PlayerStatus.Waiting);
     } else {
+      if (err) {
+        this._error = err.toString();
+      } else {
+        this._error = 'The player could not be started because an error occurred';
+      }
       this.setStatus(PlayerStatus.Error);
     }
   }
@@ -232,7 +266,7 @@ export abstract class AbstractPlayer implements OnInit {
     }
   }
 
-  public initialise(): Promise<any> {
+  public initialise(options?: IPlayerOptions): Promise<any> {
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
@@ -246,7 +280,9 @@ export abstract class AbstractPlayer implements OnInit {
         }
 
         if (!this._playerIsInitialised) {
-          promiseQueue.push(this.initialisePlayer);
+          promiseQueue.push(() => {
+            return this.initialisePlayer(options);
+          });
         }
 
         return this.executeInitialisingQueue(promiseQueue).then(() => {
@@ -295,6 +331,7 @@ export abstract class AbstractPlayer implements OnInit {
     this.setCurrentTime(from);
     this.setAllowedToPlay(true);
     this.executeOnInitialised(() => {
+      this._forcePlayStart = true;
       if (isNumber(from)) {
         this.seekTo(from);
       }
@@ -384,6 +421,10 @@ export abstract class AbstractPlayer implements OnInit {
 
   public addClass(className: string) {
     this.getPlayerEl().nativeElement.classList.add(className);
+  }
+
+  public getError() {
+    return this._error;
   }
 
   ngOnInit(): void {

@@ -1,13 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Track} from '../../../tracks/models/track.model';
-import {SoundcloudImageModel} from '../../models/soundcloud-image.model';
-
-export enum CoverSizes {
-  Small,
-  Medium,
-  Regular,
-  Large
-}
+import {Track} from '../../../tracks/models/track';
+import {ImageSizes} from '../../src/image-sizes.enum';
 
 @Component({
   selector: 'app-track-cover',
@@ -20,30 +13,14 @@ export class TrackCoverComponent {
   public track: Track;
 
   @Input()
-  public size: CoverSizes;
+  public size: ImageSizes;
 
   @Input()
   public animate = false;
 
   public getArtworkUrl(): string {
     if (this.track) {
-      const artwork: SoundcloudImageModel = this.track.image;
-      let artworkUrl: string;
-      switch (this.size) {
-        case CoverSizes.Small:
-          artworkUrl = artwork.getSmallSize();
-          break;
-        case CoverSizes.Medium:
-          artworkUrl = artwork.getMediumSize();
-          break;
-        case CoverSizes.Large:
-          artworkUrl = artwork.getLargeSize();
-          break;
-        case CoverSizes.Regular:
-          artworkUrl = artwork.getDefaultSize();
-          break;
-      }
-      return artworkUrl;
+      return this.track.image.getImageBySize(this.size);
     }
   }
 }

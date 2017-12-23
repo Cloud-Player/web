@@ -9,12 +9,14 @@ import {PlayerComponent} from './components/player/player';
 import {PlayerManagerComponent} from './components/player-manager/player-manager';
 import {PlayQueueComponent} from './components/playqueue/playqueue';
 import {YoutubePlayerComponent} from './components/youtube-player/youtube-player';
+import {TracksModule} from '../tracks/tracks.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     SharedModule,
+    TracksModule,
     CommentsModule
   ],
   declarations: [
