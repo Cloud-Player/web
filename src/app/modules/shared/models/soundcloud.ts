@@ -8,9 +8,7 @@ export class SoundcloudModel extends BaseModel {
   }
 
   public sync(method: string, model: any, options: any = {}) {
-    debugger;
     this.queryParams['client_id'] = Globals.soundcloudClientId;
-    console.log(Globals.soundcloudClientId)
     const session = getSession();
     if (session && session.isValid()) {
       this.queryParams['oauth_token'] = session.accessToken;
