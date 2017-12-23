@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs/Observable';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {isNumber} from 'underscore';
+import {throttle, isNumber} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
 import {Track} from '../../tracks/models/track';
 import {EaseService} from '../../shared/services/ease.service';
@@ -24,6 +24,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _initialiseCallbacks: Function[] = [];
   private _size: IPlayerSize = {width: 0, height: 0};
   private _error: string;
+  private _throttledTimeUpdate = throttle(this.emitTimeChange.bind(this), 900);
 
   @Input()
   public track: Track;
@@ -81,10 +82,14 @@ export abstract class AbstractPlayer implements OnInit {
     return this._duration;
   }
 
+  private emitTimeChange(time: number) {
+    this.currentTimeChange.emit(time);
+  }
+
   protected setCurrentTime(currentTime: number): void {
     if (isNumber(currentTime) && currentTime > 0) {
       this._currentTime = currentTime;
-      this.currentTimeChange.emit(currentTime);
+      this._throttledTimeUpdate(currentTime);
     }
   }
 
@@ -93,8 +98,10 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setStatus(status: PlayerStatus) {
-    this._status = status;
-    this.statusChange.emit(status);
+    if (this._status !== status) {
+      this._status = status;
+      this.statusChange.emit(status);
+    }
   }
 
   public getStatus(): PlayerStatus {
