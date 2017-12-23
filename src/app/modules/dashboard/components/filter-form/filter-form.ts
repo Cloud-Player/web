@@ -1,14 +1,15 @@
-import {Component, Input} from '@angular/core';
+import {AfterContentInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 
 import {BaseCollection} from '../../../backbone/collections/base.collection';
 import {BaseModel} from '../../../backbone/models/base.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
-  selector: 'app-search-filter',
-  styleUrls: ['./search-filter.style.scss'],
-  templateUrl: './search-filter.template.html'
+  selector: 'app-filter-form',
+  styleUrls: ['./filter-form.scss'],
+  templateUrl: './filter-form.html'
   // animations: [
   //   trigger('visibilityChanged', [
   //     state('true', style({height: '*', marginBottom: '15px', padding: '15px',})),
@@ -18,20 +19,13 @@ import {UserAnalyticsService} from '../../../user-analytics/services/user-analyt
   //   ])
   // ]
 })
-
-export class SearchFilterComponent {
-  private humanReadableSecPipe: HumanReadableSecondsPipe;
+export class FilterFormComponent implements OnInit {
   public showFilterForm = false;
-
-  public transformProgressBarValues = function (input: any) {
-    return this.humanReadableSecPipe.transform(input / 1000, null);
-  }.bind(this);
 
   @Input()
   public collection: BaseCollection<BaseModel>;
 
   constructor(private userAnalyticsService: UserAnalyticsService) {
-    this.humanReadableSecPipe = new HumanReadableSecondsPipe();
   }
 
   public toggleFilterForm(): void {
@@ -44,12 +38,17 @@ export class SearchFilterComponent {
     }
   }
 
-  public transformDuration(input: string = ''): string {
-    return this.humanReadableSecPipe.transform(input, null);
+  public setFilter(property: string, value: any): void {
+    this.collection.queryParams[property] = value;
+    //this.userAnalyticsService.trackEvent(`filter_${property}`, 'click', 'app-search-filter-cmp');
+    console.log(property, value);
+    //this.fetchCollection();
   }
 
-  public reFetch(changedAttr?: string): void {
+  protected fetchCollection(changedAttr?: string): void {
     this.collection.fetch({reset: true});
-    this.userAnalyticsService.trackEvent(`filter_${changedAttr}`, 'click', 'app-search-filter-cmp');
+  }
+
+  ngOnInit() {
   }
 }
