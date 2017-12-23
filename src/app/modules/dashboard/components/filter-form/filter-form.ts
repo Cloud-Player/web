@@ -21,6 +21,7 @@ import {FormControl} from '@angular/forms';
 })
 export class FilterFormComponent implements OnInit {
   private hasBeenChanged = false;
+  private setFilterProperties: string[] = [];
   public showFilterForm = false;
 
   @Input()
@@ -32,6 +33,12 @@ export class FilterFormComponent implements OnInit {
   public toggleFilterForm(): void {
     if (this.showFilterForm) {
       this.userAnalyticsService.trackEvent('close_filter_form', 'click', 'app-search-filter-cmp');
+      this.setFilterProperties.forEach((property) => {
+        this.hasBeenChanged = true;
+        this.collection.queryParams[property] = null;
+      });
+      this.setFilterProperties = [];
+      this.fetchCollection();
       this.showFilterForm = false;
     } else {
       this.userAnalyticsService.trackEvent('open_filter_form', 'click', 'app-search-filter-cmp');
@@ -43,6 +50,7 @@ export class FilterFormComponent implements OnInit {
     if (value !== this.collection.queryParams[property]) {
       this.userAnalyticsService.trackEvent(`filter_${property}`, 'click', 'app-search-filter-cmp');
       this.collection.queryParams[property] = value;
+      this.setFilterProperties.push(property);
       this.hasBeenChanged = true;
     }
   }
