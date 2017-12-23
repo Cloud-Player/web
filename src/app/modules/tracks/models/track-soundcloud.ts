@@ -79,7 +79,8 @@ export class TrackSoundcloud extends Track {
 
   getAdditionalMiniJSONAttrs() {
     return {
-      stream_url: this.streamUrl
+      stream_url: this.streamUrl,
+      artwork_url: this.image.imageUrl
     };
   }
 
