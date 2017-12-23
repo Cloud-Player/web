@@ -110,14 +110,15 @@ export class PlayerFactory {
     if (reusablePlayer) {
       const reusablePlayerComponent = reusablePlayer.component;
 
-      if (reusablePlayerComponent.instance.track.id !== item.track.id) {
-        reusablePlayerComponent.instance.updateTrack(item.track);
+      if (reusablePlayerComponent.instance.track.id === item.track.id) {
+        return reusablePlayer.component;
       }
 
       if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
         reusablePlayerComponent.instance.initialise({size: playerSize});
-        reusablePlayerComponent.instance.preload(item.progress);
       }
+      reusablePlayerComponent.instance.updateTrack(item.track);
+      reusablePlayerComponent.instance.preload(item.progress);
       return reusablePlayerComponent;
     } else {
       const newPlayer = this.createNewPlayer(item);

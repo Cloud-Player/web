@@ -1,3 +1,6 @@
+# v4.0.1
+- Fix playback bug
+
 # v4.0.0
 - Call youtube api to search for tracks
 - Add filter to filter youtube tracks by duration
