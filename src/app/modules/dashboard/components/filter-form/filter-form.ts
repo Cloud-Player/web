@@ -39,13 +39,11 @@ export class FilterFormComponent implements OnInit {
   }
 
   public setFilter(property: string, value: any): void {
+    this.userAnalyticsService.trackEvent(`filter_${property}`, 'click', 'app-search-filter-cmp');
     this.collection.queryParams[property] = value;
-    //this.userAnalyticsService.trackEvent(`filter_${property}`, 'click', 'app-search-filter-cmp');
-    console.log(property, value);
-    //this.fetchCollection();
   }
 
-  protected fetchCollection(changedAttr?: string): void {
+  public fetchCollection(): void {
     this.collection.fetch({reset: true});
   }
 
