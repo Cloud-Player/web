@@ -196,7 +196,7 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
     this.maxValueChanged.emit(this.value.max);
   }
 
-  protected getDisplayValue(value: number) {
+  getDisplayValue(value: number) {
     if (value && typeof this.transformDisplayValue === 'function') {
       return this.transformDisplayValue(value);
     } else {
@@ -204,7 +204,7 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
     }
   }
 
-  protected getMinSliderDisplayValue() {
+  getMinSliderDisplayValue() {
     const value = this.tmpMinValue;
 
     if (this.isInfinityMin(value)) {
@@ -214,7 +214,7 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
     }
   }
 
-  protected getMaxSliderDisplayValue() {
+  getMaxSliderDisplayValue() {
     const value = this.tmpMaxValue;
 
     if (this.isInfinityMax(value)) {

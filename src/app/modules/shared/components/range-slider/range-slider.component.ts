@@ -130,7 +130,7 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
     }
   }
 
-  protected getSliderDisplayValue(value: number) {
+  getSliderDisplayValue(value: number) {
     if (this.isInfinity(value)) {
       return 'None';
     } else {
