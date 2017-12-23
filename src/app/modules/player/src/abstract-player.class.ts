@@ -26,6 +26,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _error: string;
   private _throttledTimeUpdate = throttle(this.emitTimeChange.bind(this), 900);
   private _forcePlayStart = false;
+  private _forcePlayStartTry = 0;
 
   @Input()
   public track: Track;
@@ -169,15 +170,18 @@ export abstract class AbstractPlayer implements OnInit {
       this.pause();
     } else {
       this._forcePlayStart = false;
+      this._forcePlayStartTry = 0;
       this.setStatus(PlayerStatus.Playing);
     }
     this._error = null;
   }
 
   protected onPaused() {
-    if (this._forcePlayStart) {
+    if (this._forcePlayStart && this._forcePlayStartTry < 5) {
+      this._forcePlayStartTry++;
       this.play();
     } else {
+      this._forcePlayStartTry = 0;
       this.setStatus(PlayerStatus.Paused);
     }
   }
