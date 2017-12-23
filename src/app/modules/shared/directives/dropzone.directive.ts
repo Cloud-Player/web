@@ -1,38 +1,39 @@
-import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import {Directive, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 
 @Directive({
   selector: '[appDropzone]'
 })
-export class DropZoneDirective {
+export class DropZoneDirective implements OnInit, OnDestroy {
+  private _leaveTimeout: number;
 
-  private leaveTimeout: number;
+  @Input('dropCallback')
+  public dropCallback: Function;
 
-  @Input('dropCallback') dropCallback: Function;
+  @Input('dropItemRef')
+  public dropItemRef: any;
 
-  @Input('dropItemRef') dropItemRef: any;
-
-  @HostListener('dragenter', ['$event'])
-  onDragEnter() {
-    this.el.nativeElement.classList.add('drag-over');
-    clearTimeout(this.leaveTimeout);
+  constructor(private el: ElementRef) {
   }
 
-  @HostListener('dragover', ['$event'])
-  onDragOver(event: any) {
+  private onDragEnter(event) {
+    clearTimeout(this._leaveTimeout);
+    this.el.nativeElement.classList.add('drag-over');
+  }
+
+  private onDragOver(event: any) {
     event.preventDefault();
+    clearTimeout(this._leaveTimeout);
     this.el.nativeElement.classList.add('drag-over');
-    clearTimeout(this.leaveTimeout);
   }
 
-  @HostListener('dragleave')
-  onDragLeave() {
-    this.leaveTimeout = window.setTimeout(() => {
+  private onDragLeave() {
+    clearTimeout(this._leaveTimeout);
+    this._leaveTimeout = window.setTimeout(() => {
       this.el.nativeElement.classList.remove('drag-over');
     }, 100);
   }
 
-  @HostListener('drop', ['$event'])
-  onMouseOver(event: any) {
+  private onDrop(event: any) {
     if (this.dropCallback) {
       const args = [this.getDragData(event)];
       if (this.dropItemRef) {
@@ -41,7 +42,8 @@ export class DropZoneDirective {
       args.push(event);
       this.dropCallback.apply(this, args);
     }
-    this.leaveTimeout = window.setTimeout(() => {
+    clearTimeout(this._leaveTimeout);
+    this._leaveTimeout = window.setTimeout(() => {
       this.el.nativeElement.classList.remove('drag-over');
     }, 100);
   }
@@ -53,7 +55,19 @@ export class DropZoneDirective {
     }
   }
 
-  constructor(private el: ElementRef) {
+  public ngOnInit(): void {
+    this.el.nativeElement.addEventListener('dragenter', this.onDragEnter.bind(this));
+    this.el.nativeElement.addEventListener('dragover', this.onDragOver.bind(this));
+    this.el.nativeElement.addEventListener('dragleave', this.onDragLeave.bind(this));
+    this.el.nativeElement.addEventListener('drop', this.onDrop.bind(this));
+  }
+
+  public ngOnDestroy(): void {
+    this.el.nativeElement.removeEventListener('dragenter', this.onDragEnter.bind(this));
+    this.el.nativeElement.removeEventListener('dragover', this.onDragOver.bind(this));
+    this.el.nativeElement.removeEventListener('dragleave', this.onDragLeave.bind(this));
+    this.el.nativeElement.removeEventListener('drop', this.onDrop.bind(this));
+    clearTimeout(this._leaveTimeout);
   }
 
 }
