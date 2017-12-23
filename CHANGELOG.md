@@ -1,3 +1,15 @@
+# v4.0.0
+- Call youtube api to search for tracks
+- Add filter to filter youtube tracks by duration
+- Improve scrolling for iOS devices
+- Resize player based on to aspect ration of a track
+- Retry play when play is called and player changes to status paused
+- Refactor code:
+  - Add support to collection and nested models for dynamic instances
+  - Generify tracks so it supports youtube tracks as well
+  - Add decorators to define dynamic instances for collection and nested models
+  - Refactor sliders to support ngModel and improve code readability
+
 # v3.1.0
 - Fix memory leak in tracks list by unbinding event listeners in playTrackOn directive
 - Add youtube-player to play youtube tracks in youtube html5 player iframe
