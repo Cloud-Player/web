@@ -13,6 +13,7 @@ export abstract class Track extends BaseModel {
   public abstract likes: number;
   public abstract clicks: number;
   public abstract aspectRatio: number;
+  public abstract isLikeable: boolean;
 
   public abstract getAdditionalMiniJSONAttrs(): {};
 

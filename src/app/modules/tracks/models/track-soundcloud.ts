@@ -12,6 +12,8 @@ import {SoundcloudModel} from '../../shared/models/soundcloud';
 export class TrackSoundcloud extends Track {
   endpoint = '/tracks';
 
+  isLikeable = true;
+
   @attributesKey('provider')
   @defaultValue('SOUNDCLOUD')
   provider: string;

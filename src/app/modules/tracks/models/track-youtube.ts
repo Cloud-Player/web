@@ -9,6 +9,7 @@ import {YoutubeModel} from '../../shared/models/youtube';
 export class TrackYoutube extends Track {
   endpoint = '/videos';
 
+  isLikeable = false;
   @attributesKey('provider')
   @defaultValue('YOUTUBE')
   provider: string;
