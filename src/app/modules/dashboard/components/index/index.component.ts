@@ -10,6 +10,8 @@ import {TracksYoutube} from '../../../tracks/collections/tracks-youtube';
 import {TrackYoutube} from '../../../tracks/models/track-youtube';
 import {TabBarComponent} from '../../../shared/components/tab-bar/tab-bar';
 import {TabPaneComponent} from '../../../shared/components/tab-pane/tab-pane';
+import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
+import {ITwoRangeSliderValue} from '../../../shared/components/two-range-slider/two-range-slider.component';
 
 @Component({
   selector: 'app-my-dashboard',
@@ -22,18 +24,23 @@ export class DashboardIndexComponent implements AfterViewInit {
   public tracksYoutube: TracksYoutube<TrackYoutube>;
   public searchCollection: TracksSoundcloud<TrackSoundcloud> | TracksYoutube<TrackYoutube>;
   public isFetching = false;
+  public showWelcomeText = false;
   public activeTab = 'SOUNDCLOUD';
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private humanReadableSecPipe: HumanReadableSecondsPipe) {
     this.tracksSoundCloud = new TracksSoundcloud();
     this.tracksYoutube = new TracksYoutube();
     this.searchCollection = this.tracksSoundCloud;
   }
 
-  public connect() {
+  transformScDurationValue = function (input: any) {
+    return this.humanReadableSecPipe.transform(input / 1000, null);
+  }.bind(this);
+
+  connect() {
     this.authService.connect();
   }
 
@@ -49,23 +56,42 @@ export class DashboardIndexComponent implements AfterViewInit {
           this.searchCollection = this.tracksYoutube;
           break;
       }
+      localforage.setItem('sc_search_provider', tabPane.id);
+    });
+
+    localforage.getItem('sc_search_term').then((val: string) => {
+      if (val) {
+        this.searchBar.search(val);
+      } else {
+        this.showWelcomeText = true;
+      }
+    });
+
+    localforage.getItem('sc_search_provider').then((val: string) => {
+      if (val) {
+        this.tabBar.selectTabById(val);
+      }
     });
 
     this.searchBar.valueChange.subscribe((val: string) => {
       localforage.setItem('sc_search_term', val);
     });
 
-    localforage.getItem('sc_search_term').then((val: string) => {
-      if (val) {
-        this.searchBar.search(val);
-      }
-    });
-
     this.tracksSoundCloud.on('request', () => {
       this.isFetching = true;
+      this.showWelcomeText = false;
     });
 
     this.tracksSoundCloud.on('sync error', () => {
+      this.isFetching = false;
+    });
+
+    this.tracksYoutube.on('request', () => {
+      this.isFetching = true;
+      this.showWelcomeText = false;
+    });
+
+    this.tracksYoutube.on('sync error', () => {
       this.isFetching = false;
     });
   }
