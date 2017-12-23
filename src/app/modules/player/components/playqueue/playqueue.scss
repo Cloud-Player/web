@@ -1,7 +1,8 @@
 @import 'variables';
 
 :host{
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   flex-grow: 1;
   display: flex;
   flex-direction: column;

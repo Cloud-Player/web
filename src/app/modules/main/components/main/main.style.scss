@@ -121,6 +121,7 @@ button:focus {
     max-width: 800px;
     margin: 0 auto;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   > .version {
@@ -237,7 +238,8 @@ body.native.desktop {
 }
 
 .scrollable {
-  overflow: auto;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   display: block;
   &::-webkit-scrollbar {
     display: none;
