@@ -105,18 +105,20 @@ export class PlayerFactory {
     }
 
     const reusablePlayer = this.getReusablePlayer(item);
+    const playerSize = PlayerFactory.getPlayerSize(item.track);
+
     if (reusablePlayer) {
-      if (reusablePlayer.component.instance.track.id === item.track.id) {
-        return reusablePlayer.component;
-      } else {
-        const reusablePlayerComponent = reusablePlayer.component;
-        if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
-          const playerSize = PlayerFactory.getPlayerSize(item.track);
-          reusablePlayerComponent.instance.initialise({size: playerSize});
-        }
+      const reusablePlayerComponent = reusablePlayer.component;
+
+      if (reusablePlayerComponent.instance.track.id !== item.track.id) {
         reusablePlayerComponent.instance.updateTrack(item.track);
-        return reusablePlayerComponent;
       }
+
+      if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
+        reusablePlayerComponent.instance.initialise({size: playerSize});
+        reusablePlayerComponent.instance.preload(item.progress);
+      }
+      return reusablePlayerComponent;
     } else {
       const newPlayer = this.createNewPlayer(item);
       this._playerStore.add(newPlayer);
