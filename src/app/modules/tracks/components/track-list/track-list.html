@@ -50,12 +50,19 @@
       <div class="stats">
         <div class="duration label label-default label-light">
           <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-          {{track.duration/1000 | hReadableSeconds}}
+          <span *ngIf="track.duration">
+            {{track.duration/1000 | hReadableSeconds}}
+          </span>
+          <span *ngIf="!track.duration">
+            <app-loading-spinner [isLoading]="true"></app-loading-spinner>
+          </span>
         </div>
-        <div class="favs label label-default label-light">
+        <div *ngIf="track.likes"
+             class="favs label label-default label-light">
           <i class="fa fa-heart" aria-hidden="true" alt="favouites count"></i> {{track.likes | kMilShortener}}
         </div>
-        <div class="plays label label-default label-light">
+        <div *ngIf="track.clicks"
+             class="plays label label-default label-light">
           <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.clicks | kMilShortener}}
         </div>
         <div *ngIf="track.genre"

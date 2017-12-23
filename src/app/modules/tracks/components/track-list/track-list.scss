@@ -130,6 +130,14 @@
           border: none;
         }
       }
+
+      app-loading-spinner{
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        top: -3px;
+        position: relative;
+      }
     }
   }
 
