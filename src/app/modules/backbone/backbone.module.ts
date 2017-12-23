@@ -40,9 +40,9 @@ export class BackboneModule {
       requestOption.headers.set('content-type', 'application/json');
       return http.request(options.type, options.url, requestOption)
         .toPromise()
-        .then(function (resp: HttpResponse<{}>) {
+        .then(function (resp: any) {
           if (options.success && typeof options.success === 'function') {
-            options.success(resp, resp.statusText, this);
+            options.success(resp, null, this);
           }
           return resp;
         }, function (resp: HttpResponse<{}>) {
