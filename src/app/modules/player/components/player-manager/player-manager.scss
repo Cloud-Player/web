@@ -4,6 +4,7 @@
   .player-controller {
     height: 0;
     overflow: hidden;
+    position: relative;
 
     &.has-players {
       height: 100%;
@@ -11,10 +12,26 @@
     }
 
     /deep/ .player {
+      opacity: 0;
       display: none;
+      position: absolute;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+
 
       &.active{
-        display: block;
+        z-index: 1;
+        opacity:1;
+        display: flex;
+      }
+
+      &.upcoming{
+        z-index: 2;
+        display: flex;
       }
     }
   }
