@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input} from '@angular/core';
 import {Comments} from '../../collections/comments.collection';
 import {Comment} from '../../models/comment.model';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
@@ -15,12 +15,17 @@ export class UserCommentsComponent {
   private _comments: Comments<Comment>;
   private _humanReadableSecPipe: HumanReadableSecondsPipe;
   private _queueItemAliceTimeSecs = 5;
+  private _bigComments = false;
+  private _smallCommentsFont = '300 12px Raleway';
+  private _bigCommentsFont = '300 30px Raleway';
 
   public visibleCommentLines = 0;
   public commentsQueue: Comments<Comment>;
   public canShowMoreComments = true;
+  public font = this._smallCommentsFont;
+  public maxWidth = 288;
 
-  constructor() {
+  constructor(private el: ElementRef) {
     this._humanReadableSecPipe = new HumanReadableSecondsPipe();
     this.commentsQueue = new Comments();
   }
@@ -62,6 +67,24 @@ export class UserCommentsComponent {
       });
     }
     this.cleanUpHandler(val);
+  }
+
+  @Input()
+  get bigComments(): boolean {
+    return this._bigComments;
+  }
+
+  set bigComments(val: boolean) {
+    if (val) {
+      this.font = this._bigCommentsFont;
+      this.el.nativeElement.classList.add('big-comments');
+      this.maxWidth = screen.width - 100;
+    } else {
+      this.font = this._smallCommentsFont;
+      this.el.nativeElement.classList.remove('big-comments');
+      this.maxWidth = 288;
+    }
+    this._bigComments = val;
   }
 
   @Input()

@@ -4,14 +4,14 @@
     <li *ngFor="let comment of commentsQueue.models"
         class="comment">
       <div class="user-image">
-        <img [src]="comment.user.image.getImageByFormat('tiny')"/>
+        <img [src]="bigComments ? comment.user.image.getImageByFormat('badge') : comment.user.image.getImageByFormat('tiny')"/>
       </div>
       <div class="text">
         <app-multi-line
           [text]="comment.body"
-          font="300 12px Raleway"
+          [font]="font"
           [maxLines]="2"
-          [maxWidth]="288"
+          [maxWidth]="maxWidth"
           [paddingLeft]="5"
           [paddingRight]="5"
           (lineAmountChanged)="updateVisibleLines($event)">
