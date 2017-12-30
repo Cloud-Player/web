@@ -1,3 +1,9 @@
+# v4.1.0
+- Add button to toggle fullscreen
+- Show player in fullscreen when fullscreen event is triggered
+- Show large track comments for SoundCloud player when in fullscreen mode
+- Display next/previous button in mobile mode
+
 # v4.0.1
 - Fix playback bug
 
