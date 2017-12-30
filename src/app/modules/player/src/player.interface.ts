@@ -6,6 +6,7 @@ export interface IPlayerSize {
   height: number;
   width: number;
 }
+
 export interface IPlayerOptions {
   size: IPlayerSize;
 }
@@ -55,4 +56,6 @@ export interface IPlayer {
   getError(): string;
 
   setSize(size: IPlayerSize): void;
+
+  setOpacity(opacity: number): void;
 }

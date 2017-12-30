@@ -6,7 +6,7 @@ import {
 import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
 import {Subscription} from 'rxjs/Subscription';
 import {PlayerStatus} from '../../src/player-status.enum';
-import {IPlayer} from '../../src/player.interface';
+import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
 import {Track} from '../../../tracks/models/track';
@@ -15,6 +15,7 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {EaseService} from '../../../shared/services/ease.service';
 
 @Component({
   selector: 'app-player-manager',
@@ -157,9 +158,14 @@ export class PlayerManagerComponent implements OnInit {
 
     if (nextPlayer && nextPlayer.instance.isAbleToPlay()) {
       nextPlayer.instance.play().then(() => {
+        nextPlayer.instance.setSize(PlayerFactory.getPlayerSize(nextPlayer.instance.track));
         nextPlayer.instance.setVolume(this._volume);
         nextPlayer.instance.fadeIn(this._fadeDuration * 1000);
         currentPlayer.instance.fadeOut(this._fadeDuration * 1000);
+        EaseService.easeInCirc(0, 1, (this._fadeDuration - 1) * 1000)
+          .subscribe((value: number) => {
+            nextPlayer.instance.setOpacity(value);
+          });
       });
     }
   }

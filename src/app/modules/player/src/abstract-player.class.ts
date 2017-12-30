@@ -425,6 +425,10 @@ export abstract class AbstractPlayer implements OnInit {
     this.getPlayerEl().nativeElement.classList.add(className);
   }
 
+  public setOpacity(opacity: number) {
+    this.getPlayerEl().nativeElement.style.opacity = opacity;
+  }
+
   public getError() {
     return this._error;
   }
