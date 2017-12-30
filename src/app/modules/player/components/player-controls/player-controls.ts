@@ -2,7 +2,7 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 
 declare let MediaMetadata: any;
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Track} from '../../../tracks/models/track';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
@@ -16,6 +16,7 @@ import {ImageModel} from '../../../shared/models/image';
   templateUrl: './player-controls.html'
 })
 export class PlayerControlsComponent implements OnInit {
+  public isFullScreen = false;
   public currentItem: PlayQueueItem = new PlayQueueItem();
 
   @Input()
@@ -24,7 +25,13 @@ export class PlayerControlsComponent implements OnInit {
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
 
-  constructor(private humanReadableSecPipe: HumanReadableSecondsPipe, private userAnalyticsService: UserAnalyticsService) {
+  @Output()
+  public fullscreen: EventEmitter<boolean>;
+
+  constructor(private humanReadableSecPipe: HumanReadableSecondsPipe,
+              private userAnalyticsService: UserAnalyticsService,
+              private el: ElementRef) {
+    this.fullscreen = new EventEmitter();
   }
 
   private setMobileMediaNotification(track: Track) {
@@ -41,7 +48,7 @@ export class PlayerControlsComponent implements OnInit {
           {src: artwork.getMediumSizeUrl() || fallbackImg, sizes: '192x192', type: 'image/jpg'},
           {src: artwork.getMediumSizeUrl() || fallbackImg, sizes: '256x256', type: 'image/jpg'},
           {src: artwork.getLargeSizeUrl() || fallbackImg, sizes: '384x384', type: 'image/jpg'},
-          {src: artwork.getLargeSizeUrl() || fallbackImg, sizes: '512x512', type: 'image/jpg'},
+          {src: artwork.getLargeSizeUrl() || fallbackImg, sizes: '512x512', type: 'image/jpg'}
         ]
       });
       if (this.playQueue.hasPreviousItem()) {
@@ -56,6 +63,17 @@ export class PlayerControlsComponent implements OnInit {
           this.next();
         });
       }
+    }
+  }
+
+  private fullScreenListener() {
+    if (document.fullscreenElement) {
+      this.isFullScreen = true;
+      this.el.nativeElement.classList.add('full-screen');
+    } else {
+      this.isFullScreen = false;
+      this.el.nativeElement.classList.remove('full-screen');
+
     }
   }
 
@@ -106,12 +124,20 @@ export class PlayerControlsComponent implements OnInit {
 
   public transformProgressBarValues = (input: string) => {
     return this.humanReadableSecPipe.transform(input, null);
-  }
+  };
 
   public playTrackFromPosition(from: number) {
     const currItem = this.playQueue.getCurrentItem();
     if (currItem) {
       currItem.seekTo(from);
+    }
+  }
+
+  public toggleFullScreen() {
+    if (this.isFullScreen) {
+      this.fullscreen.emit(false);
+    } else {
+      this.fullscreen.emit(true);
     }
   }
 
@@ -133,6 +159,8 @@ export class PlayerControlsComponent implements OnInit {
     window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
     window.addEventListener('nextTrackKeyPressed', this.next.bind(this));
     window.addEventListener('previousTrackKeyPressed', this.previous.bind(this));
+
+    document.addEventListener('fullscreenchange', this.fullScreenListener.bind(this));
   }
 
 }

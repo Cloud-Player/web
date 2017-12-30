@@ -6,7 +6,7 @@ import {
 import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
 import {Subscription} from 'rxjs/Subscription';
 import {PlayerStatus} from '../../src/player-status.enum';
-import {IPlayer} from '../../src/player.interface';
+import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
 import {Track} from '../../../tracks/models/track';
@@ -15,6 +15,7 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {EaseService} from '../../../shared/services/ease.service';
 
 @Component({
   selector: 'app-player-manager',
@@ -35,6 +36,7 @@ export class PlayerManagerComponent implements OnInit {
   private _playerFactory: PlayerFactory;
   private _activePlayer: ComponentRef<IPlayer>;
   private _upcomingPlayer: ComponentRef<IPlayer>;
+  private _sizeBeforeFullScreen: number = PlayerFactory.playerWidth;
 
   @ViewChild('playerContainer', {read: ViewContainerRef})
   private container: ViewContainerRef;
@@ -156,9 +158,14 @@ export class PlayerManagerComponent implements OnInit {
 
     if (nextPlayer && nextPlayer.instance.isAbleToPlay()) {
       nextPlayer.instance.play().then(() => {
+        nextPlayer.instance.setSize(PlayerFactory.getPlayerSize(nextPlayer.instance.track));
         nextPlayer.instance.setVolume(this._volume);
         nextPlayer.instance.fadeIn(this._fadeDuration * 1000);
         currentPlayer.instance.fadeOut(this._fadeDuration * 1000);
+        EaseService.easeInCirc(0, 1, (this._fadeDuration - 1) * 1000)
+          .subscribe((value: number) => {
+            nextPlayer.instance.setOpacity(value);
+          });
       });
     }
   }
@@ -196,10 +203,6 @@ export class PlayerManagerComponent implements OnInit {
       this.removePlayer(oldPlayer);
     }
 
-    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.track);
-    newPlayer.instance.setSize(playerSize);
-    this.setHeight(playerSize.height);
-
     if (canPlay) {
       newPlayer.instance.setVolume(this._volume);
       newPlayer.instance.play(startTime);
@@ -208,8 +211,13 @@ export class PlayerManagerComponent implements OnInit {
       newPlayer.instance.seekTo(startTime);
     }
 
-    newPlayer.instance.removeClass('upcoming');
     newPlayer.instance.addClass('active');
+    newPlayer.instance.removeClass('upcoming');
+    newPlayer.instance.setOpacity(null);
+
+    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.track);
+    this.setHeight(playerSize.height);
+    newPlayer.instance.setSize(playerSize);
 
     this.bindListeners(newPlayer.instance);
 
@@ -293,8 +301,29 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
+  private updatePlayerWidth(width: number) {
+    PlayerFactory.playerWidth = width;
+    if (this._activePlayer) {
+      const playerSize = PlayerFactory.getPlayerSize(this._activePlayer.instance.track);
+      this._activePlayer.instance.setSize(playerSize);
+      this.setHeight(playerSize.height);
+    }
+    if (this._upcomingPlayer) {
+      this._upcomingPlayer.instance.setSize(PlayerFactory.getPlayerSize(this._upcomingPlayer.instance.track));
+    }
+  }
+
   public hasActivePlayer(): boolean {
     return !!this._activePlayer;
+  }
+
+  public goFullScreen(fullScreen: boolean) {
+    if (fullScreen) {
+      this._sizeBeforeFullScreen = PlayerFactory.playerWidth;
+      this.updatePlayerWidth(screen.width);
+    } else {
+      this.updatePlayerWidth(this._sizeBeforeFullScreen);
+    }
   }
 
   ngOnInit(): void {

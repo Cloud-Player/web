@@ -1,6 +1,33 @@
 @import 'variables';
 
 :host{
+  &.fullscreen-player{
+    .player {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+
+      /deep/ .player-controller{
+        height: 100vh !important;
+        width: 100vw;
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: none !important;
+      }
+
+      app-player-controls{
+        width: 100vw;
+        position: fixed;
+        bottom: 0;
+        z-index: 3;
+      }
+    }
+  }
+
   @media only screen and (min-width: $screen-sm-min) {
     .player {
       width: 320px;
@@ -22,7 +49,7 @@
 
   @media (max-width: $screen-xs-max) {
     position: fixed;
-    bottom: 40px;
+    bottom: 33px;
     width: 100vw;
     z-index: 2;
 

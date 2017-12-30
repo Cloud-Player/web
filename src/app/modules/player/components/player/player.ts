@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
@@ -6,6 +6,7 @@ import {PlayerStatus} from '../../src/player-status.enum';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
+import {PlayerManagerComponent} from '../player-manager/player-manager';
 
 @Component({
   selector: 'app-player',
@@ -14,11 +15,22 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 })
 export class PlayerComponent implements OnInit {
   public playQueue: PlayQueue<PlayQueueItem>;
-  public isPlaying: boolean;
   public isBuffering: boolean;
 
-  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
+  @ViewChild('playerManager')
+  private playerManager: PlayerManagerComponent;
 
+  constructor(private cloudPlayerLogoService: CloudPlayerLogoService, private el: ElementRef) {
+  }
+
+  private fullScreenListener(event) {
+    if (document.fullscreenElement) {
+      this.el.nativeElement.classList.add('fullscreen-player');
+      this.playerManager.goFullScreen(true);
+    } else {
+      this.el.nativeElement.classList.remove('fullscreen-player');
+      this.playerManager.goFullScreen(false);
+    }
   }
 
   public changePlayerStatus(playerStatus: PlayerStatus): void {
@@ -42,6 +54,14 @@ export class PlayerComponent implements OnInit {
       case PlayerStatus.Playing:
         this.cloudPlayerLogoService.play();
         break;
+    }
+  }
+
+  public goFullScreen(fullScreen: boolean) {
+    if (fullScreen) {
+      document.querySelector('html').requestFullscreen();
+    } else {
+      document.exitFullscreen();
     }
   }
 
@@ -76,6 +96,6 @@ export class PlayerComponent implements OnInit {
     this.playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
     this.playQueue.on('change:progress', throttledCurrentItemSave);
 
+    document.addEventListener('fullscreenchange', this.fullScreenListener.bind(this));
   }
-
 }

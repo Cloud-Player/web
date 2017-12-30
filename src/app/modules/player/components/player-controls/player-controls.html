@@ -1,5 +1,11 @@
 <div class="audio-player-controls">
 
+  <div class="player-settings">
+    <button class="btn btn-xs btn-default" (click)="toggleFullScreen()">
+      <i *ngIf="!isFullScreen" class="fa fa-expand"></i>
+      <i *ngIf="isFullScreen" class="fa fa-compress"></i>
+    </button>
+  </div>
   <div class="button-container">
     <button class="btn prev"
             type="button"

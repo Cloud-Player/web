@@ -1,6 +1,7 @@
 <app-track-cover [track]="track" class="hidden-xs" [size]="getCoverSize()" [animate]="true"></app-track-cover>
 
 <app-user-comments *ngIf="track"
+                   [bigComments]="bigComments"
                    [currentTime]="getCurrentTime()"
                    [comments]="track.get('comments')">
 </app-user-comments>

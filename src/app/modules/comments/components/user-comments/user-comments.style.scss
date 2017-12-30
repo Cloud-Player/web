@@ -2,10 +2,11 @@
 
 :host{
   position: absolute;
-  top: 0;
-  height: 290px;
   margin-top: 15px;
   overflow: hidden;
+  height: calc(100% - 15px);
+  left: 10px;
+  top: 0;
 
   ul{
     list-style: none;
@@ -46,6 +47,30 @@
 
       app-multi-line /deep/ .multiLines{
         border-left: 1px solid $brand-primary;
+      }
+    }
+  }
+
+  &.big-comments{
+    .comment{
+      margin-bottom: 10px;
+      .user-image{
+        img{
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      .text{
+        font-size: 30px;
+        height: 40px;
+
+        .line,
+        app-multi-line /deep/ .line{
+          height: 40px;
+          width: 100% !important;
+          max-width: 100vw;
+        }
       }
     }
   }

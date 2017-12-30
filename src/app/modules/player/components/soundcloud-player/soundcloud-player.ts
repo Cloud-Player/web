@@ -15,6 +15,8 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   private _listeners: Function[] = [];
   private _audio: HTMLAudioElement;
 
+  public bigComments = false;
+
   @Input()
   public track: TrackSoundcloud;
 
@@ -71,6 +73,11 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   }
 
   protected setPlayerSize(size: IPlayerSize) {
+    if (size.width >= 720) {
+      this.bigComments = true;
+    } else {
+      this.bigComments = false;
+    }
   }
 
   protected preloadTrack(track: TrackSoundcloud) {
