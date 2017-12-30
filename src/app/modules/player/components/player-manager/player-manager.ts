@@ -35,6 +35,7 @@ export class PlayerManagerComponent implements OnInit {
   private _playerFactory: PlayerFactory;
   private _activePlayer: ComponentRef<IPlayer>;
   private _upcomingPlayer: ComponentRef<IPlayer>;
+  private _sizeBeforeFullScreen: number = PlayerFactory.playerWidth;
 
   @ViewChild('playerContainer', {read: ViewContainerRef})
   private container: ViewContainerRef;
@@ -196,10 +197,6 @@ export class PlayerManagerComponent implements OnInit {
       this.removePlayer(oldPlayer);
     }
 
-    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.track);
-    newPlayer.instance.setSize(playerSize);
-    this.setHeight(playerSize.height);
-
     if (canPlay) {
       newPlayer.instance.setVolume(this._volume);
       newPlayer.instance.play(startTime);
@@ -208,8 +205,13 @@ export class PlayerManagerComponent implements OnInit {
       newPlayer.instance.seekTo(startTime);
     }
 
-    newPlayer.instance.removeClass('upcoming');
     newPlayer.instance.addClass('active');
+    newPlayer.instance.removeClass('upcoming');
+    newPlayer.instance.setOpacity(null);
+
+    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.track);
+    this.setHeight(playerSize.height);
+    newPlayer.instance.setSize(playerSize);
 
     this.bindListeners(newPlayer.instance);
 
@@ -293,8 +295,29 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
+  private updatePlayerWidth(width: number) {
+    PlayerFactory.playerWidth = width;
+    if (this._activePlayer) {
+      const playerSize = PlayerFactory.getPlayerSize(this._activePlayer.instance.track);
+      this._activePlayer.instance.setSize(playerSize);
+      this.setHeight(playerSize.height);
+    }
+    if (this._upcomingPlayer) {
+      this._upcomingPlayer.instance.setSize(PlayerFactory.getPlayerSize(this._upcomingPlayer.instance.track));
+    }
+  }
+
   public hasActivePlayer(): boolean {
     return !!this._activePlayer;
+  }
+
+  public goFullScreen(fullScreen: boolean) {
+    if (fullScreen) {
+      this._sizeBeforeFullScreen = PlayerFactory.playerWidth;
+      this.updatePlayerWidth(screen.width);
+    } else {
+      this.updatePlayerWidth(this._sizeBeforeFullScreen);
+    }
   }
 
   ngOnInit(): void {
