@@ -63,15 +63,13 @@ export class PlayerControlsComponent implements OnInit {
     }
   }
 
-  private fullScreenListener() {
-    if (document.fullscreenElement) {
-      this.isFullScreen = true;
-      this.el.nativeElement.classList.add('full-screen');
-    } else {
-      this.isFullScreen = false;
-      this.el.nativeElement.classList.remove('full-screen');
+  private enteredFullScreen() {
+    this.userAnalyticsService.trackEvent('fullscreen', 'entered', 'app-player-controls-cmp');
+    this.el.nativeElement.classList.add('full-screen');
+  }
 
-    }
+  private leftFullScreen() {
+    this.el.nativeElement.classList.remove('full-screen');
   }
 
   public play(): void {
@@ -158,7 +156,13 @@ export class PlayerControlsComponent implements OnInit {
     window.addEventListener('nextTrackKeyPressed', this.next.bind(this));
     window.addEventListener('previousTrackKeyPressed', this.previous.bind(this));
 
-    document.addEventListener('fullscreenchange', this.fullScreenListener.bind(this));
+    this.fullScreenService.getObservable()
+      .filter(eventType => eventType === FullScreenEventType.Enter)
+      .subscribe(this.enteredFullScreen.bind(this));
+
+    this.fullScreenService.getObservable()
+      .filter(eventType => eventType === FullScreenEventType.Leave)
+      .subscribe(this.leftFullScreen.bind(this));
   }
 
 }
