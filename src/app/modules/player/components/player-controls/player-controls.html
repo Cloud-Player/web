@@ -61,6 +61,10 @@
       <b class="track-title">{{currentItem.track.title}}</b>
       <div class="artist">{{currentItem.track.artist.username}}</div>
     </div>
+    <div class="timer">
+      <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
+      <div class="duration">{{currentItem.duration | hReadableSeconds}}</div>
+    </div>
   </div>
 
   <div *ngIf="!currentItem.track"

@@ -13,7 +13,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
   height: 40px;
   background: transparent;
 
-  @if $darkTheme{
+  @if $darkTheme {
     color: white;
   } @else {
     color: black;
@@ -23,8 +23,8 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     color: $brand-primary;
   }
 
-  &:active{
-    @if $darkTheme{
+  &:active {
+    @if $darkTheme {
       box-shadow: inset 0 3px 8px rgba(255, 255, 255, 0.2);
       background: #1a1a1a;
     }
@@ -46,8 +46,8 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     padding: 0;
     position: absolute;
     display: flex;
-    width: 100vw;
     margin-left: -10px;
+    z-index: 1;
 
     .prev,
     .next,
@@ -62,15 +62,18 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     }
   }
 
-  .player-settings .btn {
-    z-index: 1;
-    position: relative;
+  .player-settings{
+    top: 0;
+    z-index: 2;
 
-    @include small-player-btn($darkTheme);
     @if $darkTheme {
       border-left: 1px solid $borderColorDarkTheme;
     } @else {
       border-left: 1px solid $borderColorWhiteTheme;
+    }
+
+    .btn {
+      @include small-player-btn($darkTheme);
     }
   }
 
@@ -108,9 +111,33 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     padding: 0 !important;
     padding-left: 109px !important;
     width: calc(100vw - 66px);
+    margin: 0;
+    height: 40px;
 
-    .artist {
+    .details{
+      padding-top: 3px;
+
+      .artist {
+        display: block;
+      }
+    }
+
+    .timer {
       display: block;
+      margin-left: auto;
+      padding-left: 10px;
+      text-align: right;
+      position: relative;
+
+      &:after{
+        content: "";
+        position: absolute;
+        height: calc(100% + 10px);
+        width: 1px;
+        border-left: 1px solid $borderColorWhiteTheme;
+        left: 0;
+        top: -5px;
+      }
     }
   }
 }
@@ -199,6 +226,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
 
     .details {
       overflow: hidden;
+      text-overflow: ellipsis;
 
       .track-title,
       .artist {
@@ -206,6 +234,10 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
         overflow: hidden;
         text-overflow: ellipsis;
       }
+    }
+
+    .timer{
+      display: none;
     }
   }
 
@@ -241,7 +273,8 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     @include small-player(false);
 
     .button-container {
-      .btn.next{
+      width: 100vw;
+      .btn.next {
         margin-left: auto;
         border-left: 1px solid $borderColorWhiteTheme;
       }
@@ -250,9 +283,10 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     .meta {
       font-size: 11px;
       padding-left: 83px !important;
+      width: calc(100vw - 50px);
 
-      .details {
-        padding-top: 5px;
+      .timer{
+        display: none;
       }
     }
 
