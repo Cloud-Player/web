@@ -1,3 +1,7 @@
+# v4.1.1
+- Fix fullscreen mode for native player
+- Display timer in fullscreen player
+
 # v4.1.0
 - Add button to toggle fullscreen
 - Show player in fullscreen when fullscreen event is triggered

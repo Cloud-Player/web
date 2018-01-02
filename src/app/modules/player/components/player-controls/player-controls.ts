@@ -9,6 +9,7 @@ import {UserAnalyticsService} from '../../../user-analytics/services/user-analyt
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayQueue} from '../../collections/play-queue';
 import {ImageModel} from '../../../shared/models/image';
+import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 
 @Component({
   selector: 'app-player-controls',
@@ -16,7 +17,6 @@ import {ImageModel} from '../../../shared/models/image';
   templateUrl: './player-controls.html'
 })
 export class PlayerControlsComponent implements OnInit {
-  public isFullScreen = false;
   public currentItem: PlayQueueItem = new PlayQueueItem();
 
   @Input()
@@ -25,13 +25,10 @@ export class PlayerControlsComponent implements OnInit {
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
 
-  @Output()
-  public fullscreen: EventEmitter<boolean>;
-
   constructor(private humanReadableSecPipe: HumanReadableSecondsPipe,
               private userAnalyticsService: UserAnalyticsService,
-              private el: ElementRef) {
-    this.fullscreen = new EventEmitter();
+              private el: ElementRef,
+              public fullScreenService: FullScreenService) {
   }
 
   private setMobileMediaNotification(track: Track) {
@@ -66,15 +63,13 @@ export class PlayerControlsComponent implements OnInit {
     }
   }
 
-  private fullScreenListener() {
-    if (document.fullscreenElement) {
-      this.isFullScreen = true;
-      this.el.nativeElement.classList.add('full-screen');
-    } else {
-      this.isFullScreen = false;
-      this.el.nativeElement.classList.remove('full-screen');
+  private enteredFullScreen() {
+    this.userAnalyticsService.trackEvent('fullscreen', 'entered', 'app-player-controls-cmp');
+    this.el.nativeElement.classList.add('full-screen');
+  }
 
-    }
+  private leftFullScreen() {
+    this.el.nativeElement.classList.remove('full-screen');
   }
 
   public play(): void {
@@ -134,10 +129,11 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   public toggleFullScreen() {
-    if (this.isFullScreen) {
-      this.fullscreen.emit(false);
+    if (!this.fullScreenService.isInFullScreen()) {
+      this.userAnalyticsService.trackEvent('fullscreen', 'request', 'app-player-controls-cmp');
+      this.fullScreenService.enter();
     } else {
-      this.fullscreen.emit(true);
+      this.fullScreenService.leave();
     }
   }
 
@@ -160,7 +156,13 @@ export class PlayerControlsComponent implements OnInit {
     window.addEventListener('nextTrackKeyPressed', this.next.bind(this));
     window.addEventListener('previousTrackKeyPressed', this.previous.bind(this));
 
-    document.addEventListener('fullscreenchange', this.fullScreenListener.bind(this));
+    this.fullScreenService.getObservable()
+      .filter(eventType => eventType === FullScreenEventType.Enter)
+      .subscribe(this.enteredFullScreen.bind(this));
+
+    this.fullScreenService.getObservable()
+      .filter(eventType => eventType === FullScreenEventType.Leave)
+      .subscribe(this.leftFullScreen.bind(this));
   }
 
 }

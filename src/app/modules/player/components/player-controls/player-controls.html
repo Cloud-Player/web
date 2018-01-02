@@ -1,9 +1,11 @@
 <div class="audio-player-controls">
 
   <div class="player-settings">
-    <button class="btn btn-xs btn-default" (click)="toggleFullScreen()">
-      <i *ngIf="!isFullScreen" class="fa fa-expand"></i>
-      <i *ngIf="isFullScreen" class="fa fa-compress"></i>
+    <button *ngIf="fullScreenService.canEnterFullScreen()"
+            class="btn btn-xs btn-default"
+            (click)="toggleFullScreen()">
+      <i *ngIf="!fullScreenService.isInFullScreen()" class="fa fa-expand"></i>
+      <i *ngIf="fullScreenService.isInFullScreen()" class="fa fa-compress"></i>
     </button>
   </div>
   <div class="button-container">
@@ -58,6 +60,10 @@
          dragEffect="copy">
       <b class="track-title">{{currentItem.track.title}}</b>
       <div class="artist">{{currentItem.track.artist.username}}</div>
+    </div>
+    <div class="timer">
+      <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
+      <div class="duration">{{currentItem.duration | hReadableSeconds}}</div>
     </div>
   </div>
 

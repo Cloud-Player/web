@@ -7,8 +7,7 @@
                         (playerStatusChange)="changePlayerStatus($event)"></app-player-manager>
 
     <app-player-controls [isBuffering]="isBuffering"
-                         [playQueue]="playQueue"
-                         (fullscreen)="goFullScreen($event)"></app-player-controls>
+                         [playQueue]="playQueue"></app-player-controls>
   </div>
 
   <app-play-queue [playQueue]="playQueue" class="queue"></app-play-queue>

@@ -1,7 +1,7 @@
 {
   "name": "cloud-player",
-  "version": "4.1.0",
-  "description": "Free alternative Soundcloud music player based on Angular",
+  "version": "4.1.1",
+  "description": "Music/video player to play music from SoundCloud and YouTube",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
@@ -12,13 +12,15 @@
   },
   "keywords": [
     "angular",
-    "angular4",
+    "angular5",
     "typescript",
     "soundcloud",
+    "youtube",
     "cloudplayer",
     "backbone",
     "music",
     "audio",
+    "video",
     "player"
   ],
   "contributors": [

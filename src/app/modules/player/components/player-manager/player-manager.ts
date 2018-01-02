@@ -16,6 +16,7 @@ import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {EaseService} from '../../../shared/services/ease.service';
+import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 
 @Component({
   selector: 'app-player-manager',
@@ -47,7 +48,10 @@ export class PlayerManagerComponent implements OnInit {
   @Output()
   public playerStatusChange: EventEmitter<PlayerStatus> = new EventEmitter();
 
-  constructor(private resolver: ComponentFactoryResolver, private el: ElementRef, private userAnalyticsService: UserAnalyticsService) {
+  constructor(private resolver: ComponentFactoryResolver,
+              private el: ElementRef,
+              private fullScreenService: FullScreenService,
+              private userAnalyticsService: UserAnalyticsService) {
     this._playerSubscriptions = new Subscription();
     this._playerFactory = new PlayerFactory(this.resolver);
   }
@@ -313,17 +317,17 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
-  public hasActivePlayer(): boolean {
-    return !!this._activePlayer;
+  private enteredFullScreen() {
+    this._sizeBeforeFullScreen = PlayerFactory.playerWidth;
+    this.updatePlayerWidth(screen.width);
   }
 
-  public goFullScreen(fullScreen: boolean) {
-    if (fullScreen) {
-      this._sizeBeforeFullScreen = PlayerFactory.playerWidth;
-      this.updatePlayerWidth(screen.width);
-    } else {
-      this.updatePlayerWidth(this._sizeBeforeFullScreen);
-    }
+  private leftFullScreen() {
+    this.updatePlayerWidth(this._sizeBeforeFullScreen);
+  }
+
+  public hasActivePlayer(): boolean {
+    return !!this._activePlayer;
   }
 
   ngOnInit(): void {
@@ -339,5 +343,12 @@ export class PlayerManagerComponent implements OnInit {
       }
     });
 
+    this.fullScreenService.getObservable()
+      .filter(eventType => eventType === FullScreenEventType.Enter)
+      .subscribe(this.enteredFullScreen.bind(this));
+
+    this.fullScreenService.getObservable()
+      .filter(eventType => eventType === FullScreenEventType.Leave)
+      .subscribe(this.leftFullScreen.bind(this));
   }
 }

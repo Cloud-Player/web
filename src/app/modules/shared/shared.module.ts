@@ -35,6 +35,7 @@ import {ToastService} from './services/toast';
 import {ToastComponent} from './components/toast/toast';
 import {TabBarComponent} from './components/tab-bar/tab-bar';
 import {TabPaneComponent} from './components/tab-pane/tab-pane';
+import {FullScreenService} from './services/fullscreen.service';
 
 @NgModule({
   imports: [
@@ -108,6 +109,7 @@ import {TabPaneComponent} from './components/tab-pane/tab-pane';
   providers: [
     HumanReadableSecondsPipe,
     CloudPlayerLogoService,
+    FullScreenService,
     ToastService
   ]
 })
