@@ -1,16 +1,23 @@
-import {EventEmitter, OnDestroy, Pipe, PipeTransform} from '@angular/core';
+import {EventEmitter, NgZone, OnDestroy, OnInit, Pipe, PipeTransform, Renderer2} from '@angular/core';
 import {debounce} from 'underscore';
+import {Subscription} from 'rxjs/Subscription';
 
 @Pipe({name: 'limitCollectionresults', pure: false})
 export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
   private _orgLimit: number;
   private _limit: number;
   private _throttledScrollHandler: any;
-  private valueChange = new EventEmitter();
+  private _valueChange: EventEmitter<number>;
+  private _subscriptions: Subscription;
 
-  constructor() {
+  constructor(private zone: NgZone) {
     this._throttledScrollHandler = debounce(this._increaseLimitOnBottomReached.bind(this), 200);
-    document.addEventListener('scroll', this._throttledScrollHandler, true);
+    this._valueChange = new EventEmitter();
+    this._subscriptions = new Subscription();
+
+    this.zone.runOutsideAngular(() => {
+      document.addEventListener('scroll', this._throttledScrollHandler, true);
+    });
   }
 
   private _increaseLimitOnBottomReached(ev: MouseWheelEvent) {
@@ -21,12 +28,13 @@ export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {
       } else {
         this._limit = this._orgLimit * 2;
       }
-      this.valueChange.emit(this._limit);
+      this.zone.run(() => {
+        this._valueChange.emit(this._limit);
+      });
     }
   }
 
   transform(items: Array<any>, args: { limit: number } = {limit: null}): any {
-
     if (this._limit && this._limit > items.length) {
       document.removeEventListener('scroll', this._throttledScrollHandler, true);
       return items;
