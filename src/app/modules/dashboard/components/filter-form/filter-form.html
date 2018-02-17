@@ -1,33 +1,7 @@
 <div class="search-filter">
-  <ul class="nav nav-tabs">
-    <li role="presentation" [class.active]="!showFilterForm"><a (click)="toggleFilterForm()">All Results</a></li>
-    <li role="presentation" [class.active]="showFilterForm"><a (click)="toggleFilterForm()">Filter Result</a></li>
-  </ul>
-  <div class="item-amount">
-    <span class="label label-default">{{collection.length}} Tracks</span>
-  </div>
-  <div class="new-filter" [hidden]="!showFilterForm">
+  <div class="new-filter">
     <form class="form-horizontal" #filterForm="ngForm">
       <ng-content></ng-content>
-
-      <!--<div class="form-group">-->
-        <!--<label class="col-sm-2 control-label">Genre</label>-->
-        <!--<div class="col-sm-10">-->
-          <!--<input type="text"-->
-                 <!--class="form-control"-->
-                 <!--name="genres"-->
-                 <!--[(ngModel)]="this.collection.queryParams['genres']">-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="well">-->
-        <!--<p>Save this filter as a quick filter</p>-->
-        <!--<div class="form-group">-->
-          <!--<label class="sr-only" for="exampleInputPassword3">Password</label>-->
-          <!--<input type="text" class="form-control" id="exampleInputPassword3" placeholder="Password">-->
-        <!--</div>-->
-      <!--</div>-->
-
     </form>
   </div>
 </div>

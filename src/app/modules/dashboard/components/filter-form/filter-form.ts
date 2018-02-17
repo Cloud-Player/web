@@ -1,49 +1,44 @@
-import {AfterContentInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 import {BaseCollection} from '../../../backbone/collections/base.collection';
 import {BaseModel} from '../../../backbone/models/base.model';
-import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import {FormControl} from '@angular/forms';
+import {debounce} from 'underscore';
+
+export enum FilterFormStatusTypes {
+  Searching,
+  Reset
+}
 
 @Component({
   selector: 'app-filter-form',
   styleUrls: ['./filter-form.scss'],
   templateUrl: './filter-form.html'
-  // animations: [
-  //   trigger('visibilityChanged', [
-  //     state('true', style({height: '*', marginBottom: '15px', padding: '15px',})),
-  //     state('false', style({height: 0, marginBottom: 0, padding: 0, display: 'none'})),
-  //     state('void', style({height: 0, marginBottom: 0, padding: 0, display: 'none'})),
-  //     transition('* => *', animate('200ms ease-in-out'))
-  //   ])
-  // ]
 })
-export class FilterFormComponent implements OnInit {
+export class FilterFormComponent implements OnInit, OnDestroy {
   private hasBeenChanged = false;
   private setFilterProperties: string[] = [];
-  public showFilterForm = false;
+  public debouncedFetchCollection: Function;
 
   @Input()
   public collection: BaseCollection<BaseModel>;
 
+  @Output()
+  public status: EventEmitter<FilterFormStatusTypes>;
+
   constructor(private userAnalyticsService: UserAnalyticsService) {
+    this.status = new EventEmitter<FilterFormStatusTypes>();
+    this.debouncedFetchCollection = debounce(this.fetchCollection.bind(this), 10);
   }
 
-  public toggleFilterForm(): void {
-    if (this.showFilterForm) {
-      this.userAnalyticsService.trackEvent('close_filter_form', 'click', 'app-search-filter-cmp');
-      this.setFilterProperties.forEach((property) => {
-        this.hasBeenChanged = true;
-        this.collection.queryParams[property] = null;
-      });
-      this.setFilterProperties = [];
-      this.fetchCollection();
-      this.showFilterForm = false;
-    } else {
-      this.userAnalyticsService.trackEvent('open_filter_form', 'click', 'app-search-filter-cmp');
-      this.showFilterForm = true;
-    }
+  public resetFilter() {
+    this.setFilterProperties.forEach((property) => {
+      this.hasBeenChanged = true;
+      this.collection.queryParams[property] = null;
+    });
+    this.setFilterProperties = [];
+    this.debouncedFetchCollection();
+    this.status.emit(FilterFormStatusTypes.Reset);
   }
 
   public setFilter(property: string, value: any): void {
@@ -59,9 +54,15 @@ export class FilterFormComponent implements OnInit {
     if (this.hasBeenChanged) {
       this.collection.fetch({reset: true});
       this.hasBeenChanged = false;
+      this.status.emit(FilterFormStatusTypes.Searching);
     }
   }
 
   ngOnInit() {
+    this.collection.on('reset:filter', this.resetFilter, this);
+  }
+
+  ngOnDestroy() {
+    this.collection.off('reset:filter', this.resetFilter, this);
   }
 }
