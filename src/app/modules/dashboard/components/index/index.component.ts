@@ -3,15 +3,15 @@ import {
   CollectionTextInputSearchComponent
 } from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
 import * as localforage from 'localforage';
-import {AuthService} from '../../../shared/services/auth.service';
-import {TracksSoundcloud} from '../../../tracks/collections/tracks-soundcloud';
-import {TrackSoundcloud} from '../../../tracks/models/track-soundcloud';
-import {TracksYoutube} from '../../../tracks/collections/tracks-youtube';
-import {TrackYoutube} from '../../../tracks/models/track-youtube';
 import {TabBarComponent} from '../../../shared/components/tab-bar/tab-bar';
 import {TabPaneComponent} from '../../../shared/components/tab-pane/tab-pane';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {ITwoRangeSliderValue} from '../../../shared/components/two-range-slider/two-range-slider.component';
+import {TracksSoundcloudCollection} from '../../../api/tracks/tracks-soundcloud.collection';
+import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
+import {TracksYoutubeCollection} from '../../../api/tracks/tracks-youtube.collection';
+import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
+import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 @Component({
   selector: 'app-my-dashboard',
@@ -20,19 +20,20 @@ import {ITwoRangeSliderValue} from '../../../shared/components/two-range-slider/
 })
 
 export class DashboardIndexComponent implements AfterViewInit {
-  public tracksSoundCloud: TracksSoundcloud<TrackSoundcloud>;
-  public tracksYoutube: TracksYoutube<TrackYoutube>;
-  public searchCollection: TracksSoundcloud<TrackSoundcloud> | TracksYoutube<TrackYoutube>;
+  public tracksSoundCloud: TracksSoundcloudCollection<TrackSoundcloudModel>;
+  public tracksYoutube: TracksYoutubeCollection<TrackYoutubeModel>;
+  public searchCollection: TracksSoundcloudCollection<TrackSoundcloudModel> | TracksYoutubeCollection<TrackYoutubeModel>;
   public isFetching = false;
   public showWelcomeText = false;
-  public activeTab = 'SOUNDCLOUD';
+  public activeTab = 'soundcloud';
+  public availableProviderMap = ProviderMap.map;
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
 
-  constructor(private authService: AuthService, private humanReadableSecPipe: HumanReadableSecondsPipe) {
-    this.tracksSoundCloud = new TracksSoundcloud();
-    this.tracksYoutube = new TracksYoutube();
+  constructor(private humanReadableSecPipe: HumanReadableSecondsPipe) {
+    this.tracksSoundCloud = new TracksSoundcloudCollection();
+    this.tracksYoutube = new TracksYoutubeCollection();
     this.searchCollection = this.tracksSoundCloud;
   }
 
@@ -41,7 +42,6 @@ export class DashboardIndexComponent implements AfterViewInit {
   }.bind(this);
 
   connect() {
-    this.authService.connect();
   }
 
   ngAfterViewInit() {
@@ -49,10 +49,10 @@ export class DashboardIndexComponent implements AfterViewInit {
 
     this.tabBar.tabChange.subscribe((tabPane: TabPaneComponent) => {
       switch (tabPane.id) {
-        case 'SOUNDCLOUD':
+        case 'soundcloud':
           this.searchCollection = this.tracksSoundCloud;
           break;
-        case 'YOUTUBE':
+        case 'youtube':
           this.searchCollection = this.tracksYoutube;
           break;
       }
