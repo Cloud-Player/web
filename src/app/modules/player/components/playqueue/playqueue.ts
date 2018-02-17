@@ -3,6 +3,7 @@ import {UserAnalyticsService} from '../../../user-analytics/services/user-analyt
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
+import {IDragAndDropData} from '../../../shared/services/drag-and-drop';
 
 @Component({
   selector: 'app-play-queue',
@@ -18,16 +19,16 @@ export class PlayQueueComponent implements OnInit {
   constructor(private userAnalyticsService: UserAnalyticsService) {
   }
 
-  dropTrack = (dropData: {}) => {
+  public drop(dragAndDrop: IDragAndDropData) {
     this.userAnalyticsService.trackEvent(
       'drop_track',
       'drag-and-drop',
       'app-play-queue'
     );
     if (this.playQueue.length > 0) {
-      this.playQueue.queue({track: dropData});
+      this.playQueue.queue({track: dragAndDrop.dragData});
     } else {
-      this.playQueue.addAndPlay({track: dropData});
+      this.playQueue.addAndPlay({track: dragAndDrop.dragData});
     }
   }
 
