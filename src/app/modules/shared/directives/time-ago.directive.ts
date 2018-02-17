@@ -1,10 +1,10 @@
-import {Directive, ElementRef, OnInit, Input, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, OnInit, Input, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 import * as moment from 'moment';
 
 @Directive({
   selector: '[appTimeAgo]'
 })
-export class TimeAgoDirective implements OnInit, OnDestroy {
+export class TimeAgoDirective implements OnInit, OnDestroy, OnChanges {
   private interval: number;
 
   @Input()
@@ -29,6 +29,12 @@ export class TimeAgoDirective implements OnInit, OnDestroy {
     // if(this.interval){
     //   clearInterval(this.interval);
     // }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.appTimeAgo) {
+      this.setTime(changes.appTimeAgo.currentValue);
+    }
   }
 
 }
