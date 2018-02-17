@@ -29,6 +29,10 @@ import {TracksModule} from '../tracks/tracks.module';
   ],
   exports: [
     PlayerComponent
+  ],
+  entryComponents: [
+    SoundcloudPlayerComponent,
+    YoutubePlayerComponent
   ]
 })
 export class PlayerModule {

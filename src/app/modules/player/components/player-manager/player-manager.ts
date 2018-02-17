@@ -21,11 +21,7 @@ import {ITrack} from '../../../api/tracks/track.interface';
 @Component({
   selector: 'app-player-manager',
   styleUrls: ['./player-manager.scss'],
-  templateUrl: './player-manager.html',
-  entryComponents: [
-    SoundcloudPlayerComponent,
-    YoutubePlayerComponent
-  ]
+  templateUrl: './player-manager.html'
 })
 export class PlayerManagerComponent implements OnInit {
   private _fadeDuration = 10;
