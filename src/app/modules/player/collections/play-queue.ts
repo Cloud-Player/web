@@ -95,7 +95,9 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   }
 
   hasNextItem(): boolean {
-    if (this._loopPlayQueue) {
+    if (this.length === 0) {
+      return false;
+    } else if (this._loopPlayQueue) {
       return true;
     } else {
       return this._playIndex < this.length - 1;
