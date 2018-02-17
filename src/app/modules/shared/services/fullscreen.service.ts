@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Subscriber} from 'rxjs/Subscriber';
+import {Utils} from '../src/utils.class';
 
 export enum FullScreenEventType {
   RequestEnter,
@@ -8,7 +8,6 @@ export enum FullScreenEventType {
   RequestLeave,
   Leave
 }
-
 
 @Injectable()
 export class FullScreenService {
@@ -19,29 +18,36 @@ export class FullScreenService {
   constructor() {
     const htmlEl = document.querySelector('html');
 
-    this._observable = new EventEmitter<FullScreenEventType>();
-    if (htmlEl.requestFullscreen) {
-      this._fullScreenCall = function () {
-        htmlEl.requestFullscreen();
-      };
-    } else if (htmlEl.webkitRequestFullscreen) {
-      this._fullScreenCall = function () {
-        htmlEl.webkitRequestFullscreen();
-      };
-    }
+    Utils.vendorPrefixes.every((vendorPrefix) => {
+      const requestFullscreenFnName = Utils.toCamelCase(vendorPrefix, 'requestFullscreen');
+      const fullscreenListenerName = `${vendorPrefix}fullscreenchange`;
+      if (htmlEl[requestFullscreenFnName]) {
+        this._fullScreenCall = () => {
+          htmlEl[requestFullscreenFnName]();
+        };
+        document.addEventListener(fullscreenListenerName, this.fullScreenListener.bind(this));
+        return false;
+      } else {
+        return true;
+      }
+    });
 
-    document.addEventListener('fullscreenchange', this.fullScreenListener.bind(this));
-    document.addEventListener('webkitfullscreenchange', this.fullScreenListener.bind(this));
+    this._observable = new EventEmitter<FullScreenEventType>();
   }
 
   private fullScreenListener() {
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      this._isInFullScreen = true;
-      this._observable.emit(FullScreenEventType.Enter);
-    } else if (this._isInFullScreen) {
-      this._isInFullScreen = false;
-      this._observable.emit(FullScreenEventType.Leave);
-    }
+    Utils.vendorPrefixes.every((vendorPrefix) => {
+      const fullScreenElName = Utils.toCamelCase(vendorPrefix, 'fullscreenElement');
+      if (document[fullScreenElName]) {
+        this._isInFullScreen = true;
+        this._observable.emit(FullScreenEventType.Enter);
+        return false;
+      } else {
+        this._isInFullScreen = false;
+        this._observable.emit(FullScreenEventType.Leave);
+        return true;
+      }
+    });
   }
 
   public isInFullScreen() {
@@ -54,6 +60,7 @@ export class FullScreenService {
 
   public enter() {
     if (!this._isInFullScreen && this._fullScreenCall) {
+      debugger;
       this._fullScreenCall();
       this._observable.emit(FullScreenEventType.RequestEnter);
     }
@@ -61,11 +68,17 @@ export class FullScreenService {
 
   public leave() {
     if (this._isInFullScreen) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
+
+      Utils.vendorPrefixes.every((vendorPrefix) => {
+        const exitFullscreenFnName = Utils.toCamelCase(vendorPrefix, 'exitFullscreen');
+        if (document[exitFullscreenFnName]) {
+          document[exitFullscreenFnName]();
+          return false;
+        } else {
+          return true;
+        }
+      });
+
       this._observable.emit(FullScreenEventType.RequestLeave);
     }
   }
