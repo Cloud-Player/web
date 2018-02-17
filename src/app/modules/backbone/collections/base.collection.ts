@@ -3,7 +3,7 @@ import {getUrl} from '../utils/get_url.util';
 import {extend, isArray, result} from 'underscore';
 import {prepareParams} from '../utils/prepare_params';
 import {SelectableCollection} from './selectable.collection';
-import {Model} from 'backbone';
+import {Model, ModelSaveOptions} from 'backbone';
 import {IDynamicInstances, IModelConstructor} from '../utils/interfaces';
 import {InstanceResolver} from '../utils/instance-resolver';
 import {request} from '../utils/request.util';
@@ -65,6 +65,11 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   url = () => {
     return getUrl(this);
+  };
+
+  create(attributes: any, options: ModelSaveOptions = {}) {
+    options.wait = true;
+    return super.create.call(this, attributes, options);
   }
 
   sync(method: string, model: any, options: any = {}) {
