@@ -1,9 +1,10 @@
 import {
   Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
-  OnDestroy, forwardRef, OnChanges, SimpleChanges
+  OnDestroy, forwardRef, OnChanges, SimpleChanges, Renderer2
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isUndefined} from 'underscore';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-range-slider',

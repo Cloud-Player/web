@@ -1,9 +1,10 @@
 import {
   Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
-  OnDestroy, forwardRef, SimpleChanges, OnChanges, AfterViewInit
+  OnDestroy, forwardRef, SimpleChanges, OnChanges, AfterViewInit, Renderer2
 } from '@angular/core';
-import {isUndefined, isNumber} from 'underscore';
+import {isUndefined, isNumber, isNull} from 'underscore';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Subscription} from 'rxjs/Subscription';
 
 export interface ITwoRangeSliderValue {
   min: number;
