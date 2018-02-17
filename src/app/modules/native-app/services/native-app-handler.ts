@@ -5,6 +5,7 @@ import {ToastService} from '../../shared/services/toast';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 import {HttpClient} from '@angular/common/http';
 import {ClientDetector, OsNames, Result} from '../../shared/services/client-detector.service';
+import {AuthenticatedUserModel} from '../../api/authenticated-user/authenticated-user.model';
 
 @Injectable()
 export class NativeAppHandlerService {
@@ -72,5 +73,12 @@ export class NativeAppHandlerService {
         this.showNewNativeVersionAvailableToast(latestClientVersion);
       }
     });
+    window.addEventListener('connectionSuccessFul', (ev: CustomEvent) => {
+      AuthenticatedUserModel.getInstance().fetch();
+    });
+    const body = window.document.querySelector('body');
+    if (body) {
+      body.style.opacity = '1';
+    }
   }
 }
