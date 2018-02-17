@@ -20,12 +20,16 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
   sortOrder: string = null;
 
   private prepareDynamicModel(item: TModel | {}): TModel | {} {
+  private prepareDynamicModel(item: TModel | {}, options): TModel | {} {
     if (!(item instanceof this.model)) {
       const dynamicInstances = result(this, 'dynamicInstances');
       const instance = InstanceResolver.getDynamicInstance(dynamicInstances, 'model', item);
 
       if (instance instanceof Model) {
-        instance.set(item);
+        if (options.parse) {
+          item = instance.parse(item);
+        }
+        instance.set(item, options);
         item = instance;
       }
     }
@@ -109,11 +113,11 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
     if (isArray(item)) {
       const addedItems: Array<TModel | {}> = [];
       item.forEach((obj: any) => {
-        addedItems.push(this.prepareDynamicModel(obj));
+        addedItems.push(this.prepareDynamicModel(obj, options));
       });
       item = addedItems;
     } else {
-      item = this.prepareDynamicModel(item);
+      item = this.prepareDynamicModel(item, options);
     }
 
     item = super.add(item, options);
