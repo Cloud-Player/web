@@ -25,9 +25,13 @@ export class InstanceResolver {
     if (isObject(dynamicInstanceDefinition) && !dynamicInstanceDefinition.identifierKey) {
       throw new Error('IdentifierKey is missing on dynamicInstance definition!');
     } else if (isObject(dynamicInstanceDefinition)) {
-      const identifierValue =
-        attributes[dynamicInstanceDefinition.identifierKey] ||
-        isObject(attributes[key]) ? attributes[key][dynamicInstanceDefinition.identifierKey] : null;
+      let identifierValue;
+
+      if (attributes[dynamicInstanceDefinition.identifierKey]) {
+        identifierValue = attributes[dynamicInstanceDefinition.identifierKey];
+      } else if (isObject(attributes[key])) {
+        identifierValue = attributes[key][dynamicInstanceDefinition.identifierKey];
+      }
 
       if (identifierValue) {
         return this.getDynamicConstructorForIdentifierKeyValue(
