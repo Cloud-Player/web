@@ -14,12 +14,26 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
   queryParams: {
     [key: string]: string | number | boolean
   } = {};
+  private dynamicQueryParams: {
+    [key: string]: string
+  } = {};
 
   endpoint: string = null;
 
   sortOrder: string = null;
 
-  private prepareDynamicModel(item: TModel | {}): TModel | {} {
+  isSyncing = false;
+
+  constructor(...args) {
+    super(...args);
+    this.on('request', () => {
+      this.isSyncing = true;
+    });
+    this.on('sync error destroy', () => {
+      this.isSyncing = false;
+    });
+  }
+
   private prepareDynamicModel(item: TModel | {}, options): TModel | {} {
     if (!(item instanceof this.model)) {
       const dynamicInstances = result(this, 'dynamicInstances');
@@ -58,7 +72,13 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
     if (options.queryParams) {
       queryParams = extend({}, this.queryParams, options.queryParams);
     }
+    for (const key in this.dynamicQueryParams) {
+      if (this.dynamicQueryParams.hasOwnProperty(key)) {
+        queryParams[this.dynamicQueryParams[key]] = this[key];
+      }
+    }
     options.params = prepareParams(options.params, queryParams);
+
     return super.sync(method, model, options);
   }
 

@@ -10,6 +10,9 @@ export class BaseModel extends SelectableModel {
   queryParams: {
     [key: string]: string | number | boolean
   } = {};
+  private dynamicQueryParams: {
+    [key: string]: string
+  } = {};
 
   endpoint: string = null;
 
@@ -44,6 +47,11 @@ export class BaseModel extends SelectableModel {
     let queryParams = this.queryParams;
     if (options.queryParams) {
       queryParams = extend({}, this.queryParams, options.queryParams);
+    }
+    for (const key in this.dynamicQueryParams) {
+      if (this.dynamicQueryParams.hasOwnProperty(key)) {
+        queryParams[this.dynamicQueryParams[key]] = this[key];
+      }
     }
     options.params = prepareParams(options.params, queryParams);
     return super.sync(method, model, options);
