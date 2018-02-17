@@ -1,0 +1,33 @@
+@import 'variables';
+:host {
+  position: relative;
+
+  .btn{
+    margin: 0;
+  }
+
+  .options-list{
+    position: fixed;
+    width: 150px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 4px 4px;
+    list-style: none;
+    padding: 0;
+    background: white;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 20px;
+    margin-left: -135px;
+    z-index: 999;
+
+    /deep/ app-option-btn{
+      padding: 10px 5px;
+      display: block;
+      border-bottom: 1px solid $gray-lighter;
+
+      &:hover{
+        background: $gray-lighter;
+      }
+    }
+  }
+}
