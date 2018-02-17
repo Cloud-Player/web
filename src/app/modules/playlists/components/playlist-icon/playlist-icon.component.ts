@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-
-import {Playlist} from '../../models/playlist.model';
+import {IPlaylist} from '../../../api/playlists/playlist.interface';
 
 @Component({
   selector: 'app-play-list-icon',
@@ -11,7 +10,7 @@ import {Playlist} from '../../models/playlist.model';
 export class PlayListIconComponent {
 
   @Input()
-  playlist: Playlist;
+  playlist: IPlaylist;
 
   constructor() {
   }

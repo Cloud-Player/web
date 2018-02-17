@@ -1,32 +1,48 @@
 <section class="column">
   <app-view-header>
-    Playlists
+    <i class="fa fa-list" aria-hidden="true"></i> Playlists
   </app-view-header>
 
-  <app-scroll-view>
-
-    <div class="card">
-      <div class="well">
-        <h5>Create a new Playlist</h5>
-        <form>
-          <app-toggle-switch [(value)]="tmpPlaylist.isPublic"></app-toggle-switch>
-          <input type="text" placeholder="Playlist" name="playlistName" [(ngModel)]="tmpPlaylist.title">
-          <button class="btn btn-round btn-primary" (click)="save()" title="Create playlist"><i class="fa fa-plus"></i></button>
-        </form>
-      </div>
-
-      <div class="playlists">
-        <div *ngFor="let playlist of user.playlists.models">
-          <a routerLink="/me/playlists/{{playlist.id}}" appDropzone [dropCallback]="dropTrack" [dropItemRef]="playlist">
-            <div class="cover">
-              <img [src]="playlist.image.getDefaultSizeUrl()">
+  <app-tab-bar [showTabBar]="true" (tabChange)="selectTab($event)">
+    <app-tab-pane
+      *ngFor="let account of accounts.models"
+      [id]="account.provider"
+      [title]="availableProviderMap[account.provider].title"
+      [icon]="availableProviderMap[account.provider].icon">
+      <div *ngIf="!account.isNew()" class="card">
+        <ul class="playlist-grid">
+          <li *ngFor="let playlist of account.playlists.models">
+            <div class="playlist-card">
+              <div class="image">
+                <img [src]="playlist.image.getMediumSizeUrl()">
+              </div>
+              <div class="description">
+                <div class="title">
+                  {{playlist.title}}
+                </div>
+              </div>
+              <div class="actions">
+                <div class="btn btn-link btn-default" (click)="play(playlist)">
+                  Play
+                </div>
+                <a routerLink="/playlists/{{playlist.provider}}/{{playlist.id}}" class="btn btn-link btn-default">
+                  Show Tracks
+                </a>
+              </div>
             </div>
-            <div class="details">
-              <p>{{playlist.title}}</p>
-            </div>
-          </a>
-        </div>
+          </li>
+        </ul>
       </div>
-    </div>
-  </app-scroll-view>
+      <div *ngIf="account.isNew()">
+        <p>
+          Connect with your {{availableProviderMap[account.provider].title}}
+          account to see all of your favourite tracks
+        </p>
+        <button class="btn btn-primary">
+          <i [class]="availableProviderMap[account.provider].icon"></i>
+          Connect
+        </button>
+      </div>
+    </app-tab-pane>
+  </app-tab-bar>
 </section>

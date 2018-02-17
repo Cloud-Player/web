@@ -10,7 +10,7 @@ import {PlayerStore} from '../collections/player-store';
 import {PlayerStoreItem} from '../models/player-store-item';
 import {PlayQueueItem} from '../models/play-queue-item';
 import {YoutubePlayerComponent} from '../components/youtube-player/youtube-player';
-import {Track} from '../../tracks/models/track';
+import {ITrack} from '../../api/tracks/track.interface';
 
 @Injectable()
 export class PlayerFactory {
@@ -25,12 +25,12 @@ export class PlayerFactory {
     this._resolver = resolver;
 
     this._playerComponentMap = {
-      SOUNDCLOUD: SoundcloudPlayerComponent,
-      YOUTUBE: YoutubePlayerComponent
+      soundcloud: SoundcloudPlayerComponent,
+      youtube: YoutubePlayerComponent
     };
   }
 
-  public static getPlayerSize(track: Track): IPlayerSize {
+  public static getPlayerSize(track: ITrack): IPlayerSize {
     return {
       width: this.playerWidth,
       height: this.playerWidth / track.aspectRatio
@@ -110,13 +110,15 @@ export class PlayerFactory {
     if (reusablePlayer) {
       const reusablePlayerComponent = reusablePlayer.component;
 
-      if (reusablePlayerComponent.instance.track.id === item.track.id) {
+      if (reusablePlayerComponent.instance.track.id === item.track.id &&
+        reusablePlayerComponent.instance.getStatus() === PlayerStatus.Playing) {
         return reusablePlayer.component;
       }
 
       if (reusablePlayerComponent.instance.getStatus() === PlayerStatus.NotInitialised) {
         reusablePlayerComponent.instance.initialise({size: playerSize});
       }
+
       reusablePlayerComponent.instance.updateTrack(item.track);
       reusablePlayerComponent.instance.preload(item.progress);
       return reusablePlayerComponent;

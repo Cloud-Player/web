@@ -3,13 +3,13 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 declare let MediaMetadata: any;
 
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Track} from '../../../tracks/models/track';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayQueue} from '../../collections/play-queue';
-import {ImageModel} from '../../../shared/models/image';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
+import {ITrack} from '../../../api/tracks/track.interface';
+import {AbstractImageModel} from '../../../api/image/abstract-image';
 
 @Component({
   selector: 'app-player-controls',
@@ -31,14 +31,14 @@ export class PlayerControlsComponent implements OnInit {
               public fullScreenService: FullScreenService) {
   }
 
-  private setMobileMediaNotification(track: Track) {
+  private setMobileMediaNotification(track: ITrack) {
     if ('mediaSession' in navigator) {
       const nv: any = navigator;
-      const artwork: ImageModel = track.image;
+      const artwork: AbstractImageModel = track.image;
       const fallbackImg = 'assets/meta/icons/ios/apple-icon-180x180.png';
       nv.mediaSession.metadata = new MediaMetadata({
         title: track.title,
-        artist: track.artist.username,
+        artist: track.artist.getFullName(),
         artwork: [
           {src: artwork.getSmallSizeUrl() || fallbackImg, sizes: '96x96', type: 'image/jpg'},
           {src: artwork.getSmallSizeUrl() || fallbackImg, sizes: '128x128', type: 'image/jpg'},

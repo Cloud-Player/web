@@ -9,7 +9,6 @@ import {PlayerStatus} from '../../src/player-status.enum';
 import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
-import {Track} from '../../../tracks/models/track';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
@@ -17,6 +16,7 @@ import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {EaseService} from '../../../shared/services/ease.service';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
+import {ITrack} from '../../../api/tracks/track.interface';
 
 @Component({
   selector: 'app-player-manager',
@@ -194,7 +194,7 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
-  private setPlayQueueItemToStopped(track: Track) {
+  private setPlayQueueItemToStopped(track: ITrack) {
     const playQueueItem = this.playQueue.get(track.id);
     if (playQueueItem && playQueueItem.status === PlayQueueItemStatus.RequestedStop) {
       playQueueItem.status = PlayQueueItemStatus.Stopped;

@@ -2,13 +2,12 @@
 import {
   Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2
 } from '@angular/core';
-import {Track} from '../../../tracks/models/track';
 import {uniqueId} from 'underscore';
 import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {Events} from 'backbone';
 import {extend} from 'underscore';
 import {AbstractPlayer} from '../../src/abstract-player.class';
-import {TrackYoutube} from '../../../tracks/models/track-youtube';
+import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 
 @Component({
   selector: 'app-youtube-player',
@@ -22,7 +21,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   private _eventHandler;
 
   @Input()
-  public track: TrackYoutube;
+  public track: TrackYoutubeModel;
 
   constructor(private el: ElementRef) {
     super();
@@ -158,7 +157,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
     this._ytPlayer.setSize(size.width, size.height);
   }
 
-  protected preloadTrack(track: Track, startTime: number = 0) {
+  protected preloadTrack(track: TrackYoutubeModel, startTime: number = 0) {
     this._ytPlayer.loadVideoById({
       videoId: track.id,
       startSeconds: startTime

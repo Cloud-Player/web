@@ -3,8 +3,8 @@ import {
 } from '@angular/core';
 import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
-import {TrackSoundcloud} from '../../../tracks/models/track-soundcloud';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
+import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 
 @Component({
   selector: 'app-soundcloud-player',
@@ -18,7 +18,7 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   public bigComments = false;
 
   @Input()
-  public track: TrackSoundcloud;
+  public track: TrackSoundcloudModel;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
     super();
@@ -80,7 +80,7 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
     }
   }
 
-  protected preloadTrack(track: TrackSoundcloud) {
+  protected preloadTrack(track: TrackSoundcloudModel) {
     this._audio.src = track.getResourceUrl();
     this._audio.load();
     this.track.comments.fetch();

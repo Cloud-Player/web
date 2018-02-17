@@ -2,9 +2,10 @@ import {Observable} from 'rxjs/Observable';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {throttle, isNumber} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
-import {Track} from '../../tracks/models/track';
 import {EaseService} from '../../shared/services/ease.service';
 import {IPlayerOptions, IPlayerSize} from './player.interface';
+import {ITrack} from '../../api/tracks/track.interface';
+import {Subscription} from 'rxjs/Subscription';
 
 export abstract class AbstractPlayer implements OnInit {
   private _duration: number;
@@ -29,7 +30,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _forcePlayStartTry = 0;
 
   @Input()
-  public track: Track;
+  public track: ITrack;
 
   @Output()
   public durationChange = new EventEmitter();
@@ -62,7 +63,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   protected abstract seekPlayerTo(to: number): void;
 
-  protected abstract preloadTrack(track: Track, startTime?: number): void;
+  protected abstract preloadTrack(track: ITrack, startTime?: number): void;
 
   protected abstract getPlayerEl(): ElementRef;
 
@@ -379,16 +380,17 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public fadeOut(duration: number): Observable<number> {
-    const obs: Observable<number> = EaseService.easeInCirc(0, 1, duration);
+    const obs: Observable<number> = EaseService.easeOutSine(0, 1, duration);
     const subscription = obs.subscribe(newVal => {
       if (this._initialised) {
+        console.log(this.getVolume() - newVal)
         this.setPlayerVolume(this.getVolume() - newVal);
       }
     });
     return obs;
   }
 
-  public updateTrack(track: Track): Promise<any> {
+  public updateTrack(track: ITrack): Promise<any> {
     if (track.id === this.track.id) {
       return Promise.resolve();
     } else {
