@@ -17,6 +17,10 @@ export class FavouriteTrackItemsSoundcloudCollection<TModel extends FavouriteTra
     this.endpoint = `/playlistItems`;
   }
 
+  fetch() {
+    return SoundcloudProxyCollection.prototype.fetch.apply(this, arguments);
+  }
+
   create() {
     return SoundcloudProxyCollection.prototype.create.apply(this, arguments);
   }
