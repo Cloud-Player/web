@@ -32,6 +32,7 @@
       &.upcoming{
         z-index: 2;
         display: flex;
+        pointer-events: none;
       }
     }
   }

@@ -9,7 +9,7 @@ h2 {
 
 * {
   font-family: $font-family-base;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 html, body {
@@ -39,8 +39,6 @@ button:focus {
 }
 
 .btn {
-  margin: 5px;
-
   &:focus {
     outline: 0;
   }
@@ -104,6 +102,10 @@ button:focus {
   margin-bottom: 20px;
 }
 
+.fill-height{
+  height: calc(100vh - 70px);
+}
+
 .main {
   width: 100vw;
   height: 100vh;
@@ -123,17 +125,12 @@ button:focus {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-
-  > .version {
-    position: fixed;
-    color: #cbcbcb;
-    bottom: 5px;
-    left: 15px;
-  }
-
 }
 
 body.native.desktop {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
   .native-bar {
     -webkit-app-region: drag;
     width: 100vw;
@@ -149,10 +146,16 @@ body.native.desktop {
     .cloud-player {
       display: none;
     }
+
+    .menu {
+      top: 0 !important;
+    }
   }
 
   @media (min-width: $screen-md-min) {
     .sidebar {
+      width: 80px;
+
       .menu {
         padding-left: 6px;
         padding-top: 10px;
@@ -247,11 +250,17 @@ body.native.desktop {
 }
 
 /* Medium devices (desktops, 992px and up) */
-@media (min-width: $screen-md-min) {
-  .main {
-    .routes {
-      padding: 15px;
-    }
+@media (min-width: $screen-xs-max) and (max-width: $screen-md-min) {
+  .fill-height{
+    /*headerheight + menuBarHeight*/
+    height: calc(100vh - 110px);
+  }
+}
+
+@media (max-width: $screen-sm-min){
+  .fill-height{
+    /*headerheight + menuBarHeight + playerHeight*/
+    height: calc(100vh - 155px);
   }
 }
 

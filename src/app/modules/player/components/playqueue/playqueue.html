@@ -1,6 +1,6 @@
 <div class="play-queue"
      appDropzone
-     [dropCallback]="dropTrack">
+     (dropData)="drop($event)">
 
   <div class="queued-tracks-list" *ngIf="playQueue.getQueuedItems().length > 0">
     <div class="divider">

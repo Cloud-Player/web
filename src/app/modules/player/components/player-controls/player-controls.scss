@@ -5,7 +5,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
 
 @mixin small-player-btn($darkTheme) {
   border-radius: 0;
-  border: none;
+  border: none !important;
   font-size: initial;
   margin: 0;
   padding: 0;
@@ -55,9 +55,9 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     .pause {
       @include small-player-btn($darkTheme);
       @if $darkTheme {
-        border-right: 1px solid $borderColorDarkTheme;
+        border-right: 1px solid $borderColorDarkTheme !important;
       } @else {
-        border-right: 1px solid $borderColorWhiteTheme;
+        border-right: 1px solid $borderColorWhiteTheme !important;
       }
     }
   }
@@ -67,9 +67,9 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     z-index: 2;
 
     @if $darkTheme {
-      border-left: 1px solid $borderColorDarkTheme;
+      border-left: 1px solid $borderColorDarkTheme !important;
     } @else {
-      border-left: 1px solid $borderColorWhiteTheme;
+      border-left: 1px solid $borderColorWhiteTheme !important;
     }
 
     .btn {
@@ -88,9 +88,9 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
       justify-content: center;
 
       @if $darkTheme {
-        border-right: 1px solid $borderColorDarkTheme;
+        border-right: 1px solid $borderColorDarkTheme !important;
       } @else {
-        border-right: 1px solid $borderColorWhiteTheme;
+        border-right: 1px solid $borderColorWhiteTheme !important;
       }
     }
   }
@@ -159,16 +159,18 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
 
   .button-container {
     padding-top: 12px;
+    display: flex;
+    justify-content: center;
 
     .next, .prev {
       border: none;
-      font-size: 24px;
+      font-size: 20px;
       background: none;
       vertical-align: middle;
       box-shadow: none;
 
       &:hover {
-        color: grey;
+        color: $brand-primary;
       }
 
       &:disabled {
@@ -177,19 +179,39 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     }
 
     .play, .pause {
-      width: 60px;
-      height: 60px;
-      border: none;
-      font-size: 28px;
-      border-radius: 30px;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+      transition: all 0.6s ease;
+      border: 1px solid #ff3600 !important;
 
       &:disabled {
         pointer-events: none;
       }
     }
 
-    .play i {
-      padding-left: 3px;
+    .play {
+      background: transparent;
+      color: $brand-primary;
+
+      i {
+        padding-left: 3px;
+      }
+
+      &:hover{
+        background: $brand-primary;
+        color: white;
+      }
+    }
+
+    .pause {
+      background: $brand-primary;
+      color: white;
     }
   }
 

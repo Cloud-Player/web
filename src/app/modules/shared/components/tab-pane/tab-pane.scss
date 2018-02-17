@@ -1,5 +1,8 @@
 :host {
   .tab-pane {
-    padding: 10px 0;
+    padding: 0;
+    /deep/ .card{
+      border-radius: 0;
+    }
   }
 }

@@ -1,10 +1,9 @@
 @import 'variables';
 
 :host {
-  height: calc(100vh - 80px);
+  height: calc(100vh);
   overflow: scroll;
   display: block;
-  border-radius: 4px;
 
   &::-webkit-scrollbar {
     display: none;

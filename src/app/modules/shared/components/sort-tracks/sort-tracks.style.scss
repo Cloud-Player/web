@@ -1,7 +1,9 @@
 div.sort-tracks {
-
   display: flex;
 
+  .sort-tracks{
+    padding-right: 5px;
+  }
   app-collection-sort {
     flex: auto 0 0;
     display: inline-flex;

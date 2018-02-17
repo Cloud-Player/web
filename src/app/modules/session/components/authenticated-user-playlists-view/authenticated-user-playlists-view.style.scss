@@ -1,89 +1,71 @@
 @import 'variables';
 
-section.column {
-  border-right: solid 1px #dad9d9;
-}
+:host{
+  .playlist-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 0px;
+    list-style: none;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
 
-form{
-  display: flex;
-  align-items: center;
+    li{
+      margin: 10px;
+    }
+  }
+  .playlist-card{
+    background: $light-white;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
 
-  input[type="text"]{
-    flex-grow: 1;
+    .image{
+      flex-grow: 1;
+      background: $light-white;
+      border-radius: 5px 5px 0 0;
+      width: inherit;
+      height: inherit;
+      img{
+        width: 100%;
+        height: 100%;
+        border-radius: 5px 5px 0 0;
+        object-fit: cover;
+      }
+    }
+
+    .description{
+      padding: 10px;
+
+      .title{
+        font-size: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .actions{
+      padding: 10px;
+      .btn{
+        padding: 0;
+        text-transform: uppercase;
+        color: $gray;
+        text-decoration: none;
+
+        &:hover{
+          color: $brand-primary;
+        }
+
+        &:not(:last-child){
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }
-
-div.details {
-
-  display: flex;
-  height: 100px;
-
-  p {
-    vertical-align: middle;
-    font-weight: bold;
-    line-height: 95px;
-    text-align: left;
-    font-size: 16px;
-    margin: 0 10px;
-    float: left;
-    flex: auto;
-  }
-
-  button {
-    flex-basis: 20px;
-    margin: 25px 10px;
-  }
-
-}
-
-.icon {
-  font-size: 24px;
-  color: black;
-}
-
-.icon:before {
-  visibility: visible;
-}
-
-.icon:checked {
-  color: lightgray;
-}
-
-input[type=checkbox].icon {
-  visibility: hidden;
-
-}
-
-$img-size: 80px;
-
-a {
-  padding: 10px;
-  color: $gray-darker;
-  display: inline-block;
-  text-align: center;
-  width: 100%;
-}
-
-a:hover {
-  color: $gray-light;
-  text-decoration: none;
-}
-
-div.cover {
-  float: left;
-  display: inline-block;
-  position: relative;
-  margin: 10px;
-  width: $img-size;
-  height: $img-size;
-  background: $brand-primary;
-  background: linear-gradient(#f70, #f30);
-  clip-path: circle(50% at 50% 50%);
-
-  img {
-    margin: auto;
-    width: $img-size;
-  }
-}
-
 
