@@ -17,7 +17,7 @@ export class UserCommentsComponent {
   private _queueItemAliceTimeSecs = 5;
   private _bigComments = false;
   private _smallCommentsFont = '300 12px Raleway';
-  private _bigCommentsFont = '300 30px Raleway';
+  private _bigCommentsFont = '300 20px Raleway';
 
   public visibleCommentLines = 0;
   public commentsQueue: Comments<Comment>;

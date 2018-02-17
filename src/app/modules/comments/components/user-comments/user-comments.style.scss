@@ -24,6 +24,7 @@
       img{
         width: 18px;
         height: 18px;
+        vertical-align: initial;
       }
     }
 
@@ -39,10 +40,10 @@
         background: white;
         padding: 0 5px;
         max-width: 298px;
-        margin-top: 1px;
         height: 18px;
         display: flex;
         align-items: center;
+        border-left: 1px solid transparent;
       }
 
       app-multi-line /deep/ .multiLines{
@@ -62,7 +63,7 @@
       }
 
       .text{
-        font-size: 30px;
+        font-size: 20px;
         height: 40px;
 
         .line,
