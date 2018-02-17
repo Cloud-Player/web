@@ -1,0 +1,9 @@
+<div #container>
+  <ng-content></ng-content>
+  <div #contextMenu class="context-menu">
+    <div *ngFor="let option of options"
+         (click)="option.action.emit()">
+      <app-option-btn [title]="option.title" (action)="option.action"></app-option-btn>
+    </div>
+  </div>
+</div>

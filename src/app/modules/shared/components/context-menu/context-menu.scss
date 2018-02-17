@@ -1,0 +1,14 @@
+:host{
+  .context-menu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    background: white;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    min-width: 150px;
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
+  }
+}
