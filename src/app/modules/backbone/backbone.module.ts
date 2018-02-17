@@ -58,14 +58,6 @@ export class BackboneModule {
 
     const superSync = Backbone.sync;
     Backbone.sync = (method: string, model: Model | Collection<Model>, options?: any) => {
-      // we have to set the flag to wait true otherwise all cases were you want to delete mutliple entries will break
-      // https://github.com/jashkenas/backbone/issues/3534
-      // This flag means that the server has to confirm the creation/deletion before the model will be added/removed to the
-      // collection
-      options = options || {};
-      if (isUndefined(options.wait)) {
-        options.wait = true;
-      }
       // Instead of the response object we are returning the backbone model in the promise
       return superSync.call(Backbone, method, model, options).then(function () {
         return model;
