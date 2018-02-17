@@ -16,9 +16,25 @@ export class BaseModel extends SelectableModel {
 
   endpoint: string = null;
 
+  isSyncing = false;
+
   urlRoot: Function = (): string => {
     return getUrl(this);
   };
+
+  defaults() {
+    return {};
+  }
+
+  constructor(...args) {
+    super(...args);
+    this.on('request', () => {
+      this.isSyncing = true;
+    });
+    this.on('sync error', () => {
+      this.isSyncing = false;
+    });
+  }
 
   hostName(): string {
     return '';
@@ -54,6 +70,8 @@ export class BaseModel extends SelectableModel {
       }
     }
     options.params = prepareParams(options.params, queryParams);
+    this.isSyncing = true;
+
     return super.sync(method, model, options);
   }
 }
