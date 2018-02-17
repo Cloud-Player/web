@@ -1,192 +1,39 @@
 @import 'variables';
 
-:host .column {
-  height: calc(100vh);
-}
-
-.sidebar {
-  width: 95px;
-  overflow: hidden;
-  transition: all 0.4s ease;
+@mixin open-menu() {
+  width: 250px;
 
   .menu {
-    min-width: 250px;
-    padding-left: 15px;
-  }
-
-  .cloud-player {
-    background: $light-white;
-    padding: 0;
-    text-align: center;
-    margin: 15px 15px 15px 15px;
-    border-radius: 4px;
-    height: 60px;
-
-    img {
-      width: 58px;
-    }
-  }
-
-  .menu,
-  /deep/ app-authenticated-user-playlists {
-
-    a,
-    .nav-item {
-      margin: 20px 15px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      width: 100%;
-      text-decoration: none;
-      cursor: pointer;
-
-      img {
-        margin: 0 13px 0 0;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-      }
-
-      i {
-        border: 1px solid;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        margin-right: 13px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-
-        &.fa-search {
-          font-size: 14px;
-        }
-      }
-
-      .text {
-        display: block;
-      }
-    }
-
-    a, .nav-item {
-      text-decoration: none;
-
-      .text,
-      i {
-        transition: color 0.6s ease;
-      }
-
-      i {
-        color: $gray-darker;
-        transition: color 0.6s ease;
-      }
-
-      .text {
-        color: #cbcbcb;
-      }
-
-      &.disabled {
-        .text,
-        i {
-          color: #cbcbcb;
-        }
-      }
-
-      &:hover {
-        .text,
-        i {
-          color: $brand-primary;
-        }
-
-        i {
-          border-color: $gray-darker;
-          color: $brand-primary;
-        }
-
-        .private-badge i{
-          color: $gray-darker;
-        }
-
-        .private-badge i{
-          border-color: $gray-darker !important;
-          color: $gray-darker !important;
-        }
-      }
-
-      &.is-active,
-      &.is-active:hover {
-        .text,
-        i {
-          font-weight: bold;
-        }
-
-        i,
-        .cover{
-          color: $brand-primary !important;
-          border-color: $brand-primary !important;
-        }
-
-        .cover{
-          border: 1px solid;
-        }
-
-        .private-badge i{
-          border-color: $gray-darker !important;
-          color: $gray-darker !important;
-        }
-      }
-    }
-  }
-
-  &:hover {
-    width: 250px;
-
-    .menu,
-    /deep/ app-authenticated-user-playlists {
-      a, .nav-item {
+    /deep/ app-nav-item,
+    /deep/ app-nav-input-item {
+      .nav-item {
         .text {
-          color: $gray-darker;
-        }
-
-        &.disabled {
-          .text,
-          i {
-            color: #cbcbcb;
-          }
-        }
-
-        &:hover {
-          .text,
-          i {
-            color: $brand-primary;
-          }
-        }
-
-        &.is-active{
-          .text{
-            color: $gray-darker !important;
-          }
+          opacity: 1;
         }
       }
     }
-  }
 
-  @media (min-width: $screen-lg-min) {
-    width: 250px;
+    /deep/ app-collapsible {
+      .collapsible-head {
+        .text {
+          opacity: 1;
+        }
+      }
+    }
 
-    .menu,
-    /deep/ app-authenticated-user-playlists {
-      a, .nav-item {
-        .text,
-        i {
-          color: $gray-darker;
+    /deep/ app-nav-divider {
+      .title {
+        .text {
+          opacity: 1;
         }
 
-        &.disabled {
-          .text,
-          i {
-            color: #cbcbcb;
-          }
+        &:before {
+          max-width: 10px;
+          margin-right: 3px
+        }
+
+        &:after {
+          display: block;
         }
       }
     }
@@ -194,14 +41,159 @@
 
   @media (min-width: 1380px) {
     width: 300px;
-    &:hover {
-      width: 300px;
-    }
   }
 }
 
-@media (max-width: $screen-sm-max) {
-  :host {
+:host {
+  &.open {
+    .sidebar{
+      @include open-menu();
+    }
+  }
+
+  .column {
+    height: calc(100vh);
+  }
+
+  .sidebar {
+    width: 95px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+
+    .menu {
+      min-width: 250px;
+      padding-left: 15px;
+      height: calc(100vh);
+      top: -75px;
+      position: relative;
+      padding-top: 75px;
+      padding-bottom: 20px;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cloud-player {
+      background: rgba(250, 250, 250, 0.9);
+      padding: 0;
+      text-align: center;
+      margin: 15px 15px 0 15px;
+      border-radius: 4px;
+      height: 60px;
+      position: relative;
+      z-index: 1;
+
+      img {
+        width: 58px;
+      }
+    }
+
+    .version {
+      position: fixed;
+      bottom: 0;
+      width: inherit;
+      color: #cbcbcb;
+      background: #efefef;
+      padding: 2px 15px;
+    }
+
+    .playlists {
+      margin-top: 10px;
+
+      .playlist {
+        &.drag-over {
+          position: relative;
+
+          /deep/ app-nav-item {
+            .text {
+              color: $brand-primary !important;
+            }
+          }
+
+          &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 33px;
+            background: #ddd;
+            left: 0;
+            top: -7px;
+            z-index: -1;
+            border-radius: 10px 0 0 10px;
+          }
+        }
+      }
+    }
+
+    /deep/ app-collapsible {
+      .collapsible-head {
+        padding: 0 10px 0 5px;
+        margin-top: 0;
+        color: $gray-light;
+
+        .text {
+          text-transform: uppercase;
+          font-weight: 200;
+          font-size: 11px;
+        }
+
+        .icon {
+          width: 20px;
+          font-size: 11px;
+          text-align: center;
+          margin-right: 5px;
+        }
+      }
+
+      .collapsible-body {
+        //padding-left: 5px;
+      }
+
+      .nav-item {
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    @media (min-width: $screen-lg-min) {
+      width: 250px;
+    }
+
+    @media (min-width: $screen-sm-max) and (max-width: $screen-lg-min) {
+      .menu {
+        padding-left: 30px;
+
+        /deep/ app-nav-item,
+        /deep/ app-nav-input-item,
+        /deep/ app-collapsible {
+          .text {
+            transition: opacity 0.6s ease;
+          }
+        }
+
+        /deep/ app-collapsible {
+          .collapsible-head {
+            .text {
+              opacity: 0;
+            }
+          }
+        }
+      }
+
+      &:hover {
+        @include open-menu();
+      }
+    }
+
+    @media (min-width: 1380px) {
+      width: 300px;
+      &:hover {
+        width: 300px;
+      }
+    }
+  }
+
+  @media (max-width: $screen-sm-max) {
     width: 100vw;
     position: fixed;
     bottom: 0;
@@ -209,6 +201,26 @@
     background: $light-white;
     box-shadow: $light-boxshadow;
     z-index: 999;
+
+    .menu {
+      top: initial !important;
+      padding-top: initial !important;
+      padding-bottom: initial !important;
+      height: 40px !important;
+
+      > nav {
+        display: flex;
+        height: 100%;
+      }
+    }
+
+    .playlists {
+      display: none;
+    }
+
+    .version {
+      display: none;
+    }
 
     .sidebar,
     /deep/ app-authenticated-user-playlists {
@@ -234,59 +246,8 @@
         font-size: 13px;
         margin: 0;
 
-        a,
-        .nav-item {
-          display: block;
-          margin: 0;
-          border-left: 1px solid #dad9d9;
-          padding: 7px;
-
-          &.is-active {
-            background: #dad9d9;
-
-            i {
-              color: $brand-primary;
-            }
-          }
-
-          &.disabled{
-            display: none;
-          }
-
-          i {
-            margin: 0 auto;
-            font-size: 20px;
-            padding: 0;
-            border: none;
-            background: transparent;
-
-            &.fa-search{
-              font-size: 18px;
-            }
-          }
-
-          img {
-            width: 27px;
-            height: 27px;
-          }
-
-          .text {
-            display: none;
-          }
-
-          &.sc-connect {
-            display: flex;
-
-            i{
-              margin-right: 5px;
-            }
-            .text{
-              display: block;
-              margin-right: auto;
-              color: $gray-darker;
-              font-size: 10px;
-            }
-          }
+        app-nav-divider {
+          display: none;
         }
       }
     }
