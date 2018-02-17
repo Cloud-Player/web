@@ -159,7 +159,7 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
   writeValue(value: number): void {
     if (value) {
       this.updateValue(value);
-      if (this.dragInProgress) {
+      if (!this.dragInProgress) {
         this.setDragPosFromVal();
       }
     }

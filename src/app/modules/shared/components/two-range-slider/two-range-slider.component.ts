@@ -249,7 +249,7 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
   writeValue(value: ITwoRangeSliderValue): void {
     if (value) {
       this.updateValue(value);
-      if (this.dragInProgress) {
+      if (!this.dragInProgress) {
         this.setDragPosFromVal();
       }
     }
