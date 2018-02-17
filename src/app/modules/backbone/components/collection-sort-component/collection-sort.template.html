@@ -1,4 +1,6 @@
-<span (click)="sort()" [style.font-weight]="isSorted()?'bold':'normal'">
+<span class="clickable collection-sort"
+      [ngClass]="{active: isSorted()}"
+      (click)="sort()" >
   <i *ngIf="isSorted()"
      class="fa fa-angle-up"
      [class.fa-angle-up]="collection.sortOrder === 'ASC' && comparator"
