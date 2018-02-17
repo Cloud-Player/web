@@ -1,5 +1,5 @@
 import {AfterContentInit, Component, Injectable, Input} from '@angular/core';
-import {FilterFormComponent} from '../filter-form';
+import {FilterFormComponent, FilterFormStatusTypes} from '../filter-form';
 import {NgControl} from '@angular/forms';
 
 export abstract class AbstractFilterComponent implements AfterContentInit {
@@ -20,5 +20,12 @@ export abstract class AbstractFilterComponent implements AfterContentInit {
       this.filterForm.setFilter(this.filterProperty, value);
       this.filterForm.fetchCollection();
     });
+
+    this.filterForm.status
+      .filter(ev => ev === FilterFormStatusTypes.Reset)
+      .subscribe(() => {
+        this.value = this.filterForm.collection.queryParams[this.filterProperty];
+        this.ngControl.valueAccessor.writeValue(this.value);
+      });
   }
 }

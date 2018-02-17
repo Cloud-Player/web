@@ -1,7 +1,7 @@
 import {AbstractFilterComponent} from '../abstract-filter/abstract-filter';
 import {AfterContentInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {NgControl} from '@angular/forms';
-import {FilterFormComponent} from '../filter-form';
+import {FilterFormComponent, FilterFormStatusTypes} from '../filter-form';
 import {ITwoRangeSliderValue} from '../../../../shared/components/two-range-slider/two-range-slider.component';
 
 @Component({
@@ -51,5 +51,13 @@ export class MinMaxRangeFilterComponent implements AfterContentInit {
       this.filterForm.setFilter(this.maxFilterProperty, value.max);
       this.filterForm.fetchCollection();
     });
+
+    this.filterForm.status
+      .filter(ev => ev === FilterFormStatusTypes.Reset)
+      .subscribe(() => {
+        this.value.min = <number>this.filterForm.collection.queryParams[this.minFilterProperty];
+        this.value.max = <number>this.filterForm.collection.queryParams[this.maxFilterProperty];
+        this.ngControl.valueAccessor.writeValue(this.value);
+      });
   }
 }
