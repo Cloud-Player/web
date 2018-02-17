@@ -25,6 +25,7 @@ export interface ITwoRangeSliderValue {
 export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor, OnDestroy, AfterContentInit {
   private _onChange: Function;
   private _onTouch: Function;
+  private _subscriptions: Subscription;
 
   dragInProgress = false;
   tmpMinValue: number;
@@ -98,11 +99,12 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
   @Output()
   public maxValueChanged = new EventEmitter();
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private renderer2: Renderer2) {
     this.value = this.value || {
       min: null,
       max: null
     };
+    this._subscriptions = new Subscription();
   }
 
   private getValueInMinRange(value: number) {
@@ -282,20 +284,24 @@ export class TwoRangeSliderComponent implements OnChanges, ControlValueAccessor,
 
     this.updateValue(this.value);
 
-    this.el.nativeElement.addEventListener('mousedown', this.dragStart.bind(this));
-    this.el.nativeElement.addEventListener('touchstart', this.dragStart.bind(this));
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'mousedown', this.dragStart.bind(this))
+    );
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'touchstart', this.dragStart.bind(this))
+    );
 
-    this.el.nativeElement.addEventListener('mouseup', this.dragEnd.bind(this));
-    this.el.nativeElement.addEventListener('touchend', this.dragEnd.bind(this));
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'mouseup', this.dragEnd.bind(this))
+    );
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'touchend', this.dragEnd.bind(this))
+    );
 
     this.setDragPosFromVal();
   }
 
   ngOnDestroy(): void {
-    this.el.nativeElement.removeEventListener('mousedown', this.dragStart.bind(this));
-    this.el.nativeElement.removeEventListener('touchstart', this.dragStart.bind(this));
-
-    this.el.nativeElement.removeEventListener('mouseup', this.dragEnd.bind(this));
-    this.el.nativeElement.removeEventListener('touchend', this.dragEnd.bind(this));
+    this._subscriptions.unsubscribe();
   }
 }
