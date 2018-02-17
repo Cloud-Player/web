@@ -1,0 +1,17 @@
+<div class="empty-state">
+  <div *ngIf="icon" class="icon">
+    <i [class]="icon" aria-hidden="true"></i>
+  </div>
+  <div class="title">
+    {{title}}
+  </div>
+  <div *ngIf="ctaText"
+       class="cta">
+    <div class="btn btn-primary" (click)="click()">
+      <i *ngIf="ctaIcon"
+         [class]="ctaIcon"
+         aria-hidden="true"></i>
+      {{ctaText}}
+    </div>
+  </div>
+</div>
