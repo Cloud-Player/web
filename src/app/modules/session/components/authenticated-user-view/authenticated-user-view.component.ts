@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-authenticated-user-view',
@@ -7,11 +6,11 @@ import {AuthService} from '../../../shared/services/auth.service';
   templateUrl: './authenticated-user-view.template.html'
 })
 export class AuthenticatedUserViewComponent {
-  constructor(private authService: AuthService) {
+  constructor() {
 
   }
 
   disconnect(): void {
-    this.authService.disconnect();
+    // this.authService.disconnect();
   }
 }
