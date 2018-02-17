@@ -14,8 +14,8 @@ export function getUrl(instance: Model | Collection<Model>) {
   }
 
   if (!endpoint || endpoint.length === 0) {
-    throw new Error('An endpoint has to be specified');
+    return null;
+  } else {
+    return concatUrlParts(hostName, basePath, endpoint);
   }
-
-  return concatUrlParts(hostName, basePath, endpoint);
 }
