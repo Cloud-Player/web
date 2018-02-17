@@ -13,6 +13,7 @@ import {InputFilterComponent} from './components/filter-form/input-filter/input-
 import {RangeFilterComponent} from './components/filter-form/range-filter/range-filter';
 import {MinMaxRangeFilterComponent} from './components/filter-form/min-max-range-filter/min-max-range-filter';
 import {YoutubeDurationFilterComponent} from './components/filter-form/youtube-duration-filter/youtube-duration-filter';
+import {SearchResultTracksComponent} from './components/search-result-tracks/search-result-tracks';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {YoutubeDurationFilterComponent} from './components/filter-form/youtube-d
     RangeFilterComponent,
     MinMaxRangeFilterComponent,
     YoutubeDurationFilterComponent,
-    SocialSharePanelComponent
+    SocialSharePanelComponent,
+    SearchResultTracksComponent
   ]
 })
 
