@@ -59,7 +59,7 @@
          [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
       <b class="track-title">{{currentItem.track.title}}</b>
-      <div class="artist">{{currentItem.track.artist.username}}</div>
+      <div class="artist">{{currentItem.track.artist.getFullName()}}</div>
     </div>
     <div class="timer">
       <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
