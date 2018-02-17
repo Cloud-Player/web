@@ -1,13 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Session} from '../../../session/models/session.model';
-import {AuthenticatedUser} from '../../../session/models/authenticated_user.model';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {ToastService} from '../../../shared/services/toast';
 import {ToastModel} from '../../../shared/models/toast';
 import {ToastTypes} from '../../../shared/src/toast-types.enum';
 import {NativeAppHandlerService} from '../../../native-app/services/native-app-handler';
-
-const packageJSON = require('../../../../../../package.json');
 
 @Component({
   selector: 'app-cloud-player',
@@ -18,36 +14,13 @@ const packageJSON = require('../../../../../../package.json');
 
 export class MainComponent implements OnInit {
   private isAuthenticated = false;
-  private session: Session;
-
-  public version = packageJSON.version;
 
   constructor(private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
               private toastService: ToastService) {
-    this.session = Session.getInstance();
-  }
-
-  private setAuthenticated(user: AuthenticatedUser) {
-    if (user.authenticated) {
-      user.fetch().then(() => {
-        this.isAuthenticated = true;
-        user.likes.fetch();
-      });
-    } else {
-      this.isAuthenticated = false;
-    }
   }
 
   ngOnInit(): void {
-    this.session.user.on('change:authenticated', (user: AuthenticatedUser) => {
-      this.setAuthenticated(user);
-    });
-
-    if (this.session.isValid()) {
-      this.setAuthenticated(this.session.user);
-    }
-
     // Handle native client started event that is triggered by the native Cloud Player app
     window.addEventListener('startNativeClient', (event: CustomEvent) => {
       const clientDetails: { version: number, platform: string } = event.detail;
@@ -56,7 +29,7 @@ export class MainComponent implements OnInit {
         version: event.detail.version,
         platform: event.detail.platform
       });
-      window.dispatchEvent(new Event('clientReady'));
+
     });
 
     // Handle service worker update
