@@ -2,11 +2,8 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {SessionRoutingModule} from './session.routes';
-import {SoundcloudCallbackComponent} from './components/soundcloud-callback/soundcloud_callback.component';
-import {AuthenticatedUserPlaylistsComponent} from './components/authenticated-user-playlists/authenticated_user_playlists';
-import {LikedTracksViewComponent} from './components/liked-tracks-view/liked-tracks-view.component';
+import {FavouriteTracksViewComponent} from './components/favourite-tracks-view/favorite-tracks-view';
 import {SharedModule} from '../shared/shared.module';
-import {UserPlayListViewComponent} from './components/user-playlist-view/user-playlist-view.component';
 import {AuthenticatedUserPlaylistsViewComponent} from './components/authenticated-user-playlists-view/authenticated-user-playlists-view.component';
 import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthenticatedUserViewComponent} from './components/authenticated-user-view/authenticated-user-view.component';
@@ -22,16 +19,9 @@ import {TracksModule} from '../tracks/tracks.module';
     SharedModule
   ],
   declarations: [
-    SoundcloudCallbackComponent,
-    AuthenticatedUserPlaylistsComponent,
-    LikedTracksViewComponent,
-    UserPlayListViewComponent,
+    FavouriteTracksViewComponent,
     AuthenticatedUserPlaylistsViewComponent,
     AuthenticatedUserViewComponent
-  ],
-  exports: [
-    AuthenticatedUserPlaylistsComponent,
-    AuthenticatedUserPlaylistsViewComponent
   ]
 })
 

@@ -5,10 +5,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {PlayListViewComponent} from './components/playlist-view/playlist-view.component';
 import {SharedModule} from '../shared/shared.module';
 import {PlayListIconComponent} from './components/playlist-icon/playlist-icon.component';
+import {FormsModule} from '@angular/forms';
+import {AuthenticatedUserPlaylistGuard} from './guards/authenticated-user-playlist-guard';
 
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
     TracksModule,
     PlaylistsRoutingModule,
     SharedModule
@@ -19,6 +22,9 @@ import {PlayListIconComponent} from './components/playlist-icon/playlist-icon.co
   declarations: [
     PlayListViewComponent,
     PlayListIconComponent
+  ],
+  providers: [
+    AuthenticatedUserPlaylistGuard
   ]
 })
 

@@ -5,24 +5,29 @@ import {TracksRoutingModule} from './tracks.routes';
 import {SharedModule} from '../shared/shared.module';
 import {TrackPlayButtonComponent} from './components/play-track-button/track-play-button';
 import {TrackPlayOnEventDirective} from './directives/track-play-on-event';
-import {TrackListComponent} from './components/track-list/track-list';
 import {TrackDetailViewComponent} from './components/detail/detail-view';
+import {TrackListItemComponent} from './components/track-list-item/track-list-item';
+import {ToggleLikedTrackComponent} from './components/toggle-liked-track/toggle-liked-track';
+import {BackboneModule} from '../backbone/backbone.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     TracksRoutingModule,
+    BackboneModule,
     SharedModule
   ],
   exports: [
-    TrackListComponent
+    TrackListItemComponent,
+    ToggleLikedTrackComponent
   ],
   declarations: [
     TrackDetailViewComponent,
-    TrackListComponent,
+    TrackListItemComponent,
     TrackPlayButtonComponent,
-    TrackPlayOnEventDirective
+    TrackPlayOnEventDirective,
+    ToggleLikedTrackComponent
   ]
 })
 
