@@ -1,13 +1,14 @@
-import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Input, Renderer2, OnDestroy, NgZone} from '@angular/core';
 import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-cloud-player-logo',
   styleUrls: ['./cloud-player-logo.style.scss'],
-  templateUrl: './cloud-player-logo.template.html',
+  templateUrl: './cloud-player-logo.template.html'
 })
 
-export class CloudPlayerLogoComponent implements OnInit {
+export class CloudPlayerLogoComponent implements OnInit, OnDestroy {
 
   @Input()
   public animate = false;
@@ -17,25 +18,35 @@ export class CloudPlayerLogoComponent implements OnInit {
   private iconAnimationToPlay: any;
   private iconAnimationToPause: any;
   private isPlaying = false;
+  private subscriptions: Subscription;
 
-  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
-    cloudPlayerLogoService.logoState$.subscribe((status: string) => {
-      if (status === 'PAUSE') {
-        this.pause();
-      } else if (status === 'PLAY') {
-        this.play();
-      }
-    });
+  constructor(private renderer2: Renderer2,
+              private zone: NgZone,
+              private cloudPlayerLogoService: CloudPlayerLogoService) {
+    this.subscriptions = new Subscription();
   }
 
   ngOnInit(): void {
-    this.svgObject.nativeElement.addEventListener('load', () => {
-      const svgObj = <HTMLObjectElement>this.svgObject.nativeElement;
-      const content = <any>svgObj.contentDocument;
-      this.mainAnimation = content.querySelectorAll('.main-animation');
-      this.iconAnimationToPlay = content.querySelectorAll('.icon-animation-to-play');
-      this.iconAnimationToPause = content.querySelectorAll('.icon-animation-to-pause');
-    }, false);
+    this.zone.runOutsideAngular(() => {
+      this.cloudPlayerLogoService.logoState$.subscribe((status: string) => {
+        if (status === 'PAUSE') {
+          this.pause();
+        } else if (status === 'PLAY') {
+          this.play();
+        }
+      });
+
+      let subscription: Subscription;
+      const listener = this.renderer2.listen(this.svgObject.nativeElement, 'load', () => {
+        const svgObj = <HTMLObjectElement>this.svgObject.nativeElement;
+        const content = <any>svgObj.contentDocument;
+        this.mainAnimation = content.querySelectorAll('.main-animation');
+        this.iconAnimationToPlay = content.querySelectorAll('.icon-animation-to-play');
+        this.iconAnimationToPause = content.querySelectorAll('.icon-animation-to-pause');
+        this.subscriptions.remove(subscription);
+      });
+      subscription = this.subscriptions.add(listener);
+    });
   }
 
   play(): void {
@@ -60,5 +71,9 @@ export class CloudPlayerLogoComponent implements OnInit {
       });
       this.isPlaying = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
