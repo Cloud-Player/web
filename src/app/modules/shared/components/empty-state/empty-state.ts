@@ -27,6 +27,7 @@ export class EmptyStateComponent implements OnInit, OnDestroy {
   public ctaClick: EventEmitter<any>;
 
   constructor(private router: Router) {
+    this.ctaClick = new EventEmitter<any>();
   }
 
   public click() {
