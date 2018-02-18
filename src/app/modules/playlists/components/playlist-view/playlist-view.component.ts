@@ -30,7 +30,9 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
   public isInEditMode = false;
   public tracks: Array<ITrack>;
 
-  constructor(private route: ActivatedRoute, private router: Router, private userAnalyticsService: UserAnalyticsService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private userAnalyticsService: UserAnalyticsService) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
