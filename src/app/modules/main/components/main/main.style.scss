@@ -157,8 +157,7 @@ body.native.desktop {
       width: 80px;
 
       .menu {
-        padding-left: 6px;
-        padding-top: 10px;
+        padding-left: 20px !important;
       }
     }
   }
@@ -172,7 +171,9 @@ body.native.desktop {
 
     @media (min-width: $screen-md-min) {
       .routes {
-        padding-top: 25px;
+        app-scroll-view{
+          padding-top: 8px;
+        }
       }
 
       .sidebar {
