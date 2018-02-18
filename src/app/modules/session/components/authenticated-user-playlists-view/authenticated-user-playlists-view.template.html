@@ -52,10 +52,11 @@
 
       <div *ngIf="account.isNew()"
            class="card fill-height">
-        <app-empty-state title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your playlists"
-                         [icon]="availableProviderMap[account.provider].icon"
-                         (ctaClick)="connect(account)"
-                         ctaText="Login with {{availableProviderMap[account.provider].title}}">
+        <app-empty-state
+          title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your playlists"
+          [icon]="availableProviderMap[account.provider].icon"
+          (ctaClick)="connect(account)"
+          ctaText="Login with {{availableProviderMap[account.provider].title}}">
         </app-empty-state>
       </div>
     </app-tab-pane>

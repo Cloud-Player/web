@@ -1,5 +1,6 @@
 export class Utils {
   static vendorPrefixes = ['', 'webkit', 'moz', 'ms'];
+
   static capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }

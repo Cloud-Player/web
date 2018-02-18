@@ -3,7 +3,7 @@ import {IPlaylist} from '../../../api/playlists/playlist.interface';
 
 @Component({
   selector: 'app-play-list-icon',
-  styleUrls: [ './playlist-icon.style.scss'],
+  styleUrls: ['./playlist-icon.style.scss'],
   templateUrl: './playlist-icon.template.html'
 })
 

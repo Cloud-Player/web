@@ -4,7 +4,7 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 @Component({
   selector: 'app-view-change-loader',
   styleUrls: ['./view-change-loader.style.scss'],
-  templateUrl: './view-change-loader.template.html',
+  templateUrl: './view-change-loader.template.html'
 })
 
 export class ViewChangeLoaderComponent {

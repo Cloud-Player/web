@@ -4,7 +4,7 @@ import {TabBarComponent} from '../tab-bar/tab-bar';
 @Component({
   selector: 'app-tab-pane',
   styleUrls: ['./tab-pane.scss'],
-  templateUrl: './tab-pane.html',
+  templateUrl: './tab-pane.html'
 })
 export class TabPaneComponent implements OnInit {
   private _isActive = false;

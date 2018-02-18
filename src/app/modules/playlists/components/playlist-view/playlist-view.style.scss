@@ -1,19 +1,19 @@
 @import 'variables';
 
-:host{
-  .form-group{
+:host {
+  .form-group {
     margin-bottom: 0;
   }
 
-  input[type="text"]{
+  input[type="text"] {
     font-size: 20px;
     width: 100%;
     border-radius: 4px;
     margin-right: 5px;
   }
 
-  /deep/ app-view-header{
-    .default-playlist-img{
+  /deep/ app-view-header {
+    .default-playlist-img {
       border: 1px solid;
       border-radius: 50%;
       width: 30px;
@@ -25,23 +25,23 @@
       font-size: 12px;
     }
 
-    .title{
+    .title {
       display: flex;
       align-items: center;
       width: 100%;
 
-      .text{
+      .text {
         white-space: nowrap;
         overflow: hidden;
       }
     }
 
-    .form-group{
+    .form-group {
       display: flex;
       width: 100%;
     }
 
-    .button-group{
+    .button-group {
       margin-left: auto;
       display: flex;
       flex-wrap: nowrap;

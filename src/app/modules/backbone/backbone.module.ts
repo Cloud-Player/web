@@ -37,7 +37,7 @@ export class BackboneModule {
         url: options.url,
         withCredentials: options.withCredentials
       };
-      requestOption.headers.append('content-type', 'application/json')
+      requestOption.headers.append('content-type', 'application/json');
       return http.request(options.type, options.url, requestOption)
         .toPromise()
         .then(function (resp: any) {

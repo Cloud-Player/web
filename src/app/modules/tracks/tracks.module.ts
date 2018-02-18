@@ -31,4 +31,5 @@ import {BackboneModule} from '../backbone/backbone.module';
   ]
 })
 
-export class TracksModule { }
+export class TracksModule {
+}

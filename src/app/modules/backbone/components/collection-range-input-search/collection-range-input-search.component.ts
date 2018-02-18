@@ -7,7 +7,7 @@ import {BaseModel} from '../../models/base.model';
 
 @Component({
   selector: 'app-collection-range-input-search',
-  styleUrls: [ './collection-range-input-search.style.scss' ],
+  styleUrls: ['./collection-range-input-search.style.scss'],
   templateUrl: './collection-range-input-search.template.html'
 })
 

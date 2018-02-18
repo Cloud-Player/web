@@ -6,7 +6,7 @@ import {ToastModel} from '../../models/toast';
 @Component({
   selector: 'app-toasts',
   styleUrls: ['./toasts.scss'],
-  templateUrl: './toasts.html',
+  templateUrl: './toasts.html'
 })
 export class ToastsComponent implements OnInit {
   public toasts: Toasts<ToastModel>;

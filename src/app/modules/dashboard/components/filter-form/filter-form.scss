@@ -1,48 +1,47 @@
 @import 'variables';
 
-.search-filter{
+.search-filter {
   position: relative;
 
-  .nav-tabs{
+  .nav-tabs {
     z-index: 1;
     position: relative;
     margin-bottom: -2px;
     border-bottom: none;
 
-
-    > li{
+    > li {
       margin-bottom: 2px;
 
-      a{
+      a {
         border: none;
 
         &:hover,
-        &:focus{
+        &:focus {
           background: none;
         }
       }
 
-      &.active{
-        a{
+      &.active {
+        a {
           background: $light-white;
         }
       }
     }
   }
 
-  .item-amount{
+  .item-amount {
     position: absolute;
     right: 0;
     top: 9px;
 
-    .label{
+    .label {
       background: transparent;
       border: 1px solid #666;
       color: #666;
     }
   }
 
-  .new-filter{
+  .new-filter {
     position: relative;
     background: $light-white;
     width: 100%;
@@ -58,7 +57,7 @@
     padding-left: 15px;
     padding-right: 15px;
 
-    .item-amount{
+    .item-amount {
       right: 15px;
     }
   }

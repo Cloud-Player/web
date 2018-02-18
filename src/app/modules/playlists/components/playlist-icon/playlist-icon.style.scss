@@ -1,5 +1,6 @@
 @import 'variables';
-.playlist-icon{
+
+.playlist-icon {
   position: relative;
 
   .cover {
@@ -30,7 +31,7 @@
     font-size: 12px;
   }
 
-  .private-badge{
+  .private-badge {
     position: absolute;
     right: 5px;
     bottom: -5px;
@@ -39,7 +40,7 @@
     background: $light-white;
     border-radius: 50%;
 
-    i{
+    i {
       width: inherit;
       height: inherit;
     }

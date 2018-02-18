@@ -15,8 +15,7 @@ import {ConnectViewComponent} from './components/connect/connect-view';
   declarations: [
     ConnectViewComponent
   ],
-  exports: [
-  ]
+  exports: []
 })
 
 export class ConnectModule {

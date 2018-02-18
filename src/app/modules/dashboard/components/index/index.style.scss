@@ -1,13 +1,13 @@
 @import 'variables';
 
-:host{
-  /deep/ app-scroll-view{
+:host {
+  /deep/ app-scroll-view {
     //.results{
     //  margin-top: -8px;
     //}
   }
 
-  input{
+  input {
     font-size: 18px;
     align-self: baseline;
     top: 6px;
@@ -21,7 +21,7 @@
     margin-left: -7px;
   }
 
-  app-social-share-panel{
+  app-social-share-panel {
     display: block;
   }
 }

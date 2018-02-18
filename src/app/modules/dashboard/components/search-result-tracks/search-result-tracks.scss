@@ -1,27 +1,27 @@
 @import 'variables';
 
-:host{
+:host {
   .tracks-list {
     background: $light-white;
     padding: 10px 15px;
     border-radius: 4px;
     box-shadow: $light-boxshadow;
 
-    .header{
+    .header {
       display: flex;
       white-space: nowrap;
 
-      app-sort-tracks{
+      app-sort-tracks {
         flex-grow: 1;
         flex-shrink: 1;
         overflow: hidden;
         margin-right: 5px;
       }
-      .filter{
+      .filter {
         align-self: flex-end;
         transition: color 0.5s ease;
 
-        &:hover{
+        &:hover {
           color: $brand-primary;
         }
       }
@@ -31,16 +31,16 @@
       display: none;
     }
 
-    /deep/ app-filter-form{
-      .search-filter{
+    /deep/ app-filter-form {
+      .search-filter {
         background: #f5f5f5;
         margin-left: -18px;
         width: calc(100% + 34px);
         margin-top: 10px;
-        box-shadow: 0 0 8px 0 rgba(0,0,0,0.2) inset;
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2) inset;
       }
 
-      .new-filter{
+      .new-filter {
         background: transparent;
       }
     }

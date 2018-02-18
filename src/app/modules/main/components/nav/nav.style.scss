@@ -46,7 +46,7 @@
 
 :host {
   &.open {
-    .sidebar{
+    .sidebar {
       @include open-menu();
     }
   }

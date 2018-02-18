@@ -1,13 +1,13 @@
 @import 'variables';
 
-:host{
-  label{
+:host {
+  label {
     padding-top: 0;
   }
-  .selector span{
+  .selector span {
     cursor: pointer;
   }
-  .active{
+  .active {
     font-weight: bold;
   }
 }

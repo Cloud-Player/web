@@ -30,7 +30,7 @@ export class DraggableDirective implements OnInit, OnDestroy {
       }
       this.dragAndDropService.dragStart(this.dragData);
     } else {
-      transfer.setData('text/plain',' ');
+      transfer.setData('text/plain', ' ');
     }
     if (this._image && this._imageIsLoaded) {
       transfer.setDragImage(this._image, 10, 10);

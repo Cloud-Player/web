@@ -1,5 +1,5 @@
-:host{
-  .empty-state{
+:host {
+  .empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,16 +7,16 @@
     color: #ccc;
     height: 100%;
 
-    .icon{
+    .icon {
       font-size: 100px;
     }
 
-    .title{
+    .title {
       text-transform: uppercase;
       text-align: center;
     }
 
-    .cta{
+    .cta {
       margin-top: 50px;
     }
   }

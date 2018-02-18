@@ -19,12 +19,12 @@
     height: 100%;
     transition: background-color 0.5s ease;
 
-    &.affixed{
+    &.affixed {
       position: fixed;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255, 255, 255, 0.95);
       top: 0;
       height: 50px;
-      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
     }
 
     /deep/ > i {
@@ -41,8 +41,8 @@
     }
   }
 
-  /deep/ .button-group{
-    > .btn:not(:last-child){
+  /deep/ .button-group {
+    > .btn:not(:last-child) {
       margin-right: 5px;
     }
   }
@@ -71,21 +71,21 @@
         font-size: 24px;
         width: calc(100% - 20px);
         padding-right: 45px;
-        box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.1);
+        box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
 
-        &:focus{
-          box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.3);
+        &:focus {
+          box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
         }
       }
 
-      /deep/ app-loading-spinner{
+      /deep/ app-loading-spinner {
         right: 40px;
         top: 9px;
         z-index: 3;
         width: 25px;
         height: 25px;
 
-        .idle-dots{
+        .idle-dots {
           transform: translateX(-5px);
         }
       }

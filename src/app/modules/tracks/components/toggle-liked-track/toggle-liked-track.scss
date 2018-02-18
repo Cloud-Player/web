@@ -1,12 +1,12 @@
 @import 'variables';
 
-:host{
+:host {
   cursor: pointer;
 
-  .toggle-liked-track{
+  .toggle-liked-track {
     position: relative;
 
-    .not-authenticated{
+    .not-authenticated {
       position: absolute;
       left: 20px;
       top: -7px;
@@ -17,7 +17,7 @@
       border-radius: 4px;
       white-space: nowrap;
 
-      a{
+      a {
         color: white;
       }
     }

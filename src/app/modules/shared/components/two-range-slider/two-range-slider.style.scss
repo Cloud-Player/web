@@ -5,7 +5,7 @@
   position: relative;
   @extend .range-slider-component;
 
-  .progress-bar{
+  .progress-bar {
     input[type="range"] {
       pointer-events: none;
     }

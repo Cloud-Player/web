@@ -62,7 +62,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     }
   }
 
-  .player-settings{
+  .player-settings {
     top: 0;
     z-index: 2;
 
@@ -114,7 +114,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     margin: 0;
     height: 40px;
 
-    .details{
+    .details {
       padding-top: 3px;
 
       .artist {
@@ -129,7 +129,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
       text-align: right;
       position: relative;
 
-      &:after{
+      &:after {
         content: "";
         position: absolute;
         height: calc(100% + 10px);
@@ -203,7 +203,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
         padding-left: 3px;
       }
 
-      &:hover{
+      &:hover {
         background: $brand-primary;
         color: white;
       }
@@ -258,7 +258,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
       }
     }
 
-    .timer{
+    .timer {
       display: none;
     }
   }
@@ -307,7 +307,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
       padding-left: 83px !important;
       width: calc(100vw - 50px);
 
-      .timer{
+      .timer {
         display: none;
       }
     }

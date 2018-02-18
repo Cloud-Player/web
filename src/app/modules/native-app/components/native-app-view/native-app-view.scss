@@ -1,7 +1,7 @@
 @import 'variables';
 
-:host{
-  .screenshot{
+:host {
+  .screenshot {
     background-position-y: initial;
     -webkit-background-size: cover;
     margin-left: -15px;
@@ -9,19 +9,19 @@
     margin-top: -10px;
     border-radius: 4px 4px 0 0;
 
-    &.win{
+    &.win {
       background: url(/assets/desktop-app/win-screenshot.png) no-repeat;
       height: 300px;
     }
 
-    &.osx{
+    &.osx {
       background: url(/assets/desktop-app/osx-screenshot.png) no-repeat;
       height: 300px;
     }
   }
 
-  .tutorial{
-    .img-holder{
+  .tutorial {
+    .img-holder {
       text-align: center;
     }
   }

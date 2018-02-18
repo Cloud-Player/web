@@ -102,7 +102,7 @@ button:focus {
   margin-bottom: 20px;
 }
 
-.fill-height{
+.fill-height {
   height: calc(100vh - 70px);
 }
 
@@ -171,7 +171,7 @@ body.native.desktop {
 
     @media (min-width: $screen-md-min) {
       .routes {
-        app-scroll-view{
+        app-scroll-view {
           padding-top: 8px;
         }
       }
@@ -252,14 +252,14 @@ body.native.desktop {
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-xs-max) and (max-width: $screen-md-min) {
-  .fill-height{
+  .fill-height {
     /*headerheight + menuBarHeight*/
     height: calc(100vh - 110px);
   }
 }
 
-@media (max-width: $screen-sm-min){
-  .fill-height{
+@media (max-width: $screen-sm-min) {
+  .fill-height {
     /*headerheight + menuBarHeight + playerHeight*/
     height: calc(100vh - 155px);
   }
