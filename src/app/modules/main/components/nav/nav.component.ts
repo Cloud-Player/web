@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ClientDetector, OsNames, Result, ClientNames} from '../../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {AccountCloudplayerModel} from '../../../api/account/account-cloudplayer.model';
@@ -18,6 +18,8 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
+import {debounce} from 'underscore';
+import {LayoutService} from '../../../shared/services/layout';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -62,7 +64,13 @@ export class NavComponent implements OnInit {
   public cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel;
   public version = packageJSON.version;
 
-  constructor(private dragAndDropService: DragAndDropService, private el: ElementRef) {
+  @ViewChild('shrinkingSidebar')
+  public shrinkingSidebar: ElementRef;
+
+  constructor(private el: ElementRef,
+              private zone: NgZone,
+              private dragAndDropService: DragAndDropService,
+              private layoutService: LayoutService) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
     this.cloudPlayerAccount = <AuthenticatedUserAccountCloudplayerModel>this.getAccountForProvider('cloudplayer');
   }
@@ -173,5 +181,13 @@ export class NavComponent implements OnInit {
     this.dragAndDropService.getObservable()
       .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
       .subscribe(this.dragEnd.bind(this));
+
+    const debouncedLayoutChange = debounce(() => {
+      this.layoutService.emitLayoutChange();
+    }, 100);
+
+    this.zone.runOutsideAngular(() => {
+      this.shrinkingSidebar.nativeElement.addEventListener('transitionend', debouncedLayoutChange);
+    });
   }
 }

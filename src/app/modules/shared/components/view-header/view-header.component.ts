@@ -1,7 +1,8 @@
-import {Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ScrollViewComponent} from '../scroll-view/scroll-view.component';
 import {Subscription} from 'rxjs/Subscription';
 import {debounce} from 'underscore';
+import {LayoutService} from '../../services/layout';
 
 
 @Component({
@@ -10,25 +11,34 @@ import {debounce} from 'underscore';
   templateUrl: './view-header.template.html'
 })
 
-export class ViewHeaderComponent implements OnInit, OnDestroy {
+export class ViewHeaderComponent implements AfterViewInit, OnDestroy {
   private _subscription: Subscription;
   private _debouncedSetWidth: Function;
+  private _boundingRect: ClientRect;
+  private _affixTop: number;
 
   @ViewChild('header')
   public header;
 
   constructor(private el: ElementRef,
               private zone: NgZone,
+              private layoutService: LayoutService,
               private scrollViewComponent: ScrollViewComponent) {
     this._subscription = new Subscription();
   }
 
   private setWidth() {
-    this.header.nativeElement.style.width = `calc(100vw - ${this.el.nativeElement.getBoundingClientRect().x}px)`;
+    this.header.nativeElement.style.width = `calc(100vw - ${this._boundingRect.left}px)`;
+  }
+
+  private setBoundRect() {
+    this._boundingRect = this.el.nativeElement.getBoundingClientRect();
+    this._affixTop = this._boundingRect.top + this.scrollViewComponent.scrollPos;
+    this.scrollChange(this.scrollViewComponent.scrollPos);
   }
 
   private scrollChange(top: number) {
-    if (top > 10) {
+    if (top > this._affixTop) {
       this._debouncedSetWidth();
       this.header.nativeElement.classList.add('affixed');
     } else {
@@ -38,10 +48,15 @@ export class ViewHeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.setBoundRect();
+    this._debouncedSetWidth = debounce(this.setWidth.bind(this), 100, true);
     this.zone.runOutsideAngular(() => {
       this._subscription.add(
         this.scrollViewComponent.scrollPosChange.subscribe(this.scrollChange.bind(this))
+      );
+      this._subscription.add(
+        this.layoutService.getObservable().subscribe(this.setBoundRect.bind(this))
       );
     });
   }

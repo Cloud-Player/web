@@ -45,6 +45,7 @@ import {OptionsBtnComponent} from './components/options-btn/options-btn';
 import {OptionBtnComponent} from './components/option-btn/option-btn';
 import {OptionsOptionBtnComponent} from './components/options-btn/options-option-btn/options-option-btn';
 import {EmptyStateComponent} from './components/empty-state/empty-state';
+import {LayoutService} from './services/layout';
 
 @NgModule({
   imports: [
@@ -136,6 +137,7 @@ import {EmptyStateComponent} from './components/empty-state/empty-state';
     ToastService,
     DragAndDropService,
     ModalService,
+    LayoutService,
     AuthenticatedUserGuard
   ]
 })
