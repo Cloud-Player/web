@@ -152,7 +152,7 @@ body.native.desktop {
     }
   }
 
-  @media (min-width: $screen-md-min) {
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     .sidebar {
       width: 80px;
 
