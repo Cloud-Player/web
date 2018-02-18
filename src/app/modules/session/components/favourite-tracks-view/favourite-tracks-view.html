@@ -10,7 +10,7 @@
       [id]="account.provider"
       [title]="availableProviderMap[account.provider].title"
       [icon]="availableProviderMap[account.provider].icon">
-      <div *ngIf="!account.isNew()" class="card">
+      <div *ngIf="tracks.length>0" class="card">
         <div *ngFor="let track of tracks">
           <app-context-menu>
             <app-track-list-item [track]="track" [tracks]="tracks">
@@ -23,15 +23,22 @@
           </app-context-menu>
         </div>
       </div>
-      <div *ngIf="account.isNew()">
-        <p>
-          Connect with your {{availableProviderMap[account.provider].title}}
-          account to see all of your favourite tracks
-        </p>
-        <button class="btn btn-primary">
-          <i [class]="availableProviderMap[account.provider].icon"></i>
-          Connect
-        </button>
+
+      <div *ngIf="tracks.length === 0 && !account.isNew()" class="card fill-height">
+        <app-empty-state title="Your favourite tracks will appear here"
+                         icon="fa fa-heart-o"
+                         ctaLink="/"
+                         ctaText="Search for a track">
+        </app-empty-state>
+      </div>
+
+      <div *ngIf="account.isNew()"
+           class="card fill-height">
+        <app-empty-state title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your favourite tracks"
+                         [icon]="availableProviderMap[account.provider].icon"
+                         ctaLink="/"
+                         ctaText="Login with {{availableProviderMap[account.provider].title}}">
+        </app-empty-state>
       </div>
     </app-tab-pane>
   </app-tab-bar>

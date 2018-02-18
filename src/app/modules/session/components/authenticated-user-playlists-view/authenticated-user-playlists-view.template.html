@@ -3,13 +3,15 @@
     <i class="fa fa-list" aria-hidden="true"></i> Playlists
   </app-view-header>
 
-  <app-tab-bar [showTabBar]="true" (tabChange)="selectTab($event)">
+  <app-tab-bar [showTabBar]="true"
+               (tabChange)="selectTab($event)">
     <app-tab-pane
       *ngFor="let account of accounts.models"
       [id]="account.provider"
       [title]="availableProviderMap[account.provider].title"
       [icon]="availableProviderMap[account.provider].icon">
-      <div *ngIf="!account.isNew()" class="card">
+      <div *ngIf="account.playlists.length > 0 && !account.isNew()"
+           class="card">
         <ul class="playlist-grid">
           <li *ngFor="let playlist of account.playlists.models">
             <div class="playlist-card">
@@ -17,7 +19,7 @@
                 <img *ngIf=playlist.image.getMediumSizeUrl()
                      [src]="playlist.image.getMediumSizeUrl()">
                 <div *ngIf=!playlist.image.getMediumSizeUrl()
-                   class="no-img">
+                     class="no-img">
                   <i class="fa fa-list"></i>
                 </div>
               </div>
@@ -38,15 +40,23 @@
           </li>
         </ul>
       </div>
-      <div *ngIf="account.isNew()">
-        <p>
-          Connect with your {{availableProviderMap[account.provider].title}}
-          account to see all of your favourite tracks
-        </p>
-        <button class="btn btn-primary">
-          <i [class]="availableProviderMap[account.provider].icon"></i>
-          Connect
-        </button>
+
+      <div *ngIf="!account.playlists.isSyncing && account.playlists.length === 0 && !account.isNew()"
+           class="card fill-height">
+        <app-empty-state title="No playlists available"
+                         icon="fa fa-list"
+                         ctaLink="/"
+                         ctaText="Create a playlist">
+        </app-empty-state>
+      </div>
+
+      <div *ngIf="account.isNew()"
+           class="card fill-height">
+        <app-empty-state title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your playlists"
+                         [icon]="availableProviderMap[account.provider].icon"
+                         ctaLink="/"
+                         ctaText="Login with {{availableProviderMap[account.provider].title}}">
+        </app-empty-state>
       </div>
     </app-tab-pane>
   </app-tab-bar>
