@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, Injectable, Input} from '@angular/core';
+import {AfterContentInit, Input} from '@angular/core';
 import {FilterFormComponent, FilterFormStatusTypes} from '../filter-form';
 import {NgControl} from '@angular/forms';
 

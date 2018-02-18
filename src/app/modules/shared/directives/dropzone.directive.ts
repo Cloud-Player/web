@@ -1,7 +1,6 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../services/drag-and-drop';
 import {Subscription} from 'rxjs/Subscription';
-import {debounce, throttle} from 'underscore';
 
 @Directive({
   selector: '[appDropzone]'

@@ -1,6 +1,16 @@
 import {
-  Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
-  OnDestroy, forwardRef, OnChanges, SimpleChanges, Renderer2
+  AfterContentInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isUndefined} from 'underscore';

@@ -1,8 +1,6 @@
-import {Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, Input, Renderer2, OnDestroy} from '@angular/core';
-import {ContextMenuComponent} from '../context-menu/context-menu';
+import {Component, ElementRef, EventEmitter, OnDestroy, Output, Renderer2, ViewChild} from '@angular/core';
 import {OptionBtnComponent} from '../option-btn/option-btn';
 import {Subscription} from 'rxjs/Subscription';
-import {Subscriber} from 'rxjs/Subscriber';
 
 @Component({
   selector: 'app-options-btn',

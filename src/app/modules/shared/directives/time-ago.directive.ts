@@ -1,4 +1,4 @@
-import {Directive, ElementRef, OnInit, Input, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import * as moment from 'moment';
 
 @Directive({

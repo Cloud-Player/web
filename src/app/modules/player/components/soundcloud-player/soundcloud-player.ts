@@ -1,6 +1,4 @@
-import {
-  Component, ElementRef, Input, OnDestroy, OnInit, Renderer2
-} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, Renderer2} from '@angular/core';
 import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';

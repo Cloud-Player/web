@@ -1,9 +1,8 @@
 import {getUrl} from '../utils/get_url.util';
 import {request} from '../utils/request.util';
-import {extend, isUndefined} from 'underscore';
+import {extend} from 'underscore';
 import {prepareParams} from '../utils/prepare_params';
 import {SelectableModel} from './selectable.model';
-import {result} from 'underscore';
 import {ModelSaveOptions} from 'backbone';
 
 export class BaseModel extends SelectableModel {

@@ -1,12 +1,9 @@
-import {Component, ViewChild, ElementRef, AfterViewInit, OnInit} from '@angular/core';
-import {
-  CollectionTextInputSearchComponent
-} from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {CollectionTextInputSearchComponent} from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
 import * as localforage from 'localforage';
 import {TabBarComponent} from '../../../shared/components/tab-bar/tab-bar';
 import {TabPaneComponent} from '../../../shared/components/tab-pane/tab-pane';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
-import {ITwoRangeSliderValue} from '../../../shared/components/two-range-slider/two-range-slider.component';
 import {TracksSoundcloudCollection} from '../../../api/tracks/tracks-soundcloud.collection';
 import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 import {TracksYoutubeCollection} from '../../../api/tracks/tracks-youtube.collection';

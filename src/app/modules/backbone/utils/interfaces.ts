@@ -1,5 +1,3 @@
-import {BaseCollection} from '../collections/base.collection';
-import {BaseModel} from '../models/base.model';
 import {Collection, Model} from 'backbone';
 
 export interface IModelConstructor {

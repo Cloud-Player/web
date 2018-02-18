@@ -4,8 +4,6 @@ import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account
 import {AuthenticatedUserAccountsCollection} from '../../../api/authenticated-user/account/authenticated-user-accounts.collection';
 import {TabPaneComponent} from '../../../shared/components/tab-pane/tab-pane';
 import {ITrack} from '../../../api/tracks/track.interface';
-import {IPlaylistItems} from '../../../api/playlists/playlist-item/playlist-items.interface';
-import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.interface';
 import {IFavouriteTrackItems} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-items.interface';
 import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-item.interface';
 import {ProviderMap} from '../../../shared/src/provider-map.class';

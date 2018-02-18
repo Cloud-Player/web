@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, Input, Renderer2, OnDestroy, NgZone} from '@angular/core';
+import {Component, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
 import {Subscription} from 'rxjs/Subscription';
 

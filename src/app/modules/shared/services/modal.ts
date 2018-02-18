@@ -1,6 +1,4 @@
 import {ComponentFactoryResolver, Injectable, ViewContainerRef} from '@angular/core';
-import {ToastModel} from '../models/toast';
-import {Toasts} from '../collections/toasts';
 import {ModalFactory} from '../src/modal-factory.class';
 
 export class Modal {

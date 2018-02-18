@@ -1,8 +1,4 @@
-import {
-  Component,
-  ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type,
-  ViewContainerRef
-} from '@angular/core';
+import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from '../components/modal/modal/modal';
 
 @Injectable()

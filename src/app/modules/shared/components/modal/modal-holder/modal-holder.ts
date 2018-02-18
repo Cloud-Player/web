@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, Injectable} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ModalFactory} from '../../../src/modal-factory.class';
 import {ModalService} from '../../../services/modal';
 

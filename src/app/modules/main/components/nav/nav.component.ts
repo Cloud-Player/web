@@ -1,15 +1,11 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {ClientDetector, OsNames, Result, ClientNames} from '../../../shared/services/client-detector.service';
+import {ClientDetector, ClientNames, OsNames, Result} from '../../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {AccountCloudplayerModel} from '../../../api/account/account-cloudplayer.model';
 import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
-import {Globals} from '../../../../../globals';
 import {AuthenticatedUserAccountSoundcloudModel} from '../../../api/authenticated-user/account/authenticated-user-account-soundcloud.model';
-import {AccountSoundcloudModel} from '../../../api/account/account-soundcloud.model';
 import {AuthenticatedUserAccountYoutubeModel} from '../../../api/authenticated-user/account/authenticated-user-account-youtube.model';
-import {IAccount} from '../../../api/account/account.interface';
-import {findWhere} from 'underscore';
+import {debounce} from 'underscore';
 import {AuthenticatedUserPlaylistCloudplayerModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-cloudplayer.model';
 import {AuthenticatedUserPlaylistYoutubeModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-youtube.model';
 import {AuthenticatedUserPlaylistSoundcloudModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-soundcloud.model';
@@ -18,7 +14,6 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
-import {debounce} from 'underscore';
 import {LayoutService} from '../../../shared/services/layout';
 import {ExternalUserAuthenticator} from '../../../session/services/external-authenticator.class';
 

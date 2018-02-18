@@ -1,5 +1,5 @@
 import {Collection} from 'backbone';
-import {isUndefined, extend} from 'underscore';
+import {isUndefined} from 'underscore';
 import {Selectable} from './selectable';
 import {SelectableModel} from '../models/selectable.model';
 

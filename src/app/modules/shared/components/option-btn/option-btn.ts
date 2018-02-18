@@ -1,5 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {OptionsBtnComponent} from '../options-btn/options-btn';
+import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-option-btn',

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TabPaneComponent} from '../tab-pane/tab-pane';
 import {isUndefined} from 'underscore';
 

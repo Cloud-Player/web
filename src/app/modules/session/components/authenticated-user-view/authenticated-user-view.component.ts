@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
+import {ExternalUserAuthenticator} from '../../services/external-authenticator.class';
 
 @Component({
   selector: 'app-authenticated-user-view',
@@ -6,11 +8,11 @@ import {Component} from '@angular/core';
   templateUrl: './authenticated-user-view.template.html'
 })
 export class AuthenticatedUserViewComponent {
-  constructor() {
+  constructor(private externalUserAuthenticator: ExternalUserAuthenticator) {
 
   }
 
-  disconnect(): void {
-    // this.authService.disconnect();
+  public connect(account: IAuthenticatedUserAccount) {
+    this.externalUserAuthenticator.connect(account);
   }
 }

@@ -5,7 +5,6 @@ import {PlaylistSoundcloudModel} from '../../../api/playlists/playlist-soundclou
 import {PlaylistYoutubeModel} from '../../../api/playlists/playlist-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {IAccount} from '../../../api/account/account.interface';
 import {IPlaylists} from '../../../api/playlists/playlists.interface';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {ITrack} from '../../../api/tracks/track.interface';

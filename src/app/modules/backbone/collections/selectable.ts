@@ -1,4 +1,4 @@
-import {Collection, Model, Events} from 'backbone';
+import {Collection, Events, Model} from 'backbone';
 import {extend} from 'underscore';
 import {SelectableModel} from '../models/selectable.model';
 

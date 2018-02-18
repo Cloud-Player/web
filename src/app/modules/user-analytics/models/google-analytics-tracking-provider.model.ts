@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {TrackingProviderModel} from './tracking-provider.model';
 import {isString} from 'underscore';
 

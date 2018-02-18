@@ -4,7 +4,7 @@ import {ToastTypes} from '../../shared/src/toast-types.enum';
 import {ToastService} from '../../shared/services/toast';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 import {HttpClient} from '@angular/common/http';
-import {ClientDetector, OsNames, Result} from '../../shared/services/client-detector.service';
+import {ClientDetector} from '../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../api/authenticated-user/authenticated-user.model';
 import {LayoutService} from '../../shared/services/layout';
 

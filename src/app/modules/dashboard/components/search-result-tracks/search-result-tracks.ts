@@ -1,4 +1,4 @@
-import {Component, ContentChild, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {PlayQueue} from '../../../player/collections/play-queue';
@@ -7,7 +7,6 @@ import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ITracks} from '../../../api/tracks/tracks.interface';
 import {ITrack} from '../../../api/tracks/track.interface';
-import {FilterFormComponent} from '../filter-form/filter-form';
 
 @Component({
   selector: 'app-search-result-tracks',

@@ -1,6 +1,4 @@
 import {result} from 'underscore';
-import {getAttributesMapKey} from '../utils/get-attributes-map-key';
-import {IDynamicInstanceDefinition, IDynamicInstances} from '../utils/interfaces';
 
 export function queryParam(): any {
   return function (target: any, propertyKey: any, value: any): void {

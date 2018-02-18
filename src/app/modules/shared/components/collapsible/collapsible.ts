@@ -1,5 +1,13 @@
 import {
-  AfterContentInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges,
+  AfterContentInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  Renderer2,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';

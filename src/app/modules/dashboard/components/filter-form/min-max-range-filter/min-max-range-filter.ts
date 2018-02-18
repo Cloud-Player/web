@@ -1,5 +1,4 @@
-import {AbstractFilterComponent} from '../abstract-filter/abstract-filter';
-import {AfterContentInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, Input, ViewChild} from '@angular/core';
 import {NgControl} from '@angular/forms';
 import {FilterFormComponent, FilterFormStatusTypes} from '../filter-form';
 import {ITwoRangeSliderValue} from '../../../../shared/components/two-range-slider/two-range-slider.component';

@@ -1,6 +1,5 @@
-import {isObject, extend, pairs} from 'underscore';
+import {extend, isNull, isObject, isUndefined, pairs} from 'underscore';
 import {HttpParams} from '@angular/common/http';
-import {isUndefined, isNull} from 'underscore';
 
 function setParams(params: HttpParams, queryParams: {} = {}): HttpParams {
   pairs(queryParams).forEach((pair: any) => {

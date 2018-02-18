@@ -1,17 +1,22 @@
 import {
-  Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, OnInit, Output,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
 import {Subscription} from 'rxjs/Subscription';
 import {PlayerStatus} from '../../src/player-status.enum';
-import {IPlayer, IPlayerSize} from '../../src/player.interface';
+import {IPlayer} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
-import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {EaseService} from '../../../shared/services/ease.service';

@@ -9,7 +9,7 @@ import {MainComponent} from './components/main/main.component';
 import {MainRoutingModule} from './main.routes';
 import {PlayerModule} from '../player/player.module';
 import {SessionModule} from '../session/session.module';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {NavComponent} from './components/nav/nav.component';
 import {PlaylistModule} from '../playlists/playlist.module';
 import {SharedModule} from '../shared/shared.module';

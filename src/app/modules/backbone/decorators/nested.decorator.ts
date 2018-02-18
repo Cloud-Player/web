@@ -1,4 +1,4 @@
-import {result, pairs} from 'underscore';
+import {result} from 'underscore';
 import {getAttributesMapKey} from '../utils/get-attributes-map-key';
 
 export function nested(): any {

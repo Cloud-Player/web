@@ -1,7 +1,4 @@
-import {
-  ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type,
-  ViewContainerRef
-} from '@angular/core';
+import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {IPlayer, IPlayerSize} from './player.interface';
 import {SoundcloudPlayerComponent} from '../components/soundcloud-player/soundcloud-player';
 import {PlayerStatus} from './player-status.enum';

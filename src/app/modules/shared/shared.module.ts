@@ -27,7 +27,6 @@ import {MultiLineComponent} from './components/multi-line-text/multi-line.compon
 import {LimitCollectionresultsPipe} from './pipes/limit-collection-results.pipe';
 import {FacebookShareButtonComponent} from './components/facebook-share-button/facebook-share-button.component';
 import {TwitterShareButtonComponent} from './components/twitter-share-button/twitter-share-button.component';
-import {EaseService} from './services/ease.service';
 import {ToastsComponent} from './components/toasts/toasts';
 import {ToastService} from './services/toast';
 import {ToastComponent} from './components/toast/toast';

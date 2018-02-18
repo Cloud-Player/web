@@ -1,11 +1,8 @@
 /// <reference types="youtube" />
-import {
-  Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2
-} from '@angular/core';
-import {uniqueId} from 'underscore';
+import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {extend, uniqueId} from 'underscore';
 import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {Events} from 'backbone';
-import {extend} from 'underscore';
 import {AbstractPlayer} from '../../src/abstract-player.class';
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 

@@ -1,8 +1,18 @@
 import {
-  Component, Input, Output, ViewChild, ElementRef, EventEmitter, AfterContentInit,
-  OnDestroy, forwardRef, SimpleChanges, OnChanges, AfterViewInit, Renderer2
+  AfterContentInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
-import {isUndefined, isNumber, isNull} from 'underscore';
+import {isUndefined} from 'underscore';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TabBarComponent} from '../tab-bar/tab-bar';
 
 @Component({

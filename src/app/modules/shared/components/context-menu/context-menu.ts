@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, EventEmitter, Renderer2, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 
 class ContextMenuManager {

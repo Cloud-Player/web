@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, NgZone, OnDestroy, ViewChild} from '@angular/core';
 import {ScrollViewComponent} from '../scroll-view/scroll-view.component';
 import {Subscription} from 'rxjs/Subscription';
 import {debounce} from 'underscore';

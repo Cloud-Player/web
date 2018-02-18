@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
-import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
+import {Component, OnInit} from '@angular/core';
 import {ToastService} from '../../services/toast';
 import {Toasts} from '../../collections/toasts';
 import {ToastModel} from '../../models/toast';

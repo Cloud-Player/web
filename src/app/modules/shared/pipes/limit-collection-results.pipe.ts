@@ -1,4 +1,4 @@
-import {EventEmitter, NgZone, OnDestroy, OnInit, Pipe, PipeTransform, Renderer2} from '@angular/core';
+import {EventEmitter, NgZone, OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {debounce} from 'underscore';
 import {Subscription} from 'rxjs/Subscription';
 

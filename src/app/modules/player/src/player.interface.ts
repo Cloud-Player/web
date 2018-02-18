@@ -1,4 +1,4 @@
-import {ElementRef, EventEmitter} from '@angular/core';
+import {EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ITrack} from '../../api/tracks/track.interface';
 

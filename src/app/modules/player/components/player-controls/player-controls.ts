@@ -1,8 +1,5 @@
 import {PlayQueueItem} from '../../models/play-queue-item';
-
-declare let MediaMetadata: any;
-
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -10,6 +7,8 @@ import {PlayQueue} from '../../collections/play-queue';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {AbstractImageModel} from '../../../api/image/abstract-image';
+
+declare let MediaMetadata: any;
 
 @Component({
   selector: 'app-player-controls',

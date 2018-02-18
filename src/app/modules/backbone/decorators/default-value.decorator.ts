@@ -1,6 +1,5 @@
-import {result, pairs} from 'underscore';
+import {clone, result} from 'underscore';
 import {getAttributesMapKey} from '../utils/get-attributes-map-key';
-import {clone} from 'underscore';
 
 export function defaultValue(value: any): any {
   return function (target: any, propertyKey: string): void {

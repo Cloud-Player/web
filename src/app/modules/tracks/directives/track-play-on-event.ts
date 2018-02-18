@@ -1,4 +1,4 @@
-import {Directive, ElementRef, OnInit, Input, OnDestroy, Renderer2} from '@angular/core';
+import {Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {PlayQueue} from '../../player/collections/play-queue';
 import {PlayQueueItem} from '../../player/models/play-queue-item';
 import {ITrack} from '../../api/tracks/track.interface';

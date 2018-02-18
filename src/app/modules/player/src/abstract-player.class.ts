@@ -1,11 +1,10 @@
 import {Observable} from 'rxjs/Observable';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {throttle, isNumber} from 'underscore';
+import {isNumber, throttle} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
 import {EaseService} from '../../shared/services/ease.service';
 import {IPlayerOptions, IPlayerSize} from './player.interface';
 import {ITrack} from '../../api/tracks/track.interface';
-import {Subscription} from 'rxjs/Subscription';
 
 export abstract class AbstractPlayer implements OnInit {
   private _duration: number;

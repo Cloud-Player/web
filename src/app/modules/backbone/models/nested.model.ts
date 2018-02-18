@@ -1,8 +1,6 @@
-import {Model, Collection} from 'backbone';
-import {result, isObject, isArray, extend, isString} from 'underscore';
-import {BaseCollection} from '../collections/base.collection';
-import {BaseModel} from './base.model';
-import {IDynamicInstanceDefinition, IDynamicInstances, IModelOrCollectionConstructor, INestedDefinition} from '../utils/interfaces';
+import {Collection, Model} from 'backbone';
+import {extend, isArray, isObject, isString, result} from 'underscore';
+import {IDynamicInstances, INestedDefinition} from '../utils/interfaces';
 import {InstanceResolver} from '../utils/instance-resolver';
 
 export class NestedModel extends Model {

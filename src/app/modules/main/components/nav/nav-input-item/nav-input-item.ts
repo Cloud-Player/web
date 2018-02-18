@@ -1,6 +1,5 @@
-import {Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {RangeSliderComponent} from '../../../../shared/components/range-slider/range-slider.component';
 
 @Component({
   selector: 'app-nav-input-item',

@@ -1,4 +1,4 @@
-import {Model, Collection} from 'backbone';
+import {Collection, Model} from 'backbone';
 import {result} from 'underscore';
 import {concatUrlParts} from './concat_url_parts.util';
 
