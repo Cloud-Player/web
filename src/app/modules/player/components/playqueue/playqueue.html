@@ -41,7 +41,7 @@
 
   <div class="scheduled-tracks-list" *ngIf="playQueue.getScheduledItems().length > 0">
     <div class="divider">
-      <div class="title">Next Songs</div>
+      <div class="title">Next Tracks</div>
     </div>
     <div *ngFor="let playQueueItem of playQueue.getScheduledItems() | limitCollectionresults: {limit: 10}"
          class="track"
