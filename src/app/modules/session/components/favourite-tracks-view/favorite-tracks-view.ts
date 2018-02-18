@@ -9,6 +9,8 @@ import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.
 import {IFavouriteTrackItems} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-items.interface';
 import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-item.interface';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
+import {ExternalUserAuthenticator, ExternalUserConnectState} from '../../services/external-authenticator.class';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-favourite-tracks-view',
@@ -18,12 +20,14 @@ import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
   private _selectedAccount: IAuthenticatedUserAccount;
+  private _subscription: Subscription;
   public availableProviderMap = ProviderMap.map;
   public accounts: AuthenticatedUserAccountsCollection<IAuthenticatedUserAccount>;
   public tracks: Array<ITrack>;
 
-  constructor() {
+  constructor(private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.accounts = AuthenticatedUserModel.getInstance().accounts;
+    this._subscription = new Subscription();
   }
 
   private setTracks(items: IFavouriteTrackItems<IFavouriteTrackItem>) {
@@ -72,12 +76,23 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  public connect(account: IAuthenticatedUserAccount) {
+    this.externalUserAuthenticator.connect(account);
+  }
+
   ngOnInit(): void {
     this._selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
+    const authSubscription = this.externalUserAuthenticator.getObservable()
+      .filter(state => state === ExternalUserConnectState.Success)
+      .subscribe(() => {
+        this._selectedAccount.favouriteTracks.items.fetch();
+      });
+    this._subscription.add(authSubscription);
     this.addSetTracksListener();
   }
 
   ngOnDestroy(): void {
     this.removeSetTracksListener();
+    this._subscription.unsubscribe();
   }
 }

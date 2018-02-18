@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticatedUserAccountsCollection} from '../../../api/authenticated-user/account/authenticated-user-accounts.collection';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
@@ -9,21 +9,25 @@ import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.interface';
 import {PlayQueue} from '../../../player/collections/play-queue';
 import {PlayQueueItem} from '../../../player/models/play-queue-item';
+import {ExternalUserAuthenticator, ExternalUserConnectState} from '../../services/external-authenticator.class';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-authenticated-user-playlists-view',
   styleUrls: ['./authenticated-user-playlists-view.style.scss'],
   templateUrl: './authenticated-user-playlists-view.template.html'
 })
-export class AuthenticatedUserPlaylistsViewComponent implements OnInit {
+export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestroy {
   private _selectedAccount: IAuthenticatedUserAccount;
   private _playQueue: PlayQueue<PlayQueueItem>;
+  private _subscription: Subscription;
   public availableProviderMap = ProviderMap.map;
   public accounts: AuthenticatedUserAccountsCollection<IAuthenticatedUserAccount>;
 
-  constructor() {
+  constructor(private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.accounts = AuthenticatedUserModel.getInstance().accounts;
     this._playQueue = PlayQueue.getInstance();
+    this._subscription = new Subscription();
   }
 
   public selectTab(tabPane: TabPaneComponent) {
@@ -53,7 +57,21 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit {
     }
   }
 
+  public connect(account: IAuthenticatedUserAccount) {
+    this.externalUserAuthenticator.connect(account);
+  }
+
   ngOnInit(): void {
     this._selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
+    const authSubscription = this.externalUserAuthenticator.getObservable()
+      .filter(state => state === ExternalUserConnectState.Success)
+      .subscribe(() => {
+        this._selectedAccount.playlists.fetch();
+      });
+    this._subscription.add(authSubscription);
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }

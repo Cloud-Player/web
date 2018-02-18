@@ -20,6 +20,7 @@ import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {debounce} from 'underscore';
 import {LayoutService} from '../../../shared/services/layout';
+import {ExternalUserAuthenticator} from '../../../session/services/external-authenticator.class';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -70,6 +71,7 @@ export class NavComponent implements OnInit {
   constructor(private el: ElementRef,
               private zone: NgZone,
               private dragAndDropService: DragAndDropService,
+              private externalUserAuthenticator: ExternalUserAuthenticator,
               private layoutService: LayoutService) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
     this.cloudPlayerAccount = <AuthenticatedUserAccountCloudplayerModel>this.getAccountForProvider('cloudplayer');
@@ -102,16 +104,7 @@ export class NavComponent implements OnInit {
   }
 
   public connect(account: IAuthenticatedUserAccount) {
-    // this.userAnalyticsService.trackEvent('sc_auth_start', 'click', 'auth-service');
-    const popup = window.open(account.loginUrl);
-    const interval = window.setInterval(() => {
-      if (!popup) {
-        clearInterval(interval);
-      } else if (popup.closed) {
-        clearInterval(interval);
-        this.authenticatedUser.fetch();
-      }
-    }, 100);
+    this.externalUserAuthenticator.connect(account);
   }
 
   public saveTmpPlaylist(account) {

@@ -8,6 +8,7 @@ import {AuthenticatedUserPlaylistsViewComponent} from './components/authenticate
 import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthenticatedUserViewComponent} from './components/authenticated-user-view/authenticated-user-view.component';
 import {TracksModule} from '../tracks/tracks.module';
+import {ExternalUserAuthenticator} from './services/external-authenticator.class';
 
 @NgModule({
   imports: [
@@ -22,6 +23,9 @@ import {TracksModule} from '../tracks/tracks.module';
     FavouriteTracksViewComponent,
     AuthenticatedUserPlaylistsViewComponent,
     AuthenticatedUserViewComponent
+  ],
+  providers: [
+    ExternalUserAuthenticator
   ]
 })
 
