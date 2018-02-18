@@ -14,7 +14,12 @@
           <li *ngFor="let playlist of account.playlists.models">
             <div class="playlist-card">
               <div class="image">
-                <img [src]="playlist.image.getMediumSizeUrl()">
+                <img *ngIf=playlist.image.getMediumSizeUrl()
+                     [src]="playlist.image.getMediumSizeUrl()">
+                <div *ngIf=!playlist.image.getMediumSizeUrl()
+                   class="no-img">
+                  <i class="fa fa-list"></i>
+                </div>
               </div>
               <div class="description">
                 <div class="title">

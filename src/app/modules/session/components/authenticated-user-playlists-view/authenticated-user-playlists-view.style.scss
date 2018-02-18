@@ -36,6 +36,17 @@
         border-radius: 5px 5px 0 0;
         object-fit: cover;
       }
+
+      .no-img{
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $gray-lighter;
+        color: $gray-light;
+        font-size: 20px;
+        min-height: 100px;
+      }
     }
 
     .description{
