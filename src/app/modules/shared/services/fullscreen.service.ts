@@ -60,7 +60,6 @@ export class FullScreenService {
 
   public enter() {
     if (!this._isInFullScreen && this._fullScreenCall) {
-      debugger;
       this._fullScreenCall();
       this._observable.emit(FullScreenEventType.RequestEnter);
     }
