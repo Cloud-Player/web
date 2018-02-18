@@ -74,14 +74,14 @@
 
   <div
     *ngIf="playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && !playQueue.getCurrentItem()">
-    <p>No tracks available. <a routerLink="/app">Search</a> for a track and click on it to play it.</p>
+    <p>No tracks available. <a href="#">Search</a> for a track and click on it to play it.</p>
     <p>You can drag and drop tracks here to add them to the play queue</p>
 
   </div>
 
   <div
     *ngIf="playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && playQueue.getCurrentItem()">
-    No more tracks available. <a routerLink="/app">Search</a> for more tracks to keep the party going on.
+    No more tracks available. <a href="#">Search</a> for more tracks to keep the party going on.
   </div>
 
 </div>
