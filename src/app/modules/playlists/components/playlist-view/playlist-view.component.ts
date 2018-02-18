@@ -79,7 +79,15 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
     this.isInEditMode = false;
   }
 
-  public destroy() {
+  public deleteItem(item: IPlaylistItem) {
+    item.destroy().then(() => {
+      this.userAnalyticsService.trackEvent('playlist', 'delete_item', 'app-play-list-view');
+    }, () => {
+      this.userAnalyticsService.trackEvent('playlist:error', 'delete_item', 'app-play-list-view');
+    });
+  }
+
+  public delete() {
     const userPlaylists = this.playlists;
     const indexOfPlaylist = userPlaylists.indexOf(this.playlist);
     let otherPlaylistId: number;

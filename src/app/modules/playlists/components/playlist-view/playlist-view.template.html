@@ -40,7 +40,16 @@
   <div *ngIf="playlist.items.length>0"
        class="card">
     <div *ngFor="let item of playlist.items.models">
-      <app-track-list-item [track]="item.track" [tracks]="tracks"></app-track-list-item>
+
+      <app-context-menu>
+        <app-track-list-item [track]="item.track" [tracks]="tracks">
+          <app-options-btn>
+            <app-options-option-btn
+              title="Delete" (action)="deleteItem(item)">
+            </app-options-option-btn>
+          </app-options-btn>
+        </app-track-list-item>
+      </app-context-menu>
     </div>
   </div>
 
