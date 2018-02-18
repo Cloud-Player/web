@@ -63,12 +63,14 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     this.contextMenu.nativeElement.focus();
     this._isOpen = true;
 
-    const close = (ev) => {
-      ev.preventDefault();
-      this.hide();
-      document.removeEventListener('click', close);
-    };
-    document.addEventListener('click', close);
+    const unbindListener = this.renderer2.listen(document, 'click', (ev) => {
+      if (ev.which !== 3) {
+        ev.preventDefault();
+        this.hide();
+        unbindListener();
+      }
+    });
+    this._subscriptions.add(unbindListener);
   }
 
   public hide() {
