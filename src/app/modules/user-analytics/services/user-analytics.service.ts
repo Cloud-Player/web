@@ -11,7 +11,7 @@ export class UserAnalyticsService {
     this._trackingProviders.add(provider);
   }
 
-  public trackEvent(eventName: string, eventAction: string, msg: string) {
+  public trackEvent(eventName: string, eventAction: string, msg?: string) {
     if (this._isActive) {
       this._trackingProviders.trackEvent(eventName, eventAction, msg);
     }

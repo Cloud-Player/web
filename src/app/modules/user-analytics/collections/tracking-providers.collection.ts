@@ -5,7 +5,7 @@ export class TrackingProviders<TModel extends TrackingProviderModel> extends Bas
   _userId: string;
   model: any = TrackingProviderModel;
 
-  trackEvent(eventName: string, eventAction: string, msg: string) {
+  trackEvent(eventName: string, eventAction: string, msg?: string) {
     const args = arguments;
     this.each(function (trackingProvider) {
       trackingProvider.trackEvent.apply(this, args);

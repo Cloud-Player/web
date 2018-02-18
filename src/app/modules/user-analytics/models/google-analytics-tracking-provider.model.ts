@@ -9,7 +9,7 @@ declare global {
 }
 
 export class GoogleAnalyticsTrackingProvider extends TrackingProviderModel {
-  trackEvent(eventName: string, eventAction: string, msg: string) {
+  trackEvent(eventName: string, eventAction: string, msg?: string) {
     window.ga('send', 'event', eventName, eventAction, msg);
   }
 
