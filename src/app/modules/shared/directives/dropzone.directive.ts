@@ -54,17 +54,22 @@ export class DropZoneDirective implements OnInit, OnDestroy {
   }
 
   private onDragOver(event: any) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
   }
 
-  private onDragLeave() {
+  private onDragLeave(event) {
     clearTimeout(this._leaveTimeout);
     this.execCallback(this.dragLeave, event);
     this.el.nativeElement.classList.remove('drag-over');
   }
 
   private onDrop(event: any) {
-    this.onDragLeave();
+    if (event) {
+      event.preventDefault();
+    }
+    this.onDragLeave(event);
     this.execCallback(this.drop, event);
   }
 

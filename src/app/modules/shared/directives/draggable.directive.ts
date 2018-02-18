@@ -24,11 +24,13 @@ export class DraggableDirective implements OnInit, OnDestroy {
     const transfer = <any>event.dataTransfer;
     if (this.dragData) {
       try {
-        transfer.setData('text', JSON.stringify(this.dragData));
+        transfer.setData('text/plain', JSON.stringify(this.dragData));
       } catch (err) {
         throw new Error('DragData has to be a JSON object!');
       }
       this.dragAndDropService.dragStart(this.dragData);
+    } else {
+      transfer.setData('text/plain',' ');
     }
     if (this._image && this._imageIsLoaded) {
       transfer.setDragImage(this._image, 10, 10);
