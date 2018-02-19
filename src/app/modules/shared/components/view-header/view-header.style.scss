@@ -41,7 +41,11 @@
     }
   }
 
-  /deep/ .button-group {
+  /deep/ .actions {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: nowrap;
+
     > .btn:not(:last-child) {
       margin-right: 5px;
     }
