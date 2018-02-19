@@ -5,11 +5,15 @@ import {attributesKey} from '../../../backbone/decorators/attributes-key.decorat
 import {PlaylistItemsYoutubeCollection} from '../../playlists/playlist-item/playlist-items-youtube.collection';
 import {PlaylistItemYoutubeModel} from '../../playlists/playlist-item/playlist-item-youtube.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
+import {queryParam} from '../../../backbone/decorators/query-param.decorator';
 
 export class AuthenticatedUserPlaylistYoutubeModel
   extends PlaylistYoutubeModel implements IPlaylist {
 
   endpoint = '/playlists';
+
+  @queryParam()
+  part = 'snippet,status';
 
   @attributesKey('canEdit')
   @defaultValue(true)
@@ -26,6 +30,8 @@ export class AuthenticatedUserPlaylistYoutubeModel
         title: attrs.title,
         description: attrs.description
       },
+      status: {
+        privacyStatus: attrs.isPublic ? 'public' : 'private'
       }
     };
   }
