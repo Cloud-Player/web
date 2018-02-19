@@ -26,7 +26,6 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
   private authenticatedUser: AuthenticatedUserModel;
   public playlist: IPlaylist;
   public playlists: IPlaylists<IPlaylist>;
-  public isInEditMode = false;
   public tracks: Array<ITrack>;
 
   constructor(private route: ActivatedRoute,
@@ -68,16 +67,6 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
     );
     this.fetchPlaylist();
     this.setTracks(this.playlist.items);
-  }
-
-  public save() {
-    this.playlist.save();
-    this.isInEditMode = false;
-  }
-
-  public cancel() {
-    this.playlist.fetch();
-    this.isInEditMode = false;
   }
 
   public deleteItem(item: IPlaylistItem) {

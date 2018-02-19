@@ -1,40 +1,18 @@
 <section class="column" *ngIf="playlist">
 
   <app-view-header>
-    <div *ngIf="isInEditMode"
-         class="title edit-mode form-inline">
-      <form (submit)="save()">
-        <app-toggle-switch [(value)]="playlist.isPublic"></app-toggle-switch>
-        <div class="form-group">
-          <input type="text"
-                 name="playlistName"
-                 class="form-control"
-                 id="playlistName"
-                 placeholder="Playlist Name"
-                 [(ngModel)]="playlist.title"
-                 required
-                 appFocusInput>
-        </div>
-        <div class="button-group">
-          <input type="button" class="btn btn-danger" (click)="cancel()" value="Cancel"/>
-          <input type="submit" class="btn btn-success" value="Save"/>
-        </div>
-      </form>
+    <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
+    <span class="text">{{playlist.title}}</span>
+    <div *ngIf="playlist.canEdit"
+         class="button-group actions">
+      <a routerLink="/me/playlists/{{playlist.provider}}/{{playlist.id}}/edit"
+         class="btn btn-default">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </a>
+      <button class="btn btn-default btn-danger" (click)="delete()">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+      </button>
     </div>
-
-    <div *ngIf="!isInEditMode" class="title">
-      <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
-      <span class="text">{{playlist.title}}</span>
-      <div *ngIf="playlist.canEdit" class="button-group">
-        <button class="btn btn-default" (click)="isInEditMode = true">
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-        </button>
-        <button class="btn btn-default btn-danger" (click)="delete()">
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-
   </app-view-header>
 
   <div *ngIf="playlist.items.length>0"
