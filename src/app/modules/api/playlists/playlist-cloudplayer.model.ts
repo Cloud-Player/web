@@ -20,7 +20,7 @@ export class PlaylistCloudplayerModel extends CloudplayerModel implements IPlayl
   @defaultValue(false)
   canEdit: boolean;
 
-  @attributesKey('isPublic')
+  @attributesKey('public')
   @defaultValue(false)
   isPublic: boolean;
 
