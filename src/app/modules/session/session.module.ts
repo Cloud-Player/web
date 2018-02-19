@@ -9,6 +9,7 @@ import {PlaylistModule} from '../playlists/playlist.module';
 import {AuthenticatedUserViewComponent} from './components/authenticated-user-view/authenticated-user-view.component';
 import {TracksModule} from '../tracks/tracks.module';
 import {ExternalUserAuthenticator} from './services/external-authenticator.class';
+import {AuthenticatedUserPlaylistFormViewComponent} from './components/authenticated-user-playlist-form-view/authenticated-user-playlist-form-view';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {ExternalUserAuthenticator} from './services/external-authenticator.class
   declarations: [
     FavouriteTracksViewComponent,
     AuthenticatedUserPlaylistsViewComponent,
+    AuthenticatedUserPlaylistFormViewComponent,
     AuthenticatedUserViewComponent
   ],
   providers: [
