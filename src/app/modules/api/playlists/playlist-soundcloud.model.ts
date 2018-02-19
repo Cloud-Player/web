@@ -29,6 +29,9 @@ export class PlaylistSoundcloudModel
   @defaultValue('')
   title: string;
 
+  @attributesKey('description')
+  description: string;
+
   @attributesKey('user')
   @nested()
   artist: ArtistCloudplayerModel;
@@ -69,6 +72,7 @@ export class PlaylistSoundcloudModel
       playlist: {
         title: attrs.title,
         sharing: attrs.isPublic ? 'public' : 'private',
+        description: attrs.description,
         tracks: attrs.items
       }
     };

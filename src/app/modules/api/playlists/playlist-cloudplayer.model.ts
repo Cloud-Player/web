@@ -28,6 +28,9 @@ export class PlaylistCloudplayerModel extends CloudplayerModel implements IPlayl
   @defaultValue('')
   title: string;
 
+  @attributesKey('description')
+  description: string;
+
   @attributesKey('user')
   @nested()
   artist: ArtistCloudplayerModel;

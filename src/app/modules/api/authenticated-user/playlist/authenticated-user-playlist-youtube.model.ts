@@ -21,8 +21,11 @@ export class AuthenticatedUserPlaylistYoutubeModel
 
   compose(attrs: any) {
     return {
+      id: attrs.id,
       snippet: {
-        title: attrs.title
+        title: attrs.title,
+        description: attrs.description
+      },
       }
     };
   }

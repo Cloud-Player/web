@@ -31,6 +31,9 @@ export class PlaylistYoutubeModel extends YoutubeProxyModel implements IPlaylist
   @defaultValue('')
   title: string;
 
+  @attributesKey('description')
+  description: string;
+
   @attributesKey('user')
   @nested()
   artist: ArtistYoutubeModel;
@@ -52,6 +55,7 @@ export class PlaylistYoutubeModel extends YoutubeProxyModel implements IPlaylist
     };
     if (attributes.snippet) {
       parsedPlaylist.title = attributes.snippet.title;
+      parsedPlaylist.description = attributes.snippet.description;
       parsedPlaylist.image = attributes.snippet.thumbnails;
       parsedPlaylist.artist = {
         id: attributes.snippet.channelId,

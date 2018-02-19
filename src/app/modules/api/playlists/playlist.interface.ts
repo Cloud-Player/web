@@ -11,6 +11,7 @@ export interface IPlaylistModelConstructor {
 export interface IPlaylist extends BaseModel {
   canEdit: boolean;
   title: string;
+  description: string;
   artist: IArtist;
   image: AbstractImageModel;
   isPublic: boolean;
