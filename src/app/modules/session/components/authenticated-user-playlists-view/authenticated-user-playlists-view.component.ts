@@ -18,11 +18,11 @@ import {Subscription} from 'rxjs/Subscription';
   templateUrl: './authenticated-user-playlists-view.template.html'
 })
 export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestroy {
-  private _selectedAccount: IAuthenticatedUserAccount;
   private _playQueue: PlayQueue<PlayQueueItem>;
   private _subscription: Subscription;
   public availableProviderMap = ProviderMap.map;
   public accounts: AuthenticatedUserAccountsCollection<IAuthenticatedUserAccount>;
+  public selectedAccount: IAuthenticatedUserAccount;
 
   constructor(private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.accounts = AuthenticatedUserModel.getInstance().accounts;
@@ -31,10 +31,10 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
   }
 
   public selectTab(tabPane: TabPaneComponent) {
-    this._selectedAccount = this.accounts.getAccountForProvider(tabPane.id);
+    this.selectedAccount = this.accounts.getAccountForProvider(tabPane.id);
 
-    if (this._selectedAccount && this._selectedAccount.playlists.length === 0) {
-      this._selectedAccount.playlists.fetch();
+    if (this.selectedAccount && this.selectedAccount.playlists.length === 0) {
+      this.selectedAccount.playlists.fetch();
     }
   }
 
@@ -62,11 +62,11 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this._selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
+    this.selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
     const authSubscription = this.externalUserAuthenticator.getObservable()
       .filter(state => state === ExternalUserConnectState.Success)
       .subscribe(() => {
-        this._selectedAccount.playlists.fetch();
+        this.selectedAccount.playlists.fetch();
       });
     this._subscription.add(authSubscription);
   }
