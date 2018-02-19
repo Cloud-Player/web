@@ -101,12 +101,7 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
       }
 
       this.userAnalyticsService.trackEvent('playlist', 'delete', 'app-play-list-view');
-
-      if (otherPlaylistId) {
-        this.router.navigate(['../', otherPlaylistId], {relativeTo: this.route});
-      } else {
-        this.router.navigateByUrl('/');
-      }
+      this.router.navigateByUrl('/me/playlists');
     }, () => {
       this.userAnalyticsService.trackEvent('playlist:error', 'delete', 'app-play-list-view');
     });
