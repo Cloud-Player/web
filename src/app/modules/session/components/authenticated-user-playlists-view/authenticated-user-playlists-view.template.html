@@ -1,6 +1,13 @@
 <section class="column">
   <app-view-header>
     <i class="fa fa-list-alt" aria-hidden="true"></i> Playlists
+    <div class="button-group actions">
+      <a routerLink="/me/playlists/{{selectedAccount.provider}}/new"
+         class="btn btn-primary">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Add Playlist
+      </a>
+    </div>
   </app-view-header>
 
   <app-tab-bar [showTabBar]="true"
