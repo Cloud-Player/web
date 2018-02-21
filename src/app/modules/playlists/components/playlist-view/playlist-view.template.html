@@ -15,8 +15,14 @@
     </div>
   </app-view-header>
 
+  <div *ngIf="playlist.description"
+       class="col-md-12">
+    <p>{{playlist.description}}</p>
+  </div>
+
   <div *ngIf="playlist.items.length>0"
        class="card">
+
     <div *ngFor="let item of playlist.items.models">
 
       <app-context-menu>

@@ -34,6 +34,9 @@
                 <div class="title">
                   {{playlist.title}}
                 </div>
+                <p *ngIf="playlist.description">
+                  {{playlist.description}}
+                </p>
               </div>
               <div class="actions">
                 <div class="btn btn-link btn-default" (click)="play(playlist)">
