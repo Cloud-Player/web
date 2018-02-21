@@ -125,6 +125,10 @@
               font-size: 14px;
               margin-right: -2px
             }
+
+            &:not(:last-child) {
+              margin-right: 5px;
+            }
           }
 
           app-options-btn {
