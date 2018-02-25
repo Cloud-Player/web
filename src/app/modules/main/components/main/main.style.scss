@@ -1,6 +1,7 @@
 /* Global styles */
 @import 'variables';
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "../node_modules/font-awesome/scss/variables";
 
 h2 {
   font-size: 28px;
@@ -253,18 +254,34 @@ body.native.desktop {
   }
 }
 
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: $screen-xs-max) and (max-width: $screen-md-min) {
-  .fill-height {
-    /*headerheight + menuBarHeight*/
-    height: calc(100vh - 110px);
+.fa-queue {
+  position: relative;
+  &:before {
+    content: $fa-var-bars;
+  }
+  &:after {
+    content: $fa-var-play;
+    background: $light-white;
+    position: absolute;
+    top: 1px;
+    right: 0;
+    font-size: 6px;
+    padding: 0 0 0 2px;
   }
 }
 
-@media (max-width: $screen-sm-min) {
-  .fill-height {
-    /*headerheight + menuBarHeight + playerHeight*/
-    height: calc(100vh - 155px);
+.btn-default{
+  .fa-queue{
+    &:after{
+      background: $btn-default-bg;
+    }
+  }
+  &:hover{
+    .fa-queue{
+      &:after{
+        background:  darken($btn-default-bg, 10%);
+      }
+    }
   }
 }
 
