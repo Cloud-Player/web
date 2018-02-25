@@ -32,8 +32,8 @@ export class PlayerManagerComponent implements OnInit {
   private _fadeDuration = 10;
   private _prepareTime = 30;
   private _volume = 1;
+  private _errorRetryCounter = 0;
   private _playerStatus;
-  private _errorOccured = false;
   private _playerSubscriptions;
   private _playerFactory: PlayerFactory;
   private _activePlayer: ComponentRef<IPlayer>;
@@ -69,8 +69,8 @@ export class PlayerManagerComponent implements OnInit {
   private handlePlayerStatusChange(newStatus: PlayerStatus) {
     switch (newStatus) {
       case PlayerStatus.Playing:
-        this._errorOccured = false;
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Playing;
+        this._errorRetryCounter = 0;
         break;
       case PlayerStatus.Paused:
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Paused;
@@ -86,9 +86,12 @@ export class PlayerManagerComponent implements OnInit {
         }
         break;
       case PlayerStatus.Error:
-        this._errorOccured = true;
         this.userAnalyticsService.trackEvent('player_error', 'any', this._activePlayer.instance.getError());
-        this.playQueue.getCurrentItem().pause();
+        const currentItem = this.playQueue.getCurrentItem();
+        if (currentItem && currentItem.isPlaying()) {
+          this.playQueue.getCurrentItem().pause();
+          this.retryOnError();
+        }
         break;
     }
     this._playerStatus = status;
@@ -98,6 +101,23 @@ export class PlayerManagerComponent implements OnInit {
   private unBindListeners() {
     this._playerSubscriptions.unsubscribe();
     this._playerSubscriptions = new Subscription();
+  }
+
+  private retryOnError() {
+    const currentItem = this.playQueue.getCurrentItem();
+    const progress = currentItem.progress;
+    if (this._errorRetryCounter > 2) {
+      this.userAnalyticsService.trackEvent('player_error_resolve_timeout', 'any');
+      return;
+    }
+    this._errorRetryCounter++;
+    if (this._activePlayer) {
+      this._activePlayer.instance.deInitialize();
+      this._activePlayer = null;
+    }
+    currentItem.play(progress).then(() => {
+      this.userAnalyticsService.trackEvent('resolved_player_error', 'any');
+    });
   }
 
   private bindListeners(player: IPlayer): void {
@@ -211,7 +231,9 @@ export class PlayerManagerComponent implements OnInit {
 
     if (canPlay) {
       newPlayer.instance.setVolume(this._volume);
-      newPlayer.instance.play(startTime);
+      if (newPlayer.instance.getStatus() !== PlayerStatus.Playing) {
+        newPlayer.instance.play(startTime);
+      }
     } else {
       newPlayer.instance.setVolume(0);
       newPlayer.instance.seekTo(startTime);
@@ -260,7 +282,7 @@ export class PlayerManagerComponent implements OnInit {
       /*
        * 2. NextPlayer for PlayQueueTrack does exist and is able to play so start that one
        */
-      this.activatePlayer(nextPlayer, activePlayer);
+      this.activatePlayer(nextPlayer, activePlayer, startTime);
     } else if (activePlayer && this._playerFactory.canReusePlayer(activePlayer, playQueueItem)) {
       /*
        * 3. Existing player does exist and can be reused
