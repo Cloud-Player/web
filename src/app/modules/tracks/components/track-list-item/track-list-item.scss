@@ -19,6 +19,13 @@
       .cover /deep/ app-track-play-button .play-button {
         opacity: 1;
       }
+
+      .details{
+        .drag-indicator {
+          opacity: 1 !important;
+          margin-right: 5px !important;
+        }
+      }
     }
 
     &.selected {
@@ -89,6 +96,14 @@
         display: flex;
         align-items: center;
         margin-bottom: 18px;
+
+        .drag-indicator {
+          cursor: grab;
+          color: $gray-light;
+          margin-right: -15px;
+          opacity: 0;
+          transition: all 0.5s ease;
+        }
 
         app-toggle-liked-track {
           padding-right: 10px;

@@ -15,7 +15,10 @@
            appTrackPlayOn="click"
            [track]="track"
            [tracks]="tracks">
-        <b class="track-title">{{track.title}}</b>
+        <b class="track-title">
+          <i class="fa fa-bars drag-indicator hidden-xs"></i>
+          {{track.title}}
+        </b>
         <div class="artist">
           <span>{{track.artist.getFullName()}}</span>
           <span class="created">created
@@ -26,8 +29,7 @@
       <div class="btn-holder">
         <div class="btn btn-xs btn-default"
              (click)="addToQueue(track)">
-          <span class="fa fa-arrow-circle-o-right next-icon"></span>
-          <span class="fa fa-play"></span>
+          <span class="fa fa-queue"></span>
         </div>
         <ng-content></ng-content>
       </div>
