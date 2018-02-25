@@ -49,7 +49,7 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('contextMenu')
   public contextMenu: ElementRef;
 
-  constructor(private renderer2: Renderer2) {
+  constructor(private el: ElementRef, private renderer2: Renderer2) {
     this.options = [];
     this._contextMenuManager = ContextMenuManager.getInstance();
     this._contextMenuManager.add(this);
@@ -57,9 +57,12 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public show(posX: number, posY: number) {
+    if (this._isOpen) {
+      return;
+    }
     this._contextMenuManager.hideAll();
-    this.contextMenu.nativeElement.style.transform = `translate(${posX}px,${posY}px)`;
-    this.contextMenu.nativeElement.style.display = 'block';
+    this.contextMenu.nativeElement.style.transform = `translate(${posX + 5}px,${posY + 5}px)`;
+    this.el.nativeElement.classList.add('visible');
     this.contextMenu.nativeElement.focus();
     this._isOpen = true;
 
@@ -74,7 +77,7 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public hide() {
-    this.contextMenu.nativeElement.style.display = 'none';
+    this.el.nativeElement.classList.remove('visible');
     this._isOpen = false;
   }
 

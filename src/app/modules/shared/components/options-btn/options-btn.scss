@@ -5,21 +5,30 @@
 
   .btn {
     margin: 0;
+    width: 22px;
   }
 
   .options-list {
     position: fixed;
     min-width: 150px;
     border: 1px solid #ccc;
-    border-radius: 4px 0 4px 4px;
     list-style: none;
     padding: 0;
     background: white;
     flex-direction: column;
     flex-grow: 1;
-    margin-top: 20px;
-    margin-left: -135px;
+    margin-top: 25px;
+    margin-left: -128px;
     z-index: 999;
+  }
+
+  .backdrop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 99;
   }
 }
 
