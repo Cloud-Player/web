@@ -1,33 +1,17 @@
 @import 'variables';
 
 :host {
-  height: calc(100vh);
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   display: block;
-
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  .scroll-view {
-    padding: 10px 0;
   }
 
   @media (max-width: $screen-md-min) {
     .scroll-view {
       padding: 0 0;
     }
-  }
-
-  /* Medium devices (desktops, 992px and up) */
-  @media (min-width: $screen-xs-max) and (max-width: $screen-md-min) {
-    /*menuBarHeight*/
-    height: calc(100vh - 40px);
-  }
-
-  @media (max-width: $screen-sm-min) {
-    /*menuBarHeight + playerHeight*/
-    height: calc(100vh - 85px);
   }
 }
 
