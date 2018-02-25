@@ -1,11 +1,12 @@
 :host {
+  color: #ccc;
+
   .empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #ccc;
-    height: 100%;
+    height: 60vh;
 
     .icon {
       font-size: 100px;
