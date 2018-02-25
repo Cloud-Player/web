@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
-import {IDragAndDropData} from '../../../shared/services/drag-and-drop';
+import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-play-queue',
@@ -11,12 +12,18 @@ import {IDragAndDropData} from '../../../shared/services/drag-and-drop';
   templateUrl: './playqueue.html'
 })
 export class PlayQueueComponent implements OnInit {
-  coverSize = ImageSizes.Medium;
+  private _subscriptions: Subscription;
+
+  public coverSize = ImageSizes.Medium;
+  public showDragAndDropHelp = false;
 
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
 
-  constructor(private userAnalyticsService: UserAnalyticsService) {
+  constructor(private el: ElementRef,
+              private userAnalyticsService: UserAnalyticsService,
+              private dragAndDropService: DragAndDropService) {
+    this._subscriptions = new Subscription();
   }
 
   public drop(dragAndDrop: IDragAndDropData) {
@@ -32,11 +39,32 @@ export class PlayQueueComponent implements OnInit {
     }
   }
 
+  private onDragStart() {
+    this.el.nativeElement.classList.add('drag-in-progress');
+    this.showDragAndDropHelp = true;
+  }
+
+  private onDragEnd() {
+    this.el.nativeElement.classList.remove('drag-in-progress');
+    this.showDragAndDropHelp = false;
+  }
+
   ngOnInit() {
     this.playQueue.on('add', (playQueueItem: PlayQueueItem) => {
       if (playQueueItem.isQueued()) {
         this.userAnalyticsService.trackEvent('queue_track', 'add', 'app-play-queue');
       }
     });
+    this._subscriptions.add(
+      this.dragAndDropService
+        .getObservable()
+        .subscribe(ev => {
+          if (ev === DragAndDropStates.DragStart) {
+            this.onDragStart();
+          } else {
+            this.onDragEnd();
+          }
+        })
+    );
   }
 }
