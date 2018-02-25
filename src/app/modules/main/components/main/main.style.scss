@@ -74,6 +74,11 @@ button:focus {
   cursor: pointer;
 }
 
+.padding-side-15 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .divider {
   position: relative;
 
@@ -122,7 +127,6 @@ button:focus {
     max-width: 800px;
     margin: 0 auto;
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
   }
 }
 

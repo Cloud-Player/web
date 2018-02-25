@@ -17,8 +17,7 @@
       [id]="account.provider"
       [title]="availableProviderMap[account.provider].title"
       [icon]="availableProviderMap[account.provider].icon">
-      <div *ngIf="account.playlists.length > 0 && !account.isNew()"
-           class="card">
+      <div *ngIf="account.playlists.length > 0 && !account.isNew()">
         <ul class="playlist-grid">
           <li *ngFor="let playlist of account.playlists.models">
             <div class="playlist-card">
@@ -34,7 +33,7 @@
                 <div class="title">
                   {{playlist.title}}
                 </div>
-                <p *ngIf="playlist.description">
+                <p>
                   {{playlist.description}}
                 </p>
               </div>
@@ -51,17 +50,15 @@
         </ul>
       </div>
 
-      <div *ngIf="!account.playlists.isSyncing && account.playlists.length === 0 && !account.isNew()"
-           class="card fill-height">
+      <div *ngIf="!account.playlists.isSyncing && account.playlists.length === 0 && !account.isNew()">
         <app-empty-state title="Create a playlist to collect both SoundCloud and YouTube tracks"
                          icon="fa fa-list-alt"
-                         ctaLink="/"
+                         ctaLink="/me/playlists/{{account.provider}}/new"
                          ctaText="Create a playlist">
         </app-empty-state>
       </div>
 
-      <div *ngIf="account.isNew()"
-           class="card fill-height">
+      <div *ngIf="account.isNew()">
         <app-empty-state
           title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your playlists"
           [icon]="availableProviderMap[account.provider].icon"
