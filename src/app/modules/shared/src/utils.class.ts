@@ -18,4 +18,16 @@ export class Utils {
     });
     return camelCaseStr;
   }
+
+  static createDivEl(classList: Array<string>) {
+    const node = document.createElement('div');
+    classList.forEach((elClass) => {
+      node.classList.add(elClass);
+    });
+    return node;
+  }
+
+  static elementIsVisible(el: HTMLElement) {
+    return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+  }
 }
