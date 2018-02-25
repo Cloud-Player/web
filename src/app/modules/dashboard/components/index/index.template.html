@@ -12,8 +12,12 @@
     class="card">
   </app-social-share-panel>
 
-  <app-tab-bar [showTabBar]="true" [activeTabId]="activeTab" #tabBar *ngIf="!showWelcomeText">
-    <app-tab-pane id="soundcloud" [title]="availableProviderMap['soundcloud'].title"
+  <app-tab-bar #tabBar
+               (tabChange)="selectTab($event)"
+               [hidden]="showWelcomeText"
+               [activeTabId]="activeTab" >
+    <app-tab-pane id="soundcloud"
+                  [title]="availableProviderMap['soundcloud'].title"
                   [icon]="availableProviderMap['soundcloud'].icon">
 
       <div *ngIf="tracksSoundCloud.length>0"
@@ -36,15 +40,15 @@
         </app-search-result-tracks>
       </div>
 
-      <div *ngIf="tracksSoundCloud.length === 0 && tracksSoundCloud.isSyncing"
-           class="card">
-        Searching for tracks that match your query "{{tracksSoundCloud.queryParams.q}}"
-      </div>
+      <app-empty-state *ngIf="tracksSoundCloud.length === 0 && tracksSoundCloud.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
 
-      <div *ngIf="tracksSoundCloud.queryParams.q && tracksSoundCloud.length === 0 && !isFetching"
-           class="card">
-        No SoundCloud tracks were found for the query "{{tracksSoundCloud.queryParams.q}}"
-      </div>
+      <app-empty-state *ngIf="tracksSoundCloud.queryParams.q && tracksSoundCloud.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
 
     </app-tab-pane>
     <app-tab-pane id="youtube" [title]="availableProviderMap['youtube'].title"
@@ -61,36 +65,40 @@
         </app-search-result-tracks>
       </div>
 
-      <div *ngIf="tracksYoutube.length === 0 && tracksYoutube.isSyncing"
-           class="card">
-        Searching for tracks that match your query "{{tracksYoutube.queryParams.q}}"
-      </div>
+      <app-empty-state *ngIf="tracksYoutube.length === 0 && tracksYoutube.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
 
-      <div *ngIf="tracksYoutube.queryParams.q && tracksYoutube.length === 0 && !isFetching"
-           class="card">
-        No YouTube tracks were found for the query "{{tracksYoutube.queryParams.q}}"
-      </div>
-
+      <app-empty-state *ngIf="tracksYoutube.queryParams.q && tracksYoutube.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
     </app-tab-pane>
   </app-tab-bar>
 
-  <div *ngIf="showWelcomeText"
-       class="card getting-started">
-    <h1>Welcome to Cloud Player!</h1>
-    <p>
-      Cloud player is an unofficial SoundCloud player to play songs from SoundCloud.
-      <br>
-      You can search for all songs that are available on SoundCloud
-    </p>
-    <p>
-      <a (click)="connect()">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They
-      will appear in the menubar
-      as soon as the connection was successful.
-    </p>
-    <p>
-      You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply
-      drag and drop tracks on it.
-    </p>
-    <p>Cloud Player is also available as <a routerLink="/desktop-app">native App for your PC.</a></p>
-  </div>
+  <app-empty-state *ngIf="showWelcomeText"
+                   title="Search for tracks"
+                   icon="fa fa-search">
+  </app-empty-state>
+
+  <!--<div *ngIf="showWelcomeText"-->
+       <!--class="card getting-started">-->
+    <!--<h1>Welcome to Cloud Player!</h1>-->
+    <!--<p>-->
+      <!--Cloud player is an unofficial SoundCloud player to play songs from SoundCloud.-->
+      <!--<br>-->
+      <!--You can search for all songs that are available on SoundCloud-->
+    <!--</p>-->
+    <!--<p>-->
+      <!--<a (click)="connect()">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They-->
+      <!--will appear in the menubar-->
+      <!--as soon as the connection was successful.-->
+    <!--</p>-->
+    <!--<p>-->
+      <!--You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply-->
+      <!--drag and drop tracks on it.-->
+    <!--</p>-->
+    <!--<p>Cloud Player is also available as <a routerLink="/desktop-app">native App for your PC.</a></p>-->
+  <!--</div>-->
 </section>
