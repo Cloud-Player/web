@@ -3,6 +3,7 @@ export enum PlayerStatus {
   Initialised,
   Waiting,
   Ready,
+  RequestPlay,
   Playing,
   Stopped,
   Paused,

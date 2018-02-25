@@ -162,6 +162,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   }
 
   protected startPlayer(): void {
+    this.onRequestPlay();
     this._ytPlayer.playVideo();
   }
 

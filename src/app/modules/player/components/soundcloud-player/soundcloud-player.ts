@@ -87,6 +87,7 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   }
 
   protected startPlayer(): void {
+    this.onRequestPlay();
     this._audio.play().then(null, (err) => {
       console.warn('Audio Element could not be started!', err);
       this.setAbleToPlay(false);

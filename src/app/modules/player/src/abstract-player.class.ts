@@ -5,6 +5,7 @@ import {PlayerStatus} from './player-status.enum';
 import {EaseService} from '../../shared/services/ease.service';
 import {IPlayerOptions, IPlayerSize} from './player.interface';
 import {ITrack} from '../../api/tracks/track.interface';
+import {isString} from 'underscore';
 
 export abstract class AbstractPlayer implements OnInit {
   private _duration: number;
@@ -164,6 +165,10 @@ export abstract class AbstractPlayer implements OnInit {
     this.setStatus(PlayerStatus.Ready);
   }
 
+  protected onRequestPlay() {
+    this.setStatus(PlayerStatus.RequestPlay);
+  }
+
   protected onPlaying() {
     this.setAbleToPlay(true);
     if (!this.isAllowedToPlay()) {
@@ -206,7 +211,7 @@ export abstract class AbstractPlayer implements OnInit {
       this.setStatus(PlayerStatus.Waiting);
     } else {
       if (err) {
-        this._error = err.toString();
+        this._error = isString(err) ? err : JSON.stringify(err);
       } else {
         this._error = 'The player could not be started because an error occurred';
       }
