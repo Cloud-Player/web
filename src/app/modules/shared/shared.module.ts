@@ -22,7 +22,6 @@ import {ViewChangeLoaderComponent} from './components/view-change-loader/view-ch
 import {TrackCoverComponent} from './components/track-cover/track-cover.component';
 import {TimeAgoDirective} from './directives/time-ago.directive';
 import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
-import {FillHeightDirective} from './directives/fill-height.directive';
 import {MultiLineComponent} from './components/multi-line-text/multi-line.component';
 import {LimitCollectionresultsPipe} from './pipes/limit-collection-results.pipe';
 import {FacebookShareButtonComponent} from './components/facebook-share-button/facebook-share-button.component';
@@ -45,6 +44,7 @@ import {OptionBtnComponent} from './components/option-btn/option-btn';
 import {OptionsOptionBtnComponent} from './components/options-btn/options-option-btn/options-option-btn';
 import {EmptyStateComponent} from './components/empty-state/empty-state';
 import {LayoutService} from './services/layout';
+import {FillHeightDirective} from './directives/fill-height';
 
 @NgModule({
   imports: [
