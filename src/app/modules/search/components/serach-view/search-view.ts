@@ -12,12 +12,12 @@ import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-my-dashboard',
-  styleUrls: ['./index.style.scss'],
-  templateUrl: './index.template.html'
+  selector: 'app-search-view',
+  styleUrls: ['./search-view.scss'],
+  templateUrl: './search-view.html'
 })
 
-export class DashboardIndexComponent implements AfterViewInit {
+export class SearchViewComponent implements AfterViewInit {
   public tracksSoundCloud: TracksSoundcloudCollection<TrackSoundcloudModel>;
   public tracksYoutube: TracksYoutubeCollection<TrackYoutubeModel>;
   public searchCollection: TracksSoundcloudCollection<TrackSoundcloudModel> | TracksYoutubeCollection<TrackYoutubeModel>;

@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {BackboneModule} from '../backbone/backbone.module';
 import {TracksModule} from '../tracks/tracks.module';
-import {DashboardModule} from '../dashboard/dashboard.module';
 import {MainComponent} from './components/main/main.component';
 import {MainRoutingModule} from './main.routes';
 import {PlayerModule} from '../player/player.module';
@@ -22,6 +21,7 @@ import {ConnectModule} from '../connect/connect.module';
 import {NavItemComponent} from './components/nav/nav-item/nav-item';
 import {NavInputItemComponent} from './components/nav/nav-input-item/nav-input-item';
 import {NavDividerComponent} from './components/nav/nav-divider/nav-divider';
+import {SearchModule} from '../search/search.module';
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import {NavDividerComponent} from './components/nav/nav-divider/nav-divider';
     BackboneModule,
     PlayerModule,
     TracksModule,
-    DashboardModule,
+    SearchModule,
     MainRoutingModule,
     SessionModule,
     PlaylistModule,

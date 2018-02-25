@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {DashboardIndexComponent} from './components/index/index.component';
+import {SearchViewComponent} from './components/serach-view/search-view';
 
 const routes: Routes = [
-  {path: 'dashboard', component: DashboardIndexComponent}
+  {path: 'search', component: SearchViewComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {
+export class SearchRoutingModule {
 }

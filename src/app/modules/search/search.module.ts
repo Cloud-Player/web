@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {DashboardIndexComponent} from './components/index/index.component';
+import {SearchViewComponent} from './components/serach-view/search-view';
 import {TracksModule} from '../tracks/tracks.module';
-import {DashboardRoutingModule} from './dashboard.routes';
+import {SearchRoutingModule} from './search.routes';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {SessionModule} from '../session/session.module';
@@ -20,13 +20,13 @@ import {SearchResultTracksComponent} from './components/search-result-tracks/sea
     BrowserModule,
     FormsModule,
     TracksModule,
-    DashboardRoutingModule,
+    SearchRoutingModule,
     SessionModule,
     BackboneModule,
     SharedModule
   ],
   declarations: [
-    DashboardIndexComponent,
+    SearchViewComponent,
     FilterFormComponent,
     InputFilterComponent,
     RangeFilterComponent,
@@ -37,5 +37,5 @@ import {SearchResultTracksComponent} from './components/search-result-tracks/sea
   ]
 })
 
-export class DashboardModule {
+export class SearchModule {
 }

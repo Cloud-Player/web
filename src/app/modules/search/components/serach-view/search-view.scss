@@ -1,12 +1,6 @@
 @import 'variables';
 
 :host {
-  /deep/ app-scroll-view {
-    //.results{
-    //  margin-top: -8px;
-    //}
-  }
-
   input {
     font-size: 18px;
     align-self: baseline;
