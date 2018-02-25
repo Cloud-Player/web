@@ -7,7 +7,7 @@ import {TracksModule} from '../tracks/tracks.module';
 import {MainComponent} from './components/main/main.component';
 import {MainRoutingModule} from './main.routes';
 import {PlayerModule} from '../player/player.module';
-import {SessionModule} from '../session/session.module';
+import {AuthenticatedUserModule} from '../authenticated-user/authenticated-user.module';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {NavComponent} from './components/nav/nav.component';
 import {PlaylistModule} from '../playlists/playlist.module';
@@ -33,7 +33,7 @@ import {SearchModule} from '../search/search.module';
     TracksModule,
     SearchModule,
     MainRoutingModule,
-    SessionModule,
+    AuthenticatedUserModule,
     PlaylistModule,
     SharedModule,
     UserAnalyticsModule,

@@ -4,7 +4,7 @@ import {TracksModule} from '../tracks/tracks.module';
 import {SearchRoutingModule} from './search.routes';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {SessionModule} from '../session/session.module';
+import {AuthenticatedUserModule} from '../authenticated-user/authenticated-user.module';
 import {BackboneModule} from '../backbone/backbone.module';
 import {SharedModule} from '../shared/shared.module';
 import {FilterFormComponent} from './components/filter-form/filter-form';
@@ -21,7 +21,7 @@ import {SearchResultTracksComponent} from './components/search-result-tracks/sea
     FormsModule,
     TracksModule,
     SearchRoutingModule,
-    SessionModule,
+    AuthenticatedUserModule,
     BackboneModule,
     SharedModule
   ],

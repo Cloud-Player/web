@@ -19,5 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class SessionRoutingModule {
+export class AuthenticatedUserRoutingModule {
 }

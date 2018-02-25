@@ -15,7 +15,7 @@ import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {LayoutChangeTypes, LayoutService} from '../../../shared/services/layout';
-import {ExternalUserAuthenticator} from '../../../session/services/external-authenticator.class';
+import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
 
 const packageJSON = require('../../../../../../package.json');
 
