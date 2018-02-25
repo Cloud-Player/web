@@ -16,15 +16,13 @@
   </app-view-header>
 
   <div *ngIf="playlist.description"
-       class="col-md-12">
+       class="playlist-description padding-side-15">
     <p>{{playlist.description}}</p>
   </div>
 
   <div *ngIf="playlist.items.length>0"
        class="card">
-
     <div *ngFor="let item of playlist.items.models">
-
       <app-context-menu>
         <app-track-list-item [track]="item.track" [tracks]="tracks">
           <app-options-btn>
@@ -37,13 +35,15 @@
     </div>
   </div>
 
-  <div *ngIf="!playlist.items.isSyncing && playlist.items.length === 0"
-       class="card fill-height">
+  <app-empty-state *ngIf="!playlist.isSyncing && !playlist.items.isSyncing && playlist.items.length === 0"
+                   title="No tracks in the playlist"
+                   icon="fa fa-music"
+                   ctaLink="/"
+                   ctaText="Search for tracks">
+  </app-empty-state>
 
-    <app-empty-state title="No tracks in the playlist"
-                     icon="fa fa-music"
-                     ctaLink="/"
-                     ctaText="Search for tracks">
-    </app-empty-state>
-  </div>
+  <app-empty-state *ngIf="playlist.isSyncing || playlist.items.isSyncing"
+                   title="Loading tracks"
+                   icon="fa fa-music">
+  </app-empty-state>
 </section>
