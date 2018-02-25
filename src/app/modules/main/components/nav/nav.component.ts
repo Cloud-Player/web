@@ -14,7 +14,7 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
-import {LayoutService} from '../../../shared/services/layout';
+import {LayoutChangeTypes, LayoutService} from '../../../shared/services/layout';
 import {ExternalUserAuthenticator} from '../../../session/services/external-authenticator.class';
 
 const packageJSON = require('../../../../../../package.json');
@@ -108,8 +108,10 @@ export class NavComponent implements OnInit {
       if (accMapValue.tmpPlaylistModel instanceof AuthenticatedUserPlaylistCloudplayerModel) {
         accMapValue.tmpPlaylistModel.accountId = this.authenticatedUser.id;
       }
-      account.playlists.create(accMapValue.tmpPlaylistModel.clone());
-      accMapValue.tmpPlaylistModel.clear();
+      if (accMapValue.tmpPlaylistModel.title.length > 0) {
+        account.playlists.create(accMapValue.tmpPlaylistModel.clone());
+        accMapValue.tmpPlaylistModel.clear();
+      }
     }
   }
 
@@ -171,7 +173,7 @@ export class NavComponent implements OnInit {
       .subscribe(this.dragEnd.bind(this));
 
     const debouncedLayoutChange = debounce(() => {
-      this.layoutService.emitLayoutChange();
+      this.layoutService.emitLayoutChange(LayoutChangeTypes.menuSidebarChange);
     }, 100);
 
     this.zone.runOutsideAngular(() => {
