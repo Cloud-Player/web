@@ -6,7 +6,7 @@ import {UserAnalyticsService} from '../../user-analytics/services/user-analytics
 import {HttpClient} from '@angular/common/http';
 import {ClientDetector} from '../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../api/authenticated-user/authenticated-user.model';
-import {LayoutService} from '../../shared/services/layout';
+import {LayoutService, WindowElementTypes} from '../../shared/services/layout';
 
 @Injectable()
 export class NativeAppHandlerService {
@@ -82,6 +82,6 @@ export class NativeAppHandlerService {
     if (body) {
       body.style.opacity = '1';
     }
-    this.layoutService.emitLayoutChange();
+    this.layoutService.registerWindowElement(WindowElementTypes.NativeDesktopApp);
   }
 }

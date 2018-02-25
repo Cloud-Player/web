@@ -8,6 +8,7 @@ import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {PlayerManagerComponent} from '../player-manager/player-manager';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
+import {LayoutService, WindowElementTypes} from '../../../shared/services/layout';
 
 @Component({
   selector: 'app-player',
@@ -23,6 +24,7 @@ export class PlayerComponent implements OnInit {
 
   constructor(private cloudPlayerLogoService: CloudPlayerLogoService,
               private el: ElementRef,
+              private layoutService: LayoutService,
               private fullScreenService: FullScreenService) {
   }
 
@@ -78,13 +80,22 @@ export class PlayerComponent implements OnInit {
       localforage.setItem('sc_playqueue', this.playQueue.getScheduledItemsJSON(30));
     }, 1000);
 
+    const debouncedSetHasPlayer = debounce(() => {
+      if (this.playQueue.hasCurrentItem()) {
+        this.layoutService.registerWindowElement(WindowElementTypes.MusicPlayer);
+      } else {
+        this.layoutService.unRegisterWindowElement(WindowElementTypes.MusicPlayer);
+      }
+    }, 1000);
+
     const throttledCurrentItemSave = throttle((currentItem) => {
       if (currentItem) {
         localforage.setItem('sc_currentItem', currentItem.toMiniJSON());
       }
     }, 10000);
 
-    this.playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
+    this.playQueue.on('update remove reset change:status', debouncedPlayQueueSave);
+    this.playQueue.on('update remove reset', debouncedSetHasPlayer);
     this.playQueue.on('change:progress', throttledCurrentItemSave);
 
     this.fullScreenService.getObservable()
