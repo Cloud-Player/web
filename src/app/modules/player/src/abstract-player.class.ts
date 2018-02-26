@@ -293,6 +293,7 @@ export abstract class AbstractPlayer implements OnInit {
         return this.executeInitialisingQueue(promiseQueue).then(() => {
           this._playerSdkIsInitialised = true;
           this._playerIsInitialised = true;
+          this._initialised = true;
 
           this.bindListeners();
           if (isNumber(this.getVolume())) {
@@ -303,7 +304,6 @@ export abstract class AbstractPlayer implements OnInit {
           });
           this._initialiseCallbacks = [];
           this.setStatus(PlayerStatus.Initialised);
-          this._initialised = true;
           resolve();
         });
       });
