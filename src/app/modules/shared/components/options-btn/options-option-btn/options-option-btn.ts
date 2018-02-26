@@ -26,7 +26,8 @@ export class OptionsOptionBtnComponent implements OnInit {
     if (this.contextMenuComponent) {
       this.contextMenuComponent.registerOption({
         title: this.title,
-        action: this.action
+        action: this.action,
+        icon: this.icon
       });
     }
   }

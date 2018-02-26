@@ -8,6 +8,23 @@
 
     &:hover {
       background: $gray-lighter;
+      .fa-queue{
+        &:after{
+          background: $gray-lighter;
+        }
+      }
+    }
+
+    .icon{
+      width: 20px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .fa-queue{
+      &:after{
+        background: white;
+      }
     }
   }
 }

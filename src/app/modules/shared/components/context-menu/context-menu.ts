@@ -29,6 +29,7 @@ class ContextMenuManager {
 
 export interface IContextOption {
   title: string;
+  icon: string;
   action: EventEmitter<any>;
 }
 
