@@ -1,7 +1,6 @@
-import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef} from '@angular/core';
+import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from '../components/modal/modal/modal';
 import {Subject} from 'rxjs/Subject';
-import {TestComponent} from '../../search/components/test/test';
 
 export enum ModalStates {
   Initalised,
@@ -111,27 +110,19 @@ export class ModalService {
     modal.getObservable()
       .filter(ev => ev === ModalStates.Opened)
       .subscribe(() => {
-        console.log('+1');
         this._openedModals++;
         this._subject.next(ModalServiceStates.ModalAdded);
         if (this._openedModals === 1) {
-          console.log('===1')
           this._subject.next(ModalServiceStates.ModalVisbile);
-        } else {
-          console.log(this._openedModals)
         }
       });
     modal.getObservable()
       .filter(ev => ev === ModalStates.Closed)
       .subscribe(() => {
-        console.log('-1');
         this._openedModals--;
         this._subject.next(ModalServiceStates.ModalRemoved);
         if (this._openedModals === 0) {
-          console.log('===0')
           this._subject.next(ModalServiceStates.NoModalVisible);
-        } else {
-          console.log(this._openedModals)
         }
       });
   }
