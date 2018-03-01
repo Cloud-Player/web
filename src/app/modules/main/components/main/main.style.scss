@@ -254,19 +254,38 @@ body.native.desktop {
   }
 }
 
-.fa-queue {
+.fa-queue,
+.fa-add-playlist{
   position: relative;
   &:before {
     content: $fa-var-bars;
   }
   &:after {
-    content: $fa-var-play;
     background: $light-white;
     position: absolute;
     top: 10%;
     right: 0;
     font-size: 54%;
     padding: 0 6% 6% 10%;
+  }
+}
+
+.fa-queue{
+  &:after {
+    content: $fa-var-play;
+  }
+}
+
+.fa-add-playlist{
+  &:before {
+    content: $fa-var-list-alt;
+  }
+  &:after {
+    content: $fa-var-plus;
+    top: -10%;
+    right: -3px;
+    font-size: 60%;
+    border-radius: 50%;
   }
 }
 
