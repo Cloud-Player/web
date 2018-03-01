@@ -10,6 +10,7 @@ import {AuthenticatedUserViewComponent} from './components/authenticated-user-vi
 import {TracksModule} from '../tracks/tracks.module';
 import {ExternalUserAuthenticator} from './services/external-authenticator.class';
 import {AuthenticatedUserPlaylistFormViewComponent} from './components/authenticated-user-playlist-form-view/authenticated-user-playlist-form-view';
+import {AuthenticatedUserPlaylistSelectorModalComponent} from './components/authenticated-user-playlist-selector-modal/authenticated-user-playlist-selector-modal';
 
 @NgModule({
   imports: [
@@ -24,10 +25,18 @@ import {AuthenticatedUserPlaylistFormViewComponent} from './components/authentic
     FavouriteTracksViewComponent,
     AuthenticatedUserPlaylistsViewComponent,
     AuthenticatedUserPlaylistFormViewComponent,
-    AuthenticatedUserViewComponent
+    AuthenticatedUserViewComponent,
+
+    AuthenticatedUserPlaylistSelectorModalComponent
+  ],
+  exports: [
+    AuthenticatedUserPlaylistSelectorModalComponent
   ],
   providers: [
     ExternalUserAuthenticator
+  ],
+  entryComponents: [
+    AuthenticatedUserPlaylistSelectorModalComponent
   ]
 })
 

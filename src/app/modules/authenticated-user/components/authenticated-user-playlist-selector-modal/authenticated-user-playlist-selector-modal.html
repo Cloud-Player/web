@@ -1,0 +1,36 @@
+<div class="playlist-selector-modal">
+  <p *ngIf="track">
+    Select the playlist where the track {{track.title}} should be added
+  </p>
+  <app-tab-bar (tabChange)="selectTab($event)">
+    <app-tab-pane
+      *ngFor="let account of getAccounts()"
+      [id]="account.provider"
+      [title]="availableProviderMap[account.provider].title"
+      [icon]="availableProviderMap[account.provider].icon">
+      <div *ngIf="account.playlists.length > 0 && !account.isNew()">
+        <ul class="playlist-grid">
+          <li *ngFor="let playlist of account.playlists.models"
+              class="clickable"
+              (click)="addTrackTo(playlist)">
+            <div class="playlist-card">
+              <div class="image">
+                <img *ngIf=playlist.image.getMediumSizeUrl()
+                     [src]="playlist.image.getMediumSizeUrl()">
+                <div *ngIf=!playlist.image.getMediumSizeUrl()
+                     class="no-img">
+                  <i class="fa fa-list-alt"></i>
+                </div>
+              </div>
+              <div class="description">
+                <div class="title">
+                  {{playlist.title}}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </app-tab-pane>
+  </app-tab-bar>
+</div>
