@@ -45,10 +45,12 @@ import {OptionsOptionBtnComponent} from './components/options-btn/options-option
 import {EmptyStateComponent} from './components/empty-state/empty-state';
 import {LayoutService} from './services/layout';
 import {FillHeightDirective} from './directives/fill-height';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     BackboneModule
   ],
@@ -138,6 +140,9 @@ import {FillHeightDirective} from './directives/fill-height';
     ModalService,
     LayoutService,
     AuthenticatedUserGuard
+  ],
+  entryComponents: [
+    ModalComponent
   ]
 })
 export class SharedModule {
