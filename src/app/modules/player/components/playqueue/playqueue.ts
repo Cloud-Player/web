@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit} from '@angular/core';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
@@ -9,7 +9,8 @@ import {Subscription} from 'rxjs/Subscription';
 @Component({
   selector: 'app-play-queue',
   styleUrls: ['./playqueue.scss'],
-  templateUrl: './playqueue.html'
+  templateUrl: './playqueue.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayQueueComponent implements OnInit {
   private _subscriptions: Subscription;
@@ -22,7 +23,8 @@ export class PlayQueueComponent implements OnInit {
 
   constructor(private el: ElementRef,
               private userAnalyticsService: UserAnalyticsService,
-              private dragAndDropService: DragAndDropService) {
+              private dragAndDropService: DragAndDropService,
+              private cdr: ChangeDetectorRef) {
     this._subscriptions = new Subscription();
   }
 
@@ -49,6 +51,10 @@ export class PlayQueueComponent implements OnInit {
     this.showDragAndDropHelp = false;
   }
 
+  private update() {
+    this.cdr.detectChanges();
+  }
+
   ngOnInit() {
     this.playQueue.on('add', (playQueueItem: PlayQueueItem) => {
       if (playQueueItem.isQueued()) {
@@ -66,5 +72,6 @@ export class PlayQueueComponent implements OnInit {
           }
         })
     );
+    this.playQueue.on('add remove reset change:status', this.update, this);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {PlayQueue} from '../../../player/collections/play-queue';
@@ -11,9 +11,10 @@ import {ITrack} from '../../../api/tracks/track.interface';
 @Component({
   selector: 'app-track-list-item',
   styleUrls: ['./track-list-item.scss'],
-  templateUrl: './track-list-item.html'
+  templateUrl: './track-list-item.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TrackListItemComponent {
+export class TrackListItemComponent implements OnInit, OnDestroy {
 
   @Input() track: ITrack;
 
@@ -21,7 +22,11 @@ export class TrackListItemComponent {
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  }
+
+  private update() {
+    this.cdr.detectChanges();
   }
 
   gotoDetail(track: ITrack): void {
@@ -39,5 +44,15 @@ export class TrackListItemComponent {
     } else {
       return ImageSizes.Medium;
     }
+  }
+
+  ngOnInit() {
+    this.track.on('change', this.update, this);
+    this.playQueue.on('change:status', this.update, this);
+  }
+
+  ngOnDestroy() {
+    this.track.off('change', this.update, this);
+    this.playQueue.off('change:status', this.update, this);
   }
 }

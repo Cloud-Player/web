@@ -1,4 +1,4 @@
-import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ClientDetector, ClientNames, OsNames, Result} from '../../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
@@ -22,7 +22,8 @@ const packageJSON = require('../../../../../../package.json');
 @Component({
   selector: 'app-nav-sidebar',
   styleUrls: ['./nav.style.scss'],
-  templateUrl: './nav.template.html'
+  templateUrl: './nav.template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class NavComponent implements OnInit {
@@ -65,6 +66,7 @@ export class NavComponent implements OnInit {
 
   constructor(private el: ElementRef,
               private zone: NgZone,
+              private cdr: ChangeDetectorRef,
               private dragAndDropService: DragAndDropService,
               private externalUserAuthenticator: ExternalUserAuthenticator,
               private layoutService: LayoutService) {
@@ -87,6 +89,10 @@ export class NavComponent implements OnInit {
         account.playlists.fetch();
       }
     });
+  }
+
+  private update() {
+    this.cdr.detectChanges();
   }
 
   public showDesktopAppEntry(): boolean {
@@ -149,6 +155,7 @@ export class NavComponent implements OnInit {
         break;
     }
     this.el.nativeElement.classList.add('open');
+    this.update();
   }
 
   public dragEnd() {
@@ -156,12 +163,14 @@ export class NavComponent implements OnInit {
     this.availableProviderMap.soundcloud.playlistCollapsed = this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal;
     this.availableProviderMap.youtube.playlistCollapsed = this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal;
     this.el.nativeElement.classList.remove('open');
+    this.update();
   }
 
   ngOnInit(): void {
     this.authenticatedUser.accounts.each((account: IAuthenticatedUserAccount) => {
       account.on('change:id', () => {
-        account.playlists.fetch();
+        account.playlists.fetch().then(this.update.bind(this));
+        this.update();
       });
     });
     this.authenticatedUser.fetch();
