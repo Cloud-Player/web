@@ -1,4 +1,4 @@
-<div class="tracks-list">
+<div class="tracks-list" *ngIf="tracks">
   <div class="header">
     <app-sort-tracks [tracks]="tracks"></app-sort-tracks>
     <div *ngIf="!showFilter"
@@ -27,6 +27,11 @@
           title="Add to queue"
           icon="fa fa-queue"
           (action)="addToQueue(track)">
+        </app-options-option-btn>
+        <app-options-option-btn
+          title="Add to playlist"
+          icon="fa fa-queue fa-add-playlist"
+          (action)="openModal(track)">
         </app-options-option-btn>
       </app-options-btn>
     </app-track-list-item>

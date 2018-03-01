@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {PlayQueue} from '../../../player/collections/play-queue';
@@ -7,14 +7,17 @@ import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ITracks} from '../../../api/tracks/tracks.interface';
 import {ITrack} from '../../../api/tracks/track.interface';
+import {AuthenticatedUserPlaylistSelectorModalComponent} from '../../../authenticated-user/components/authenticated-user-playlist-selector-modal/authenticated-user-playlist-selector-modal';
+import {Modal, ModalService} from '../../../shared/services/modal';
 
 @Component({
   selector: 'app-search-result-tracks',
   styleUrls: ['./search-result-tracks.scss'],
   templateUrl: './search-result-tracks.html'
 })
-export class SearchResultTracksComponent {
+export class SearchResultTracksComponent implements OnInit, OnDestroy {
   private _playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
+  private _playlistSelectorModal: Modal<AuthenticatedUserPlaylistSelectorModalComponent>;
 
   public showFilter = false;
 
@@ -24,7 +27,7 @@ export class SearchResultTracksComponent {
   @Input()
   public canBeDeleted: boolean;
 
-  constructor(private router: Router) {
+  constructor(private modalService: ModalService) {
   }
 
   public toggleFilter() {
@@ -32,11 +35,6 @@ export class SearchResultTracksComponent {
     if (!this.showFilter) {
       this.tracks.trigger('reset:filter');
     }
-  }
-
-  public gotoDetail(track: ITrack): void {
-    const link = ['/tracks', track.id];
-    this.router.navigate(link);
   }
 
   public addToQueue(track: ITrack) {
@@ -49,5 +47,18 @@ export class SearchResultTracksComponent {
     } else {
       return ImageSizes.Medium;
     }
+  }
+
+  public openModal(track: ITrack) {
+    this._playlistSelectorModal.getInstance().track = track;
+    this._playlistSelectorModal.open();
+  }
+
+  ngOnInit() {
+    this._playlistSelectorModal = this.modalService.createModal(AuthenticatedUserPlaylistSelectorModalComponent);
+  }
+
+  ngOnDestroy() {
+    this._playlistSelectorModal.destroy();
   }
 }
