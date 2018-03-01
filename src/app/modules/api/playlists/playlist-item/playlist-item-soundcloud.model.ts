@@ -33,14 +33,14 @@ export class PlaylistItemSoundcloudModel
     if (this.collection) {
       const collection = this.collection;
       collection.remove(this);
-      collection.triggerSave(this);
+      return collection.triggerSave(this);
     }
   }
 
   save() {
     if (this.collection) {
       this.collection.add(this.toJSON(), {merge: true});
-      this.collection.triggerSave(this);
+      return this.collection.triggerSave(this);
     }
   }
 

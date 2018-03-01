@@ -85,8 +85,14 @@ export class PlaylistSoundcloudModel
     this.on('change:id', () => {
       this.items.setEndpoint(this.id);
     });
-    this.items.on('save', () => {
-      this.save();
+    this.items.on('save', (item) => {
+      this.save().then(
+        () => {
+          this.items.trigger('save:completed');
+        },
+        () => {
+          this.items.trigger('save:error');
+        });
     });
   }
 }

@@ -19,14 +19,17 @@ export class PlaylistItemsSoundcloudCollection<TModel extends PlaylistItemSoundc
     return this.getTrackDetails(trackIds);
   }
 
-  create(item: TModel): TModel {
+  create(item: TModel): Promise<TModel> {
     this.add(item);
-    this.triggerSave(item);
-    return item;
+    return this.triggerSave(item);
   }
 
-  triggerSave(track: TModel) {
-    this.trigger('save', track, this);
+  triggerSave(item: TModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.trigger('save', item, this);
+      this.once('save:completed', resolve.bind(this, item));
+      this.once('save:error', reject.bind(this));
+    });
   }
 
   setEndpoint(playlistId: number) {
