@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
@@ -36,6 +36,45 @@ export class PlayerComponent implements OnInit {
     this.el.nativeElement.classList.remove('fullscreen-player');
   }
 
+  private setLastPlayingQueue() {
+    // TODO remove this, only to support backwards compatibility from v4 to v5
+    localforage.getItem('sc_playqueue').then((lastPlayingQueue: Array<any>) => {
+      if (lastPlayingQueue) {
+        lastPlayingQueue.forEach(function (item) {
+          item.track.provider = item.track.provider.toLowerCase();
+        });
+        this.playQueue.add(lastPlayingQueue);
+        localforage.removeItem('sc_playqueue');
+      }
+    });
+
+    localforage.getItem('cp_playqueue').then((lastPlayingQueue: Array<any>) => {
+      if (lastPlayingQueue) {
+        this.playQueue.add(lastPlayingQueue);
+      }
+    });
+  }
+
+  private setLastPlayingItem() {
+    // TODO remove this, only to support backwards compatibility from v4 to v5
+    localforage.getItem('sc_currentItem').then((lastPlayingItem: any) => {
+      if (lastPlayingItem) {
+        lastPlayingItem.track.provider = lastPlayingItem.track.provider.toLowerCase();
+        lastPlayingItem.status = PlayQueueItemStatus.Paused;
+        const item = this.playQueue.add(lastPlayingItem, {at: 0});
+        localforage.setItem('cp_currentItem', item.toMiniJSON());
+        localforage.removeItem('sc_currentItem');
+      }
+    });
+
+    localforage.getItem('cp_currentItem').then((lastPlayingItem: any) => {
+      if (lastPlayingItem) {
+        lastPlayingItem.status = PlayQueueItemStatus.Paused;
+        this.playQueue.add(lastPlayingItem, {at: 0});
+      }
+    });
+  }
+
   public changePlayerStatus(playerStatus: PlayerStatus): void {
     switch (playerStatus) {
       case PlayerStatus.Waiting:
@@ -63,21 +102,11 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.playQueue = PlayQueue.getInstance();
 
-    localforage.getItem('sc_playqueue').then((lastPlayingQueue: Array<any>) => {
-      if (lastPlayingQueue) {
-        this.playQueue.add(lastPlayingQueue);
-      }
-    });
-
-    localforage.getItem('sc_currentItem').then((lastPlayingItem: any) => {
-      if (lastPlayingItem) {
-        lastPlayingItem.status = PlayQueueItemStatus.Paused;
-        this.playQueue.add(lastPlayingItem, {at: 0});
-      }
-    });
+    this.setLastPlayingQueue();
+    this.setLastPlayingItem();
 
     const debouncedPlayQueueSave = debounce(() => {
-      localforage.setItem('sc_playqueue', this.playQueue.getScheduledItemsJSON(30));
+      localforage.setItem('cp_playqueue', this.playQueue.getScheduledItemsJSON(30));
     }, 1000);
 
     const debouncedSetHasPlayer = debounce(() => {
@@ -90,7 +119,7 @@ export class PlayerComponent implements OnInit {
 
     const throttledCurrentItemSave = throttle((currentItem) => {
       if (currentItem) {
-        localforage.setItem('sc_currentItem', currentItem.toMiniJSON());
+        localforage.setItem('cp_currentItem', currentItem.toMiniJSON());
       }
     }, 10000);
 
