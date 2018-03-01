@@ -1,33 +1,56 @@
 @import 'variables';
 
 :host {
-  position: relative;
+  .modal-holder {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
 
-  .btn {
-    margin: 0;
-  }
+    .modal {
+      width: 600px;
+      margin-top: 7vh;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+      flex-shrink: 1;
 
-  .options-list {
-    position: fixed;
-    width: 150px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 4px 4px;
-    list-style: none;
-    padding: 0;
-    background: white;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-top: 20px;
-    margin-left: -135px;
-    z-index: 999;
+      header {
+        padding: 10px 15px;
+        background: $brand-primary;
+        color: white;
+        font-size: 20px;
+        display: flex;
 
-    /deep/ app-option-btn {
-      padding: 10px 5px;
-      display: block;
-      border-bottom: 1px solid $gray-lighter;
+        .title {
+          flex-grow: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
-      &:hover {
-        background: $gray-lighter;
+        .closer {
+          transition: transform 0.2s ease;
+
+          &:hover {
+            transform: rotateZ(90deg);
+          }
+        }
+      }
+
+      .content {
+        padding: 15px;
+        overflow: scroll;
+        flex-shrink: 1;
+        max-height: 70vh;
+      }
+
+      footer {
+        padding: 10px 15px;
+        border-top: 1px solid #efefef;
+      }
+
+      &.visible {
+        transform: translateY(0);
       }
     }
   }
