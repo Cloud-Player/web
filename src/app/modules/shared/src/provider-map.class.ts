@@ -9,7 +9,7 @@ export interface IProvider {
 
 export class ProviderMap {
   static cloudplayer: IProvider = {
-    title: 'Cloud Player',
+    title: 'Cloud-Player',
     icon: 'fa fa-play-circle'
   };
 

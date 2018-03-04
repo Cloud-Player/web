@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Handle native client started event that is triggered by the native Cloud Player app
+    // Handle native client started event that is triggered by the native Cloud-Player app
     window.addEventListener('startNativeClient', (event: CustomEvent) => {
       const clientDetails: { version: number, platform: string } = event.detail;
       document.querySelector('body').classList.add('native', 'desktop', clientDetails.platform);
@@ -35,13 +35,13 @@ export class MainComponent implements OnInit {
     // Handle service worker update
     window.addEventListener('newAppVersionAvailable', (event: CustomEvent) => {
       const toast = new ToastModel();
-      toast.title = 'Cloud Player has been updated';
+      toast.title = 'Cloud-Player has been updated';
       toast.type = ToastTypes.Primary;
       toast.icon = 'fa fa-rocket';
       toast.buttonAction = () => {
         location.reload(true);
       };
-      toast.buttonLabel = 'Restart Cloud Player';
+      toast.buttonLabel = 'Restart Cloud-Player';
 
       this.toastService.addToast(toast);
     });
