@@ -9,12 +9,20 @@ export class CloudPlayerLogoService {
   // Observable string streams
   logoState$ = this.logoStateSource.asObservable();
 
+  public logoState = 'PAUSE';
+
   // Service message commands
   play() {
-    this.logoStateSource.next('PLAY');
+    if (this.logoState !== 'PLAY') {
+      this.logoState = 'PLAY';
+      this.logoStateSource.next(this.logoState);
+    }
   }
 
   pause() {
-    this.logoStateSource.next('PAUSE');
+    if (this.logoState !== 'PAUSE') {
+      this.logoState = 'PAUSE';
+      this.logoStateSource.next(this.logoState);
+    }
   }
 }
