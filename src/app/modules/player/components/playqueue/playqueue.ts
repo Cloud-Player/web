@@ -5,6 +5,7 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
 import {Subscription} from 'rxjs/Subscription';
+import {debounce} from 'underscore';
 
 @Component({
   selector: 'app-play-queue',
@@ -14,7 +15,7 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class PlayQueueComponent implements OnInit {
   private _subscriptions: Subscription;
-
+  private _debouncedUpdate: Function;
   public coverSize = ImageSizes.Medium;
   public showDragAndDropHelp = false;
 
@@ -26,6 +27,7 @@ export class PlayQueueComponent implements OnInit {
               private dragAndDropService: DragAndDropService,
               private cdr: ChangeDetectorRef) {
     this._subscriptions = new Subscription();
+    this._debouncedUpdate = debounce(this.update, 10);
   }
 
   public drop(dragAndDrop: IDragAndDropData) {
@@ -44,11 +46,13 @@ export class PlayQueueComponent implements OnInit {
   private onDragStart() {
     this.el.nativeElement.classList.add('drag-in-progress');
     this.showDragAndDropHelp = true;
+    this._debouncedUpdate();
   }
 
   private onDragEnd() {
     this.el.nativeElement.classList.remove('drag-in-progress');
     this.showDragAndDropHelp = false;
+    this._debouncedUpdate();
   }
 
   private update() {
@@ -72,6 +76,6 @@ export class PlayQueueComponent implements OnInit {
           }
         })
     );
-    this.playQueue.on('add remove reset change:status', this.update, this);
+    this.playQueue.on('add remove reset change:status change:track', this._debouncedUpdate, this);
   }
 }
