@@ -30,7 +30,7 @@ export class NavComponent implements OnInit {
   public availableProviderMap = {
     cloudplayer: {
       providerId: 'cloudplayer',
-      title: 'Cloud Player',
+      title: 'Cloud-Player',
       icon: 'fa fa-play-circle',
       accountModel: AuthenticatedUserAccountCloudplayerModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistCloudplayerModel(),
