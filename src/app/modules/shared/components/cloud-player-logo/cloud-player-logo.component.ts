@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -7,73 +7,89 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./cloud-player-logo.style.scss'],
   templateUrl: './cloud-player-logo.template.html'
 })
+export class CloudPlayerLogoComponent implements AfterViewInit, OnDestroy {
 
-export class CloudPlayerLogoComponent implements OnInit, OnDestroy {
+  private _iconAnimationToPlay: any;
+  private _iconAnimationToPause: any;
+  private _subscriptions: Subscription;
+  private _animatableObjects: Array<HTMLElement>;
+  private _isInit = false;
 
   @Input()
   public animate = false;
 
-  @ViewChild('svgObject') svgObject: ElementRef;
-  private mainAnimation: Array<SVGSVGElement>;
-  private iconAnimationToPlay: any;
-  private iconAnimationToPause: any;
-  private isPlaying = false;
-  private subscriptions: Subscription;
+  @ViewChild('playPause')
+  public playPause: ElementRef;
 
-  constructor(private renderer2: Renderer2,
+  constructor(private el: ElementRef,
+              private renderer2: Renderer2,
               private zone: NgZone,
               private cloudPlayerLogoService: CloudPlayerLogoService) {
-    this.subscriptions = new Subscription();
+    this._subscriptions = new Subscription();
   }
 
-  ngOnInit(): void {
-    this.zone.runOutsideAngular(() => {
-      this.cloudPlayerLogoService.logoState$.subscribe((status: string) => {
-        if (status === 'PAUSE') {
-          this.pause();
-        } else if (status === 'PLAY') {
-          this.play();
-        }
-      });
-
-      let subscription: Subscription;
-      const listener = this.renderer2.listen(this.svgObject.nativeElement, 'load', () => {
-        const svgObj = <HTMLObjectElement>this.svgObject.nativeElement;
-        const content = <any>svgObj.contentDocument;
-        this.mainAnimation = content.querySelectorAll('.main-animation');
-        this.iconAnimationToPlay = content.querySelectorAll('.icon-animation-to-play');
-        this.iconAnimationToPause = content.querySelectorAll('.icon-animation-to-pause');
-        this.subscriptions.remove(subscription);
-      });
-      subscription = this.subscriptions.add(listener);
-    });
+  private init() {
+    const playPauseSvg = this.playPause.nativeElement.contentDocument;
+    this._iconAnimationToPlay = playPauseSvg.querySelectorAll('.icon-animation-to-play');
+    this._iconAnimationToPause = playPauseSvg.querySelectorAll('.icon-animation-to-pause');
+    if (this.cloudPlayerLogoService.logoState === 'PLAY') {
+      this.play();
+    } else {
+      this.pause();
+    }
   }
 
   play(): void {
-    if (this.mainAnimation && this.animate && !this.isPlaying) {
-      this.mainAnimation.forEach((el: any) => {
-        el.beginElement(el.getCurrentTime());
-      });
-      this.iconAnimationToPause.forEach((el: any) => {
+    if (this._iconAnimationToPlay && this.animate) {
+      this._iconAnimationToPlay.forEach((el: any) => {
         el.beginElement();
       });
-      this.isPlaying = true;
     }
+
+    this._animatableObjects.forEach((obj: HTMLElement) => {
+      obj.style.animationPlayState = 'running';
+    });
   }
 
   pause(): void {
-    if (this.mainAnimation && this.animate && this.isPlaying) {
-      this.mainAnimation.forEach((el: any) => {
-        el.endElement();
-      });
-      this.iconAnimationToPlay.forEach((el: any) => {
+    if (this._iconAnimationToPause && this.animate) {
+      this._iconAnimationToPause.forEach((el: any) => {
         el.beginElement();
       });
-      this.isPlaying = false;
     }
+
+    this._animatableObjects.forEach((obj: HTMLElement) => {
+      obj.style.animationPlayState = 'paused';
+    });
+  }
+
+  ngAfterViewInit() {
+    this._animatableObjects = this.el.nativeElement.querySelectorAll('.animatable');
+    const svgObjects = this.el.nativeElement.querySelectorAll('object');
+    let loadedSvgObjects = 0;
+    svgObjects.forEach((svgObject) => {
+      this._subscriptions.add(
+        this.renderer2.listen(svgObject, 'load', () => {
+          loadedSvgObjects++;
+          if (loadedSvgObjects > svgObjects.length) {
+            loadedSvgObjects = 1;
+          }
+          if (loadedSvgObjects === svgObjects.length) {
+            this.init();
+          }
+        })
+      );
+    });
+    this.cloudPlayerLogoService.logoState$.subscribe((status: string) => {
+      if (status === 'PAUSE') {
+        this.pause();
+      } else if (status === 'PLAY') {
+        this.play();
+      }
+    });
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this._subscriptions.unsubscribe();
   }
 }
