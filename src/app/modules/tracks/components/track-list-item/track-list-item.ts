@@ -7,6 +7,7 @@ import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ITracks} from '../../../api/tracks/tracks.interface';
 import {ITrack} from '../../../api/tracks/track.interface';
+import {debounce} from 'underscore';
 
 @Component({
   selector: 'app-track-list-item',
@@ -21,8 +22,10 @@ export class TrackListItemComponent implements OnInit, OnDestroy {
   @Input() tracks: ITracks<ITrack>;
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
+  private _debouncedUpdate: Function;
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
+    this._debouncedUpdate = debounce(this.update.bind(this), 10);
   }
 
   private update() {
@@ -47,12 +50,12 @@ export class TrackListItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.track.on('change', this.update, this);
-    this.playQueue.on('change:status', this.update, this);
+    this.track.on('change', this._debouncedUpdate, this);
+    this.playQueue.on('change:status', this._debouncedUpdate, this);
   }
 
   ngOnDestroy() {
-    this.track.off('change', this.update, this);
-    this.playQueue.off('change:status', this.update, this);
+    this.track.off('change', this._debouncedUpdate, this);
+    this.playQueue.off('change:status', this._debouncedUpdate, this);
   }
 }
