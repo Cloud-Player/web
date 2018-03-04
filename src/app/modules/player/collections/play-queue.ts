@@ -41,8 +41,12 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
 
   private setPlayIndex(): number {
     const currentPlaylingItem = this.getPlayingItem();
+    const oldPlayIndex = this._playIndex;
     if (currentPlaylingItem) {
       this._playIndex = this.indexOf(currentPlaylingItem);
+    }
+    if (this._playIndex !== oldPlayIndex) {
+      this.trigger('change:playIndex');
     }
     return this._playIndex;
   }
@@ -170,6 +174,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     if (scheduledItem && this.indexOf(scheduledItem) < this._playIndex) {
       scheduledItem.stop();
       this.stopScheduledItemsBeforeCurrentItem();
+      this.trigger('change:status');
     }
   }
 
