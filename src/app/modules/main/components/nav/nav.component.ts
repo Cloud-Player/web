@@ -169,9 +169,10 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.authenticatedUser.accounts.each((account: IAuthenticatedUserAccount) => {
       account.on('change:id', () => {
-        account.playlists.fetch().then(this.update.bind(this));
+        account.playlists.fetch();
         this.update();
       });
+      account.playlists.on('add remove reset', this.update.bind(this));
     });
     this.authenticatedUser.fetch();
     this.dragAndDropService.getObservable()
