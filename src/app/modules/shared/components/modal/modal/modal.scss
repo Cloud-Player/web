@@ -42,6 +42,12 @@
         overflow: scroll;
         flex-shrink: 1;
         max-height: 70vh;
+
+        /deep/ app-empty-state{
+          .empty-state{
+            max-height: 40vh;
+          }
+        }
       }
 
       footer {

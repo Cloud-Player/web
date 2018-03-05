@@ -25,19 +25,25 @@ export class FillHeightDirective implements AfterContentInit, OnDestroy {
 
   private setHeight() {
     const offsetTop = this._boundingClientRec.top;
-    let fixedFooterElementHeight = 0;
+    let screenHeight = '100vh';
+    let offsetBottom = 0;
     if (this.layoutService.isOneOfTheBreakPointsActive([WindowBreakPointTypes.sm, WindowBreakPointTypes.xs])) {
-      fixedFooterElementHeight += FillHeightDirective.menuHeight;
+      offsetBottom += FillHeightDirective.menuHeight;
     }
     if (this.layoutService.isBreakPointActive(WindowBreakPointTypes.xs) &&
       this.layoutService.hasWindowElement(WindowElementTypes.MusicPlayer)) {
-      fixedFooterElementHeight += FillHeightDirective.playerHeight;
+      offsetBottom += FillHeightDirective.playerHeight;
+    }
+    if (this.layoutService.hasWindowElement(WindowElementTypes.Modal)) {
+      screenHeight = '80vh';
+      offsetBottom = 0;
     }
 
+    const height = `calc(${screenHeight} - ${offsetTop + offsetBottom - this._padding}px)`;
     if (this.minHeight) {
-      this.el.nativeElement.style.minHeight = `calc(100vh - ${offsetTop + fixedFooterElementHeight - this._padding}px)`;
+      this.el.nativeElement.style.minHeight = height;
     } else {
-      this.el.nativeElement.style.height = `calc(100vh - ${offsetTop + fixedFooterElementHeight - this._padding}px)`;
+      this.el.nativeElement.style.height = height;
     }
   }
 
@@ -49,9 +55,19 @@ export class FillHeightDirective implements AfterContentInit, OnDestroy {
     this._subscription.add(
       this.layoutService.getObservable()
         .filter((ev) => {
-          return ev.changeType === LayoutChangeTypes.windowBreakpointChange || ev.changeType === LayoutChangeTypes.windowElementChange;
+          return ev.changeType === LayoutChangeTypes.windowBreakpointChange;
         })
         .subscribe(this.setHeight.bind(this))
+    );
+    this._subscription.add(
+      this.layoutService.getObservable()
+        .filter((ev) => {
+          return ev.changeType === LayoutChangeTypes.windowElementChange;
+        })
+        .subscribe((ev) => {
+          this._boundingClientRec = this.el.nativeElement.getBoundingClientRect();
+          this.setHeight();
+        })
     );
   }
 

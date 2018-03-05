@@ -13,6 +13,7 @@ export enum LayoutChangeTypes {
 
 export enum WindowElementTypes {
   MusicPlayer,
+  Modal,
   NativeDesktopApp
 }
 

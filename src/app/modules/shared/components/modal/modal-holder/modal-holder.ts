@@ -1,6 +1,7 @@
 import {Component, ComponentFactoryResolver, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ModalService, ModalServiceStates} from '../../../services/modal';
 import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
+import {LayoutService, WindowElementTypes} from '../../../services/layout';
 
 @Component({
   selector: 'app-modal-holder',
@@ -21,16 +22,23 @@ export class ModalHolderComponent implements OnInit, OnDestroy {
 
   public showBackdrop = false;
 
-  constructor(private el: ElementRef, private resolver: ComponentFactoryResolver, private modalService: ModalService) {
+  constructor(private el: ElementRef,
+              private resolver: ComponentFactoryResolver,
+              private modalService: ModalService,
+              private layoutService: LayoutService) {
   }
 
   private onFirstModalBecameVisible() {
     this.el.nativeElement.classList.add('has-visible-modals');
     this.showBackdrop = true;
+    setTimeout(() => {
+      this.layoutService.registerWindowElement(WindowElementTypes.Modal);
+    });
   }
 
   private onNoMoreModalVisible() {
     this.showBackdrop = false;
+    this.layoutService.unRegisterWindowElement(WindowElementTypes.Modal);
   }
 
   handleDone(event: AnimationEvent) {
@@ -41,6 +49,7 @@ export class ModalHolderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.modalService.init(this.resolver, this._container);
+
     this.modalService.getObservable()
       .filter(ev => ev === ModalServiceStates.ModalVisbile)
       .subscribe(this.onFirstModalBecameVisible.bind(this));
