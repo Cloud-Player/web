@@ -174,7 +174,6 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     if (scheduledItem && this.indexOf(scheduledItem) < this._playIndex) {
       scheduledItem.stop();
       this.stopScheduledItemsBeforeCurrentItem();
-      this.trigger('change:status');
     }
   }
 
