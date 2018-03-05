@@ -30,7 +30,8 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
   @ViewChild('modalContainer', {read: ViewContainerRef})
   public container: ViewContainerRef;
 
-  constructor(private resolver: ComponentFactoryResolver, private el: ElementRef) {
+  constructor(private resolver: ComponentFactoryResolver,
+              private el: ElementRef) {
     this.modalOptions = {
       title: 'ABC',
       dismissible: true,
@@ -71,8 +72,15 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
     this.build();
   }
 
+  public activate() {
+    this.el.nativeElement.style.display = 'block';
+  }
+
+  public deactivate() {
+    this.el.nativeElement.style.display = 'none';
+  }
+
   public show() {
-    console.log('SHOW!');
     this.el.nativeElement.style.display = 'block';
     this.isVisible = true;
     if (this._componentRef && this._componentRef.instance.modalOnOpen) {
@@ -108,6 +116,14 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
     return this.modalOptions.primaryAction || this.modalOptions.secondaryAction;
   }
 
+  public isDisabled(action: string) {
+    if (typeof this.modalOptions[action].isDisabled === 'function') {
+      return this.modalOptions[action].isDisabled();
+    } else {
+      return this.modalOptions[action].isDisabled;
+    }
+  }
+
   public getInstance(): any {
     return this._componentRef.instance;
   }
@@ -122,7 +138,6 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('DESTROY');
     if (this._componentRef) {
       this._componentRef.destroy();
     }

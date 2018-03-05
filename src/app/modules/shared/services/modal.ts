@@ -54,6 +54,14 @@ export class Modal<TComponent> {
     }
   }
 
+  public activate() {
+    this._modalRef.instance.activate();
+  }
+
+  public deactivate() {
+    this._modalRef.instance.deactivate();
+  }
+
   public getInstance(): TComponent {
     return this._modalRef.instance.getInstance();
   }
@@ -86,12 +94,29 @@ export class ModalService {
   private _resolver: ComponentFactoryResolver;
   private _container: ViewContainerRef;
   private _initialized = false;
+  private _modalStack: Array<Modal<any>> = [];
   private _initializeCbs: Array<Function> = [];
   private _subject: Subject<ModalServiceStates>;
-  private _openedModals = 0;
 
   constructor() {
     this._subject = new Subject();
+  }
+
+  private addToStack(modal: Modal<any>) {
+    if (this._modalStack.length > 0) {
+      const lastOpenedModal = this._modalStack[this._modalStack.length - 1];
+      lastOpenedModal.deactivate();
+    }
+    this._modalStack.push(modal);
+  }
+
+  private removeFromStack(modal: Modal<any>) {
+    const index = this._modalStack.indexOf(modal);
+    this._modalStack.splice(index, 1);
+    if (index > 0) {
+      const previousOpenedModal = this._modalStack[index - 1];
+      previousOpenedModal.activate();
+    }
   }
 
   public init(resolver: ComponentFactoryResolver, container: ViewContainerRef) {
@@ -110,25 +135,28 @@ export class ModalService {
     modal.getObservable()
       .filter(ev => ev === ModalStates.Opened)
       .subscribe(() => {
-        this._openedModals++;
+        this.addToStack(modal);
         this._subject.next(ModalServiceStates.ModalAdded);
-        if (this._openedModals === 1) {
+        if (this.getOpenedModalsAmount() === 1) {
           this._subject.next(ModalServiceStates.ModalVisbile);
         }
       });
     modal.getObservable()
       .filter(ev => ev === ModalStates.Closed)
       .subscribe(() => {
-        this._openedModals--;
+        this.removeFromStack(modal);
         this._subject.next(ModalServiceStates.ModalRemoved);
-        if (this._openedModals === 0) {
+        if (this.getOpenedModalsAmount() === 0) {
           this._subject.next(ModalServiceStates.NoModalVisible);
         }
       });
   }
 
+  public getOpenedModalsAmount() {
+    return this._modalStack.length;
+  }
+
   public createModal<TComponent>(component: Type<TComponent>): Modal<TComponent> {
-    console.log('CREATE MODAL');
     const modal = new Modal<TComponent>(ModalComponent, component);
     if (this._initialized) {
       modal.init(this._resolver, this._container);
