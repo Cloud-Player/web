@@ -21,29 +21,34 @@ export class ExternalUserAuthenticator {
     this._subject = new Subject<ExternalUserConnectState>();
   }
 
-  public connect(account: IAuthenticatedUserAccount) {
-    const popup = window.open(account.loginUrl);
-    this.userAnalyticsService.trackEvent('connect', `start_${account.provider}`, 'ExternalUserAuthenticator');
-    this._subject.next(ExternalUserConnectState.Start);
-    const interval = window.setInterval(() => {
-      if (!popup) {
-        clearInterval(interval);
-      } else if (popup.closed) {
-        clearInterval(interval);
-        this._authenticatedUser.fetch().then(() => {
-          if (!account.isNew()) {
-            this._subject.next(ExternalUserConnectState.Success);
-            this.userAnalyticsService.trackEvent('connect', `success_${account.provider}`, 'ExternalUserAuthenticator');
-          } else {
-            this._subject.next(ExternalUserConnectState.Abort);
-            this.userAnalyticsService.trackEvent('connect', `abort_${account.provider}`, 'ExternalUserAuthenticator');
-          }
-        }, () => {
-          this._subject.next(ExternalUserConnectState.Error);
-          this.userAnalyticsService.trackEvent('connect', `error_${account.provider}`, 'ExternalUserAuthenticator');
-        });
-      }
-    }, 100);
+  public connect(account: IAuthenticatedUserAccount): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      const popup = window.open(account.loginUrl);
+      this.userAnalyticsService.trackEvent('connect', `start_${account.provider}`, 'ExternalUserAuthenticator');
+      this._subject.next(ExternalUserConnectState.Start);
+      const interval = window.setInterval(() => {
+        if (!popup) {
+          clearInterval(interval);
+        } else if (popup.closed) {
+          clearInterval(interval);
+          this._authenticatedUser.fetch().then(() => {
+            if (!account.isNew()) {
+              this._subject.next(ExternalUserConnectState.Success);
+              this.userAnalyticsService.trackEvent('connect', `success_${account.provider}`, 'ExternalUserAuthenticator');
+              resolve();
+            } else {
+              this._subject.next(ExternalUserConnectState.Abort);
+              this.userAnalyticsService.trackEvent('connect', `abort_${account.provider}`, 'ExternalUserAuthenticator');
+              reject();
+            }
+          }, () => {
+            this._subject.next(ExternalUserConnectState.Error);
+            this.userAnalyticsService.trackEvent('connect', `error_${account.provider}`, 'ExternalUserAuthenticator');
+            reject();
+          });
+        }
+      }, 100);
+    });
   }
 
   public getObservable(): Subject<ExternalUserConnectState> {
