@@ -16,11 +16,13 @@
       <div class="btn-group pull-right">
         <button *ngIf="modalOptions.secondaryAction"
                 class="btn btn-default btn-default"
+                [disabled]="isDisabled('secondaryAction')"
                 (click)="executeSecondary()">
           {{modalOptions.secondaryAction.text}}
         </button>
         <button *ngIf="modalOptions.primaryAction"
                 class="btn btn-default btn-primary"
+                [disabled]="isDisabled('primaryAction')"
                 (click)="executePrimary()">
           {{modalOptions.primaryAction.text}}
         </button>

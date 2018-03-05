@@ -3,6 +3,7 @@ export type modalAction = (modal: IModal) => Promise<any> | void;
 export interface IModalActionBtn {
   text: string;
   action?: modalAction;
+  isDisabled?: Function | boolean;
 }
 
 export interface IModalOptions {
