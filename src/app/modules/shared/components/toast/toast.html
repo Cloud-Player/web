@@ -1,10 +1,11 @@
-<div class="card toast {{toast.type}}">
-  <div *ngIf="getIcon()"
-       class="icon-holder">
+<div class="card toast {{toast.type}}"
+     [ngClass]="{'has-button': !!toast.buttonLink, 'has-title': !!toast.title, 'has-message': !!toast.message}">
+  <div  *ngIf="getIcon()"
+        class="icon-holder">
     <span class="icon {{getIcon()}}"></span>
   </div>
   <div class="content">
-    <h3 *ngIf="toast.title && toast.title.length>1"
+    <h3 *ngIf="toast.title"
         class="title">
       {{toast.title}}
     </h3>
