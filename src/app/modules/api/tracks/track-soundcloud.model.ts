@@ -61,6 +61,10 @@ export class TrackSoundcloudModel extends SoundcloudProxyModel implements ITrack
   @defaultValue(1)
   aspectRatio: number;
 
+  @attributesKey('supportsMobilePlayBack')
+  @defaultValue(true)
+  supportsMobilePlayBack: boolean;
+
   getResourceUrl(): string {
     if (this.streamUrl) {
       return `${this.streamUrl}?client_id=${Globals.soundcloudClientId}`;

@@ -69,6 +69,10 @@ export class TrackYoutubeModel extends YoutubeProxyModel implements ITrack {
   @nested()
   categoryIds: BaseCollection<BaseModel>;
 
+  @attributesKey('supportsMobilePlayBack')
+  @defaultValue(false)
+  supportsMobilePlayBack: boolean;
+
   // Parses the youtube duration string e.g. PT4M25S, PT10H4M25S, PT4M
   public static getParsedDuration(ytDuration: string) {
     let hours = 0;

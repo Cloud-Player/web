@@ -4,6 +4,10 @@ import {PlayQueueItem} from '../../player/models/play-queue-item';
 import {ITrack} from '../../api/tracks/track.interface';
 import {ITracks} from '../../api/tracks/tracks.interface';
 import {Subscription} from 'rxjs/Subscription';
+import {ToastService} from '../../shared/services/toast';
+import {ToastModel} from '../../shared/models/toast';
+import {ToastTypes} from '../../shared/src/toast-types.enum';
+import {ClientDetector} from '../../shared/services/client-detector.service';
 
 @Directive({
   selector: '[appTrackPlayOn]'
@@ -23,7 +27,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
   @Input()
   tracks: ITracks<ITrack>;
 
-  constructor(private el: ElementRef, private renderer2: Renderer2) {
+  constructor(private el: ElementRef, private renderer2: Renderer2, private toastService: ToastService) {
     this._subscriptions = new Subscription();
   }
 
@@ -49,7 +53,19 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     return (playingItem && playingItem.track.id === this.track.id);
   }
 
+  private showNotSupportedOnMobileToast() {
+    const toast = new ToastModel();
+    toast.type = ToastTypes.Info;
+    toast.title = 'Not supported yet';
+    toast.message = `Due to mobile browser restrictions the playback of ${this.track.provider} tracks is not supported on mobile devices yet. We are working on a solution.`;
+    this.toastService.addToast(toast);
+  }
+
   private play(): void {
+    if (ClientDetector.isMobileDevice() && !this.track.supportsMobilePlayBack) {
+      this.showNotSupportedOnMobileToast();
+      return;
+    }
     const existingPlayQueueItem = this.playQueue.get(this.track.id);
     if (existingPlayQueueItem && existingPlayQueueItem.isPaused()) {
       existingPlayQueueItem.play();

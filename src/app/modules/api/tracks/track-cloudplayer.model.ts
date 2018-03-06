@@ -51,6 +51,10 @@ export class TrackCloudplayerModel extends CloudplayerModel implements ITrack {
   @defaultValue(1)
   aspectRatio: number;
 
+  @attributesKey('supportsMobilePlayBack')
+  @defaultValue(false)
+  supportsMobilePlayBack: boolean;
+
   public toMiniJSON() {
     return {};
   }
