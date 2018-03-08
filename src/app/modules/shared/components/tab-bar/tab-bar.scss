@@ -3,10 +3,10 @@
 :host {
   .tab-bar {
     display: flex;
-    margin: 0;
     list-style: none;
     padding: 0;
     border-bottom: 3px solid $light-white;
+    margin:0 15px;
 
     .tab {
       color: $gray;
