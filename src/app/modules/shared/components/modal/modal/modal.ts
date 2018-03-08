@@ -1,5 +1,7 @@
 import {
-  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, forwardRef, Inject, OnDestroy, OnInit, Type, ViewChild,
+  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, forwardRef, Inject, OnDestroy, OnInit,
+  Output,
+  Type, ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import {Modal} from '../../../services/modal';
@@ -30,6 +32,9 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
   @ViewChild('modalContainer', {read: ViewContainerRef})
   public container: ViewContainerRef;
 
+  @Output()
+  public visibilityChange: EventEmitter<boolean>;
+
   constructor(private resolver: ComponentFactoryResolver,
               private el: ElementRef) {
     this.modalOptions = {
@@ -39,6 +44,7 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
         text: 'Ok'
       }
     };
+    this.visibilityChange = new EventEmitter<boolean>();
   }
 
   private build() {
@@ -74,10 +80,12 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
 
   public activate() {
     this.el.nativeElement.style.display = 'block';
+    this.visibilityChange.emit(true);
   }
 
   public deactivate() {
     this.el.nativeElement.style.display = 'none';
+    this.visibilityChange.emit(false);
   }
 
   public show() {
@@ -86,10 +94,12 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
     if (this._componentRef && this._componentRef.instance.modalOnOpen) {
       this._componentRef.instance.modalOnOpen();
     }
+    this.visibilityChange.emit(true);
   }
 
   public hide() {
     this.isVisible = false;
+    this.visibilityChange.emit(false);
   }
 
   public getTitle() {
