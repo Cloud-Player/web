@@ -1,9 +1,11 @@
 import {
   AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Directive, ElementRef, Input, OnDestroy,
-  OnInit
+  OnInit, Optional, OptionalDecorator
 } from '@angular/core';
 import {LayoutChangeTypes, LayoutService, WindowBreakPointTypes, WindowElementTypes} from '../services/layout';
 import {Subscription} from 'rxjs/Subscription';
+import {ModalService, ModalServiceStates} from '../services/modal';
+import {ModalComponent} from '../components/modal/modal/modal';
 
 @Directive({
   selector: '[appFillHeight]'
@@ -19,7 +21,10 @@ export class FillHeightDirective implements AfterContentInit, OnDestroy {
   @Input()
   minHeight = true;
 
-  constructor(private el: ElementRef, private layoutService: LayoutService) {
+  constructor(private el: ElementRef,
+              private layoutService: LayoutService,
+              private modalService: ModalService,
+              @Optional() private modal: ModalComponent) {
     this._subscription = new Subscription();
   }
 
@@ -34,7 +39,7 @@ export class FillHeightDirective implements AfterContentInit, OnDestroy {
       this.layoutService.hasWindowElement(WindowElementTypes.MusicPlayer)) {
       offsetBottom += FillHeightDirective.playerHeight;
     }
-    if (this.layoutService.hasWindowElement(WindowElementTypes.Modal)) {
+    if (this.modal) {
       screenHeight = '80vh';
       offsetBottom = 0;
     }
@@ -65,10 +70,19 @@ export class FillHeightDirective implements AfterContentInit, OnDestroy {
           return ev.changeType === LayoutChangeTypes.windowElementChange;
         })
         .subscribe((ev) => {
-          this._boundingClientRec = this.el.nativeElement.getBoundingClientRect();
           this.setHeight();
         })
     );
+    if (this.modal) {
+      this._subscription.add(
+        this.modal.visibilityChange.subscribe(() => {
+          setTimeout(() => {
+            this._boundingClientRec = this.el.nativeElement.getBoundingClientRect();
+          });
+        })
+      );
+    }
+    this.setHeight();
   }
 
   ngOnDestroy() {
