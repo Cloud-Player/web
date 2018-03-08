@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
+import {Component, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 
 
@@ -13,6 +13,9 @@ export class ScrollViewComponent implements OnInit, OnDestroy {
 
   public scrollPos: number;
 
+  @ViewChild('scrollView')
+  public scrollView: ElementRef;
+
   @Output()
   public scrollPosChange: EventEmitter<number>;
 
@@ -25,8 +28,8 @@ export class ScrollViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.zone.runOutsideAngular(() => {
       this._subscription.add(
-        this.renderer2.listen(this.el.nativeElement, 'scroll', () => {
-          this.scrollPos = this.el.nativeElement.scrollTop;
+        this.renderer2.listen(this.scrollView.nativeElement, 'scroll', () => {
+          this.scrollPos = this.scrollView.nativeElement.scrollTop;
           this.scrollPosChange.emit(this.scrollPos);
         })
       );

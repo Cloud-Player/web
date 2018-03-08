@@ -1,3 +1,6 @@
-<div class="scroll-view" appFillHeight [minHeight]="false">
+<div #scrollView
+     class="scroll-view scrollable"
+     appFillHeight
+     [minHeight]="false">
   <ng-content></ng-content>
 </div>

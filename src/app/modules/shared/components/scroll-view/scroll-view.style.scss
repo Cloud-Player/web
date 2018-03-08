@@ -1,13 +1,6 @@
 @import 'variables';
 
 :host {
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  display: block;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
   @media (max-width: $screen-md-min) {
     .scroll-view {
       padding: 0 0;
