@@ -73,6 +73,10 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
     return ClientDetector.isMobileDevice();
   }
 
+  public setSearchTerm(query: string) {
+    this.query = query;
+  }
+
   // Push a search term into the observable stream.
   public search(query?: string): void {
     if (query) {
