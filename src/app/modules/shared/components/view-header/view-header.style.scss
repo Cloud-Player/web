@@ -73,8 +73,8 @@
         background: white;
         border-radius: 20px !important;
         font-size: 24px;
-        width: calc(100% - 20px);
-        padding-right: 45px;
+        width: calc(100% - 30px);
+        padding-right: 55px;
         box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
 
         &:focus {
@@ -83,14 +83,14 @@
       }
 
       /deep/ app-loading-spinner {
-        right: 40px;
+        right: 50px;
         top: 9px;
         z-index: 3;
         width: 25px;
         height: 25px;
 
         .idle-dots {
-          transform: translateX(-5px);
+          transform: translateX(-15px);
         }
       }
     }
