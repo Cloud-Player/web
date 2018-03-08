@@ -25,6 +25,7 @@ export class ViewHeaderComponent implements AfterViewInit, OnDestroy {
               private layoutService: LayoutService,
               private scrollViewComponent: ScrollViewComponent) {
     this._subscription = new Subscription();
+    this._debouncedSetWidth = debounce(this.setWidth.bind(this), 100, true);
   }
 
   private setWidth() {
@@ -50,7 +51,6 @@ export class ViewHeaderComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.setBoundRect();
-    this._debouncedSetWidth = debounce(this.setWidth.bind(this), 100, true);
     this.zone.runOutsideAngular(() => {
       this._subscription.add(
         this.scrollViewComponent.scrollPosChange.subscribe(this.scrollChange.bind(this))
