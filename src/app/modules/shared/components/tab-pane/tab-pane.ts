@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TabBarComponent} from '../tab-bar/tab-bar';
 
 @Component({
@@ -6,7 +6,7 @@ import {TabBarComponent} from '../tab-bar/tab-bar';
   styleUrls: ['./tab-pane.scss'],
   templateUrl: './tab-pane.html'
 })
-export class TabPaneComponent implements OnInit {
+export class TabPaneComponent implements OnInit, OnDestroy {
   private _isActive = false;
 
   @Input()
@@ -36,5 +36,9 @@ export class TabPaneComponent implements OnInit {
 
   ngOnInit(): void {
     this.tabBar.addTab(this);
+  }
+
+  ngOnDestroy(): void {
+    this.tabBar.removeTab(this);
   }
 }

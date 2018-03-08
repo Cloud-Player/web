@@ -44,6 +44,17 @@ export class TabBarComponent implements OnInit, OnChanges {
     this.setInitialSelectedTab();
   }
 
+  public removeTab(tab: TabPaneComponent) {
+    this.tabs.every((tabPane, index) => {
+      if (tab === tabPane) {
+        this.tabs.splice(index, 1);
+        return false;
+      } else {
+        return true;
+      }
+    });
+  }
+
   public selectTab(tab: TabPaneComponent) {
     if (tab) {
       const previousSelectedTab = this.tabs[this._selectedTabIndex];
