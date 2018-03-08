@@ -10,6 +10,7 @@ import {TracksYoutubeCollection} from '../../../api/tracks/tracks-youtube.collec
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {Subscription} from 'rxjs/Subscription';
+import {Utils} from '../../../shared/src/utils.class';
 
 @Component({
   selector: 'app-search-view',
@@ -25,6 +26,7 @@ export class SearchViewComponent implements AfterViewInit {
   public showWelcomeText = false;
   public activeTab = 'soundcloud';
   public availableProviderMap = ProviderMap.map;
+  public searchTerm = '';
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
@@ -33,6 +35,7 @@ export class SearchViewComponent implements AfterViewInit {
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
     this.searchCollection = this.tracksSoundCloud;
+    this.setRandomSearchTerm();
   }
 
   public selectTab(tabPane: TabPaneComponent) {
@@ -45,6 +48,40 @@ export class SearchViewComponent implements AfterViewInit {
         break;
     }
     localforage.setItem('sc_search_provider', tabPane.id);
+  }
+
+  public setRandomSearchTerm() {
+    const searchTerms = [
+      'M83',
+      'Max Cooper',
+      'Ed Sheeran',
+      'alt-J',
+      'Portugal. The Man',
+      'Imagine Dragons',
+      'Sofi Tukker',
+      'Drake',
+      'Kendrik Lamar',
+      'The Weeknd',
+      'Bedouin Brutal Hearts',
+      'La raíz',
+      'Fallout Boy',
+      'Wanda',
+      'Cigarettes after Sex',
+      'Trentemøller'
+    ];
+    const randomInt = Utils.getRandomInt(0, searchTerms.length - 1);
+    this.searchTerm = searchTerms[randomInt];
+  }
+
+  public animatedSearch(searchTerm, query = '', index = 0) {
+    if (query.length === this.searchTerm.length) {
+      this.searchBar.search();
+    } else {
+      query += searchTerm[index];
+      index++;
+      this.searchBar.setSearchTerm(query);
+      setTimeout(this.animatedSearch.bind(this, searchTerm, query, index), 100);
+    }
   }
 
   ngAfterViewInit() {

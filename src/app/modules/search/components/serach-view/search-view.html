@@ -7,15 +7,15 @@
     </app-collection-text-input-search>
   </app-view-header>
 
-  <app-social-share-panel
-    *ngIf="tracksSoundCloud.length !== 0"
-    class="card">
-  </app-social-share-panel>
+  <!--<app-social-share-panel-->
+    <!--*ngIf="tracksSoundCloud.length !== 0"-->
+    <!--class="card">-->
+  <!--</app-social-share-panel>-->
 
   <app-tab-bar #tabBar
                (tabChange)="selectTab($event)"
                [hidden]="showWelcomeText"
-               [activeTabId]="activeTab" >
+               [activeTabId]="activeTab">
     <app-tab-pane id="soundcloud"
                   [title]="availableProviderMap['soundcloud'].title"
                   [icon]="availableProviderMap['soundcloud'].icon">
@@ -78,27 +78,9 @@
   </app-tab-bar>
 
   <app-empty-state *ngIf="showWelcomeText"
-                   title="Search for tracks"
-                   icon="fa fa-search">
+                   title="Search for tracks or artists on SoundCloud and YouTube"
+                   icon="fa fa-search"
+                   ctaText="Search e.g. for {{searchTerm}}"
+                   (ctaClick)="animatedSearch(searchTerm)">
   </app-empty-state>
-
-  <!--<div *ngIf="showWelcomeText"-->
-       <!--class="card getting-started">-->
-    <!--<h1>Welcome to Cloud Player!</h1>-->
-    <!--<p>-->
-      <!--Cloud player is an unofficial SoundCloud player to play songs from SoundCloud.-->
-      <!--<br>-->
-      <!--You can search for all songs that are available on SoundCloud-->
-    <!--</p>-->
-    <!--<p>-->
-      <!--<a (click)="connect()">Connect with your SoundCloud account</a> to get your playlists and liked tracks. They-->
-      <!--will appear in the menubar-->
-      <!--as soon as the connection was successful.-->
-    <!--</p>-->
-    <!--<p>-->
-      <!--You can then create new playlists or edit your existing ones. To add new Songs to your playlists you can simply-->
-      <!--drag and drop tracks on it.-->
-    <!--</p>-->
-    <!--<p>Cloud Player is also available as <a routerLink="/desktop-app">native App for your PC.</a></p>-->
-  <!--</div>-->
 </section>

@@ -30,4 +30,10 @@ export class Utils {
   static elementIsVisible(el: HTMLElement) {
     return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
   }
+
+  static getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min +1)) + min;
+  }
 }
