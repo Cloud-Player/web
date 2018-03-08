@@ -9,11 +9,10 @@
          [class.win]="isWindowsPc()"
          [class.osx]="isMacPc()"></div>
     <div>
-      <h3>Download the native Cloud Player App to install it on your PC.</h3>
+      <h3>1. Download native app</h3>
       <ul>
         <li>Create a shortcut to Cloud Player on your Desktop</li>
-        <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>
-        <li>Have all the other nice features of Cloud Player</li>
+        <li>Control the player from your keyboard (play/pause, next track, previous track)</li>
       </ul>
     </div>
     <a *ngIf="downloadLink"
@@ -31,15 +30,18 @@
 
   <div class="card tutorial osx"
        *ngIf="isMacPc()">
-    <h2>How to Install</h2>
-    <h3>Open the downloaded <i>Cloud Player.dmg</i> file</h3>
+    <h3>2. Install</h3>
+    <p>Open the downloaded <i>Cloud Player.dmg</i> file</p>
     <div class="img-holder">
-      <img src="assets/desktop-app/osx-dmg.png" width="400px"/>
+      <img src="assets/desktop-app/osx-dmg.png" width="300px"/>
     </div>
-    <p>After the Download has finished open the dmg file. Drag and drop the Cloud Player app into the
+    <p>Drag and drop the Cloud Player app into the
       <i>Applications</i> folder</p>
-    <hr>
-    <h3>Start Cloud Player</h3>
+  </div>
+
+  <div class="card tutorial osx start"
+       *ngIf="isMacPc()">
+    <h3>3. Run Cloud-Player app</h3>
     <p>
       As this is a student project we don't have an Apple developer certificate. Therefore we could not sign the
       application.
@@ -62,14 +64,11 @@
 
   <div class="card tutorial win"
        *ngIf="isWindowsPc()">
-    <h2>How to Install</h2>
-    <h3>Open the downloaded <i>Cloud Player.setup.exe</i> file</h3>
+    <h3>2. Install</h3>
+    <p>Open the downloaded <i>Cloud Player.setup.exe</i> file</p>
     <div class="img-holder">
-      <img src="assets/desktop-app/win-exe.png" width="400px"/>
+      <img src="assets/desktop-app/win-exe.png" width="300px"/>
     </div>
-    <p>
-      After the Download has finished open the exe file.
-    </p>
     <p>
       As this is a student project we don't have an Windows developer certificate. Therefore we could not sign the
       application.
