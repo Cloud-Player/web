@@ -11,6 +11,7 @@ import {TracksModule} from '../tracks/tracks.module';
 import {ExternalUserAuthenticator} from './services/external-authenticator.class';
 import {AuthenticatedUserPlaylistFormViewComponent} from './components/authenticated-user-playlist-form-view/authenticated-user-playlist-form-view';
 import {AuthenticatedUserPlaylistSelectorModalComponent} from './components/authenticated-user-playlist-selector-modal/authenticated-user-playlist-selector-modal';
+import {AuthenticatedUserPlaylistFormComponent} from './components/authenticated-user-form-component/authenticated-user-playlist-form';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {AuthenticatedUserPlaylistSelectorModalComponent} from './components/auth
     AuthenticatedUserPlaylistsViewComponent,
     AuthenticatedUserPlaylistFormViewComponent,
     AuthenticatedUserViewComponent,
+    AuthenticatedUserPlaylistFormComponent,
 
     AuthenticatedUserPlaylistSelectorModalComponent
   ],
@@ -36,7 +38,8 @@ import {AuthenticatedUserPlaylistSelectorModalComponent} from './components/auth
     ExternalUserAuthenticator
   ],
   entryComponents: [
-    AuthenticatedUserPlaylistSelectorModalComponent
+    AuthenticatedUserPlaylistSelectorModalComponent,
+    AuthenticatedUserPlaylistFormComponent
   ]
 })
 
