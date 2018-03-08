@@ -51,6 +51,7 @@ export class SearchResultTracksComponent implements OnInit, OnDestroy {
 
   public openModal(track: ITrack) {
     this._playlistSelectorModal.getInstance().track = track;
+    this._playlistSelectorModal.getInstance().setAccounts();
     this._playlistSelectorModal.open();
   }
 
