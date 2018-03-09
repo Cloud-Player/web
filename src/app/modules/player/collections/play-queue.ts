@@ -1,4 +1,4 @@
-import {isArray} from 'underscore';
+import {shuffle, isArray} from 'underscore';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {PlayQueueItem} from '../models/play-queue-item';
 import {BaseCollection} from '../../backbone/collections/base.collection';
@@ -155,6 +155,16 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
 
   getPlayIndex(): number {
     return this._playIndex;
+  }
+
+  shuffle(): any {
+    let items = [];
+    this.getScheduledItems().forEach((item) => {
+      items.push(item);
+      this.remove(item, {silent: true});
+    });
+    items = shuffle(items);
+    this.add(items, {silent: true});
   }
 
   ensureQueuingOrder(): void {
