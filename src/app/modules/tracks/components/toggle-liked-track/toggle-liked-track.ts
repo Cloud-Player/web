@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
@@ -6,28 +6,30 @@ import {IFavouriteTracks} from '../../../api/favourite-tracks/favourite-tracks.i
 import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.interface';
 import {FavouriteTracksCloudplayerModel} from '../../../api/favourite-tracks/favourite-tracks-cloudplayer.model';
 import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {debounce} from 'underscore';
 
 @Component({
   selector: 'app-toggle-liked-track',
   styleUrls: ['./toggle-liked-track.scss'],
-  templateUrl: './toggle-liked-track.html'
-  // animations: [
-  //   trigger('visibilityChanged', [
-  //     state('true', style({width: '*', opacity: 1})),
-  //     state('false', style({width: 0, display: 'none', opacity: 0})),
-  //     state('void', style({width: 0, display: 'none', opacity: 0})),
-  //     transition('* => *', animate('300ms ease-in-out'))
-  //   ])
-  // ]
+  templateUrl: './toggle-liked-track.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToggleLikedTrackComponent implements OnInit {
+export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   private _authenticatedUser: AuthenticatedUserModel;
   private _favouriteTracksPerProvider: Array<IFavouriteTracks>;
   private _cloudPlayerFavouriteTracks: FavouriteTracksCloudplayerModel;
+  private _debouncedUpdate: Function;
+
   @Input() track: ITrack;
 
-  constructor(private userAnalyticsService: UserAnalyticsService) {
+  constructor(private userAnalyticsService: UserAnalyticsService, private cdr: ChangeDetectorRef) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
+    this._debouncedUpdate = debounce(this.update, 10);
+  }
+
+  private update() {
+    console.log('UPDATE');
+    this.cdr.detectChanges();
   }
 
   hasLikedTrack(): boolean {
@@ -38,11 +40,13 @@ export class ToggleLikedTrackComponent implements OnInit {
   }
 
   like(): void {
-    this._favouriteTracksPerProvider.forEach((favouriteTracks: IFavouriteTracks) => {
-      favouriteTracks.items.create({
-        track: this.track
+    if (!this.hasLikedTrack()) {
+      this._favouriteTracksPerProvider.forEach((favouriteTracks: IFavouriteTracks) => {
+        favouriteTracks.items.create({
+          track: this.track
+        });
       });
-    });
+    }
   }
 
   dislike(): void {
@@ -73,6 +77,11 @@ export class ToggleLikedTrackComponent implements OnInit {
       this._cloudPlayerFavouriteTracks = cloudplayerAccount.favouriteTracks;
       this._favouriteTracksPerProvider.push(cloudplayerAccount.favouriteTracks);
     }
+    this._cloudPlayerFavouriteTracks.items.on('add remove reset', this._debouncedUpdate, this);
+  }
+
+  ngOnDestroy() {
+    this._cloudPlayerFavouriteTracks.items.off('add remove reset', this._debouncedUpdate, this);
   }
 
 }

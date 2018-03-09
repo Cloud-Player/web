@@ -1,4 +1,7 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Renderer2,
+  ViewChild
+} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 
 class ContextMenuManager {
@@ -36,7 +39,8 @@ export interface IContextOption {
 @Component({
   selector: 'app-context-menu',
   styleUrls: ['./context-menu.scss'],
-  templateUrl: './context-menu.html'
+  templateUrl: './context-menu.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private _isOpen: boolean;
@@ -50,7 +54,7 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('contextMenu')
   public contextMenu: ElementRef;
 
-  constructor(private el: ElementRef, private renderer2: Renderer2) {
+  constructor(private el: ElementRef, private renderer2: Renderer2, private cdr: ChangeDetectorRef) {
     this.options = [];
     this._contextMenuManager = ContextMenuManager.getInstance();
     this._contextMenuManager.add(this);
@@ -84,6 +88,7 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public registerOption(option: IContextOption) {
     this.options.push(option);
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {
