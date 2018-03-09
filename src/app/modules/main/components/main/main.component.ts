@@ -4,6 +4,7 @@ import {ToastService} from '../../../shared/services/toast';
 import {ToastModel} from '../../../shared/models/toast';
 import {ToastTypes} from '../../../shared/src/toast-types.enum';
 import {NativeAppHandlerService} from '../../../native-app/services/native-app-handler';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 
 @Component({
   selector: 'app-cloud-player',
@@ -13,11 +14,12 @@ import {NativeAppHandlerService} from '../../../native-app/services/native-app-h
 })
 
 export class MainComponent implements OnInit {
-  private isAuthenticated = false;
+  private _authenticatedUser: AuthenticatedUserModel;
 
   constructor(private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
               private toastService: ToastService) {
+    this._authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
   ngOnInit(): void {
@@ -62,5 +64,12 @@ export class MainComponent implements OnInit {
         window.dispatchEvent(nativeClientStartEvent);
       }
     }, 2000);
+
+    const cloudPlayerAccount = this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
+    if (cloudPlayerAccount) {
+      cloudPlayerAccount.once('change:id', () => {
+        cloudPlayerAccount.favouriteTracks.fetch();
+      });
+    }
   }
 }
