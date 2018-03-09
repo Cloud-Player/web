@@ -16,6 +16,7 @@ declare let MediaMetadata: any;
   templateUrl: './player-controls.html'
 })
 export class PlayerControlsComponent implements OnInit {
+  private _docTitle: string;
   public currentItem: PlayQueueItem = new PlayQueueItem();
 
   @Input()
@@ -59,6 +60,14 @@ export class PlayerControlsComponent implements OnInit {
           this.next();
         });
       }
+    }
+  }
+
+  private setBrowserTitle(playingTrack?: ITrack) {
+    if (playingTrack) {
+      document.title = playingTrack.title;
+    } else {
+      document.title = this._docTitle;
     }
   }
 
@@ -137,10 +146,17 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._docTitle = document.title;
     this.playQueue.on('change:status', (model: PlayQueueItem, status: PlayQueueItemStatus) => {
       if (status === PlayQueueItemStatus.RequestedPlaying) {
         this.currentItem = this.playQueue.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
+        this.setBrowserTitle(this.currentItem.track);
+      }
+      if (status === PlayQueueItemStatus.RequestedPause) {
+        this.currentItem = this.playQueue.getCurrentItem();
+        this.setMobileMediaNotification(this.currentItem.track);
+        this.setBrowserTitle();
       }
     });
 
