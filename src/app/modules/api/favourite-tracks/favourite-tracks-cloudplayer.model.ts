@@ -37,7 +37,7 @@ export class FavouriteTracksCloudplayerModel extends CloudplayerModel implements
       this._favouriteTracksMap[item.track.id] = item.track;
     });
     this.items.on('remove', (item: IPlaylistItem) => {
-      delete this._favouriteTracksMap[item.track.id];
+      this._favouriteTracksMap[item.track.id] = null;
     });
     this.items.on('reset', (item: IPlaylistItem) => {
       this._favouriteTracksMap = {};
