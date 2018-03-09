@@ -33,9 +33,10 @@ export class OptionsBtnComponent implements OnDestroy {
   }
 
   public open(): void {
+    const boundingRect = this.el.nativeElement.getBoundingClientRect();
     this.registerCloseListeners();
-    this.optionsHolder.nativeElement.style.left = `${this.el.nativeElement.offsetLeft}px`;
-    this.optionsHolder.nativeElement.style.top = `${this.el.nativeElement.getBoundingClientRect().top}px`;
+    this.optionsHolder.nativeElement.style.right = `calc(100vw - ${boundingRect.right}px)`;
+    this.optionsHolder.nativeElement.style.top = `${boundingRect.top}px`;
     this.optionsAreVisible = true;
     this.openState.emit(true);
   }
