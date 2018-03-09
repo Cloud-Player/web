@@ -9,9 +9,10 @@ import {IModal, IModalComponent, IModalOptions} from '../../../shared/src/modal.
 import {ITrack} from '../../../api/tracks/track.interface';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {ExternalUserAuthenticator} from '../../services/external-authenticator.class';
-import {Modal, ModalService} from '../../../shared/services/modal';
+import {ModalService} from '../../../shared/services/modal';
 import {AuthenticatedUserPlaylistFormViewComponent} from '../authenticated-user-playlist-form-view/authenticated-user-playlist-form-view';
 import {AuthenticatedUserPlaylistFormComponent} from '../authenticated-user-form-component/authenticated-user-playlist-form';
+import {Modal} from '../../../shared/src/modal-factory.class';
 
 @Component({
   selector: 'app-authenticated-user-playlist-selector-modal',

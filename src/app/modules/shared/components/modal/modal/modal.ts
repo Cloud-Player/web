@@ -4,9 +4,9 @@ import {
   Type, ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Modal} from '../../../services/modal';
 import {state, style, transition, trigger, animate, AnimationEvent} from '@angular/animations';
 import {IModal, IModalComponent, IModalOptions, modalAction} from '../../../src/modal.interface';
+import {Modal} from '../../../src/modal-factory.class';
 
 @Component({
   selector: 'app-modal',
