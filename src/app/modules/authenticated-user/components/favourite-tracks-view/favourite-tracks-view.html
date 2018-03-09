@@ -15,7 +15,10 @@
           <app-context-menu>
             <app-track-list-item [track]="track" [tracks]="tracks">
               <app-options-btn>
+                <app-add-to-queue-option [track]="track"></app-add-to-queue-option>
+                <app-add-to-playlist-option [track]="track"></app-add-to-playlist-option>
                 <app-options-option-btn
+                  icon="fa fa-trash"
                   title="Delete" (action)="deleteTrack(track)">
                 </app-options-option-btn>
               </app-options-btn>

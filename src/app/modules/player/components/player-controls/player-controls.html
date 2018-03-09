@@ -51,21 +51,24 @@
                     (valueChanged)="playTrackFromPosition($event)">
   </app-range-slider>
 
-  <div *ngIf="currentItem.track" class="meta">
-    <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
-    <div class="details"
-         appDraggable="true"
-         [dragData]="currentItem.track.toJSON()"
-         [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
-         dragEffect="copy">
-      <b class="track-title">{{currentItem.track.title}}</b>
-      <div class="artist">{{currentItem.track.artist.getFullName()}}</div>
+  <app-context-menu>
+    <div *ngIf="currentItem.track" class="meta">
+      <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
+      <div class="details"
+           appDraggable="true"
+           [dragData]="currentItem.track.toJSON()"
+           [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
+           dragEffect="copy">
+        <b class="track-title">{{currentItem.track.title}}</b>
+        <div class="artist">{{currentItem.track.artist.getFullName()}}</div>
+      </div>
+      <div class="timer">
+        <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
+        <div class="duration">{{currentItem.duration | hReadableSeconds}}</div>
+      </div>
+      <app-add-to-playlist-option style="display: none" [track]="currentItem.track"></app-add-to-playlist-option>
     </div>
-    <div class="timer">
-      <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
-      <div class="duration">{{currentItem.duration | hReadableSeconds}}</div>
-    </div>
-  </div>
+  </app-context-menu>
 
   <div *ngIf="!currentItem.track"
        class="dummy meta">
