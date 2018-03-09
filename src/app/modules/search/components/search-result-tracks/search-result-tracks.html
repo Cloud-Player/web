@@ -23,16 +23,8 @@
       [track]="track"
       [tracks]="tracks">
       <app-options-btn>
-        <app-options-option-btn
-          title="Add to queue"
-          icon="fa fa-queue"
-          (action)="addToQueue(track)">
-        </app-options-option-btn>
-        <app-options-option-btn
-          title="Add to playlist"
-          icon="fa fa-queue fa-add-playlist"
-          (action)="openModal(track)">
-        </app-options-option-btn>
+        <app-add-to-queue-option [track]="track"></app-add-to-queue-option>
+        <app-add-to-playlist-option [track]="track"></app-add-to-playlist-option>
       </app-options-btn>
     </app-track-list-item>
   </app-context-menu>
