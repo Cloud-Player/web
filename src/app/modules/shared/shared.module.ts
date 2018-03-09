@@ -46,6 +46,8 @@ import {EmptyStateComponent} from './components/empty-state/empty-state';
 import {LayoutService} from './services/layout';
 import {FillHeightDirective} from './directives/fill-height';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AddToQueueOptionComponent} from './components/option-btn/add-to-queue-option/add-to-queue-option';
+import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playlist-option/add-to-playlist-option';
 
 @NgModule({
   imports: [
@@ -71,9 +73,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
     MultiLineComponent,
+
     OptionBtnComponent,
     OptionsBtnComponent,
     OptionsOptionBtnComponent,
+    AddToQueueOptionComponent,
+    AddToPlaylistOptionComponent,
+
     TrackCoverComponent,
     ToastComponent,
     ToastsComponent,
@@ -110,9 +116,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
     MultiLineComponent,
+
     OptionBtnComponent,
     OptionsBtnComponent,
     OptionsOptionBtnComponent,
+    AddToQueueOptionComponent,
+    AddToPlaylistOptionComponent,
+
     TrackCoverComponent,
     ToastsComponent,
     TabBarComponent,
