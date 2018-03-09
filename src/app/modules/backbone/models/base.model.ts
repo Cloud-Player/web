@@ -49,12 +49,12 @@ export class BaseModel extends SelectableModel {
     return request(url, method, options, this);
   }
 
-  trigger(evType: string, value: string, model: BaseModel) {
+  trigger(evType: string, value?: string, model?: BaseModel) {
     const changedAttr = evType.split(':')[1];
     if (changedAttr && this.attributesMap) {
       if (this.attributesMap[changedAttr] && this.attributesMap[changedAttr] !== changedAttr) {
         const mappedChangeEvent = `change:${this.attributesMap[changedAttr]}`;
-        super.trigger.call(this, mappedChangeEvent, value, model);
+        super.trigger.call(this, mappedChangeEvent, value, model || this);
       }
     }
     return super.trigger.apply(this, arguments);
