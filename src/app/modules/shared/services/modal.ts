@@ -1,91 +1,6 @@
-import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef} from '@angular/core';
-import {ModalComponent} from '../components/modal/modal/modal';
+import {ComponentFactoryResolver, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-import {IModelOrCollectionConstructor} from '../../backbone/utils/interfaces';
-
-export enum ModalStates {
-  Initalised,
-  Opened,
-  Closed,
-  Destroyed
-}
-
-export class Modal<TComponent> {
-  private _resolver: ComponentFactoryResolver;
-  private _container: ViewContainerRef;
-  private _modalComponent: Type<ModalComponent>;
-  private _contentComponent: Type<any>;
-  private _modalRef: ComponentRef<ModalComponent>;
-  private _initialised = false;
-  private _isBuild = false;
-  private _isDestroyed = false;
-  private _subject: Subject<ModalStates>;
-
-  constructor(modalComponent: Type<ModalComponent>, contentComponent: Type<TComponent>) {
-    this._modalComponent = modalComponent;
-    this._contentComponent = contentComponent;
-    this._subject = new Subject();
-  }
-
-  private build() {
-    if (!this._isBuild) {
-      const modalFactory: ComponentFactory<ModalComponent> = this._resolver.resolveComponentFactory(this._modalComponent);
-      this._modalRef = this._container.createComponent(modalFactory);
-      this._modalRef.instance.setComponent(this._contentComponent);
-      this._modalRef.instance.setModal(this);
-      this._isBuild = true;
-    }
-  }
-
-  public init(resolver: ComponentFactoryResolver, container: ViewContainerRef) {
-    if (!this._initialised) {
-      this._initialised = true;
-      this._resolver = resolver;
-      this._container = container;
-      this.build();
-      this._subject.next(ModalStates.Initalised);
-    }
-  }
-
-  public open() {
-    if (this._initialised) {
-      this._modalRef.instance.show();
-      this._subject.next(ModalStates.Opened);
-    } else {
-      throw new Error('Modal is not initialised yet!');
-    }
-  }
-
-  public activate() {
-    this._modalRef.instance.activate();
-  }
-
-  public deactivate() {
-    this._modalRef.instance.deactivate();
-  }
-
-  public getInstance(): TComponent {
-    return this._modalRef.instance.getInstance();
-  }
-
-  public close() {
-    this._subject.next(ModalStates.Closed);
-    this._modalRef.instance.hide();
-  }
-
-  public destroy() {
-    if (!this._isDestroyed) {
-      this._modalRef.destroy();
-      this._subject.next(ModalStates.Destroyed);
-      this._subject.unsubscribe();
-      this._isDestroyed = true;
-    }
-  }
-
-  public getObservable() {
-    return this._subject;
-  }
-}
+import {Modal, ModalFactory, ModalStates} from '../src/modal-factory.class';
 
 export enum ModalServiceStates {
   ModalVisbile,
@@ -96,15 +11,14 @@ export enum ModalServiceStates {
 
 @Injectable()
 export class ModalService {
-  private _resolver: ComponentFactoryResolver;
-  private _container: ViewContainerRef;
-  private _initialized = false;
-  private _modalStore: Array<{ component: Type<Component>, modal: Modal<any> }> = [];
   private _modalStack: Array<Modal<any>> = [];
   private _initializeCbs: Array<Function> = [];
   private _subject: Subject<ModalServiceStates>;
+  private _modalFactory: ModalFactory;
+  private _isInitialised = false;
 
   constructor() {
+    this._modalFactory = new ModalFactory();
     this._subject = new Subject();
   }
 
@@ -126,10 +40,9 @@ export class ModalService {
   }
 
   public init(resolver: ComponentFactoryResolver, container: ViewContainerRef) {
-    if (!this._initialized) {
-      this._initialized = true;
-      this._resolver = resolver;
-      this._container = container;
+    if (!this._isInitialised) {
+      this._modalFactory.init(resolver, container);
+      this._isInitialised = true;
       this._initializeCbs.forEach((cb) => {
         cb.apply(this);
       });
@@ -156,18 +69,6 @@ export class ModalService {
           this._subject.next(ModalServiceStates.NoModalVisible);
         }
       });
-    modal.getObservable()
-      .filter(ev => ev === ModalStates.Destroyed)
-      .subscribe(() => {
-        this._modalStore.every((val, index) => {
-          if (val.modal === modal) {
-            this._modalStore.splice(index, 1);
-            return false;
-          } else {
-            return true;
-          }
-        });
-      });
   }
 
   public getOpenedModalsAmount() {
@@ -176,26 +77,13 @@ export class ModalService {
 
   public createModal<TComponent>(component: Type<TComponent>): Modal<TComponent> {
     let modal: Modal<TComponent>;
-    this._modalStore.every((val) => {
-      if (val.component === component) {
-        modal = val.modal;
-        return false;
-      } else {
-        return true;
-      }
-    });
-    if (!modal) {
-      modal = new Modal<TComponent>(ModalComponent, component);
-      if (this._initialized) {
-        modal.init(this._resolver, this._container);
-        this.bindModalListener(modal);
-      } else {
-        this._initializeCbs.push(() => {
-          modal.init(this._resolver, this._container);
-          this.bindModalListener(modal);
-        });
-      }
-      this._modalStore.push({component: component, modal: modal});
+
+    if (this._isInitialised) {
+      modal = this._modalFactory.createModal(component, this.bindModalListener.bind(this));
+    } else {
+      this._initializeCbs.push(() => {
+        modal = this._modalFactory.createModal(component, this.bindModalListener.bind(this));
+      });
     }
     return modal;
   }
