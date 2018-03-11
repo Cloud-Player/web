@@ -70,12 +70,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     if (existingPlayQueueItem && existingPlayQueueItem.isPaused()) {
       existingPlayQueueItem.play();
     } else {
-      this.playQueue.filter((model) => {
-        return !model.isQueued();
-      }).forEach((model) => {
-        this.playQueue.remove(model);
-      });
-
+      this.playQueue.resetQueue();
       if (this.tracks) {
         this.tracks.forEach((track: ITrack, index) => {
           if (!this.playQueue.get(track.id)) {
@@ -83,7 +78,6 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
           }
         });
       }
-
       this.playQueue.add({track: this.track}).play();
     }
   }
