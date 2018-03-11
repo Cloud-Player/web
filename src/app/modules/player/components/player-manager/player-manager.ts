@@ -321,10 +321,14 @@ export class PlayerManagerComponent implements OnInit {
         this.startPlayerFor(item, item.progress);
         break;
       case PlayQueueItemStatus.RequestedStop:
-        this.stopPlayer();
+        if (item === this.playQueue.getCurrentItem()) {
+          this.stopPlayer();
+        }
         break;
       case PlayQueueItemStatus.RequestedPause:
-        this.pausePlayer();
+        if (item === this.playQueue.getCurrentItem()) {
+          this.pausePlayer();
+        }
         break;
     }
   }
