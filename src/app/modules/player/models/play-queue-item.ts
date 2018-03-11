@@ -33,6 +33,9 @@ export class PlayQueueItem extends BaseModel {
   @defaultValue(0)
   duration: number;
 
+  @attributesKey('indexBeforeShuffle')
+  indexBeforeShuffle: number;
+
   private resolveOnStatus(requestedStatus): Promise<any> {
     if (!this._promisePerState[requestedStatus]) {
       this._promisePerState[requestedStatus] = new Promise(resolve => {
