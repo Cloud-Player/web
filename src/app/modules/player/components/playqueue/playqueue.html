@@ -5,6 +5,12 @@
   <div class="queued-tracks-list" *ngIf="playQueue.getQueuedItems().length > 0">
     <div class="divider">
       <div class="title">Coming up next</div>
+      <div class="btn-group">
+        <div class="btn btn-xs btn-default"
+             (click)="removeQueuedItems()">
+          <i class="fa fa-trash"></i>
+        </div>
+      </div>
     </div>
     <div *ngFor="let playQueueItem of playQueue.getQueuedItems()"
          appDraggable="true"
@@ -21,9 +27,6 @@
                  style="flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;">
                 {{playQueueItem.track.title || 'None'}}
               </b>
-              <button class="btn btn-xs btn-default" (click)="playQueueItem.unQueue()">
-                <span class="fa fa-trash"></span>
-              </button>
             </div>
             <div class="artist">{{playQueueItem.track.artist.getFullName()}}</div>
             <div class="stats">
@@ -38,6 +41,7 @@
             </div>
           </div>
         </div>
+        <app-add-to-queue-option [track]="playQueueItem.track" hidden></app-add-to-queue-option>
         <app-add-to-playlist-option [track]="playQueueItem.track" hidden></app-add-to-playlist-option>
       </app-context-menu>
     </div>
@@ -46,6 +50,22 @@
   <div class="scheduled-tracks-list" *ngIf="playQueue.getScheduledItems().length > 0">
     <div class="divider">
       <div class="title">Scheduled Tracks</div>
+      <div class="btn-group">
+        <div class="btn btn-xs btn-default"
+             [ngClass]="{'is-active': playQueue.isLooped()}"
+             (click)="toggleLoop()">
+          <i class="fa fa-repeat"></i>
+        </div>
+        <div class="btn btn-xs btn-default"
+             [ngClass]="{'is-active': playQueue.isShuffled()}"
+             (click)="toggleShuffle()">
+          <i class="fa fa-random"></i>
+        </div>
+        <div class="btn btn-xs btn-default"
+             (click)="removeScheduledItems()">
+          <i class="fa fa-trash"></i>
+        </div>
+      </div>
     </div>
     <div *ngFor="let playQueueItem of playQueue.getScheduledItems() | limitCollectionresults: {limit: 10}"
          appDraggable="true"

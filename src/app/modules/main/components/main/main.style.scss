@@ -82,9 +82,12 @@ button:focus {
 
 .divider {
   position: relative;
+  display: flex;
+  align-items: center;
 
   .title {
     display: flex;
+    flex-grow: 1;
     &:before,
     &:after {
       content: "";

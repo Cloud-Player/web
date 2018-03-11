@@ -59,6 +59,34 @@ export class PlayQueueComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  public toggleShuffle() {
+    if (this.playQueue.isShuffled()) {
+      this.playQueue.deShuffle();
+    } else {
+      this.playQueue.shuffle();
+    }
+  }
+
+  public toggleLoop() {
+    if (this.playQueue.isLooped()) {
+      this.playQueue.setLoopPlayQueue(false);
+    } else {
+      this.playQueue.setLoopPlayQueue(true);
+    }
+  }
+
+  public removeQueuedItems() {
+    this.playQueue.getQueuedItems().forEach((item) => {
+      this.playQueue.remove(item);
+    });
+  }
+
+  public removeScheduledItems() {
+    this.playQueue.getQueuedItems().forEach((item) => {
+      this.playQueue.remove(item);
+    });
+  }
+
   ngOnInit() {
     this.playQueue.on('add', (playQueueItem: PlayQueueItem) => {
       if (playQueueItem.isQueued()) {

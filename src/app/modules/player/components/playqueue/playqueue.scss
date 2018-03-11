@@ -18,6 +18,32 @@
     .scheduled-tracks-list {
       .divider {
         margin: 5px -15px 10px -15px;
+
+        .title {
+          color: $gray;
+          font-weight: 100;
+        }
+
+        .btn-group {
+          margin-right: 5px;
+          display: flex;
+
+          .btn {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+
+            &:not(:last-child) {
+              margin-right: 5px;
+            }
+
+            &.is-active {
+              color: $brand-primary;
+            }
+          }
+        }
       }
 
       .track {
