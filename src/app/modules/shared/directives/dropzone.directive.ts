@@ -94,12 +94,16 @@ export class DropZoneDirective implements OnInit, OnDestroy {
     this.dragAndDropService.getObservable()
       .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
       .subscribe(() => {
-        this.el.nativeElement.querySelector('*').style.pointerEvents = 'none';
+        for (let i = 0; i < this.el.nativeElement.children.length; i++) {
+          this.el.nativeElement.children[i].style.pointerEvents = 'none';
+        }
       });
     this.dragAndDropService.getObservable()
       .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
       .subscribe(() => {
-        this.el.nativeElement.querySelector('*').style.pointerEvents = 'initial';
+        for (let i = 0; i < this.el.nativeElement.children.length; i++) {
+          this.el.nativeElement.children[i].style.pointerEvents = 'initial';
+        }
       });
   }
 
