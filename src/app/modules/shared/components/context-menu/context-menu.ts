@@ -3,6 +3,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
+import {debounce} from 'underscore';
 
 class ContextMenuManager {
   private static contextMenuManager: ContextMenuManager;
@@ -31,6 +32,7 @@ class ContextMenuManager {
 }
 
 export interface IContextOption {
+  id: string;
   title: string;
   icon: string;
   action: EventEmitter<any>;
@@ -46,6 +48,7 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private _isOpen: boolean;
   private _contextMenuManager: ContextMenuManager;
   private _subscriptions: Subscription;
+  private _debouncedUpdate: Function;
 
   public options: Array<IContextOption>;
   @ViewChild('container')
@@ -59,6 +62,11 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     this._contextMenuManager = ContextMenuManager.getInstance();
     this._contextMenuManager.add(this);
     this._subscriptions = new Subscription();
+    this._debouncedUpdate = debounce(this.update.bind(this), 100);
+  }
+
+  private update() {
+    this.cdr.detectChanges();
   }
 
   public show(posX: number, posY: number) {
@@ -88,7 +96,18 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public registerOption(option: IContextOption) {
     this.options.push(option);
-    this.cdr.detectChanges();
+    this._debouncedUpdate();
+  }
+
+  public unRegisterOption(id: string) {
+    this.options.every((option, index) => {
+      if (option.id === id) {
+        this.options.splice(index, 1);
+        return false;
+      } else {
+        return true;
+      }
+    });
   }
 
   ngOnInit(): void {
