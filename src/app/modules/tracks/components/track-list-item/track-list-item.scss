@@ -136,13 +136,27 @@
             align-items: center;
             justify-content: center;
 
-            .next-icon {
-              font-size: 14px;
-              margin-right: -2px
-            }
-
             &:not(:last-child) {
               margin-right: 5px;
+            }
+          }
+
+          .is-queued{
+            border: none;
+            color: $brand-primary;
+
+            .fa-trash{
+              display: none;
+            }
+
+            &:hover{
+              .fa-queue{
+                display: none;
+              }
+
+              .fa-trash{
+                display: inline;
+              }
             }
           }
 

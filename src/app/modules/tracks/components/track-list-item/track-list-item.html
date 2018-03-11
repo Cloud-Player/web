@@ -27,9 +27,16 @@
         </div>
       </div>
       <div class="btn-holder">
-        <div class="btn btn-xs btn-default"
+        <div *ngIf="!isQueued()"
+             class="btn btn-xs btn-default"
              (click)="addToQueue(track)">
           <span class="fa fa-queue"></span>
+        </div>
+        <div *ngIf="isQueued()"
+             class="btn btn-xs btn-default is-queued"
+             (click)="removeFromQueue(track)">
+          <i class="fa fa-queue"></i>
+          <i class="fa fa-trash"></i>
         </div>
         <ng-content></ng-content>
       </div>

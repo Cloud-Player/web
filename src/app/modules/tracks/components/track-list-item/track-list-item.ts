@@ -41,6 +41,22 @@ export class TrackListItemComponent implements OnInit, OnDestroy {
     this.playQueue.queue({track: track});
   }
 
+  removeFromQueue(track: ITrack) {
+    const playQueueItem = this.playQueue.get(track);
+    if (playQueueItem) {
+      return playQueueItem.unQueue();
+    }
+  }
+
+  isQueued() {
+    const playQueueItem = this.playQueue.get(this.track);
+    if (playQueueItem) {
+      return playQueueItem.isQueued();
+    } else {
+      return false;
+    }
+  }
+
   getSize() {
     if (ClientDetector.isMobileDevice()) {
       return ImageSizes.Small;
@@ -51,11 +67,11 @@ export class TrackListItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.track.on('change', this._debouncedUpdate, this);
-    this.playQueue.on('change:status', this._debouncedUpdate, this);
+    this.playQueue.on('change:status remove', this._debouncedUpdate, this);
   }
 
   ngOnDestroy() {
     this.track.off('change', this._debouncedUpdate, this);
-    this.playQueue.off('change:status', this._debouncedUpdate, this);
+    this.playQueue.off('change:status remove', this._debouncedUpdate, this);
   }
 }
