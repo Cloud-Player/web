@@ -57,7 +57,10 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     const toast = new ToastModel();
     toast.type = ToastTypes.Info;
     toast.title = 'Not supported yet';
-    toast.message = `Due to mobile browser restrictions the playback of ${this.track.provider} tracks is not supported on mobile devices yet. We are working on a solution.`;
+    toast.message =
+      `Due to mobile browser restrictions the playback of ${this.track.provider}
+       tracks is not supported on this device yet.
+       We are working on a solution.`;
     this.toastService.addToast(toast);
   }
 
