@@ -19,7 +19,23 @@ export class AddToQueueOptionComponent {
     this._playQueue = PlayQueue.getInstance();
   }
 
+  public isQueued() {
+    const playQueueItem = this._playQueue.get(this.track);
+    if (playQueueItem) {
+      return playQueueItem.isQueued();
+    } else {
+      return false;
+    }
+  }
+
   public addToQueue() {
     this._playQueue.queue({track: this.track});
+  }
+
+  public removeFromQueue() {
+    const playQueueItem = this._playQueue.get(this.track);
+    if (playQueueItem) {
+      playQueueItem.unQueue();
+    }
   }
 }
