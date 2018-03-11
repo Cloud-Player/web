@@ -48,6 +48,7 @@ import {FillHeightDirective} from './directives/fill-height';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddToQueueOptionComponent} from './components/option-btn/add-to-queue-option/add-to-queue-option';
 import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playlist-option/add-to-playlist-option';
+import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-option/shuffle-play-option';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playl
     OptionsOptionBtnComponent,
     AddToQueueOptionComponent,
     AddToPlaylistOptionComponent,
+    ShufflePlayOptionComponent,
 
     TrackCoverComponent,
     ToastComponent,
@@ -122,6 +124,7 @@ import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playl
     OptionsOptionBtnComponent,
     AddToQueueOptionComponent,
     AddToPlaylistOptionComponent,
+    ShufflePlayOptionComponent,
 
     TrackCoverComponent,
     ToastsComponent,

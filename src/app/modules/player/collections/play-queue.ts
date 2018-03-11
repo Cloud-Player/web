@@ -1,4 +1,4 @@
-import {shuffle, isArray} from 'underscore';
+import {shuffle, sortBy, isArray} from 'underscore';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {PlayQueueItem} from '../models/play-queue-item';
 import {BaseCollection} from '../../backbone/collections/base.collection';
@@ -7,6 +7,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   private static _instance: PlayQueue<PlayQueueItem>;
   private _playIndex = 0;
   private _loopPlayQueue = false;
+  private _isShuffled = false;
 
   model: any = PlayQueueItem;
 
@@ -159,12 +160,36 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
 
   shuffle(): any {
     let items = [];
+    let orgIndex = 0;
     this.getScheduledItems().forEach((item) => {
+      if (!item.indexBeforeShuffle) {
+        item.indexBeforeShuffle = orgIndex;
+      }
+      orgIndex++;
       items.push(item);
       this.remove(item, {silent: true});
     });
     items = shuffle(items);
     this.add(items, {silent: true});
+    this._isShuffled = true;
+  }
+
+  deShuffle() {
+    const items = this.getScheduledItems();
+    items.push(this.getCurrentItem());
+    const sorted = sortBy(items, 'indexBeforeShuffle');
+    sorted.forEach((item) => {
+      this.remove(item, {silent: true});
+      this.add(item, {at: item.indexBeforeShuffle, silent: true});
+    });
+    this.setPlayIndex();
+    this.ensureQueuingOrder();
+    this.stopScheduledItemsBeforeCurrentItem();
+    this._isShuffled = false;
+  }
+
+  isShuffled(): boolean {
+    return this._isShuffled;
   }
 
   ensureQueuingOrder(): void {
@@ -199,6 +224,19 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
 
   setLoopPlayQueue(allowedToLoop: boolean) {
     this._loopPlayQueue = allowedToLoop;
+  }
+
+  public isLooped() {
+    return this._loopPlayQueue;
+  }
+
+  resetQueue() {
+    this.filter((model) => {
+      return !model.isQueued();
+    }).forEach((model) => {
+      this.remove(model);
+    });
+    this._isShuffled = false;
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {

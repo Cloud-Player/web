@@ -27,6 +27,7 @@
         <app-track-list-item [track]="item.track" [tracks]="tracks">
           <app-options-btn>
             <app-add-to-queue-option [track]="item.track"></app-add-to-queue-option>
+            <app-shuffle-play-option [track]="item.track" [tracks]="tracks"></app-shuffle-play-option>
             <app-add-to-playlist-option [track]="item.track"></app-add-to-playlist-option>
             <app-options-option-btn
               title="Remove from playlist"
