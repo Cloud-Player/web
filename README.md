@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Cloud-Player/web.svg?branch=master)](https://travis-ci.org/Cloud-Player/web)
 
 # Cloud-Player
-[![Cloud Player Teaser](https://raw.githubusercontent.com/Cloud-Player/web/master/src/assets/meta/social/facebook.jpg)](https://cloud-player.io)
+[![Cloud Player Teaser](./src/assets/meta/social/facebook.jpg)](https://cloud-player.io)
 
 ## Multiple providers – One player
 Cloud-Player combines the libraries of multiple streaming providers into a single music player. 
@@ -35,7 +35,7 @@ Play tracks without any breaks thanks to our preloading and crossfading technolo
 When a track has finished playing you don’t have to wait until the next track starts playing.
 We also save your play queue automatically so when you come back later you can continue where you left off.
 
-## Creators
+## Maintainers
 Cloud Player is a study project created at [HTW Berlin](http://www.htw-berlin.de/) by 
 
 <table>
