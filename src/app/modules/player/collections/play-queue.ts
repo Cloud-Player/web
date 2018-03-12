@@ -72,6 +72,12 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     });
   }
 
+  getStoppedItems(): TModel[] {
+    return this.filter((item: TModel) => {
+      return item.isStopped();
+    });
+  }
+
   getPlayingItem(): TModel {
     return this.find(item => item.isPlaying());
   }
