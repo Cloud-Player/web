@@ -82,9 +82,16 @@ export class PlayQueueComponent implements OnInit {
   }
 
   public removeScheduledItems() {
-    this.playQueue.getQueuedItems().forEach((item) => {
+    this.playQueue.getScheduledItems().forEach((item) => {
       this.playQueue.remove(item);
     });
+  }
+
+  public hasScheduledItems() {
+    return (
+      this.playQueue.getScheduledItems().length > 0 ||
+      (this.playQueue.isLooped() && this.playQueue.getStoppedItems().length > 0)
+    );
   }
 
   ngOnInit() {
@@ -104,6 +111,6 @@ export class PlayQueueComponent implements OnInit {
           }
         })
     );
-    this.playQueue.on('add remove reset change:status change:track', this._debouncedUpdate, this);
+    this.playQueue.on('add remove reset change:status change:track change:shuffle change:loop', this._debouncedUpdate, this);
   }
 }
