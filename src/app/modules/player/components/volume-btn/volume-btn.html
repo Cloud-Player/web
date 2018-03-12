@@ -8,7 +8,7 @@
   <app-range-slider [min]="0" [max]="100"
                     [(ngModel)]="volume"
                     (valueChange)="onSliderChange($event)"
-                    (valueChanged)="onSliderChanged($event)"
+                    (valueChanged)="onSliderChanged()"
                     [vertical]="true"
                     [hideSliderValue]="true"
                     [showCurrentValue]="false"
