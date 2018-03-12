@@ -13,7 +13,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {isUndefined} from 'underscore';
+import {isUndefined, isNumber} from 'underscore';
 import {Subscription} from 'rxjs/Subscription';
 
 @Component({
@@ -77,6 +77,9 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
   @Input()
   public allowInfinity = true;
 
+  @Input()
+  public vertical = false;
+
   @Output()
   public valueChange = new EventEmitter();
 
@@ -134,7 +137,11 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
   private setDragPosFromVal() {
     const pos = (((this.tmpValue - this.min) / (this.max - this.min)) * 100);
     this.handle.nativeElement.style.left = pos + '%';
-    this.handle.nativeElement.style.transform = 'translateX(-' + ((this.draggerSize / 100) * pos) + 'px)';
+    let translateVal = 'translateX(-' + ((this.draggerSize / 100) * pos) + 'px)';
+    if (this.vertical) {
+      translateVal += ' rotate(90deg)';
+    }
+    this.handle.nativeElement.style.transform = translateVal;
     this.progressBarLine.nativeElement.style.width = pos + '%';
   }
 
@@ -168,7 +175,7 @@ export class RangeSliderComponent implements ControlValueAccessor, OnDestroy, On
   }
 
   writeValue(value: number): void {
-    if (value) {
+    if (isNumber(value)) {
       this.updateValue(value);
       if (!this.dragInProgress) {
         this.setDragPosFromVal();

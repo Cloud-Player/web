@@ -87,6 +87,12 @@
     margin-left: 5px;
   }
 
+  &.vertical{
+    .progress-bar{
+      transform: rotate(-90deg);
+    }
+  }
+
   &:hover,
   &.is-loading,
   &.is-dragging,
