@@ -172,6 +172,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     items = shuffle(items);
     this.add(items, {silent: true});
     this._isShuffled = true;
+    this.trigger('change:shuffle', this._isShuffled, this);
   }
 
   deShuffle() {
@@ -186,6 +187,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     this.ensureQueuingOrder();
     this.stopScheduledItemsBeforeCurrentItem();
     this._isShuffled = false;
+    this.trigger('change:shuffle', this._isShuffled, this);
   }
 
   isShuffled(): boolean {
@@ -224,6 +226,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
 
   setLoopPlayQueue(allowedToLoop: boolean) {
     this._loopPlayQueue = allowedToLoop;
+    this.trigger('change:loop', this._loopPlayQueue, this);
   }
 
   public isLooped() {
