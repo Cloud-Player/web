@@ -99,6 +99,10 @@ export class PlayerComponent implements OnInit {
     }
   }
 
+  public setVolume(volume: number) {
+    this.playerManager.setVolume(volume / 100);
+  }
+
   ngOnInit(): void {
     this.playQueue = PlayQueue.getInstance();
 
