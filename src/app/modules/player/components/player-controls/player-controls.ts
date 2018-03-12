@@ -1,5 +1,5 @@
 import {PlayQueueItem} from '../../models/play-queue-item';
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -25,10 +25,17 @@ export class PlayerControlsComponent implements OnInit {
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;
 
+  @Input()
+  public volume = 100;
+
+  @Output()
+  public volumeChange: EventEmitter<number>;
+
   constructor(private humanReadableSecPipe: HumanReadableSecondsPipe,
               private userAnalyticsService: UserAnalyticsService,
               private el: ElementRef,
               public fullScreenService: FullScreenService) {
+    this.volumeChange = new EventEmitter<number>();
   }
 
   private setMobileMediaNotification(track: ITrack) {
@@ -143,6 +150,22 @@ export class PlayerControlsComponent implements OnInit {
     } else {
       this.fullScreenService.leave();
     }
+  }
+
+  public toggleShuffle() {
+    if (this.playQueue.isShuffled()) {
+      this.playQueue.deShuffle();
+    } else {
+      this.playQueue.shuffle();
+    }
+  }
+
+  public toggleLoop() {
+    this.playQueue.setLoopPlayQueue(!this.playQueue.isLooped());
+  }
+
+  public setVolume(volume: number) {
+    this.volumeChange.emit(volume);
   }
 
   ngOnInit(): void {

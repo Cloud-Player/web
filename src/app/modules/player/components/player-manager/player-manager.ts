@@ -358,6 +358,16 @@ export class PlayerManagerComponent implements OnInit {
     return !!this._activePlayer;
   }
 
+  public setVolume(volume) {
+    if (this._activePlayer) {
+      this._activePlayer.instance.setVolume(volume);
+    }
+    if (this._upcomingPlayer) {
+      this._upcomingPlayer.instance.setVolume(volume);
+    }
+    this._volume = volume;
+  }
+
   ngOnInit(): void {
     this._playerFactory.setContainer(this.container);
 

@@ -1,6 +1,19 @@
 <div class="audio-player-controls">
 
   <div class="player-settings">
+    <button class="btn btn-xs btn-default"
+            [ngClass]="{'is-activated': playQueue.isShuffled()}"
+            (click)="toggleShuffle()">
+      <i class="fa fa-random"></i>
+    </button>
+    <button class="btn btn-xs btn-default"
+            [ngClass]="{'is-activated': playQueue.isLooped()}"
+            (click)="toggleLoop()">
+      <i class="fa fa-repeat"></i>
+    </button>
+    <app-volume-btn [volume]="volume" (volumeChange)="setVolume($event)"></app-volume-btn>
+  </div>
+  <div class="fullscreen">
     <button *ngIf="fullScreenService.canEnterFullScreen()"
             class="btn btn-xs btn-default"
             (click)="toggleFullScreen()">

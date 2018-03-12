@@ -12,6 +12,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
   width: 40px;
   height: 40px;
   background: transparent;
+  display: inline-block;
 
   @if $darkTheme {
     color: white;
@@ -62,7 +63,7 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
     }
   }
 
-  .player-settings {
+  .fullscreen {
     top: 0;
     z-index: 2;
 
@@ -72,9 +73,13 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
       border-left: 1px solid $borderColorWhiteTheme !important;
     }
 
-    .btn {
+    .btn-xs {
       @include small-player-btn($darkTheme);
     }
+  }
+
+  .player-settings {
+    display: none;
   }
 
   /deep/ app-toggle-liked-track {
@@ -150,11 +155,47 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
   padding: 0 10px;
   position: relative;
 
-  .player-settings {
+  .player-settings,
+  .fullscreen {
     position: absolute;
-    right: 5px;
     top: 5px;
     color: $gray-dark;
+
+    .btn-xs,
+    /deep/ app-volume-btn .btn-xs {
+      width: 22px;
+      height: 22px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      &.is-activated {
+        color: $brand-primary;
+      }
+    }
+  }
+
+  .fullscreen {
+    right: 5px;
+  }
+
+  .player-settings {
+    left: 5px;
+    display: flex;
+    align-items: center;
+
+    .btn,
+    /deep/ app-volume-btn .btn,
+    .btn:active,
+    /deep/ app-volume-btn .btn:active{
+      border: none;
+      background: transparent;
+
+      &:hover{
+        background: #e6e5e5;
+      }
+    }
   }
 
   .button-container {
@@ -312,7 +353,8 @@ $borderColorWhiteTheme: rgba(150, 150, 150, 0.3);
       }
     }
 
-    .player-settings {
+    .player-settings,
+    .fullscreen {
       display: none;
     }
   }
