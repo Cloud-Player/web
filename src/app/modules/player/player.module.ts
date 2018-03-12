@@ -10,6 +10,7 @@ import {PlayerManagerComponent} from './components/player-manager/player-manager
 import {PlayQueueComponent} from './components/playqueue/playqueue';
 import {YoutubePlayerComponent} from './components/youtube-player/youtube-player';
 import {TracksModule} from '../tracks/tracks.module';
+import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {TracksModule} from '../tracks/tracks.module';
     SoundcloudPlayerComponent,
     YoutubePlayerComponent,
     PlayerManagerComponent,
-    PlayerComponent
+    PlayerComponent,
+    VolumeBtnComponent
   ],
   exports: [
     PlayerComponent
