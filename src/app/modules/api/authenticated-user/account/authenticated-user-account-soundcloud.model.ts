@@ -6,6 +6,7 @@ import {AuthenticatedUserPlaylistSoundcloudModel} from '../playlist/authenticate
 import {AuthenticatedUserPlaylistsSoundcloudCollection} from '../playlist/authenticated-user-playlists-soundcloud.collection';
 import {AuthenticatedUserPlaylistCloudplayerModel} from '../playlist/authenticated-user-playlist-cloudplayer.model';
 import {FavouriteTracksSoundcloudModel} from '../../favourite-tracks/favourite-tracks-soundcloud.model';
+import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 
 export class AuthenticatedUserAccountSoundcloudModel
   extends AccountSoundcloudModel implements IAuthenticatedUserAccount {
