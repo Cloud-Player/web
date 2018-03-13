@@ -6,6 +6,7 @@ import {AuthenticatedUserPlaylistsYoutubeCollection} from '../playlist/authentic
 import {AuthenticatedUserPlaylistYoutubeModel} from '../playlist/authenticated-user-playlist-youtube.model';
 import {AuthenticatedUserPlaylistCloudplayerModel} from '../playlist/authenticated-user-playlist-cloudplayer.model';
 import {FavouriteTracksYoutubeModel} from '../../favourite-tracks/favourite-tracks-youtube.model';
+import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 
 export class AuthenticatedUserAccountYoutubeModel
   extends AccountYoutubeModel implements IAuthenticatedUserAccount {
@@ -27,6 +28,13 @@ export class AuthenticatedUserAccountYoutubeModel
     if (attrs.items && attrs.items.length > 0) {
       return super.parse(attrs.items[0]);
     } else {
+      if (attrs.image) {
+        attrs.image = {
+          small: {url: attrs.image.small},
+          medium: {url: attrs.image.medium},
+          high: {url: attrs.image.large}
+        };
+      }
       return attrs;
     }
   }

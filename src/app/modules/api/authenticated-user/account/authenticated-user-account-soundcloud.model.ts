@@ -25,6 +25,14 @@ export class AuthenticatedUserAccountSoundcloudModel
   @attributesKey('connected')
   @defaultValue(false)
   connected: boolean;
+
+  parse(attrs: any) {
+    if (attrs.image) {
+      attrs.avatar_url = attrs.image.small;
+    }
+    return attrs;
+  }
+
   createNewPlaylist(title: string, isPublic: boolean = false) {
     const playlist = new AuthenticatedUserPlaylistCloudplayerModel();
     playlist.title = title;
