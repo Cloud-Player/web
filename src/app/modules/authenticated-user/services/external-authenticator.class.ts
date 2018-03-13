@@ -32,7 +32,7 @@ export class ExternalUserAuthenticator {
         } else if (popup.closed) {
           clearInterval(interval);
           this._authenticatedUser.fetch().then(() => {
-            if (!account.isNew()) {
+            if (account.isConnected()) {
               this._subject.next(ExternalUserConnectState.Success);
               this.userAnalyticsService.trackEvent('connect', `success_${account.provider}`, 'ExternalUserAuthenticator');
               resolve();
