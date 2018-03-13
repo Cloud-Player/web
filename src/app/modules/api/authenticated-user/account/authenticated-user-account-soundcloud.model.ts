@@ -21,11 +21,18 @@ export class AuthenticatedUserAccountSoundcloudModel
   @nested()
   favouriteTracks: FavouriteTracksSoundcloudModel;
 
+  @attributesKey('connected')
+  @defaultValue(false)
+  connected: boolean;
   createNewPlaylist(title: string, isPublic: boolean = false) {
     const playlist = new AuthenticatedUserPlaylistCloudplayerModel();
     playlist.title = title;
     playlist.isPublic = isPublic;
     this.playlists.add(playlist);
     return playlist.save();
+  }
+
+  isConnected(){
+    return this.connected && !this.isNew();
   }
 }

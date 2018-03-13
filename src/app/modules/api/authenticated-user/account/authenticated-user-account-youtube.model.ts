@@ -19,6 +19,10 @@ export class AuthenticatedUserAccountYoutubeModel
   @nested()
   favouriteTracks: FavouriteTracksYoutubeModel;
 
+  @attributesKey('connected')
+  @defaultValue(false)
+  connected: boolean;
+
   parse(attrs: any) {
     if (attrs.items && attrs.items.length > 0) {
       return super.parse(attrs.items[0]);
@@ -33,5 +37,9 @@ export class AuthenticatedUserAccountYoutubeModel
     playlist.isPublic = isPublic;
     this.playlists.add(playlist);
     return playlist.save();
+  }
+
+  isConnected(){
+    return this.connected && !this.isNew();
   }
 }

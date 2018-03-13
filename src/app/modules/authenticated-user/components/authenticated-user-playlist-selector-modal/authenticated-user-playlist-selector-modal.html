@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div *ngIf="account.isNew()">
+      <div *ngIf="!account.isConnected()">
         <app-empty-state
           title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your playlists"
           [icon]="availableProviderMap[account.provider].icon"
@@ -41,7 +41,7 @@
         </app-empty-state>
       </div>
 
-      <app-empty-state *ngIf="!account.isNew() && !account.playlists.isSyncing && account.playlists.length === 0"
+      <app-empty-state *ngIf="account.isConnected() && !account.playlists.isSyncing && account.playlists.length === 0"
                        title="You have not created a playlist yet"
                        icon="fa fa-list-alt"
                        ctaText="Create Playlist"

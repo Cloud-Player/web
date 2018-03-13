@@ -30,6 +30,10 @@ export class AuthenticatedUserAccountCloudplayerModel
   @nested()
   favouriteTracks: FavouriteTracksCloudplayerModel;
 
+  @attributesKey('connected')
+  @defaultValue(false)
+  connected: boolean;
+
   initialize(): void {
     if (this.id) {
       this.playlists.setEndpoint(this.id);
@@ -58,5 +62,9 @@ export class AuthenticatedUserAccountCloudplayerModel
       delete attributes.id;
     }
     return attributes;
+  }
+
+  isConnected(){
+    return this.connected && !this.isNew();
   }
 }

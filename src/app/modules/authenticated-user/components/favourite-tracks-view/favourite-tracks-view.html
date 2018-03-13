@@ -29,14 +29,14 @@
         <div style="text-align: center; text-transform: uppercase; color: #999">{{tracks.length}} favourited tracks</div>
       </div>
 
-      <app-empty-state *ngIf="tracks.length === 0 && !account.isNew()"
+      <app-empty-state *ngIf="tracks.length === 0 && account.isConnected()"
                        title="Your favourite tracks will appear here"
                        icon="fa fa-heart-o"
                        ctaLink="/"
                        ctaText="Search for a track">
       </app-empty-state>
 
-      <app-empty-state *ngIf="account.isNew()"
+      <app-empty-state *ngIf="!account.isConnected()"
                        title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your favourite tracks"
                        [icon]="availableProviderMap[account.provider].icon"
                        (ctaClick)="connect(account)"

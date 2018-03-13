@@ -62,14 +62,14 @@
             [title]="availableProviderMap[account.provider].title"
             icon="fa {{availableProviderMap[account.provider].icon}}"
             [(isCollapsed)]="availableProviderMap[account.provider].playlistCollapsed">
-            <div *ngIf="account.isNew()">
+            <div *ngIf="!account.isConnected()">
               <app-nav-item
                 (click)="connect(account)"
                 title="Connect"
                 icon="fa fa-user">
               </app-nav-item>
             </div>
-            <div *ngIf="!account.isNew()">
+            <div *ngIf="account.isConnected()">
               <app-nav-input-item
                 icon="fa fa-plus"
                 title="Add new playlist"
