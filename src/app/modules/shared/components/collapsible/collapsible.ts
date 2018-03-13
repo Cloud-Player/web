@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   Output,
   Renderer2,
   SimpleChanges,
@@ -18,7 +18,7 @@ import {isUndefined} from 'underscore';
   styleUrls: ['./collapsible.scss'],
   templateUrl: './collapsible.html'
 })
-export class CollapsibleComponent implements AfterContentInit, OnChanges {
+export class CollapsibleComponent implements AfterContentInit, OnChanges, OnDestroy {
   private _transitionDuration = 200;
   private _subscriptions: Subscription;
   private _isCollapsed = false;
@@ -122,7 +122,7 @@ export class CollapsibleComponent implements AfterContentInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (!isUndefined(changes.isCollapsed.currentValue) && changes.isCollapsed.currentValue !== this._isCollapsed) {
+    if (changes.isCollapsed && !isUndefined(changes.isCollapsed.currentValue) && changes.isCollapsed.currentValue !== this._isCollapsed) {
       if (changes.isCollapsed.currentValue) {
         this.close();
       } else {
@@ -141,6 +141,10 @@ export class CollapsibleComponent implements AfterContentInit, OnChanges {
     }
 
     this._collapsibleBody.nativeElement.style.transition = `all ${this._transitionDuration / 1000}s ease`;
+  }
+
+  ngOnDestroy(){
+    this._subscriptions.unsubscribe();
   }
 
 }
