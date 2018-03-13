@@ -24,6 +24,8 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   isSyncing = false;
 
+  models: Array<TModel>;
+
   constructor(...args) {
     super(...args);
     this.on('request', () => {
