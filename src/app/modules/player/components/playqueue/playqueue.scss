@@ -118,6 +118,10 @@
 
   &.drag-in-progress {
     overflow: initial;
+
+    .no-items{
+      display: none;
+    }
   }
 
   /deep/ app-empty-state {
