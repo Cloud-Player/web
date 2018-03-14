@@ -37,6 +37,10 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
       item.id = item.track.id;
     }
 
+    if (!(item instanceof PlayQueueItem) && item.indexBeforeShuffle) {
+      this._isShuffled = true;
+    }
+
     return item;
   }
 
@@ -167,7 +171,14 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   shuffle(): any {
     let items = [];
     let orgIndex = 0;
-    this.getScheduledItems().forEach((item) => {
+    const currentItem = this.getCurrentItem();
+    const scheduledItems = this.getScheduledItems();
+    if (currentItem) {
+      if (!currentItem.indexBeforeShuffle) {
+        currentItem.indexBeforeShuffle = orgIndex++;
+      }
+    }
+    scheduledItems.forEach((item) => {
       if (!item.indexBeforeShuffle) {
         item.indexBeforeShuffle = orgIndex;
       }
