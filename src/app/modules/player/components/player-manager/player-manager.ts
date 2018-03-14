@@ -29,7 +29,7 @@ import {ITrack} from '../../../api/tracks/track.interface';
   templateUrl: './player-manager.html'
 })
 export class PlayerManagerComponent implements OnInit {
-  private _fadeDuration = 10;
+  private _fadeDuration = 5;
   private _prepareTime = 30;
   private _volume = 1;
   private _errorRetryCounter = 0;
