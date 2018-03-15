@@ -387,7 +387,6 @@ export abstract class AbstractPlayer implements OnInit {
     const obs: Observable<number> = EaseService.easeOutSine(0, 1, duration);
     const subscription = obs.subscribe(newVal => {
       if (this._initialised) {
-        console.log(this.getVolume() - newVal);
         this.setPlayerVolume(this.getVolume() - newVal);
       }
     });

@@ -29,7 +29,6 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   private update() {
-    console.log('UPDATE');
     this.cdr.detectChanges();
   }
 
