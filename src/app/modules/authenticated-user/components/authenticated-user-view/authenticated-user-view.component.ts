@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
 import {ExternalUserAuthenticator} from '../../services/external-authenticator.class';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {AccountCloudplayerModel} from '../../../api/account/account-cloudplayer.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 @Component({

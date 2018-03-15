@@ -1,15 +1,13 @@
-import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {CollectionTextInputSearchComponent} from '../../../shared/components/collection-text-input-search/collection-text-input-search.component';
 import * as localforage from 'localforage';
 import {TabBarComponent} from '../../../shared/components/tab-bar/tab-bar';
 import {TabPaneComponent} from '../../../shared/components/tab-pane/tab-pane';
-import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {TracksSoundcloudCollection} from '../../../api/tracks/tracks-soundcloud.collection';
 import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 import {TracksYoutubeCollection} from '../../../api/tracks/tracks-youtube.collection';
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
-import {Subscription} from 'rxjs/Subscription';
 import {Utils} from '../../../shared/src/utils.class';
 
 @Component({

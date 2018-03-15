@@ -1,10 +1,18 @@
 import {
-  Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, forwardRef, Inject, OnDestroy, OnInit,
+  Component,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
   Output,
-  Type, ViewChild,
+  Type,
+  ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {state, style, transition, trigger, animate, AnimationEvent} from '@angular/animations';
+import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
 import {IModal, IModalComponent, IModalOptions, modalAction} from '../../../src/modal.interface';
 import {Modal} from '../../../src/modal-factory.class';
 

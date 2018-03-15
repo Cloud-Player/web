@@ -1,4 +1,4 @@
-import {shuffle, sortBy, isArray} from 'underscore';
+import {isArray, shuffle, sortBy} from 'underscore';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {PlayQueueItem} from '../models/play-queue-item';
 import {BaseCollection} from '../../backbone/collections/base.collection';

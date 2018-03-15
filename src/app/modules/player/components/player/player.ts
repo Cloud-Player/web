@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';

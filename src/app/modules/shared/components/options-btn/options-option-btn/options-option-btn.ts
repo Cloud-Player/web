@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Optional, Output} from '@angular/core';
 import {ContextMenuComponent} from '../../context-menu/context-menu';
 import {uniqueId} from 'underscore';
 

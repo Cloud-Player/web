@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PlayQueue} from '../../../player/collections/play-queue';
 import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {ClientDetector} from '../../../shared/services/client-detector.service';

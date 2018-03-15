@@ -1,5 +1,4 @@
-import {EventEmitter, Injectable, NgZone} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Injectable, NgZone} from '@angular/core';
 import {debounce, isString} from 'underscore';
 import {Utils} from '../src/utils.class';
 import {Subject} from 'rxjs/Subject';

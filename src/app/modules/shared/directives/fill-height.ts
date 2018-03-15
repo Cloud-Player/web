@@ -1,10 +1,7 @@
-import {
-  AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Directive, ElementRef, Input, OnDestroy,
-  OnInit, Optional, OptionalDecorator
-} from '@angular/core';
+import {AfterContentInit, Directive, ElementRef, Input, OnDestroy, Optional} from '@angular/core';
 import {LayoutChangeTypes, LayoutService, WindowBreakPointTypes, WindowElementTypes} from '../services/layout';
 import {Subscription} from 'rxjs/Subscription';
-import {ModalService, ModalServiceStates} from '../services/modal';
+import {ModalService} from '../services/modal';
 import {ModalComponent} from '../components/modal/modal/modal';
 
 @Directive({

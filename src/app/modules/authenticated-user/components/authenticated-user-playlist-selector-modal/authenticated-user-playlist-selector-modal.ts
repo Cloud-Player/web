@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, NgZone, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {AuthenticatedUserAccountsCollection} from '../../../api/authenticated-user/account/authenticated-user-accounts.collection';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
@@ -10,7 +10,6 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {ExternalUserAuthenticator} from '../../services/external-authenticator.class';
 import {ModalService} from '../../../shared/services/modal';
-import {AuthenticatedUserPlaylistFormViewComponent} from '../authenticated-user-playlist-form-view/authenticated-user-playlist-form-view';
 import {AuthenticatedUserPlaylistFormComponent} from '../authenticated-user-form-component/authenticated-user-playlist-form';
 import {Modal} from '../../../shared/src/modal-factory.class';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';

@@ -1,7 +1,6 @@
 import {ComponentFactoryResolver, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Modal, ModalFactory, ModalStates} from '../src/modal-factory.class';
-import {UserAnalyticsModule} from '../../user-analytics/user-analytics.module';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 
 export enum ModalServiceStates {
