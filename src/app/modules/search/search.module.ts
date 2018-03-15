@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SearchViewComponent} from './components/serach-view/search-view';
+import {SearchViewComponent} from './components/search-view/search-view';
 import {TracksModule} from '../tracks/tracks.module';
 import {SearchRoutingModule} from './search.routes';
 import {BrowserModule} from '@angular/platform-browser';
