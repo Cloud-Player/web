@@ -7,4 +7,5 @@ export interface IPlaylistItemModelConstructor {
 
 export interface IPlaylistItem extends BaseModel {
   track: ITrack;
+  type: string;
 }

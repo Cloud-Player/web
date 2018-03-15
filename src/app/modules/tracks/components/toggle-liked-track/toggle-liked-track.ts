@@ -7,6 +7,7 @@ import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.
 import {FavouriteTracksCloudplayerModel} from '../../../api/favourite-tracks/favourite-tracks-cloudplayer.model';
 import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
 import {debounce} from 'underscore';
+import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-item.interface';
 
 @Component({
   selector: 'app-toggle-liked-track',
@@ -42,19 +43,40 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   like(): void {
     if (!this.hasLikedTrack()) {
       this._favouriteTracksPerProvider.forEach((favouriteTracks: IFavouriteTracks) => {
-        favouriteTracks.items.create({
+        const favouriteTrack = favouriteTracks.items.add({
           track: this.track
+        });
+        favouriteTrack.save().then(() => {
+          this.userAnalyticsService.trackEvent(
+            'toggle_like',
+            `${favouriteTrack.type}:like_${this.track.provider}`,
+            'app-option-btn');
+        }, () => {
+          this.userAnalyticsService.trackEvent(
+            'toggle_like',
+            `${favouriteTrack.type}:like_error:${this.track.provider}`,
+            'app-option-btn');
         });
       });
     }
   }
 
   dislike(): void {
-    const favouriteTrack = this._cloudPlayerFavouriteTracks.items.find((item: IPlaylistItem) => {
+    const favouriteTrack = <IFavouriteTrackItem>this._cloudPlayerFavouriteTracks.items.find((item: IPlaylistItem) => {
       return item.track.id === this.track.id;
     });
     if (favouriteTrack) {
-      favouriteTrack.destroy();
+      favouriteTrack.destroy().then(() => {
+        this.userAnalyticsService.trackEvent(
+          'toggle_like',
+          `${favouriteTrack.type}:dislike_${this.track.provider}`,
+          'app-option-btn');
+      }, () => {
+        this.userAnalyticsService.trackEvent(
+          'toggle_like',
+          `${favouriteTrack.type}:dislike_error:${this.track.provider}`,
+          'app-option-btn');
+      });
     }
   }
 

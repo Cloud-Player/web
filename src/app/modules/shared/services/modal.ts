@@ -1,6 +1,8 @@
 import {ComponentFactoryResolver, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Modal, ModalFactory, ModalStates} from '../src/modal-factory.class';
+import {UserAnalyticsModule} from '../../user-analytics/user-analytics.module';
+import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 
 export enum ModalServiceStates {
   ModalVisbile,
@@ -17,7 +19,7 @@ export class ModalService {
   private _modalFactory: ModalFactory;
   private _isInitialised = false;
 
-  constructor() {
+  constructor(private userAnalyticsService: UserAnalyticsService) {
     this._modalFactory = new ModalFactory();
     this._subject = new Subject();
   }
@@ -59,6 +61,7 @@ export class ModalService {
         if (this.getOpenedModalsAmount() === 1) {
           this._subject.next(ModalServiceStates.ModalVisbile);
         }
+        this.userAnalyticsService.trackEvent('modal', `open_${modal.getTitle()}`, 'ModalService');
       });
     modal.getObservable()
       .filter(ev => ev === ModalStates.Closed)
@@ -68,6 +71,7 @@ export class ModalService {
         if (this.getOpenedModalsAmount() === 0) {
           this._subject.next(ModalServiceStates.NoModalVisible);
         }
+        this.userAnalyticsService.trackEvent('modal', `close_${modal.getTitle()}`, 'ModalService');
       });
   }
 

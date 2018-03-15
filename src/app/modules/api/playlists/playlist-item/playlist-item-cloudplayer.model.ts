@@ -8,6 +8,8 @@ import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 export class PlaylistItemCloudplayerModel
   extends CloudplayerModel implements IPlaylistItem {
 
+  public type = 'cloudplayer';
+
   @attributesKey('track')
   @dynamicInstance({
     identifierKey: 'provider_id',

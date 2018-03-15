@@ -7,4 +7,5 @@ export interface IFavouriteTrackItemModelConstructor {
 
 export interface IFavouriteTrackItem extends BaseModel {
   track: ITrack;
+  type: string;
 }

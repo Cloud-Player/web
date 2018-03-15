@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'app-empty-state',
@@ -26,7 +27,7 @@ export class EmptyStateComponent implements OnInit, OnDestroy {
   @Output()
   public ctaClick: EventEmitter<any>;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userAnalyticsService: UserAnalyticsService) {
     this.ctaClick = new EventEmitter<any>();
   }
 
@@ -35,6 +36,10 @@ export class EmptyStateComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(this.ctaLink);
     }
     this.ctaClick.emit();
+    this.userAnalyticsService.trackEvent(
+      'empty_state',
+      `cta_click_${this.ctaText}`,
+      'app-empty-state');
   }
 
   ngOnInit(): void {

@@ -9,6 +9,8 @@ export class PlaylistItemYoutubeModel
   extends YoutubeProxyModel implements IPlaylistItem {
   private _playlistId: string;
 
+  public type = 'youtube';
+
   @queryParam()
   part = 'snippet';
 

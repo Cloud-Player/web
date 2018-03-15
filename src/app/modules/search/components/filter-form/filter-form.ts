@@ -39,14 +39,15 @@ export class FilterFormComponent implements OnInit, OnDestroy {
     this.setFilterProperties = [];
     this.debouncedFetchCollection();
     this.status.emit(FilterFormStatusTypes.Reset);
+    this.userAnalyticsService.trackEvent(`filter_searchresult`, `reset`, 'app-filter-form');
   }
 
   public setFilter(property: string, value: any): void {
     if (value !== this.collection.queryParams[property]) {
-      this.userAnalyticsService.trackEvent(`filter_${property}`, 'click', 'app-search-filter-cmp');
       this.collection.queryParams[property] = value;
       this.setFilterProperties.push(property);
       this.hasBeenChanged = true;
+      this.userAnalyticsService.trackEvent(`filter_searchresult`, `${property}`, 'app-filter-form');
     }
   }
 

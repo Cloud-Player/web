@@ -73,7 +73,7 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
     item.destroy().then(() => {
       this.userAnalyticsService.trackEvent('playlist', 'delete_item', 'app-play-list-view');
     }, () => {
-      this.userAnalyticsService.trackEvent('playlist:error', 'delete_item', 'app-play-list-view');
+      this.userAnalyticsService.trackEvent('playlist', 'delete_item:error', 'app-play-list-view');
     });
   }
 
@@ -92,7 +92,7 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
       this.userAnalyticsService.trackEvent('playlist', 'delete', 'app-play-list-view');
       this.router.navigateByUrl('/me/playlists');
     }, () => {
-      this.userAnalyticsService.trackEvent('playlist:error', 'delete', 'app-play-list-view');
+      this.userAnalyticsService.trackEvent('playlist', 'delete:error', 'app-play-list-view');
     });
   }
 

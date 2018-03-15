@@ -75,6 +75,12 @@ export class Modal<TComponent> {
     this._modalRef.instance.hide();
   }
 
+  public getTitle() {
+    if (this._modalRef) {
+      return this._modalRef.instance.getTitle();
+    }
+  }
+
   public destroy() {
     this._modalFactory.destroyModal(this);
   }

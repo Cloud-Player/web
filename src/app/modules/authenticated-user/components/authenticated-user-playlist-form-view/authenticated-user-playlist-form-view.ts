@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {IAccount} from '../../../api/account/account.interface';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'app-authenticated-user-playlist-form-view',
@@ -19,7 +20,8 @@ export class AuthenticatedUserPlaylistFormViewComponent implements OnInit, OnDes
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private location: Location) {
+              private location: Location,
+              private userAnalyticsService: UserAnalyticsService) {
   }
 
   private setPlaylist(provider: string, playlistId?: string) {
@@ -46,7 +48,13 @@ export class AuthenticatedUserPlaylistFormViewComponent implements OnInit, OnDes
   }
 
   save() {
+    const wasNew = this.playlist.isNew();
     this.playlist.save().then(() => {
+      if (wasNew) {
+        this.userAnalyticsService.trackEvent('playlist', 'create', 'app-authenticated-user-playlist-form-view');
+      } else {
+        this.userAnalyticsService.trackEvent('playlist', 'edit', 'app-authenticated-user-playlist-form-view');
+      }
       this.router.navigate(['/playlists', this.playlist.provider, this.playlist.id]);
       this.account.playlists.add(this.playlist);
     });

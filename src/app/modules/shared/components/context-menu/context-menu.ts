@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {debounce} from 'underscore';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 class ContextMenuManager {
   private static contextMenuManager: ContextMenuManager;
@@ -57,7 +58,10 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('contextMenu')
   public contextMenu: ElementRef;
 
-  constructor(private el: ElementRef, private renderer2: Renderer2, private cdr: ChangeDetectorRef) {
+  constructor(private el: ElementRef,
+              private renderer2: Renderer2,
+              private cdr: ChangeDetectorRef,
+              private userAnalyticsService: UserAnalyticsService) {
     this.options = [];
     this._contextMenuManager = ContextMenuManager.getInstance();
     this._contextMenuManager.add(this);
@@ -108,6 +112,11 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
         return true;
       }
     });
+  }
+
+  public executeAction(option: IContextOption) {
+    option.action.emit();
+    this.userAnalyticsService.trackEvent('context_menu', `click_${option.title}`, 'app-context-menu');
   }
 
   ngOnInit(): void {

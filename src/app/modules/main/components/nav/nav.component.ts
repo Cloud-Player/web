@@ -16,6 +16,7 @@ import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {LayoutChangeTypes, LayoutService} from '../../../shared/services/layout';
 import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -69,7 +70,8 @@ export class NavComponent implements OnInit {
               private cdr: ChangeDetectorRef,
               private dragAndDropService: DragAndDropService,
               private externalUserAuthenticator: ExternalUserAuthenticator,
-              private layoutService: LayoutService) {
+              private layoutService: LayoutService,
+              private userAnalyticsService: UserAnalyticsService) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
     this.cloudPlayerAccount = <AuthenticatedUserAccountCloudplayerModel>this.getAccountForProvider('cloudplayer');
   }
@@ -126,7 +128,23 @@ export class NavComponent implements OnInit {
     const playlist = <IPlaylist>dragAndDrop.dropReference;
     if (track && playlist) {
       const playlistItem = playlist.items.add({track: track});
-      playlistItem.save();
+      playlistItem.save().then(
+        () => {
+          this.userAnalyticsService.trackEvent(
+            'playlist',
+            `${playlistItem.type}:add:${track.provider}`,
+            'app-nav-sidebar');
+        }, () => {
+          this.userAnalyticsService.trackEvent(
+            'playlist',
+            `${playlistItem.type}:add_error:${track.provider}`,
+            'app-nav-sidebar');
+        }
+      );
+      this.userAnalyticsService.trackEvent(
+        'drag_and_drop',
+        `add_track_to_playlist`,
+        'app-nav-sidebar');
     }
   }
 

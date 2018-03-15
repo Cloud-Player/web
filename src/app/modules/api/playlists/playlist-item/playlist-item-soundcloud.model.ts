@@ -10,6 +10,8 @@ export class PlaylistItemSoundcloudModel
 
   collection: PlaylistItemsSoundcloudCollection<PlaylistItemSoundcloudModel>;
 
+  public type = 'soundcloud';
+
   @attributesKey('track')
   @nested()
   track: TrackSoundcloudModel;

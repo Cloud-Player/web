@@ -2,8 +2,8 @@
   <ng-content></ng-content>
   <div #contextMenu class="context-menu">
     <div *ngFor="let option of options"
-         (click)="option.action.emit()">
-      <app-option-btn [title]="option.title" [icon]="option.icon" (action)="option.action"></app-option-btn>
+         (click)="executeAction(option)">
+      <app-option-btn [title]="option.title" [icon]="option.icon" [executeAction]="false"></app-option-btn>
     </div>
   </div>
   <div class="backdrop"></div>

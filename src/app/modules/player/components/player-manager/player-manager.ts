@@ -69,16 +69,19 @@ export class PlayerManagerComponent implements OnInit {
   private handlePlayerStatusChange(newStatus: PlayerStatus) {
     switch (newStatus) {
       case PlayerStatus.Playing:
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:is_playing`, 'app-player-manager');
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Playing;
         this._errorRetryCounter = 0;
         break;
       case PlayerStatus.Paused:
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:paused`, 'app-player-manager');
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Paused;
         break;
       case PlayerStatus.Stopped:
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Stopped;
         break;
       case PlayerStatus.Ended:
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:ended`, 'app-player-manager');
         if (this.playQueue.hasNextItem()) {
           this.playQueue.getNextItem().play();
         } else {
@@ -86,7 +89,7 @@ export class PlayerManagerComponent implements OnInit {
         }
         break;
       case PlayerStatus.Error:
-        this.userAnalyticsService.trackEvent('player_error', 'any', this._activePlayer.instance.getError());
+        this.userAnalyticsService.trackEvent('player', `error:${this._activePlayer.instance.getError()}`, 'app-player-manager');
         const currentItem = this.playQueue.getCurrentItem();
         if (currentItem && currentItem.isPlaying()) {
           this.playQueue.getCurrentItem().pause();
@@ -107,7 +110,7 @@ export class PlayerManagerComponent implements OnInit {
     const currentItem = this.playQueue.getCurrentItem();
     const progress = currentItem.progress;
     if (this._errorRetryCounter > 2) {
-      this.userAnalyticsService.trackEvent('player_error_resolve_timeout', 'any');
+      this.userAnalyticsService.trackEvent('player', 'error_resolve_timeout', 'app-player-manager');
       return;
     }
     this._errorRetryCounter++;
@@ -116,7 +119,7 @@ export class PlayerManagerComponent implements OnInit {
       this._activePlayer = null;
     }
     currentItem.play(progress).then(() => {
-      this.userAnalyticsService.trackEvent('resolved_player_error', 'any');
+      this.userAnalyticsService.trackEvent('player', 'resolved_player_error', 'app-player-manager');
     });
   }
 

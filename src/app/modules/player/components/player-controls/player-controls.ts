@@ -57,13 +57,13 @@ export class PlayerControlsComponent implements OnInit {
       });
       if (this.playQueue.hasPreviousItem()) {
         nv.mediaSession.setActionHandler('previoustrack', () => {
-          this.userAnalyticsService.trackEvent('previous_track_chrome_mob', 'click', 'app-player-controls-cmp');
+          this.userAnalyticsService.trackEvent('chrome_mob', 'previous_track', 'app-player-controls-cmp');
           this.previous();
         });
       }
       if (this.playQueue.hasNextItem()) {
         nv.mediaSession.setActionHandler('nexttrack', () => {
-          this.userAnalyticsService.trackEvent('next_track_chrome_mob', 'click', 'app-player-controls-cmp');
+          this.userAnalyticsService.trackEvent('chrome_mob', 'next_track', 'app-player-controls-cmp');
           this.next();
         });
       }
@@ -79,7 +79,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   private enteredFullScreen() {
-    this.userAnalyticsService.trackEvent('fullscreen', 'entered', 'app-player-controls-cmp');
+    this.userAnalyticsService.trackEvent('player_ctrls', 'entered_fullscreen', 'app-player-controls-cmp');
     this.el.nativeElement.classList.add('full-screen');
   }
 
@@ -91,7 +91,7 @@ export class PlayerControlsComponent implements OnInit {
     const currItem = this.playQueue.getCurrentItem();
     if (currItem) {
       currItem.play(currItem.progress);
-      this.userAnalyticsService.trackEvent('play_track', 'click', 'app-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('player_ctrls', 'play', 'app-player-controls-cmp');
     }
   }
 
@@ -99,7 +99,7 @@ export class PlayerControlsComponent implements OnInit {
     const currItem = this.playQueue.getPlayingItem();
     if (currItem) {
       currItem.pause();
-      this.userAnalyticsService.trackEvent('pause_track', 'click', 'app-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('player_ctrls', 'pause', 'app-player-controls-cmp');
     }
   }
 
@@ -118,17 +118,17 @@ export class PlayerControlsComponent implements OnInit {
     const playingItem = this.playQueue.getPlayingItem();
     if (playingItem && playingItem.progress > 3) {
       playingItem.restart();
-      this.userAnalyticsService.trackEvent('restart_track', 'click', 'app-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('player_ctrls', 'restart_track', 'app-player-controls-cmp');
     } else if (this.playQueue.hasPreviousItem()) {
       this.playQueue.getPreviousItem().play();
-      this.userAnalyticsService.trackEvent('previous_track', 'click', 'app-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('player_ctrls', 'previous_track', 'app-player-controls-cmp');
     }
   }
 
   public next(): void {
     if (this.playQueue.hasNextItem()) {
       this.playQueue.getNextItem().play();
-      this.userAnalyticsService.trackEvent('next_track', 'click', 'app-player-controls-cmp');
+      this.userAnalyticsService.trackEvent('player_ctrls', 'next_track', 'app-player-controls-cmp');
     }
   }
 
@@ -145,7 +145,6 @@ export class PlayerControlsComponent implements OnInit {
 
   public toggleFullScreen() {
     if (!this.fullScreenService.isInFullScreen()) {
-      this.userAnalyticsService.trackEvent('fullscreen', 'request', 'app-player-controls-cmp');
       this.fullScreenService.enter();
     } else {
       this.fullScreenService.leave();
@@ -155,13 +154,21 @@ export class PlayerControlsComponent implements OnInit {
   public toggleShuffle() {
     if (this.playQueue.isShuffled()) {
       this.playQueue.deShuffle();
+      this.userAnalyticsService.trackEvent('player_ctrls', 'deshuffle', 'app-player-controls-cmp');
     } else {
       this.playQueue.shuffle();
+      this.userAnalyticsService.trackEvent('player_ctrls', 'shuffle', 'app-player-controls-cmp');
     }
   }
 
   public toggleLoop() {
-    this.playQueue.setLoopPlayQueue(!this.playQueue.isLooped());
+    if (this.playQueue.isLooped()) {
+      this.playQueue.setLoopPlayQueue(false);
+      this.userAnalyticsService.trackEvent('player_ctrls', 'disable_loop', 'app-player-controls-cmp');
+    } else {
+      this.playQueue.setLoopPlayQueue(true);
+      this.userAnalyticsService.trackEvent('player_ctrls', 'enable_loop', 'app-player-controls-cmp');
+    }
   }
 
   public setVolume(volume: number) {
@@ -189,10 +196,6 @@ export class PlayerControlsComponent implements OnInit {
         this.currentItem = this.playQueue.getCurrentItem();
       }
     });
-
-    window.addEventListener('playPauseTrackKeyPressed', this.togglePlayPause.bind(this));
-    window.addEventListener('nextTrackKeyPressed', this.next.bind(this));
-    window.addEventListener('previousTrackKeyPressed', this.previous.bind(this));
 
     this.fullScreenService.getObservable()
       .filter(eventType => eventType === FullScreenEventType.Enter)

@@ -8,6 +8,7 @@ import {ToastService} from '../../shared/services/toast';
 import {ToastModel} from '../../shared/models/toast';
 import {ToastTypes} from '../../shared/src/toast-types.enum';
 import {ClientDetector} from '../../shared/services/client-detector.service';
+import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 
 @Directive({
   selector: '[appTrackPlayOn]'
@@ -27,7 +28,10 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
   @Input()
   tracks: ITracks<ITrack>;
 
-  constructor(private el: ElementRef, private renderer2: Renderer2, private toastService: ToastService) {
+  constructor(private el: ElementRef,
+              private renderer2: Renderer2,
+              private toastService: ToastService,
+              private userAnalyticsService: UserAnalyticsService) {
     this._subscriptions = new Subscription();
   }
 
@@ -82,6 +86,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
         });
       }
       this.playQueue.add({track: this.track}).play();
+      this.userAnalyticsService.trackEvent('play_track', `${this.track.provider}:${this.track.title}`, 'appTrackPlayOn');
     }
   }
 

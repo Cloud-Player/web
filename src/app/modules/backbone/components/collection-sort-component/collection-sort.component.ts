@@ -52,15 +52,15 @@ export class CollectionSortComponent implements OnInit {
       }
       if (!this.collection.sortOrder || this.collection.sortOrder === 'ASC') {
         this.collection.sortDescending();
-        this.userAnalyticsService.trackEvent(`sort_${this.collection.comparator}_desc`, 'click', 'app-collection-sort-cmp');
+        this.userAnalyticsService.trackEvent('sort', `${this.collection.comparator}_desc`, 'app-collection-sort-cmp');
       } else {
         this.collection.sortAscending();
-        this.userAnalyticsService.trackEvent(`sort_${this.collection.comparator}_asc`, 'click', 'app-collection-sort-cmp');
+        this.userAnalyticsService.trackEvent('sort', `${this.collection.comparator}_asc`, 'app-collection-sort-cmp');
       }
     } else if (this.collection.comparator) {
       this.collection.comparator = null;
       this.collection.fetch();
-      this.userAnalyticsService.trackEvent('sort_reset', 'click', 'app-collection-sort-cmp');
+      this.userAnalyticsService.trackEvent('sort', 'reset', 'app-collection-sort-cmp');
     }
   }
 

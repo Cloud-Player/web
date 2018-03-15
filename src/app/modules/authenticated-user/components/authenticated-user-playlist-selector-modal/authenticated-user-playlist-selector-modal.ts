@@ -13,6 +13,7 @@ import {ModalService} from '../../../shared/services/modal';
 import {AuthenticatedUserPlaylistFormViewComponent} from '../authenticated-user-playlist-form-view/authenticated-user-playlist-form-view';
 import {AuthenticatedUserPlaylistFormComponent} from '../authenticated-user-form-component/authenticated-user-playlist-form';
 import {Modal} from '../../../shared/src/modal-factory.class';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 
 @Component({
   selector: 'app-authenticated-user-playlist-selector-modal',
@@ -32,7 +33,9 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
   @Input()
   track: ITrack;
 
-  constructor(private externalUserAuthenticator: ExternalUserAuthenticator, private modalService: ModalService) {
+  constructor(private externalUserAuthenticator: ExternalUserAuthenticator,
+              private modalService: ModalService,
+              private userAnalyticsService: UserAnalyticsService) {
     this.accounts = AuthenticatedUserModel.getInstance().accounts;
     this._subscription = new Subscription();
     this.modalOptions = {
@@ -54,7 +57,19 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
 
   public addTrackTo(playlist: IPlaylist) {
     const playlistItem = playlist.items.add({track: this.track});
-    playlistItem.save();
+    playlistItem.save().then(
+      () => {
+        this.userAnalyticsService.trackEvent(
+          'playlist',
+          `${playlistItem.type}:add:${this.track.provider}`,
+          'app-authenticated-user-playlist-selector-modal');
+      }, () => {
+        this.userAnalyticsService.trackEvent(
+          'playlist',
+          `${playlistItem.type}:add_error:${this.track.provider}`,
+          'app-authenticated-user-playlist-selector-modal');
+      }
+    );
     this._modal.hide();
   }
 
