@@ -2,11 +2,11 @@
 @import "../authenticated-user-playlists-view/authenticated-user-playlists-view.style";
 
 :host {
-  .playlist-grid {
+  .cp-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
   }
-  .playlist-card {
+  .grid-card {
     transition: transform 0.2s ease;
     .description {
       .title {

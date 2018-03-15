@@ -1,7 +1,6 @@
 <div class="playlist-selector-modal">
   <p *ngIf="track">
     Select the playlist where the track <b>{{track.title}}</b> should be added
-    {{applicableAccounts.length}}
   </p>
   <app-tab-bar (tabChange)="selectTab($event)">
     <app-tab-pane
@@ -10,18 +9,16 @@
       [title]="availableProviderMap[account.provider].title"
       [icon]="availableProviderMap[account.provider].icon">
       <div *ngIf="account.playlists.length > 0">
-        <ul class="playlist-grid">
+        <ul class="cp-grid">
           <li *ngFor="let playlist of account.playlists.models"
               class="clickable"
               (click)="addTrackTo(playlist)">
-            <div class="playlist-card">
+            <div class="grid-card">
               <div class="image">
                 <img *ngIf=playlist.image.getMediumSizeUrl()
                      [src]="playlist.image.getMediumSizeUrl()">
-                <div *ngIf=!playlist.image.getMediumSizeUrl()
-                     class="no-img">
-                  <i class="fa fa-list-alt"></i>
-                </div>
+                <img *ngIf=!playlist.image.getMediumSizeUrl()
+                     src="assets/cassette.jpg">
               </div>
               <div class="description">
                 <div class="title">

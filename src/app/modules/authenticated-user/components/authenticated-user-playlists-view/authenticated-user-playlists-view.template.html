@@ -24,18 +24,13 @@
               <div class="image">
                 <img *ngIf=playlist.image.getMediumSizeUrl()
                      [src]="playlist.image.getMediumSizeUrl()">
-                <div *ngIf=!playlist.image.getMediumSizeUrl()
-                     class="no-img">
-                  <i class="fa fa-list-alt"></i>
-                </div>
+                <img *ngIf=!playlist.image.getMediumSizeUrl()
+                     src="assets/cassette.jpg">
               </div>
               <div class="description">
                 <div class="title">
                   {{playlist.title}}
                 </div>
-                <p>
-                  {{playlist.description}}
-                </p>
               </div>
               <div class="actions">
                 <div class="btn btn-link btn-default" (click)="play(playlist)">
