@@ -62,7 +62,8 @@ export class SearchViewComponent implements AfterViewInit {
       'The Weeknd',
       'Bedouin Brutal Hearts',
       'La raíz',
-      'Fallout Boy',
+      'Fall Out Boy',
+      'Kodaline',
       'Wanda',
       'Cigarettes after Sex',
       'Trentemøller'
