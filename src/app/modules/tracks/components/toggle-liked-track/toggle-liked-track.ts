@@ -91,7 +91,7 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
     const providerAccount = this._authenticatedUser.accounts.getAccountForProvider(this.track.provider);
     const cloudplayerAccount = this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
     this._favouriteTracksPerProvider = [];
-    if (providerAccount) {
+    if (providerAccount && providerAccount.isConnected()) {
       this._favouriteTracksPerProvider.push(providerAccount.favouriteTracks);
     }
     if (cloudplayerAccount && cloudplayerAccount instanceof AuthenticatedUserAccountCloudplayerModel) {
