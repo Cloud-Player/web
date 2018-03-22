@@ -190,7 +190,7 @@ export class NavComponent implements OnInit {
         account.playlists.fetch();
         this.update();
       });
-      account.playlists.on('add remove reset', this.update.bind(this));
+      account.playlists.on('add remove reset change', this.update.bind(this));
     });
     this.authenticatedUser.fetch();
     this.dragAndDropService.getObservable()
