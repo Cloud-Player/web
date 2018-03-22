@@ -24,8 +24,7 @@ export class AuthenticatedUserPlaylistCloudplayerModel
     return {
       title: attrs.title,
       public: attrs.public,
-      account_id: attrs.account_id
-      /*description: attrs.description*/
+      description: attrs.description
     };
   }
 }
