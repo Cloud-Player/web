@@ -9,6 +9,7 @@ import {TracksYoutubeCollection} from '../../../api/tracks/tracks-youtube.collec
 import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {Utils} from '../../../shared/src/utils.class';
+import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 
 @Component({
   selector: 'app-search-view',
@@ -29,7 +30,7 @@ export class SearchViewComponent implements AfterViewInit {
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
 
-  constructor() {
+  constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe) {
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
     this.searchCollection = this.tracksSoundCloud;
@@ -82,6 +83,12 @@ export class SearchViewComponent implements AfterViewInit {
       setTimeout(this.animatedSearch.bind(this, searchTerm, query, index), 100);
     }
   }
+
+  public transformScDurationValue = (value) => {
+    if (value) {
+      return this.humanReadableSecondsPipe.transform((value / 1000).toString());
+    }
+  };
 
   ngAfterViewInit() {
     this.searchBar.focus();
