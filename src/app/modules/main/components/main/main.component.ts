@@ -49,7 +49,7 @@ export class MainComponent implements OnInit {
     });
 
     // Handle service worker update
-    window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable);
+    window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable.bind(this));
 
     // FIXME DEPRECATED For backwards compatibility where the native client does not trigger the event
     setTimeout(() => {
