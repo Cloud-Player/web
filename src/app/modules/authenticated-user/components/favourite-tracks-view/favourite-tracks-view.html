@@ -29,7 +29,12 @@
         <app-list-footer [collection]="tracks" text="favourited tracks"></app-list-footer>
       </div>
 
-      <app-empty-state *ngIf="tracks.length === 0 && account.isConnected()"
+      <app-empty-state *ngIf="isSyncing()"
+                       title="Loading your favourited tracks"
+                       icon="fa fa-heart-o">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="tracks.length === 0 && !isSyncing() && account.isConnected()"
                        title="Your favourite tracks will appear here"
                        icon="fa fa-heart-o"
                        ctaLink="/"
