@@ -38,6 +38,7 @@
         </app-track-list-item>
       </app-context-menu>
     </div>
+    <app-list-footer [collection]="tracks" text="tracks in playlist"></app-list-footer>
   </div>
 
   <app-empty-state *ngIf="!playlist.isSyncing && !playlist.items.isSyncing && playlist.items.length === 0"

@@ -26,7 +26,7 @@
             </app-track-list-item>
           </app-context-menu>
         </div>
-        <div style="text-align: center; text-transform: uppercase; color: #999">{{tracks.length}} favourited tracks</div>
+        <app-list-footer [collection]="tracks" text="favourited tracks"></app-list-footer>
       </div>
 
       <app-empty-state *ngIf="tracks.length === 0 && account.isConnected()"

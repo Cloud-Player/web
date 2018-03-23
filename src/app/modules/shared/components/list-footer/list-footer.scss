@@ -1,0 +1,12 @@
+@import 'variables';
+
+:host {
+  .list-footer {
+    text-align: center;
+    text-transform: uppercase;
+    color: #999;
+    padding: 10px;
+    margin-top: 15px;
+  }
+}
+

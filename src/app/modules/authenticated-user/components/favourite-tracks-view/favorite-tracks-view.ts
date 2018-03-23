@@ -78,6 +78,14 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
     this.externalUserAuthenticator.connect(account);
   }
 
+  public isSyncing(): boolean {
+    if (this._selectedAccount) {
+      return this._selectedAccount.favouriteTracks.items.isSyncing;
+    } else {
+      return false;
+    }
+  }
+
   ngOnInit(): void {
     this._selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
     const authSubscription = this.externalUserAuthenticator.getObservable()

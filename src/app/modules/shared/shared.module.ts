@@ -49,6 +49,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddToQueueOptionComponent} from './components/option-btn/add-to-queue-option/add-to-queue-option';
 import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playlist-option/add-to-playlist-option';
 import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-option/shuffle-play-option';
+import {ListFooterComponent} from './components/list-footer/list-footer';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-o
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
     MultiLineComponent,
+    ListFooterComponent,
 
     OptionBtnComponent,
     OptionsBtnComponent,
@@ -118,6 +120,7 @@ import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-o
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
     MultiLineComponent,
+    ListFooterComponent,
 
     OptionBtnComponent,
     OptionsBtnComponent,
