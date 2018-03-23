@@ -29,6 +29,7 @@ export class MainComponent implements OnInit {
     toast.type = ToastTypes.Primary;
     toast.icon = 'fa fa-rocket';
     toast.buttonAction = () => {
+      this.userAnalyticsService.trackEvent('restart_app', 'new_version', 'app-cloud-player');
       location.reload(true);
     };
     toast.buttonLabel = 'Restart Cloud-Player';
