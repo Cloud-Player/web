@@ -24,6 +24,8 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   isSyncing = false;
 
+  isFetched = false;
+
   models: Array<TModel>;
 
   constructor(...args) {
@@ -33,6 +35,9 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
     });
     this.on('sync error destroy', () => {
       this.isSyncing = false;
+    });
+    this.on('sync error', () => {
+      this.isFetched = true;
     });
   }
 
@@ -134,6 +139,14 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   request(url: string, method: string, options?: any) {
     return request(url, method, options, this);
+  }
+
+  singletonFetch(...args): Promise<BaseCollection<TModel>> {
+    if (this.isFetched) {
+      return Promise.resolve(this);
+    } else {
+      return <any>this.fetch(...args);
+    }
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {

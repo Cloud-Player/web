@@ -19,6 +19,8 @@ export class BaseModel extends SelectableModel {
 
   isSyncing = false;
 
+  isFetched = false;
+
   urlRoot: Function = (): string => {
     return getUrl(this);
   };
@@ -34,6 +36,7 @@ export class BaseModel extends SelectableModel {
     });
     this.on('sync error', () => {
       this.isSyncing = false;
+      this.isFetched = true;
     });
   }
 
@@ -47,6 +50,14 @@ export class BaseModel extends SelectableModel {
 
   request(url: string, method: string, options?: any) {
     return request(url, method, options, this);
+  }
+
+  singletonFetch(...args): Promise<BaseModel> {
+    if (this.isFetched) {
+      return Promise.resolve(this);
+    } else {
+      return <any>this.fetch(...args);
+    }
   }
 
   trigger(evType: string, value?: string, model?: BaseModel) {
