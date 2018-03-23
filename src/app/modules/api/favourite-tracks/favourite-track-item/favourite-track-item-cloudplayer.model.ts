@@ -7,7 +7,7 @@ export class FavouriteTrackItemCloudplayerModel
   compose(): any {
     return {
       track_provider_id: this.track.provider,
-      track_id: this.track.id
+      track_id: this.track.id.toString()
     };
   }
 
