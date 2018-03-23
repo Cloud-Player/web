@@ -57,7 +57,7 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
     this.addSetTracksListener();
 
     if (this._selectedAccount && this._selectedAccount.favouriteTracks.items.length === 0) {
-      this._selectedAccount.favouriteTracks.items.fetch();
+      this._selectedAccount.favouriteTracks.items.singletonFetch();
     }
 
     this.setTracks(this._selectedAccount.favouriteTracks.items);
@@ -91,7 +91,7 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
     const authSubscription = this.externalUserAuthenticator.getObservable()
       .filter(state => state === ExternalUserConnectState.Success)
       .subscribe(() => {
-        this._selectedAccount.favouriteTracks.items.fetch();
+        this._selectedAccount.favouriteTracks.items.singletonFetch();
       });
     this._subscription.add(authSubscription);
     this.addSetTracksListener();

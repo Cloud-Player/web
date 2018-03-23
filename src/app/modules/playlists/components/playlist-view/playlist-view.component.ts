@@ -35,13 +35,9 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
   }
 
   private fetchPlaylist() {
-    if (this.playlist.items.length === 0) {
-      this.playlist.fetch().then(() => {
-        if (this.playlist.items.length === 0) {
-          this.playlist.items.fetch();
-        }
-      });
-    }
+    this.playlist.singletonFetch().then(() => {
+      this.playlist.items.singletonFetch();
+    });
   }
 
   private setTracks(items: IPlaylistItems<IPlaylistItem>) {
