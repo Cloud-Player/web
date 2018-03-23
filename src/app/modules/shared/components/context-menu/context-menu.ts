@@ -58,6 +58,7 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private _contextMenuManager: ContextMenuManager;
   private _subscriptions: Subscription;
   private _debouncedUpdate: Function;
+  private _isDestroyed = false;
 
   public options: Array<IContextOption>;
   @ViewChild('container')
@@ -78,7 +79,11 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private update() {
-    this.cdr.detectChanges();
+    // The method is called debounced which can not be terminated. When the view is destroyed
+    // the method might be called again even though the view is not available anymore
+    if (!this._isDestroyed) {
+      this.cdr.detectChanges();
+    }
   }
 
   public show(posX: number, posY: number) {
@@ -144,6 +149,8 @@ export class ContextMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this._isDestroyed = true;
+    this.options = [];
     this._subscriptions.unsubscribe();
   }
 }

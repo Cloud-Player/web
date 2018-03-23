@@ -20,6 +20,7 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   private _favouriteTracksPerProvider: Array<IFavouriteTracks>;
   private _cloudPlayerFavouriteTracks: FavouriteTracksCloudplayerModel;
   private _debouncedUpdate: Function;
+  private _isDestroyed = false;
 
   @Input() track: ITrack;
 
@@ -29,7 +30,11 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   private update() {
-    this.cdr.detectChanges();
+    // The method is called debounced which can not be terminated. When the view is destroyed
+    // the method might be called again even though the view is not available anymore
+    if (!this._isDestroyed) {
+      this.cdr.detectChanges();
+    }
   }
 
   hasLikedTrack(): boolean {
@@ -102,6 +107,7 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this._isDestroyed = true;
     this._cloudPlayerFavouriteTracks.items.off('add remove reset', this._debouncedUpdate, this);
   }
 
