@@ -56,7 +56,7 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
     this.removeSetTracksListener();
     this.addSetTracksListener();
 
-    if (this._selectedAccount && this._selectedAccount.favouriteTracks.items.length === 0) {
+    if (this._selectedAccount) {
       this._selectedAccount.favouriteTracks.items.singletonFetch();
     }
 
