@@ -27,13 +27,13 @@ export enum OsNames {
 }
 
 export enum ClientNames {
-  Chrome,
-  Safari,
-  Firefox,
-  IE,
-  Edge,
-  Opera,
-  Electron
+  Chrome = 'Chrome',
+  Safari = 'Safari',
+  Firefox = 'Firefox',
+  IE = 'Internet Explorer',
+  Edge = 'Edge',
+  Opera = 'Opera',
+  Electron = 'Electron'
 }
 
 export class ClientDetector {
