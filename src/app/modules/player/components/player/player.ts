@@ -88,8 +88,8 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.playQueue = PlayQueue.getInstance();
 
-    this.setLastPlayingQueue();
-    this.setLastPlayingItem();
+    //this.setLastPlayingQueue();
+    //this.setLastPlayingItem();
 
     const debouncedPlayQueueSave = debounce(() => {
       localforage.setItem('cp_playqueue', this.playQueue.getScheduledItemsJSON(30));
@@ -125,5 +125,48 @@ export class PlayerComponent implements OnInit {
         filter(eventType => eventType === FullScreenEventType.Leave)
       )
       .subscribe(this.leftFullScreen.bind(this));
+
+    this.playQueue.add({
+      track: {
+        provider: 'mixcloud',
+        id: '/matsumoto-kentaro/dj-k3npy-party-time-mix/',
+        title: 'Party Time Mix',
+        user: {
+          title: 'matsumoto-kentaro'
+        },
+        image: {
+          high: {
+            url: 'https://thumbnailer.mixcloud.com/unsafe/600x600/extaudio/6/6/b/f/d97a-c170-4aa0-868d-b49d1b400d11.jpg'
+          },
+          medium: {
+            url: 'https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/6/b/f/d97a-c170-4aa0-868d-b49d1b400d11.jpg'
+          },
+          default: {
+            url: 'https://thumbnailer.mixcloud.com/unsafe/100x100/extaudio/6/6/b/f/d97a-c170-4aa0-868d-b49d1b400d11.jpg'
+          }
+        }
+      }
+    });
+    this.playQueue.add({
+      track: {
+        provider: 'mixcloud',
+        id: '/DJMimi_Taiwan/%E5%92%AA%E5%92%AA%E5%A4%A7%E8%88%9E%E5%BB%B3-elecrto-house-party-time-by-dj-mimi-taiwan/',
+        title: 'Party Time Mix 2',
+        user: {
+          title: 'DJMimi_Taiwan'
+        },
+        image: {
+          high: {
+            url: 'https://thumbnailer.mixcloud.com/unsafe/600x600/profile/1/0/1/c/5459-5295-46da-9193-2960ce2ab7ea.jpg'
+          },
+          medium: {
+            url: 'https://thumbnailer.mixcloud.com/unsafe/300x300/profile/1/0/1/c/5459-5295-46da-9193-2960ce2ab7ea.jpg'
+          },
+          default: {
+            url: 'https://thumbnailer.mixcloud.com/unsafe/100x100/profile/1/0/1/c/5459-5295-46da-9193-2960ce2ab7ea.jpg'
+          }
+        }
+      }
+    });
   }
 }
