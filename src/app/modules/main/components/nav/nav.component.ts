@@ -82,17 +82,6 @@ export class NavComponent implements OnInit {
     });
   }
 
-  private prepareUserAccounts() {
-    this.authenticatedUser.accounts.each((account) => {
-      if (account.provider !== 'cloudplayer' && !account.isNew()) {
-        account.fetch();
-      }
-      if (!account.isNew() /*&& account.playlists.length === 0*/) {
-        account.playlists.fetch();
-      }
-    });
-  }
-
   private update() {
     this.cdr.detectChanges();
   }
