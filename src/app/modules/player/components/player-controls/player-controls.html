@@ -72,7 +72,7 @@
            [dragData]="currentItem.track.toJSON()"
            [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
            dragEffect="copy">
-        <b class="track-title">{{currentItem.track.title}}</b>
+        <b class="track-title" [title]="currentItem.track.title">{{currentItem.track.title}}</b>
         <div class="artist">{{currentItem.track.artist.getFullName()}}</div>
       </div>
       <div class="timer">
