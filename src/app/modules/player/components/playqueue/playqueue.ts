@@ -82,7 +82,9 @@ export class PlayQueueComponent implements OnInit {
   }
 
   public removeScheduledItems() {
-    this.playQueue.getScheduledItems().forEach((item) => {
+    this.playQueue.filter((playQueueItem) => {
+      return !playQueueItem.isQueued() && !playQueueItem.isPlaying() && !playQueueItem.isPaused();
+    }).forEach((item) => {
       this.playQueue.remove(item);
     });
   }
