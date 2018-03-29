@@ -5,6 +5,8 @@ import {ToastModel} from '../../../shared/models/toast';
 import {ToastTypes} from '../../../shared/src/toast-types.enum';
 import {NativeAppHandlerService} from '../../../native-app/services/native-app-handler';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {ClientDetector} from '../../../shared/services/client-detector.service';
 
 @Component({
   selector: 'app-cloud-player',
@@ -69,11 +71,16 @@ export class MainComponent implements OnInit {
       }
     }, 2000);
 
-    const cloudPlayerAccount = this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
+    const cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel = <AuthenticatedUserAccountCloudplayerModel>this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
     if (cloudPlayerAccount) {
       cloudPlayerAccount.once('change:id', () => {
         cloudPlayerAccount.favouriteTracks.fetch();
       });
     }
+    cloudPlayerAccount.createSession({
+      browser: `${ClientDetector.getClient().name}`,
+      os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
+      screenSize: '100'
+    });
   }
 }
