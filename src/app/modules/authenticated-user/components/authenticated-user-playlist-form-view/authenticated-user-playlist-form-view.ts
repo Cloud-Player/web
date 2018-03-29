@@ -49,15 +49,23 @@ export class AuthenticatedUserPlaylistFormViewComponent implements OnInit, OnDes
 
   save() {
     const wasNew = this.playlist.isNew();
-    this.playlist.save().then(() => {
-      if (wasNew) {
-        this.userAnalyticsService.trackEvent('playlist', 'create', 'app-authenticated-user-playlist-form-view');
-      } else {
-        this.userAnalyticsService.trackEvent('playlist', 'edit', 'app-authenticated-user-playlist-form-view');
-      }
-      this.router.navigate(['/playlists', this.playlist.provider, this.playlist.id]);
-      this.account.playlists.add(this.playlist);
-    });
+    this.playlist.save().then(
+      () => {
+        this.userAnalyticsService.trackEvent(
+          'playlist',
+          `${wasNew ? 'create' : 'edit'}:${this.playlist.provider}`,
+          'app-authenticated-user-playlist-form-view'
+        );
+        this.router.navigate(['/playlists', this.playlist.provider, this.playlist.id]);
+        this.account.playlists.add(this.playlist);
+      },
+      () => {
+        this.userAnalyticsService.trackEvent(
+          'playlist',
+          `${wasNew ? 'create' : 'edit'}_error:${this.playlist.provider}`,
+          'app-authenticated-user-playlist-form-view'
+        );
+      });
   }
 
   cancel() {
