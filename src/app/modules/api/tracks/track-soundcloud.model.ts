@@ -77,7 +77,7 @@ export class TrackSoundcloudModel extends SoundcloudProxyModel implements ITrack
     attrs = super.parse(attrs);
     attrs.likes = attrs.likes_count || attrs.favoritings_count;
 
-    if (attrs.strea_url) {
+    if (attrs.stream_url) {
       attrs.hasDetails = true;
     }
 
