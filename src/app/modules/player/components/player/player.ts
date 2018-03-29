@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
 import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
@@ -25,7 +25,8 @@ export class PlayerComponent implements OnInit {
   constructor(private cloudPlayerLogoService: CloudPlayerLogoService,
               private el: ElementRef,
               private layoutService: LayoutService,
-              private fullScreenService: FullScreenService) {
+              private fullScreenService: FullScreenService,
+              private cdr: ChangeDetectorRef) {
   }
 
   private enteredFullScreen() {
@@ -79,11 +80,13 @@ export class PlayerComponent implements OnInit {
     switch (playerStatus) {
       case PlayerStatus.Waiting:
         this.isBuffering = true;
+        this.cdr.detectChanges();
         break;
       case PlayerStatus.Ready:
       case PlayerStatus.Paused:
       case PlayerStatus.Playing:
         this.isBuffering = false;
+        this.cdr.detectChanges();
         break;
     }
 
@@ -121,15 +124,16 @@ export class PlayerComponent implements OnInit {
       }
     }, 1000);
 
-    const throttledCurrentItemSave = throttle((currentItem) => {
+    const throttledProgressUpdate = throttle((currentItem) => {
       if (currentItem) {
         localforage.setItem('cp_currentItem', currentItem.toMiniJSON());
       }
+      this.cdr.detectChanges();
     }, 10000);
 
     this.playQueue.on('update remove reset change:status', debouncedPlayQueueSave);
     this.playQueue.on('update remove reset', debouncedSetHasPlayer);
-    this.playQueue.on('change:progress', throttledCurrentItemSave);
+    this.playQueue.on('change:progress', throttledProgressUpdate);
 
     this.fullScreenService.getObservable()
       .filter(eventType => eventType === FullScreenEventType.Enter)
