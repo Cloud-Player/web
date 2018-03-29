@@ -14,8 +14,6 @@ export class TrackSoundcloudModel extends SoundcloudProxyModel implements ITrack
 
   endpoint = '/tracks';
 
-  isLikeable = true;
-
   @attributesKey('hasDetails')
   @defaultValue(false)
   hasDetails: boolean;

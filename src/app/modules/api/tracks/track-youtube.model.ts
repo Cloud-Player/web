@@ -19,8 +19,6 @@ export class TrackYoutubeModel extends YoutubeProxyModel implements ITrack {
 
   endpoint = '/videos';
 
-  isLikeable = false;
-
   @queryParam()
   part = 'snippet';
 

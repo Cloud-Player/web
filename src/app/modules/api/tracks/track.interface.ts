@@ -19,7 +19,6 @@ export interface ITrack extends BaseModel {
   likes: number;
   clicks: number;
   aspectRatio: number;
-  isLikeable: boolean;
   supportsMobilePlayBack: boolean;
 
   toMiniJSON(): {};

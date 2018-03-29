@@ -11,8 +11,6 @@ export class TrackCloudplayerModel extends CloudplayerModel implements ITrack {
 
   endpoint = '/tracks';
 
-  isLikeable = true;
-
   @attributesKey('hasDetails')
   @defaultValue(false)
   hasDetails: boolean;
