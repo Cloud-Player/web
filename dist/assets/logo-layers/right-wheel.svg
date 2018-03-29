@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px"
+	 height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+  <g id="right-wheel">
+    <path fill="#FF3600" d="M78.862,23.955c-10.812,0-19.577,8.766-19.577,19.577c0,10.814,8.765,19.582,19.577,19.582
+      s19.581-8.768,19.581-19.582C98.439,32.721,89.675,23.955,78.862,23.955z M78.921,60.129c-9.132,0-16.535-7.403-16.535-16.538
+      c0-9.132,7.403-16.536,16.535-16.536c9.135,0,16.537,7.405,16.537,16.536C95.46,52.726,88.056,60.129,78.921,60.129z"/>
+    <circle fill="#FF3600" cx="78.864" cy="30.891" r="1.682"/>
+  </g>
+</svg>
