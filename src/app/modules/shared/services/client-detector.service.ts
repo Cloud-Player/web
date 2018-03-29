@@ -81,10 +81,13 @@ export class ClientDetector {
   static test<T extends Result>(array: Array<Test>): T {
     const result: T = <T>{};
 
-    array.forEach((osItem: any) => {
-      if (osItem.r.test(navigator.userAgent) && !result.name) {
+    array.every((osItem: any) => {
+      if (osItem.r.test(navigator.userAgent)) {
         result.name = osItem.s;
         result.version = osItem.v;
+        return false;
+      } else {
+        return true;
       }
     });
     return result;
