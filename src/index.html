@@ -2,7 +2,7 @@
 <html>
 <head>
   <base href="./">
-  <title>Cloud Player</title>
+  <title>Cloud-Player</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="keywords" content="audio player, video player, SoundCloud, YouTube, music">
@@ -21,11 +21,11 @@
 
   <!-- Android -->
   <meta name="theme-color" content="#ff3600">
-  <link rel="icon" type="image/png" sizes="192x192"  href="assets/meta/icons/android/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/meta/icons/android/android-icon-192x192.png">
   <link rel="manifest" href="assets/meta/manifest.json">
 
   <!-- Apple -->
-  <meta name="apple-mobile-web-app-title" content="Cloud Player">
+  <meta name="apple-mobile-web-app-title" content="Cloud-Player">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -47,145 +47,134 @@
   <meta content="https://cloud-player.io/assets/meta/social/twitter.jpg" name="twitter:image:src"/>
   <meta content="@cldplayer" name="twitter:site"/>
   <meta content="summary" name="twitter:card"/>
-  <meta content="Cloud Player" name="twitter:title"/>
-  <meta content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!" name="twitter:description"/>
+  <meta content="Cloud-Player" name="twitter:title"/>
+  <meta
+    content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!"
+    name="twitter:description"/>
 
   <!-- Facebook -->
   <meta content="https://cloud-player.io/assets/meta/social/facebook.jpg" property="og:image"/>
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
-  <meta content="Cloud Player" property="og:site_name"/>
+  <meta content="Cloud-Player" property="og:site_name"/>
   <meta content="object" property="og:type"/>
-  <meta content="Cloud Player" property="og:title"/>
+  <meta content="Cloud-Player" property="og:title"/>
   <meta content="https://cloud-player.io" property="og:url"/>
-  <meta content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!" property="og:description"/>
+  <meta
+    content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!"
+    property="og:description"/>
 
   <!-- Fluid App -->
-  <link rel="fluid-icon" type="image/png" href="assets/logo.png" title="Cloud Player">
+  <link rel="fluid-icon" type="image/png" href="assets/logo.png" title="Cloud-Player">
 
   <!-- Style during initialization of the application -->
   <style>
-    html, body {
+    html, body{
       padding: 0;
       margin: 0;
     }
-
-    #initScreen {
+    #initScreen{
       display: flex;
-      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       width: 100vw;
+      height: 100vh;
       background: #efefef;
+      font-family: "Raleway", Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
     }
 
-    #loader {
-      margin: auto;
-      text-align: center;
+    #initScreen *,
+    #initScreen *:before,
+    #initScreen *:after {
+      box-sizing: border-box;
     }
 
-    #loader img {
-      margin-bottom: 20px;
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
+    #initScreen .notes-holder{
+      display: flex;
     }
 
-    #loader p {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-weight: lighter;
-      color: #999;
-      font-size: 18px;
-      margin: 0;
+    #initScreen .text{
+      margin: 40px 0 -40px 0;
+      color: #aaa;
+      text-transform: uppercase;
+      font-weight: 100;
     }
 
-    #loadCircle {
+    #initScreen .note{
+      position: relative;
+      height: 90px;
+      width: 55px;
+      animation: opacity 2s cubic-bezier(0.59, 0.43, 0.86, 0.85) infinite alternate;
+      opacity: 0.4;
+    }
+
+    #initScreen .note.sm{
+      animation-delay: 0.5s;
+      margin-left: 10px;
+    }
+
+    #initScreen .note:before{
+      content: "";
       position: absolute;
-      margin: auto;
-      left: calc(50% - 300px);
-      top: calc(50% - 300px);
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      height: 60px;
+      width: 8px;
+      background: #ff3600;
+      top: 0;
+      right: 5px;
     }
 
-    #loadCircleLineMask {
+    #initScreen .note:after{
+      content: "";
       position: absolute;
-      left: calc(50% - 300px);
-      top: calc(50% - 300px);
-      width: 300px;
-      height: 600px;
-      overflow: hidden;
-      -webkit-transform-origin: 300px;
-      transform-origin: 300px;
-      -webkit-mask-image: -webkit-linear-gradient(top, #000000, transparent);
-      mask-image: linear-gradient(#000 0%, transparent 100%);
-      animation: rotate 1.4s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95);
-    }
-
-    #loadLine {
-      width: 600px;
-      height: 600px;
+      width: 50px;
+      height: 50px;
+      border: 7.5px solid #ff3600;
+      bottom: 0;
       border-radius: 50%;
-      box-shadow: inset 0 0 0 2px rgba(255, 54, 0, 0.8);
     }
 
-    @keyframes rotate {
-      0% {
-        transform: rotate(0);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    #initScreen .note.sm:before{
+      height: 40px;
     }
 
-    @media (max-width: 768px){
-      #loadCircle{
-        left: calc(50% - 150px);
-        top: calc(50% - 150px);
-        width: 300px;
-        height: 300px;
-      }
+    #initScreen .note.sm:after{
+      bottom: 20px;
+    }
 
-      #loadCircleLineMask {
-        width: 300px;
-        height: 300px;
-        left: calc(50% - 150px);
-        top: calc(50% - 150px);
-        -webkit-transform-origin: 150px;
-        transform-origin: 150px;
+    @keyframes opacity {
+      15% {
+        opacity: 0.4;
       }
-
-      #loadLine{
-        width: 300px;
-        height: 300px;
-        box-shadow: inset 0 0 0 1px rgba(255, 54, 0, 0.8);
+      40% {
+        opacity: 1;
       }
-
-      #loader img{
-        width: 80px;
-        height: 80px;
-        margin: -10px 0 10px 0;
+      60% {
+        opacity: 1;
       }
-
-      #loader p{
-        font-size: 14px
+      85%{
+        opacity: 0.4;
       }
     }
   </style>
-
 </head>
 
 <body>
 <app-cloud-player>
+  <script>
+    if (window.navigator.appVersion.match(/.*Electron.*/)) {
+      document.querySelector('body').style.opacity = 0;
+      document.querySelector('body').style.background = '#efefef';
+    }
+  </script>
   <div id="initScreen">
-    <div id="loader">
-      <div id="loadCircle"></div>
-      <div id="loadCircleLineMask">
-        <div id="loadLine"></div>
-      </div>
-      <img src="assets/logo-animated.svg">
-      <p id="statusText">Initialising Cloud Player...</p>
+    <div class="notes-holder">
+      <div class="note"></div>
+      <div class="note sm"></div>
     </div>
+    <div class="text">Initialising Cloud-Player</div>
   </div>
 </app-cloud-player>
 </body>

@@ -1,0 +1,49 @@
+<section>
+  <app-view-header>
+    Connect a device
+  </app-view-header>
+
+  <div class="card col-md-12">
+    <p>Enter the code the is displayed on the screen to connect the device with Cloud-Player</p>
+
+    <div *ngIf="!tokenWasValid"
+         class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon">
+              Code
+            </span>
+          <input type="text"
+                 class="form-control"
+                 placeholder="CP1234"
+                 name="deviceToken"
+                 [disabled]="connectDeviceModel.isSyncing"
+                 [(ngModel)]="connectDeviceModel.tokenId">
+        </div>
+      </div>
+      <div class="col-md-8">
+        <button *ngIf="!connectDeviceModel.isSyncing"
+                class="btn btn-primary"
+                (click)="connectDeviceModel.save()"
+                [disabled]="!connectDeviceModel.tokenId || connectDeviceModel.tokenId.length !== 6">
+          Connect
+        </button>
+        <app-loading-spinner *ngIf="connectDeviceModel.isSyncing"
+                             [isLoading]="true"
+                             style="height: 20px; width: 20px"></app-loading-spinner>
+      </div>
+    </div>
+
+    <br>
+
+    <div *ngIf="tokenWasSend && tokenWasValid"
+         class="alert alert-success">
+      Your device was successfully registered
+    </div>
+
+    <div *ngIf="tokenWasSend && !tokenWasValid"
+         class="alert alert-danger">
+      The entered code is invalid!
+    </div>
+  </div>
+</section>

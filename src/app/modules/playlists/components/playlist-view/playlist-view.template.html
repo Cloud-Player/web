@@ -1,9 +1,55 @@
-<section class="column">
+<section class="column" *ngIf="playlist">
+
   <app-view-header>
-    <i class="fa fa-heart" aria-hidden="true"></i> {{playlist.title}}
+    <app-play-list-icon [playlist]="playlist"></app-play-list-icon>
+    <span class="text">{{playlist.title}}</span>
+    <div *ngIf="playlist.canEdit"
+         class="button-group actions">
+      <a routerLink="/me/playlists/{{playlist.provider}}/{{playlist.id}}/edit"
+         class="btn btn-default">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </a>
+      <button class="btn btn-default btn-danger" (click)="delete()">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+      </button>
+    </div>
   </app-view-header>
 
-  <app-scroll-view>
-    <app-track-list [tracks]="playlist.tracks"></app-track-list>
-  </app-scroll-view>
+  <div *ngIf="playlist.description"
+       class="card">
+    <p>{{playlist.description}}</p>
+  </div>
+
+  <div *ngIf="playlist.items.length>0"
+       class="card">
+    <div *ngFor="let item of playlist.items.models">
+      <app-context-menu>
+        <app-track-list-item [track]="item.track" [tracks]="tracks">
+          <app-options-btn>
+            <app-add-to-queue-option [track]="item.track"></app-add-to-queue-option>
+            <app-shuffle-play-option [track]="item.track" [tracks]="tracks"></app-shuffle-play-option>
+            <app-add-to-playlist-option [track]="item.track"></app-add-to-playlist-option>
+            <app-options-option-btn
+              title="Remove from playlist"
+              icon="fa fa-trash"
+              (action)="deleteItem(item)">
+            </app-options-option-btn>
+          </app-options-btn>
+        </app-track-list-item>
+      </app-context-menu>
+    </div>
+    <app-list-footer [collection]="tracks" text="tracks in playlist"></app-list-footer>
+  </div>
+
+  <app-empty-state *ngIf="!playlist.isSyncing && !playlist.items.isSyncing && playlist.items.length === 0"
+                   title="No tracks in the playlist"
+                   icon="fa fa-music"
+                   ctaLink="/"
+                   ctaText="Search for tracks">
+  </app-empty-state>
+
+  <app-empty-state *ngIf="playlist.isSyncing || playlist.items.isSyncing"
+                   title="Loading tracks"
+                   icon="fa fa-music">
+  </app-empty-state>
 </section>

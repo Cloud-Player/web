@@ -1,68 +1,108 @@
 <section class="column">
 
-  <div class="sidebar">
+  <div #shrinkingSidebar
+       class="sidebar">
     <div class="cloud-player">
       <app-cloud-player-logo [animate]="true"></app-cloud-player-logo>
     </div>
 
-    <div class="menu">
+    <div class="menu scrollable">
       <nav>
-        <a routerLink="/dashboard"
-           [routerLinkActive]="['is-active']">
-          <i class="fa fa-search" aria-hidden="true"></i>
-          <div class="text">Search</div>
-        </a>
+        <app-nav-item
+          link="/search"
+          title="Search"
+          icon="fa fa-search">
+        </app-nav-item>
 
-        <a *ngIf="showDesktopAppEntry()"
-           routerLink="/native-app"
-           [routerLinkActive]="['is-active']"
-           class="desktop-entry">
-          <i class="fa fa-desktop" aria-hidden="true"></i>
-          <div class="text">Desktop App</div>
-        </a>
+        <app-nav-item
+          *ngIf="showDesktopAppEntry()"
+          link="/native-app"
+          title="Desktop App"
+          icon="fa fa-desktop">
+        </app-nav-item>
 
-        <div class="divider">
-          <div class="title">Account</div>
+        <app-nav-divider title="Account"></app-nav-divider>
+
+        <app-nav-item
+          *ngIf="!cloudPlayerAccount.image.getSmallSizeUrl()"
+          class="user"
+          link="/me"
+          [exact]="true"
+          [title]="cloudPlayerAccount.getFullName()"
+          icon="fa fa-user">
+        </app-nav-item>
+
+        <app-nav-item
+          *ngIf="cloudPlayerAccount.image.getSmallSizeUrl()"
+          class="user"
+          link="/me"
+          [exact]="true"
+          [title]="cloudPlayerAccount.getFullName()"
+          [image]="cloudPlayerAccount.image.getSmallSizeUrl()">
+        </app-nav-item>
+
+        <app-nav-item
+          link="/me/likes"
+          title="Likes"
+          icon="fa fa-heart">
+        </app-nav-item>
+
+        <app-nav-item
+          class="visible-xs visible-sm"
+          link="/me/playlists"
+          title="Playlists"
+          icon="fa fa-list-alt">
+        </app-nav-item>
+
+        <app-nav-divider title="Playlists"></app-nav-divider>
+
+        <div class="playlists">
+          <app-collapsible
+            *ngFor="let account of authenticatedUser.accounts.models"
+            [title]="availableProviderMap[account.provider].title"
+            icon="fa {{availableProviderMap[account.provider].icon}}"
+            [(isCollapsed)]="availableProviderMap[account.provider].playlistCollapsed">
+            <div *ngIf="!account.isConnected()">
+              <app-nav-item
+                (click)="connect(account)"
+                title="Connect"
+                icon="fa fa-user">
+              </app-nav-item>
+            </div>
+            <div *ngIf="account.isConnected()">
+              <app-nav-input-item
+                icon="fa fa-plus"
+                title="Add new playlist"
+                [(ngModel)]="availableProviderMap[account.provider].tmpPlaylistModel.title"
+                (submit)="saveTmpPlaylist(account)">
+              </app-nav-input-item>
+              <div *ngFor="let playlist of account.playlists.models"
+                   class="playlist"
+                   appDropzone
+                   [dropItemRef]="playlist"
+                   (dropData)="drop($event)">
+                <app-nav-item
+                  *ngIf="playlist.image.getSmallSizeUrl()"
+                  [exact]="true"
+                  link="/playlists/{{playlist.provider}}/{{playlist.id}}"
+                  [title]="playlist.title"
+                  [image]="playlist.image.getSmallSizeUrl()">
+                </app-nav-item>
+                <app-nav-item
+                  *ngIf="!playlist.image.getSmallSizeUrl()"
+                  [exact]="true"
+                  link="/playlists/{{playlist.provider}}/{{playlist.id}}"
+                  [title]="playlist.title"
+                  icon="fa fa-list-alt">
+                </app-nav-item>
+              </div>
+            </div>
+          </app-collapsible>
         </div>
-
-        <a *ngIf="isAuthenticated"
-           routerLink="/me"
-           class="user">
-          <img [src]="user.image.getSmallSizeUrl()" [alt]="user.fullName" class="avatar">
-          <div class="text">
-            <span>{{user.fullName || user.username}}</span>
-          </div>
-        </a>
-
-        <a *ngIf="!isAuthenticated"
-           (click)="connect()"
-           class="sc-connect">
-          <i class="fa fa-soundcloud" aria-hidden="true"></i>
-          <div class="text">Login with SoundCloud</div>
-        </a>
-
-        <a routerLink="me/likes"
-           [routerLinkActive]="['is-active']" [class.disabled]="!isAuthenticated">
-          <i class="fa fa-heart" aria-hidden="true"></i>
-          <div class="text">Likes</div>
-        </a>
-
-
-        <a *ngIf="isAuthenticated"
-           routerLink="me/playlists"
-           [routerLinkActive]="['is-active']"
-           class="visible-xs visible-sm">
-          <i class="fa fa-list" aria-hidden="true"></i>
-          <div class="text">Playlists</div>
-        </a>
-
-        <div class="divider">
-          <div class="title">Playlists</div>
-        </div>
-
-        <app-authenticated-user-playlists class="hidden-xs hidden-sm" appFillHeight></app-authenticated-user-playlists>
       </nav>
     </div>
+
+    <div class="version">v{{version}}</div>
 
   </div>
 

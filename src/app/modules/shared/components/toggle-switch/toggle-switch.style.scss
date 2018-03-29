@@ -1,16 +1,17 @@
 @import 'variables';
 
-:host{
-  .toggle-switch{
+:host {
+  .toggle-switch {
     display: flex;
     position: relative;
     border: 1px solid #aaa;
     border-radius: 20px;
     margin-right: 10px;
     background: white;
+    width: 50px;
 
     .left,
-    .right{
+    .right {
       height: 26px;
       width: 26px;
       display: flex;
@@ -23,16 +24,16 @@
       transition: color 0.5s ease;
       cursor: pointer;
 
-      &.active{
+      &.active {
         color: white;
       }
     }
 
-    .right{
+    .right {
       margin-left: -4px;
     }
 
-    .indicator{
+    .indicator {
       position: absolute;
       height: 26px;
       width: 26px;
@@ -44,14 +45,14 @@
       transition: transform 0.5s ease;
     }
 
-    &.on{
-      .indicator{
+    &.on {
+      .indicator {
         transform: translateX(22px);
       }
     }
 
-    &.off{
-      .indicator{
+    &.off {
+      .indicator {
         //left: -1px;
       }
     }

@@ -1,5 +1,10 @@
 :host {
+  min-height: inherit;
   .tab-pane {
-    padding: 10px 0;
+    min-height: inherit;
+    padding: 15px;
+    /deep/ .card {
+      border-radius: 0;
+    }
   }
 }

@@ -1,83 +1,87 @@
 <section class="column">
   <app-view-header>
+    <i class="fa fa-desktop" aria-hidden="true"></i>
     Desktop App
   </app-view-header>
 
-  <app-scroll-view>
-    <div class="card">
-      <div class="screenshot"
-           [class.win]="isWindowsPc()"
-           [class.osx]="isMacPc()"></div>
-      <div>
-        <h3>Download the native Cloud Player App to install it on your PC.</h3>
-        <ul>
-          <li>Create a shortcut to Cloud Player on your Desktop</li>
-          <li>Control the Cloud Player from your keyboard (play/pause, next track, previous track)</li>
-          <li>Have all the other nice features of Cloud Player</li>
-        </ul>
-      </div>
-      <a *ngIf="downloadLink"
-         [href]="downloadLink"
-         class="btn btn-primary btn-block"
-         (click)="download()">
-        {{getDownloadLabel()}}
-      </a>
-
-      <div *ngIf="!downloadLink"
-           class="alert alert-info">
-        Sorry for this platform we don't have a native app yet :(
-      </div>
+  <div class="card">
+    <div class="screenshot"
+         [class.win]="isWindowsPc()"
+         [class.osx]="isMacPc()"></div>
+    <div>
+      <h3>1. Download desktop app</h3>
+      <ul>
+        <li>Create a shortcut to Cloud-Player on your Desktop</li>
+        <li>Control the player from your keyboard (play/pause, next track, previous track)</li>
+      </ul>
     </div>
+    <a *ngIf="downloadLink"
+       [href]="downloadLink"
+       class="btn btn-primary btn-block"
+       (click)="download()">
+      {{getDownloadLabel()}}
+    </a>
 
-    <div class="card tutorial osx"
-         *ngIf="isMacPc()">
-      <h2>How to Install</h2>
-      <h3>Open the downloaded <i>Cloud Player.dmg</i> file</h3>
-      <div class="img-holder">
-        <img src="assets/desktop-app/osx-dmg.png" width="400px"/>
-      </div>
-      <p>After the Download has finished open the dmg file. Drag and drop the Cloud Player app into the <i>Applications</i> folder</p>
-      <hr>
-      <h3>Start Cloud Player</h3>
-      <p>
-        As this is a student project we don't have an Apple developer certificate. Therefore we could not sign the application.
-        When you try to start it, macOS will tell you that the application is from an unidentified developer.
-        <br>
-        <br>
-        To open the app anyway locate Cloud Player in the <i>Applications</i> folder. Control click the Cloud Player app icon
-        and then choose <i>Open</i> from the shortcut menu.
-        <br>
-        <br>
-        This has to be done only when you start Cloud Player for the first time.
-        <br>
-        <br>
-        <a href="https://support.apple.com/kb/PH25088?locale=en_US" target="_blank">More information...</a>
-        | <a href="https://github.com/Cloud Player/desktop-app" target="_blank">The native application is open source as well</a>
-      </p>
+    <div *ngIf="!downloadLink"
+         class="alert alert-info">
+      Sorry for this platform we don't have a native app yet :(
     </div>
+  </div>
 
-    <div class="card tutorial win"
-         *ngIf="isWindowsPc()">
-      <h2>How to Install</h2>
-      <h3>Open the downloaded <i>Cloud Player.setup.exe</i> file</h3>
-      <div class="img-holder">
-        <img src="assets/desktop-app/win-exe.png" width="400px"/>
-      </div>
-      <p>
-        After the Download has finished open the exe file.
-      </p>
-      <p>
-        As this is a student project we don't have an Windows developer certificate. Therefore we could not sign the application.
-        The Windows Security Agent will prevent starting the installation process
-        <br>
-        <br>
-        To start the installation anyway click on the button "More Info" (1). A new button "Run anyway" will appear (2).
-        Click
-        on that button to start the installation process
-        <br>
-        <br>
-        <a href="https://github.com/Cloud Player/desktop-app" target="_blank">The native application is open source as well</a>
-      </p>
+  <div class="card tutorial osx"
+       *ngIf="isMacPc()">
+    <h3>2. Install</h3>
+    <p>Open the downloaded <i>Cloud-Player.dmg</i> file</p>
+    <div class="img-holder">
+      <img src="assets/desktop-app/osx-dmg.png" width="300px"/>
     </div>
-  </app-scroll-view>
+    <p>Drag and drop the Cloud-Player app into the
+      <i>Applications</i> folder</p>
+  </div>
+
+  <div class="card tutorial osx start"
+       *ngIf="isMacPc()">
+    <h3>3. Run Cloud-Player app</h3>
+    <p>
+      As this is a student project we don't have an Apple developer certificate. Therefore we could not sign the
+      application.
+      When you try to start it, macOS will tell you that the application is from an unidentified developer.
+      <br>
+      <br>
+      To open the app anyway locate Cloud-Player in the <i>Applications</i> folder. Control click the Cloud-Player app
+      icon
+      and then choose <i>Open</i> from the shortcut menu.
+      <br>
+      <br>
+      This has to be done only when you start Cloud-Player for the first time.
+      <br>
+      <br>
+      <a href="https://support.apple.com/kb/PH25088?locale=en_US" target="_blank">More information...</a>
+      | <a href="https://github.com/Cloud-Player/desktop-app" target="_blank">The native application is open source as
+      well</a>
+    </p>
+  </div>
+
+  <div class="card tutorial win"
+       *ngIf="isWindowsPc()">
+    <h3>2. Install</h3>
+    <p>Open the downloaded <i>Cloud-Player.setup.exe</i> file</p>
+    <div class="img-holder">
+      <img src="assets/desktop-app/win-exe.png" width="300px"/>
+    </div>
+    <p>
+      As this is a student project we don't have an Windows developer certificate. Therefore we could not sign the
+      application.
+      The Windows Security Agent will prevent starting the installation process
+      <br>
+      <br>
+      To start the installation anyway click on the button "More Info" (1). A new button "Run anyway" will appear (2).
+      Click
+      on that button to start the installation process
+      <br>
+      <br>
+      <a href="https://github.com/Cloud-Player/desktop-app" target="_blank">The native application is open source as
+        well</a>
+    </p>
+  </div>
 </section>

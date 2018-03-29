@@ -1,0 +1,17 @@
+<div class="collapsible clickable">
+  <div class="collapsible-head" (click)="toggle()">
+    <div class="title">
+      <span *ngIf="icon" class="icon {{icon}}"></span>
+      <span ng-if="title" class="text">{{title}}</span>
+    </div>
+    <button class="toggler">
+      <span *ngIf="isOpened()" class="fa fa-angle-up"></span>
+      <span *ngIf="!isOpened()" class="fa fa-angle-down"></span>
+    </button>
+  </div>
+  <div #collapsibleBody class="collapsible-body" ngClass="{'is-collapsed': !isOpened()}">
+    <div #collapsibleBodyContent class="collapsible-body-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

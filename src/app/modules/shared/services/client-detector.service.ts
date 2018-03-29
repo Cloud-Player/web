@@ -17,7 +17,7 @@ export enum OsNames {
   SunOs = 'SunOS',
   Linux = 'Linux',
   iOS = 'iOS',
-  MacOs = 'MacOs',
+  MacOs = 'macOS',
   QNX = 'QNX',
   UNIX = 'Unix',
   BeOS = 'BeOS',
@@ -27,13 +27,13 @@ export enum OsNames {
 }
 
 export enum ClientNames {
-  Chrome,
-  Safari,
-  Firefox,
-  IE,
-  Edge,
-  Opera,
-  Electron
+  Chrome = 'Chrome',
+  Safari = 'Safari',
+  Firefox = 'Firefox',
+  IE = 'Internet Explorer',
+  Edge = 'Edge',
+  Opera = 'Opera',
+  Electron = 'Electron'
 }
 
 export class ClientDetector {
@@ -81,10 +81,13 @@ export class ClientDetector {
   static test<T extends Result>(array: Array<Test>): T {
     const result: T = <T>{};
 
-    array.forEach((osItem: any) => {
-      if (osItem.r.test(navigator.userAgent) && !result.name) {
+    array.every((osItem: any) => {
+      if (osItem.r.test(navigator.userAgent)) {
         result.name = osItem.s;
         result.version = osItem.v;
+        return false;
+      } else {
+        return true;
       }
     });
     return result;

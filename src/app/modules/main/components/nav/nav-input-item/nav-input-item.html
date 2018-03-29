@@ -1,0 +1,19 @@
+<div class="nav-item clickable"
+     (click)="showInput()">
+  <i *ngIf="icon" class="icon {{icon}}" aria-hidden="true"></i>
+  <img *ngIf="image" class="avatar" aria-hidden="true" [src]="image"/>
+  <div *ngIf="title && !inputIsVisible" class="text">{{title}}</div>
+  <form *ngIf="!title  || inputIsVisible"
+        class="form-inline"
+        (submit)="hideInput()">
+    <div class="form-group">
+      <input type="text"
+             name="navInputTitle"
+             class="form-control"
+             [(ngModel)]="tmpValue"
+             (ngModelChange)="updateValue()"
+             (blur)="hideInput()"
+             appFocusInput>
+    </div>
+  </form>
+</div>

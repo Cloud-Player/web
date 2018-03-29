@@ -1,10 +1,8 @@
-import {
-  Component, ElementRef, Input, OnDestroy, OnInit, Renderer2
-} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, Renderer2} from '@angular/core';
 import {IPlayer, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
-import {TrackSoundcloud} from '../../../tracks/models/track-soundcloud';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
+import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 
 @Component({
   selector: 'app-soundcloud-player',
@@ -18,7 +16,7 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   public bigComments = false;
 
   @Input()
-  public track: TrackSoundcloud;
+  public track: TrackSoundcloudModel;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
     super();
@@ -69,6 +67,8 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   }
 
   protected setPlayerVolume(volume: number) {
+    volume = volume < 0 ? 0 : volume;
+    volume = volume > 1 ? 1 : volume;
     this._audio.volume = volume;
   }
 
@@ -80,13 +80,14 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
     }
   }
 
-  protected preloadTrack(track: TrackSoundcloud) {
+  protected preloadTrack(track: TrackSoundcloudModel) {
     this._audio.src = track.getResourceUrl();
     this._audio.load();
     this.track.comments.fetch();
   }
 
   protected startPlayer(): void {
+    this.onRequestPlay();
     this._audio.play().then(null, (err) => {
       console.warn('Audio Element could not be started!', err);
       this.setAbleToPlay(false);

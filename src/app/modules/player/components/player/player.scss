@@ -1,7 +1,7 @@
 @import 'variables';
 
-:host{
-  &.fullscreen-player{
+:host {
+  &.fullscreen-player {
     .player {
       position: fixed;
       top: 0;
@@ -9,7 +9,7 @@
       width: 100vw;
       height: 100vh;
 
-      /deep/ .player-controller{
+      /deep/ .player-controller {
         height: 100vh !important;
         width: 100vw;
         background: black;
@@ -19,7 +19,7 @@
         transition: none !important;
       }
 
-      app-player-controls{
+      app-player-controls {
         width: 100vw;
         position: fixed;
         bottom: 0;
@@ -57,18 +57,18 @@
       width: 100%;
       box-shadow: none;
 
-      .track-item{
+      .track-item {
         height: 48px;
         background: white;
       }
 
-      &.noTrack{
+      &.noTrack {
         display: none;
       }
     }
 
-    .no-items{
-      .track-item{
+    .no-items {
+      .track-item {
         display: none;
       }
     }

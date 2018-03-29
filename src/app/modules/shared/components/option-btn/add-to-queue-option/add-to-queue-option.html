@@ -1,0 +1,15 @@
+<div>
+  <app-options-option-btn
+    *ngIf="!isQueued()"
+    title="Add to play queue"
+    icon="fa fa-queue"
+    (action)="addToQueue()">
+  </app-options-option-btn>
+
+  <app-options-option-btn
+    *ngIf="isQueued()"
+    title="Remove from play queue"
+    icon="fa fa-queue"
+    (action)="removeFromQueue()">
+  </app-options-option-btn>
+</div>

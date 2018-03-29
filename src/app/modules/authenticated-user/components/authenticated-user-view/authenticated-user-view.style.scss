@@ -1,0 +1,53 @@
+:host{
+  @import 'variables';
+
+  /deep/ app-collapsible{
+    .collapsible-head{
+      margin: 5px 0 10px 0;
+      padding: 0 15px;
+      text-transform: uppercase;
+      color: $gray-light;
+      font-weight: 100;
+    }
+  }
+  .cp-grid{
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .cp-grid ~ * {
+    margin-top: 15px;
+  }
+
+  /deep/ app-view-header img{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .new-account{
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $gray-lighter;
+
+    .fa{
+      font-size: 50px;
+    }
+  }
+
+  .btn-link{
+    padding: 0;
+  }
+
+
+
+}

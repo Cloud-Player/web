@@ -1,8 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Session} from '../../session/models/session.model';
-import * as localforage from 'localforage';
-import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
-import {Globals} from '../../../../globals';
 import {ToastModel} from '../models/toast';
 import {Toasts} from '../collections/toasts';
 

@@ -1,11 +1,32 @@
-:host{
-  .toasts{
+@import 'variables';
+
+:host {
+  .toasts {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 15px;
     position: fixed;
     z-index: 9999;
-    bottom: -15px;
-    right: 15px;
+    bottom: -5px;
+    right: 0;
+  }
+
+  @media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
+    .toasts {
+      bottom: 35px;
+    }
+  }
+
+  @media (max-width: $screen-sm-min) {
+    .toasts {
+      bottom: 20px;
+      padding: 0;
+    }
+
+    &.music-player-active{
+      .toasts {
+        bottom: 65px;
+      }
+    }
   }
 }

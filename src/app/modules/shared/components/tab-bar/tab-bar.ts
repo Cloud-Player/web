@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TabPaneComponent} from '../tab-pane/tab-pane';
 import {isUndefined} from 'underscore';
 
@@ -42,6 +42,17 @@ export class TabBarComponent implements OnInit, OnChanges {
   public addTab(tab: TabPaneComponent) {
     this.tabs.push(tab);
     this.setInitialSelectedTab();
+  }
+
+  public removeTab(tab: TabPaneComponent) {
+    this.tabs.every((tabPane, index) => {
+      if (tab === tabPane) {
+        this.tabs.splice(index, 1);
+        return false;
+      } else {
+        return true;
+      }
+    });
   }
 
   public selectTab(tab: TabPaneComponent) {

@@ -1,65 +1,215 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from '../../../users/models/user.model';
-import {Session} from '../../../session/models/session.model';
-import {AuthService} from '../../../shared/services/auth.service';
-import {ClientDetector, OsNames, Result, ClientNames} from '../../../shared/services/client-detector.service';
-import {AuthenticatedUser} from '../../../session/models/authenticated_user.model';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {ClientDetector, ClientNames, OsNames, Result} from '../../../shared/services/client-detector.service';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
+import {AuthenticatedUserAccountSoundcloudModel} from '../../../api/authenticated-user/account/authenticated-user-account-soundcloud.model';
+import {AuthenticatedUserAccountYoutubeModel} from '../../../api/authenticated-user/account/authenticated-user-account-youtube.model';
+import {debounce} from 'underscore';
+import {AuthenticatedUserPlaylistCloudplayerModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-cloudplayer.model';
+import {AuthenticatedUserPlaylistYoutubeModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-youtube.model';
+import {AuthenticatedUserPlaylistSoundcloudModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-soundcloud.model';
+import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
+import {ITrack} from '../../../api/tracks/track.interface';
+import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
+import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
+import {IPlaylist} from '../../../api/playlists/playlist.interface';
+import {LayoutChangeTypes, LayoutService} from '../../../shared/services/layout';
+import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
+import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+
+const packageJSON = require('../../../../../../package.json');
 
 @Component({
   selector: 'app-nav-sidebar',
   styleUrls: ['./nav.style.scss'],
-  templateUrl: './nav.template.html'
+  templateUrl: './nav.template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class NavComponent implements OnInit {
-  private session: Session;
-  private toggleState = 'in';
-
-  public user: User;
-
-  isAuthenticated: boolean;
-
-  constructor(private authService: AuthService) {
-    this.session = Session.getInstance();
-    this.user = this.session.user;
-  }
-
-  connect() {
-    this.authService.connect();
-  }
-
-  disconnect() {
-    this.authService.disconnect();
-  }
-
-
-  private setAuthenticated(user: AuthenticatedUser) {
-    if (user.authenticated) {
-      user.fetch().then(() => {
-        this.isAuthenticated = true;
-        user.likes.fetch();
-      });
-    } else {
-      this.isAuthenticated = false;
+  public availableProviderMap = {
+    cloudplayer: {
+      providerId: 'cloudplayer',
+      title: 'Cloud-Player',
+      icon: 'fa fa-play-circle',
+      accountModel: AuthenticatedUserAccountCloudplayerModel,
+      tmpPlaylistModel: new AuthenticatedUserPlaylistCloudplayerModel(),
+      playlistCollapsed: null,
+      playlistCollapsedBeforeDragVal: null
+    },
+    soundcloud: {
+      providerId: 'soundcloud',
+      title: 'SoundCloud',
+      icon: 'fa fa-soundcloud',
+      accountModel: AuthenticatedUserAccountSoundcloudModel,
+      tmpPlaylistModel: new AuthenticatedUserPlaylistSoundcloudModel(),
+      playlistCollapsed: null,
+      playlistCollapsedBeforeDragVal: null
+    },
+    youtube: {
+      providerId: 'youtube',
+      title: 'YouTube',
+      icon: 'fa fa-youtube-play',
+      accountModel: AuthenticatedUserAccountYoutubeModel,
+      tmpPlaylistModel: new AuthenticatedUserPlaylistYoutubeModel(),
+      playlistCollapsed: null,
+      playlistCollapsedBeforeDragVal: null
     }
+  };
+
+  public authenticatedUser: AuthenticatedUserModel;
+  public cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel;
+  public version = packageJSON.version;
+
+  @ViewChild('shrinkingSidebar')
+  public shrinkingSidebar: ElementRef;
+
+  constructor(private el: ElementRef,
+              private zone: NgZone,
+              private cdr: ChangeDetectorRef,
+              private dragAndDropService: DragAndDropService,
+              private externalUserAuthenticator: ExternalUserAuthenticator,
+              private layoutService: LayoutService,
+              private userAnalyticsService: UserAnalyticsService) {
+    this.authenticatedUser = AuthenticatedUserModel.getInstance();
+    this.cloudPlayerAccount = <AuthenticatedUserAccountCloudplayerModel>this.getAccountForProvider('cloudplayer');
   }
 
-  ngOnInit(): void {
-    this.session.user.on('change:authenticated', (user: AuthenticatedUser) => {
-      this.setAuthenticated(user);
+  private getAccountForProvider(provider: string) {
+    return this.authenticatedUser.accounts.find((item) => {
+      return item.provider === provider;
     });
-
-    if (this.session.isValid()) {
-      this.setAuthenticated(this.session.user);
-    }
   }
 
-  showDesktopAppEntry(): boolean {
+  private update() {
+    this.cdr.detectChanges();
+  }
+
+  public showDesktopAppEntry(): boolean {
     const os: Result = ClientDetector.getOs(),
       client: Result = ClientDetector.getClient();
     return (
       client.name !== ClientNames.Electron &&
-      ( (os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7) )
+      ((os.name === OsNames.MacOs && os.version > 0) || (os.name === OsNames.Windows && os.version >= 7))
     );
+  }
+
+  public connect(account: IAuthenticatedUserAccount) {
+    this.externalUserAuthenticator.connect(account);
+  }
+
+  public saveTmpPlaylist(account) {
+    const accMapValue = this.availableProviderMap[account.provider];
+    if (accMapValue) {
+      if (accMapValue.tmpPlaylistModel instanceof AuthenticatedUserPlaylistCloudplayerModel) {
+        accMapValue.tmpPlaylistModel.accountId = this.authenticatedUser.id;
+      }
+      if (accMapValue.tmpPlaylistModel.title.length > 0) {
+        const newPlaylist: IPlaylist = account.playlists.add(accMapValue.tmpPlaylistModel.clone(), {at: 0});
+        newPlaylist.save().then(
+          () => {
+            this.userAnalyticsService.trackEvent(
+              'playlist',
+              `create:${accMapValue.tmpPlaylistModel.provider}`,
+              'app-nav-sidebar');
+            accMapValue.tmpPlaylistModel.title = '';
+            this.update();
+          },
+          () => {
+            this.userAnalyticsService.trackEvent(
+              'playlist',
+              `create_error:${accMapValue.tmpPlaylistModel.provider}`,
+              'app-nav-sidebar');
+          }
+        );
+      }
+    }
+  }
+
+  public drop(dragAndDrop: IDragAndDropData) {
+    const track = <ITrack>dragAndDrop.dragData;
+    const playlist = <IPlaylist>dragAndDrop.dropReference;
+    if (track && playlist) {
+      const playlistItem = playlist.items.add({track: track.clone()});
+      playlistItem.save().then(
+        () => {
+          this.userAnalyticsService.trackEvent(
+            'playlist',
+            `${playlistItem.type}:add:${track.provider}`,
+            'app-nav-sidebar');
+        }, () => {
+          this.userAnalyticsService.trackEvent(
+            'playlist',
+            `${playlistItem.type}:add_error:${track.provider}`,
+            'app-nav-sidebar');
+        }
+      );
+      this.userAnalyticsService.trackEvent(
+        'drag_and_drop',
+        `add_track_to_playlist`,
+        'app-nav-sidebar');
+    }
+  }
+
+  public dragStart() {
+    const dragData = this.dragAndDropService.getDragData().dragData;
+    switch (dragData.constructor) {
+      case TrackSoundcloudModel:
+        this.availableProviderMap.cloudplayer.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.cloudplayer.playlistCollapsed;
+        this.availableProviderMap.cloudplayer.playlistCollapsed = false;
+
+        this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
+        this.availableProviderMap.soundcloud.playlistCollapsed = false;
+
+        this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
+        this.availableProviderMap.youtube.playlistCollapsed = true;
+        break;
+      case TrackYoutubeModel:
+        this.availableProviderMap.cloudplayer.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.cloudplayer.playlistCollapsed;
+        this.availableProviderMap.cloudplayer.playlistCollapsed = false;
+
+        this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
+        this.availableProviderMap.soundcloud.playlistCollapsed = true;
+
+        this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
+        this.availableProviderMap.youtube.playlistCollapsed = false;
+        break;
+    }
+    this.el.nativeElement.classList.add('open');
+    this.update();
+  }
+
+  public dragEnd() {
+    this.availableProviderMap.cloudplayer.playlistCollapsed = this.availableProviderMap.cloudplayer.playlistCollapsedBeforeDragVal;
+    this.availableProviderMap.soundcloud.playlistCollapsed = this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal;
+    this.availableProviderMap.youtube.playlistCollapsed = this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal;
+    this.el.nativeElement.classList.remove('open');
+    this.update();
+  }
+
+  ngOnInit(): void {
+    this.authenticatedUser.accounts.each((account: IAuthenticatedUserAccount) => {
+      account.on('change:id', () => {
+        account.playlists.fetch();
+        this.update();
+      });
+      account.playlists.on('add remove reset change', this.update.bind(this));
+    });
+    this.authenticatedUser.fetch();
+    this.dragAndDropService.getObservable()
+      .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
+      .subscribe(this.dragStart.bind(this));
+    this.dragAndDropService.getObservable()
+      .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
+      .subscribe(this.dragEnd.bind(this));
+
+    const debouncedLayoutChange = debounce(() => {
+      this.layoutService.emitLayoutChange(LayoutChangeTypes.menuSidebarChange);
+    }, 100);
+
+    this.zone.runOutsideAngular(() => {
+      this.shrinkingSidebar.nativeElement.addEventListener('transitionend', debouncedLayoutChange);
+    });
   }
 }

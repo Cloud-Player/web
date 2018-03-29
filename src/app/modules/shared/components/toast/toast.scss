@@ -1,55 +1,80 @@
 @import 'variables';
 
 @mixin toast-variant($background, $border, $text-color) {
-  border: 1px solid $border;
-
-  .icon-holder{
+  .icon-holder {
     background: $background;
     color: $text-color;
   }
 }
 
-:host{
-  .toast{
+:host {
+  .toast {
     background: white;
-    width: 350px;
+    max-width: 350px;
     display: flex;
+    box-shadow: 0 0 5px 0 #c8c8c8;
 
-    .icon-holder{
+    .icon-holder {
       min-width: 40px;
-      background: red;
       margin: -10px 5px -10px -15px;
-      border-radius: 4px 0 0 4px;
       padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 18px;
+      z-index: 1;
     }
 
-    .content{
+    .content {
       flex-grow: 1;
       padding: 0 5px;
+      display: flex;
+      flex-direction: column;
+
+      h3{
+        margin: 0 10px;
+      }
     }
 
-    .action-button{
+    .closer{
+      align-self: center;
+    }
+
+    .action-button {
       margin: 10px 0 0;
     }
 
-    &.info{
+    &.has-message{
+      .closer{
+        align-self: flex-start;
+      }
+      .content{
+        h3{
+          margin: 0 0 10px 0;
+        }
+      }
+    }
+
+    &.info {
       @include toast-variant($brand-info, $brand-info, white);
     }
 
-    &.warning{
+    &.warning {
       @include toast-variant($brand-warning, $brand-warning, white);
     }
 
-    &.danger{
+    &.danger {
       @include toast-variant($brand-danger, $brand-danger, white);
     }
 
-    &.primary{
+    &.primary {
       @include toast-variant($brand-primary, $brand-primary, white);
+    }
+  }
+
+  @media (max-width: $screen-sm-min) {
+    .toast{
+      max-width: inherit;
     }
   }
 }

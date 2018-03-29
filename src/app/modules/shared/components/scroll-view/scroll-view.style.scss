@@ -1,19 +1,6 @@
 @import 'variables';
 
 :host {
-  height: calc(100vh - 80px);
-  overflow: scroll;
-  display: block;
-  border-radius: 4px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  .scroll-view {
-    padding: 10px 0;
-  }
-
   @media (max-width: $screen-md-min) {
     .scroll-view {
       padding: 0 0;

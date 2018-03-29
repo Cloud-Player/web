@@ -1,6 +1,6 @@
-import {ElementRef, EventEmitter} from '@angular/core';
-import {Track} from '../../tracks/models/track';
+import {EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import {ITrack} from '../../api/tracks/track.interface';
 
 export interface IPlayerSize {
   height: number;
@@ -15,7 +15,7 @@ export interface IPlayer {
   durationChange: EventEmitter<{}>;
   statusChange: EventEmitter<{}>;
   currentTimeChange: EventEmitter<{}>;
-  track: Track;
+  track: ITrack;
 
   getDuration(): number;
 
@@ -47,7 +47,7 @@ export interface IPlayer {
 
   fadeOut(duration: number): Observable<number>;
 
-  updateTrack(track: Track): Promise<any>;
+  updateTrack(track: ITrack): Promise<any>;
 
   addClass(className: string): void;
 

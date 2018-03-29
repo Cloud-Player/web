@@ -1,4 +1,4 @@
-import {toArray, compact, each} from 'underscore';
+import {compact, each, toArray} from 'underscore';
 
 export function concatUrlParts(...args: Array<string>) {
   let urlParts: any = toArray(arguments);

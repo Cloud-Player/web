@@ -1,10 +1,11 @@
 @import 'variables';
-:host{
+
+:host {
   width: 100px;
   height: 100px;
 }
 
-.idle-dots{
+.idle-dots {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -12,7 +13,7 @@
   justify-content: center;
   align-items: center;
 
-  .dot{
+  .dot {
     width: 5px;
     height: 5px;
     background: $gray-light;
@@ -20,17 +21,17 @@
     margin-left: 3px;
     animation: bounce 1.2s infinite cubic-bezier(0.69, 0.1, 0.64, 0.95);
 
-    &.two{
+    &.two {
       animation-delay: 0.4s;
     }
 
-    &.three{
+    &.three {
       animation-delay: 0.8s;
     }
   }
 }
 
-.loading-spinner{
+.loading-spinner {
   width: inherit;
   height: inherit;
   position: relative;

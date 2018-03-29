@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
@@ -71,6 +71,10 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
 
   public isMobileDevice() {
     return ClientDetector.isMobileDevice();
+  }
+
+  public setSearchTerm(query: string) {
+    this.query = query;
   }
 
   // Push a search term into the observable stream.

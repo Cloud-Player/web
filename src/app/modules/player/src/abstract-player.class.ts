@@ -1,10 +1,10 @@
 import {Observable} from 'rxjs/Observable';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {throttle, isNumber} from 'underscore';
+import {isNumber, isString, throttle} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
-import {Track} from '../../tracks/models/track';
 import {EaseService} from '../../shared/services/ease.service';
 import {IPlayerOptions, IPlayerSize} from './player.interface';
+import {ITrack} from '../../api/tracks/track.interface';
 
 export abstract class AbstractPlayer implements OnInit {
   private _duration: number;
@@ -29,7 +29,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _forcePlayStartTry = 0;
 
   @Input()
-  public track: Track;
+  public track: ITrack;
 
   @Output()
   public durationChange = new EventEmitter();
@@ -62,7 +62,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   protected abstract seekPlayerTo(to: number): void;
 
-  protected abstract preloadTrack(track: Track, startTime?: number): void;
+  protected abstract preloadTrack(track: ITrack, startTime?: number): void;
 
   protected abstract getPlayerEl(): ElementRef;
 
@@ -164,6 +164,10 @@ export abstract class AbstractPlayer implements OnInit {
     this.setStatus(PlayerStatus.Ready);
   }
 
+  protected onRequestPlay() {
+    this.setStatus(PlayerStatus.RequestPlay);
+  }
+
   protected onPlaying() {
     this.setAbleToPlay(true);
     if (!this.isAllowedToPlay()) {
@@ -206,7 +210,7 @@ export abstract class AbstractPlayer implements OnInit {
       this.setStatus(PlayerStatus.Waiting);
     } else {
       if (err) {
-        this._error = err.toString();
+        this._error = isString(err) ? err : JSON.stringify(err);
       } else {
         this._error = 'The player could not be started because an error occurred';
       }
@@ -288,6 +292,7 @@ export abstract class AbstractPlayer implements OnInit {
         return this.executeInitialisingQueue(promiseQueue).then(() => {
           this._playerSdkIsInitialised = true;
           this._playerIsInitialised = true;
+          this._initialised = true;
 
           this.bindListeners();
           if (isNumber(this.getVolume())) {
@@ -298,7 +303,6 @@ export abstract class AbstractPlayer implements OnInit {
           });
           this._initialiseCallbacks = [];
           this.setStatus(PlayerStatus.Initialised);
-          this._initialised = true;
           resolve();
         });
       });
@@ -379,7 +383,7 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public fadeOut(duration: number): Observable<number> {
-    const obs: Observable<number> = EaseService.easeInCirc(0, 1, duration);
+    const obs: Observable<number> = EaseService.easeOutSine(0, 1, duration);
     const subscription = obs.subscribe(newVal => {
       if (this._initialised) {
         this.setPlayerVolume(this.getVolume() - newVal);
@@ -388,7 +392,7 @@ export abstract class AbstractPlayer implements OnInit {
     return obs;
   }
 
-  public updateTrack(track: Track): Promise<any> {
+  public updateTrack(track: ITrack): Promise<any> {
     if (track.id === this.track.id) {
       return Promise.resolve();
     } else {

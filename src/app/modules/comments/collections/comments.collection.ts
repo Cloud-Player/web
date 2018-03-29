@@ -1,7 +1,7 @@
-import {SoundcloudCollection} from '../../shared/collections/soundcloud';
 import {Comment} from '../models/comment.model';
+import {SoundcloudProxyCollection} from '../../api/soundcloud/soundcloud-proxy.collection';
 
-export class Comments<TModel extends Comment> extends SoundcloudCollection<TModel> {
+export class Comments<TModel extends Comment> extends SoundcloudProxyCollection<TModel> {
   endpoint = '/comments';
   model: any = Comment;
   comparator = 'timestamp';
@@ -10,3 +10,4 @@ export class Comments<TModel extends Comment> extends SoundcloudCollection<TMode
     this.endpoint = `/tracks/${trackId}/comments`;
   }
 }
+

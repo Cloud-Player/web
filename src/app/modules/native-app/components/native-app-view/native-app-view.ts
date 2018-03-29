@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import {ClientDetector, OsNames, Result} from '../../../shared/services/client-detector.service';
+import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {NativeAppHandlerService} from '../../services/native-app-handler';
 
 @Component({
@@ -29,8 +29,8 @@ export class NativeAppViewComponent implements OnInit {
 
   public download() {
     this.userAnalyticsService.trackEvent(
-      `download_desktop_app_${ClientDetector.getOs().name}`,
-      'click',
+      `desktop_native`,
+      `download_${ClientDetector.getOs().name}`,
       'app-desktop-app-view'
     );
   }

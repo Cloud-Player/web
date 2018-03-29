@@ -1,0 +1,24 @@
+@import 'variables';
+
+:host {
+  .divider {
+
+  }
+
+  @media (min-width: $screen-sm-max) and (max-width: $screen-lg-min) {
+    .divider {
+      .title {
+        .text {
+          opacity: 0;
+        }
+        &:before {
+          max-width: 35px;
+          margin-right: 0;
+        }
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<div class="modal-holder">
+  <div #modalContainer></div>
+  <div class="backdrop"
+       [@backdropState]="showBackdrop?'visible':'hidden'"
+       (@backdropState.done)="handleDone($event)">
+  </div>
+</div>

@@ -1,7 +1,82 @@
 :host{
-  object{
-    width: 58px;
+  .cloud-player-logo {
     position: relative;
-    top: 2px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .left-wheel,
+  .right-wheel,
+  .rack,
+  .tape,
+  .notes,
+  .note-l,
+  .note-r,
+  .play-pause{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .left-wheel{
+    transform-origin: 29.663% 35.198%;
+  }
+
+  .right-wheel{
+    transform-origin: 78.864% 43.534%;
+  }
+
+  .rack{
+    transform-origin: 64.779% 13.986%;
+  }
+
+  .notes-holder{
+    position: absolute;
+    left: 20%;
+    width: 50%;
+    top: 4%;
+    height: inherit;
+    overflow: hidden;
+  }
+
+  .note-l,
+  .note-r{
+    animation: opacity 3s ease-in-out 2s infinite;
+    opacity: 0.4;
+  }
+
+  .note-l{
+    animation-delay: 1.5s;
+  }
+
+  .anim-rotate {
+    animation: rotate 3s linear 2s infinite;
+  }
+
+  .reverse{
+    animation-direction: reverse;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes opacity {
+    20% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 1;
+    }
+    90%{
+      opacity: 0.4;
+    }
   }
 }

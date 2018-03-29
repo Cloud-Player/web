@@ -1,8 +1,6 @@
-import {Model, Collection} from 'backbone';
-import {result, isObject, isArray, extend, isString} from 'underscore';
-import {BaseCollection} from '../collections/base.collection';
-import {BaseModel} from './base.model';
-import {IDynamicInstanceDefinition, IDynamicInstances, IModelOrCollectionConstructor, INestedDefinition} from '../utils/interfaces';
+import {Collection, Model} from 'backbone';
+import {extend, isArray, isObject, isString, result} from 'underscore';
+import {IDynamicInstances, INestedDefinition} from '../utils/interfaces';
 import {InstanceResolver} from '../utils/instance-resolver';
 
 export class NestedModel extends Model {
@@ -61,8 +59,11 @@ export class NestedModel extends Model {
     return attributes;
   }
 
-  private _setNestedModel(key: string, value: string | any): void {
+  private _setNestedModel(key: string, value: string | any, options: any = {}): void {
     if (isObject(value)) {
+      if (options.parse) {
+        value = this.get(key).parse(value);
+      }
       this.get(key).set(value);
     } else {
       const id = this.get(key).idAttribute;
@@ -70,12 +71,12 @@ export class NestedModel extends Model {
     }
   }
 
-  private _setNestedCollection(key: string, value: string | any): void {
+  private _setNestedCollection(key: string, value: string | any, options: any = {}): void {
     if (isObject(value) && !isArray(value)) {
-      this.get(key).add(value);
+      this.get(key).add(value, options);
     } else if (isArray(value)) {
       value.forEach(function (val: string | any) {
-        this._setNestedCollection(key, val);
+        this._setNestedCollection(key, val, options);
       }.bind(this));
     } else {
       const id = this.get(key).model.prototype.idAttribute,
@@ -86,7 +87,7 @@ export class NestedModel extends Model {
     }
   }
 
-  private _setNestedAttributes(obj: any): any {
+  private _setNestedAttributes(obj: any, options = {}): any {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const nestedAttrs = result(this, 'nested'),
@@ -102,9 +103,9 @@ export class NestedModel extends Model {
         ) {
 
           if (this.get(key) instanceof Model) {
-            this._setNestedModel(key, value);
+            this._setNestedModel(key, value, options);
           } else if (this.get(key) instanceof Collection) {
-            this._setNestedCollection(key, value);
+            this._setNestedCollection(key, value, options);
           }
 
           delete obj[key];
@@ -169,7 +170,7 @@ export class NestedModel extends Model {
 
     this._setDynamicInstance(obj);
 
-    obj = this._setNestedAttributes(obj);
+    obj = this._setNestedAttributes(obj, _options);
 
     return super.set.call(this, obj, _options);
   }

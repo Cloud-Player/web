@@ -1,8 +1,6 @@
 @import 'variables';
 
-:host{
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+:host {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -12,58 +10,85 @@
     margin-top: -5px;
     background: $light-white;
     flex-grow: 1;
+    position: relative;
 
     .queued-tracks-list,
     .scheduled-tracks-list {
-      .divider{
+      .divider {
         margin: 5px -15px 10px -15px;
+
+        .title {
+          color: $gray;
+          font-weight: 100;
+        }
+
+        .btn-group {
+          margin-right: 5px;
+          display: flex;
+
+          .btn {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+
+            &:not(:last-child) {
+              margin-right: 5px;
+            }
+
+            &.is-active {
+              color: $brand-primary;
+            }
+          }
+        }
       }
 
-      .track{
+      .track {
         display: flex;
         margin-bottom: 10px;
 
-        app-track-cover{
+        app-track-cover {
           width: 60px;
           height: 60px;
-          flex-shrink:0;
+          flex-shrink: 0;
           margin-right: 10px;
         }
 
-        .details{
+        .details {
           flex-grow: 1;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
 
-          &.dummy{
+          &.dummy {
             .title,
-            .artist{
+            .artist {
               background: $gray-lighter;
               color: transparent;
             }
 
-            .title{
+            .title {
               width: 90%;
             }
 
-            .artist{
+            .artist {
               width: 70%;
             }
 
-            .stats{
+            .stats {
               display: none;
             }
           }
 
-          .btn{
+          .btn {
             margin: 0;
           }
 
-          .stats{
+          .stats {
             margin-top: 5px;
 
-            > div{
+            > div {
               display: inline-block;
               font-size: 11px;
               color: $gray-light;
@@ -73,14 +98,56 @@
       }
     }
 
+    .drag-and-drop-help {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.9);
+      color: $gray;
+    }
+
     &::-webkit-scrollbar {
       display: none;
     }
 
   }
+
+  &.drag-in-progress {
+    overflow: initial;
+
+    .no-items{
+      display: none;
+    }
+  }
+
+  /deep/ app-empty-state {
+    .empty-state {
+      height: initial !important;
+    }
+    .fa-queue {
+      font-size: 50px;
+      &:after {
+        top: 6px;
+        right: -1px;
+        font-size: 23px;
+        padding: 0 0 0 5px;
+      }
+    }
+  }
 }
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
+  :host {
+    .play-queue {
+      padding-bottom: 50px;
+    }
+  }
+}
+
 @media (max-width: $screen-xs-max) {
-  :host{
+  :host {
     display: none;
   }
 }

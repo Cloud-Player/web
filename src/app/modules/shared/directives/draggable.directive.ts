@@ -1,4 +1,6 @@
-import {Directive, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
+import {Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {DragAndDropService} from '../services/drag-and-drop';
+import {Subscription} from 'rxjs/Subscription';
 
 @Directive({
   selector: '[appDraggable]'
@@ -6,6 +8,7 @@ import {Directive, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@an
 export class DraggableDirective implements OnInit, OnDestroy {
   private _image: HTMLImageElement;
   private _imageIsLoaded: boolean;
+  private _subscriptions: Subscription;
 
   @Input('dragData') dragData: any;
 
@@ -13,18 +16,21 @@ export class DraggableDirective implements OnInit, OnDestroy {
 
   @Input('dragEffect') dragEffect: string;
 
-  constructor(private el: ElementRef) {
-
+  constructor(private el: ElementRef, private renderer2: Renderer2, private dragAndDropService: DragAndDropService) {
+    this._subscriptions = new Subscription();
   }
 
   private onDragStart(event: any) {
     const transfer = <any>event.dataTransfer;
     if (this.dragData) {
       try {
-        transfer.setData('text', JSON.stringify(this.dragData));
+        transfer.setData('text/plain', JSON.stringify(this.dragData));
       } catch (err) {
         throw new Error('DragData has to be a JSON object!');
       }
+      this.dragAndDropService.dragStart(this.dragData);
+    } else {
+      transfer.setData('text/plain', ' ');
     }
     if (this._image && this._imageIsLoaded) {
       transfer.setDragImage(this._image, 10, 10);
@@ -37,6 +43,7 @@ export class DraggableDirective implements OnInit, OnDestroy {
 
   private onDragEnd() {
     this.el.nativeElement.classList.remove('drag-in-progress');
+    this.dragAndDropService.dragEnd();
   }
 
   private onMouseOver() {
@@ -52,15 +59,28 @@ export class DraggableDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.el.nativeElement.setAttribute('draggable', true);
-    this.el.nativeElement.addEventListener('mouseover', this.onMouseOver.bind(this));
-    this.el.nativeElement.addEventListener('dragstart', this.onDragStart.bind(this));
-    this.el.nativeElement.addEventListener('dragend', this.onDragEnd.bind(this));
+
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'mouseover', this.onMouseOver.bind(this))
+    );
+
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'dragstart', this.onDragStart.bind(this))
+    );
+
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'dragend', this.onDragEnd.bind(this))
+    );
+
+    this._subscriptions.add(
+      this.renderer2.listen(this.el.nativeElement, 'dragover', (ev) => {
+        ev.preventDefault();
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.el.nativeElement.removeEventListener('mouseover', this.onMouseOver.bind(this));
-    this.el.nativeElement.removeEventListener('dragstart', this.onDragStart.bind(this));
-    this.el.nativeElement.removeEventListener('dragend', this.onDragEnd.bind(this));
+    this._subscriptions.unsubscribe();
   }
 
 }

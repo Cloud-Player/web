@@ -1,25 +1,86 @@
-import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, Renderer2, ViewChild} from '@angular/core';
 import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-cloud-player-logo',
   styleUrls: ['./cloud-player-logo.style.scss'],
-  templateUrl: './cloud-player-logo.template.html',
+  templateUrl: './cloud-player-logo.template.html'
 })
+export class CloudPlayerLogoComponent implements AfterViewInit, OnDestroy {
 
-export class CloudPlayerLogoComponent implements OnInit {
+  private _iconAnimationToPlay: any;
+  private _iconAnimationToPause: any;
+  private _subscriptions: Subscription;
+  private _animatableObjects: Array<HTMLElement>;
+  private _isInit = false;
 
   @Input()
   public animate = false;
 
-  @ViewChild('svgObject') svgObject: ElementRef;
-  private mainAnimation: Array<SVGSVGElement>;
-  private iconAnimationToPlay: any;
-  private iconAnimationToPause: any;
-  private isPlaying = false;
+  @ViewChild('playPause')
+  public playPause: ElementRef;
 
-  constructor(private cloudPlayerLogoService: CloudPlayerLogoService) {
-    cloudPlayerLogoService.logoState$.subscribe((status: string) => {
+  constructor(private el: ElementRef,
+              private renderer2: Renderer2,
+              private zone: NgZone,
+              private cloudPlayerLogoService: CloudPlayerLogoService) {
+    this._subscriptions = new Subscription();
+  }
+
+  private init() {
+    const playPauseSvg = this.playPause.nativeElement.contentDocument;
+    this._iconAnimationToPlay = playPauseSvg.querySelectorAll('.icon-animation-to-play');
+    this._iconAnimationToPause = playPauseSvg.querySelectorAll('.icon-animation-to-pause');
+    if (this.cloudPlayerLogoService.logoState === 'PLAY') {
+      this.play();
+    } else {
+      this.pause();
+    }
+  }
+
+  play(): void {
+    if (this._iconAnimationToPlay && this.animate) {
+      this._iconAnimationToPlay.forEach((el: any) => {
+        el.beginElement();
+      });
+    }
+
+    this._animatableObjects.forEach((obj: HTMLElement) => {
+      obj.style.animationPlayState = 'running';
+    });
+  }
+
+  pause(): void {
+    if (this._iconAnimationToPause && this.animate) {
+      this._iconAnimationToPause.forEach((el: any) => {
+        el.beginElement();
+      });
+    }
+
+    this._animatableObjects.forEach((obj: HTMLElement) => {
+      obj.style.animationPlayState = 'paused';
+    });
+  }
+
+  ngAfterViewInit() {
+    this._animatableObjects = this.el.nativeElement.querySelectorAll('.animatable');
+    const svgObjects = this.el.nativeElement.querySelectorAll('object');
+    let loadedSvgObjects = 0;
+    svgObjects.forEach((svgObject) => {
+      this._subscriptions.add(
+        this.renderer2.listen(svgObject, 'load', () => {
+          loadedSvgObjects++;
+          if (loadedSvgObjects > svgObjects.length) {
+            loadedSvgObjects = 1;
+          }
+          if (loadedSvgObjects === svgObjects.length) {
+            this.init();
+          }
+        })
+      );
+    });
+    this.cloudPlayerLogoService.logoState$.subscribe((status: string) => {
       if (status === 'PAUSE') {
         this.pause();
       } else if (status === 'PLAY') {
@@ -28,37 +89,7 @@ export class CloudPlayerLogoComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.svgObject.nativeElement.addEventListener('load', () => {
-      const svgObj = <HTMLObjectElement>this.svgObject.nativeElement;
-      const content = <any>svgObj.contentDocument;
-      this.mainAnimation = content.querySelectorAll('.main-animation');
-      this.iconAnimationToPlay = content.querySelectorAll('.icon-animation-to-play');
-      this.iconAnimationToPause = content.querySelectorAll('.icon-animation-to-pause');
-    }, false);
-  }
-
-  play(): void {
-    if (this.mainAnimation && this.animate && !this.isPlaying) {
-      this.mainAnimation.forEach((el: any) => {
-        el.beginElement(el.getCurrentTime());
-      });
-      this.iconAnimationToPause.forEach((el: any) => {
-        el.beginElement();
-      });
-      this.isPlaying = true;
-    }
-  }
-
-  pause(): void {
-    if (this.mainAnimation && this.animate && this.isPlaying) {
-      this.mainAnimation.forEach((el: any) => {
-        el.endElement();
-      });
-      this.iconAnimationToPlay.forEach((el: any) => {
-        el.beginElement();
-      });
-      this.isPlaying = false;
-    }
+  ngOnDestroy() {
+    this._subscriptions.unsubscribe();
   }
 }

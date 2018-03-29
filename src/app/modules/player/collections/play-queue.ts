@@ -1,4 +1,4 @@
-import {isArray} from 'underscore';
+import {isArray, shuffle, sortBy} from 'underscore';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {PlayQueueItem} from '../models/play-queue-item';
 import {BaseCollection} from '../../backbone/collections/base.collection';
@@ -7,6 +7,7 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   private static _instance: PlayQueue<PlayQueueItem>;
   private _playIndex = 0;
   private _loopPlayQueue = false;
+  private _isShuffled = false;
 
   model: any = PlayQueueItem;
 
@@ -36,13 +37,21 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
       item.id = item.track.id;
     }
 
+    if (!(item instanceof PlayQueueItem) && item.indexBeforeShuffle) {
+      this._isShuffled = true;
+    }
+
     return item;
   }
 
   private setPlayIndex(): number {
     const currentPlaylingItem = this.getPlayingItem();
+    const oldPlayIndex = this._playIndex;
     if (currentPlaylingItem) {
       this._playIndex = this.indexOf(currentPlaylingItem);
+    }
+    if (this._playIndex !== oldPlayIndex) {
+      this.trigger('change:playIndex');
     }
     return this._playIndex;
   }
@@ -64,6 +73,12 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   getScheduledItems(): TModel[] {
     return this.filter((item: TModel) => {
       return item.isScheduled();
+    });
+  }
+
+  getStoppedItems(): TModel[] {
+    return this.filter((item: TModel) => {
+      return item.isStopped();
     });
   }
 
@@ -95,7 +110,9 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
   }
 
   hasNextItem(): boolean {
-    if (this._loopPlayQueue) {
+    if (this.length === 0) {
+      return false;
+    } else if (this._loopPlayQueue) {
       return true;
     } else {
       return this._playIndex < this.length - 1;
@@ -151,6 +168,49 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
     return this._playIndex;
   }
 
+  shuffle(): any {
+    let items = [];
+    let orgIndex = 0;
+    const currentItem = this.getCurrentItem();
+    const scheduledItems = this.getScheduledItems();
+    if (currentItem) {
+      if (!currentItem.indexBeforeShuffle) {
+        currentItem.indexBeforeShuffle = orgIndex++;
+      }
+    }
+    scheduledItems.forEach((item) => {
+      if (!item.indexBeforeShuffle) {
+        item.indexBeforeShuffle = orgIndex;
+      }
+      orgIndex++;
+      items.push(item);
+      this.remove(item, {silent: true});
+    });
+    items = shuffle(items);
+    this.add(items, {silent: true});
+    this._isShuffled = true;
+    this.trigger('change:shuffle', this._isShuffled, this);
+  }
+
+  deShuffle() {
+    const items = this.getScheduledItems();
+    items.push(this.getCurrentItem());
+    const sorted = sortBy(items, 'indexBeforeShuffle');
+    sorted.forEach((item) => {
+      this.remove(item, {silent: true});
+      this.add(item, {at: item.indexBeforeShuffle, silent: true});
+    });
+    this.setPlayIndex();
+    this.ensureQueuingOrder();
+    this.stopScheduledItemsBeforeCurrentItem();
+    this._isShuffled = false;
+    this.trigger('change:shuffle', this._isShuffled, this);
+  }
+
+  isShuffled(): boolean {
+    return this._isShuffled;
+  }
+
   ensureQueuingOrder(): void {
     const queuedItems = this.getQueuedItems();
     const incr = this.getCurrentItem() ? 1 : 0;
@@ -183,6 +243,20 @@ export class PlayQueue<TModel extends PlayQueueItem> extends BaseCollection<TMod
 
   setLoopPlayQueue(allowedToLoop: boolean) {
     this._loopPlayQueue = allowedToLoop;
+    this.trigger('change:loop', this._loopPlayQueue, this);
+  }
+
+  public isLooped() {
+    return this._loopPlayQueue;
+  }
+
+  resetQueue() {
+    this.filter((model) => {
+      return !model.isQueued();
+    }).forEach((model) => {
+      this.remove(model);
+    });
+    this._isShuffled = false;
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {

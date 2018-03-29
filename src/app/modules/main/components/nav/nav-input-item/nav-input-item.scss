@@ -1,0 +1,9 @@
+@import 'variables';
+@import '../nav-item/nav-item';
+
+:host {
+  input {
+    width: 100%;
+    height: 25px;
+  }
+}

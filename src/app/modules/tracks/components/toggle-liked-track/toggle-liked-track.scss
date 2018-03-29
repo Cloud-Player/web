@@ -1,0 +1,25 @@
+@import 'variables';
+
+:host {
+  cursor: pointer;
+
+  .toggle-liked-track {
+    position: relative;
+
+    .not-authenticated {
+      position: absolute;
+      left: 20px;
+      top: -7px;
+      width: 263px;
+      background: $brand-primary;
+      color: $gray-darker;
+      padding: 5px;
+      border-radius: 4px;
+      white-space: nowrap;
+
+      a {
+        color: white;
+      }
+    }
+  }
+}

@@ -1,38 +1,39 @@
 import {
-  Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, OnInit, Output,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {SoundcloudPlayerComponent} from '../soundcloud-player/soundcloud-player';
 import {Subscription} from 'rxjs/Subscription';
 import {PlayerStatus} from '../../src/player-status.enum';
-import {IPlayer, IPlayerSize} from '../../src/player.interface';
+import {IPlayer} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
-import {Track} from '../../../tracks/models/track';
 import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
-import {YoutubePlayerComponent} from '../youtube-player/youtube-player';
 import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {EaseService} from '../../../shared/services/ease.service';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
+import {ITrack} from '../../../api/tracks/track.interface';
 
 @Component({
   selector: 'app-player-manager',
   styleUrls: ['./player-manager.scss'],
-  templateUrl: './player-manager.html',
-  entryComponents: [
-    SoundcloudPlayerComponent,
-    YoutubePlayerComponent
-  ]
+  templateUrl: './player-manager.html'
 })
 export class PlayerManagerComponent implements OnInit {
-  private _fadeDuration = 10;
+  private _fadeDuration = 5;
   private _prepareTime = 30;
   private _volume = 1;
+  private _errorRetryCounter = 0;
   private _playerStatus;
-  private _errorOccured = false;
   private _playerSubscriptions;
   private _playerFactory: PlayerFactory;
   private _activePlayer: ComponentRef<IPlayer>;
@@ -68,16 +69,19 @@ export class PlayerManagerComponent implements OnInit {
   private handlePlayerStatusChange(newStatus: PlayerStatus) {
     switch (newStatus) {
       case PlayerStatus.Playing:
-        this._errorOccured = false;
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:is_playing`, 'app-player-manager');
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Playing;
+        this._errorRetryCounter = 0;
         break;
       case PlayerStatus.Paused:
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:paused`, 'app-player-manager');
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Paused;
         break;
       case PlayerStatus.Stopped:
         this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Stopped;
         break;
       case PlayerStatus.Ended:
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:ended`, 'app-player-manager');
         if (this.playQueue.hasNextItem()) {
           this.playQueue.getNextItem().play();
         } else {
@@ -85,9 +89,12 @@ export class PlayerManagerComponent implements OnInit {
         }
         break;
       case PlayerStatus.Error:
-        this._errorOccured = true;
-        this.userAnalyticsService.trackEvent('player_error', 'any', this._activePlayer.instance.getError());
-        this.playQueue.getCurrentItem().pause();
+        this.userAnalyticsService.trackEvent('player', `error:${this._activePlayer.instance.getError()}`, 'app-player-manager');
+        const currentItem = this.playQueue.getCurrentItem();
+        if (currentItem && currentItem.isPlaying()) {
+          this.playQueue.getCurrentItem().pause();
+          this.retryOnError();
+        }
         break;
     }
     this._playerStatus = status;
@@ -97,6 +104,23 @@ export class PlayerManagerComponent implements OnInit {
   private unBindListeners() {
     this._playerSubscriptions.unsubscribe();
     this._playerSubscriptions = new Subscription();
+  }
+
+  private retryOnError() {
+    const currentItem = this.playQueue.getCurrentItem();
+    const progress = currentItem.progress;
+    if (this._errorRetryCounter > 2) {
+      this.userAnalyticsService.trackEvent('player', 'error_resolve_timeout', 'app-player-manager');
+      return;
+    }
+    this._errorRetryCounter++;
+    if (this._activePlayer) {
+      this._activePlayer.instance.deInitialize();
+      this._activePlayer = null;
+    }
+    currentItem.play(progress).then(() => {
+      this.userAnalyticsService.trackEvent('player', 'resolved_player_error', 'app-player-manager');
+    });
   }
 
   private bindListeners(player: IPlayer): void {
@@ -187,13 +211,14 @@ export class PlayerManagerComponent implements OnInit {
           this.removePlayer(this._upcomingPlayer);
         }
         this._upcomingPlayer = this._playerFactory.createPlayer(upcoming);
+        this._upcomingPlayer.instance.setOpacity(0);
         this._upcomingPlayer.instance.setVolume(0);
         this._upcomingPlayer.instance.addClass('upcoming');
       }
     }
   }
 
-  private setPlayQueueItemToStopped(track: Track) {
+  private setPlayQueueItemToStopped(track: ITrack) {
     const playQueueItem = this.playQueue.get(track.id);
     if (playQueueItem && playQueueItem.status === PlayQueueItemStatus.RequestedStop) {
       playQueueItem.status = PlayQueueItemStatus.Stopped;
@@ -209,7 +234,9 @@ export class PlayerManagerComponent implements OnInit {
 
     if (canPlay) {
       newPlayer.instance.setVolume(this._volume);
-      newPlayer.instance.play(startTime);
+      if (newPlayer.instance.getStatus() !== PlayerStatus.Playing) {
+        newPlayer.instance.play(startTime);
+      }
     } else {
       newPlayer.instance.setVolume(0);
       newPlayer.instance.seekTo(startTime);
@@ -258,7 +285,7 @@ export class PlayerManagerComponent implements OnInit {
       /*
        * 2. NextPlayer for PlayQueueTrack does exist and is able to play so start that one
        */
-      this.activatePlayer(nextPlayer, activePlayer);
+      this.activatePlayer(nextPlayer, activePlayer, startTime);
     } else if (activePlayer && this._playerFactory.canReusePlayer(activePlayer, playQueueItem)) {
       /*
        * 3. Existing player does exist and can be reused
@@ -297,10 +324,14 @@ export class PlayerManagerComponent implements OnInit {
         this.startPlayerFor(item, item.progress);
         break;
       case PlayQueueItemStatus.RequestedStop:
-        this.stopPlayer();
+        if (item === this.playQueue.getCurrentItem()) {
+          this.stopPlayer();
+        }
         break;
       case PlayQueueItemStatus.RequestedPause:
-        this.pausePlayer();
+        if (item === this.playQueue.getCurrentItem()) {
+          this.pausePlayer();
+        }
         break;
     }
   }
@@ -328,6 +359,16 @@ export class PlayerManagerComponent implements OnInit {
 
   public hasActivePlayer(): boolean {
     return !!this._activePlayer;
+  }
+
+  public setVolume(volume) {
+    if (this._activePlayer) {
+      this._activePlayer.instance.setVolume(volume);
+    }
+    if (this._upcomingPlayer) {
+      this._upcomingPlayer.instance.setVolume(volume);
+    }
+    this._volume = volume;
   }
 
   ngOnInit(): void {

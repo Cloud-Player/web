@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
-
-import {Track} from '../../models/track';
-import {TrackSoundcloud} from '../../models/track-soundcloud';
+import {TrackSoundcloudModel} from '../../../api/tracks/track-soundcloud.model';
 
 @Component({
   selector: 'app-track-detail-view',
@@ -12,11 +10,11 @@ import {TrackSoundcloud} from '../../models/track-soundcloud';
 })
 
 export class TrackDetailViewComponent implements OnInit {
-  public track: Track;
+  public track: TrackSoundcloudModel;
 
   constructor(private route: ActivatedRoute,
               private location: Location) {
-    this.track = new TrackSoundcloud();
+    this.track = new TrackSoundcloudModel();
   }
 
   ngOnInit(): void {

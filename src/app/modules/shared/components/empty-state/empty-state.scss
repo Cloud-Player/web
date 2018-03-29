@@ -1,0 +1,24 @@
+:host {
+  color: #ccc;
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+
+    .icon {
+      font-size: 100px;
+    }
+
+    .title {
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .cta {
+      margin-top: 50px;
+    }
+  }
+}

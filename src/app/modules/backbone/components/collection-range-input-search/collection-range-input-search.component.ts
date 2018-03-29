@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
@@ -7,7 +7,7 @@ import {BaseModel} from '../../models/base.model';
 
 @Component({
   selector: 'app-collection-range-input-search',
-  styleUrls: [ './collection-range-input-search.style.scss' ],
+  styleUrls: ['./collection-range-input-search.style.scss'],
   templateUrl: './collection-range-input-search.template.html'
 })
 

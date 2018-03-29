@@ -1,9 +1,9 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-toggle-switch',
   styleUrls: ['./toggle-switch.style.scss'],
-  templateUrl: './toggle-switch.template.html',
+  templateUrl: './toggle-switch.template.html'
 })
 
 export class ToggleSwitchComponent {
@@ -13,12 +13,12 @@ export class ToggleSwitchComponent {
   @Output() valueChange = new EventEmitter();
 
   @Input()
-  get value(): boolean{
+  get value(): boolean {
     return this._value;
   }
 
-  set value(val: boolean){
-   this._value = val;
+  set value(val: boolean) {
+    this._value = val;
     this.valueChange.emit(val);
   }
 

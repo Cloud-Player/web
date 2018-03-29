@@ -1,4 +1,4 @@
-import {result, pairs} from 'underscore';
+import {clone, result} from 'underscore';
 import {getAttributesMapKey} from '../utils/get-attributes-map-key';
 
 export function defaultValue(value: any): any {
@@ -9,7 +9,7 @@ export function defaultValue(value: any): any {
       get: function () {
         const mappedKey = getAttributesMapKey(this, propertyKey);
         defaults[mappedKey] = value;
-        return defaults;
+        return clone(defaults);
       },
       set: function () {
       }

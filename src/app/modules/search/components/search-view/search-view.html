@@ -1,0 +1,86 @@
+<section class="column">
+  <app-view-header>
+    <i class="fa fa-search" aria-hidden="true"></i>
+    <app-collection-text-input-search #searchBar
+                                      [collection]="searchCollection"
+                                      [queryParam]="'q'">
+    </app-collection-text-input-search>
+  </app-view-header>
+
+  <!--<app-social-share-panel-->
+    <!--*ngIf="tracksSoundCloud.length !== 0"-->
+    <!--class="card">-->
+  <!--</app-social-share-panel>-->
+
+  <app-tab-bar #tabBar
+               (tabChange)="selectTab($event)"
+               [hidden]="showWelcomeText"
+               [activeTabId]="activeTab">
+    <app-tab-pane id="soundcloud"
+                  [title]="availableProviderMap['soundcloud'].title"
+                  [icon]="availableProviderMap['soundcloud'].icon">
+
+      <div *ngIf="tracksSoundCloud.length>0"
+           class="results">
+        <app-search-result-tracks [tracks]="tracksSoundCloud">
+          <app-filter-form [collection]="tracksSoundCloud">
+            <app-min-max-range-filter label="Duration"
+                                      [min]="1000" [max]="3600000" [step]="1000"
+                                      minFilterProperty="duration[from]"
+                                      maxFilterProperty="duration[to]"
+                                      [transformDisplayValue]="transformScDurationValue">
+            </app-min-max-range-filter>
+
+            <app-min-max-range-filter label="BPM"
+                                      [min]="20" [max]="200" [step]="20"
+                                      minFilterProperty="bpm[from]"
+                                      maxFilterProperty="bmp[to]">
+            </app-min-max-range-filter>
+          </app-filter-form>
+        </app-search-result-tracks>
+      </div>
+
+      <app-empty-state *ngIf="tracksSoundCloud.length === 0 && tracksSoundCloud.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="tracksSoundCloud.queryParams.q && tracksSoundCloud.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+    </app-tab-pane>
+    <app-tab-pane id="youtube" [title]="availableProviderMap['youtube'].title"
+                  [icon]="availableProviderMap['youtube'].icon">
+
+      <div *ngIf="tracksYoutube.length>0"
+           class="results">
+        <app-search-result-tracks [tracks]="tracksYoutube">
+          <app-filter-form [collection]="tracksYoutube">
+            <app-youtube-duration-filter label="Duration"
+                                         filterProperty="videoDuration">
+            </app-youtube-duration-filter>
+          </app-filter-form>
+        </app-search-result-tracks>
+      </div>
+
+      <app-empty-state *ngIf="tracksYoutube.length === 0 && tracksYoutube.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="tracksYoutube.queryParams.q && tracksYoutube.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
+    </app-tab-pane>
+  </app-tab-bar>
+
+  <app-empty-state *ngIf="showWelcomeText"
+                   title="Search for tracks or artists on SoundCloud and YouTube"
+                   icon="fa fa-search"
+                   ctaText="Try searching for {{searchTerm}}"
+                   (ctaClick)="animatedSearch(searchTerm)">
+  </app-empty-state>
+</section>

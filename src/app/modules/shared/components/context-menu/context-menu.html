@@ -1,0 +1,10 @@
+<div #container>
+  <ng-content></ng-content>
+  <div #contextMenu class="context-menu">
+    <div *ngFor="let option of options"
+         (click)="executeAction(option)">
+      <app-option-btn [title]="option.title" [icon]="option.icon" [executeAction]="false"></app-option-btn>
+    </div>
+  </div>
+  <div class="backdrop"></div>
+</div>

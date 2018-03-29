@@ -6,7 +6,7 @@ import {ToastService} from '../../services/toast';
 @Component({
   selector: 'app-toast',
   styleUrls: ['./toast.scss'],
-  templateUrl: './toast.html',
+  templateUrl: './toast.html'
 })
 export class ToastComponent {
   @Input()

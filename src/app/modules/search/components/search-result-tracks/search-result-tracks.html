@@ -1,0 +1,33 @@
+<div class="tracks-list" *ngIf="tracks">
+  <div class="header">
+    <app-sort-tracks [tracks]="tracks"></app-sort-tracks>
+    <div *ngIf="!showFilter"
+         class="filter clickable"
+         (click)="toggleFilter()">
+      <i class="fa fa-filter filter-icon" aria-hidden="true"></i>
+      Filter <span class="hidden-xs">result</span>
+    </div>
+
+    <div *ngIf="showFilter" class="filter clickable"
+         (click)="toggleFilter()">
+      <i class="fa fa-times filter-icon" aria-hidden="true"></i>
+      Remove <span class="hidden-xs">filter</span>
+    </div>
+
+  </div>
+  <ng-content *ngIf="showFilter"
+              class="filter"></ng-content>
+  <app-context-menu
+    *ngFor="let track of tracks.models | limitCollectionresults: {limit: 10}">
+    <app-track-list-item
+      [track]="track"
+      [tracks]="tracks">
+      <app-options-btn>
+        <app-add-to-queue-option [track]="track"></app-add-to-queue-option>
+        <app-shuffle-play-option [track]="track" [tracks]="tracks"></app-shuffle-play-option>
+        <app-add-to-playlist-option [track]="track"></app-add-to-playlist-option>
+      </app-options-btn>
+    </app-track-list-item>
+  </app-context-menu>
+  <app-list-footer [collection]="tracks" text="tracks were found"></app-list-footer>
+</div>

@@ -15,7 +15,7 @@ export class HumanReadableSecondsPipe implements PipeTransform {
     }
   }
 
-  transform(value: string, args: string[]): any {
+  transform(value: string, args?: string[]): any {
     if (!value) {
       return value;
     } else {

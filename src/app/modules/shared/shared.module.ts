@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {HumanReadableSecondsPipe} from './pipes/h-readable-seconds.pipe';
-import {ToggleLikedTrackComponent} from './components/toggle-liked-track-component/toggle-liked-track.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {QueueButtonComponent} from './components/queue-button/queue_button.component';
 import {SortTracksComponent} from './components/sort-tracks/sort-tracks.component';
@@ -22,33 +21,50 @@ import {FocusInputDirective} from './directives/focus-input.directive';
 import {ViewChangeLoaderComponent} from './components/view-change-loader/view-change-loader.component';
 import {TrackCoverComponent} from './components/track-cover/track-cover.component';
 import {TimeAgoDirective} from './directives/time-ago.directive';
-import {OptionsBtnComponent, OptionsBtnOptionComponent} from './components/options-btn/options-btn.component';
 import {KMilShortenerPipe} from './pipes/k-mil-shortener.pipe';
-import {FillHeightDirective} from './directives/fill-height.directive';
 import {MultiLineComponent} from './components/multi-line-text/multi-line.component';
 import {LimitCollectionresultsPipe} from './pipes/limit-collection-results.pipe';
 import {FacebookShareButtonComponent} from './components/facebook-share-button/facebook-share-button.component';
 import {TwitterShareButtonComponent} from './components/twitter-share-button/twitter-share-button.component';
-import {EaseService} from './services/ease.service';
 import {ToastsComponent} from './components/toasts/toasts';
 import {ToastService} from './services/toast';
 import {ToastComponent} from './components/toast/toast';
 import {TabBarComponent} from './components/tab-bar/tab-bar';
 import {TabPaneComponent} from './components/tab-pane/tab-pane';
 import {FullScreenService} from './services/fullscreen.service';
+import {CollapsibleComponent} from './components/collapsible/collapsible';
+import {AuthenticatedUserGuard} from './guards/authenticated-user-guard';
+import {DragAndDropService} from './services/drag-and-drop';
+import {ModalHolderComponent} from './components/modal/modal-holder/modal-holder';
+import {ModalComponent} from './components/modal/modal/modal';
+import {ModalService} from './services/modal';
+import {ContextMenuComponent} from './components/context-menu/context-menu';
+import {OptionsBtnComponent} from './components/options-btn/options-btn';
+import {OptionBtnComponent} from './components/option-btn/option-btn';
+import {OptionsOptionBtnComponent} from './components/options-btn/options-option-btn/options-option-btn';
+import {EmptyStateComponent} from './components/empty-state/empty-state';
+import {LayoutService} from './services/layout';
+import {FillHeightDirective} from './directives/fill-height';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AddToQueueOptionComponent} from './components/option-btn/add-to-queue-option/add-to-queue-option';
+import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playlist-option/add-to-playlist-option';
+import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-option/shuffle-play-option';
+import {ListFooterComponent} from './components/list-footer/list-footer';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     BackboneModule
   ],
   declarations: [
     CloudPlayerLogoComponent,
     CollectionTextInputSearchComponent,
+    CollapsibleComponent,
+    ContextMenuComponent,
     FacebookShareButtonComponent,
     TwitterShareButtonComponent,
-    ToggleLikedTrackComponent,
     QueueButtonComponent,
     SortTracksComponent,
     RangeSliderComponent,
@@ -59,18 +75,30 @@ import {FullScreenService} from './services/fullscreen.service';
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
     MultiLineComponent,
+    ListFooterComponent,
+
+    OptionBtnComponent,
     OptionsBtnComponent,
-    OptionsBtnOptionComponent,
+    OptionsOptionBtnComponent,
+    AddToQueueOptionComponent,
+    AddToPlaylistOptionComponent,
+    ShufflePlayOptionComponent,
+
     TrackCoverComponent,
     ToastComponent,
     ToastsComponent,
     TabBarComponent,
     TabPaneComponent,
+    ModalHolderComponent,
+    ModalComponent,
+    EmptyStateComponent,
+
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
     TimeAgoDirective,
     FillHeightDirective,
+
     HumanReadableSecondsPipe,
     KMilShortenerPipe,
     LimitCollectionresultsPipe
@@ -78,9 +106,10 @@ import {FullScreenService} from './services/fullscreen.service';
   exports: [
     CloudPlayerLogoComponent,
     CollectionTextInputSearchComponent,
+    CollapsibleComponent,
+    ContextMenuComponent,
     FacebookShareButtonComponent,
     TwitterShareButtonComponent,
-    ToggleLikedTrackComponent,
     QueueButtonComponent,
     SortTracksComponent,
     RangeSliderComponent,
@@ -91,17 +120,29 @@ import {FullScreenService} from './services/fullscreen.service';
     ToggleSwitchComponent,
     LoadingSpinnerComponent,
     MultiLineComponent,
+    ListFooterComponent,
+
+    OptionBtnComponent,
     OptionsBtnComponent,
-    OptionsBtnOptionComponent,
+    OptionsOptionBtnComponent,
+    AddToQueueOptionComponent,
+    AddToPlaylistOptionComponent,
+    ShufflePlayOptionComponent,
+
     TrackCoverComponent,
     ToastsComponent,
     TabBarComponent,
     TabPaneComponent,
+    ModalHolderComponent,
+    ModalComponent,
+    EmptyStateComponent,
+
     DraggableDirective,
     DropZoneDirective,
     FocusInputDirective,
     TimeAgoDirective,
     FillHeightDirective,
+
     HumanReadableSecondsPipe,
     KMilShortenerPipe,
     LimitCollectionresultsPipe
@@ -110,7 +151,14 @@ import {FullScreenService} from './services/fullscreen.service';
     HumanReadableSecondsPipe,
     CloudPlayerLogoService,
     FullScreenService,
-    ToastService
+    ToastService,
+    DragAndDropService,
+    ModalService,
+    LayoutService,
+    AuthenticatedUserGuard
+  ],
+  entryComponents: [
+    ModalComponent
   ]
 })
 export class SharedModule {

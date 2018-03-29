@@ -1,0 +1,54 @@
+<div class="playlist-selector-modal">
+  <p *ngIf="track">
+    Select the playlist where the track <b>{{track.title}}</b> should be added
+  </p>
+  <app-tab-bar (tabChange)="selectTab($event)">
+    <app-tab-pane
+      *ngFor="let account of applicableAccounts"
+      [id]="account.provider"
+      [title]="availableProviderMap[account.provider].title"
+      [icon]="availableProviderMap[account.provider].icon">
+      <div *ngIf="account.playlists.length > 0">
+        <ul class="cp-grid">
+          <li *ngFor="let playlist of account.playlists.models"
+              class="clickable"
+              (click)="addTrackTo(playlist)">
+            <div class="grid-card">
+              <div class="image">
+                <img *ngIf=playlist.image.getMediumSizeUrl()
+                     [src]="playlist.image.getMediumSizeUrl()">
+                <img *ngIf=!playlist.image.getMediumSizeUrl()
+                     src="assets/cassette.jpg">
+              </div>
+              <div class="description">
+                <div class="title">
+                  {{playlist.title}}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!account.isConnected()">
+        <app-empty-state
+          title="Connect with {{availableProviderMap[account.provider].title}} to syncronize your playlists"
+          [icon]="availableProviderMap[account.provider].icon"
+          (ctaClick)="connect(account)"
+          ctaText="Login with {{availableProviderMap[account.provider].title}}">
+        </app-empty-state>
+      </div>
+
+      <app-empty-state *ngIf="account.isConnected() && !account.playlists.isSyncing && account.playlists.length === 0"
+                       title="You have not created a playlist yet"
+                       icon="fa fa-list-alt"
+                       ctaText="Create playlist"
+                       (ctaClick)="createNewPlaylist()">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="account.playlists.isSyncing"
+                       title="Loading playlists"
+                       icon="fa fa-music">
+      </app-empty-state>
+    </app-tab-pane>
+  </app-tab-bar>
+</div>

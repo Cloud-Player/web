@@ -1,1 +1,43 @@
 @import 'variables';
+
+:host {
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  input[type="text"] {
+    font-size: 20px;
+    width: 100%;
+    border-radius: 4px;
+    margin-right: 5px;
+  }
+
+  /deep/ app-view-header {
+    .default-playlist-img {
+      border: 1px solid;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      margin-right: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      .text {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .playlist-description{
+    margin: 10px 0 20px 0;
+  }
+}

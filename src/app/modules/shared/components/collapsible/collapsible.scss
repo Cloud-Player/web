@@ -1,0 +1,33 @@
+@import 'variables';
+
+:host {
+  .collapsible-head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+
+    .toggler {
+      border: none;
+      background: none;
+      margin-left: auto;
+    }
+
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+
+  .collapsible-body {
+    opacity: 1;
+
+    &.is-collapsed {
+      opacity: 0;
+      max-height: 0;
+    }
+
+    .collapsible-body-content {
+      border: 1px solid transparent !important;
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {TrackingProviderModel} from './tracking-provider.model';
 import {isString} from 'underscore';
 
@@ -9,7 +8,7 @@ declare global {
 }
 
 export class GoogleAnalyticsTrackingProvider extends TrackingProviderModel {
-  trackEvent(eventName: string, eventAction: string, msg: string) {
+  trackEvent(eventName: string, eventAction: string, msg?: string) {
     window.ga('send', 'event', eventName, eventAction, msg);
   }
 

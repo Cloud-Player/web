@@ -1,26 +1,26 @@
 @import 'variables';
 
-:host{
-  .tab-bar{
+:host {
+  .tab-bar {
     display: flex;
-    margin: 0;
     list-style: none;
     padding: 0;
     border-bottom: 3px solid $light-white;
+    margin:0 15px;
 
-    .tab{
+    .tab {
       color: $gray;
       padding: 10px 15px;
       border-bottom: 3px solid transparent;
       margin-bottom: -3px;
       transition: all 0.5s ease;
 
-      &.active{
+      &.active {
         color: $brand-primary;
         border-bottom-color: $brand-primary;
       }
 
-      &:hover{
+      &:hover {
         color: $brand-primary;
       }
     }

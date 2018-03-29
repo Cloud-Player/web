@@ -1,10 +1,10 @@
-import {Component, OnInit, EventEmitter, Output, NgZone, Renderer, ElementRef} from '@angular/core';
-import {Router, NavigationStart, NavigationEnd, NavigationError, NavigationCancel} from '@angular/router';
+import {Component, ElementRef, NgZone, Renderer} from '@angular/core';
+import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-change-loader',
   styleUrls: ['./view-change-loader.style.scss'],
-  templateUrl: './view-change-loader.template.html',
+  templateUrl: './view-change-loader.template.html'
 })
 
 export class ViewChangeLoaderComponent {

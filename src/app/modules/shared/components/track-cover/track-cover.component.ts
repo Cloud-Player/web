@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Track} from '../../../tracks/models/track';
 import {ImageSizes} from '../../src/image-sizes.enum';
+import {ITrack} from '../../../api/tracks/track.interface';
 
 @Component({
   selector: 'app-track-cover',
@@ -10,7 +10,7 @@ import {ImageSizes} from '../../src/image-sizes.enum';
 
 export class TrackCoverComponent {
   @Input()
-  public track: Track;
+  public track: ITrack;
 
   @Input()
   public size: ImageSizes;

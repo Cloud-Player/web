@@ -1,0 +1,12 @@
+<a [routerLink]="link"
+   [routerLinkActive]="['is-active']"
+   [routerLinkActiveOptions]="{exact:this.exact}"
+   [ngClass]="{'is-link': link}"
+   class="nav-item">
+  <i *ngIf="icon" class="icon {{icon}}" aria-hidden="true"></i>
+  <img *ngIf="image" class="avatar" aria-hidden="true" [src]="image"/>
+  <div *ngIf="title" class="text">{{title}}</div>
+  <ng-content></ng-content>
+</a>
+
+

@@ -10,6 +10,7 @@
       "assets": [
         "CNAME",
         "assets",
+        "connect",
         "favicon.ico",
         "service-worker.js"
       ],

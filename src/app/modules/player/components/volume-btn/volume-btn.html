@@ -1,0 +1,18 @@
+<div class="volume-btn">
+  <div class="btn btn-xs btn-default"
+       (click)="toggleVolume()">
+    <i *ngIf="volume>80" class="fa fa-volume-up"></i>
+    <i *ngIf="volume<=80 && volume>0" class="fa fa-volume-down"></i>
+    <i *ngIf="volume===0" class="fa fa-volume-off"></i>
+  </div>
+  <app-range-slider [min]="0" [max]="100"
+                    [(ngModel)]="volume"
+                    (valueChange)="onSliderChange($event)"
+                    (valueChanged)="onSliderChanged()"
+                    [vertical]="true"
+                    [hideSliderValue]="true"
+                    [showCurrentValue]="false"
+                    [showSliderValue]="false"
+                    [allowInfinity]="false">
+  </app-range-slider>
+</div>

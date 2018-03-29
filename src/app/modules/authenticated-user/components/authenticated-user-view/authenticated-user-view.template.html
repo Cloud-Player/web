@@ -1,0 +1,53 @@
+<section class="column">
+  <app-view-header>
+    <img *ngIf="cloudPlayerAccount.image.getSmallSizeUrl()"
+         [src]="cloudPlayerAccount.image.getSmallSizeUrl()">
+    <i *ngIf="!cloudPlayerAccount.image.getSmallSizeUrl()"
+       class="fa fa-user"></i>
+    {{cloudPlayerAccount.getFullName()}}
+  </app-view-header>
+
+  <div *ngIf="!hasConnectedAccount"
+       class="card">
+    <h3>Guest Account</h3>
+    <p>Your account is a guest account and can only be accessed from this device.
+      To create a permanent account that can be used accross devices, login with
+      <span (click)="connect('soundcloud')" class="btn btn-link">SoundCloud</span>
+      and/or <span class="btn btn-link" (click)="connect('youtube')">YouTube</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Connected Accounts</h3>
+    <p>Connect other accounts to sychronise playlists and favourited tracks</p>
+    <div class="cp-grid">
+      <div *ngFor="let account of accounts"
+           class="grid-card">
+        <div class="image">
+          <img *ngIf="account.isConnected()"
+               [src]="account.image.getLargeSizeUrl()">
+          <div *ngIf="!account.isConnected()"
+               class="new-account">
+            <i class="{{providerMap[account.provider].icon}}"></i>
+          </div>
+        </div>
+        <div class="description">
+          <div class="title">
+            {{providerMap[account.provider].title}}
+          </div>
+        </div>
+        <div class="actions">
+          <div *ngIf="!account.isConnected()"
+               class="btn btn-link btn-primary"
+               (click)="connect(account.provider)">
+            Connect
+          </div>
+          <!--<div *ngIf="account.isConnected()"-->
+               <!--class="btn btn-link btn-primary">-->
+            <!--Disconnect-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

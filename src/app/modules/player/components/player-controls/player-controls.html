@@ -1,6 +1,19 @@
 <div class="audio-player-controls">
 
   <div class="player-settings">
+    <button class="btn btn-xs btn-default"
+            [ngClass]="{'is-activated': playQueue.isShuffled()}"
+            (click)="toggleShuffle()">
+      <i class="fa fa-random"></i>
+    </button>
+    <button class="btn btn-xs btn-default"
+            [ngClass]="{'is-activated': playQueue.isLooped()}"
+            (click)="toggleLoop()">
+      <i class="fa fa-repeat"></i>
+    </button>
+    <app-volume-btn [volume]="volume" (volumeChange)="setVolume($event)"></app-volume-btn>
+  </div>
+  <div class="fullscreen">
     <button *ngIf="fullScreenService.canEnterFullScreen()"
             class="btn btn-xs btn-default"
             (click)="toggleFullScreen()">
@@ -51,21 +64,24 @@
                     (valueChanged)="playTrackFromPosition($event)">
   </app-range-slider>
 
-  <div *ngIf="currentItem.track" class="meta">
-    <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
-    <div class="details"
-         appDraggable="true"
-         [dragData]="currentItem.track.toJSON()"
-         [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
-         dragEffect="copy">
-      <b class="track-title">{{currentItem.track.title}}</b>
-      <div class="artist">{{currentItem.track.artist.username}}</div>
+  <app-context-menu>
+    <div *ngIf="currentItem.track" class="meta">
+      <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
+      <div class="details"
+           appDraggable="true"
+           [dragData]="currentItem.track.toJSON()"
+           [dragImageUrl]="currentItem.track.image.getSmallSizeUrl()"
+           dragEffect="copy">
+        <b class="track-title" [title]="currentItem.track.title">{{currentItem.track.title}}</b>
+        <div class="artist">{{currentItem.track.artist.getFullName()}}</div>
+      </div>
+      <div class="timer">
+        <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
+        <div class="duration">{{currentItem.duration | hReadableSeconds}}</div>
+      </div>
+      <app-add-to-playlist-option style="display: none" [track]="currentItem.track"></app-add-to-playlist-option>
     </div>
-    <div class="timer">
-      <div class="progress">{{currentItem.progress | hReadableSeconds}}</div>
-      <div class="duration">{{currentItem.duration | hReadableSeconds}}</div>
-    </div>
-  </div>
+  </app-context-menu>
 
   <div *ngIf="!currentItem.track"
        class="dummy meta">

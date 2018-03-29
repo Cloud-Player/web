@@ -1,12 +1,12 @@
-import {Track} from '../../tracks/models/track';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {PlayQueueItemStatus} from '../src/playqueue-item-status.enum';
 import {isNumber} from 'underscore';
 import {dynamicInstance} from '../../backbone/decorators/dynamic-instance.decorator';
-import {TrackSoundcloud} from '../../tracks/models/track-soundcloud';
 import {BaseModel} from '../../backbone/models/base.model';
-import {TrackYoutube} from '../../tracks/models/track-youtube';
+import {TrackYoutubeModel} from '../../api/tracks/track-youtube.model';
+import {TrackSoundcloudModel} from '../../api/tracks/track-soundcloud.model';
+import {ITrack} from '../../api/tracks/track.interface';
 
 export class PlayQueueItem extends BaseModel {
   private _promisePerState = {};
@@ -19,11 +19,11 @@ export class PlayQueueItem extends BaseModel {
   @dynamicInstance({
     identifierKey: 'provider',
     identifierKeyValueMap: {
-      'SOUNDCLOUD': TrackSoundcloud,
-      'YOUTUBE': TrackYoutube
+      'soundcloud': TrackSoundcloudModel,
+      'youtube': TrackYoutubeModel
     }
   })
-  track: Track;
+  track: ITrack;
 
   @attributesKey('progress')
   @defaultValue(0)
@@ -32,6 +32,9 @@ export class PlayQueueItem extends BaseModel {
   @attributesKey('duration')
   @defaultValue(0)
   duration: number;
+
+  @attributesKey('indexBeforeShuffle')
+  indexBeforeShuffle: number;
 
   private resolveOnStatus(requestedStatus): Promise<any> {
     if (!this._promisePerState[requestedStatus]) {

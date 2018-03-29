@@ -1,87 +1,142 @@
-<div class="play-queue"
+<div class="play-queue scrollable"
      appDropzone
-     [dropCallback]="dropTrack">
-
+     (dropData)="drop($event)">
   <div class="queued-tracks-list" *ngIf="playQueue.getQueuedItems().length > 0">
     <div class="divider">
       <div class="title">Coming up next</div>
+      <div class="btn-group">
+        <div class="btn btn-xs btn-default"
+             (click)="removeQueuedItems()">
+          <i class="fa fa-trash"></i>
+        </div>
+      </div>
     </div>
     <div *ngFor="let playQueueItem of playQueue.getQueuedItems()"
-         class="track"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"
          [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
-      <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
-      <div class="details"
-           [class.dummy]="!playQueueItem.track.artist.getFullName()">
-        <div style="display: flex; align-items: center">
-          <b class="title"
-             style="flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;">
-            {{playQueueItem.track.title || 'None'}}
-          </b>
-          <button class="btn btn-xs btn-default" (click)="playQueueItem.unQueue()">
-            <span class="fa fa-trash"></span>
-          </button>
-        </div>
-        <div class="artist">{{playQueueItem.track.artist.getFullName()}}</div>
-        <div class="stats">
-          <div class="duration">
-            <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-            {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+      <app-context-menu>
+        <div class="track">
+          <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
+          <div class="details"
+               [class.dummy]="!playQueueItem.track.artist.getFullName() && !playQueueItem.track.title">
+            <div style="display: flex; align-items: center">
+              <b class="title"
+                 style="flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;"
+                 [title]="playQueueItem.track.title">
+                {{playQueueItem.track.title}}
+              </b>
+            </div>
+            <div class="artist">{{playQueueItem.track.artist.getFullName()}}</div>
+            <div class="stats">
+              <div class="duration">
+                <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
+                {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+              </div>
+              <div *ngIf="playQueueItem.track.genre"
+                   class="genre">
+                #{{playQueueItem.track.genre}}
+              </div>
+            </div>
           </div>
-          <div *ngIf="playQueueItem.track.genre"
-               class="genre">
-            #{{playQueueItem.track.genre}}
-          </div>
         </div>
-      </div>
+        <app-add-to-queue-option [track]="playQueueItem.track" hidden></app-add-to-queue-option>
+        <app-add-to-playlist-option [track]="playQueueItem.track" hidden></app-add-to-playlist-option>
+      </app-context-menu>
     </div>
   </div>
 
-  <div class="scheduled-tracks-list" *ngIf="playQueue.getScheduledItems().length > 0">
+  <div class="scheduled-tracks-list" *ngIf="hasScheduledItems()">
     <div class="divider">
-      <div class="title">Next Songs</div>
+      <div class="title">Scheduled Tracks</div>
+      <div class="btn-group">
+        <div class="btn btn-xs btn-default"
+             (click)="removeScheduledItems()">
+          <i class="fa fa-trash"></i>
+        </div>
+      </div>
     </div>
     <div *ngFor="let playQueueItem of playQueue.getScheduledItems() | limitCollectionresults: {limit: 10}"
-         class="track"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"
          [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
-      <div class="cover">
-        <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
-      </div>
-      <div class="details"
-           [class.dummy]="!playQueueItem.track.artist.getFullName()">
-        <b class="title">
-          {{playQueueItem.track.title || 'None'}}
-        </b>
-        <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
-        <div class="stats">
-          <div class="duration">
-            <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-            {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+      <app-context-menu>
+        <div class="track">
+          <div class="cover">
+            <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
           </div>
-          <div *ngIf="playQueueItem.track.genre"
-               class="genre">
-            #{{playQueueItem.track.genre}}
+          <div class="details"
+               [class.dummy]="!playQueueItem.track.artist.getFullName() && !playQueueItem.track.title">
+            <b class="title" [title]="playQueueItem.track.title">
+              {{playQueueItem.track.title}}
+            </b>
+            <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
+            <div class="stats">
+              <div class="duration">
+                <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
+                {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+              </div>
+              <div *ngIf="playQueueItem.track.genre"
+                   class="genre">
+                #{{playQueueItem.track.genre}}
+              </div>
+            </div>
           </div>
         </div>
+        <app-add-to-queue-option [track]="playQueueItem.track" hidden></app-add-to-queue-option>
+        <app-add-to-playlist-option [track]="playQueueItem.track" hidden></app-add-to-playlist-option>
+      </app-context-menu>
+    </div>
+    <div *ngIf="playQueue.isLooped()">
+      <div *ngFor="let playQueueItem of playQueue.getStoppedItems() | limitCollectionresults: {limit: 10}"
+           appDraggable="true"
+           [dragData]="playQueueItem.track.toJSON()"
+           [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
+           dragEffect="copy">
+        <app-context-menu>
+          <div class="track">
+            <div class="cover">
+              <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
+            </div>
+            <div class="details"
+                 [class.dummy]="!playQueueItem.track.artist.getFullName()">
+              <b class="title" [title]="playQueueItem.track.title">
+                {{playQueueItem.track.title || 'None'}}
+              </b>
+              <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
+              <div class="stats">
+                <div class="duration">
+                  <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
+                  {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+                </div>
+                <div *ngIf="playQueueItem.track.genre"
+                     class="genre">
+                  #{{playQueueItem.track.genre}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <app-add-to-queue-option [track]="playQueueItem.track" hidden></app-add-to-queue-option>
+          <app-add-to-playlist-option [track]="playQueueItem.track" hidden></app-add-to-playlist-option>
+        </app-context-menu>
       </div>
     </div>
   </div>
 
-  <div
-    *ngIf="playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && !playQueue.getCurrentItem()">
-    <p>No tracks available. <a routerLink="/app">Search</a> for a track and click on it to play it.</p>
-    <p>You can drag and drop tracks here to add them to the play queue</p>
+  <app-empty-state
+    *ngIf="showDragAndDropHelp"
+    class="drag-and-drop-help"
+    title="Drop track here to queue it"
+    icon="fa fa-queue">
+  </app-empty-state>
 
-  </div>
-
-  <div
-    *ngIf="playQueue.getScheduledItems().length === 0 && playQueue.getQueuedItems().length === 0 && playQueue.getCurrentItem()">
-    No more tracks available. <a routerLink="/app">Search</a> for more tracks to keep the party going on.
-  </div>
+  <app-empty-state
+    *ngIf="!hasScheduledItems() && playQueue.getQueuedItems().length === 0"
+    class="no-items"
+    title="Your play queue is empty"
+    icon="fa fa-queue">
+  </app-empty-state>
 
 </div>

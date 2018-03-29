@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Subscriber} from 'rxjs/Subscriber';
+import {Utils} from '../src/utils.class';
 
 export enum FullScreenEventType {
   RequestEnter,
@@ -8,7 +8,6 @@ export enum FullScreenEventType {
   RequestLeave,
   Leave
 }
-
 
 @Injectable()
 export class FullScreenService {
@@ -19,29 +18,67 @@ export class FullScreenService {
   constructor() {
     const htmlEl = document.querySelector('html');
 
-    this._observable = new EventEmitter<FullScreenEventType>();
-    if (htmlEl.requestFullscreen) {
-      this._fullScreenCall = function () {
-        htmlEl.requestFullscreen();
-      };
-    } else if (htmlEl.webkitRequestFullscreen) {
-      this._fullScreenCall = function () {
-        htmlEl.webkitRequestFullscreen();
-      };
-    }
+    Utils.vendorPrefixes.every((vendorPrefix) => {
+      let requestFullscreenFnName;
+      switch (vendorPrefix) {
+        case 'moz':
+          requestFullscreenFnName = 'mozRequestFullScreen';
+          break;
+        case 'webkit':
+          requestFullscreenFnName = 'webkitRequestFullScreen';
+          break;
+        case 'ms':
+          requestFullscreenFnName = 'msRequestFullscreen';
+          break;
+        default:
+          requestFullscreenFnName = 'requestFullscreen';
+          break;
+      }
+      const fullscreenListenerName = `${vendorPrefix}fullscreenchange`;
+      if (htmlEl[requestFullscreenFnName]) {
+        this._fullScreenCall = () => {
+          htmlEl[requestFullscreenFnName]();
+        };
+        document.addEventListener(fullscreenListenerName, this.fullScreenListener.bind(this));
+        return false;
+      } else {
+        return true;
+      }
+    });
 
-    document.addEventListener('fullscreenchange', this.fullScreenListener.bind(this));
-    document.addEventListener('webkitfullscreenchange', this.fullScreenListener.bind(this));
+    this._observable = new EventEmitter<FullScreenEventType>();
   }
 
   private fullScreenListener() {
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      this._isInFullScreen = true;
-      this._observable.emit(FullScreenEventType.Enter);
-    } else if (this._isInFullScreen) {
-      this._isInFullScreen = false;
-      this._observable.emit(FullScreenEventType.Leave);
-    }
+    Utils.vendorPrefixes.every((vendorPrefix) => {
+      let fullScreenElName;
+      switch (vendorPrefix) {
+        case 'moz':
+          fullScreenElName = 'mozFullScreen';
+          break;
+        case 'webkit':
+          fullScreenElName = 'webkitIsFullScreen';
+          break;
+        case 'ms':
+          fullScreenElName = 'msFullscreenElement';
+          break;
+        default:
+          fullScreenElName = 'fullscreen';
+          break;
+      }
+      if (document[fullScreenElName] === true) {
+        this._isInFullScreen = true;
+        this._observable.emit(FullScreenEventType.Enter);
+        return false;
+      } else if (document[fullScreenElName] === false) {
+        this._isInFullScreen = false;
+        this._observable.emit(FullScreenEventType.Leave);
+        return true;
+      } else {
+        // Element is not supported by browser
+        return true;
+      }
+    });
   }
 
   public isInFullScreen() {
@@ -61,11 +98,31 @@ export class FullScreenService {
 
   public leave() {
     if (this._isInFullScreen) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
+
+      Utils.vendorPrefixes.every((vendorPrefix) => {
+        let exitFullscreenFnName;
+        switch (vendorPrefix) {
+          case 'moz':
+            exitFullscreenFnName = 'mozCancelFullScreen';
+            break;
+          case 'webkit':
+            exitFullscreenFnName = 'webkitCancelFullScreen';
+            break;
+          case 'ms':
+            exitFullscreenFnName = 'msExitFullscreen';
+            break;
+          default:
+            exitFullscreenFnName = 'exitFullscreen';
+            break;
+        }
+        if (document[exitFullscreenFnName]) {
+          document[exitFullscreenFnName]();
+          return false;
+        } else {
+          return true;
+        }
+      });
+
       this._observable.emit(FullScreenEventType.RequestLeave);
     }
   }

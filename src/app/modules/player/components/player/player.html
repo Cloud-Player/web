@@ -7,7 +7,8 @@
                         (playerStatusChange)="changePlayerStatus($event)"></app-player-manager>
 
     <app-player-controls [isBuffering]="isBuffering"
-                         [playQueue]="playQueue"></app-player-controls>
+                         [playQueue]="playQueue"
+                         (volumeChange)="setVolume($event)"></app-player-controls>
   </div>
 
   <app-play-queue [playQueue]="playQueue" class="queue"></app-play-queue>

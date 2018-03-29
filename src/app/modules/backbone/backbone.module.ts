@@ -2,8 +2,7 @@ import {NgModule} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {isUndefined} from 'underscore';
-import {Model, Collection} from 'backbone';
+import {Collection, Model} from 'backbone';
 import {CollectionSortComponent} from './components/collection-sort-component/collection-sort.component';
 import {CollectionRangeInputSearchComponent} from './components/collection-range-input-search/collection-range-input-search.component';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpResponse} from '@angular/common/http';
@@ -35,9 +34,10 @@ export class BackboneModule {
         body: options.data,
         headers: new HttpHeaders(options.headers),
         params: options.params,
-        url: options.url
+        url: options.url,
+        withCredentials: options.withCredentials
       };
-      requestOption.headers.set('content-type', 'application/json');
+      requestOption.headers.append('content-type', 'application/json');
       return http.request(options.type, options.url, requestOption)
         .toPromise()
         .then(function (resp: any) {
@@ -57,14 +57,6 @@ export class BackboneModule {
 
     const superSync = Backbone.sync;
     Backbone.sync = (method: string, model: Model | Collection<Model>, options?: any) => {
-      // we have to set the flag to wait true otherwise all cases were you want to delete mutliple entries will break
-      // https://github.com/jashkenas/backbone/issues/3534
-      // This flag means that the server has to confirm the creation/deletion before the model will be added/removed to the
-      // collection
-      options = options || {};
-      if (isUndefined(options.wait)) {
-        options.wait = true;
-      }
       // Instead of the response object we are returning the backbone model in the promise
       return superSync.call(Backbone, method, model, options).then(function () {
         return model;

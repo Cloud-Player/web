@@ -1,0 +1,30 @@
+@import 'variables';
+
+:host {
+  .option-btn {
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border-bottom: 1px solid $gray-lighter;
+
+    &:hover {
+      background: $gray-lighter;
+      .fa-queue{
+        &:after{
+          background: $gray-lighter;
+        }
+      }
+    }
+
+    .icon{
+      width: 20px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .fa-queue{
+      &:after{
+        background: white;
+      }
+    }
+  }
+}

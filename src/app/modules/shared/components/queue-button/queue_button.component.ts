@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {Track} from '../../../tracks/models/track';
-import {Tracks} from '../../../tracks/collections/tracks';
 import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {PlayQueue} from '../../../player/collections/play-queue';
+import {ITrack} from '../../../api/tracks/track.interface';
+import {ITracks} from '../../../api/tracks/tracks.interface';
 
 @Component({
   selector: 'app-queue-button',
@@ -12,9 +12,9 @@ import {PlayQueue} from '../../../player/collections/play-queue';
 
 export class QueueButtonComponent {
 
-  @Input() track: Track;
+  @Input() track: ITrack;
 
-  @Input() tracks: Tracks<Track>;
+  @Input() tracks: ITracks<ITrack>;
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
 

@@ -1,0 +1,52 @@
+@import 'variables';
+
+:host {
+  .volume-btn{
+    position: relative;
+
+    /deep/ app-range-slider{
+      width: 60px;
+      position: absolute;
+      left: -19px;
+      top: -49px;
+      z-index: 999;
+    }
+
+    app-range-slider{
+      display: none;
+    }
+  }
+
+  &.is-changing .volume-btn,
+  .volume-btn:hover {
+    app-range-slider{
+      display: block;
+    }
+
+    .btn{
+      background: #e6e5e5;
+    }
+
+    &:after{
+      content: "";
+      position: absolute;
+      height: 70px;
+      background: $light-white;
+      width: 22px;
+      top: -72px;
+      left: 0;
+      z-index: 998;
+      box-shadow: 0 0 2px rgba(0,0,0,0.1);
+    }
+
+    &:before{
+      content: "";
+      position: absolute;
+      height: 77px;
+      width: 26px;
+      top: -75px;
+      left: -2px;
+      z-index: 998;
+    }
+  }
+}

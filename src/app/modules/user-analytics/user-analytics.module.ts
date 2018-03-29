@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {UserAnalyticsService} from './services/user-analytics.service';
 import {GoogleAnalyticsTrackingProvider} from './models/google-analytics-tracking-provider.model';
-import {NavigationEnd, Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @NgModule({
   providers: [UserAnalyticsService]

@@ -1,13 +1,12 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Session} from '../../../session/models/session.model';
-import {AuthenticatedUser} from '../../../session/models/authenticated_user.model';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {ToastService} from '../../../shared/services/toast';
 import {ToastModel} from '../../../shared/models/toast';
 import {ToastTypes} from '../../../shared/src/toast-types.enum';
 import {NativeAppHandlerService} from '../../../native-app/services/native-app-handler';
-
-const packageJSON = require('../../../../../../package.json');
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {ClientDetector} from '../../../shared/services/client-detector.service';
 
 @Component({
   selector: 'app-cloud-player',
@@ -17,38 +16,31 @@ const packageJSON = require('../../../../../../package.json');
 })
 
 export class MainComponent implements OnInit {
-  private isAuthenticated = false;
-  private session: Session;
-
-  public version = packageJSON.version;
+  private _authenticatedUser: AuthenticatedUserModel;
 
   constructor(private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
               private toastService: ToastService) {
-    this.session = Session.getInstance();
+    this._authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
-  private setAuthenticated(user: AuthenticatedUser) {
-    if (user.authenticated) {
-      user.fetch().then(() => {
-        this.isAuthenticated = true;
-        user.likes.fetch();
-      });
-    } else {
-      this.isAuthenticated = false;
-    }
+  private onNewVersionAvailable() {
+    const toast = new ToastModel();
+    toast.title = 'Cloud-Player has been updated';
+    toast.message = 'Restart Cloud-Player to get the latest version';
+    toast.type = ToastTypes.Primary;
+    toast.icon = 'fa fa-rocket';
+    toast.buttonAction = () => {
+      this.userAnalyticsService.trackEvent('restart_app', 'new_version', 'app-cloud-player');
+      location.reload(true);
+    };
+    toast.buttonLabel = 'Restart Cloud-Player';
+
+    this.toastService.addToast(toast);
   }
 
   ngOnInit(): void {
-    this.session.user.on('change:authenticated', (user: AuthenticatedUser) => {
-      this.setAuthenticated(user);
-    });
-
-    if (this.session.isValid()) {
-      this.setAuthenticated(this.session.user);
-    }
-
-    // Handle native client started event that is triggered by the native Cloud Player app
+    // Handle native client started event that is triggered by the native Cloud-Player app
     window.addEventListener('startNativeClient', (event: CustomEvent) => {
       const clientDetails: { version: number, platform: string } = event.detail;
       document.querySelector('body').classList.add('native', 'desktop', clientDetails.platform);
@@ -56,22 +48,11 @@ export class MainComponent implements OnInit {
         version: event.detail.version,
         platform: event.detail.platform
       });
-      window.dispatchEvent(new Event('clientReady'));
+
     });
 
     // Handle service worker update
-    window.addEventListener('newAppVersionAvailable', (event: CustomEvent) => {
-      const toast = new ToastModel();
-      toast.title = 'Cloud Player has been updated';
-      toast.type = ToastTypes.Primary;
-      toast.icon = 'fa fa-rocket';
-      toast.buttonAction = () => {
-        location.reload(true);
-      };
-      toast.buttonLabel = 'Restart Cloud Player';
-
-      this.toastService.addToast(toast);
-    });
+    window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable.bind(this));
 
     // FIXME DEPRECATED For backwards compatibility where the native client does not trigger the event
     setTimeout(() => {
@@ -89,5 +70,17 @@ export class MainComponent implements OnInit {
         window.dispatchEvent(nativeClientStartEvent);
       }
     }, 2000);
+
+    const cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel = <AuthenticatedUserAccountCloudplayerModel>this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
+    if (cloudPlayerAccount) {
+      cloudPlayerAccount.once('change:id', () => {
+        cloudPlayerAccount.favouriteTracks.fetch();
+        cloudPlayerAccount.createSession({
+          browser: `${ClientDetector.getClient().name}`,
+          os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
+          screenSize: '100'
+        });
+      });
+    }
   }
 }
