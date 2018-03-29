@@ -48,7 +48,7 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
     if (!this.hasLikedTrack()) {
       this._favouriteTracksPerProvider.forEach((favouriteTracks: IFavouriteTracks) => {
         const favouriteTrack = favouriteTracks.items.add({
-          track: this.track
+          track: this.track.clone()
         });
         favouriteTrack.save().then(() => {
           this.userAnalyticsService.trackEvent(

@@ -116,7 +116,7 @@ export class NavComponent implements OnInit {
     const track = <ITrack>dragAndDrop.dragData;
     const playlist = <IPlaylist>dragAndDrop.dropReference;
     if (track && playlist) {
-      const playlistItem = playlist.items.add({track: track});
+      const playlistItem = playlist.items.add({track: track.clone()});
       playlistItem.save().then(
         () => {
           this.userAnalyticsService.trackEvent(
