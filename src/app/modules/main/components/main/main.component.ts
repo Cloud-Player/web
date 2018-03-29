@@ -75,12 +75,12 @@ export class MainComponent implements OnInit {
     if (cloudPlayerAccount) {
       cloudPlayerAccount.once('change:id', () => {
         cloudPlayerAccount.favouriteTracks.fetch();
+        cloudPlayerAccount.createSession({
+          browser: `${ClientDetector.getClient().name}`,
+          os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
+          screenSize: '100'
+        });
       });
     }
-    cloudPlayerAccount.createSession({
-      browser: `${ClientDetector.getClient().name}`,
-      os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
-      screenSize: '100'
-    });
   }
 }
