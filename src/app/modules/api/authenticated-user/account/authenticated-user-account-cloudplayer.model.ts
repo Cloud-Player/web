@@ -64,7 +64,7 @@ export class AuthenticatedUserAccountCloudplayerModel
     return attributes;
   }
 
-  isConnected(){
+  isConnected() {
     return this.connected && !this.isNew();
   }
 }
