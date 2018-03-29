@@ -1,3 +1,24 @@
+# v5.0.0
+## Features
+- Integrate Cloud-Player API (Fix [#58](https://github.com/Cloud-Player/web/issues/58), [#63](https://github.com/Cloud-Player/web/issues/63), [#66](https://github.com/Cloud-Player/web/issues/66))
+  - Create playlists for mixed tracks
+  - Favourite tracks independently of the streaming service provider
+  - Connect with streaming service providers (SoundCloud, YouTube) to synchronise liked tracks and playlists
+- Add modal to add tracks to playlists
+- Add context menu so you can right click on tracks
+- Add button to shuffle playqueue (Fix [#62](https://github.com/Cloud-Player/web/issues/62))
+- Add button to loop playqueue
+- Add button to set player volume
+
+## Improvements
+- Improve performance 
+  - Use css animations for logo instead of svg animations for GPU acceleration
+  - Use Angular OnPush detection strategy for some components
+  - Listen to performance intensive events like scroll outside of ngZone
+- Improve style  
+- Support fullscreen for all major browsers instead of Chrome only
+- Improve drag and drop
+
 # v4.1.1
 - Fix fullscreen mode for native player
 - Display timer in fullscreen player
