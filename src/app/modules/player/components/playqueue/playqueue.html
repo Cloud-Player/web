@@ -20,11 +20,11 @@
         <div class="track">
           <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
           <div class="details"
-               [class.dummy]="!playQueueItem.track.artist.getFullName()">
+               [class.dummy]="!playQueueItem.track.artist.getFullName() && !playQueueItem.track.title">
             <div style="display: flex; align-items: center">
               <b class="title"
                  style="flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;">
-                {{playQueueItem.track.title || 'None'}}
+                {{playQueueItem.track.title}}
               </b>
             </div>
             <div class="artist">{{playQueueItem.track.artist.getFullName()}}</div>
@@ -67,9 +67,9 @@
             <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
           </div>
           <div class="details"
-               [class.dummy]="!playQueueItem.track.artist.getFullName()">
+               [class.dummy]="!playQueueItem.track.artist.getFullName() && !playQueueItem.track.title">
             <b class="title">
-              {{playQueueItem.track.title || 'None'}}
+              {{playQueueItem.track.title}}
             </b>
             <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
             <div class="stats">
