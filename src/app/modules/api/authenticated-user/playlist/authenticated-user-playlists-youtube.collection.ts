@@ -12,4 +12,7 @@ export class AuthenticatedUserPlaylistsYoutubeCollection<TModel extends Authenti
 
   @queryParam()
   public mine = 'true';
+
+  @queryParam()
+  public limit = 50;
 }
