@@ -17,7 +17,7 @@ export enum OsNames {
   SunOs = 'SunOS',
   Linux = 'Linux',
   iOS = 'iOS',
-  MacOs = 'MacOs',
+  MacOs = 'macOS',
   QNX = 'QNX',
   UNIX = 'Unix',
   BeOS = 'BeOS',
