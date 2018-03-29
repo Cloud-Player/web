@@ -106,8 +106,23 @@ export class NavComponent implements OnInit {
         accMapValue.tmpPlaylistModel.accountId = this.authenticatedUser.id;
       }
       if (accMapValue.tmpPlaylistModel.title.length > 0) {
-        account.playlists.create(accMapValue.tmpPlaylistModel.clone());
-        accMapValue.tmpPlaylistModel.clear();
+        const newPlaylist: IPlaylist = account.playlists.add(accMapValue.tmpPlaylistModel.clone(), {at: 0});
+        newPlaylist.save().then(
+          () => {
+            this.userAnalyticsService.trackEvent(
+              'playlist',
+              `create:${accMapValue.tmpPlaylistModel.provider}`,
+              'app-nav-sidebar');
+            accMapValue.tmpPlaylistModel.title = '';
+            this.update();
+          },
+          () => {
+            this.userAnalyticsService.trackEvent(
+              'playlist',
+              `create_error:${accMapValue.tmpPlaylistModel.provider}`,
+              'app-nav-sidebar');
+          }
+        );
       }
     }
   }
