@@ -127,21 +127,14 @@
   <app-empty-state
     *ngIf="showDragAndDropHelp"
     class="drag-and-drop-help"
-    title="Drop track here to add it"
+    title="Drop track here to queue it"
     icon="fa fa-queue">
   </app-empty-state>
 
   <app-empty-state
-    *ngIf="!hasScheduledItems() && playQueue.getQueuedItems().length === 0 && !playQueue.getCurrentItem()"
+    *ngIf="!hasScheduledItems() && playQueue.getQueuedItems().length === 0"
     class="no-items"
-    title="No tracks are in the play queue"
-    icon="fa fa-queue">
-  </app-empty-state>
-
-  <app-empty-state
-    *ngIf="!hasScheduledItems() && playQueue.getQueuedItems().length === 0 && playQueue.getCurrentItem()"
-    class="no-items"
-    title="No more tracks in the play queue"
+    title="Your play queue is empty"
     icon="fa fa-queue">
   </app-empty-state>
 

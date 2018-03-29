@@ -41,7 +41,7 @@
       <app-empty-state *ngIf="account.isConnected() && !account.playlists.isSyncing && account.playlists.length === 0"
                        title="You have not created a playlist yet"
                        icon="fa fa-list-alt"
-                       ctaText="Create Playlist"
+                       ctaText="Create playlist"
                        (ctaClick)="createNewPlaylist()">
       </app-empty-state>
 
