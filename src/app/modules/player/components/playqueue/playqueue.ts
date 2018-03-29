@@ -62,16 +62,36 @@ export class PlayQueueComponent implements OnInit {
   public toggleShuffle() {
     if (this.playQueue.isShuffled()) {
       this.playQueue.deShuffle();
+      this.userAnalyticsService.trackEvent(
+        'playqueue',
+        'un_shuffle',
+        'app-play-queue'
+      );
     } else {
       this.playQueue.shuffle();
+      this.userAnalyticsService.trackEvent(
+        'playqueue',
+        'shuffle',
+        'app-play-queue'
+      );
     }
   }
 
   public toggleLoop() {
     if (this.playQueue.isLooped()) {
       this.playQueue.setLoopPlayQueue(false);
+      this.userAnalyticsService.trackEvent(
+        'playqueue',
+        'un_loop_queue',
+        'app-play-queue'
+      );
     } else {
       this.playQueue.setLoopPlayQueue(true);
+      this.userAnalyticsService.trackEvent(
+        'playqueue',
+        'loop_queue',
+        'app-play-queue'
+      );
     }
   }
 
@@ -79,6 +99,11 @@ export class PlayQueueComponent implements OnInit {
     this.playQueue.getQueuedItems().forEach((item) => {
       this.playQueue.remove(item);
     });
+    this.userAnalyticsService.trackEvent(
+      'playqueue',
+      'reset_queued_tracks',
+      'app-play-queue'
+    );
   }
 
   public removeScheduledItems() {
@@ -87,6 +112,11 @@ export class PlayQueueComponent implements OnInit {
     }).forEach((item) => {
       this.playQueue.remove(item);
     });
+    this.userAnalyticsService.trackEvent(
+      'playqueue',
+      'reset_scheduled_tracks',
+      'app-play-queue'
+    );
   }
 
   public hasScheduledItems() {
