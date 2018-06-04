@@ -8,7 +8,8 @@ import {IFavouriteTrackItems} from '../../../api/favourite-tracks/favourite-trac
 import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-item.interface';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {ExternalUserAuthenticator, ExternalUserConnectState} from '../../services/external-authenticator.class';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-favourite-tracks-view',
@@ -89,7 +90,9 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
     const authSubscription = this.externalUserAuthenticator.getObservable()
-      .filter(state => state === ExternalUserConnectState.Success)
+      .pipe(
+        filter(state => state === ExternalUserConnectState.Success)
+      )
       .subscribe(() => {
         this._selectedAccount.favouriteTracks.items.singletonFetch();
       });

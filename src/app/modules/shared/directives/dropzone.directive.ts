@@ -1,6 +1,7 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../services/drag-and-drop';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
+import {filter} from 'rxjs/internal/operators';
 
 @Directive({
   selector: '[appDropzone]'
@@ -92,14 +93,18 @@ export class DropZoneDirective implements OnInit, OnDestroy {
     );
 
     this.dragAndDropService.getObservable()
-      .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
+      .pipe(
+        filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
+      )
       .subscribe(() => {
         for (let i = 0; i < this.el.nativeElement.children.length; i++) {
           this.el.nativeElement.children[i].style.pointerEvents = 'none';
         }
       });
     this.dragAndDropService.getObservable()
-      .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
+      .pipe(
+        filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
+      )
       .subscribe(() => {
         for (let i = 0; i < this.el.nativeElement.children.length; i++) {
           this.el.nativeElement.children[i].style.pointerEvents = 'initial';

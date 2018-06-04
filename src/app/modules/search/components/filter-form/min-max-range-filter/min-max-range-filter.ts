@@ -2,6 +2,7 @@ import {AfterContentInit, Component, Input, ViewChild} from '@angular/core';
 import {NgControl} from '@angular/forms';
 import {FilterFormComponent, FilterFormStatusTypes} from '../filter-form';
 import {ITwoRangeSliderValue} from '../../../../shared/components/two-range-slider/two-range-slider.component';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-min-max-range-filter',
@@ -52,7 +53,9 @@ export class MinMaxRangeFilterComponent implements AfterContentInit {
     });
 
     this.filterForm.status
-      .filter(ev => ev === FilterFormStatusTypes.Reset)
+      .pipe(
+        filter(ev => ev === FilterFormStatusTypes.Reset)
+      )
       .subscribe(() => {
         this.value.min = <number>this.filterForm.collection.queryParams[this.minFilterProperty];
         this.value.max = <number>this.filterForm.collection.queryParams[this.maxFilterProperty];

@@ -1,11 +1,10 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import {Observable, of, Subject, Subscription} from 'rxjs';
 import {BaseCollection} from '../../../backbone/collections/base.collection';
 import {BaseModel} from '../../../backbone/models/base.model';
 import {ClientDetector} from '../../services/client-detector.service';
-import {Subscription} from 'rxjs/Subscription';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-collection-text-input-search',
@@ -43,18 +42,22 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
 
     this.searchTermsSubscription =
       this.searchTerms
-        .debounceTime(600)        // wait for 300ms pause in events
-        .distinctUntilChanged()   // ignore if next search term is same as previous
-        .switchMap(term => {
-          if (term) {
-            this.collection.queryParams[this.queryParam] = term;
-          } else {
-            this.collection.queryParams[this.queryParam] = null;
-          }
-          this.collection.fetch({reset: true});
-          this.valueChange.emit(term);
-          return Observable.of<BaseCollection<BaseModel>>(this.collection);
-        }).subscribe();
+        .pipe(
+          debounceTime(600),        // wait for 300ms pause in events
+          distinctUntilChanged(),   // ignore if next search term is same as previous
+          switchMap(term => {
+              if (term) {
+                this.collection.queryParams[this.queryParam] = term;
+              } else {
+                this.collection.queryParams[this.queryParam] = null;
+              }
+              this.collection.fetch({reset: true});
+              this.valueChange.emit(term);
+              return of<BaseCollection<BaseModel>>(this.collection);
+            }
+          )
+        )
+        .subscribe();
 
     if (collection.queryParams[this.queryParam] !== this.query) {
       this.collection.reset();

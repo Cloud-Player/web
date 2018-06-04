@@ -1,6 +1,6 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Type, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from '../components/modal/modal/modal';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 export enum ModalStates {
   Initalised,

@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Utils} from '../src/utils.class';
 
 export enum FullScreenEventType {

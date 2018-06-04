@@ -1,7 +1,8 @@
 import {ComponentFactoryResolver, Injectable, Type, ViewContainerRef} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {Modal, ModalFactory, ModalStates} from '../src/modal-factory.class';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
+import {filter} from 'rxjs/internal/operators';
 
 export enum ModalServiceStates {
   ModalVisbile,
@@ -53,7 +54,9 @@ export class ModalService {
 
   public bindModalListener<TComponent>(modal: Modal<TComponent>) {
     modal.getObservable()
-      .filter(ev => ev === ModalStates.Opened)
+      .pipe(
+        filter(ev => ev === ModalStates.Opened)
+      )
       .subscribe(() => {
         this.addToStack(modal);
         this._subject.next(ModalServiceStates.ModalAdded);
@@ -63,7 +66,9 @@ export class ModalService {
         this.userAnalyticsService.trackEvent('modal', `open_${modal.getTitle()}`, 'ModalService');
       });
     modal.getObservable()
-      .filter(ev => ev === ModalStates.Closed)
+      .pipe(
+        filter(ev => ev === ModalStates.Closed)
+      )
       .subscribe(() => {
         this.removeFromStack(modal);
         this._subject.next(ModalServiceStates.ModalRemoved);

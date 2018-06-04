@@ -2,7 +2,7 @@ import {AuthenticatedUserModel} from '../../api/authenticated-user/authenticated
 import {IAuthenticatedUserAccount} from '../../api/authenticated-user/account/authenticated-user-account.interface';
 import {Injectable} from '@angular/core';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 export enum ExternalUserConnectState {
   Start,

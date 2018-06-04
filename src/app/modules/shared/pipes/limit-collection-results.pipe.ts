@@ -1,6 +1,6 @@
 import {EventEmitter, NgZone, OnDestroy, Pipe, PipeTransform} from '@angular/core';
 import {debounce} from 'underscore';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Pipe({name: 'limitCollectionresults', pure: false})
 export class LimitCollectionresultsPipe implements PipeTransform, OnDestroy {

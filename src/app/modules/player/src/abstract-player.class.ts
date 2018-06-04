@@ -1,10 +1,11 @@
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {isNumber, isString, throttle} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
 import {EaseService} from '../../shared/services/ease.service';
 import {IPlayerOptions, IPlayerSize} from './player.interface';
 import {ITrack} from '../../api/tracks/track.interface';
+import {filter} from 'rxjs/internal/operators';
 
 export abstract class AbstractPlayer implements OnInit {
   private _duration: number;
@@ -226,7 +227,9 @@ export abstract class AbstractPlayer implements OnInit {
           this._subscriptionsPerState[requiredStatus] = null;
         } else {
           const subscription = this.statusChange
-            .filter(newState => newState === requiredStatus)
+            .pipe(
+              filter(newState => newState === requiredStatus)
+            )
             .subscribe(() => {
               resolve();
               subscription.unsubscribe();

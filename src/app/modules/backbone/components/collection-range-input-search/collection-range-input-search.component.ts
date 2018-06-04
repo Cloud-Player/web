@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import {Observable, of, Subject} from 'rxjs';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-collection-range-input-search',
@@ -27,15 +27,18 @@ export class CollectionRangeInputSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchTerms
-      .debounceTime(300)        // wait for 300ms pause in events
-      .distinctUntilChanged()   // ignore if next search term is same as previous
-      .switchMap(term => {
-        if (term) {
-          this.collection.queryParams[this.queryParam] = term;
-          this.collection.fetch({reset: true});
-          return Observable.of<BaseCollection<BaseModel>>(this.collection);
-        }
-      }).toPromise();
+      .pipe(
+        debounceTime(300), // wait for 300ms pause in events
+        distinctUntilChanged(),
+        switchMap(term => {
+          if (term) {
+            this.collection.queryParams[this.queryParam] = term;
+            this.collection.fetch({reset: true});
+            return of<BaseCollection<BaseModel>>(this.collection);
+          }
+        })
+      )
+      .toPromise();
 
     this.query = <string>this.collection.queryParams[this.queryParam];
   }

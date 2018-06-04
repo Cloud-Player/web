@@ -9,6 +9,7 @@ import {PlayQueueItem} from '../../models/play-queue-item';
 import {PlayerManagerComponent} from '../player-manager/player-manager';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {LayoutService, WindowElementTypes} from '../../../shared/services/layout';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-player',
@@ -136,11 +137,15 @@ export class PlayerComponent implements OnInit {
     this.playQueue.on('change:progress', throttledProgressUpdate);
 
     this.fullScreenService.getObservable()
-      .filter(eventType => eventType === FullScreenEventType.Enter)
+      .pipe(
+        filter(eventType => eventType === FullScreenEventType.Enter)
+      )
       .subscribe(this.enteredFullScreen.bind(this));
 
     this.fullScreenService.getObservable()
-      .filter(eventType => eventType === FullScreenEventType.Leave)
+      .pipe(
+        filter(eventType => eventType === FullScreenEventType.Leave)
+      )
       .subscribe(this.leftFullScreen.bind(this));
   }
 }

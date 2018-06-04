@@ -1,7 +1,7 @@
 import {Injectable, NgZone} from '@angular/core';
 import {debounce, isString} from 'underscore';
 import {Utils} from '../src/utils.class';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 export enum LayoutChangeTypes {
   windowSizeChange,

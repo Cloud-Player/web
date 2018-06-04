@@ -4,7 +4,7 @@ import {PlayQueue} from '../../collections/play-queue';
 import {PlayQueueItem} from '../../models/play-queue-item';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {debounce} from 'underscore';
 
 @Component({
