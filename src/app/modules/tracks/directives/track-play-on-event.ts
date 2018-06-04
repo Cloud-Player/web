@@ -3,7 +3,7 @@ import {PlayQueue} from '../../player/collections/play-queue';
 import {PlayQueueItem} from '../../player/models/play-queue-item';
 import {ITrack} from '../../api/tracks/track.interface';
 import {ITracks} from '../../api/tracks/tracks.interface';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ToastService} from '../../shared/services/toast';
 import {ToastModel} from '../../shared/models/toast';
 import {ToastTypes} from '../../shared/src/toast-types.enum';

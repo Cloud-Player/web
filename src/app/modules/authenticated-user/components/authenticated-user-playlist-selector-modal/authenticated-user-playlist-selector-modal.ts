@@ -4,7 +4,7 @@ import {AuthenticatedUserModel} from '../../../api/authenticated-user/authentica
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
 import {TabPaneComponent} from '../../../shared/components/tab-pane/tab-pane';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {IModal, IModalComponent, IModalOptions} from '../../../shared/src/modal.interface';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';

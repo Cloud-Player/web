@@ -4,6 +4,7 @@ import {Toasts} from '../../collections/toasts';
 import {ToastModel} from '../../models/toast';
 import {LayoutChangeTypes, LayoutService, WindowElementTypes} from '../../services/layout';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-toasts',
@@ -31,7 +32,9 @@ export class ToastsComponent implements OnInit {
   ngOnInit(): void {
     this.toasts = this.toastService.getToasts();
     this.layoutService.getObservable()
-      .filter(ev => ev.changeType === LayoutChangeTypes.windowElementChange)
+      .pipe(
+        filter(ev => ev.changeType === LayoutChangeTypes.windowElementChange)
+      )
       .subscribe((ev) => {
         if (this.layoutService.hasWindowElement(WindowElementTypes.MusicPlayer)) {
           this.el.nativeElement.classList.add('music-player-active');

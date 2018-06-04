@@ -7,6 +7,7 @@ import {PlayQueue} from '../../collections/play-queue';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {AbstractImageModel} from '../../../api/image/abstract-image';
+import {filter} from 'rxjs/internal/operators';
 
 declare let MediaMetadata: any;
 
@@ -198,11 +199,15 @@ export class PlayerControlsComponent implements OnInit {
     });
 
     this.fullScreenService.getObservable()
-      .filter(eventType => eventType === FullScreenEventType.Enter)
+      .pipe(
+        filter(eventType => eventType === FullScreenEventType.Enter)
+      )
       .subscribe(this.enteredFullScreen.bind(this));
 
     this.fullScreenService.getObservable()
-      .filter(eventType => eventType === FullScreenEventType.Leave)
+      .pipe(
+        filter(eventType => eventType === FullScreenEventType.Leave)
+      )
       .subscribe(this.leftFullScreen.bind(this));
   }
 

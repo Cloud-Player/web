@@ -10,7 +10,7 @@ import {
   Renderer2,
   ViewChild
 } from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {debounce} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 

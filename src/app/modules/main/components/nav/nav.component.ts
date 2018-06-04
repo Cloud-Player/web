@@ -17,6 +17,7 @@ import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {LayoutChangeTypes, LayoutService} from '../../../shared/services/layout';
 import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
+import {filter} from 'rxjs/internal/operators';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -198,10 +199,13 @@ export class NavComponent implements OnInit {
     });
     this.authenticatedUser.fetch();
     this.dragAndDropService.getObservable()
-      .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
+      .pipe(
+        filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
+      )
       .subscribe(this.dragStart.bind(this));
-    this.dragAndDropService.getObservable()
-      .filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
+    this.dragAndDropService.getObservable().pipe(
+        filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
+      )
       .subscribe(this.dragEnd.bind(this));
 
     const debouncedLayoutChange = debounce(() => {

@@ -1,5 +1,5 @@
 import {EventEmitter} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ITrack} from '../../api/tracks/track.interface';
 
 export interface IPlayerSize {

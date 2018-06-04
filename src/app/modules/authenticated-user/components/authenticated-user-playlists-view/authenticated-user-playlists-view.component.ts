@@ -10,7 +10,8 @@ import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.
 import {PlayQueue} from '../../../player/collections/play-queue';
 import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {ExternalUserAuthenticator, ExternalUserConnectState} from '../../services/external-authenticator.class';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-authenticated-user-playlists-view',
@@ -64,7 +65,9 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
   ngOnInit(): void {
     this.selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
     const authSubscription = this.externalUserAuthenticator.getObservable()
-      .filter(state => state === ExternalUserConnectState.Success)
+      .pipe(
+        filter(state => state === ExternalUserConnectState.Success)
+      )
       .subscribe(() => {
         this.selectedAccount.playlists.fetch();
       });

@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, OnDestroy, Output, Renderer2, ViewChild} from '@angular/core';
 import {OptionBtnComponent} from '../option-btn/option-btn';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-options-btn',

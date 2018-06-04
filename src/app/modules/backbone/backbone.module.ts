@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import 'rxjs/add/operator/toPromise';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {Collection, Model} from 'backbone';

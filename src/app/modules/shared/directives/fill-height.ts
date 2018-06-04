@@ -1,8 +1,9 @@
 import {AfterContentInit, Directive, ElementRef, Input, OnDestroy, Optional} from '@angular/core';
 import {LayoutChangeTypes, LayoutService, WindowBreakPointTypes, WindowElementTypes} from '../services/layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ModalService} from '../services/modal';
 import {ModalComponent} from '../components/modal/modal/modal';
+import {filter} from 'rxjs/internal/operators';
 
 @Directive({
   selector: '[appFillHeight]'
@@ -56,16 +57,20 @@ export class FillHeightDirective implements AfterContentInit, OnDestroy {
     this.setHeight();
     this._subscription.add(
       this.layoutService.getObservable()
-        .filter((ev) => {
-          return ev.changeType === LayoutChangeTypes.windowBreakpointChange;
-        })
+        .pipe(
+          filter((ev) => {
+            return ev.changeType === LayoutChangeTypes.windowBreakpointChange;
+          })
+        )
         .subscribe(this.setHeight.bind(this))
     );
     this._subscription.add(
       this.layoutService.getObservable()
-        .filter((ev) => {
-          return ev.changeType === LayoutChangeTypes.windowElementChange;
-        })
+        .pipe(
+          filter((ev) => {
+            return ev.changeType === LayoutChangeTypes.windowElementChange;
+          })
+        )
         .subscribe((ev) => {
           this.setHeight();
         })

@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 
 @Component({

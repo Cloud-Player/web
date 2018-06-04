@@ -2,6 +2,7 @@ import {Component, ComponentFactoryResolver, ElementRef, OnDestroy, OnInit, View
 import {ModalService, ModalServiceStates} from '../../../services/modal';
 import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
 import {LayoutService, WindowElementTypes} from '../../../services/layout';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-modal-holder',
@@ -51,11 +52,15 @@ export class ModalHolderComponent implements OnInit, OnDestroy {
     this.modalService.init(this.resolver, this._container);
 
     this.modalService.getObservable()
-      .filter(ev => ev === ModalServiceStates.ModalVisbile)
+      .pipe(
+        filter(ev => ev === ModalServiceStates.ModalVisbile)
+      )
       .subscribe(this.onFirstModalBecameVisible.bind(this));
 
     this.modalService.getObservable()
-      .filter(ev => ev === ModalServiceStates.NoModalVisible)
+      .pipe(
+        filter(ev => ev === ModalServiceStates.NoModalVisible)
+      )
       .subscribe(this.onNoMoreModalVisible.bind(this));
   }
 

@@ -1,6 +1,7 @@
 import {AfterContentInit, Input} from '@angular/core';
 import {FilterFormComponent, FilterFormStatusTypes} from '../filter-form';
 import {NgControl} from '@angular/forms';
+import {filter} from 'rxjs/internal/operators';
 
 export abstract class AbstractFilterComponent implements AfterContentInit {
   protected abstract ngControl: NgControl;
@@ -22,7 +23,9 @@ export abstract class AbstractFilterComponent implements AfterContentInit {
     });
 
     this.filterForm.status
-      .filter(ev => ev === FilterFormStatusTypes.Reset)
+      .pipe(
+        filter(ev => ev === FilterFormStatusTypes.Reset)
+      )
       .subscribe(() => {
         this.value = this.filterForm.collection.queryParams[this.filterProperty];
         this.ngControl.valueAccessor.writeValue(this.value);

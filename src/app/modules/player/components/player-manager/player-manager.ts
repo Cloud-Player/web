@@ -10,7 +10,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {PlayerStatus} from '../../src/player-status.enum';
 import {IPlayer} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -22,6 +22,7 @@ import {UserAnalyticsService} from '../../../user-analytics/services/user-analyt
 import {EaseService} from '../../../shared/services/ease.service';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {ITrack} from '../../../api/tracks/track.interface';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-player-manager',
@@ -134,11 +135,13 @@ export class PlayerManagerComponent implements OnInit {
 
     this._playerSubscriptions.add(
       player.currentTimeChange
-        .filter((currentTime: number) => {
-          if (player.getDuration()) {
-            return currentTime >= (player.getDuration() - this._prepareTime);
-          }
-        })
+        .pipe(
+          filter((currentTime: number) => {
+            if (player.getDuration()) {
+              return currentTime >= (player.getDuration() - this._prepareTime);
+            }
+          })
+        )
         .subscribe(currentTime => {
           this.prepareNextPlayer();
         })
@@ -146,13 +149,15 @@ export class PlayerManagerComponent implements OnInit {
 
     const crossFadeSubscription = this._playerSubscriptions.add(
       player.currentTimeChange
-        .filter(currentTime => {
-          if (player.getDuration() > this._fadeDuration) {
-            return currentTime >= player.getDuration() - this._fadeDuration;
-          } else {
-            return false;
-          }
-        })
+        .pipe(
+          filter(currentTime => {
+            if (player.getDuration() > this._fadeDuration) {
+              return currentTime >= player.getDuration() - this._fadeDuration;
+            } else {
+              return false;
+            }
+          })
+        )
         .subscribe(() => {
           crossFadeSubscription.unsubscribe();
           this.crossFade();
@@ -385,11 +390,15 @@ export class PlayerManagerComponent implements OnInit {
     });
 
     this.fullScreenService.getObservable()
-      .filter(eventType => eventType === FullScreenEventType.Enter)
+      .pipe(
+        filter(eventType => eventType === FullScreenEventType.Enter)
+      )
       .subscribe(this.enteredFullScreen.bind(this));
 
     this.fullScreenService.getObservable()
-      .filter(eventType => eventType === FullScreenEventType.Leave)
+      .pipe(
+        filter(eventType => eventType === FullScreenEventType.Leave)
+      )
       .subscribe(this.leftFullScreen.bind(this));
   }
 }
