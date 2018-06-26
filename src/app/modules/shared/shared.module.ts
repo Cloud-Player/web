@@ -50,6 +50,7 @@ import {AddToQueueOptionComponent} from './components/option-btn/add-to-queue-op
 import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playlist-option/add-to-playlist-option';
 import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-option/shuffle-play-option';
 import {ListFooterComponent} from './components/list-footer/list-footer';
+import {AlertBoxComponent} from './components/alert/alert-box';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import {ListFooterComponent} from './components/list-footer/list-footer';
     BackboneModule
   ],
   declarations: [
+    AlertBoxComponent,
     CloudPlayerLogoComponent,
     CollectionTextInputSearchComponent,
     CollapsibleComponent,
@@ -104,6 +106,7 @@ import {ListFooterComponent} from './components/list-footer/list-footer';
     LimitCollectionresultsPipe
   ],
   exports: [
+    AlertBoxComponent,
     CloudPlayerLogoComponent,
     CollectionTextInputSearchComponent,
     CollapsibleComponent,

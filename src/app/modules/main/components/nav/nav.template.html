@@ -21,42 +21,51 @@
           icon="fa fa-desktop">
         </app-nav-item>
 
-        <app-nav-divider title="Account"></app-nav-divider>
+        <div class="account" *ngIf="cloudPlayerAccount.isConnected()">
+          <app-nav-divider title="Account"></app-nav-divider>
+
+          <app-nav-item
+            *ngIf="!cloudPlayerAccount.image.getSmallSizeUrl()"
+            class="user"
+            link="/me"
+            [exact]="true"
+            [title]="cloudPlayerAccount.getFullName()"
+            icon="fa fa-user">
+          </app-nav-item>
+
+          <app-nav-item
+            *ngIf="cloudPlayerAccount.image.getSmallSizeUrl()"
+            class="user"
+            link="/me"
+            [exact]="true"
+            [title]="cloudPlayerAccount.getFullName()"
+            [image]="cloudPlayerAccount.image.getSmallSizeUrl()">
+          </app-nav-item>
+
+          <app-nav-item
+            link="/me/likes"
+            title="Likes"
+            icon="fa fa-heart">
+          </app-nav-item>
+
+          <app-nav-item
+            class="visible-xs visible-sm"
+            link="/me/playlists"
+            title="Playlists"
+            icon="fa fa-list-alt">
+          </app-nav-item>
+        </div>
 
         <app-nav-item
-          *ngIf="!cloudPlayerAccount.image.getSmallSizeUrl()"
-          class="user"
-          link="/me"
-          [exact]="true"
-          [title]="cloudPlayerAccount.getFullName()"
-          icon="fa fa-user">
+          *ngIf="!cloudPlayerAccount.isConnected()"
+          title="Update Privacy Settings"
+          icon="fa fa-user secret"
+          (click)="openPrivacySettings()">
         </app-nav-item>
 
-        <app-nav-item
-          *ngIf="cloudPlayerAccount.image.getSmallSizeUrl()"
-          class="user"
-          link="/me"
-          [exact]="true"
-          [title]="cloudPlayerAccount.getFullName()"
-          [image]="cloudPlayerAccount.image.getSmallSizeUrl()">
-        </app-nav-item>
+        <app-nav-divider title="Playlists" *ngIf="cloudPlayerAccount.isConnected()"></app-nav-divider>
 
-        <app-nav-item
-          link="/me/likes"
-          title="Likes"
-          icon="fa fa-heart">
-        </app-nav-item>
-
-        <app-nav-item
-          class="visible-xs visible-sm"
-          link="/me/playlists"
-          title="Playlists"
-          icon="fa fa-list-alt">
-        </app-nav-item>
-
-        <app-nav-divider title="Playlists"></app-nav-divider>
-
-        <div class="playlists">
+        <div class="playlists" *ngIf="cloudPlayerAccount.isConnected()">
           <app-collapsible
             *ngFor="let account of authenticatedUser.accounts.models"
             [title]="availableProviderMap[account.provider].title"
@@ -69,7 +78,7 @@
                 icon="fa fa-user">
               </app-nav-item>
             </div>
-            <div *ngIf="account.isConnected()">
+            <div *ngIf="account.isConnected() && authenticatedUser.canCreateCloudPlayerData()"> <!-- FIXME remove this after migration to new API -->
               <app-nav-input-item
                 icon="fa fa-plus"
                 title="Add new playlist"
@@ -102,7 +111,15 @@
       </nav>
     </div>
 
-    <div class="version">v{{version}}</div>
+    <div class="footer">
+      <span class="version">v{{version}}</span> •
+      <span class="imprint">
+        <a routerLink="/imprint">Imprint</a>
+      </span> •
+      <span class="privacy">
+        <a routerLink="/privacy">Privacy</a>
+      </span>
+    </div>
 
   </div>
 

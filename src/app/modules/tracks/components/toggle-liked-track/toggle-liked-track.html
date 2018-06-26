@@ -1,4 +1,4 @@
-<span class="toggle-liked-track">
+<span class="toggle-liked-track" *ngIf="canLikeTrack()">
   <i class="fa"
      [class.fa-heart]="hasLikedTrack()"
      [class.fa-heart-o]="!hasLikedTrack()"

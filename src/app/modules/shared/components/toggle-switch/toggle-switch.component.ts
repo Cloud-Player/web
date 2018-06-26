@@ -13,6 +13,15 @@ export class ToggleSwitchComponent {
   @Output() valueChange = new EventEmitter();
 
   @Input()
+  required: boolean;
+
+  @Input()
+  enabledIcon = 'fa fa-check';
+
+  @Input()
+  disabledIcon = 'fa fa-times';
+
+  @Input()
   get value(): boolean {
     return this._value;
   }

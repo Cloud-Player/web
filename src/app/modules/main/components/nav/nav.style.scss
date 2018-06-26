@@ -96,13 +96,23 @@
       }
     }
 
-    .version {
+    .footer {
       position: fixed;
       bottom: 0;
       width: inherit;
       color: #cbcbcb;
       background: #efefef;
       padding: 2px 15px;
+      white-space: nowrap;
+
+      a {
+        color: #aaa;
+        text-decoration: underline;
+
+        &:hover {
+          color: $brand-primary;
+        }
+      }
     }
 
     .playlists {
@@ -222,16 +232,21 @@
       }
     }
 
+    .account{
+      display: flex;
+      width: 75%;
+      display: contents;
+    }
+
     .playlists {
       display: none;
     }
 
-    .version {
+    .footer {
       display: none;
     }
 
-    .sidebar,
-    /deep/ app-authenticated-user-playlists {
+    .sidebar {
       min-width: 100%;
       padding: 0;
 

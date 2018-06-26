@@ -1,6 +1,7 @@
 @import 'variables';
 
 :host {
+  display: none;
   .modal-holder {
     width: 100vw;
     display: flex;
@@ -57,6 +58,20 @@
 
       &.visible {
         transform: translateY(0);
+      }
+    }
+  }
+
+  @media (max-width: $screen-sm-max) {
+    .modal-holder{
+      .modal{
+        margin-top: 2vh;
+        width: 96vw;
+        max-height: 96vh;
+
+        .content{
+          max-height: inherit;
+        }
       }
     }
   }

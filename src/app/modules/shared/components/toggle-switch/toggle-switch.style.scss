@@ -10,6 +10,15 @@
     background: white;
     width: 50px;
 
+    &.required {
+      pointer-events: none;
+      cursor: not-allowed;
+      .indicator {
+        background: $gray-light;
+        border-color: $gray-light;
+      }
+    }
+
     .left,
     .right {
       height: 26px;

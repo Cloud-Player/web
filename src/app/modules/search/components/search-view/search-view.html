@@ -7,10 +7,26 @@
     </app-collection-text-input-search>
   </app-view-header>
 
-  <!--<app-social-share-panel-->
-    <!--*ngIf="tracksSoundCloud.length !== 0"-->
-    <!--class="card">-->
-  <!--</app-social-share-panel>-->
+  <div *ngIf="!isConnected"
+       class="card">
+    You are in an anonymous mode.
+    <button class="btn btn-link text-link" (click)="updatePrivacySettings()">Update your Privacy Settings</button>
+    to create playlists and favourite tracks
+  </div>
+
+  <!-- FIXME remove this after migration to new API -->
+  <app-alert-box *ngIf="authenticatedUser.isNotConnectedAndHasData()"
+                 title="Connect your account in order to keep your playlists and favourite tracks"
+                 type="warning">
+    <p>
+      Due to server changes and migrations we are cleaning up our data.
+      Accounts that are not connected with either SoundCloud or YouTube will be removed soon
+    </p>
+    <div class="btn-group">
+      <div class="btn btn-default" (click)="connect('soundcloud')">Connect with SoundCloud</div>
+      <div class="btn btn-default" (click)="connect('youtube')">Connect with YouTube</div>
+    </div>
+  </app-alert-box>
 
   <app-tab-bar #tabBar
                (tabChange)="selectTab($event)"

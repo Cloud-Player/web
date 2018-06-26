@@ -43,6 +43,14 @@ button:focus {
   &:focus {
     outline: 0;
   }
+
+  &.text-link{
+    padding: 0 !important;
+  }
+
+  ~.btn{
+    margin-left: 5px;
+  }
 }
 
 .btn-round {

@@ -1,0 +1,14 @@
+<div class="card alert alert-{{type}}">
+  <div *ngIf="icon" class="icon">
+    <i class="{{icon}}"></i>
+  </div>
+  <div class="message">
+    <div class="header">
+      <h3 *ngIf="title">{{title}}</h3>
+      <div class="closer clickable" (click)="close()">
+        <i class="fa fa-times"></i>
+      </div>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

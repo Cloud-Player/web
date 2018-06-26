@@ -10,6 +10,12 @@ import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {Utils} from '../../../shared/src/utils.class';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {PrivacyManager} from '../../../main/services/privacy-manager';
+import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
+import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
+import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
 
 @Component({
   selector: 'app-search-view',
@@ -26,15 +32,28 @@ export class SearchViewComponent implements AfterViewInit {
   public activeTab = 'soundcloud';
   public availableProviderMap = ProviderMap.map;
   public searchTerm = '';
+  public isConnected = true;
+  public authenticatedUser: AuthenticatedUserModel;
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
 
-  constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe) {
+  constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe,
+              private privacyConfigModalOpener: PrivacyConfigModalOpener,
+              private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
     this.searchCollection = this.tracksSoundCloud;
     this.setRandomSearchTerm();
+    this.authenticatedUser = AuthenticatedUserModel.getInstance();
+  }
+
+  public setIsConnected() {
+    this.isConnected = this.authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected();
+    this.authenticatedUser.accounts.getAccountForProvider('cloudplayer')
+      .on('change:connected', (account: AuthenticatedUserAccountCloudplayerModel) => {
+        this.isConnected = account.isConnected();
+      });
   }
 
   public selectTab(tabPane: TabPaneComponent) {
@@ -84,11 +103,20 @@ export class SearchViewComponent implements AfterViewInit {
     }
   }
 
+  public updatePrivacySettings() {
+    this.privacyConfigModalOpener.open();
+  }
+
   public transformScDurationValue = (value) => {
     if (value) {
       return this.humanReadableSecondsPipe.transform((value / 1000).toString());
     }
   };
+
+  public connect(providerId: string) {
+    const account: IAuthenticatedUserAccount = this.authenticatedUser.accounts.getAccountForProvider(providerId);
+    this.externalUserAuthenticator.connect(account);
+  }
 
   ngAfterViewInit() {
     this.searchBar.focus();
@@ -128,5 +156,7 @@ export class SearchViewComponent implements AfterViewInit {
     this.tracksYoutube.on('sync error', () => {
       this.isFetching = false;
     });
+
+    setTimeout(this.setIsConnected.bind(this), 2000);
   }
 }

@@ -39,17 +39,6 @@ export class PlayerComponent implements OnInit {
   }
 
   private setLastPlayingQueue() {
-    // TODO remove this, only to support backwards compatibility from v4 to v5
-    localforage.getItem('sc_playqueue').then((lastPlayingQueue: Array<any>) => {
-      if (lastPlayingQueue) {
-        lastPlayingQueue.forEach(function (item) {
-          item.track.provider = item.track.provider.toLowerCase();
-        });
-        this.playQueue.add(lastPlayingQueue);
-        localforage.removeItem('sc_playqueue');
-      }
-    });
-
     localforage.getItem('cp_playqueue').then((lastPlayingQueue: Array<any>) => {
       if (lastPlayingQueue) {
         this.playQueue.add(lastPlayingQueue);
@@ -58,17 +47,6 @@ export class PlayerComponent implements OnInit {
   }
 
   private setLastPlayingItem() {
-    // TODO remove this, only to support backwards compatibility from v4 to v5
-    localforage.getItem('sc_currentItem').then((lastPlayingItem: any) => {
-      if (lastPlayingItem) {
-        lastPlayingItem.track.provider = lastPlayingItem.track.provider.toLowerCase();
-        lastPlayingItem.status = PlayQueueItemStatus.Paused;
-        const item = this.playQueue.add(lastPlayingItem, {at: 0});
-        localforage.setItem('cp_currentItem', item.toMiniJSON());
-        localforage.removeItem('sc_currentItem');
-      }
-    });
-
     localforage.getItem('cp_currentItem').then((lastPlayingItem: any) => {
       if (lastPlayingItem) {
         lastPlayingItem.status = PlayQueueItemStatus.Paused;
