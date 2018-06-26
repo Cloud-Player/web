@@ -1,6 +1,7 @@
 @import 'variables';
 
 :host {
+  display: none;
   .modal-holder {
     width: 100vw;
     display: flex;

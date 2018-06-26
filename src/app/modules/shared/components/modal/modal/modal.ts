@@ -98,11 +98,13 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
 
   public show() {
     this.el.nativeElement.style.display = 'block';
-    this.isVisible = true;
-    if (this._componentRef && this._componentRef.instance.modalOnOpen) {
-      this._componentRef.instance.modalOnOpen();
-    }
-    this.visibilityChange.emit(true);
+    setTimeout(() => {
+      this.isVisible = true;
+      if (this._componentRef && this._componentRef.instance.modalOnOpen) {
+        this._componentRef.instance.modalOnOpen();
+      }
+      this.visibilityChange.emit(true);
+    });
   }
 
   public hide() {
