@@ -1,8 +1,5 @@
 import {Injectable} from '@angular/core';
 import * as localforage from 'localforage';
-import {PrivacyConfigComponent} from '../components/privacy-config/privacy-config';
-import {filter} from 'rxjs/internal/operators';
-import {ModalStates} from '../../shared/src/modal-factory.class';
 import {ModalService} from '../../shared/services/modal';
 import {AuthenticatedUserModel} from '../../api/authenticated-user/authenticated-user.model';
 import {IPrivacySettings} from '../components/main/main.component';
@@ -40,7 +37,6 @@ export class PrivacyManager {
             this._privacySettings = settings;
             this.applySettings();
             this.isConfigured = true;
-            console.log('IS CONFIGURED', this.isConfigured);
           } else {
             if (navigator.doNotTrack === '1') {
               this._privacySettings.allowTracking = false;
