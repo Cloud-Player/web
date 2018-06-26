@@ -37,6 +37,10 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
     }
   }
 
+  canLikeTrack(): boolean {
+    return this._authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected();
+  }
+
   hasLikedTrack(): boolean {
     if (this._cloudPlayerFavouriteTracks) {
       return this._cloudPlayerFavouriteTracks.trackIsFavourited(this.track);
