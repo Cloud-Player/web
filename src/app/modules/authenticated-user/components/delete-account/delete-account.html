@@ -1,0 +1,33 @@
+<form #form="ngForm">
+  <section *ngIf="isDeleted">
+    Your account has been deleted successfully. You may close this page now.
+  </section>
+
+  <section *ngIf="!isDeleted">
+    <p>
+      <b>We are very sad to see you go :(</b>.
+    </p>
+    <br>
+    <p>
+      Are you sure that you want to delete your Cloud-Player
+      account with all its bellonging data?
+    </p>
+    <br>
+    <p>
+      When you delete your account all your data will be deleted from our server and can not be recovered.
+    </p>
+
+    <br>
+    <p>
+      Enter "{{confirmationText}}" into the text field to delete your Account
+    </p>
+    <div>
+      <input type="text"
+             name="playlistName"
+             class="form-control"
+             placeholder="Enter {{confirmationText}}"
+             [(ngModel)]="confirmation"
+             required>
+    </div>
+  </section>
+</form>
