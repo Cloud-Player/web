@@ -22,6 +22,10 @@ import {NavItemComponent} from './components/nav/nav-item/nav-item';
 import {NavInputItemComponent} from './components/nav/nav-input-item/nav-input-item';
 import {NavDividerComponent} from './components/nav/nav-divider/nav-divider';
 import {SearchModule} from '../search/search.module';
+import {PrivacyComponent} from './components/privacy/privacy';
+import {ImprintComponent} from './components/imprint/imprint';
+import {PrivacyConfigComponent, PrivacyConfigModalOpener} from './components/privacy-config/privacy-config';
+import {PrivacyManager} from './services/privacy-manager';
 
 @NgModule({
   imports: [
@@ -45,9 +49,13 @@ import {SearchModule} from '../search/search.module';
     NavComponent,
     NavItemComponent,
     NavInputItemComponent,
-    NavDividerComponent
+    NavDividerComponent,
+    PrivacyComponent,
+    ImprintComponent,
+    PrivacyConfigComponent
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, PrivacyManager, PrivacyConfigModalOpener],
+  entryComponents: [PrivacyConfigComponent, PrivacyComponent],
   bootstrap: [MainComponent]
 })
 export class MainModule {
