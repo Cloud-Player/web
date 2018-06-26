@@ -7,6 +7,17 @@ import {NativeAppHandlerService} from '../../../native-app/services/native-app-h
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
 import {ClientDetector} from '../../../shared/services/client-detector.service';
+import * as localforage from 'localforage';
+import {ModalService} from '../../../shared/services/modal';
+import {Modal, ModalStates} from '../../../shared/src/modal-factory.class';
+import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
+import {filter} from 'rxjs/internal/operators';
+import {PrivacyManager} from '../../services/privacy-manager';
+
+export interface IPrivacySettings {
+  allowTracking: boolean;
+  allowIdCookie: boolean;
+}
 
 @Component({
   selector: 'app-cloud-player',
@@ -17,10 +28,13 @@ import {ClientDetector} from '../../../shared/services/client-detector.service';
 
 export class MainComponent implements OnInit {
   private _authenticatedUser: AuthenticatedUserModel;
+  private _privacyConfigModal: Modal<PrivacyConfigComponent>;
 
-  constructor(private userAnalyticsService: UserAnalyticsService,
+  constructor(private privacyManager: PrivacyManager,
+              private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
-              private toastService: ToastService) {
+              private toastService: ToastService,
+              private privacyConfigModalOpener: PrivacyConfigModalOpener) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
@@ -82,5 +96,11 @@ export class MainComponent implements OnInit {
         });
       });
     }
+
+    this.privacyManager.getPrivacySettings().then(() => {
+      if (!this.privacyManager.isConfigured) {
+        this.privacyConfigModalOpener.open();
+      }
+    });
   }
 }
