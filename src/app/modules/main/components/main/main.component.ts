@@ -68,24 +68,9 @@ export class MainComponent implements OnInit {
     // Handle service worker update
     window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable.bind(this));
 
-    // FIXME DEPRECATED For backwards compatibility where the native client does not trigger the event
-    setTimeout(() => {
-      if ((<any>window).appVersion) {
-        const oldVersion = {
-          version: (<any>window).appVersion,
-          platform: null
-        };
-        const bodyClassList = document.querySelector('body').classList.toString();
-        const platformMatch = bodyClassList.match(/desktop\s([^\s]*)/);
-        if (platformMatch && platformMatch.length > 0) {
-          oldVersion.platform = platformMatch[1];
-        }
-        const nativeClientStartEvent = new CustomEvent('startNativeClient', {detail: oldVersion});
-        window.dispatchEvent(nativeClientStartEvent);
-      }
-    }, 2000);
+    const cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel =
+      <AuthenticatedUserAccountCloudplayerModel>this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
 
-    const cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel = <AuthenticatedUserAccountCloudplayerModel>this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
     if (cloudPlayerAccount) {
       cloudPlayerAccount.once('change:id', () => {
         cloudPlayerAccount.favouriteTracks.fetch();
