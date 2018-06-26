@@ -1,0 +1,36 @@
+@import 'variables';
+
+:host {
+  .alert {
+    display: flex;
+    padding: 0;
+
+    .icon {
+      width: 30px;
+      background: #fcf8e3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon,
+    .message{
+      padding: 10px 20px;
+    }
+
+    .header{
+      display: flex;
+      align-items: center;
+
+      h3{
+        flex-grow: 1;
+        margin: 0;
+      }
+
+      .closer{
+        justify-self: flex-end;
+        margin-left: 5px;
+      }
+    }
+  }
+}
