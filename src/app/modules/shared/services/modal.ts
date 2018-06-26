@@ -96,6 +96,20 @@ export class ModalService {
     return modal;
   }
 
+  public createModalAsync<TComponent>(component: Type<TComponent>): Promise<Modal<TComponent>> {
+    return new Promise<Modal<TComponent>>((resolve, reject) => {
+      let modal: Modal<TComponent>;
+      if (!this._isInitialised) {
+        this._initializeCbs.push(() => {
+          modal = this.createModal(component);
+          resolve(modal);
+        });
+      } else {
+        resolve(this.createModal(component));
+      }
+    });
+  }
+
   public getObservable(): Subject<ModalServiceStates> {
     return this._subject;
   }
