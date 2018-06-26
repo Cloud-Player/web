@@ -1,0 +1,116 @@
+<section>
+  <div *ngIf="isGerman()">
+    <app-view-header>
+      Impressum
+    </app-view-header>
+
+    <div class="card">
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        Cloud-Player wird betrieben von Alexander Zarges und Nicolas Drebenstedt
+      </p>
+      <br>
+      <p>
+        <b>Postalische Anschrift:</b><br>
+        Alexander Zarges<br />
+        Rodelbergweg 6<br />
+        12437 Berlin
+      </p>
+      <br>
+      <p>
+        <b>Kontakt:</b><br>
+        E-Mail: <a [href]="'mailto:'+getMail()">{{getMail()}}</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Open Source</h2>
+      Cloud-Player ist Open Source. Der Quellcode kann komplett eingesehen werden auf
+      <a href="https://github.com/Cloud-Player"
+         class="btn btn-primary">
+        <i class="fa fa-github"></i>
+        GitHub
+      </a>
+    </div>
+
+    <div class="card">
+      <h2>3rd Party Bibliotheken</h2>
+      Cloud-Player verwendet die folgenden Open Source Bibliotheken:
+      <ul>
+        <li *ngFor="let dependency of getDependencies()">
+          {{dependency.name}}—v{{dependency.version}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>3rd Party Services</h2>
+      Cloud-Player verwendet die offiziellen Schnittstellen der folgenden 3rd Party Services:
+      <ul>
+        <li>
+          <a href="https://developers.soundcloud.com/docs/api/guide">SoundCloud HTTP API</a>
+        </li>
+        <li>
+          <a href="https://developers.google.com/youtube/v3/docs">YouTube Data API</a>
+        </li>
+        <li>
+          <a href="https://www.mixcloud.com/developers">Mixcloud API</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="!isGerman()">
+    <app-view-header>
+      About
+    </app-view-header>
+
+    <div class="card">
+      <h2>Contact</h2>
+      <p>
+        Cloud-Player is hosted by Alexander Zarges and Nicolas Drebenstedt
+      </p>
+      <br>
+      <p>
+        <b>E-Mail:</b><br>
+        <a [href]="'mailto:'+getMail()">{{getMail()}}</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Open Source</h2>
+      Cloud-Player is Open Source. The complete source code is available on
+      <a href="https://github.com/Cloud-Player"
+         class="btn btn-primary">
+        <i class="fa fa-github"></i>
+        GitHub
+      </a>
+    </div>
+
+    <div class="card">
+      <h2>3rd Party Libraries</h2>
+      Cloud-Player uses the following open source libraries:
+      <ul>
+        <li *ngFor="let dependency of getDependencies()">
+          {{dependency.name}}—v{{dependency.version}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>3rd Party Services</h2>
+      Cloud-Player uses the official interfaces of the following 3rd Party services:
+      <ul>
+        <li>
+          <a href="https://developers.soundcloud.com/docs/api/guide">SoundCloud HTTP API</a>
+        </li>
+        <li>
+          <a href="https://developers.google.com/youtube/v3/docs">YouTube Data API</a>
+        </li>
+        <li>
+          <a href="https://www.mixcloud.com/developers">Mixcloud API</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
