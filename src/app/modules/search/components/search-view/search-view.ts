@@ -14,6 +14,8 @@ import {AuthenticatedUserModel} from '../../../api/authenticated-user/authentica
 import {PrivacyManager} from '../../../main/services/privacy-manager';
 import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
 import {PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
+import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
+import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
 
 @Component({
   selector: 'app-search-view',
@@ -31,21 +33,24 @@ export class SearchViewComponent implements AfterViewInit {
   public availableProviderMap = ProviderMap.map;
   public searchTerm = '';
   public isConnected = true;
+  public authenticatedUser: AuthenticatedUserModel;
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
 
   constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe,
-              private privacyConfigModalOpener: PrivacyConfigModalOpener) {
+              private privacyConfigModalOpener: PrivacyConfigModalOpener,
+              private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
     this.searchCollection = this.tracksSoundCloud;
     this.setRandomSearchTerm();
+    this.authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
   public setIsConnected() {
-    this.isConnected = AuthenticatedUserModel.getInstance().accounts.getAccountForProvider('cloudplayer').isConnected();
-    AuthenticatedUserModel.getInstance().accounts.getAccountForProvider('cloudplayer')
+    this.isConnected = this.authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected();
+    this.authenticatedUser.accounts.getAccountForProvider('cloudplayer')
       .on('change:connected', (account: AuthenticatedUserAccountCloudplayerModel) => {
         this.isConnected = account.isConnected();
       });
@@ -107,6 +112,11 @@ export class SearchViewComponent implements AfterViewInit {
       return this.humanReadableSecondsPipe.transform((value / 1000).toString());
     }
   };
+
+  public connect(providerId: string) {
+    const account: IAuthenticatedUserAccount = this.authenticatedUser.accounts.getAccountForProvider(providerId);
+    this.externalUserAuthenticator.connect(account);
+  }
 
   ngAfterViewInit() {
     this.searchBar.focus();
