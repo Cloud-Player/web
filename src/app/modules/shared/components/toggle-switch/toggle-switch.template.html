@@ -1,10 +1,11 @@
-<div class="toggle-switch" [class.on]="isOn()" [class.off]="!isOn()">
+<div class="toggle-switch"
+     [ngClass]="{'required': required, 'on': isOn(), 'off': !isOn()}">
   <div class="left" [class.active]="!isOn()" (click)="turnOff()">
-    <i class="fa fa-lock" aria-hidden="true"></i>
+    <i class="{{disabledIcon}}" aria-hidden="true"></i>
   </div>
 
   <div class="right" [class.active]="isOn()" (click)="turnOn()">
-    <i class="fa fa-globe" aria-hidden="true"></i>
+    <i class="{{enabledIcon}}" aria-hidden="true"></i>
   </div>
 
   <div class="indicator" (click)="toggle()"></div>
