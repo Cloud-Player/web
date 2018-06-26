@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {ModalComponent} from '../../../shared/components/modal/modal/modal';
-import {Modal} from '../../../shared/src/modal-factory.class';
+import {Modal, ModalStates} from '../../../shared/src/modal-factory.class';
 import {IModal, IModalComponent, IModalOptions} from '../../../shared/src/modal.interface';
 import {PrivacyComponent} from '../privacy/privacy';
 import {ModalService} from '../../../shared/services/modal';
@@ -8,6 +8,7 @@ import {IPrivacySettings} from '../main/main.component';
 import * as localforage from 'localforage';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {PrivacyManager} from '../../services/privacy-manager';
+import {filter} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-privacy-config',
@@ -66,6 +67,9 @@ export class PrivacyConfigModalOpener {
   open(): void {
     this.modalService.createModalAsync(PrivacyConfigComponent).then((modal) => {
       modal.open();
+      modal.getObservable()
+        .pipe(filter(ev => ev === ModalStates.Closed))
+        .subscribe(modal.destroy.bind(modal));
     });
   }
 }
