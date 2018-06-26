@@ -10,6 +10,10 @@ import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {Utils} from '../../../shared/src/utils.class';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {PrivacyManager} from '../../../main/services/privacy-manager';
+import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
 
 @Component({
   selector: 'app-search-view',
@@ -26,15 +30,25 @@ export class SearchViewComponent implements AfterViewInit {
   public activeTab = 'soundcloud';
   public availableProviderMap = ProviderMap.map;
   public searchTerm = '';
+  public isConnected = true;
 
   @ViewChild('searchBar') searchBar: CollectionTextInputSearchComponent;
   @ViewChild('tabBar') tabBar: TabBarComponent;
 
-  constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe) {
+  constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe,
+              private privacyConfigModalOpener: PrivacyConfigModalOpener) {
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
     this.searchCollection = this.tracksSoundCloud;
     this.setRandomSearchTerm();
+  }
+
+  public setIsConnected() {
+    this.isConnected = AuthenticatedUserModel.getInstance().accounts.getAccountForProvider('cloudplayer').isConnected();
+    AuthenticatedUserModel.getInstance().accounts.getAccountForProvider('cloudplayer')
+      .on('change:connected', (account: AuthenticatedUserAccountCloudplayerModel) => {
+        this.isConnected = account.isConnected();
+      });
   }
 
   public selectTab(tabPane: TabPaneComponent) {
@@ -84,6 +98,10 @@ export class SearchViewComponent implements AfterViewInit {
     }
   }
 
+  public updatePrivacySettings() {
+    this.privacyConfigModalOpener.open();
+  }
+
   public transformScDurationValue = (value) => {
     if (value) {
       return this.humanReadableSecondsPipe.transform((value / 1000).toString());
@@ -128,5 +146,7 @@ export class SearchViewComponent implements AfterViewInit {
     this.tracksYoutube.on('sync error', () => {
       this.isFetching = false;
     });
+
+    setTimeout(this.setIsConnected.bind(this), 2000);
   }
 }
