@@ -18,6 +18,8 @@ import {LayoutChangeTypes, LayoutService} from '../../../shared/services/layout'
 import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {filter} from 'rxjs/internal/operators';
+import {PrivacyManager} from '../../services/privacy-manager';
+import {PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -72,7 +74,9 @@ export class NavComponent implements OnInit {
               private dragAndDropService: DragAndDropService,
               private externalUserAuthenticator: ExternalUserAuthenticator,
               private layoutService: LayoutService,
-              private userAnalyticsService: UserAnalyticsService) {
+              private userAnalyticsService: UserAnalyticsService,
+              private privacyManager: PrivacyManager,
+              private privacyConfigModalOpener: PrivacyConfigModalOpener) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
     this.cloudPlayerAccount = <AuthenticatedUserAccountCloudplayerModel>this.getAccountForProvider('cloudplayer');
   }
@@ -98,6 +102,10 @@ export class NavComponent implements OnInit {
 
   public connect(account: IAuthenticatedUserAccount) {
     this.externalUserAuthenticator.connect(account);
+  }
+
+  public openPrivacySettings() {
+    this.privacyConfigModalOpener.open();
   }
 
   public saveTmpPlaylist(account) {
@@ -197,15 +205,14 @@ export class NavComponent implements OnInit {
       });
       account.playlists.on('add remove reset change', this.update.bind(this));
     });
-    this.authenticatedUser.fetch();
     this.dragAndDropService.getObservable()
       .pipe(
         filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
       )
       .subscribe(this.dragStart.bind(this));
     this.dragAndDropService.getObservable().pipe(
-        filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
-      )
+      filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragEnd)
+    )
       .subscribe(this.dragEnd.bind(this));
 
     const debouncedLayoutChange = debounce(() => {
