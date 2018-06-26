@@ -27,6 +27,30 @@ export class AuthenticatedUserModel extends CloudplayerModel {
     this.set('id', id);
     return superCall;
   }
+
+  isConnectedWith3rdParty() {
+    const youtubeAccount = this.accounts.getAccountForProvider('youtube');
+    const soundcloudAccount = this.accounts.getAccountForProvider('soundcloud');
+
+    return youtubeAccount.isConnected() || soundcloudAccount.isConnected();
+  }
+
+  accountHasData() {
+    const cloudplayerAccount = this.accounts.getAccountForProvider('cloudplayer');
+
+    return (cloudplayerAccount.playlists.length > 0 || cloudplayerAccount.favouriteTracks.items.length > 0);
+  }
+
+  isNotConnectedAndHasData() {
+    return (
+      this.accountHasData() &&
+      !this.isConnectedWith3rdParty()
+    );
+  }
+
+  canCreateCloudPlayerData() {
+    return this.isConnectedWith3rdParty() || this.accountHasData();
+  }
 }
 
 

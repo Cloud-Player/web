@@ -38,7 +38,10 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   canLikeTrack(): boolean {
-    return this._authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected();
+    return (
+      this._authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected() && //FIXME remove this after migration to new API
+      this._authenticatedUser.canCreateCloudPlayerData()
+    );
   }
 
   hasLikedTrack(): boolean {
@@ -94,6 +97,10 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
     } else {
       this.dislike();
     }
+  }
+
+  canBeUsed(): boolean {
+    return this._authenticatedUser.isConnectedWith3rdParty();
   }
 
   ngOnInit() {

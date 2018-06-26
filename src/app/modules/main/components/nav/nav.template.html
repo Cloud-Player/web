@@ -78,7 +78,7 @@
                 icon="fa fa-user">
               </app-nav-item>
             </div>
-            <div *ngIf="account.isConnected()">
+            <div *ngIf="account.isConnected() && authenticatedUser.canCreateCloudPlayerData()"> <!-- FIXME remove this after migration to new API -->
               <app-nav-input-item
                 icon="fa fa-plus"
                 title="Add new playlist"
