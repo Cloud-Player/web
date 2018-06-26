@@ -1,0 +1,52 @@
+<section>
+  <p>
+    <b>Privacy matters!</b>
+    We at Cloud-Player care about privacy. We treat your data with respect and we are not selling it to any third party.
+    Only data that is necessary to provide you a service, is stored on our server.
+  </p>
+  <br>
+  <p>
+    An "user id cookie" is stored on your computer to identify you as an existing user.
+    This allows you to access your playlists, favourites and history from previous sessions.
+  </p>
+  <br>
+  <p>
+    We also use Google Analytics to see how our users are interacting with it. The anonymous data helps us to improve
+    the general experience over time. You can turn that off if you do not want to be tracked, we respect that.
+  </p>
+
+  <br>
+  <p>
+    You can read more about your privacy in our
+    <button class="btn btn-link text-link" (click)="openPrivacyStatement()">privacy statement</button>
+    .
+  </p>
+
+  <ul class="settings" *ngIf="privacySettings">
+    <li>
+      <app-toggle-switch [(value)]="privacySettings.allowIdCookie" [required]="idCookieIsRequired"></app-toggle-switch>
+      <b>Accept "user id cookie"</b><i *ngIf="idCookieIsRequired">(is required)</i>
+      <div *ngIf="!privacySettings.allowIdCookie"
+           class="alert alert-danger" style="margin-top: 15px">
+        <i class="fa fa-exclamation-triangle"></i>
+        When you turn off this cookie you will loose functionality. You wont be able to:
+        <ul>
+          <li>Create Playlists</li>
+          <li>Favourite tracks</li>
+          <li>Sychronise playlists with SoundCloud or Youtube</li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <app-toggle-switch [(value)]="privacySettings.allowTracking"></app-toggle-switch>
+      <b>Accept Google Analytics tracking</b>
+      <div *ngIf="!privacySettings.allowTracking"
+           class="alert alert-info" style="margin-top: 15px">
+        <i class="fa fa-info"></i>
+        You turned tracking off, we respect that. However, you could help us a lot by turning it back on.
+        The anonymous tracking data helps us improving the user experience.
+      </div>
+    </li>
+  </ul>
+
+</section>
