@@ -55,7 +55,7 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
   }
 
   public addTrackTo(playlist: IPlaylist) {
-    const playlistItem = playlist.items.add({track: this.track});
+    const playlistItem = playlist.items.add({track: this.track.clone()});
     playlistItem.save().then(
       () => {
         this.userAnalyticsService.trackEvent(
