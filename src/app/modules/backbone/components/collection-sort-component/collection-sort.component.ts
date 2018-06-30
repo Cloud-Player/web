@@ -36,15 +36,7 @@ export class CollectionSortComponent implements OnInit {
         return;
       }
 
-      const model = this.collection.first();
-      if (model && model.attributesMap) {
-        const mappingKey = findKey(<any>model.attributesMap, (value, key) => {
-          return value === this.comparator;
-        });
-        if (mappingKey) {
-          this.comparator = mappingKey;
-        }
-      }
+      this.comparator = this.collection.getMappedComparatorKey(this.comparator);
 
       if (this.collection.comparator !== this.comparator) {
         this.collection.sortOrder = null;
