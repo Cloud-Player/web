@@ -1,6 +1,18 @@
 @import 'variables';
 
 :host {
+  @media (max-width: $screen-sm-max) {
+    .cp-grid{
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
+    }
+  }
 
+  @media (max-width: $screen-xs-max) {
+    .cp-grid{
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
+    }
+  }
 }
 
