@@ -4,6 +4,7 @@ import {IPlaylistItem} from './playlist-item.interface';
 import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../../backbone/decorators/nested.decorator';
 import {PlaylistItemsSoundcloudCollection} from './playlist-items-soundcloud.collection';
+import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 
 export class PlaylistItemSoundcloudModel
   extends SoundcloudProxyModel implements IPlaylistItem {
@@ -15,6 +16,10 @@ export class PlaylistItemSoundcloudModel
   @attributesKey('track')
   @nested()
   track: TrackSoundcloudModel;
+
+  @attributesKey('created')
+  @defaultValue(0)
+  created: number;
 
   parse(attributes) {
 

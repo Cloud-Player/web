@@ -5,11 +5,14 @@ import {SoundcloudProxyModel} from '../../soundcloud/soundcloud-proxy.model';
 import {SoundcloudProxyCollection} from '../../soundcloud/soundcloud-proxy.collection';
 import {IPlaylistItem} from './playlist-item.interface';
 import {IPlaylistItems} from './playlist-items.interface';
+import {SortPlaylistItemsComparator} from './sort-playlist-items-comparator';
 
 export class PlaylistItemsSoundcloudCollection<TModel extends PlaylistItemSoundcloudModel>
   extends SoundcloudProxyCollection<SoundcloudProxyModel> implements IPlaylistItems<IPlaylistItem> {
 
   model = PlaylistItemSoundcloudModel;
+
+  hasCreatedAttribute = false;
 
   private fetchTrackDetails() {
     const trackIds = [];
@@ -37,7 +40,11 @@ export class PlaylistItemsSoundcloudCollection<TModel extends PlaylistItemSoundc
   }
 
   fetch(): any {
-    return Promise.resolve(this);
+    return new Promise<any>((resolve, reject) => {
+      this.trigger('fetch');
+      this.once('sync', resolve.bind(this));
+      this.once('error', reject.bind(this));
+    });
   }
 
   public getTrackDetails(trackIds: Array<string>) {
@@ -53,6 +60,14 @@ export class PlaylistItemsSoundcloudCollection<TModel extends PlaylistItemSoundc
       });
       return this;
     });
+  }
+
+  public sort(options?: any) {
+    const orgComparator = this.comparator;
+    this.comparator = SortPlaylistItemsComparator.sortItems(this, orgComparator);
+    const result = super.sort(options);
+    this.comparator = orgComparator;
+    return result;
   }
 
 }

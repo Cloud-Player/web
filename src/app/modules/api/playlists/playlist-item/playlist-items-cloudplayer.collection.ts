@@ -7,11 +7,16 @@ import {IPlaylistItem} from './playlist-item.interface';
 import {PlaylistItemsSoundcloudCollection} from './playlist-items-soundcloud.collection';
 import {PlaylistItemsYoutubeCollection} from './playlist-items-youtube.collection';
 import {debounce} from 'underscore';
+import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
+import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
+import {SortPlaylistItemsComparator} from './sort-playlist-items-comparator';
 
 export class PlaylistItemsCloudplayerCollection<TModel extends PlaylistItemCloudplayerModel>
   extends CloudplayerCollection<CloudplayerModel> implements IPlaylistItems<IPlaylistItem> {
 
   model = PlaylistItemCloudplayerModel;
+
+  hasCreatedAttribute = true;
 
   constructor(...args) {
     super(...args);
@@ -37,6 +42,14 @@ export class PlaylistItemsCloudplayerCollection<TModel extends PlaylistItemCloud
     });
     PlaylistItemsSoundcloudCollection.prototype.getTrackDetails.call(this, soundcloudTrackIds);
     PlaylistItemsYoutubeCollection.prototype.getTrackDetails.call(this, youtubeTrackIds);
+  }
+
+  public sort(options?: any) {
+    const orgComparator = this.comparator;
+    this.comparator = SortPlaylistItemsComparator.sortItems(this, orgComparator);
+    const result = super.sort(options);
+    this.comparator = orgComparator;
+    return result;
   }
 
   setEndpoint(playlistId: number) {

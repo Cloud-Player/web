@@ -20,6 +20,9 @@ export class PlaylistItemCloudplayerModel
   })
   track: TrackSoundcloudModel;
 
+  @attributesKey('created')
+  created: number;
+
   parse(attributes) {
     const parsedTrack = {
       id: attributes.track_id,
