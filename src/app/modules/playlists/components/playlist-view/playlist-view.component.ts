@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistCloudplayerModel} from '../../../api/playlists/playlist-cloudplayer.model';
 import {PlaylistSoundcloudModel} from '../../../api/playlists/playlist-soundcloud.model';
@@ -36,7 +36,7 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
 
   private fetchPlaylist() {
     this.playlist.singletonFetch().then(() => {
-      this.playlist.items.singletonFetch();
+      this.playlist.items.fetch();
     });
   }
 
@@ -96,6 +96,7 @@ export class PlayListViewComponent implements OnInit, OnDestroy {
     this.route.params.forEach((params: any) => {
       this.setPlaylist(params.id, params.provider);
     });
+    this.playlist.items.on('sync', this.setTracks.bind(this));
   }
 
   ngOnDestroy(): void {
