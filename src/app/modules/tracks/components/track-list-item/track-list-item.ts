@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {PlayQueue} from '../../../player/collections/play-queue';
@@ -15,8 +15,7 @@ import {debounce} from 'underscore';
   templateUrl: './track-list-item.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TrackListItemComponent implements OnInit, OnDestroy {
-
+export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() track: ITrack;
 
   @Input() tracks: ITracks<ITrack>;
@@ -30,6 +29,14 @@ export class TrackListItemComponent implements OnInit, OnDestroy {
 
   private update() {
     this.cdr.detectChanges();
+  }
+
+  private bindTrackChangeListener(track) {
+    track.on('change sync', this._debouncedUpdate, this);
+  }
+
+  private unBindTrackChangeListener(track) {
+    track.off('change sync', this._debouncedUpdate, this);
   }
 
   gotoDetail(track: ITrack): void {
@@ -66,12 +73,22 @@ export class TrackListItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.track.on('change', this._debouncedUpdate, this);
+    this.bindTrackChangeListener(this.track);
     this.playQueue.on('change:status remove', this._debouncedUpdate, this);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.track && changes.track.previousValue) {
+      this.unBindTrackChangeListener(changes.track.previousValue);
+    }
+    if (changes.track && changes.track.currentValue) {
+      this.bindTrackChangeListener(changes.track.currentValue);
+    }
+    this._debouncedUpdate();
+  }
+
   ngOnDestroy() {
-    this.track.off('change', this._debouncedUpdate, this);
+    this.unBindTrackChangeListener(this.track);
     this.playQueue.off('change:status remove', this._debouncedUpdate, this);
   }
 }
