@@ -21,6 +21,9 @@ export class PlaylistItemYoutubeModel
   @nested()
   track: TrackYoutubeModel;
 
+  @attributesKey('created')
+  created: number;
+
   setEndpoint(playlistId: string) {
     this.queryParams.playlistId = playlistId;
     this.endpoint = `/playlistItems`;
@@ -39,6 +42,7 @@ export class PlaylistItemYoutubeModel
           snippet: attributes.snippet,
           id: attributes.snippet.resourceId.videoId || attributes.snippet.resourceId
         };
+        parsedPlaylistItem.created = attributes.snippet.publishedAt;
       }
     }
     return parsedPlaylistItem;

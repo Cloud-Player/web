@@ -103,4 +103,8 @@ export class TrackSoundcloudModel extends SoundcloudProxyModel implements ITrack
       this.comments.setTrackId(this.id);
     });
   }
+
+  clone() {
+    return new TrackSoundcloudModel(this.toMiniJSON());
+  }
 }

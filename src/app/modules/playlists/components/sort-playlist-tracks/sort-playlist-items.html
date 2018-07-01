@@ -1,0 +1,21 @@
+<div class="sort-tracks">
+  <span class="sort-by sort-by-tracks">
+    <i class="fa fa-sort sort-icon" aria-hidden="true"></i>
+    <span class="hidden-sm hidden-xs">Sort by:</span>
+
+  </span>
+  <app-collection-sort [collection]="playlistItems" [label]="'Original'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="playlistItems" [comparator]="'track.duration'"
+                       [label]="'Duration'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="playlistItems" [comparator]="'track.likes'"
+                       [label]="'Likes'"></app-collection-sort>
+  |
+  <app-collection-sort [collection]="playlistItems" [comparator]="'track.clicks'"
+                       [label]="'Plays'"></app-collection-sort>
+  <div *ngIf="playlistItems.hasCreatedAttribute" style="display: contents">
+    |
+    <app-collection-sort [collection]="playlistItems" [comparator]="'created'" [label]="'Added'"></app-collection-sort>
+  </div>
+</div>

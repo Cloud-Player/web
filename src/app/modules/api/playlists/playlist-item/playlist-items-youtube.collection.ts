@@ -7,6 +7,7 @@ import {YoutubeProxyModel} from '../../youtube/youtube-proxy.model';
 import {IPlaylistItems} from './playlist-items.interface';
 import {IPlaylistItem} from './playlist-item.interface';
 import {debounce} from 'underscore';
+import {SortPlaylistItemsComparator} from './sort-playlist-items-comparator';
 
 export class PlaylistItemsYoutubeCollection<TModel extends PlaylistItemYoutubeModel>
   extends YoutubeProxyCollection<YoutubeProxyModel> implements IPlaylistItems<IPlaylistItem> {
@@ -18,6 +19,8 @@ export class PlaylistItemsYoutubeCollection<TModel extends PlaylistItemYoutubeMo
 
   @queryParam()
   maxResults = 50;
+
+  hasCreatedAttribute = true;
 
   constructor(...args) {
     super(...args);
@@ -56,5 +59,13 @@ export class PlaylistItemsYoutubeCollection<TModel extends PlaylistItemYoutubeMo
       });
       return this;
     });
+  }
+
+  public sort(options?: any) {
+    const orgComparator = this.comparator;
+    this.comparator = SortPlaylistItemsComparator.sortItems(this, orgComparator);
+    const result = super.sort(options);
+    this.comparator = orgComparator;
+    return result;
   }
 }

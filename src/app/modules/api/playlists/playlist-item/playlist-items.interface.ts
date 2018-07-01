@@ -4,4 +4,5 @@ import {BaseModel} from '../../../backbone/models/base.model';
 
 export interface IPlaylistItems<TModel extends IPlaylistItem> extends BaseCollection<BaseModel> {
   model: IPlaylistItemModelConstructor;
+  hasCreatedAttribute: boolean;
 }

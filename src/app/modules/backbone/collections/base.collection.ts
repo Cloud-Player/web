@@ -1,6 +1,6 @@
 import {BaseModel} from '../models/base.model';
 import {getUrl} from '../utils/get_url.util';
-import {extend, isArray, result} from 'underscore';
+import {extend, findKey, isArray, result} from 'underscore';
 import {prepareParams} from '../utils/prepare_params';
 import {SelectableCollection} from './selectable.collection';
 import {Model, ModelSaveOptions} from 'backbone';
@@ -107,6 +107,22 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
       return this.sortOrder === 'DESC';
     } else {
       return false;
+    }
+  }
+
+  getMappedComparatorKey(orgComparator: string): string {
+    const model = this.first();
+    if (model && model.attributesMap) {
+      const mappedComparator = findKey(<any>model.attributesMap, (value, key) => {
+        return value === orgComparator;
+      });
+      if (mappedComparator) {
+        return mappedComparator;
+      } else {
+        return orgComparator;
+      }
+    } else {
+      return orgComparator;
     }
   }
 

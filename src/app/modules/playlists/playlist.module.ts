@@ -7,6 +7,8 @@ import {SharedModule} from '../shared/shared.module';
 import {PlayListIconComponent} from './components/playlist-icon/playlist-icon.component';
 import {FormsModule} from '@angular/forms';
 import {AuthenticatedUserPlaylistGuard} from './guards/authenticated-user-playlist-guard';
+import {SortPlaylistItemsComponent} from './components/sort-playlist-tracks/sort-playlist-items';
+import {BackboneModule} from '../backbone/backbone.module';
 
 @NgModule({
   imports: [
@@ -14,6 +16,7 @@ import {AuthenticatedUserPlaylistGuard} from './guards/authenticated-user-playli
     FormsModule,
     TracksModule,
     PlaylistsRoutingModule,
+    BackboneModule,
     SharedModule
   ],
   exports: [
@@ -21,7 +24,8 @@ import {AuthenticatedUserPlaylistGuard} from './guards/authenticated-user-playli
   ],
   declarations: [
     PlayListViewComponent,
-    PlayListIconComponent
+    PlayListIconComponent,
+    SortPlaylistItemsComponent
   ],
   providers: [
     AuthenticatedUserPlaylistGuard

@@ -94,5 +94,7 @@ export class PlaylistSoundcloudModel
           this.items.trigger('save:error');
         });
     });
+
+    this.items.on('fetch', this.fetch.bind(this));
   }
 }

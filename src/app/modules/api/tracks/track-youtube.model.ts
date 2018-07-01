@@ -11,6 +11,7 @@ import {ImageYoutubeModel} from '../image/image-youtube.model';
 import {ArtistYoutubeModel} from '../artist/artist-youtube.model';
 import {queryParam} from '../../backbone/decorators/query-param.decorator';
 import {isObject} from 'underscore';
+import {TrackSoundcloudModel} from './track-soundcloud.model';
 
 export class TrackYoutubeModel extends YoutubeProxyModel implements ITrack {
   private _topics: TracksYoutubeTopicsCollection<TracksYoutubeTopicModel>;
@@ -182,6 +183,10 @@ export class TrackYoutubeModel extends YoutubeProxyModel implements ITrack {
     this.categoryIds.on('add remove reset', () => {
       this.setGenre();
     });
+  }
+
+  clone() {
+    return new TrackYoutubeModel(this.toMiniJSON());
   }
 
   public toMiniJSON() {
