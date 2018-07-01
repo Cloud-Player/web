@@ -11,6 +11,7 @@ import {PlayQueueComponent} from './components/playqueue/playqueue';
 import {YoutubePlayerComponent} from './components/youtube-player/youtube-player';
 import {TracksModule} from '../tracks/tracks.module';
 import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
+import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-player';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
     PlayQueueComponent,
     SoundcloudPlayerComponent,
     YoutubePlayerComponent,
+    MixcloudPlayerComponent,
     PlayerManagerComponent,
     PlayerComponent,
     VolumeBtnComponent
@@ -34,7 +36,8 @@ import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
   ],
   entryComponents: [
     SoundcloudPlayerComponent,
-    YoutubePlayerComponent
+    YoutubePlayerComponent,
+    MixcloudPlayerComponent
   ]
 })
 export class PlayerModule {

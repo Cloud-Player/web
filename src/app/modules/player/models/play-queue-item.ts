@@ -7,6 +7,7 @@ import {BaseModel} from '../../backbone/models/base.model';
 import {TrackYoutubeModel} from '../../api/tracks/track-youtube.model';
 import {TrackSoundcloudModel} from '../../api/tracks/track-soundcloud.model';
 import {ITrack} from '../../api/tracks/track.interface';
+import {TrackMixcloudModel} from '../../api/tracks/track-mixcloud.model';
 
 export class PlayQueueItem extends BaseModel {
   private _promisePerState = {};
@@ -20,7 +21,8 @@ export class PlayQueueItem extends BaseModel {
     identifierKey: 'provider',
     identifierKeyValueMap: {
       'soundcloud': TrackSoundcloudModel,
-      'youtube': TrackYoutubeModel
+      'youtube': TrackYoutubeModel,
+      'mixcloud': TrackMixcloudModel
     }
   })
   track: ITrack;
