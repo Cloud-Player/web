@@ -1,3 +1,10 @@
+# v5.1.0
+- Upgrade to Angular 6
+- Add privacy notice
+- Prepare Mixcloud integration
+- Add sort buttons to playlist view (Fix [#69](https://github.com/Cloud-Player/web/issues/69))
+- Fix empty track when adding track to a playlist
+
 # v5.0.0
 ## Features
 - Integrate Cloud-Player API (Fix [#58](https://github.com/Cloud-Player/web/issues/58), [#63](https://github.com/Cloud-Player/web/issues/63), [#66](https://github.com/Cloud-Player/web/issues/66))
