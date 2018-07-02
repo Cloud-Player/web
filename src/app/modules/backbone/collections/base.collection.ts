@@ -72,7 +72,7 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   url = () => {
     return getUrl(this);
-  };
+  }
 
   create(attributes: any, options: ModelSaveOptions = {}) {
     options.wait = true;
@@ -117,7 +117,7 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
         return value === orgComparator;
       });
       if (mappedComparator) {
-        return mappedComparator;
+        return <string>mappedComparator;
       } else {
         return orgComparator;
       }
