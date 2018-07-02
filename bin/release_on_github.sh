@@ -59,7 +59,8 @@ VERSION_NUMBER=$(cat package.json \
 CHANGELOG=$(sed -n -e "/# v$VERSION_NUMBER/,/# v/ p" CHANGELOG.md \
   | sed -e '1d;$d')
 
-git reset --hard package-lock.json
+# Ignore changes of package-lock.json
+git checkout -- package-lock.json
 
 # Check if a tag with the same version already exists
 if [ "$(git ls-remote origin_gh refs/tags/v${VERSION_NUMBER})" ]; then
