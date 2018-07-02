@@ -26,6 +26,8 @@ exit_with_error () {
     exit 1
 }
 
+git reset --hard package-lock.json  
+
 # Check if there are any local changes that are not committed yet
 if [ -n "$(git status --porcelain)" ]; then
   git status --porcelain

@@ -59,6 +59,8 @@ VERSION_NUMBER=$(cat package.json \
 CHANGELOG=$(sed -n -e "/# v$VERSION_NUMBER/,/# v/ p" CHANGELOG.md \
   | sed -e '1d;$d')
 
+git reset --hard package-lock.json
+
 # Check if a tag with the same version already exists
 if [ "$(git ls-remote origin_gh refs/tags/v${VERSION_NUMBER})" ]; then
  echo Skipping deployment because tag for version ${VERSION_NUMBER} already exists. Increment version number to release a new version
