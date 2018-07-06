@@ -18,7 +18,6 @@ export class TracksYoutubeCollection<TModel extends TrackYoutubeModel>
     part: 'snippet',
     type: 'video',
     videoEmbeddable: true,
-    videoSyndicated: true,
     maxResults: 50
   };
 

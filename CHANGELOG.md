@@ -1,3 +1,6 @@
+# v5.1.1
+- Remove youtube video syndicated filter
+
 # v5.1.0
 - Upgrade to Angular 6
 - Add privacy notice
