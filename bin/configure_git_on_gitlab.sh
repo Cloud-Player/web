@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-RELEASE_GIT_NAME="Bob Builder"
-RELEASE_GIT_MAIL="hello@aux.app"
+RELEASE_GIT_NAME="Gitlab Agent"
+RELEASE_GIT_MAIL="agent@gitlab.com"
 
 # activate the ssh-agent
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
