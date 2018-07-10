@@ -4,6 +4,8 @@ set -e
 RELEASE_GIT_NAME="Bob Builder"
 RELEASE_GIT_MAIL="hello@aux.app"
 
+echo "$GIT_SSH_PRIV_KEY"
+
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
 eval $(ssh-agent -s)
 ssh-add <(echo "$GIT_SSH_PRIV_KEY")
