@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 set -e
 
+echo "0"
+
 RELEASE_GIT_NAME="Bob Builder"
 RELEASE_GIT_MAIL="hello@aux.app"
+
+echo "01"
 
 CURRENT_GIT_USER=`git config user.name`
 CURRENT_GIT_USERMAIL=`git config user.email`
 CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+echo "02"
 
 # Sets everything back to the beginning, before the release process has been started
 reset () {
@@ -14,6 +20,8 @@ reset () {
     git config user.name "$CURRENT_GIT_USER"
     git config user.email "$CURRENT_GIT_USERMAIL"
 }
+
+echo "03"
 
 # Shows error message and exits with statuscode 1
 exit_with_error () {
