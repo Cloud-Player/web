@@ -4,7 +4,7 @@ pages:
   stage: deploy
   script:
   - mkdir public
-  - echo "<html><head><title>Hello aux.app</title></head><body><h1>Hello aux.app</h1></body></html>" > index.html 
+  - echo "<html><head><title>Hello aux.app</title></head><body><h1>Hello aux.app</h1></body></html>" > public/index.html
   artifacts:
     paths:
     - public
