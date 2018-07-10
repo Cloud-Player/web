@@ -9,7 +9,7 @@ release:
   - ./bin/release_on_gitlab.sh
   - ./bin/release_on_gitlab_pages.sh
   artifacts:
-      paths:
-        - public
+    paths:
+      - public
   only:
   - master
