@@ -3,7 +3,7 @@ image: node:8
 release:
   stage: deploy
   script:
-
+  - ./bin/configure_git_on_gitlab.sh
   - ./bin/release_on_gitlab.sh
   - ./bin/zip_version_gitlab.sh
   - ./bin/release_on_gitlab_pages.sh
