@@ -1,4 +1,4 @@
-#/bin/sh
+#!/usr/bin/env bash
 set -e
 
 RELEASE_GIT_NAME="Bob Builder"
