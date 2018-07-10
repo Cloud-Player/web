@@ -7,7 +7,7 @@ echo "# Releasing...                           #"
 echo "#                                        #"
 echo "##########################################"
 
-mv -r dist/* public
+mv dist/* public
 
 echo "##########################################"
 echo "#                                        #"
