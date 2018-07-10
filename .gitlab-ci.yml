@@ -3,8 +3,7 @@ image: node:8
 release:
   stage: deploy
   script:
-  - npm install
-  - npm run release
+
   - ./bin/release_on_gitlab.sh
   - ./bin/zip_version_gitlab.sh
   - ./bin/release_on_gitlab_pages.sh
