@@ -1,19 +1,24 @@
 #!/usr/bin/env bash
 set -e
 
-REPO_REF="gitlab.com/auxapp/web"
 RELEASE_GIT_NAME="Bob Builder"
 RELEASE_GIT_MAIL="hello@aux.app"
 
-echo "START"
-echo "https://$CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD@$REPO_REF.git"
+# activate the ssh-agent
+which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+eval $(ssh-agent -s)
 
-# Set or add the remote url for the github repo with the GH_TOKEN
-# The GH_TOKEN is a github personal access token https://github.com/settings/tokens
-# It is encrypted with travis `$ travis encrypt GH_TOKEN=<GH_PERSONAL_TOKEN>` and set as global env via the .travis.yml
-if git remote | grep origin > /dev/null
-then
-  git remote set-url origin https://$CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD@$REPO_REF.git
-else
-  git remote add origin https://$GH_TOKEN@$GH_REF.git
-fi
+# load the private key, which is accesible as a environment variable
+echo "$GIT_SSH_PRIV_KEY" | ssh-add -
+mkdir -p ~/.ssh
+
+# ensure that ssh will trust a new host, instead of asking
+echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+# the repo is initially cloned with https so we change the
+# remote origin to point to the ssh access
+git remote set-url origin git@gitlab.com:auxapp/web.git
+
+# This replaces the current commiter for the release
+git config user.name "$RELEASE_GIT_NAME"
+git config user.email "$RELEASE_GIT_MAIL"
