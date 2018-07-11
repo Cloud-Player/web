@@ -1,7 +1,7 @@
 image: node:8
 
-release:
-  stage: pages
+pages:
+  stage: deploy
   script:
   - npm install
   - npm run release
