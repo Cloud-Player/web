@@ -1,6 +1,6 @@
 import {IAuthenticatedUserAccount} from './authenticated-user-account.interface';
 import {dynamicInstance} from '../../../backbone/decorators/dynamic-instance.decorator';
-import {AuthenticatedUserAccountCloudplayerModel} from './authenticated-user-account-cloudplayer.model';
+import {AuthenticatedUserAccountAuxappModel} from './authenticated-user-account-auxapp.model';
 import {AuthenticatedUserAccountYoutubeModel} from './authenticated-user-account-youtube.model';
 import {AuthenticatedUserAccountSoundcloudModel} from './authenticated-user-account-soundcloud.model';
 import {AccountsCollection} from '../../account/accounts.collection';
@@ -16,7 +16,7 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
   @dynamicInstance({
     identifierKey: 'provider_id',
     identifierKeyValueMap: {
-      cloudplayer: AuthenticatedUserAccountCloudplayerModel,
+      auxapp: AuthenticatedUserAccountAuxappModel,
       youtube: AuthenticatedUserAccountYoutubeModel,
       soundcloud: AuthenticatedUserAccountSoundcloudModel
     }
@@ -32,7 +32,7 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
 
   initialize() {
     [
-      AuthenticatedUserAccountCloudplayerModel,
+      AuthenticatedUserAccountAuxappModel,
       AuthenticatedUserAccountSoundcloudModel,
       AuthenticatedUserAccountYoutubeModel
     ].forEach((account) => {

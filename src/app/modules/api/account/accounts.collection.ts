@@ -2,14 +2,14 @@ import {IAccount} from './account.interface';
 import {AccountSoundcloudModel} from './account-soundcloud.model';
 import {AccountYoutubeModel} from './account-youtube.model';
 import {dynamicInstance} from '../../backbone/decorators/dynamic-instance.decorator';
-import {CloudplayerCollection} from '../cloud-player/cloud-player.collection';
-import {AccountCloudplayerModel} from './account-cloudplayer.model';
+import {AuxappCollection} from '../auxapp/auxapp.collection';
+import {AccountAuxappModel} from './account-auxapp.model';
 
-export class AccountsCollection<TModel extends IAccount> extends CloudplayerCollection<TModel> {
+export class AccountsCollection<TModel extends IAccount> extends AuxappCollection<TModel> {
   @dynamicInstance({
     identifierKey: 'provider_id',
     identifierKeyValueMap: {
-      cloudplayer: AccountCloudplayerModel,
+      auxapp: AccountAuxappModel,
       youtube: AccountYoutubeModel,
       soundcloud: AccountSoundcloudModel
     }

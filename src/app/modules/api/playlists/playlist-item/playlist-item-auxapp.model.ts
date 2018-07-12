@@ -1,14 +1,14 @@
-import {CloudplayerModel} from '../../cloud-player/cloud-player.model';
 import {IPlaylistItem} from './playlist-item.interface';
 import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
 import {dynamicInstance} from '../../../backbone/decorators/dynamic-instance.decorator';
 import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
 import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
+import {AuxappModel} from '../../auxapp/auxapp.model';
 
-export class PlaylistItemCloudplayerModel
-  extends CloudplayerModel implements IPlaylistItem {
+export class PlaylistItemAuxappModel
+  extends AuxappModel implements IPlaylistItem {
 
-  public type = 'cloudplayer';
+  public type = 'auxapp';
 
   @attributesKey('track')
   @dynamicInstance({
@@ -37,8 +37,8 @@ export class PlaylistItemCloudplayerModel
   compose() {
     return {
       track_provider_id: this.track.provider,
-      track_id: this.track.id,
-      rank: this.collection.length
+      track_id: this.track.id
+//      rank: this.collection.length
     };
   }
 }

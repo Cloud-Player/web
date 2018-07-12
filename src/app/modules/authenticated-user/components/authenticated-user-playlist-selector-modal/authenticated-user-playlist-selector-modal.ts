@@ -77,7 +77,7 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
     if (this.track) {
       this.accounts.each((account) => {
         if (
-          account.provider === this.track.provider || account.provider === 'cloudplayer'
+          account.provider === this.track.provider || account.provider === 'auxapp'
         ) {
           this.applicableAccounts.push(account);
         }
@@ -97,7 +97,7 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
   }
 
   ngOnInit(): void {
-    this.selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
+    this.selectedAccount = this.accounts.getAccountForProvider('auxapp');
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

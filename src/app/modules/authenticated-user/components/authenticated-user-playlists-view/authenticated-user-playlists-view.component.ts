@@ -63,7 +63,7 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
   }
 
   ngOnInit(): void {
-    this.selectedAccount = this.accounts.getAccountForProvider('cloudplayer');
+    this.selectedAccount = this.accounts.getAccountForProvider('auxapp');
     const authSubscription = this.externalUserAuthenticator.getObservable()
       .pipe(
         filter(state => state === ExternalUserConnectState.Success)

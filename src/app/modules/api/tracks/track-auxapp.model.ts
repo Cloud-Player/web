@@ -2,11 +2,11 @@ import {attributesKey} from '../../backbone/decorators/attributes-key.decorator'
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {ITrack} from './track.interface';
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
 import {ImageSoundcloudModel} from '../image/image-soundcloud.model';
-import {ArtistCloudplayerModel} from '../artist/artist-cloudplayer.model';
+import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
 
-export class TrackCloudplayerModel extends CloudplayerModel implements ITrack {
+export class TrackAuxappModel extends AuxappModel implements ITrack {
   type: 'Track';
 
   endpoint = '/tracks';
@@ -16,12 +16,12 @@ export class TrackCloudplayerModel extends CloudplayerModel implements ITrack {
   hasDetails: boolean;
 
   @attributesKey('provider_id')
-  @defaultValue('cloudplayer')
+  @defaultValue('auxapp')
   provider: string;
 
   @attributesKey('artist')
   @nested()
-  artist: ArtistCloudplayerModel;
+  artist: ArtistAuxappModel;
 
   @attributesKey('image')
   @nested()

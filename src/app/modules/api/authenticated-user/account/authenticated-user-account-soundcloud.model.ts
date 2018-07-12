@@ -4,7 +4,7 @@ import {nested} from '../../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
 import {AuthenticatedUserPlaylistSoundcloudModel} from '../playlist/authenticated-user-playlist-soundcloud.model';
 import {AuthenticatedUserPlaylistsSoundcloudCollection} from '../playlist/authenticated-user-playlists-soundcloud.collection';
-import {AuthenticatedUserPlaylistCloudplayerModel} from '../playlist/authenticated-user-playlist-cloudplayer.model';
+import {AuthenticatedUserPlaylistAuxappModel} from '../playlist/authenticated-user-playlist-auxapp.model';
 import {FavouriteTracksSoundcloudModel} from '../../favourite-tracks/favourite-tracks-soundcloud.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 
@@ -34,7 +34,7 @@ export class AuthenticatedUserAccountSoundcloudModel
   }
 
   createNewPlaylist(title: string, isPublic: boolean = false) {
-    const playlist = new AuthenticatedUserPlaylistCloudplayerModel();
+    const playlist = new AuthenticatedUserPlaylistAuxappModel();
     playlist.title = title;
     playlist.isPublic = isPublic;
     this.playlists.add(playlist);

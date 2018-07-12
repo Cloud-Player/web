@@ -1,10 +1,10 @@
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {AuthenticatedUserAccountsCollection} from './account/authenticated-user-accounts.collection';
 import {IAuthenticatedUserAccount} from './account/authenticated-user-account.interface';
 
-export class AuthenticatedUserModel extends CloudplayerModel {
+export class AuthenticatedUserModel extends AuxappModel {
   private static instance: AuthenticatedUserModel;
 
   endpoint = '/user';
@@ -26,30 +26,6 @@ export class AuthenticatedUserModel extends CloudplayerModel {
     const superCall = super.fetch.apply(this, ...args);
     this.set('id', id);
     return superCall;
-  }
-
-  isConnectedWith3rdParty() {
-    const youtubeAccount = this.accounts.getAccountForProvider('youtube');
-    const soundcloudAccount = this.accounts.getAccountForProvider('soundcloud');
-
-    return youtubeAccount.isConnected() || soundcloudAccount.isConnected();
-  }
-
-  accountHasData() {
-    const cloudplayerAccount = this.accounts.getAccountForProvider('cloudplayer');
-
-    return (cloudplayerAccount.playlists.length > 0 || cloudplayerAccount.favouriteTracks.items.length > 0);
-  }
-
-  isNotConnectedAndHasData() {
-    return (
-      this.accountHasData() &&
-      !this.isConnectedWith3rdParty()
-    );
-  }
-
-  canCreateCloudPlayerData() {
-    return this.isConnectedWith3rdParty() || this.accountHasData();
   }
 }
 

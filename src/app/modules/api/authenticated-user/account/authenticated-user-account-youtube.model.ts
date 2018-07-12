@@ -4,7 +4,7 @@ import {nested} from '../../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
 import {AuthenticatedUserPlaylistsYoutubeCollection} from '../playlist/authenticated-user-playlists-youtube.collection';
 import {AuthenticatedUserPlaylistYoutubeModel} from '../playlist/authenticated-user-playlist-youtube.model';
-import {AuthenticatedUserPlaylistCloudplayerModel} from '../playlist/authenticated-user-playlist-cloudplayer.model';
+import {AuthenticatedUserPlaylistAuxappModel} from '../playlist/authenticated-user-playlist-auxapp.model';
 import {FavouriteTracksYoutubeModel} from '../../favourite-tracks/favourite-tracks-youtube.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 
@@ -40,7 +40,7 @@ export class AuthenticatedUserAccountYoutubeModel
   }
 
   createNewPlaylist(title: string, isPublic: boolean = false) {
-    const playlist = new AuthenticatedUserPlaylistCloudplayerModel();
+    const playlist = new AuthenticatedUserPlaylistAuxappModel();
     playlist.title = title;
     playlist.isPublic = isPublic;
     this.playlists.add(playlist);

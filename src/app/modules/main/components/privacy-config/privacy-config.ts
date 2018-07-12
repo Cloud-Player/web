@@ -1,11 +1,9 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {ModalComponent} from '../../../shared/components/modal/modal/modal';
-import {Modal, ModalStates} from '../../../shared/src/modal-factory.class';
-import {IModal, IModalComponent, IModalOptions} from '../../../shared/src/modal.interface';
+import {ModalStates} from '../../../shared/src/modal-factory.class';
+import {IModalComponent, IModalOptions} from '../../../shared/src/modal.interface';
 import {PrivacyComponent} from '../privacy/privacy';
 import {ModalService} from '../../../shared/services/modal';
 import {IPrivacySettings} from '../main/main.component';
-import * as localforage from 'localforage';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {PrivacyManager} from '../../services/privacy-manager';
 import {filter} from 'rxjs/internal/operators';
@@ -29,7 +27,7 @@ export class PrivacyConfigComponent implements IModalComponent, OnInit {
     //   text: 'Delete my account'
     // }
   };
-  public idCookieIsRequired = true;
+  public idCookieIsRequired = false;
   public privacySettings: IPrivacySettings;
 
   constructor(private modalService: ModalService, private privacyManger: PrivacyManager) {
@@ -53,7 +51,7 @@ export class PrivacyConfigComponent implements IModalComponent, OnInit {
   }
 
   public setIdCookieIsRequired(): void {
-    if (AuthenticatedUserModel.getInstance().accounts.getAccountForProvider('cloudplayer').isConnected()) {
+    if (AuthenticatedUserModel.getInstance().accounts.getAccountForProvider('auxapp').isConnected()) {
       this.idCookieIsRequired = true;
     }
   }

@@ -8,8 +8,8 @@ export interface IProvider {
 }
 
 export class ProviderMap {
-  static cloudplayer: IProvider = {
-    title: 'Cloud-Player',
+  static auxapp: IProvider = {
+    title: 'Aux.app',
     icon: 'fa fa-play-circle'
   };
 
@@ -24,7 +24,7 @@ export class ProviderMap {
   };
 
   static map: IProviderMap = {
-    cloudplayer: ProviderMap.cloudplayer,
+    auxapp: ProviderMap.auxapp,
     soundcloud: ProviderMap.soundcloud,
     youtube: ProviderMap.youtube
   };

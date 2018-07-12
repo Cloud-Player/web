@@ -1,19 +1,19 @@
 import {IFavouriteTracks} from './favourite-tracks.interface';
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {IPlaylistItem} from '../playlists/playlist-item/playlist-item.interface';
 import {ITrack} from '../tracks/track.interface';
-import {FavouriteTrackItemsCloudplayerCollection} from './favourite-track-item/favourite-track-items-cloudplayer.collection';
-import {FavouriteTrackItemCloudplayerModel} from './favourite-track-item/favourite-track-item-cloudplayer.model';
+import {FavouriteTrackItemsAuxappCollection} from './favourite-track-item/favourite-track-items-auxapp.collection';
+import {FavouriteTrackItemAuxappModel} from './favourite-track-item/favourite-track-item-auxapp.model';
 
-export class FavouriteTracksCloudplayerModel extends CloudplayerModel implements IFavouriteTracks {
+export class FavouriteTracksAuxappModel extends AuxappModel implements IFavouriteTracks {
   private _favouriteTracksMap: any;
-  endpoint = '/favourite/cloudplayer';
+  endpoint = '/favourite/auxapp';
 
   @attributesKey('items')
   @nested()
-  items: FavouriteTrackItemsCloudplayerCollection<FavouriteTrackItemCloudplayerModel>;
+  items: FavouriteTrackItemsAuxappCollection<FavouriteTrackItemAuxappModel>;
 
   parse(attributes) {
     delete attributes.items;

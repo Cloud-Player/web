@@ -5,13 +5,10 @@ import {ToastModel} from '../../../shared/models/toast';
 import {ToastTypes} from '../../../shared/src/toast-types.enum';
 import {NativeAppHandlerService} from '../../../native-app/services/native-app-handler';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {AuthenticatedUserAccountAuxappModel} from '../../../api/authenticated-user/account/authenticated-user-account-auxapp.model';
 import {ClientDetector} from '../../../shared/services/client-detector.service';
-import * as localforage from 'localforage';
-import {ModalService} from '../../../shared/services/modal';
-import {Modal, ModalStates} from '../../../shared/src/modal-factory.class';
+import {Modal} from '../../../shared/src/modal-factory.class';
 import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
-import {filter} from 'rxjs/internal/operators';
 import {PrivacyManager} from '../../services/privacy-manager';
 
 export interface IPrivacySettings {
@@ -68,13 +65,13 @@ export class MainComponent implements OnInit {
     // Handle service worker update
     window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable.bind(this));
 
-    const cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel =
-      <AuthenticatedUserAccountCloudplayerModel>this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
+    const auxappAccount: AuthenticatedUserAccountAuxappModel =
+      <AuthenticatedUserAccountAuxappModel>this._authenticatedUser.accounts.getAccountForProvider('auxapp');
 
-    if (cloudPlayerAccount) {
-      cloudPlayerAccount.once('change:id', () => {
-        cloudPlayerAccount.favouriteTracks.fetch();
-        cloudPlayerAccount.createSession({
+    if (auxappAccount) {
+      auxappAccount.once('change:id', () => {
+        auxappAccount.favouriteTracks.fetch();
+        auxappAccount.createSession({
           browser: `${ClientDetector.getClient().name}`,
           os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
           screenSize: '100'

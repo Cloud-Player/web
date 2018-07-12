@@ -3,10 +3,10 @@ import {request} from '../../backbone/utils/request.util';
 import {ModelSaveOptions} from 'backbone';
 import {isUndefined} from 'underscore';
 
-export class CloudplayerModel extends BaseModel {
+export class AuxappModel extends BaseModel {
 
   hostName(): string {
-    return 'https://api.cloud-player.io';
+    return 'https://api.aux.app';
   }
 
   request(url: string, method: string, options: any = {}) {

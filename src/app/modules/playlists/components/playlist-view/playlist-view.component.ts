@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PlaylistCloudplayerModel} from '../../../api/playlists/playlist-cloudplayer.model';
+import {PlaylistAuxappModel} from '../../../api/playlists/playlist-auxapp.model';
 import {PlaylistSoundcloudModel} from '../../../api/playlists/playlist-soundcloud.model';
 import {PlaylistYoutubeModel} from '../../../api/playlists/playlist-youtube.model';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
@@ -19,7 +19,7 @@ import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.
 
 export class PlayListViewComponent implements OnInit, OnDestroy {
   private _providerPlaylistModelMap = {
-    cloudplayer: PlaylistCloudplayerModel,
+    auxapp: PlaylistAuxappModel,
     soundcloud: PlaylistSoundcloudModel,
     youtube: PlaylistYoutubeModel
   };

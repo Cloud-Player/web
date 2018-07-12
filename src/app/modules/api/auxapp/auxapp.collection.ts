@@ -1,13 +1,13 @@
 import {BaseCollection} from '../../backbone/collections/base.collection';
 import {request} from '../../backbone/utils/request.util';
-import {CloudplayerModel} from './cloud-player.model';
+import {AuxappModel} from './auxapp.model';
 
-export class CloudplayerCollection<TModel extends CloudplayerModel> extends BaseCollection<TModel> {
+export class AuxappCollection<TModel extends AuxappModel> extends BaseCollection<TModel> {
 
-  model: any = CloudplayerModel;
+  model: any = AuxappModel;
 
   hostName(): string {
-    return 'https://api.cloud-player.io';
+    return 'https://api.aux.app';
   }
 
   request(url: string, method: string, options: any = {}) {

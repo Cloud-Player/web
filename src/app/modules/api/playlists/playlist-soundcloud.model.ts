@@ -6,7 +6,7 @@ import {IPlaylist} from './playlist.interface';
 import {PlaylistItemsSoundcloudCollection} from './playlist-item/playlist-items-soundcloud.collection';
 import {PlaylistItemSoundcloudModel} from './playlist-item/playlist-item-soundcloud.model';
 import {ImageSoundcloudModel} from '../image/image-soundcloud.model';
-import {ArtistCloudplayerModel} from '../artist/artist-cloudplayer.model';
+import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
 
 export class PlaylistSoundcloudModel
   extends SoundcloudProxyModel implements IPlaylist {
@@ -34,7 +34,7 @@ export class PlaylistSoundcloudModel
 
   @attributesKey('user')
   @nested()
-  artist: ArtistCloudplayerModel;
+  artist: ArtistAuxappModel;
 
   @attributesKey('items')
   @nested()
