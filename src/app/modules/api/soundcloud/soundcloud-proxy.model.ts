@@ -1,7 +1,7 @@
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
 import {ModelSaveOptions} from 'backbone';
 
-export class SoundcloudProxyModel extends CloudplayerModel {
+export class SoundcloudProxyModel extends AuxappModel {
   basePath() {
     return '/proxy/soundcloud';
   }

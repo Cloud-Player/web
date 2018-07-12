@@ -1,7 +1,7 @@
 import {AbstractImageModel} from './abstract-image';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 
-export class ImageCloudplayerModel extends AbstractImageModel {
+export class ImageAuxappModel extends AbstractImageModel {
 
   @attributesKey('large')
   large: string;

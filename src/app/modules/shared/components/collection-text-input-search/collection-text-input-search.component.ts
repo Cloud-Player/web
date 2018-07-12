@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 
-import {Observable, of, Subject, Subscription} from 'rxjs';
+import {of, Subject, Subscription} from 'rxjs';
 import {BaseCollection} from '../../../backbone/collections/base.collection';
 import {BaseModel} from '../../../backbone/models/base.model';
 import {ClientDetector} from '../../services/client-detector.service';

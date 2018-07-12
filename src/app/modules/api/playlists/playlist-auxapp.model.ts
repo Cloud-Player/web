@@ -1,19 +1,19 @@
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
 import {IPlaylist} from './playlist.interface';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
-import {ImageCloudplayerModel} from '../image/image-cloudplayer.model';
+import {ImageAuxappModel} from '../image/image-auxapp.model';
 import {IPlaylistItem} from './playlist-item/playlist-item.interface';
-import {PlaylistItemsCloudplayerCollection} from './playlist-item/playlist-items-cloudplayer.collection';
-import {PlaylistItemCloudplayerModel} from './playlist-item/playlist-item-cloudplayer.model';
-import {ArtistCloudplayerModel} from '../artist/artist-cloudplayer.model';
+import {PlaylistItemsAuxappCollection} from './playlist-item/playlist-items-auxapp.collection';
+import {PlaylistItemAuxappModel} from './playlist-item/playlist-item-auxapp.model';
+import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
 
-export class PlaylistCloudplayerModel extends CloudplayerModel implements IPlaylist {
-  endpoint = '/playlist/cloudplayer';
+export class PlaylistAuxappModel extends AuxappModel implements IPlaylist {
+  endpoint = '/playlist/auxapp';
 
   @attributesKey('provider')
-  @defaultValue('cloudplayer')
+  @defaultValue('auxapp')
   provider: string;
 
   @attributesKey('canEdit')
@@ -33,15 +33,15 @@ export class PlaylistCloudplayerModel extends CloudplayerModel implements IPlayl
 
   @attributesKey('user')
   @nested()
-  artist: ArtistCloudplayerModel;
+  artist: ArtistAuxappModel;
 
   @attributesKey('image')
   @nested()
-  image: ImageCloudplayerModel;
+  image: ImageAuxappModel;
 
   @attributesKey('items')
   @nested()
-  items: PlaylistItemsCloudplayerCollection<PlaylistItemCloudplayerModel>;
+  items: PlaylistItemsAuxappCollection<PlaylistItemAuxappModel>;
 
   private setCover(item: IPlaylistItem) {
     if (item.track.image.getSmallSizeUrl()) {

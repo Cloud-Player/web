@@ -4,8 +4,8 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {IFavouriteTracks} from '../../../api/favourite-tracks/favourite-tracks.interface';
 import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.interface';
-import {FavouriteTracksCloudplayerModel} from '../../../api/favourite-tracks/favourite-tracks-cloudplayer.model';
-import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {FavouriteTracksAuxappModel} from '../../../api/favourite-tracks/favourite-tracks-auxapp.model';
+import {AuthenticatedUserAccountAuxappModel} from '../../../api/authenticated-user/account/authenticated-user-account-auxapp.model';
 import {debounce} from 'underscore';
 import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track-item/favourite-track-item.interface';
 
@@ -18,7 +18,7 @@ import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track
 export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   private _authenticatedUser: AuthenticatedUserModel;
   private _favouriteTracksPerProvider: Array<IFavouriteTracks>;
-  private _cloudPlayerFavouriteTracks: FavouriteTracksCloudplayerModel;
+  private _auxappFavouriteTracks: FavouriteTracksAuxappModel;
   private _debouncedUpdate: Function;
   private _isDestroyed = false;
 
@@ -39,14 +39,13 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
 
   canLikeTrack(): boolean {
     return (
-      this._authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected() && //FIXME remove this after migration to new API
-      this._authenticatedUser.canCreateCloudPlayerData()
+      this._authenticatedUser.accounts.getAccountForProvider('auxapp').isConnected()
     );
   }
 
   hasLikedTrack(): boolean {
-    if (this._cloudPlayerFavouriteTracks) {
-      return this._cloudPlayerFavouriteTracks.trackIsFavourited(this.track);
+    if (this._auxappFavouriteTracks) {
+      return this._auxappFavouriteTracks.trackIsFavourited(this.track);
     }
     return false;
   }
@@ -73,7 +72,7 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   dislike(): void {
-    const favouriteTrack = <IFavouriteTrackItem>this._cloudPlayerFavouriteTracks.items.find((item: IPlaylistItem) => {
+    const favouriteTrack = <IFavouriteTrackItem>this._auxappFavouriteTracks.items.find((item: IPlaylistItem) => {
       return item.track.id === this.track.id;
     });
     if (favouriteTrack) {
@@ -99,27 +98,24 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
     }
   }
 
-  canBeUsed(): boolean {
-    return this._authenticatedUser.isConnectedWith3rdParty();
-  }
-
   ngOnInit() {
     const providerAccount = this._authenticatedUser.accounts.getAccountForProvider(this.track.provider);
-    const cloudplayerAccount = this._authenticatedUser.accounts.getAccountForProvider('cloudplayer');
+    const auxappAccount = this._authenticatedUser.accounts.getAccountForProvider('auxapp');
     this._favouriteTracksPerProvider = [];
     if (providerAccount && providerAccount.isConnected()) {
       this._favouriteTracksPerProvider.push(providerAccount.favouriteTracks);
     }
-    if (cloudplayerAccount && cloudplayerAccount instanceof AuthenticatedUserAccountCloudplayerModel) {
-      this._cloudPlayerFavouriteTracks = cloudplayerAccount.favouriteTracks;
-      this._favouriteTracksPerProvider.push(cloudplayerAccount.favouriteTracks);
+    if (auxappAccount && auxappAccount instanceof AuthenticatedUserAccountAuxappModel) {
+      this._auxappFavouriteTracks = auxappAccount.favouriteTracks;
+      this._favouriteTracksPerProvider.push(auxappAccount.favouriteTracks);
     }
-    this._cloudPlayerFavouriteTracks.items.on('add remove reset', this._debouncedUpdate, this);
+    this._auxappFavouriteTracks.items.on('add remove reset', this._debouncedUpdate, this);
+    this._authenticatedUser.accounts.getAccountForProvider('auxapp').on('change:connected', this._debouncedUpdate, this);
   }
 
   ngOnDestroy() {
     this._isDestroyed = true;
-    this._cloudPlayerFavouriteTracks.items.off('add remove reset', this._debouncedUpdate, this);
+    this._auxappFavouriteTracks.items.off('add remove reset', this._debouncedUpdate, this);
   }
 
 }

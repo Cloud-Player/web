@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, Renderer2, ViewChild} from '@angular/core';
-import {CloudPlayerLogoService} from '../../services/cloud-player-logo.service';
+import {LogoService} from '../../services/logo.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./cloud-player-logo.style.scss'],
   templateUrl: './cloud-player-logo.template.html'
 })
-export class CloudPlayerLogoComponent implements AfterViewInit, OnDestroy {
+export class LogoComponent implements AfterViewInit, OnDestroy {
 
   private _iconAnimationToPlay: any;
   private _iconAnimationToPause: any;
@@ -24,7 +24,7 @@ export class CloudPlayerLogoComponent implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef,
               private renderer2: Renderer2,
               private zone: NgZone,
-              private cloudPlayerLogoService: CloudPlayerLogoService) {
+              private auxappLogoService: LogoService) {
     this._subscriptions = new Subscription();
   }
 
@@ -32,7 +32,7 @@ export class CloudPlayerLogoComponent implements AfterViewInit, OnDestroy {
     const playPauseSvg = this.playPause.nativeElement.contentDocument;
     this._iconAnimationToPlay = playPauseSvg.querySelectorAll('.icon-animation-to-play');
     this._iconAnimationToPause = playPauseSvg.querySelectorAll('.icon-animation-to-pause');
-    if (this.cloudPlayerLogoService.logoState === 'PLAY') {
+    if (this.auxappLogoService.logoState === 'PLAY') {
       this.play();
     } else {
       this.pause();
@@ -80,7 +80,7 @@ export class CloudPlayerLogoComponent implements AfterViewInit, OnDestroy {
         })
       );
     });
-    this.cloudPlayerLogoService.logoState$.subscribe((status: string) => {
+    this.auxappLogoService.logoState$.subscribe((status: string) => {
       if (status === 'PAUSE') {
         this.pause();
       } else if (status === 'PLAY') {

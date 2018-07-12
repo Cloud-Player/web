@@ -1,9 +1,9 @@
-import {CloudplayerCollection} from '../cloud-player/cloud-player.collection';
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappCollection} from '../auxapp/auxapp.collection';
+import {AuxappModel} from '../auxapp/auxapp.model';
 
-export class SoundcloudProxyCollection<TModel extends CloudplayerModel> extends CloudplayerCollection<CloudplayerModel> {
+export class SoundcloudProxyCollection<TModel extends AuxappModel> extends AuxappCollection<AuxappModel> {
 
-  model: any = CloudplayerModel;
+  model: any = AuxappModel;
 
   basePath() {
     return '/proxy/soundcloud';

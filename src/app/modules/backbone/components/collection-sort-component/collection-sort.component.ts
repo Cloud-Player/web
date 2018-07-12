@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import {findKey} from 'underscore';
 
 @Component({
   selector: 'app-collection-sort',

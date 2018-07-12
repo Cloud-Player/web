@@ -1,7 +1,7 @@
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
 import {ModelSaveOptions} from 'backbone';
 
-export class YoutubeProxyModel extends CloudplayerModel {
+export class YoutubeProxyModel extends AuxappModel {
   basePath() {
     return '/proxy/youtube';
   }

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
-import {AuthenticatedUserPlaylistCloudplayerModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-cloudplayer.model';
+import {AuthenticatedUserPlaylistAuxappModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-auxapp.model';
 import {AuthenticatedUserPlaylistSoundcloudModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-soundcloud.model';
 import {AuthenticatedUserPlaylistYoutubeModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-youtube.model';
 import {IAccount} from '../../../api/account/account.interface';
@@ -51,8 +51,8 @@ export class AuthenticatedUserPlaylistFormComponent implements IModalComponent, 
 
   public setPlaylistFromProvider(provider: string) {
     switch (provider) {
-      case 'cloudplayer':
-        this.playlist = new AuthenticatedUserPlaylistCloudplayerModel();
+      case 'auxapp':
+        this.playlist = new AuthenticatedUserPlaylistAuxappModel();
         break;
       case 'soundcloud':
         this.playlist = new AuthenticatedUserPlaylistSoundcloudModel();

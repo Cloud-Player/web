@@ -11,8 +11,7 @@ import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {Utils} from '../../../shared/src/utils.class';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {PrivacyManager} from '../../../main/services/privacy-manager';
-import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {AuthenticatedUserAccountAuxappModel} from '../../../api/authenticated-user/account/authenticated-user-account-auxapp.model';
 import {PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
 import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
@@ -49,9 +48,9 @@ export class SearchViewComponent implements AfterViewInit {
   }
 
   public setIsConnected() {
-    this.isConnected = this.authenticatedUser.accounts.getAccountForProvider('cloudplayer').isConnected();
-    this.authenticatedUser.accounts.getAccountForProvider('cloudplayer')
-      .on('change:connected', (account: AuthenticatedUserAccountCloudplayerModel) => {
+    this.isConnected = this.authenticatedUser.accounts.getAccountForProvider('auxapp').isConnected();
+    this.authenticatedUser.accounts.getAccountForProvider('auxapp')
+      .on('change:connected', (account: AuthenticatedUserAccountAuxappModel) => {
         this.isConnected = account.isConnected();
       });
   }

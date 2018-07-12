@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {ClientDetector, ClientNames, OsNames, Result} from '../../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {AuthenticatedUserAccountCloudplayerModel} from '../../../api/authenticated-user/account/authenticated-user-account-cloudplayer.model';
+import {AuthenticatedUserAccountAuxappModel} from '../../../api/authenticated-user/account/authenticated-user-account-auxapp.model';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
 import {AuthenticatedUserAccountSoundcloudModel} from '../../../api/authenticated-user/account/authenticated-user-account-soundcloud.model';
 import {AuthenticatedUserAccountYoutubeModel} from '../../../api/authenticated-user/account/authenticated-user-account-youtube.model';
 import {debounce} from 'underscore';
-import {AuthenticatedUserPlaylistCloudplayerModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-cloudplayer.model';
+import {AuthenticatedUserPlaylistAuxappModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-auxapp.model';
 import {AuthenticatedUserPlaylistYoutubeModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-youtube.model';
 import {AuthenticatedUserPlaylistSoundcloudModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-soundcloud.model';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
@@ -32,12 +32,12 @@ const packageJSON = require('../../../../../../package.json');
 
 export class NavComponent implements OnInit {
   public availableProviderMap = {
-    cloudplayer: {
-      providerId: 'cloudplayer',
+    auxapp: {
+      providerId: 'auxapp',
       title: 'Cloud-Player',
       icon: 'fa fa-play-circle',
-      accountModel: AuthenticatedUserAccountCloudplayerModel,
-      tmpPlaylistModel: new AuthenticatedUserPlaylistCloudplayerModel(),
+      accountModel: AuthenticatedUserAccountAuxappModel,
+      tmpPlaylistModel: new AuthenticatedUserPlaylistAuxappModel(),
       playlistCollapsed: null,
       playlistCollapsedBeforeDragVal: null
     },
@@ -62,7 +62,7 @@ export class NavComponent implements OnInit {
   };
 
   public authenticatedUser: AuthenticatedUserModel;
-  public cloudPlayerAccount: AuthenticatedUserAccountCloudplayerModel;
+  public auxappAccount: AuthenticatedUserAccountAuxappModel;
   public version = packageJSON.version;
 
   @ViewChild('shrinkingSidebar')
@@ -78,7 +78,7 @@ export class NavComponent implements OnInit {
               private privacyManager: PrivacyManager,
               private privacyConfigModalOpener: PrivacyConfigModalOpener) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
-    this.cloudPlayerAccount = <AuthenticatedUserAccountCloudplayerModel>this.getAccountForProvider('cloudplayer');
+    this.auxappAccount = <AuthenticatedUserAccountAuxappModel>this.getAccountForProvider('auxapp');
   }
 
   private getAccountForProvider(provider: string) {
@@ -111,7 +111,7 @@ export class NavComponent implements OnInit {
   public saveTmpPlaylist(account) {
     const accMapValue = this.availableProviderMap[account.provider];
     if (accMapValue) {
-      if (accMapValue.tmpPlaylistModel instanceof AuthenticatedUserPlaylistCloudplayerModel) {
+      if (accMapValue.tmpPlaylistModel instanceof AuthenticatedUserPlaylistAuxappModel) {
         accMapValue.tmpPlaylistModel.accountId = this.authenticatedUser.id;
       }
       if (accMapValue.tmpPlaylistModel.title.length > 0) {
@@ -165,8 +165,8 @@ export class NavComponent implements OnInit {
     const dragData = this.dragAndDropService.getDragData().dragData;
     switch (dragData.constructor) {
       case TrackSoundcloudModel:
-        this.availableProviderMap.cloudplayer.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.cloudplayer.playlistCollapsed;
-        this.availableProviderMap.cloudplayer.playlistCollapsed = false;
+        this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.auxapp.playlistCollapsed;
+        this.availableProviderMap.auxapp.playlistCollapsed = false;
 
         this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
         this.availableProviderMap.soundcloud.playlistCollapsed = false;
@@ -175,8 +175,8 @@ export class NavComponent implements OnInit {
         this.availableProviderMap.youtube.playlistCollapsed = true;
         break;
       case TrackYoutubeModel:
-        this.availableProviderMap.cloudplayer.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.cloudplayer.playlistCollapsed;
-        this.availableProviderMap.cloudplayer.playlistCollapsed = false;
+        this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.auxapp.playlistCollapsed;
+        this.availableProviderMap.auxapp.playlistCollapsed = false;
 
         this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
         this.availableProviderMap.soundcloud.playlistCollapsed = true;
@@ -190,7 +190,7 @@ export class NavComponent implements OnInit {
   }
 
   public dragEnd() {
-    this.availableProviderMap.cloudplayer.playlistCollapsed = this.availableProviderMap.cloudplayer.playlistCollapsedBeforeDragVal;
+    this.availableProviderMap.auxapp.playlistCollapsed = this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal;
     this.availableProviderMap.soundcloud.playlistCollapsed = this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal;
     this.availableProviderMap.youtube.playlistCollapsed = this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal;
     this.el.nativeElement.classList.remove('open');

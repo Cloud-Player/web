@@ -1,8 +1,5 @@
 import {Component} from '@angular/core';
 import {IModalComponent, IModalOptions} from '../../../shared/src/modal.interface';
-import * as localforage from 'localforage';
-import {IPrivacySettings} from '../main/main.component';
-import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PrivacyManager} from '../../services/privacy-manager';
 
 @Component({

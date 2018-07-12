@@ -1,6 +1,6 @@
 /// <reference path="./mixcloud.d.ts" />
 import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {extend, uniqueId} from 'underscore';
+import {uniqueId} from 'underscore';
 import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
 import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';

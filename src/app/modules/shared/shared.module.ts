@@ -12,8 +12,8 @@ import {DropZoneDirective} from './directives/dropzone.directive';
 import {TwoRangeSliderComponent} from './components/two-range-slider/two-range-slider.component';
 import {ViewHeaderComponent} from './components/view-header/view-header.component';
 import {ScrollViewComponent} from './components/scroll-view/scroll-view.component';
-import {CloudPlayerLogoService} from './services/cloud-player-logo.service';
-import {CloudPlayerLogoComponent} from './components/cloud-player-logo/cloud-player-logo.component';
+import {LogoService} from './services/logo.service';
+import {LogoComponent} from './components/logo/cloud-player-logo.component';
 import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
 import {LoadingSpinnerComponent} from './components/loading-spinner/loading-spinner.component';
 import {CollectionTextInputSearchComponent} from './components/collection-text-input-search/collection-text-input-search.component';
@@ -61,7 +61,7 @@ import {AlertBoxComponent} from './components/alert/alert-box';
   ],
   declarations: [
     AlertBoxComponent,
-    CloudPlayerLogoComponent,
+    LogoComponent,
     CollectionTextInputSearchComponent,
     CollapsibleComponent,
     ContextMenuComponent,
@@ -107,7 +107,7 @@ import {AlertBoxComponent} from './components/alert/alert-box';
   ],
   exports: [
     AlertBoxComponent,
-    CloudPlayerLogoComponent,
+    LogoComponent,
     CollectionTextInputSearchComponent,
     CollapsibleComponent,
     ContextMenuComponent,
@@ -152,7 +152,7 @@ import {AlertBoxComponent} from './components/alert/alert-box';
   ],
   providers: [
     HumanReadableSecondsPipe,
-    CloudPlayerLogoService,
+    LogoService,
     FullScreenService,
     ToastService,
     DragAndDropService,

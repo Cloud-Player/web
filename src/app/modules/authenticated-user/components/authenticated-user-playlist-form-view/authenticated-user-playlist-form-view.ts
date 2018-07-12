@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
-import {AuthenticatedUserPlaylistCloudplayerModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-cloudplayer.model';
+import {AuthenticatedUserPlaylistAuxappModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-auxapp.model';
 import {AuthenticatedUserPlaylistSoundcloudModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-soundcloud.model';
 import {AuthenticatedUserPlaylistYoutubeModel} from '../../../api/authenticated-user/playlist/authenticated-user-playlist-youtube.model';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,8 +26,8 @@ export class AuthenticatedUserPlaylistFormViewComponent implements OnInit, OnDes
 
   private setPlaylist(provider: string, playlistId?: string) {
     switch (provider) {
-      case 'cloudplayer':
-        this.playlist = new AuthenticatedUserPlaylistCloudplayerModel();
+      case 'auxapp':
+        this.playlist = new AuthenticatedUserPlaylistAuxappModel();
         break;
       case 'soundcloud':
         this.playlist = new AuthenticatedUserPlaylistSoundcloudModel();

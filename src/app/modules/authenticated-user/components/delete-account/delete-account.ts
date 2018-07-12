@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IModal, IModalComponent, IModalOptions} from '../../../shared/src/modal.interface';
 import * as localforage from 'localforage';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';

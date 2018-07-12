@@ -1,8 +1,8 @@
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
-import {CloudplayerModel} from '../../api/cloud-player/cloud-player.model';
+import {AuxappModel} from '../../api/auxapp/auxapp.model';
 
-export class ConnectDeviceModel extends CloudplayerModel {
+export class ConnectDeviceModel extends AuxappModel {
   endpoint = '/token';
 
   @attributesKey('id')

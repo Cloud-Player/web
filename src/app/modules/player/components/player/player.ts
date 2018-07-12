@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {CloudPlayerLogoService} from '../../../shared/services/cloud-player-logo.service';
+import {LogoService} from '../../../shared/services/logo.service';
 import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
 import {PlayerStatus} from '../../src/player-status.enum';
@@ -23,7 +23,7 @@ export class PlayerComponent implements OnInit {
   @ViewChild('playerManager')
   private playerManager: PlayerManagerComponent;
 
-  constructor(private cloudPlayerLogoService: CloudPlayerLogoService,
+  constructor(private logoService: LogoService,
               private el: ElementRef,
               private layoutService: LayoutService,
               private fullScreenService: FullScreenService,
@@ -73,10 +73,10 @@ export class PlayerComponent implements OnInit {
       case PlayerStatus.Waiting:
       case PlayerStatus.Paused:
       case PlayerStatus.Stopped:
-        this.cloudPlayerLogoService.pause();
+        this.logoService.pause();
         break;
       case PlayerStatus.Playing:
-        this.cloudPlayerLogoService.play();
+        this.logoService.play();
         break;
     }
   }

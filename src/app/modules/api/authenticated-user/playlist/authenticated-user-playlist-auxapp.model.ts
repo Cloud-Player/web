@@ -1,13 +1,13 @@
 import {IPlaylist} from '../../playlists/playlist.interface';
-import {PlaylistCloudplayerModel} from '../../playlists/playlist-cloudplayer.model';
+import {PlaylistAuxappModel} from '../../playlists/playlist-auxapp.model';
 import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
-import {PlaylistItemsCloudplayerCollection} from '../../playlists/playlist-item/playlist-items-cloudplayer.collection';
-import {PlaylistItemCloudplayerModel} from '../../playlists/playlist-item/playlist-item-cloudplayer.model';
+import {PlaylistItemsAuxappCollection} from '../../playlists/playlist-item/playlist-items-auxapp.collection';
+import {PlaylistItemAuxappModel} from '../../playlists/playlist-item/playlist-item-auxapp.model';
 import {nested} from '../../../backbone/decorators/nested.decorator';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 
-export class AuthenticatedUserPlaylistCloudplayerModel
-  extends PlaylistCloudplayerModel implements IPlaylist {
+export class AuthenticatedUserPlaylistAuxappModel
+  extends PlaylistAuxappModel implements IPlaylist {
 
   @attributesKey('account_id')
   public accountId: string;
@@ -18,7 +18,7 @@ export class AuthenticatedUserPlaylistCloudplayerModel
 
   @attributesKey('items')
   @nested()
-  items: PlaylistItemsCloudplayerCollection<PlaylistItemCloudplayerModel>;
+  items: PlaylistItemsAuxappCollection<PlaylistItemAuxappModel>;
 
   compose(attrs: any) {
     return {

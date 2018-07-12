@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {Observable, of, Subject} from 'rxjs';
+import {of, Subject} from 'rxjs';
 import {BaseCollection} from '../../collections/base.collection';
 import {BaseModel} from '../../models/base.model';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/internal/operators';

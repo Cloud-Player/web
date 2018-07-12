@@ -3,11 +3,9 @@ import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account
 import {ExternalUserAuthenticator} from '../../services/external-authenticator.class';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
-import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
-import {filter} from 'rxjs/internal/operators';
-import {Modal, ModalStates} from '../../../shared/src/modal-factory.class';
+import {PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
+import {Modal} from '../../../shared/src/modal-factory.class';
 import {DeleteAccountComponent} from '../delete-account/delete-account';
-import {ModalComponent} from '../../../shared/components/modal/modal/modal';
 import {ModalService} from '../../../shared/services/modal';
 import {PrivacyManager} from '../../../main/services/privacy-manager';
 
@@ -19,7 +17,7 @@ import {PrivacyManager} from '../../../main/services/privacy-manager';
 export class AuthenticatedUserViewComponent implements OnDestroy {
   public accounts: Array<IAuthenticatedUserAccount>;
   public authenticatedUser: AuthenticatedUserModel;
-  public cloudPlayerAccount: IAuthenticatedUserAccount;
+  public auxappAccount: IAuthenticatedUserAccount;
   public hasConnectedAccount: boolean;
   public providerMap = ProviderMap.map;
   private _deleteAccountModal: Modal<DeleteAccountComponent>;
@@ -29,9 +27,9 @@ export class AuthenticatedUserViewComponent implements OnDestroy {
               private externalUserAuthenticator: ExternalUserAuthenticator,
               private privacyConfigModalOpener: PrivacyConfigModalOpener) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
-    this.cloudPlayerAccount = this.authenticatedUser.accounts.getAccountForProvider('cloudplayer');
+    this.auxappAccount = this.authenticatedUser.accounts.getAccountForProvider('auxapp');
     this.accounts = this.authenticatedUser.accounts.filter((account) => {
-      return account.provider !== 'cloudplayer';
+      return account.provider !== 'auxapp';
     });
     this.accounts.every((account) => {
       if (account.isConnected()) {

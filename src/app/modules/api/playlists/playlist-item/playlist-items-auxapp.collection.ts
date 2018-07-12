@@ -1,20 +1,18 @@
 import {ITrack} from '../../tracks/track.interface';
-import {PlaylistItemCloudplayerModel} from './playlist-item-cloudplayer.model';
+import {PlaylistItemAuxappModel} from './playlist-item-auxapp.model';
 import {IPlaylistItems} from './playlist-items.interface';
-import {CloudplayerCollection} from '../../cloud-player/cloud-player.collection';
-import {CloudplayerModel} from '../../cloud-player/cloud-player.model';
 import {IPlaylistItem} from './playlist-item.interface';
 import {PlaylistItemsSoundcloudCollection} from './playlist-items-soundcloud.collection';
 import {PlaylistItemsYoutubeCollection} from './playlist-items-youtube.collection';
 import {debounce} from 'underscore';
-import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
-import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {SortPlaylistItemsComparator} from './sort-playlist-items-comparator';
+import {AuxappModel} from '../../auxapp/auxapp.model';
+import {AuxappCollection} from '../../auxapp/auxapp.collection';
 
-export class PlaylistItemsCloudplayerCollection<TModel extends PlaylistItemCloudplayerModel>
-  extends CloudplayerCollection<CloudplayerModel> implements IPlaylistItems<IPlaylistItem> {
+export class PlaylistItemsAuxappCollection<TModel extends PlaylistItemAuxappModel>
+  extends AuxappCollection<AuxappModel> implements IPlaylistItems<IPlaylistItem> {
 
-  model = PlaylistItemCloudplayerModel;
+  model = PlaylistItemAuxappModel;
 
   hasCreatedAttribute = true;
 
@@ -53,6 +51,6 @@ export class PlaylistItemsCloudplayerCollection<TModel extends PlaylistItemCloud
   }
 
   setEndpoint(playlistId: number) {
-    this.endpoint = `/playlist/cloudplayer/${playlistId}/item`;
+    this.endpoint = `/playlist/auxapp/${playlistId}/item`;
   }
 }

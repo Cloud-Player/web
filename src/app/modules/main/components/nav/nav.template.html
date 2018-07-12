@@ -21,25 +21,25 @@
           icon="fa fa-desktop">
         </app-nav-item>
 
-        <div class="account" *ngIf="cloudPlayerAccount.isConnected()">
+        <div class="account" *ngIf="auxappAccount.isConnected()">
           <app-nav-divider title="Account"></app-nav-divider>
 
           <app-nav-item
-            *ngIf="!cloudPlayerAccount.image.getSmallSizeUrl()"
+            *ngIf="!auxappAccount.image.getSmallSizeUrl()"
             class="user"
             link="/me"
             [exact]="true"
-            [title]="cloudPlayerAccount.getFullName()"
+            [title]="auxappAccount.getFullName()"
             icon="fa fa-user">
           </app-nav-item>
 
           <app-nav-item
-            *ngIf="cloudPlayerAccount.image.getSmallSizeUrl()"
+            *ngIf="auxappAccount.image.getSmallSizeUrl()"
             class="user"
             link="/me"
             [exact]="true"
-            [title]="cloudPlayerAccount.getFullName()"
-            [image]="cloudPlayerAccount.image.getSmallSizeUrl()">
+            [title]="auxappAccount.getFullName()"
+            [image]="auxappAccount.image.getSmallSizeUrl()">
           </app-nav-item>
 
           <app-nav-item
@@ -57,15 +57,15 @@
         </div>
 
         <app-nav-item
-          *ngIf="!cloudPlayerAccount.isConnected()"
+          *ngIf="!auxappAccount.isConnected()"
           title="Update Privacy Settings"
           icon="fa fa-user secret"
           (click)="openPrivacySettings()">
         </app-nav-item>
 
-        <app-nav-divider title="Playlists" *ngIf="cloudPlayerAccount.isConnected()"></app-nav-divider>
+        <app-nav-divider title="Playlists" *ngIf="auxappAccount.isConnected()"></app-nav-divider>
 
-        <div class="playlists" *ngIf="cloudPlayerAccount.isConnected()">
+        <div class="playlists" *ngIf="auxappAccount.isConnected()">
           <app-collapsible
             *ngFor="let account of authenticatedUser.accounts.models"
             [title]="availableProviderMap[account.provider].title"
@@ -78,7 +78,7 @@
                 icon="fa fa-user">
               </app-nav-item>
             </div>
-            <div *ngIf="account.isConnected() && authenticatedUser.canCreateCloudPlayerData()"> <!-- FIXME remove this after migration to new API -->
+            <div *ngIf="account.isConnected()">
               <app-nav-input-item
                 icon="fa fa-plus"
                 title="Add new playlist"

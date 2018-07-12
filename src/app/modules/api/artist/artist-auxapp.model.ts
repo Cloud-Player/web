@@ -1,21 +1,21 @@
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
-import {CloudplayerModel} from '../cloud-player/cloud-player.model';
-import {ImageCloudplayerModel} from '../image/image-cloudplayer.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
+import {ImageAuxappModel} from '../image/image-auxapp.model';
 import {IArtist} from './artist.interface';
 
-export class ArtistCloudplayerModel extends CloudplayerModel implements IArtist {
+export class ArtistAuxappModel extends AuxappModel implements IArtist {
 
   endpoint = '/account';
 
   @attributesKey('provider_id')
-  @defaultValue('cloudplayer')
+  @defaultValue('auxapp')
   provider: string;
 
   @attributesKey('image')
   @nested()
-  image: ImageCloudplayerModel;
+  image: ImageAuxappModel;
 
   @attributesKey('title')
   @defaultValue('')

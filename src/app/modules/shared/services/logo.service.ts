@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 
 @Injectable()
-export class CloudPlayerLogoService {
+export class LogoService {
   // Observable string sources
   private logoStateSource = new Subject<string>();
 
