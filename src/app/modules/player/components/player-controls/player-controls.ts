@@ -43,7 +43,7 @@ export class PlayerControlsComponent implements OnInit {
     if ('mediaSession' in navigator) {
       const nv: any = navigator;
       const artwork: AbstractImageModel = track.image;
-      const fallbackImg = 'assets/meta/icons/ios/apple-icon-180x180.png';
+      const fallbackImg = '/assets/meta/icons/ios/apple-icon-180x180.png';
       nv.mediaSession.metadata = new MediaMetadata({
         title: track.title,
         artist: track.artist.getFullName(),
