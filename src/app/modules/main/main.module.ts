@@ -54,7 +54,7 @@ import {PrivacyManager} from './services/privacy-manager';
     ImprintComponent,
     PrivacyConfigComponent
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, PrivacyManager, PrivacyConfigModalOpener],
+  providers: [PrivacyManager, PrivacyConfigModalOpener],
   entryComponents: [PrivacyConfigComponent, PrivacyComponent],
   bootstrap: [MainComponent]
 })
