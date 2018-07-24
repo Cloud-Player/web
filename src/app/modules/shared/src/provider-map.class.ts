@@ -5,22 +5,32 @@ export interface IProviderMap {
 export interface IProvider {
   title: string;
   icon: string;
+  id: string;
 }
 
 export class ProviderMap {
   static auxapp: IProvider = {
-    title: 'Aux.app',
-    icon: 'fa fa-play-circle'
+    title: 'Cloud-Player',
+    icon: 'fa fa-play-circle',
+    id: 'auxapp'
   };
 
   static soundcloud: IProvider = {
     title: 'SoundCloud',
-    icon: 'fa fa-soundcloud'
+    icon: 'fa fa-soundcloud',
+    id: 'soundcloud'
   };
 
   static youtube: IProvider = {
     title: 'YouTube',
-    icon: 'fa fa-youtube-play'
+    icon: 'fa fa-youtube-play',
+    id: 'youtube'
+  };
+
+  static mixcloud: IProvider = {
+    title: 'Mixcloud',
+    icon: 'fa fa-mixcloud',
+    id: 'mixcloud'
   };
 
   static map: IProviderMap = {
