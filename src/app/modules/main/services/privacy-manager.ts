@@ -25,7 +25,9 @@ export class PrivacyManager {
     }
 
     if (this._privacySettings.allowIdCookie) {
-      this._authenticatedUser.fetch();
+      this._authenticatedUser.migrate().then(() => {
+        this._authenticatedUser.fetch();
+      });
     }
   }
 
