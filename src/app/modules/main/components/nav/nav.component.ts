@@ -20,6 +20,7 @@ import {UserAnalyticsService} from '../../../user-analytics/services/user-analyt
 import {filter} from 'rxjs/internal/operators';
 import {PrivacyManager} from '../../services/privacy-manager';
 import {PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
+import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -33,27 +34,27 @@ const packageJSON = require('../../../../../../package.json');
 export class NavComponent implements OnInit {
   public availableProviderMap = {
     auxapp: {
-      providerId: 'auxapp',
-      title: 'Cloud-Player',
-      icon: 'fa fa-play-circle',
+      providerId: ProviderMap.auxapp.id,
+      title: ProviderMap.auxapp.title,
+      icon: ProviderMap.auxapp.icon,
       accountModel: AuthenticatedUserAccountAuxappModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistAuxappModel(),
       playlistCollapsed: null,
       playlistCollapsedBeforeDragVal: null
     },
     soundcloud: {
-      providerId: 'soundcloud',
-      title: 'SoundCloud',
-      icon: 'fa fa-soundcloud',
+      providerId: ProviderMap.soundcloud.id,
+      title: ProviderMap.soundcloud.title,
+      icon: ProviderMap.soundcloud.icon,
       accountModel: AuthenticatedUserAccountSoundcloudModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistSoundcloudModel(),
       playlistCollapsed: null,
       playlistCollapsedBeforeDragVal: null
     },
     youtube: {
-      providerId: 'youtube',
-      title: 'YouTube',
-      icon: 'fa fa-youtube-play',
+      providerId: ProviderMap.youtube.id,
+      title: ProviderMap.youtube.title,
+      icon: ProviderMap.youtube.icon,
       accountModel: AuthenticatedUserAccountYoutubeModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistYoutubeModel(),
       playlistCollapsed: null,
