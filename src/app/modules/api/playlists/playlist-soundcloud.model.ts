@@ -52,17 +52,7 @@ export class PlaylistSoundcloudModel
       attrs.artwork_url = attrs.tracks[0].artwork_url;
     }
 
-    if (attrs.tracks) {
-      const parsedPlaylistItems = [];
-      attrs.tracks.forEach((track) => {
-        parsedPlaylistItems.push({
-          id: track.id,
-          track: track
-        });
-      });
-      delete attrs.tracks;
-      attrs.items = parsedPlaylistItems;
-    }
+    attrs.items = attrs.tracks;
 
     return attrs;
   }

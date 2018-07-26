@@ -10,37 +10,11 @@ import {AuxappModel} from '../../auxapp/auxapp.model';
 import {AuxappCollection} from '../../auxapp/auxapp.collection';
 
 export class PlaylistItemsAuxappCollection<TModel extends PlaylistItemAuxappModel>
-  extends AuxappCollection<AuxappModel> implements IPlaylistItems<IPlaylistItem> {
+  extends AuxappCollection<TModel> implements IPlaylistItems<IPlaylistItem> {
 
   model = PlaylistItemAuxappModel;
 
   hasCreatedAttribute = true;
-
-  constructor(...args) {
-    super(...args);
-    const debouncedFetchDetails = debounce(this.fetchDetails.bind(this), 100);
-    this.on('update reset add', debouncedFetchDetails, this);
-  }
-
-  private fetchDetails() {
-    const url = `${this.hostName()}/proxy/youtube/videos`;
-    const youtubeTrackIds = [];
-    const soundcloudTrackIds = [];
-    this.pluck('track').forEach((track: ITrack) => {
-      if (!track.hasDetails) {
-        switch (track.provider) {
-          case 'youtube':
-            youtubeTrackIds.push(track.id);
-            break;
-          case 'soundcloud':
-            soundcloudTrackIds.push(track.id);
-            break;
-        }
-      }
-    });
-    PlaylistItemsSoundcloudCollection.prototype.getTrackDetails.call(this, soundcloudTrackIds);
-    PlaylistItemsYoutubeCollection.prototype.getTrackDetails.call(this, youtubeTrackIds);
-  }
 
   public sort(options?: any) {
     const orgComparator = this.comparator;

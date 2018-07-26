@@ -49,7 +49,7 @@ export class PlaylistItemsYoutubeCollection<TModel extends PlaylistItemYoutubeMo
 
   getTrackDetails(trackIds: Array<string>) {
     return TracksYoutubeCollection.getTrackDetails(trackIds).then((rsp: any) => {
-      rsp.items.forEach((rspItem) => {
+      rsp.forEach((rspItem) => {
         const playlistItem = <PlaylistItemYoutubeModel>this.find((item: PlaylistItemYoutubeModel) => {
           return item.track.id === rspItem.id;
         });

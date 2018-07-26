@@ -32,7 +32,7 @@ export class PlayerFactory {
   public static getPlayerSize(track: ITrack): IPlayerSize {
     return {
       width: this.playerWidth,
-      height: this.playerWidth / track.aspectRatio
+      height: this.playerWidth * track.aspectRatio
     };
   }
 

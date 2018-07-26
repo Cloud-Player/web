@@ -3,13 +3,14 @@ import {nested} from '../../backbone/decorators/nested.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {ITrack} from './track.interface';
 import {AuxappModel} from '../auxapp/auxapp.model';
-import {ImageSoundcloudModel} from '../image/image-soundcloud.model';
 import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
+import {ImageAuxappModel} from '../image/image-auxapp.model';
+import {TrackYoutubeModel} from './track-youtube.model';
 
 export class TrackAuxappModel extends AuxappModel implements ITrack {
   type: 'Track';
 
-  endpoint = '/tracks';
+  endpoint = '/track';
 
   @attributesKey('hasDetails')
   @defaultValue(false)
@@ -19,13 +20,13 @@ export class TrackAuxappModel extends AuxappModel implements ITrack {
   @defaultValue('auxapp')
   provider: string;
 
-  @attributesKey('artist')
+  @attributesKey('account')
   @nested()
   artist: ArtistAuxappModel;
 
   @attributesKey('image')
   @nested()
-  image: ImageSoundcloudModel;
+  image: ImageAuxappModel;
 
   @attributesKey('title')
   title: string;
@@ -33,28 +34,45 @@ export class TrackAuxappModel extends AuxappModel implements ITrack {
   @attributesKey('duration')
   duration: number;
 
-  @attributesKey('genre')
+  @attributesKey('genres')
   genre: string;
 
-  @attributesKey('createdAt')
+  @attributesKey('created')
   createdAt: number;
 
-  @attributesKey('likes')
+  @attributesKey('favourite_count')
   likes: number;
 
-  @attributesKey('clicks')
+  @attributesKey('play_count')
   clicks: number;
 
-  @attributesKey('aspectRatio')
+  @attributesKey('aspect_ratio')
   @defaultValue(1)
   aspectRatio: number;
 
+  @attributesKey('external_link')
+  externalLink: string;
+
   @attributesKey('supportsMobilePlayBack')
-  @defaultValue(false)
+  @defaultValue(true)
   supportsMobilePlayBack: boolean;
 
   public toMiniJSON() {
-    return {};
+    const obj: any = {};
+    obj.provider = this.provider;
+    obj.id = this.id;
+    obj.title = this.title;
+    obj.duration = this.duration;
+    obj.image = this.image.toJSON();
+    obj.account = this.artist.toJSON();
+    obj.aspect_ratio = this.aspectRatio;
+    obj.external_link = this.externalLink;
+    obj.created = this.createdAt;
+    return obj;
+  }
+
+  clone() {
+    return new TrackAuxappModel(this.toMiniJSON());
   }
 }
 

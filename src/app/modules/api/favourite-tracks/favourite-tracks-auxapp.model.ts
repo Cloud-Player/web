@@ -24,6 +24,7 @@ export class FavouriteTracksAuxappModel extends AuxappModel implements IFavourit
     const id = this.id;
     this.set('id', 'mine');
     const superCall = super.fetch.apply(this, ...args).then(() => {
+      this.items.setEndpoint(this.id);
       this.items.fetch();
       return this;
     });
@@ -41,9 +42,6 @@ export class FavouriteTracksAuxappModel extends AuxappModel implements IFavourit
     });
     this.items.on('reset', (item: IPlaylistItem) => {
       this._favouriteTracksMap = {};
-    });
-    this.on('change:id', () => {
-      this.items.endpoint = `${this.endpoint}/${this.id}/item`;
     });
   }
 

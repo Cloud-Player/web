@@ -32,7 +32,7 @@
             <div class="stats">
               <div class="duration">
                 <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-                {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+                {{playQueueItem.track.duration | hReadableSeconds}}
               </div>
               <div *ngIf="playQueueItem.track.genre"
                    class="genre">
@@ -76,7 +76,7 @@
             <div class="stats">
               <div class="duration">
                 <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-                {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+                {{playQueueItem.track.duration | hReadableSeconds}}
               </div>
               <div *ngIf="playQueueItem.track.genre"
                    class="genre">
@@ -109,7 +109,7 @@
               <div class="stats">
                 <div class="duration">
                   <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
-                  {{playQueueItem.track.duration/1000 | hReadableSeconds}}
+                  {{playQueueItem.track.duration | hReadableSeconds}}
                 </div>
                 <div *ngIf="playQueueItem.track.genre"
                      class="genre">

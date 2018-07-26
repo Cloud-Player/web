@@ -7,19 +7,15 @@ import {PlaylistItemsAuxappCollection} from '../../playlists/playlist-item/playl
 export class FavouriteTrackItemsAuxappCollection<TModel extends FavouriteTrackItemAuxappModel>
   extends PlaylistItemsAuxappCollection<PlaylistItemAuxappModel> implements IPlaylistItems<IPlaylistItem> {
 
-  endpoint = '/favourite/auxapp/mine/item';
   model = FavouriteTrackItemAuxappModel;
 
-  private prepareItem(item: any): any {
-    if (!item.id && item instanceof FavouriteTrackItemAuxappModel) {
-      item.set('id', item.track.id);
-    } else if (!item.id) {
-      item.id = item.track.id;
-    }
-    return item;
+  setEndpoint(favouriteId: number) {
+    this.endpoint = `favourite/auxapp/${favouriteId}/item`;
   }
 
-  setEndpoint() {
-
+  fetch(): any {
+    if (this.endpoint) {
+      return super.fetch();
+    }
   }
 }

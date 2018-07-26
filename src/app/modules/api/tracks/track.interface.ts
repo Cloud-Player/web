@@ -20,6 +20,7 @@ export interface ITrack extends BaseModel {
   clicks: number;
   aspectRatio: number;
   supportsMobilePlayBack: boolean;
+  externalLink: string;
 
   toMiniJSON(): {};
 }

@@ -6,6 +6,7 @@ import {SoundcloudProxyCollection} from '../../soundcloud/soundcloud-proxy.colle
 import {IPlaylistItem} from './playlist-item.interface';
 import {IPlaylistItems} from './playlist-items.interface';
 import {SortPlaylistItemsComparator} from './sort-playlist-items-comparator';
+import {debounce} from 'underscore';
 
 export class PlaylistItemsSoundcloudCollection<TModel extends PlaylistItemSoundcloudModel>
   extends SoundcloudProxyCollection<SoundcloudProxyModel> implements IPlaylistItems<IPlaylistItem> {
@@ -13,6 +14,12 @@ export class PlaylistItemsSoundcloudCollection<TModel extends PlaylistItemSoundc
   model = PlaylistItemSoundcloudModel;
 
   hasCreatedAttribute = false;
+
+  constructor(...args) {
+    super(...args);
+    const debouncedFetchDetails = debounce(this.fetchTrackDetails.bind(this), 100);
+    this.on('update reset add', debouncedFetchDetails, this);
+  }
 
   private fetchTrackDetails() {
     const trackIds = [];

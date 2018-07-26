@@ -4,6 +4,8 @@ import {dynamicInstance} from '../../../backbone/decorators/dynamic-instance.dec
 import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
 import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {AuxappModel} from '../../auxapp/auxapp.model';
+import {ITrack} from '../../tracks/track.interface';
+import {TrackMixcloudModel} from '../../tracks/track-mixcloud.model';
 
 export class PlaylistItemAuxappModel
   extends AuxappModel implements IPlaylistItem {
@@ -15,22 +17,28 @@ export class PlaylistItemAuxappModel
     identifierKey: 'provider_id',
     identifierKeyValueMap: {
       soundcloud: TrackSoundcloudModel,
-      youtube: TrackYoutubeModel
+      youtube: TrackYoutubeModel,
+      mixcloud: TrackMixcloudModel
     }
   })
-  track: TrackSoundcloudModel;
+  track: ITrack;
 
   @attributesKey('created')
   created: number;
 
   parse(attributes) {
-    const parsedTrack = {
-      id: attributes.track_id,
-      provider_id: attributes.track_provider_id
-    };
+    if (!attributes.track) {
+      if (!this.track || this.track.isNew()) {
+        attributes.track = {
+          id: attributes.track_id,
+          provider_id: attributes.track_provider_id
+        };
+      } else {
+        delete attributes.track;
+      }
+    }
     delete attributes.track_id;
     delete attributes.track_provider_id;
-    attributes.track = parsedTrack;
     return attributes;
   }
 

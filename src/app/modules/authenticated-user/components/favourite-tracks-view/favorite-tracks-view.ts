@@ -27,6 +27,7 @@ export class FavouriteTracksViewComponent implements OnInit, OnDestroy {
   constructor(private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.accounts = AuthenticatedUserModel.getInstance().accounts;
     this._subscription = new Subscription();
+    this.tracks = [];
   }
 
   private setTracks(items: IFavouriteTrackItems<IFavouriteTrackItem>) {
