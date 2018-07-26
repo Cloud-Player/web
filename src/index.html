@@ -5,9 +5,9 @@
   <title>Cloud-Player</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="keywords" content="audio player, video player, SoundCloud, YouTube, music">
+  <meta name="keywords" content="audio player, video player, SoundCloud, YouTube, Mixcloud, music">
   <meta name="description"
-        content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!">
+        content="Free music/video player to play music from YouTube, SoundCloud and Mixcloud. Listen to awesome music by awesome artists!">
   <meta name="subject" content="Awesome music by awesome artists">
   <meta name="language" content="EN">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,7 +49,7 @@
   <meta content="summary" name="twitter:card"/>
   <meta content="Cloud-Player" name="twitter:title"/>
   <meta
-    content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!"
+    content="Free music/video player to play music from YouTube, SoundCloud and Mixcloud. Listen to awesome music by awesome artists!"
     name="twitter:description"/>
 
   <!-- Facebook -->
@@ -61,19 +61,34 @@
   <meta content="Cloud-Player" property="og:title"/>
   <meta content="https://cloud-player.io" property="og:url"/>
   <meta
-    content="Free music/video player to play music from SoundCloud and YouTube. Listen to awesome music by awesome artists!"
+    content="Free music/video player to play music from YouTube, SoundCloud and Mixcloud. Listen to awesome music by awesome artists!"
     property="og:description"/>
+
+
+  <link rel="dns-prefetch" href="https://api.aux.app">
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+  <link rel="dns-prefetch" href="https://thumbnailer.mixcloud.com">
+  <link rel="dns-prefetch" href="https://stream2.mixcloud.com">
+
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+
+  <link rel="dns-prefetch" href="https://a1.sndcdn.com">
+  <link rel="dns-prefetch" href="https://i1.sndcdn.com">
+  <link rel="dns-prefetch" href="https://cf-media.sndcdn.com">
 
   <!-- Fluid App -->
   <link rel="fluid-icon" type="image/png" href="/assets/logo.png" title="Cloud-Player">
 
   <!-- Style during initialization of the application -->
   <style>
-    html, body{
+    html, body {
       padding: 0;
       margin: 0;
     }
-    #initScreen{
+
+    #initScreen {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -92,18 +107,18 @@
       box-sizing: border-box;
     }
 
-    #initScreen .notes-holder{
+    #initScreen .notes-holder {
       display: flex;
     }
 
-    #initScreen .text{
+    #initScreen .text {
       margin: 40px 0 -40px 0;
       color: #aaa;
       text-transform: uppercase;
       font-weight: 100;
     }
 
-    #initScreen .note{
+    #initScreen .note {
       position: relative;
       height: 90px;
       width: 55px;
@@ -111,12 +126,12 @@
       opacity: 0.4;
     }
 
-    #initScreen .note.sm{
+    #initScreen .note.sm {
       animation-delay: 0.5s;
       margin-left: 10px;
     }
 
-    #initScreen .note:before{
+    #initScreen .note:before {
       content: "";
       position: absolute;
       height: 60px;
@@ -126,7 +141,7 @@
       right: 5px;
     }
 
-    #initScreen .note:after{
+    #initScreen .note:after {
       content: "";
       position: absolute;
       width: 50px;
@@ -136,11 +151,11 @@
       border-radius: 50%;
     }
 
-    #initScreen .note.sm:before{
+    #initScreen .note.sm:before {
       height: 40px;
     }
 
-    #initScreen .note.sm:after{
+    #initScreen .note.sm:after {
       bottom: 20px;
     }
 
@@ -154,7 +169,7 @@
       60% {
         opacity: 1;
       }
-      85%{
+      85% {
         opacity: 0.4;
       }
     }
