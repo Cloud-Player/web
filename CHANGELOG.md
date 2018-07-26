@@ -1,3 +1,9 @@
+# v5.3.0
+- Integrate Mixcloud
+
+# v5.2.0
+- Migrate to new API endpoint
+
 # v5.1.1
 - Remove youtube video syndicated filter
 
