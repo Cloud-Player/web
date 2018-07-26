@@ -1,7 +1,4 @@
-import {ITracks} from './tracks.interface';
 import {ITrackModelConstructor} from './track.interface';
-import {TrackAuxappModel} from './track-auxapp.model';
-import {AuxappCollection} from '../auxapp/auxapp.collection';
 import {TracksAuxappCollection} from './tracks-auxapp.collection';
 import {TrackMixcloudModel} from './track-mixcloud.model';
 

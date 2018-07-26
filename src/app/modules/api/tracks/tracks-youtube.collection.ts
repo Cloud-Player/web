@@ -1,9 +1,4 @@
 import {TrackYoutubeModel} from './track-youtube.model';
-import {YoutubeProxyCollection} from '../youtube/youtube-proxy.collection';
-import {ITrackModelConstructor} from './track.interface';
-import {ITracks} from './tracks.interface';
-import {debounce} from 'underscore';
-import {TrackMixcloudModel} from './track-mixcloud.model';
 import {TracksAuxappCollection} from './tracks-auxapp.collection';
 import {AuxappCollection} from '../auxapp/auxapp.collection';
 

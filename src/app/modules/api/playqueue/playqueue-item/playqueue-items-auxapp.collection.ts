@@ -1,11 +1,7 @@
-import {PlaylistItemAuxappModel} from '../../playlists/playlist-item/playlist-item-auxapp.model';
-import {IPlaylistItems} from '../../playlists/playlist-item/playlist-items.interface';
-import {IPlaylistItem} from '../../playlists/playlist-item/playlist-item.interface';
 import {PlaylistItemsAuxappCollection} from '../../playlists/playlist-item/playlist-items-auxapp.collection';
 import {PlayqueueItemAuxappModel} from './playqueue-item-auxapp.model';
 import {isArray, shuffle, sortBy} from 'underscore';
 import {PlayQueueItemStatus} from '../../../player/src/playqueue-item-status.enum';
-import {PlayQueue} from '../../../player/collections/play-queue';
 
 export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappModel>
   extends PlaylistItemsAuxappCollection<TModel> {

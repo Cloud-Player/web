@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {isObject, isString} from 'underscore';
-import {IMessage, MessageMethodTypes, MessageSubscription, MessageTypes, MessageService} from './message';
+import {IMessage, MessageMethodTypes, MessageService, MessageSubscription, MessageTypes} from './message';
 import {filter} from 'rxjs/operators';
 
 export enum SocketStatusTypes {

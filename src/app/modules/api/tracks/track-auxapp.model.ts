@@ -5,7 +5,6 @@ import {ITrack} from './track.interface';
 import {AuxappModel} from '../auxapp/auxapp.model';
 import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
 import {ImageAuxappModel} from '../image/image-auxapp.model';
-import {TrackYoutubeModel} from './track-youtube.model';
 
 export class TrackAuxappModel extends AuxappModel implements ITrack {
   type: 'Track';

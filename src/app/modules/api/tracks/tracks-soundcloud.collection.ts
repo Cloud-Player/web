@@ -1,7 +1,4 @@
-import {SoundcloudProxyCollection} from '../soundcloud/soundcloud-proxy.collection';
 import {TrackSoundcloudModel} from './track-soundcloud.model';
-import {ITracks} from './tracks.interface';
-import {ITrackModelConstructor} from './track.interface';
 import {TracksAuxappCollection} from './tracks-auxapp.collection';
 import {AuxappCollection} from '../auxapp/auxapp.collection';
 
