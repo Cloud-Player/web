@@ -34,8 +34,8 @@ export class SearchViewComponent implements AfterViewInit {
   public searchCollection: TracksAuxappCollection<TrackAuxappModel>;
   public isFetching = false;
   public showWelcomeText = false;
-  public activeTab = 'all';
   public availableProviderMap = ProviderMap.map;
+  public activeTab = this.availableProviderMap['auxapp'].id;
   public searchTerm = '';
   public isConnected = true;
   public authenticatedUser: AuthenticatedUserModel;
