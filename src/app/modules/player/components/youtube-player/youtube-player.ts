@@ -16,6 +16,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   private _timePoller: number;
   private _ytApiReady = false;
   private _eventHandler;
+  private _canPlay = false;
 
   @Input()
   public track: TrackYoutubeModel;
@@ -31,7 +32,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   public id = uniqueId('yt_player');
 
   private pollCurrentTime() {
-    if (this._ytPlayer && this._ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+    if (this._canPlay && this._ytPlayer && this._ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
       this.setCurrentTime(this._ytPlayer.getCurrentTime());
       clearTimeout(this._timePoller);
       this._timePoller = setTimeout(this.pollCurrentTime.bind(this), 500);
@@ -162,15 +163,18 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   }
 
   protected startPlayer(): void {
+    this._canPlay = true;
     this.onRequestPlay();
     this._ytPlayer.playVideo();
   }
 
   protected pausePlayer(): void {
+    this._canPlay = false;
     this._ytPlayer.pauseVideo();
   }
 
   protected stopPlayer(): void {
+    this._canPlay = false;
     this._ytPlayer.stopVideo();
   }
 
