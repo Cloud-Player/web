@@ -25,6 +25,13 @@
         bottom: 0;
         z-index: 3;
       }
+
+      /deep/ app-soundcloud-player,
+      /deep/ app-mixcloud-player {
+        .provider-cover {
+          bottom: 45px;
+        }
+      }
     }
   }
 
