@@ -10,7 +10,7 @@
   </div>
   <div class="details">
     <b>{{track.title}}</b>
-    <p>{{track.artist.username}}</p>
+    <p>{{track.artist.getFullName()}}</p>
     <app-track-play-button [track]="track"></app-track-play-button>
   </div>
 
