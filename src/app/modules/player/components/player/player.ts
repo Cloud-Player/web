@@ -107,12 +107,17 @@ export class PlayerComponent implements OnInit {
       if (currentItem) {
         localforage.setItem('cp_currentItem', currentItem.toMiniJSON());
       }
-      this.cdr.detectChanges();
     }, 10000);
 
+    const throttledViewUpdate = throttle(() => {
+      this.cdr.detectChanges();
+    }, 1000);
+
+    this.playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
     this.playQueue.on('update remove reset change:status', debouncedPlayQueueSave);
     this.playQueue.on('update remove reset', debouncedSetHasPlayer);
     this.playQueue.on('change:progress', throttledProgressUpdate);
+    this.playQueue.on('change:progress', throttledViewUpdate);
 
     this.fullScreenService.getObservable()
       .pipe(
