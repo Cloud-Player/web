@@ -11,7 +11,7 @@
       [title]="availableProviderMap[account.provider].title"
       [icon]="availableProviderMap[account.provider].icon">
       <div *ngIf="tracks.length>0">
-        <div *ngFor="let track of tracks">
+        <div *ngFor="let track of tracks | limitCollectionresults: {limit: 10}">
           <app-context-menu>
             <app-track-list-item [track]="track" [tracks]="tracks">
               <app-options-btn>

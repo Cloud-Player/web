@@ -24,7 +24,7 @@
   <div *ngIf="playlist.items.length>0"
        class="card">
     <app-sort-playlist-items [playlistItems]="playlist.items"></app-sort-playlist-items>
-    <div *ngFor="let item of playlist.items.models">
+    <div *ngFor="let item of playlist.items.models | limitCollectionresults: {limit: 10}">
       <app-context-menu>
         <app-track-list-item [track]="item.track" [tracks]="tracks">
           <app-options-btn>
