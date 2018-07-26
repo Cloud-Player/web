@@ -14,14 +14,6 @@
     width: 100%;
     margin-left: -7px;
   }
-
-  /deep/ app-tab-bar {
-    li{
-      flex-grow: 1;
-      text-align: center;
-      width: auto;
-    }
-  }
 }
 
 
