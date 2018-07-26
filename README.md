@@ -5,11 +5,12 @@
 
 ## Multiple providers – One player
 Cloud-Player combines the libraries of multiple streaming providers into a single music player. 
-Search for tracks on SoundCloud or on YouTube and play them without switching between browser tabs.
+Search for tracks on Youtube, SoundCloud or on Mixcloud and play them without switching between browser tabs.
 We are planning to extend Cloud-Player with even more music providers in the future.
 So far, it is using the official
+[YouTube Data API](https://developers.google.com/youtube/v3/docs),
 [SoundCloud API](https://developers.soundcloud.com/docs/api) and 
-[YouTube Data API](https://developers.google.com/youtube/v3/docs).
+[Mixcloud API](https://www.mixcloud.com/developers/)
 
 [Start the webplayer](https://cloud-player.io)
 
@@ -25,9 +26,8 @@ so you don’t have to sign up.
 The account will be automatically deleted when you are not using Cloud-Player for more than 30 days.
 To persist your account and use it accross devices, login with your SoundCloud or YouTube account.
 
-
 ## Add tracks to playlists
-Create a Cloud-Player playlist to add both SoundCloud and YouTube tracks. Tracks can be also saved as favourites. 
+Create a Cloud-Player playlist to add YouTube, SoundCloud and Mixcloud tracks. Tracks can be also saved as favourites. 
 Connect with your SoundCloud and YouTube account to synchronise already existing playlists and favourite tracks.
 
 ## Continuous playback
@@ -62,7 +62,7 @@ Cloud Player is a study project created at [HTW Berlin](http://www.htw-berlin.de
 - [Cloud-Player Native Desktop App](https://github.com/Cloud-Player/desktop-app) (Electron)
 
 ## Disclaimer
-Cloud-Player is neither related to SoundCloud or YouTube nor was it build on behalf of SoundCloud or YouTube.
+Cloud-Player is neither related to YouTube, SoundCloud or Mixcloud nor was it build on behalf of YouTube, SoundCloud or Mixcloud.
 
 ## License
 [GNU GPLv3](./LICENSE)
