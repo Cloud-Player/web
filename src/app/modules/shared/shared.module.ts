@@ -51,6 +51,8 @@ import {AddToPlaylistOptionComponent} from './components/option-btn/add-to-playl
 import {ShufflePlayOptionComponent} from './components/option-btn/shuffle-play-option/shuffle-play-option';
 import {ListFooterComponent} from './components/list-footer/list-footer';
 import {AlertBoxComponent} from './components/alert/alert-box';
+import {SocketMessageService} from './services/socket-message';
+import {MessageService} from './services/message';
 
 @NgModule({
   imports: [
@@ -158,6 +160,8 @@ import {AlertBoxComponent} from './components/alert/alert-box';
     DragAndDropService,
     ModalService,
     LayoutService,
+    MessageService,
+    SocketMessageService,
     AuthenticatedUserGuard
   ],
   entryComponents: [
