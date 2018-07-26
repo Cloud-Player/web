@@ -8,6 +8,7 @@ import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ITracks} from '../../../api/tracks/tracks.interface';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {debounce} from 'underscore';
+import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 @Component({
   selector: 'app-track-list-item',
@@ -22,6 +23,8 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
 
   private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
   private _debouncedUpdate: Function;
+
+  public providerMap: ProviderMap = ProviderMap.map;
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this._debouncedUpdate = debounce(this.update.bind(this), 10);

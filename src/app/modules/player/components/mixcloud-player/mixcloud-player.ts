@@ -5,6 +5,7 @@ import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
 import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
+import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 @Component({
   selector: 'app-mixcloud-player',
@@ -14,9 +15,12 @@ import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, OnInit, OnDestroy {
   private _mcPlayer: Mixcloud.IPlayerWidget;
   private _mcApiReady = false;
+  private _seekedTo: number;
 
   @Input()
   public track: TrackMixcloudModel;
+
+  public providerMap: ProviderMap = ProviderMap.map;
 
   constructor(private el: ElementRef) {
     super();
@@ -34,12 +38,10 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
         this.onWaiting();
         break;
       case 'play':
-        console.log('PLAY');
         this._mcPlayer.getDuration().then(this.setDuration.bind(this));
         this.onPlaying();
         break;
       case 'pause':
-        console.log('PAUSE');
         this.onPaused();
         break;
       case 'ended':
@@ -122,7 +124,12 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
 
   protected startPlayer(): void {
     this.onRequestPlay();
-    this._mcPlayer.play();
+    this._mcPlayer.play().then(() => {
+      if (this._seekedTo) {
+        this.seekPlayerTo(this._seekedTo);
+        this._seekedTo = null;
+      }
+    });
   }
 
   protected pausePlayer(): void {
@@ -134,7 +141,8 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
   }
 
   protected seekPlayerTo(to: number) {
-    this._mcPlayer.seek(to);
+    this._seekedTo = to;
+    return this._mcPlayer.seek(to);
   }
 
   public getPlayerEl(): ElementRef {

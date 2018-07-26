@@ -42,10 +42,16 @@
       </div>
     </div>
     <div class="stats">
+      <a class="label label-default label-light"
+         [href]="track.externalLink"
+         target="_blank"
+         title="Open in {{providerMap[track.provider].title}}">
+        <span class="{{providerMap[track.provider].icon}}"></span>
+      </a>
       <div class="duration label label-default label-light">
         <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
         <span *ngIf="track.duration">
-            {{track.duration/1000 | hReadableSeconds}}
+            {{track.duration | hReadableSeconds}}
           </span>
         <span *ngIf="!track.duration">
             <app-loading-spinner [isLoading]="true"></app-loading-spinner>
@@ -59,7 +65,7 @@
            class="plays label label-default label-light">
         <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.clicks | kMilShortener}}
       </div>
-      <div *ngIf="track.genre"
+      <div *ngIf="track.genre && track.genre.length>0"
            class="genre label label-default label-light">
         #{{track.genre}}
       </div>

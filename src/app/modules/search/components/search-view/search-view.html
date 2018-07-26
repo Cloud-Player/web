@@ -18,7 +18,33 @@
                (tabChange)="selectTab($event)"
                [hidden]="showWelcomeText"
                [activeTabId]="activeTab">
-    <app-tab-pane id="soundcloud"
+    <app-tab-pane [id]="availableProviderMap['auxapp'].id"
+                  title="All"
+                  [icon]="availableProviderMap['auxapp'].icon">
+
+      <div *ngIf="tracksAuxapp.length>0"
+           class="results">
+        <app-search-result-tracks [tracks]="tracksAuxapp">
+          <app-filter-form [collection]="tracksAuxapp">
+            <app-youtube-duration-filter label="Duration"
+                                         filterProperty="duration">
+            </app-youtube-duration-filter>
+          </app-filter-form>
+        </app-search-result-tracks>
+      </div>
+
+      <app-empty-state *ngIf="tracksAuxapp.length === 0 && tracksAuxapp.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="tracksAuxapp.queryParams.q && tracksAuxapp.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+    </app-tab-pane>
+    <app-tab-pane [id]="availableProviderMap['soundcloud'].id"
                   [title]="availableProviderMap['soundcloud'].title"
                   [icon]="availableProviderMap['soundcloud'].icon">
 
@@ -26,18 +52,9 @@
            class="results">
         <app-search-result-tracks [tracks]="tracksSoundCloud">
           <app-filter-form [collection]="tracksSoundCloud">
-            <app-min-max-range-filter label="Duration"
-                                      [min]="1000" [max]="3600000" [step]="1000"
-                                      minFilterProperty="duration[from]"
-                                      maxFilterProperty="duration[to]"
-                                      [transformDisplayValue]="transformScDurationValue">
-            </app-min-max-range-filter>
-
-            <app-min-max-range-filter label="BPM"
-                                      [min]="20" [max]="200" [step]="20"
-                                      minFilterProperty="bpm[from]"
-                                      maxFilterProperty="bmp[to]">
-            </app-min-max-range-filter>
+            <app-youtube-duration-filter label="Duration"
+                                         filterProperty="duration">
+            </app-youtube-duration-filter>
           </app-filter-form>
         </app-search-result-tracks>
       </div>
@@ -53,7 +70,8 @@
       </app-empty-state>
 
     </app-tab-pane>
-    <app-tab-pane id="youtube" [title]="availableProviderMap['youtube'].title"
+    <app-tab-pane [id]="availableProviderMap['youtube'].id"
+                  [title]="availableProviderMap['youtube'].title"
                   [icon]="availableProviderMap['youtube'].icon">
 
       <div *ngIf="tracksYoutube.length>0"
@@ -61,7 +79,7 @@
         <app-search-result-tracks [tracks]="tracksYoutube">
           <app-filter-form [collection]="tracksYoutube">
             <app-youtube-duration-filter label="Duration"
-                                         filterProperty="videoDuration">
+                                         filterProperty="duration">
             </app-youtube-duration-filter>
           </app-filter-form>
         </app-search-result-tracks>
@@ -73,6 +91,31 @@
       </app-empty-state>
 
       <app-empty-state *ngIf="tracksYoutube.queryParams.q && tracksYoutube.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
+    </app-tab-pane>
+    <app-tab-pane [id]="availableProviderMap['mixcloud'].id"
+                  [title]="availableProviderMap['mixcloud'].title"
+                  [icon]="availableProviderMap['mixcloud'].icon">
+
+      <div *ngIf="tracksMixcloud.length>0"
+           class="results">
+        <app-search-result-tracks [tracks]="tracksMixcloud">
+          <app-filter-form [collection]="tracksMixcloud">
+            <app-youtube-duration-filter label="Duration"
+                                         filterProperty="duration">
+            </app-youtube-duration-filter>
+          </app-filter-form>
+        </app-search-result-tracks>
+      </div>
+
+      <app-empty-state *ngIf="tracksMixcloud.length === 0 && tracksMixcloud.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="tracksMixcloud.queryParams.q && tracksMixcloud.length === 0 && !isFetching"
                        title="No tracks were found"
                        icon="fa fa-search">
       </app-empty-state>

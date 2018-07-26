@@ -20,7 +20,7 @@
         opacity: 1;
       }
 
-      .details{
+      .details {
         .drag-indicator {
           opacity: 1 !important;
           margin-right: 5px !important;
@@ -141,20 +141,20 @@
             }
           }
 
-          .is-queued{
+          .is-queued {
             border: none;
             color: $brand-primary;
 
-            .fa-trash{
+            .fa-trash {
               display: none;
             }
 
-            &:hover{
-              .fa-queue{
+            &:hover {
+              .fa-queue {
                 display: none;
               }
 
-              .fa-trash{
+              .fa-trash {
                 display: inline;
               }
             }
@@ -167,8 +167,20 @@
       }
 
       .stats {
+        .label:first-child {
+          padding-left: 0;
+        }
+
         .label-light {
           border: none;
+        }
+
+        a.label{
+          background: none !important;
+
+          &:hover{
+            color: $brand-primary;
+          }
         }
       }
 

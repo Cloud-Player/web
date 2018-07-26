@@ -15,6 +15,10 @@ import {AuthenticatedUserAccountAuxappModel} from '../../../api/authenticated-us
 import {PrivacyConfigModalOpener} from '../../../main/components/privacy-config/privacy-config';
 import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
 import {ExternalUserAuthenticator} from '../../../authenticated-user/services/external-authenticator.class';
+import {TracksAuxappCollection} from '../../../api/tracks/tracks-auxapp.collection';
+import {TrackAuxappModel} from '../../../api/tracks/track-auxapp.model';
+import {TracksMixcloudCollection} from '../../../api/tracks/tracks-mixcloud.collection';
+import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
 
 @Component({
   selector: 'app-search-view',
@@ -23,12 +27,14 @@ import {ExternalUserAuthenticator} from '../../../authenticated-user/services/ex
 })
 
 export class SearchViewComponent implements AfterViewInit {
+  public tracksAuxapp: TracksAuxappCollection<TrackAuxappModel>;
   public tracksSoundCloud: TracksSoundcloudCollection<TrackSoundcloudModel>;
   public tracksYoutube: TracksYoutubeCollection<TrackYoutubeModel>;
-  public searchCollection: TracksSoundcloudCollection<TrackSoundcloudModel> | TracksYoutubeCollection<TrackYoutubeModel>;
+  public tracksMixcloud: TracksMixcloudCollection<TrackMixcloudModel>;
+  public searchCollection: TracksAuxappCollection<TrackAuxappModel>;
   public isFetching = false;
   public showWelcomeText = false;
-  public activeTab = 'soundcloud';
+  public activeTab = 'all';
   public availableProviderMap = ProviderMap.map;
   public searchTerm = '';
   public isConnected = true;
@@ -40,8 +46,10 @@ export class SearchViewComponent implements AfterViewInit {
   constructor(private humanReadableSecondsPipe: HumanReadableSecondsPipe,
               private privacyConfigModalOpener: PrivacyConfigModalOpener,
               private externalUserAuthenticator: ExternalUserAuthenticator) {
+    this.tracksAuxapp = new TracksAuxappCollection();
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
+    this.tracksMixcloud = new TracksMixcloudCollection();
     this.searchCollection = this.tracksSoundCloud;
     this.setRandomSearchTerm();
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
@@ -57,11 +65,17 @@ export class SearchViewComponent implements AfterViewInit {
 
   public selectTab(tabPane: TabPaneComponent) {
     switch (tabPane.id) {
-      case 'soundcloud':
+      case ProviderMap.auxapp.id:
+        this.searchCollection = this.tracksAuxapp;
+        break;
+      case ProviderMap.soundcloud.id:
         this.searchCollection = this.tracksSoundCloud;
         break;
-      case 'youtube':
+      case ProviderMap.youtube.id:
         this.searchCollection = this.tracksYoutube;
+        break;
+      case ProviderMap.mixcloud.id:
+        this.searchCollection = this.tracksMixcloud;
         break;
     }
     localforage.setItem('sc_search_provider', tabPane.id);
@@ -138,6 +152,15 @@ export class SearchViewComponent implements AfterViewInit {
       localforage.setItem('sc_search_term', val);
     });
 
+    this.tracksAuxapp.on('request', () => {
+      this.isFetching = true;
+      this.showWelcomeText = false;
+    });
+
+    this.tracksAuxapp.on('sync error', () => {
+      this.isFetching = false;
+    });
+
     this.tracksSoundCloud.on('request', () => {
       this.isFetching = true;
       this.showWelcomeText = false;
@@ -153,6 +176,15 @@ export class SearchViewComponent implements AfterViewInit {
     });
 
     this.tracksYoutube.on('sync error', () => {
+      this.isFetching = false;
+    });
+
+    this.tracksMixcloud.on('request', () => {
+      this.isFetching = true;
+      this.showWelcomeText = false;
+    });
+
+    this.tracksMixcloud.on('sync error', () => {
       this.isFetching = false;
     });
 

@@ -36,6 +36,7 @@ export class ProviderMap {
   static map: IProviderMap = {
     auxapp: ProviderMap.auxapp,
     soundcloud: ProviderMap.soundcloud,
-    youtube: ProviderMap.youtube
+    youtube: ProviderMap.youtube,
+    mixcloud: ProviderMap.mixcloud
   };
 }

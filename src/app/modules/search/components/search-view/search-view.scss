@@ -15,8 +15,12 @@
     margin-left: -7px;
   }
 
-  app-social-share-panel {
-    display: block;
+  /deep/ app-tab-bar {
+    li{
+      flex-grow: 1;
+      text-align: center;
+      width: auto;
+    }
   }
 }
 
