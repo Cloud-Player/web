@@ -6,6 +6,7 @@ import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
 import {Subscription} from 'rxjs';
 import {debounce} from 'underscore';
+import {ProviderMap} from '../../../shared/src/provider-map.class';
 
 @Component({
   selector: 'app-play-queue',
@@ -18,6 +19,7 @@ export class PlayQueueComponent implements OnInit {
   private _debouncedUpdate: Function;
   public coverSize = ImageSizes.Medium;
   public showDragAndDropHelp = false;
+  public providerMap: ProviderMap = ProviderMap.map;
 
   @Input()
   public playQueue: PlayQueue<PlayQueueItem>;

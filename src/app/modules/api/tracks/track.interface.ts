@@ -14,7 +14,7 @@ export interface ITrack extends BaseModel {
   image: AbstractImageModel;
   title: string;
   duration: number;
-  genre: string;
+  genre: Array<string>;
   createdAt: number;
   likes: number;
   clicks: number;
@@ -23,5 +23,6 @@ export interface ITrack extends BaseModel {
   externalLink: string;
 
   toMiniJSON(): {};
+  getGenreString(): string;
 }
 

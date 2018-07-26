@@ -94,6 +94,18 @@
               color: $gray-light;
             }
           }
+
+          .genre {
+            .fa {
+              margin-left: 10px;
+            }
+          }
+
+          .provider {
+            color: $gray-light;
+            font-size: 11px;
+            margin-right: 10px;
+          }
         }
       }
     }
@@ -117,7 +129,7 @@
   &.drag-in-progress {
     overflow: initial;
 
-    .no-items{
+    .no-items {
       display: none;
     }
   }

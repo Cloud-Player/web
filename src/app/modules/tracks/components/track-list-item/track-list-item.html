@@ -66,8 +66,10 @@
         <i class="fa fa-play-circle" aria-hidden="true" alt="play count"></i> {{track.clicks | kMilShortener}}
       </div>
       <div *ngIf="track.genre && track.genre.length>0"
-           class="genre label label-default label-light">
-        #{{track.genre}}
+           class="genre label label-default label-light"
+           title="Track category">
+        <i class="fa fa-dot-circle-o" aria-hidden="true" alt="genre"></i>
+        {{track.getGenreString()}}
       </div>
     </div>
   </div>

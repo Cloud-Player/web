@@ -34,7 +34,7 @@ export class TrackAuxappModel extends AuxappModel implements ITrack {
   duration: number;
 
   @attributesKey('genres')
-  genre: string;
+  genre: Array<string>;
 
   @attributesKey('created')
   createdAt: number;
@@ -68,6 +68,10 @@ export class TrackAuxappModel extends AuxappModel implements ITrack {
     obj.external_link = this.externalLink;
     obj.created = this.createdAt;
     return obj;
+  }
+
+  public getGenreString() {
+    return this.genre.slice(0, 3).join(', ');
   }
 
   clone() {

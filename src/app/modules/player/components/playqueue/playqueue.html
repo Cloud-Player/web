@@ -34,9 +34,10 @@
                 <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
                 {{playQueueItem.track.duration | hReadableSeconds}}
               </div>
-              <div *ngIf="playQueueItem.track.genre"
+              <div *ngIf="playQueueItem.track.genre && playQueueItem.track.genre.length>0"
                    class="genre">
-                #{{playQueueItem.track.genre}}
+                <i class="fa fa-dot-circle-o" aria-hidden="true" alt="genre"></i>
+                {{playQueueItem.track.genre[0]}}
               </div>
             </div>
           </div>
@@ -74,13 +75,21 @@
             </b>
             <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
             <div class="stats">
+              <a class="provider"
+                 [href]="playQueueItem.track.externalLink"
+                 target="_blank"
+                 title="Open in {{providerMap[playQueueItem.track.provider].title}}">
+                <span class="{{providerMap[playQueueItem.track.provider].icon}}"></span>
+              </a>
               <div class="duration">
                 <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
                 {{playQueueItem.track.duration | hReadableSeconds}}
               </div>
-              <div *ngIf="playQueueItem.track.genre"
-                   class="genre">
-                #{{playQueueItem.track.genre}}
+              <div *ngIf="playQueueItem.track.genre && playQueueItem.track.genre.length>0"
+                   class="genre"
+                   title="Track category">
+                <i class="fa fa-dot-circle-o" aria-hidden="true" alt="genre"></i>
+                {{playQueueItem.track.genre[0]}}
               </div>
             </div>
           </div>
@@ -107,13 +116,21 @@
               </b>
               <div class="artist">{{playQueueItem.track.artist.getFullName() || 'None'}}</div>
               <div class="stats">
+                <a class="provider"
+                   [href]="playQueueItem.track.externalLink"
+                   target="_blank"
+                   title="Open in {{providerMap[playQueueItem.track.provider].title}}">
+                  <span class="{{providerMap[playQueueItem.track.provider].icon}}"></span>
+                </a>
                 <div class="duration">
                   <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
                   {{playQueueItem.track.duration | hReadableSeconds}}
                 </div>
-                <div *ngIf="playQueueItem.track.genre"
-                     class="genre">
-                  #{{playQueueItem.track.genre}}
+                <div *ngIf="playQueueItem.track.genre && playQueueItem.track.genre.length>0"
+                     class="genre"
+                     title="Track category">
+                  <i class="fa fa-dot-circle-o" aria-hidden="true" alt="genre"></i>
+                  {{playQueueItem.track.genre[0]}}
                 </div>
               </div>
             </div>
