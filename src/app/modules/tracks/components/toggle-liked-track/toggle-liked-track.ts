@@ -72,19 +72,19 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   dislike(): void {
-    const favouriteTrack = <IFavouriteTrackItem>this._auxappFavouriteTracks.items.find((item: IPlaylistItem) => {
+    const favouriteTrackItem = <IFavouriteTrackItem>this._auxappFavouriteTracks.items.find((item: IPlaylistItem) => {
       return item.track.id === this.track.id;
     });
-    if (favouriteTrack) {
-      favouriteTrack.destroy().then(() => {
+    if (favouriteTrackItem && !favouriteTrackItem.isNew()) {
+      favouriteTrackItem.destroy().then(() => {
         this.userAnalyticsService.trackEvent(
           'toggle_like',
-          `${favouriteTrack.type}:dislike_${this.track.provider}`,
+          `${favouriteTrackItem.type}:dislike_${this.track.provider}`,
           'app-option-btn');
       }, () => {
         this.userAnalyticsService.trackEvent(
           'toggle_like',
-          `${favouriteTrack.type}:dislike_error:${this.track.provider}`,
+          `${favouriteTrackItem.type}:dislike_error:${this.track.provider}`,
           'app-option-btn');
       });
     }
