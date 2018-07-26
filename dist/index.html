@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+  <title>Cloud-Player</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="keywords" content="audio player, video player, SoundCloud, YouTube, Mixcloud, music">
+  <meta name="description"
+        content="Free music/video player to play music from YouTube, SoundCloud and Mixcloud. Listen to awesome music by awesome artists!">
+  <meta name="subject" content="Awesome music by awesome artists">
+  <meta name="language" content="EN">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Language" content="en">
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" type="image/ico" href="/assets/meta/icons/favicons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/meta/icons/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/meta/icons/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/meta/icons/favicons/favicon-16x16.png">
+
+  <!-- Android -->
+  <meta name="theme-color" content="#ff3600">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/meta/icons/android/android-icon-192x192.png">
+  <link rel="manifest" href="/assets/meta/manifest.json">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="Cloud-Player">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/meta/icons/ios/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/meta/icons/ios/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/meta/icons/ios/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/meta/icons/ios/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/meta/icons/ios/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/meta/icons/ios/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/meta/icons/ios/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/meta/icons/ios/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/meta/icons/ios/apple-icon-180x180.png">
+
+  <!-- Windows -->
+  <meta name="msapplication-TileColor" content="#ff3600">
+  <meta name="msapplication-TileImage" content="/assets/meta/icons/windows/ms-icon-144x144.png">
+
+  <!-- Twitter -->
+  <meta content="https://cloud-player.io/assets/meta/social/twitter.jpg" name="twitter:image:src"/>
+  <meta content="@cldplayer" name="twitter:site"/>
+  <meta content="summary" name="twitter:card"/>
+  <meta content="Cloud-Player" name="twitter:title"/>
+  <meta
+    content="Free music/video player to play music from YouTube, SoundCloud and Mixcloud. Listen to awesome music by awesome artists!"
+    name="twitter:description"/>
+
+  <!-- Facebook -->
+  <meta content="https://cloud-player.io/assets/meta/social/facebook.jpg" property="og:image"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="Cloud-Player" property="og:site_name"/>
+  <meta content="object" property="og:type"/>
+  <meta content="Cloud-Player" property="og:title"/>
+  <meta content="https://cloud-player.io" property="og:url"/>
+  <meta
+    content="Free music/video player to play music from YouTube, SoundCloud and Mixcloud. Listen to awesome music by awesome artists!"
+    property="og:description"/>
+
+
+  <link rel="dns-prefetch" href="https://api.aux.app">
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+  <link rel="dns-prefetch" href="https://thumbnailer.mixcloud.com">
+  <link rel="dns-prefetch" href="https://stream2.mixcloud.com">
+
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+
+  <link rel="dns-prefetch" href="https://a1.sndcdn.com">
+  <link rel="dns-prefetch" href="https://i1.sndcdn.com">
+  <link rel="dns-prefetch" href="https://cf-media.sndcdn.com">
+
+  <!-- Fluid App -->
+  <link rel="fluid-icon" type="image/png" href="/assets/logo.png" title="Cloud-Player">
+
+  <!-- Style during initialization of the application -->
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #initScreen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      background: #efefef;
+      font-family: "Raleway", Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+    }
+
+    #initScreen *,
+    #initScreen *:before,
+    #initScreen *:after {
+      box-sizing: border-box;
+    }
+
+    #initScreen .notes-holder {
+      display: flex;
+    }
+
+    #initScreen .text {
+      margin: 40px 0 -40px 0;
+      color: #aaa;
+      text-transform: uppercase;
+      font-weight: 100;
+    }
+
+    #initScreen .note {
+      position: relative;
+      height: 90px;
+      width: 55px;
+      animation: opacity 2s cubic-bezier(0.59, 0.43, 0.86, 0.85) infinite alternate;
+      opacity: 0.4;
+    }
+
+    #initScreen .note.sm {
+      animation-delay: 0.5s;
+      margin-left: 10px;
+    }
+
+    #initScreen .note:before {
+      content: "";
+      position: absolute;
+      height: 60px;
+      width: 8px;
+      background: #ff3600;
+      top: 0;
+      right: 5px;
+    }
+
+    #initScreen .note:after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border: 7.5px solid #ff3600;
+      bottom: 0;
+      border-radius: 50%;
+    }
+
+    #initScreen .note.sm:before {
+      height: 40px;
+    }
+
+    #initScreen .note.sm:after {
+      bottom: 20px;
+    }
+
+    @keyframes opacity {
+      15% {
+        opacity: 0.4;
+      }
+      40% {
+        opacity: 1;
+      }
+      60% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 0.4;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="styles.3a732ee470c2e9730bdb.css"></head>
+
+<body>
+<app-cloud-player>
+  <script>
+    if (window.navigator.appVersion.match(/.*Electron.*/)) {
+      document.querySelector('body').style.opacity = 0;
+      document.querySelector('body').style.background = '#efefef';
+    }
+  </script>
+  <div id="initScreen">
+    <div class="notes-holder">
+      <div class="note"></div>
+      <div class="note sm"></div>
+    </div>
+    <div class="text">Initialising Cloud-Player</div>
+  </div>
+</app-cloud-player>
+<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.14b74e2b9ba69f7f362e.js"></script><script type="text/javascript" src="main.960a2cf8f54e95144819.js"></script></body>
+
+</html>
