@@ -21,6 +21,7 @@ import {filter} from 'rxjs/internal/operators';
 import {PrivacyManager} from '../../services/privacy-manager';
 import {PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
+import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -184,6 +185,16 @@ export class NavComponent implements OnInit {
 
         this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
         this.availableProviderMap.youtube.playlistCollapsed = false;
+        break;
+      case TrackMixcloudModel:
+        this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.auxapp.playlistCollapsed;
+        this.availableProviderMap.auxapp.playlistCollapsed = false;
+
+        this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
+        this.availableProviderMap.soundcloud.playlistCollapsed = true;
+
+        this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
+        this.availableProviderMap.youtube.playlistCollapsed = true;
         break;
     }
     this.el.nativeElement.classList.add('open');
