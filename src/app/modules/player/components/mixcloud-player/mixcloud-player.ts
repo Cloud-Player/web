@@ -149,6 +149,7 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
   }
 
   protected stopPlayer(): void {
+    this._seekedTo = 0;
     this._mcPlayer.pause();
   }
 
