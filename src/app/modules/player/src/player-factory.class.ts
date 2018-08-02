@@ -75,10 +75,14 @@ export class PlayerFactory {
     keys(this._playerComponentMap).forEach((providerKey) => {
       const playersForProvider = this._playerStore.where({provider: providerKey});
       while (playersForProvider.length > 2) {
-        const player = playersForProvider.pop();
+        const player = playersForProvider.shift();
         const playerInstance = player.component.instance;
         const playerStatus = playerInstance.getStatus();
-        if (playerStatus === PlayerStatus.NotInitialised || playerStatus === PlayerStatus.Stopped) {
+        if (playerStatus === PlayerStatus.NotInitialised ||
+          playerStatus === PlayerStatus.Stopped ||
+          playerStatus === PlayerStatus.Paused ||
+          playerStatus === PlayerStatus.Ended) {
+          console.warn('Playerfactory cleanup service destroys unused player for provider ' + player.component.instance.track.provider);
           player.component.destroy();
           this._playerStore.remove(player);
         }
