@@ -13,13 +13,6 @@
     bottom: 0;
     padding: 0 10px 5px 10px;
     background: white;
-    opacity: 0;
     transition: opacity 0.2s ease-in-out;
-  }
-
-  &:hover{
-    .provider-cover{
-      opacity: 1;
-    }
   }
 }

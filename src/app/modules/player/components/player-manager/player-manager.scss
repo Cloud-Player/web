@@ -33,6 +33,18 @@
         display: flex;
         pointer-events: none;
       }
+
+      &.status-PLAYING {
+        .provider-cover {
+          opacity: 0;
+        }
+      }
+
+      &:hover{
+        .provider-cover{
+          opacity: 1 !important;
+        }
+      }
     }
   }
 
