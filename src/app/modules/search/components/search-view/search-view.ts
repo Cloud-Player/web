@@ -99,7 +99,11 @@ export class SearchViewComponent implements AfterViewInit {
       'Kodaline',
       'Wanda',
       'Cigarettes after Sex',
-      'Trentemøller'
+      'Trentemøller',
+      'Arcade Fire',
+      'Burning Man',
+      'Robot Heart',
+      'Fusion Festival'
     ];
     const randomInt = Utils.getRandomInt(0, searchTerms.length - 1);
     this.searchTerm = searchTerms[randomInt];
