@@ -79,6 +79,9 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
   }
 
   protected unBindListeners() {
+    if (!this._mcPlayer) {
+      return;
+    }
     this._mcPlayer.events.pause.off(this.handleMcStatusChange.bind(this, 'pause'));
     this._mcPlayer.events.play.off(this.handleMcStatusChange.bind(this, 'play'));
     this._mcPlayer.events.buffering.off(this.handleMcStatusChange.bind(this, 'buffering'));
