@@ -44,7 +44,7 @@ export class SocketMessageService {
 
     this.messageService.handleMessage(MessageTypes.SOCKET, {
       channel: jsonData.channel,
-      method: MessageMethodTypes[jsonData.method as keyof typeof MessageMethodTypes],
+      method: MessageMethodTypes[jsonData.method.toUpperCase() as keyof typeof MessageMethodTypes],
       body: jsonData.body
     });
     this._observable.emit({type: SocketStatusTypes.MESSAGE, detail: jsonData});
