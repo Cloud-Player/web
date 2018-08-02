@@ -1,3 +1,7 @@
+# v5.3.1
+- Fix Mixcloud player bugs
+- Refactor playqueue to prepare support to persist playqueue on server
+
 # v5.3.0
 - Integrate Mixcloud
 
