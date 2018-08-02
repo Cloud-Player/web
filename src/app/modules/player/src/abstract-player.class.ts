@@ -454,6 +454,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   ngOnInit(): void {
     this._viewReadyResolver();
+    this._ngOnInitCompleted = true;
     this.initialise();
   }
 }
