@@ -101,9 +101,15 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setStatus(status: PlayerStatus) {
+    if (!this._initialised && status !== PlayerStatus.NotInitialised) {
+      /*Make sure that the status NotInitialised can not be overwritted by a delayed promise*/
+      return;
+    }
     if (this._status !== status) {
       this._status = status;
       this.statusChange.emit(status);
+      this.removeClass(/status-/);
+      this.addClass('status-' + status);
     }
   }
 
@@ -413,6 +419,9 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public removeClass(className: string | RegExp) {
+    if (!this.getPlayerEl() || !this.getPlayerEl().nativeElement) {
+      return;
+    }
     if (className instanceof RegExp) {
       const removeClassNames: string[] = [];
       this.getPlayerEl().nativeElement.classList.forEach((foundClassName) => {
@@ -429,6 +438,9 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public addClass(className: string) {
+    if (!this.getPlayerEl() || !this.getPlayerEl().nativeElement) {
+      return;
+    }
     this.getPlayerEl().nativeElement.classList.add(className);
   }
 
