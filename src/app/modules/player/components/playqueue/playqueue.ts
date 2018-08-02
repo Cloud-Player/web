@@ -1,12 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit} from '@angular/core';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
-import {PlayQueue} from '../../collections/play-queue';
-import {PlayQueueItem} from '../../models/play-queue-item';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {DragAndDropService, DragAndDropStates, IDragAndDropData} from '../../../shared/services/drag-and-drop';
 import {Subscription} from 'rxjs';
 import {debounce} from 'underscore';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 
 @Component({
   selector: 'app-play-queue',
@@ -22,7 +21,7 @@ export class PlayQueueComponent implements OnInit {
   public providerMap: ProviderMap = ProviderMap.map;
 
   @Input()
-  public playQueue: PlayQueue<PlayQueueItem>;
+  public playQueue: PlayqueueAuxappModel;
 
   constructor(private el: ElementRef,
               private userAnalyticsService: UserAnalyticsService,
@@ -38,10 +37,10 @@ export class PlayQueueComponent implements OnInit {
       'playqueue-add',
       'app-play-queue'
     );
-    if (this.playQueue.length > 0) {
-      this.playQueue.queue({track: dragAndDrop.dragData});
+    if (this.playQueue.items.length > 0) {
+      this.playQueue.items.queue({track: dragAndDrop.dragData});
     } else {
-      this.playQueue.addAndPlay({track: dragAndDrop.dragData});
+      this.playQueue.items.addAndPlay({track: dragAndDrop.dragData});
     }
   }
 
@@ -62,15 +61,15 @@ export class PlayQueueComponent implements OnInit {
   }
 
   public toggleShuffle() {
-    if (this.playQueue.isShuffled()) {
-      this.playQueue.deShuffle();
+    if (this.playQueue.items.isShuffled()) {
+      this.playQueue.items.deShuffle();
       this.userAnalyticsService.trackEvent(
         'playqueue',
         'un_shuffle',
         'app-play-queue'
       );
     } else {
-      this.playQueue.shuffle();
+      this.playQueue.items.shuffle();
       this.userAnalyticsService.trackEvent(
         'playqueue',
         'shuffle',
@@ -80,15 +79,15 @@ export class PlayQueueComponent implements OnInit {
   }
 
   public toggleLoop() {
-    if (this.playQueue.isLooped()) {
-      this.playQueue.setLoopPlayQueue(false);
+    if (this.playQueue.items.isLooped()) {
+      this.playQueue.items.setLoopPlayQueue(false);
       this.userAnalyticsService.trackEvent(
         'playqueue',
         'un_loop_queue',
         'app-play-queue'
       );
     } else {
-      this.playQueue.setLoopPlayQueue(true);
+      this.playQueue.items.setLoopPlayQueue(true);
       this.userAnalyticsService.trackEvent(
         'playqueue',
         'loop_queue',
@@ -98,8 +97,8 @@ export class PlayQueueComponent implements OnInit {
   }
 
   public removeQueuedItems() {
-    this.playQueue.getQueuedItems().forEach((item) => {
-      this.playQueue.remove(item);
+    this.playQueue.items.getQueuedItems().forEach((item) => {
+      this.playQueue.items.remove(item);
     });
     this.userAnalyticsService.trackEvent(
       'playqueue',
@@ -109,10 +108,10 @@ export class PlayQueueComponent implements OnInit {
   }
 
   public removeScheduledItems() {
-    this.playQueue.filter((playQueueItem) => {
+    this.playQueue.items.filter((playQueueItem) => {
       return !playQueueItem.isQueued() && !playQueueItem.isPlaying() && !playQueueItem.isPaused();
     }).forEach((item) => {
-      this.playQueue.remove(item);
+      this.playQueue.items.remove(item);
     });
     this.userAnalyticsService.trackEvent(
       'playqueue',
@@ -123,8 +122,8 @@ export class PlayQueueComponent implements OnInit {
 
   public hasScheduledItems() {
     return (
-      this.playQueue.getScheduledItems().length > 0 ||
-      (this.playQueue.isLooped() && this.playQueue.getStoppedItems().length > 0)
+      this.playQueue.items.getScheduledItems().length > 0 ||
+      (this.playQueue.items.isLooped() && this.playQueue.items.getStoppedItems().length > 0)
     );
   }
 
@@ -140,6 +139,6 @@ export class PlayQueueComponent implements OnInit {
           }
         })
     );
-    this.playQueue.on('add remove reset change:status change:track change:shuffle change:loop', this._debouncedUpdate, this);
+    this.playQueue.items.on('add remove reset change:status change:track change:shuffle change:loop', this._debouncedUpdate, this);
   }
 }

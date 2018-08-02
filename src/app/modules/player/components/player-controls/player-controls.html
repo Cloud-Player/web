@@ -2,12 +2,12 @@
 
   <div class="player-settings">
     <button class="btn btn-xs btn-default"
-            [ngClass]="{'is-activated': playQueue.isShuffled()}"
+            [ngClass]="{'is-activated': playQueue.items.isShuffled()}"
             (click)="toggleShuffle()">
       <i class="fa fa-random"></i>
     </button>
     <button class="btn btn-xs btn-default"
-            [ngClass]="{'is-activated': playQueue.isLooped()}"
+            [ngClass]="{'is-activated': playQueue.items.isLooped()}"
             (click)="toggleLoop()">
       <i class="fa fa-repeat"></i>
     </button>
@@ -24,21 +24,21 @@
   <div class="button-container">
     <button class="btn prev"
             type="button"
-            [disabled]="!playQueue.hasPreviousItem() && currentItem.progress < 1"
+            [disabled]="!playQueue.items.hasPreviousItem() && currentItem.progress < 1"
             (click)="previous()">
       <i class="fa fa-backward" aria-hidden="true"></i>
     </button>
 
     <button class="btn btn-round btn-brand play"
-            *ngIf="!playQueue.getPlayingItem()"
+            *ngIf="!playQueue.items.getPlayingItem()"
             type="button"
-            [disabled]="!playQueue.getCurrentItem()"
+            [disabled]="!playQueue.items.getCurrentItem()"
             (click)="play()">
       <i class="fa fa-play" aria-hidden="true"></i>
     </button>
 
     <button class="btn btn-round btn-brand pause"
-            *ngIf="playQueue.getPlayingItem()"
+            *ngIf="playQueue.items.getPlayingItem()"
             type="button"
             (click)="pause()">
       <i class="fa fa-pause" aria-hidden="true"></i>
@@ -46,7 +46,7 @@
 
     <button class="btn next"
             type="button"
-            [disabled]="!playQueue.hasNextItem()"
+            [disabled]="!playQueue.items.hasNextItem()"
             (click)="next()">
       <i class="fa fa-forward" aria-hidden="true"></i>
     </button>

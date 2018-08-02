@@ -4,12 +4,12 @@ import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
 import {PlayerStatus} from '../../src/player-status.enum';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
-import {PlayQueue} from '../../collections/play-queue';
-import {PlayQueueItem} from '../../models/play-queue-item';
 import {PlayerManagerComponent} from '../player-manager/player-manager';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {LayoutService, WindowElementTypes} from '../../../shared/services/layout';
 import {filter} from 'rxjs/internal/operators';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
+import {SocketMessageService} from '../../../shared/services/socket-message';
 
 @Component({
   selector: 'app-player',
@@ -17,7 +17,7 @@ import {filter} from 'rxjs/internal/operators';
   templateUrl: './player.html'
 })
 export class PlayerComponent implements OnInit {
-  public playQueue: PlayQueue<PlayQueueItem>;
+  public playQueue: PlayqueueAuxappModel;
   public isBuffering: boolean;
 
   @ViewChild('playerManager')
@@ -41,7 +41,7 @@ export class PlayerComponent implements OnInit {
   private setLastPlayingQueue() {
     localforage.getItem('cp_playqueue').then((lastPlayingQueue: Array<any>) => {
       if (lastPlayingQueue) {
-        this.playQueue.add(lastPlayingQueue);
+        this.playQueue.items.add(lastPlayingQueue);
       }
     });
   }
@@ -50,7 +50,7 @@ export class PlayerComponent implements OnInit {
     localforage.getItem('cp_currentItem').then((lastPlayingItem: any) => {
       if (lastPlayingItem) {
         lastPlayingItem.status = PlayQueueItemStatus.Paused;
-        this.playQueue.add(lastPlayingItem, {at: 0});
+        this.playQueue.items.add(lastPlayingItem, {at: 0});
       }
     });
   }
@@ -86,17 +86,17 @@ export class PlayerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.playQueue = PlayQueue.getInstance();
+    this.playQueue = PlayqueueAuxappModel.getInstance();
 
     this.setLastPlayingQueue();
     this.setLastPlayingItem();
 
     const debouncedPlayQueueSave = debounce(() => {
-      localforage.setItem('cp_playqueue', this.playQueue.getScheduledItemsJSON(30));
+      localforage.setItem('cp_playqueue', this.playQueue.items.getScheduledItemsJSON(30));
     }, 1000);
 
     const debouncedSetHasPlayer = debounce(() => {
-      if (this.playQueue.hasCurrentItem()) {
+      if (this.playQueue.items.hasCurrentItem()) {
         this.layoutService.registerWindowElement(WindowElementTypes.MusicPlayer);
       } else {
         this.layoutService.unRegisterWindowElement(WindowElementTypes.MusicPlayer);
@@ -113,11 +113,11 @@ export class PlayerComponent implements OnInit {
       this.cdr.detectChanges();
     }, 1000);
 
-    this.playQueue.on('add remove reset change:status', debouncedPlayQueueSave);
-    this.playQueue.on('update remove reset change:status', debouncedPlayQueueSave);
-    this.playQueue.on('update remove reset', debouncedSetHasPlayer);
-    this.playQueue.on('change:progress', throttledProgressUpdate);
-    this.playQueue.on('change:progress', throttledViewUpdate);
+    this.playQueue.items.on('add remove reset change:status', debouncedPlayQueueSave);
+    this.playQueue.items.on('update remove reset change:status', debouncedPlayQueueSave);
+    this.playQueue.items.on('update remove reset', debouncedSetHasPlayer);
+    this.playQueue.items.on('change:progress', throttledProgressUpdate);
+    this.playQueue.items.on('change:progress', throttledViewUpdate);
 
     this.fullScreenService.getObservable()
       .pipe(

@@ -9,13 +9,14 @@ import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {PlayqueueItemsAuxappCollection} from './playqueue-items-auxapp.collection';
+import {AuxappModel} from '../../auxapp/auxapp.model';
 
 export class PlayqueueItemAuxappModel
   extends PlaylistItemAuxappModel {
 
   private _promisePerState = {};
 
-  @attributesKey('state')
+  @attributesKey('status')
   @defaultValue(PlayQueueItemStatus.Scheduled)
   status: PlayQueueItemStatus;
 
@@ -40,8 +41,6 @@ export class PlayqueueItemAuxappModel
 
   @attributesKey('indexBeforeShuffle')
   indexBeforeShuffle: number;
-
-  idAttribute = 'ABC';
 
   url = () => {
     return (<PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>>this.collection).url();
@@ -142,11 +141,27 @@ export class PlayqueueItemAuxappModel
   }
 
   compose() {
-    return {
-      track_provider_id: this.track.provider,
-      track_id: this.track.id.toString(),
-      state: 'stopped'
-    };
+    return AuxappModel.prototype.compose.apply(this, arguments);
   }
+
+  // compose() {
+  //   // let status = this.status;
+  //   // switch (status) {
+  //   //   case PlayQueueItemStatus.RequestedPlaying:
+  //   //     status = PlayQueueItemStatus.Playing;
+  //   //     break;
+  //   //   case PlayQueueItemStatus.RequestedPause:
+  //   //     status = PlayQueueItemStatus.Paused;
+  //   //     break;
+  //   //   case PlayQueueItemStatus.RequestedStop:
+  //   //     status = PlayQueueItemStatus.Stopped;
+  //   //     break;
+  //   // }
+  //   // return {
+  //   //   track_provider_id: this.track.provider,
+  //   //   track_id: this.track.id.toString(),
+  //   //   state: status
+  //   // };
+  // }
 
 }

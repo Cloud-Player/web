@@ -1,13 +1,13 @@
-import {PlayQueueItem} from '../../models/play-queue-item';
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
-import {PlayQueue} from '../../collections/play-queue';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {AbstractImageModel} from '../../../api/image/abstract-image';
 import {filter} from 'rxjs/internal/operators';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
+import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 declare let MediaMetadata: any;
 
@@ -18,13 +18,13 @@ declare let MediaMetadata: any;
 })
 export class PlayerControlsComponent implements OnInit {
   private _docTitle: string;
-  public currentItem: PlayQueueItem = new PlayQueueItem();
+  public currentItem: PlayqueueItemAuxappModel = new PlayqueueItemAuxappModel();
 
   @Input()
   public isBuffering: boolean;
 
   @Input()
-  public playQueue: PlayQueue<PlayQueueItem>;
+  public playQueue: PlayqueueAuxappModel;
 
   @Input()
   public volume = 100;
@@ -56,13 +56,13 @@ export class PlayerControlsComponent implements OnInit {
           {src: artwork.getLargeSizeUrl() || fallbackImg, sizes: '512x512', type: 'image/jpg'}
         ]
       });
-      if (this.playQueue.hasPreviousItem()) {
+      if (this.playQueue.items.hasPreviousItem()) {
         nv.mediaSession.setActionHandler('previoustrack', () => {
           this.userAnalyticsService.trackEvent('chrome_mob', 'previous_track', 'app-player-controls-cmp');
           this.previous();
         });
       }
-      if (this.playQueue.hasNextItem()) {
+      if (this.playQueue.items.hasNextItem()) {
         nv.mediaSession.setActionHandler('nexttrack', () => {
           this.userAnalyticsService.trackEvent('chrome_mob', 'next_track', 'app-player-controls-cmp');
           this.next();
@@ -89,7 +89,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   public play(): void {
-    const currItem = this.playQueue.getCurrentItem();
+    const currItem = this.playQueue.items.getCurrentItem();
     if (currItem) {
       currItem.play(currItem.progress);
       this.userAnalyticsService.trackEvent('player_ctrls', 'play', 'app-player-controls-cmp');
@@ -97,7 +97,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   public pause(): void {
-    const currItem = this.playQueue.getPlayingItem();
+    const currItem = this.playQueue.items.getPlayingItem();
     if (currItem) {
       currItem.pause();
       this.userAnalyticsService.trackEvent('player_ctrls', 'pause', 'app-player-controls-cmp');
@@ -105,7 +105,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   public togglePlayPause(): void {
-    const currItem = this.playQueue.getCurrentItem();
+    const currItem = this.playQueue.items.getCurrentItem();
     if (currItem) {
       if (currItem.isPlaying()) {
         this.pause();
@@ -116,19 +116,19 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   public previous(): void {
-    const playingItem = this.playQueue.getPlayingItem();
+    const playingItem = this.playQueue.items.getPlayingItem();
     if (playingItem && playingItem.progress > 3) {
       playingItem.restart();
       this.userAnalyticsService.trackEvent('player_ctrls', 'restart_track', 'app-player-controls-cmp');
-    } else if (this.playQueue.hasPreviousItem()) {
-      this.playQueue.getPreviousItem().play();
+    } else if (this.playQueue.items.hasPreviousItem()) {
+      this.playQueue.items.getPreviousItem().play();
       this.userAnalyticsService.trackEvent('player_ctrls', 'previous_track', 'app-player-controls-cmp');
     }
   }
 
   public next(): void {
-    if (this.playQueue.hasNextItem()) {
-      this.playQueue.getNextItem().play();
+    if (this.playQueue.items.hasNextItem()) {
+      this.playQueue.items.getNextItem().play();
       this.userAnalyticsService.trackEvent('player_ctrls', 'next_track', 'app-player-controls-cmp');
     }
   }
@@ -138,7 +138,7 @@ export class PlayerControlsComponent implements OnInit {
   };
 
   public playTrackFromPosition(from: number) {
-    const currItem = this.playQueue.getCurrentItem();
+    const currItem = this.playQueue.items.getCurrentItem();
     if (currItem) {
       currItem.seekTo(from);
     }
@@ -153,21 +153,21 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   public toggleShuffle() {
-    if (this.playQueue.isShuffled()) {
-      this.playQueue.deShuffle();
+    if (this.playQueue.items.isShuffled()) {
+      this.playQueue.items.deShuffle();
       this.userAnalyticsService.trackEvent('player_ctrls', 'deshuffle', 'app-player-controls-cmp');
     } else {
-      this.playQueue.shuffle();
+      this.playQueue.items.shuffle();
       this.userAnalyticsService.trackEvent('player_ctrls', 'shuffle', 'app-player-controls-cmp');
     }
   }
 
   public toggleLoop() {
-    if (this.playQueue.isLooped()) {
-      this.playQueue.setLoopPlayQueue(false);
+    if (this.playQueue.items.isLooped()) {
+      this.playQueue.items.setLoopPlayQueue(false);
       this.userAnalyticsService.trackEvent('player_ctrls', 'disable_loop', 'app-player-controls-cmp');
     } else {
-      this.playQueue.setLoopPlayQueue(true);
+      this.playQueue.items.setLoopPlayQueue(true);
       this.userAnalyticsService.trackEvent('player_ctrls', 'enable_loop', 'app-player-controls-cmp');
     }
   }
@@ -178,23 +178,23 @@ export class PlayerControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this._docTitle = document.title;
-    this.playQueue.on('change:status', (model: PlayQueueItem, status: PlayQueueItemStatus) => {
+    this.playQueue.items.on('change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
       if (status === PlayQueueItemStatus.RequestedPlaying) {
-        this.currentItem = this.playQueue.getCurrentItem();
+        this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
         this.setBrowserTitle(this.currentItem.track);
       }
       if (status === PlayQueueItemStatus.RequestedPause) {
-        this.currentItem = this.playQueue.getCurrentItem();
+        this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
         this.setBrowserTitle();
       }
     });
 
-    this.playQueue.on('add', () => {
-      const currentItem = this.playQueue.getCurrentItem();
+    this.playQueue.items.on('add', () => {
+      const currentItem = this.playQueue.items.getCurrentItem();
       if (currentItem) {
-        this.currentItem = this.playQueue.getCurrentItem();
+        this.currentItem = this.playQueue.items.getCurrentItem();
       }
     });
 

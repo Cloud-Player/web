@@ -20,11 +20,11 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   private prepareItem(item: any): PlayqueueItemAuxappModel {
-    // if (!item.id && item instanceof PlayqueueItemAuxappModel) {
-    //   item.set('id', item.track.id);
-    // } else if (!item.id) {
-    //   item.id = item.track.id;
-    // }
+    if (!item.id && item instanceof PlayqueueItemAuxappModel) {
+      item.set('id', item.track.id);
+    } else if (!item.id) {
+      item.id = item.track.id;
+    }
 
     if (!(item instanceof PlayqueueItemAuxappModel) && item.indexBeforeShuffle) {
       this._isShuffled = true;
@@ -43,6 +43,30 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
       this.trigger('change:playIndex');
     }
     return this._playIndex;
+  }
+
+  private pushMiniItems(items: Array<PlayqueueItemAuxappModel>, allItems: Array<any>, maxItems?: number): Array<any> {
+    items.forEach((item: PlayqueueItemAuxappModel) => {
+      if (maxItems && allItems.length > maxItems) {
+        return;
+      }
+      allItems.push(item.toMiniJSON());
+    });
+    return allItems;
+  }
+
+  getScheduledItemsJSON(maxItems: number): Array<{}> {
+    const allItems: Array<{}> = [],
+      queuedItems = this.getQueuedItems(),
+      scheduledItems = this.getScheduledItems();
+
+    this.pushMiniItems(queuedItems, allItems, maxItems);
+    this.pushMiniItems(scheduledItems, allItems, maxItems);
+    return allItems;
+  }
+
+  getItemByTrackId(trackId: number | string): TModel {
+    return this.find(item => item.track.id === trackId);
   }
 
   getQueuedItems(): TModel[] {

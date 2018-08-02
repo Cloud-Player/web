@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {PlayQueue} from '../../../player/collections/play-queue';
-import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {ITracks} from '../../../api/tracks/tracks.interface';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 
 @Component({
   selector: 'app-track-play-button',
@@ -10,7 +9,7 @@ import {ITracks} from '../../../api/tracks/tracks.interface';
   templateUrl: './track-play-button.html'
 })
 export class TrackPlayButtonComponent {
-  private _playQueue: PlayQueue<PlayQueueItem>;
+  private _playQueue: PlayqueueAuxappModel;
 
   @Input()
   track: ITrack;
@@ -19,11 +18,11 @@ export class TrackPlayButtonComponent {
   tracks: ITracks<ITrack>;
 
   constructor() {
-    this._playQueue = PlayQueue.getInstance();
+    this._playQueue = PlayqueueAuxappModel.getInstance();
   }
 
   isPlaying(): boolean {
-    const playingItem = this._playQueue.getPlayingItem();
+    const playingItem = this._playQueue.items.getPlayingItem();
     return (playingItem && playingItem.track.id === this.track.id);
   }
 }

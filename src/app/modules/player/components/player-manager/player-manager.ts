@@ -15,14 +15,14 @@ import {PlayerStatus} from '../../src/player-status.enum';
 import {IPlayer} from '../../src/player.interface';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerFactory} from '../../src/player-factory.class';
-import {PlayQueue} from '../../collections/play-queue';
-import {PlayQueueItem} from '../../models/play-queue-item';
 import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {EaseService} from '../../../shared/services/ease.service';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {filter} from 'rxjs/internal/operators';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
+import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 @Component({
   selector: 'app-player-manager',
@@ -45,7 +45,7 @@ export class PlayerManagerComponent implements OnInit {
   private container: ViewContainerRef;
 
   @Input()
-  public playQueue: PlayQueue<PlayQueueItem>;
+  public playQueue: PlayqueueAuxappModel;
 
   @Output()
   public playerStatusChange: EventEmitter<PlayerStatus> = new EventEmitter();
@@ -70,30 +70,30 @@ export class PlayerManagerComponent implements OnInit {
   private handlePlayerStatusChange(newStatus: PlayerStatus) {
     switch (newStatus) {
       case PlayerStatus.Playing:
-        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:is_playing`, 'app-player-manager');
-        this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Playing;
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:is_playing`, 'app-player-manager');
+        this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Playing;
         this._errorRetryCounter = 0;
         break;
       case PlayerStatus.Paused:
-        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:paused`, 'app-player-manager');
-        this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Paused;
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:paused`, 'app-player-manager');
+        this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Paused;
         break;
       case PlayerStatus.Stopped:
-        this.playQueue.getCurrentItem().status = PlayQueueItemStatus.Stopped;
+        this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Stopped;
         break;
       case PlayerStatus.Ended:
-        this.userAnalyticsService.trackEvent('player', `${this.playQueue.getCurrentItem().track.provider}:ended`, 'app-player-manager');
-        if (this.playQueue.hasNextItem()) {
-          this.playQueue.getNextItem().play();
+        this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:ended`, 'app-player-manager');
+        if (this.playQueue.items.hasNextItem()) {
+          this.playQueue.items.getNextItem().play();
         } else {
-          this.playQueue.getCurrentItem().stop();
+          this.playQueue.items.getCurrentItem().stop();
         }
         break;
       case PlayerStatus.Error:
         this.userAnalyticsService.trackEvent('player', `error:${this._activePlayer.instance.getError()}`, 'app-player-manager');
-        const currentItem = this.playQueue.getCurrentItem();
+        const currentItem = this.playQueue.items.getCurrentItem();
         if (currentItem && currentItem.isPlaying()) {
-          this.playQueue.getCurrentItem().pause();
+          this.playQueue.items.getCurrentItem().pause();
           this.retryOnError();
         }
         break;
@@ -108,7 +108,7 @@ export class PlayerManagerComponent implements OnInit {
   }
 
   private retryOnError() {
-    const currentItem = this.playQueue.getCurrentItem();
+    const currentItem = this.playQueue.items.getCurrentItem();
     const progress = currentItem.progress;
     if (this._errorRetryCounter > 2) {
       this.userAnalyticsService.trackEvent('player', 'error_resolve_timeout', 'app-player-manager');
@@ -129,7 +129,7 @@ export class PlayerManagerComponent implements OnInit {
 
     this._playerSubscriptions.add(player.currentTimeChange
       .subscribe(currentTime => {
-        this.playQueue.get(player.track.id).progress = currentTime;
+        this.playQueue.items.getItemByTrackId(player.track.id).progress = currentTime;
       })
     );
 
@@ -174,13 +174,13 @@ export class PlayerManagerComponent implements OnInit {
     this._playerSubscriptions.add(
       player.durationChange
         .subscribe(() => {
-          this.playQueue.get(player.track.id).duration = player.getDuration();
+          this.playQueue.items.getItemByTrackId(player.track.id).duration = player.getDuration();
         })
     );
 
     const currentDuration = player.getDuration();
     if (isNumber(currentDuration) && currentDuration > 0) {
-      this.playQueue.get(player.track.id).duration = player.getDuration();
+      this.playQueue.items.getItemByTrackId(player.track.id).duration = player.getDuration();
     }
     this.handlePlayerStatusChange(player.getStatus());
   }
@@ -204,7 +204,7 @@ export class PlayerManagerComponent implements OnInit {
   }
 
   private prepareNextPlayer() {
-    const upcoming: PlayQueueItem = this.playQueue.getNextItem();
+    const upcoming: PlayqueueItemAuxappModel = this.playQueue.items.getNextItem();
 
     if (upcoming) {
       if (this._upcomingPlayer && this._upcomingPlayer.instance.track.id === upcoming.track.id) {
@@ -224,7 +224,7 @@ export class PlayerManagerComponent implements OnInit {
   }
 
   private setPlayQueueItemToStopped(track: ITrack) {
-    const playQueueItem = this.playQueue.get(track.id);
+    const playQueueItem = this.playQueue.items.getItemByTrackId(track.id);
     if (playQueueItem && playQueueItem.status === PlayQueueItemStatus.RequestedStop) {
       playQueueItem.status = PlayQueueItemStatus.Stopped;
     }
@@ -261,7 +261,7 @@ export class PlayerManagerComponent implements OnInit {
     this._upcomingPlayer = null;
   }
 
-  private reusePlayer(existingPlayer: ComponentRef<IPlayer>, playQueueItem: PlayQueueItem, startTime?: number) {
+  private reusePlayer(existingPlayer: ComponentRef<IPlayer>, playQueueItem: PlayqueueItemAuxappModel, startTime?: number) {
     this.setPlayQueueItemToStopped(existingPlayer.instance.track);
     existingPlayer.instance.updateTrack(playQueueItem.track).then(() => {
       this.activatePlayer(existingPlayer, this._upcomingPlayer, startTime);
@@ -275,7 +275,7 @@ export class PlayerManagerComponent implements OnInit {
     this._playerFactory.destroyPlayer(player);
   }
 
-  private startPlayerFor(playQueueItem: PlayQueueItem, startTime: number = 0) {
+  private startPlayerFor(playQueueItem: PlayqueueItemAuxappModel, startTime: number = 0) {
     const activePlayer: ComponentRef<IPlayer> = this._activePlayer;
     const nextPlayer: ComponentRef<IPlayer> = this._upcomingPlayer;
 
@@ -323,18 +323,18 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
-  private reactOnPlayQueueChange(item: PlayQueueItem): void {
+  private reactOnPlayQueueChange(item: PlayqueueItemAuxappModel): void {
     switch (item.status) {
       case PlayQueueItemStatus.RequestedPlaying:
         this.startPlayerFor(item, item.progress);
         break;
       case PlayQueueItemStatus.RequestedStop:
-        if (item === this.playQueue.getCurrentItem()) {
+        if (item === this.playQueue.items.getCurrentItem()) {
           this.stopPlayer();
         }
         break;
       case PlayQueueItemStatus.RequestedPause:
-        if (item === this.playQueue.getCurrentItem()) {
+        if (item === this.playQueue.items.getCurrentItem()) {
           this.pausePlayer();
         }
         break;
@@ -379,10 +379,10 @@ export class PlayerManagerComponent implements OnInit {
   ngOnInit(): void {
     this._playerFactory.setContainer(this.container);
 
-    this.playQueue.setLoopPlayQueue(true);
-    this.playQueue.on('change:status', this.reactOnPlayQueueChange, this);
-    this.playQueue.on('add', () => {
-      const firstPlayQueueItem = this.playQueue.getPausedItem() || this.playQueue.getPlayingItem();
+    this.playQueue.items.setLoopPlayQueue(true);
+    this.playQueue.items.on('change:status', this.reactOnPlayQueueChange, this);
+    this.playQueue.items.on('add', () => {
+      const firstPlayQueueItem = this.playQueue.items.getPausedItem() || this.playQueue.items.getPlayingItem();
       if (!this._activePlayer && firstPlayQueueItem) {
         const firstPlayer = this._playerFactory.createPlayer(firstPlayQueueItem);
         this.activatePlayer(firstPlayer, this._activePlayer, firstPlayQueueItem.progress, false);

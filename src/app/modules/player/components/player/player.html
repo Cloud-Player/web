@@ -1,7 +1,7 @@
-<section class="player" [ngClass]="{'no-items': playQueue.length===0}">
+<section class="player" [ngClass]="{'no-items': playQueue.items.length===0}">
 
   <div class="track-item">
-    <app-track-cover *ngIf="playQueue.length===0"></app-track-cover>
+    <app-track-cover *ngIf="playQueue.items.length===0"></app-track-cover>
     <app-player-manager #playerManager
                         [playQueue]="playQueue"
                         (playerStatusChange)="changePlayerStatus($event)"></app-player-manager>

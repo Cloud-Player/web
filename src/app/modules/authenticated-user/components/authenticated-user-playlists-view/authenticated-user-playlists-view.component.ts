@@ -7,11 +7,10 @@ import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {IPlaylistItems} from '../../../api/playlists/playlist-item/playlist-items.interface';
 import {IPlaylist} from '../../../api/playlists/playlist.interface';
 import {IPlaylistItem} from '../../../api/playlists/playlist-item/playlist-item.interface';
-import {PlayQueue} from '../../../player/collections/play-queue';
-import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {ExternalUserAuthenticator, ExternalUserConnectState} from '../../services/external-authenticator.class';
 import {Subscription} from 'rxjs';
 import {filter} from 'rxjs/internal/operators';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 
 @Component({
   selector: 'app-authenticated-user-playlists-view',
@@ -19,7 +18,7 @@ import {filter} from 'rxjs/internal/operators';
   templateUrl: './authenticated-user-playlists-view.template.html'
 })
 export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestroy {
-  private _playQueue: PlayQueue<PlayQueueItem>;
+  private _playQueue: PlayqueueAuxappModel;
   private _subscription: Subscription;
   public availableProviderMap = ProviderMap.map;
   public accounts: AuthenticatedUserAccountsCollection<IAuthenticatedUserAccount>;
@@ -27,7 +26,7 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
 
   constructor(private externalUserAuthenticator: ExternalUserAuthenticator) {
     this.accounts = AuthenticatedUserModel.getInstance().accounts;
-    this._playQueue = PlayQueue.getInstance();
+    this._playQueue = PlayqueueAuxappModel.getInstance();
     this._subscription = new Subscription();
   }
 
@@ -40,12 +39,12 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
   }
 
   public playPlaylistItems(playlistItems: IPlaylistItems<IPlaylistItem>) {
-    this._playQueue.reset();
+    this._playQueue.items.reset();
     playlistItems.each((item: IPlaylistItem) => {
-      this._playQueue.add({track: item.track});
+      this._playQueue.items.add({track: item.track});
     });
 
-    this._playQueue.first().play();
+    this._playQueue.items.first().play();
   }
 
   public play(playlist: IPlaylist) {

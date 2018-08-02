@@ -7,8 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {ClientDetector} from '../../shared/services/client-detector.service';
 import {AuthenticatedUserModel} from '../../api/authenticated-user/authenticated-user.model';
 import {LayoutService, WindowElementTypes} from '../../shared/services/layout';
-import {PlayQueue} from '../../player/collections/play-queue';
-import {PlayQueueItem} from '../../player/models/play-queue-item';
+import {PlayqueueAuxappModel} from '../../api/playqueue/playqueue-auxapp.model';
 
 @Injectable()
 export class NativeAppHandlerService {
@@ -17,7 +16,7 @@ export class NativeAppHandlerService {
     platform: string
   };
   private _latestClientVersion: string;
-  private _playQueue: PlayQueue<PlayQueueItem>;
+  private _playQueue: PlayqueueAuxappModel;
 
   public static getDownloadLinkForVersion(version: string): string {
     if (ClientDetector.isWindowsPC()) {
@@ -31,7 +30,7 @@ export class NativeAppHandlerService {
               private toastService: ToastService,
               private layoutService: LayoutService,
               private userAnalyticsService: UserAnalyticsService) {
-    this._playQueue = PlayQueue.getInstance();
+    this._playQueue = PlayqueueAuxappModel.getInstance();
   }
 
   private fetchLatestClientVersion(): Promise<string> {
@@ -59,23 +58,23 @@ export class NativeAppHandlerService {
 
   private bindMediaKeyListener() {
     window.addEventListener('playPauseTrackKeyPressed', () => {
-      if (this._playQueue.getPlayingItem()) {
+      if (this._playQueue.items.getPlayingItem()) {
         this.userAnalyticsService.trackEvent('desktop_native', 'pause_track', 'app-player-controls-cmp');
-        this._playQueue.getPlayingItem().pause();
-      } else if (this._playQueue.getPausedItem()) {
+        this._playQueue.items.getPlayingItem().pause();
+      } else if (this._playQueue.items.getPausedItem()) {
         this.userAnalyticsService.trackEvent('desktop_native', 'play_track', 'app-player-controls-cmp');
-        this._playQueue.getPausedItem().play();
+        this._playQueue.items.getPausedItem().play();
       }
     });
     window.addEventListener('nextTrackKeyPressed', () => {
-      if (this._playQueue.hasNextItem()) {
-        this._playQueue.getNextItem().play();
+      if (this._playQueue.items.hasNextItem()) {
+        this._playQueue.items.getNextItem().play();
         this.userAnalyticsService.trackEvent('desktop_native', 'next_track', 'app-player-controls-cmp');
       }
     });
     window.addEventListener('previousTrackKeyPressed', () => {
-      if (this._playQueue.getPreviousItem()) {
-        this._playQueue.getPreviousItem().play();
+      if (this._playQueue.items.getPreviousItem()) {
+        this._playQueue.items.getPreviousItem().play();
         this.userAnalyticsService.trackEvent('desktop_native', 'previous_track', 'app-player-controls-cmp');
       }
     });

@@ -1,6 +1,4 @@
 import {Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
-import {PlayQueue} from '../../player/collections/play-queue';
-import {PlayQueueItem} from '../../player/models/play-queue-item';
 import {ITrack} from '../../api/tracks/track.interface';
 import {ITracks} from '../../api/tracks/tracks.interface';
 import {Subscription} from 'rxjs';
@@ -9,6 +7,7 @@ import {ToastModel} from '../../shared/models/toast';
 import {ToastTypes} from '../../shared/src/toast-types.enum';
 import {ClientDetector} from '../../shared/services/client-detector.service';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
+import {PlayqueueAuxappModel} from '../../api/playqueue/playqueue-auxapp.model';
 
 @Directive({
   selector: '[appTrackPlayOn]'
@@ -35,7 +34,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     this._subscriptions = new Subscription();
   }
 
-  private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
+  private playQueue: PlayqueueAuxappModel = PlayqueueAuxappModel.getInstance();
 
   private togglePlay() {
 
@@ -53,7 +52,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
   }
 
   private isPlaying(): boolean {
-    const playingItem = this.playQueue.getPlayingItem();
+    const playingItem = this.playQueue.items.getPlayingItem();
     return (playingItem && playingItem.track.id === this.track.id);
   }
 
@@ -73,26 +72,26 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
       this.showNotSupportedOnMobileToast();
       return;
     }
-    const existingPlayQueueItem = this.playQueue.get(this.track.id);
+    const existingPlayQueueItem = this.playQueue.items.getItemByTrackId(this.track.id);
     if (existingPlayQueueItem && existingPlayQueueItem.isPaused()) {
       existingPlayQueueItem.play();
     } else {
-      this.playQueue.resetQueue();
+      this.playQueue.items.resetQueue();
       if (this.tracks) {
         this.tracks.forEach((track: ITrack, index) => {
-          if (!this.playQueue.get(track.id)) {
-            this.playQueue.add({track: track});
+          if (!this.playQueue.items.getItemByTrackId(track.id)) {
+            this.playQueue.items.add({track: track});
           }
         });
       }
-      this.playQueue.add({track: this.track}).play();
+      this.playQueue.items.add({track: this.track}).play();
       this.userAnalyticsService.trackEvent('play_track', `${this.track.provider}:${this.track.title}`, 'appTrackPlayOn');
     }
   }
 
   private pause(): void {
     if (this.isPlaying()) {
-      PlayQueue.getInstance().getPlayingItem().pause();
+      this.playQueue.items.getPlayingItem().pause();
     }
   }
 

@@ -5,10 +5,10 @@ import {PlayerStatus} from './player-status.enum';
 import {keys} from 'underscore';
 import {PlayerStore} from '../collections/player-store';
 import {PlayerStoreItem} from '../models/player-store-item';
-import {PlayQueueItem} from '../models/play-queue-item';
 import {YoutubePlayerComponent} from '../components/youtube-player/youtube-player';
 import {ITrack} from '../../api/tracks/track.interface';
 import {MixcloudPlayerComponent} from '../components/mixcloud-player/mixcloud-player';
+import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 @Injectable()
 export class PlayerFactory {
@@ -44,7 +44,7 @@ export class PlayerFactory {
     }
   }
 
-  private createNewPlayer(item: PlayQueueItem): PlayerStoreItem {
+  private createNewPlayer(item: PlayqueueItemAuxappModel): PlayerStoreItem {
     const component: Type<IPlayer> = this.getComponentForType(item.track.provider);
     const factory: ComponentFactory<IPlayer> = this._resolver.resolveComponentFactory(component);
     const playerComponent: ComponentRef<IPlayer> = this._container.createComponent(factory);
@@ -60,10 +60,11 @@ export class PlayerFactory {
     return player;
   }
 
-  private getReusablePlayer(playQueueItem: PlayQueueItem): PlayerStoreItem {
+  private getReusablePlayer(playQueueItem: PlayqueueItemAuxappModel): PlayerStoreItem {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
       return player.provider === playQueueItem.track.provider &&
         player.component.instance.getStatus() === PlayerStatus.NotInitialised ||
+        player.component.instance.getStatus() === PlayerStatus.Ended ||
         player.component.instance.getStatus() === PlayerStatus.Stopped;
     });
 
@@ -90,7 +91,7 @@ export class PlayerFactory {
     this._playerStore = new PlayerStore();
   }
 
-  public canReusePlayer(playerComponent: ComponentRef<IPlayer>, playQueueItem: PlayQueueItem) {
+  public canReusePlayer(playerComponent: ComponentRef<IPlayer>, playQueueItem: PlayqueueItemAuxappModel) {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
       return player.component === playerComponent && player.provider === playQueueItem.track.provider;
     });
@@ -98,7 +99,7 @@ export class PlayerFactory {
     return !!applicablePlayer;
   }
 
-  public createPlayer(item: PlayQueueItem): ComponentRef<IPlayer> {
+  public createPlayer(item: PlayqueueItemAuxappModel): ComponentRef<IPlayer> {
     if (!this._container) {
       throw new Error('A container has to be set before you can create a player! Call setContainer()');
     }

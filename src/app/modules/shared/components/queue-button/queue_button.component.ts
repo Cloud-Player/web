@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {PlayQueueItem} from '../../../player/models/play-queue-item';
-import {PlayQueue} from '../../../player/collections/play-queue';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {ITracks} from '../../../api/tracks/tracks.interface';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
+import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 @Component({
   selector: 'app-queue-button',
@@ -16,11 +16,11 @@ export class QueueButtonComponent {
 
   @Input() tracks: ITracks<ITrack>;
 
-  private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
+  private playQueue: PlayqueueAuxappModel = PlayqueueAuxappModel.getInstance();
 
   isQueued(): boolean {
-    const queuedItems = this.playQueue.getQueuedItems();
-    if (queuedItems && queuedItems.find((item: PlayQueueItem) => {
+    const queuedItems = this.playQueue.items.getQueuedItems();
+    if (queuedItems && queuedItems.find((item: PlayqueueItemAuxappModel) => {
         return item.track.id === this.track.id;
       })) {
       return true;
@@ -30,6 +30,6 @@ export class QueueButtonComponent {
   }
 
   queue(): void {
-    this.playQueue.queue({track: this.track});
+    this.playQueue.items.queue({track: this.track});
   }
 }

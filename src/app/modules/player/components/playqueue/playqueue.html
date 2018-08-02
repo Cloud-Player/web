@@ -1,7 +1,7 @@
 <div class="play-queue scrollable"
      appDropzone
      (dropData)="drop($event)">
-  <div class="queued-tracks-list" *ngIf="playQueue.getQueuedItems().length > 0">
+  <div class="queued-tracks-list" *ngIf="playQueue.items.getQueuedItems().length > 0">
     <div class="divider">
       <div class="title">Coming up next</div>
       <div class="btn-group">
@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div *ngFor="let playQueueItem of playQueue.getQueuedItems()"
+    <div *ngFor="let playQueueItem of playQueue.items.getQueuedItems()"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"
          [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-    <div *ngFor="let playQueueItem of playQueue.getScheduledItems() | limitCollectionresults: {limit: 10}"
+    <div *ngFor="let playQueueItem of playQueue.items.getScheduledItems() | limitCollectionresults: {limit: 10}"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"
          [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
@@ -98,8 +98,8 @@
         <app-add-to-playlist-option [track]="playQueueItem.track" hidden></app-add-to-playlist-option>
       </app-context-menu>
     </div>
-    <div *ngIf="playQueue.isLooped()">
-      <div *ngFor="let playQueueItem of playQueue.getStoppedItems() | limitCollectionresults: {limit: 10}"
+    <div *ngIf="playQueue.items.isLooped()">
+      <div *ngFor="let playQueueItem of playQueue.items.getStoppedItems() | limitCollectionresults: {limit: 10}"
            appDraggable="true"
            [dragData]="playQueueItem.track.toJSON()"
            [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
@@ -150,7 +150,7 @@
   </app-empty-state>
 
   <app-empty-state
-    *ngIf="!hasScheduledItems() && playQueue.getQueuedItems().length === 0"
+    *ngIf="!hasScheduledItems() && playQueue.items.getQueuedItems().length === 0"
     class="no-items"
     title="Your play queue is empty"
     icon="fa fa-queue">

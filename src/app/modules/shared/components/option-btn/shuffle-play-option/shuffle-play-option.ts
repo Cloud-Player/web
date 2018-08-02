@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {ITrack} from '../../../../api/tracks/track.interface';
-import {PlayQueue} from '../../../../player/collections/play-queue';
-import {PlayQueueItem} from '../../../../player/models/play-queue-item';
 import {ITracks} from '../../../../api/tracks/tracks.interface';
+import {PlayqueueItemAuxappModel} from '../../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {PlayqueueAuxappModel} from '../../../../api/playqueue/playqueue-auxapp.model';
 
 @Component({
   selector: 'app-shuffle-play-option',
@@ -11,7 +11,7 @@ import {ITracks} from '../../../../api/tracks/tracks.interface';
 })
 export class ShufflePlayOptionComponent {
 
-  private _playQueue: PlayQueue<PlayQueueItem>;
+  private _playQueue: PlayqueueAuxappModel;
 
   @Input()
   public track: ITrack;
@@ -20,29 +20,29 @@ export class ShufflePlayOptionComponent {
   public tracks: ITracks<ITrack>;
 
   constructor() {
-    this._playQueue = PlayQueue.getInstance();
+    this._playQueue = PlayqueueAuxappModel.getInstance();
   }
 
   public shufflePlay() {
-    this._playQueue.resetQueue();
+    this._playQueue.items.resetQueue();
 
     if (this.tracks) {
       this.tracks.forEach((track: ITrack, index) => {
-        if (!this._playQueue.get(track.id)) {
-          this._playQueue.add({track: track});
+        if (!this._playQueue.items.getItemByTrackId(track.id)) {
+          this._playQueue.items.add({track: track});
         }
       });
     }
 
-    this._playQueue.shuffle();
+    this._playQueue.items.shuffle();
 
-    const addedTrack = this._playQueue.get(this.track.id);
-    const newPlayQueueItem = new PlayQueueItem({track: this.track});
+    const addedTrack = this._playQueue.items.getItemByTrackId(this.track.id);
+    const newPlayQueueItem = new PlayqueueItemAuxappModel({track: this.track});
     if (addedTrack) {
       newPlayQueueItem.indexBeforeShuffle = addedTrack.indexBeforeShuffle;
-      this._playQueue.remove(addedTrack, {silent: true});
+      this._playQueue.items.remove(addedTrack, {silent: true});
     }
 
-    this._playQueue.add(newPlayQueueItem, {at: 0}).play();
+    this._playQueue.items.add(newPlayQueueItem, {at: 0}).play();
   }
 }

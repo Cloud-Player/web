@@ -5,11 +5,20 @@ import {PlayqueueItemsAuxappCollection} from './playqueue-item/playqueue-items-a
 import {PlayqueueItemAuxappModel} from './playqueue-item/playqueue-item-auxapp.model';
 
 export class PlayqueueAuxappModel extends AuxappModel {
+  private static instance: PlayqueueAuxappModel;
+
   endpoint = '/queue';
 
   @attributesKey('items')
   @nested()
   items: PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>;
+
+  static getInstance(): PlayqueueAuxappModel {
+    if (!PlayqueueAuxappModel.instance) {
+      PlayqueueAuxappModel.instance = new PlayqueueAuxappModel();
+    }
+    return PlayqueueAuxappModel.instance;
+  }
 
   parse(attributes) {
     delete attributes.items;

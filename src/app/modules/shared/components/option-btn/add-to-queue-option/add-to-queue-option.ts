@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ITrack} from '../../../../api/tracks/track.interface';
-import {PlayQueue} from '../../../../player/collections/play-queue';
-import {PlayQueueItem} from '../../../../player/models/play-queue-item';
+import {PlayqueueAuxappModel} from '../../../../api/playqueue/playqueue-auxapp.model';
 
 @Component({
   selector: 'app-add-to-queue-option',
@@ -10,17 +9,17 @@ import {PlayQueueItem} from '../../../../player/models/play-queue-item';
 })
 export class AddToQueueOptionComponent {
 
-  private _playQueue: PlayQueue<PlayQueueItem>;
+  private _playQueue: PlayqueueAuxappModel;
 
   @Input()
   public track: ITrack;
 
   constructor() {
-    this._playQueue = PlayQueue.getInstance();
+    this._playQueue = PlayqueueAuxappModel.getInstance();
   }
 
   public isQueued() {
-    const playQueueItem = this._playQueue.get(this.track);
+    const playQueueItem = this._playQueue.items.get(this.track);
     if (playQueueItem) {
       return playQueueItem.isQueued();
     } else {
@@ -29,11 +28,11 @@ export class AddToQueueOptionComponent {
   }
 
   public addToQueue() {
-    this._playQueue.queue({track: this.track});
+    this._playQueue.items.queue({track: this.track});
   }
 
   public removeFromQueue() {
-    const playQueueItem = this._playQueue.get(this.track);
+    const playQueueItem = this._playQueue.items.get(this.track);
     if (playQueueItem) {
       playQueueItem.unQueue();
     }

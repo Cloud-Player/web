@@ -1,14 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-
-import {PlayQueue} from '../../../player/collections/play-queue';
-import {PlayQueueItem} from '../../../player/models/play-queue-item';
 import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ITracks} from '../../../api/tracks/tracks.interface';
 import {ITrack} from '../../../api/tracks/track.interface';
 import {debounce} from 'underscore';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
+import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 
 @Component({
   selector: 'app-track-list-item',
@@ -21,7 +19,7 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() tracks: ITracks<ITrack>;
 
-  private playQueue: PlayQueue<PlayQueueItem> = PlayQueue.getInstance();
+  private playQueue: PlayqueueAuxappModel = PlayqueueAuxappModel.getInstance();
   private _debouncedUpdate: Function;
 
   public providerMap: ProviderMap = ProviderMap.map;
@@ -48,18 +46,18 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addToQueue(track: ITrack) {
-    this.playQueue.queue({track: track});
+    this.playQueue.items.queue({track: track});
   }
 
   removeFromQueue(track: ITrack) {
-    const playQueueItem = this.playQueue.get(track);
+    const playQueueItem = this.playQueue.items.get(track);
     if (playQueueItem) {
       return playQueueItem.unQueue();
     }
   }
 
   isQueued() {
-    const playQueueItem = this.playQueue.get(this.track);
+    const playQueueItem = this.playQueue.items.get(this.track);
     if (playQueueItem) {
       return playQueueItem.isQueued();
     } else {
@@ -77,7 +75,7 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.bindTrackChangeListener(this.track);
-    this.playQueue.on('change:status remove', this._debouncedUpdate, this);
+    this.playQueue.items.on('change:status remove', this._debouncedUpdate, this);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -92,6 +90,6 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.unBindTrackChangeListener(this.track);
-    this.playQueue.off('change:status remove', this._debouncedUpdate, this);
+    this.playQueue.items.off('change:status remove', this._debouncedUpdate, this);
   }
 }
