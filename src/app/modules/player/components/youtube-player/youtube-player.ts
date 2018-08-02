@@ -21,6 +21,9 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
   @Input()
   public track: TrackYoutubeModel;
 
+  public supportsMultiplePlayerInstances = true;
+  public supportsCrossfade = true;
+
   constructor(private el: ElementRef) {
     super();
     if ((<any>window).YT && (<any>window).YT.loaded) {

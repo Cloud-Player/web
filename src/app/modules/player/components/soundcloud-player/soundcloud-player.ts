@@ -18,6 +18,9 @@ export class SoundcloudPlayerComponent extends AbstractPlayer implements IPlayer
   @Input()
   public track: TrackSoundcloudModel;
 
+  public supportsMultiplePlayerInstances = true;
+  public supportsCrossfade = true;
+
   constructor(private renderer: Renderer2, private el: ElementRef) {
     super();
   }

@@ -20,6 +20,18 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
   @Input()
   public track: TrackMixcloudModel;
 
+  /*
+   * Mixcloud does not support multiple instances
+   * A second instance can be created, however when you trigger play on the second instance it will
+   * automatically stop the other instance. Mixcloud let only one instance playing
+   */
+  public supportsMultiplePlayerInstances = false;
+
+  /*
+   * Mixcloud does not allow to set the volume of the player therefor crossfade does not work!
+   */
+  public supportsCrossfade = false;
+
   public providerMap: ProviderMap = ProviderMap.map;
 
   constructor(private el: ElementRef) {

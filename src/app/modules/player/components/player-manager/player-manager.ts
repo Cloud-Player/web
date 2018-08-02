@@ -189,7 +189,9 @@ export class PlayerManagerComponent implements OnInit {
     const currentPlayer = this._activePlayer;
     const nextPlayer = this._upcomingPlayer;
 
-    if (nextPlayer && nextPlayer.instance.isAbleToPlay()) {
+    if (nextPlayer &&
+      nextPlayer.instance.supportsCrossfade &&
+      nextPlayer.instance.isAbleToPlay()) {
       nextPlayer.instance.play().then(() => {
         nextPlayer.instance.setSize(PlayerFactory.getPlayerSize(nextPlayer.instance.track));
         nextPlayer.instance.setVolume(this._volume);
@@ -214,6 +216,13 @@ export class PlayerManagerComponent implements OnInit {
         if (this._upcomingPlayer) {
           // Upcoming track has been changed so remove the previous prepared player
           this.removePlayer(this._upcomingPlayer);
+        }
+
+        // In case provider does not support multiple player instances like Mixcloud do not initialise a new instance
+        if (this._activePlayer &&
+          !this._activePlayer.instance.supportsMultiplePlayerInstances &&
+          upcoming.track.provider === this._activePlayer.instance.track.provider) {
+          return;
         }
         this._upcomingPlayer = this._playerFactory.createPlayer(upcoming);
         this._upcomingPlayer.instance.setOpacity(0);
