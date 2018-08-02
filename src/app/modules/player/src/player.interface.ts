@@ -1,6 +1,7 @@
 import {EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ITrack} from '../../api/tracks/track.interface';
+import {PlayerStatus} from './player-status.enum';
 
 export interface IPlayerSize {
   height: number;
@@ -16,10 +17,12 @@ export interface IPlayer {
   statusChange: EventEmitter<{}>;
   currentTimeChange: EventEmitter<{}>;
   track: ITrack;
+  supportsMultiplePlayerInstances: boolean;
+  supportsCrossfade: boolean;
 
   getDuration(): number;
 
-  getStatus(): number;
+  getStatus(): PlayerStatus;
 
   getCurrentTime(): number;
 
