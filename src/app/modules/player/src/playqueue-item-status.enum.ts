@@ -1,10 +1,10 @@
 export enum PlayQueueItemStatus {
-  Playing = 'PLAYING',
+  Playing = 'playing',
   RequestedPlaying = 'REQUESTED_PLAYING',
-  Paused = 'PAUSED',
+  Paused = 'paused',
   RequestedPause = 'REQUESTED_PAUSE',
-  Stopped = 'STOPPED',
+  Stopped = 'stopped',
   RequestedStop = 'REQUESTED_STOP',
-  Queued = 'QUEUED',
-  Scheduled = 'NULL'
+  Queued = 'queued',
+  Scheduled = 'null'
 }
