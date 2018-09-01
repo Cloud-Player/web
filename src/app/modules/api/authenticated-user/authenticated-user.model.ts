@@ -21,37 +21,6 @@ export class AuthenticatedUserModel extends AuxappModel {
     return AuthenticatedUserModel.instance;
   }
 
-  private migrateCloudPlayerAccount(): JQueryPromise<any> {
-    const cloudPlayerHostname = 'https://api.cloud-player.io';
-    return this.request(`${cloudPlayerHostname}/user/me`, 'GET').then((user) => {
-      return this.request(`${cloudPlayerHostname}/migration`, 'POST', {
-        data: {
-          user_id: user.id
-        }
-      }).then((rsp) => {
-        return this.request(`${this.hostName()}/migration`, 'POST', {
-          data: rsp
-        });
-      });
-    });
-  }
-
-  migrate() {
-    return new Promise((resolve) => {
-      localforage.getItem('cp_user_migrated').then((isMigrated) => {
-        if (!isMigrated) {
-          this.migrateCloudPlayerAccount().then(() => {
-            localforage.setItem('cp_user_migrated', true);
-            resolve();
-          }, resolve.bind(this));
-        } else {
-          resolve();
-        }
-      });
-    });
-
-  }
-
   fetch(...args) {
     const id = this.id;
     this.set('id', 'me');
