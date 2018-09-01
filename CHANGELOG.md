@@ -1,3 +1,8 @@
+# v5.3.2
+- Remove migration of cp account
+- Upgrade dependencies
+- Fix empty favourite track view after connecting
+
 # v5.3.1
 - Fix Mixcloud player bugs
 - Refactor playqueue to prepare support to persist playqueue on server
