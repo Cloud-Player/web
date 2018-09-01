@@ -69,14 +69,16 @@ export class MainComponent implements OnInit {
       <AuthenticatedUserAccountAuxappModel>this._authenticatedUser.accounts.getAccountForProvider('auxapp');
 
     if (auxappAccount) {
+      // Create session only once per app start
       auxappAccount.once('change:id', () => {
-        auxappAccount.favouriteTracks.fetch();
         auxappAccount.createSession({
           browser: `${ClientDetector.getClient().name}`,
           os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
           screenSize: '100'
         });
       });
+      // Fetch favourite tracks on every id change
+      this._authenticatedUser.on('change:id', auxappAccount.favouriteTracks.fetch.bind(auxappAccount.favouriteTracks));
     }
 
     this.privacyManager.getPrivacySettings().then(() => {
