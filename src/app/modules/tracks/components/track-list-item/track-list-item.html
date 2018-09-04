@@ -28,12 +28,12 @@
       </div>
       <div class="btn-holder">
         <div *ngIf="!isQueued()"
-             class="btn btn-xs btn-default"
+             class="btn btn-xs btn-default queue-btn"
              (click)="addToQueue(track)">
           <span class="fa fa-queue"></span>
         </div>
         <div *ngIf="isQueued()"
-             class="btn btn-xs btn-default is-queued"
+             class="btn btn-xs btn-default is-queued queue-btn"
              (click)="removeFromQueue(track)">
           <i class="fa fa-queue"></i>
           <i class="fa fa-trash"></i>

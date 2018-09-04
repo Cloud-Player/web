@@ -197,6 +197,8 @@
   @media (max-width: $screen-sm-min) {
     .track-list-item {
       position: relative;
+      padding: 20px 15px 10px 15px;
+
       .cover {
         app-track-cover {
           width: 40px;
@@ -228,17 +230,41 @@
         }
       }
       .details {
+        margin-left: -40px;
+        padding-left: 55px;
+        overflow: hidden;
+        position: relative;
+        height: 67px;
+
         .stats {
           position: absolute;
-          left: 15px;
+          left: 0;
           white-space: nowrap;
-          bottom: 10px;
+          bottom: 0;
 
           .label-light {
             &:first-child {
               padding-left: 0;
             }
           }
+        }
+      }
+
+      .queue-btn,
+      /deep/ app-options-btn .btn{
+        &:after{
+          content: "";
+          position: absolute;
+          right: -3px;
+          height: 100px;
+          width: 80px;
+        }
+      }
+
+      /deep/ app-options-btn .btn{
+        &:after{
+          top: 0;
+          width: 28px;
         }
       }
     }
