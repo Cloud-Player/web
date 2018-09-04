@@ -35,11 +35,12 @@ export class NativeAppHandlerService {
 
   private fetchLatestClientVersion(): Promise<string> {
     return this.http
-      .get('https://raw.githubusercontent.com/Cloud-Player/desktop-app/master/package.json')
+      .get('https://api.github.com/repos/Cloud-Player/desktop-app/releases')
       .toPromise()
-      .then((packageJSON: any) => {
-        this._latestClientVersion = packageJSON.version;
-        return packageJSON.version;
+      .then((versions: Array<any>) => {
+        const latestVersion = versions[0];
+        this._latestClientVersion = latestVersion.name;
+        return latestVersion.name;
       });
   }
 
