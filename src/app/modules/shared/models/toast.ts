@@ -26,6 +26,10 @@ export class ToastModel extends BaseModel {
   @attributesKey('icon')
   icon: string;
 
+  @attributesKey('dismissible')
+  @defaultValue(true)
+  dismissible: boolean;
+
   @attributesKey('buttonAction')
   buttonAction: Function;
 

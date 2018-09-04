@@ -24,7 +24,8 @@
       {{toast.buttonLabel}}
     </a>
   </div>
-  <div class="closer clickable"
+  <div *ngIf="toast.dismissible"
+       class="closer clickable"
        (click)="closeToast()">
     <span class="fa fa-times"></span>
   </div>
