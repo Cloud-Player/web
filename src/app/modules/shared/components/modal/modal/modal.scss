@@ -2,6 +2,8 @@
 
 :host {
   display: none;
+  height: 100%;
+
   .modal-holder {
     width: 100vw;
     display: flex;
@@ -44,8 +46,8 @@
         flex-shrink: 1;
         max-height: 70vh;
 
-        /deep/ app-empty-state{
-          .empty-state{
+        /deep/ app-empty-state {
+          .empty-state {
             max-height: 40vh;
           }
         }
@@ -62,14 +64,16 @@
     }
   }
 
-  @media (max-width: $screen-sm-max) {
-    .modal-holder{
-      .modal{
-        margin-top: 2vh;
-        width: 96vw;
-        max-height: 96vh;
+  @media (max-width: $screen-xs-max) {
+    .modal-holder {
+      max-height: 100%;
 
-        .content{
+      .modal {
+        width: 100vw;
+        max-height: 100%;
+        margin: 2vh;
+
+        .content {
           max-height: inherit;
         }
       }
