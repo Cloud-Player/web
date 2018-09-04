@@ -1,3 +1,8 @@
+# v5.3.3
+- Fix modal scrolling bug on mobile devices
+- Increase click area for add to queue button on mobile devices
+- Show download progress in native app when new version is downloaded
+
 # v5.3.2
 - Remove migration of cp account
 - Upgrade dependencies
