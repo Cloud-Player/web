@@ -55,6 +55,25 @@ export class NativeAppHandlerService {
     toast.buttonLink = NativeAppHandlerService.getDownloadLinkForVersion(version);
 
     this.toastService.addToast(toast);
+
+    window.addEventListener('downloadProgress', (ev: CustomEvent) => {
+      const progress = ev.detail.receivedByes / ev.detail.totalBytes;
+      if (progress < 1) {
+        toast.title = null;
+        toast.message = `Downloading new Version (${Math.round(progress * 100)}%)...`;
+        toast.buttonLink = null;
+        toast.dismissible = false;
+      } else {
+        toast.title = 'Download completed!';
+        toast.message = 'Open the new version to install it on your computer';
+        toast.buttonLabel = 'Open';
+        toast.buttonAction = () => {
+          window.open(`open-file://${ev.detail.path}`);
+          this.toastService.removeToast(toast);
+        };
+        toast.dismissible = true;
+      }
+    });
   }
 
   private bindMediaKeyListener() {
