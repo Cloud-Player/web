@@ -71,9 +71,9 @@ export class PlayerControlsComponent implements OnInit {
     }
   }
 
-  private setBrowserTitle(playingTrack?: ITrack) {
-    if (playingTrack) {
-      document.title = playingTrack.title;
+  private setBrowserTitle(playQueueItem?: PlayqueueItemAuxappModel) {
+    if (playQueueItem.isPlaying()) {
+      document.title = playQueueItem.track.title;
     } else {
       document.title = this._docTitle;
     }
@@ -179,15 +179,10 @@ export class PlayerControlsComponent implements OnInit {
   ngOnInit(): void {
     this._docTitle = document.title;
     this.playQueue.items.on('change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
-      if (status === PlayQueueItemStatus.RequestedPlaying) {
+      if (status === PlayQueueItemStatus.RequestedPlaying || status === PlayQueueItemStatus.RequestedPause) {
         this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
-        this.setBrowserTitle(this.currentItem.track);
-      }
-      if (status === PlayQueueItemStatus.RequestedPause) {
-        this.currentItem = this.playQueue.items.getCurrentItem();
-        this.setMobileMediaNotification(this.currentItem.track);
-        this.setBrowserTitle();
+        this.setBrowserTitle(this.currentItem);
       }
     });
 

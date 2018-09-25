@@ -42,7 +42,7 @@ export class PlaylistItemAuxappModel
     return attributes;
   }
 
-  compose() {
+  compose(): any {
     return {
       track_provider_id: this.track.provider,
       track_id: this.track.id

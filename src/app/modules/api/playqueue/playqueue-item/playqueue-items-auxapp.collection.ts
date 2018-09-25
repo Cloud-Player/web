@@ -20,12 +20,6 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   private prepareItem(item: any): PlayqueueItemAuxappModel {
-    if (!item.id && item instanceof PlayqueueItemAuxappModel) {
-      item.set('id', item.track.id);
-    } else if (!item.id) {
-      item.id = item.track.id;
-    }
-
     if (!(item instanceof PlayqueueItemAuxappModel) && item.indexBeforeShuffle) {
       this._isShuffled = true;
     }
@@ -160,7 +154,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     if (!(item instanceof PlayqueueItemAuxappModel)) {
       item = new PlayqueueItemAuxappModel(item);
     }
-    if (this.get(item)) {
+    if (this.getItemByTrackId(item.track.id)) {
       this.remove(item, {silent: true});
     }
     item.queue();
@@ -251,15 +245,6 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
   public isLooped() {
     return this._loopPlayQueue;
-  }
-
-  resetQueue() {
-    this.filter((model) => {
-      return !model.isQueued();
-    }).forEach((model) => {
-      this.remove(model);
-    });
-    this._isShuffled = false;
   }
 
   add(item: TModel | TModel[] | {}, options: any = {}): any {

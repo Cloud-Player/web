@@ -385,13 +385,19 @@ export class PlayerManagerComponent implements OnInit {
     this._volume = volume;
   }
 
+  public seekActivePlayerTrackTo(seekTo: number) {
+    if (this._activePlayer) {
+      this._activePlayer.instance.seekTo(seekTo);
+    }
+  }
+
   ngOnInit(): void {
     this._playerFactory.setContainer(this.container);
 
     this.playQueue.items.setLoopPlayQueue(true);
     this.playQueue.items.on('change:status', this.reactOnPlayQueueChange, this);
-    this.playQueue.items.on('add', () => {
-      const firstPlayQueueItem = this.playQueue.items.getPausedItem() || this.playQueue.items.getPlayingItem();
+    this.playQueue.items.once('add', () => {
+      const firstPlayQueueItem = this.playQueue.items.getCurrentItem();
       if (!this._activePlayer && firstPlayQueueItem) {
         const firstPlayer = this._playerFactory.createPlayer(firstPlayQueueItem);
         this.activatePlayer(firstPlayer, this._activePlayer, firstPlayQueueItem.progress, false);

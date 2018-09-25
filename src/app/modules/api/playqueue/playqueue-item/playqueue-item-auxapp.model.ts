@@ -42,7 +42,7 @@ export class PlayqueueItemAuxappModel
   @attributesKey('indexBeforeShuffle')
   indexBeforeShuffle: number;
 
-  url = () => {
+  urlRoot = () => {
     return (<PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>>this.collection).url();
   };
 
@@ -140,28 +140,46 @@ export class PlayqueueItemAuxappModel
     return item;
   }
 
-  compose() {
-    return AuxappModel.prototype.compose.apply(this, arguments);
-  }
-
   // compose() {
-  //   // let status = this.status;
-  //   // switch (status) {
-  //   //   case PlayQueueItemStatus.RequestedPlaying:
-  //   //     status = PlayQueueItemStatus.Playing;
-  //   //     break;
-  //   //   case PlayQueueItemStatus.RequestedPause:
-  //   //     status = PlayQueueItemStatus.Paused;
-  //   //     break;
-  //   //   case PlayQueueItemStatus.RequestedStop:
-  //   //     status = PlayQueueItemStatus.Stopped;
-  //   //     break;
-  //   // }
-  //   // return {
-  //   //   track_provider_id: this.track.provider,
-  //   //   track_id: this.track.id.toString(),
-  //   //   state: status
-  //   // };
+  //   return AuxappModel.prototype.compose.apply(this, arguments);
   // }
 
+  parse(attrs) {
+    attrs.status = attrs.state;
+    delete attrs.state;
+
+    if (!attrs.track || attrs.track === null || (attrs.track && !attrs.track.id)) {
+      delete attrs.track;
+    } else {
+      attrs.track.provider = attrs.track.provider_id;
+      delete attrs.track.provider_id;
+    }
+    return attrs;
+  }
+
+  compose() {
+    let status = this.status;
+    switch (status) {
+      case PlayQueueItemStatus.RequestedPlaying:
+        status = PlayQueueItemStatus.Playing;
+        break;
+      case PlayQueueItemStatus.RequestedPause:
+        status = PlayQueueItemStatus.Paused;
+        break;
+      case PlayQueueItemStatus.RequestedStop:
+        status = PlayQueueItemStatus.Stopped;
+        break;
+    }
+    if (this.isNew()) {
+      return {
+        track_provider_id: this.track.provider,
+        track_id: this.track.id.toString(),
+        state: status
+      };
+    } else {
+      return {
+        state: status
+      };
+    }
+  }
 }

@@ -58,6 +58,7 @@
         </div>
       </div>
     </div>
+
     <div *ngFor="let playQueueItem of playQueue.items.getScheduledItems() | limitCollectionresults: {limit: 10}"
          appDraggable="true"
          [dragData]="playQueueItem.track.toJSON()"

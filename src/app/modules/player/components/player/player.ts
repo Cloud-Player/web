@@ -10,6 +10,7 @@ import {LayoutService, WindowElementTypes} from '../../../shared/services/layout
 import {filter} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {SocketMessageService} from '../../../shared/services/socket-message';
+import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 @Component({
   selector: 'app-player',
@@ -38,19 +39,14 @@ export class PlayerComponent implements OnInit {
     this.el.nativeElement.classList.remove('fullscreen-player');
   }
 
-  private setLastPlayingQueue() {
-    localforage.getItem('cp_playqueue').then((lastPlayingQueue: Array<any>) => {
-      if (lastPlayingQueue) {
-        this.playQueue.items.add(lastPlayingQueue);
-      }
-    });
-  }
-
   private setLastPlayingItem() {
     localforage.getItem('cp_currentItem').then((lastPlayingItem: any) => {
-      if (lastPlayingItem) {
-        lastPlayingItem.status = PlayQueueItemStatus.Paused;
-        this.playQueue.items.add(lastPlayingItem, {at: 0});
+      if (lastPlayingItem && lastPlayingItem.track.id && lastPlayingItem.progress) {
+        const lastPlaying = this.playQueue.items.getItemByTrackId(lastPlayingItem.track.id);
+        if (lastPlaying) {
+          lastPlaying.progress = lastPlayingItem.progress;
+          this.playerManager.seekActivePlayerTrackTo(Math.round(lastPlaying.progress));
+        }
       }
     });
   }
@@ -88,11 +84,8 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 
-    this.setLastPlayingQueue();
-    this.setLastPlayingItem();
-
     const debouncedPlayQueueSave = debounce(() => {
-      localforage.setItem('cp_playqueue', this.playQueue.items.getScheduledItemsJSON(30));
+      this.playQueue.save();
     }, 1000);
 
     const debouncedSetHasPlayer = debounce(() => {
@@ -105,19 +98,43 @@ export class PlayerComponent implements OnInit {
 
     const throttledProgressUpdate = throttle((currentItem) => {
       if (currentItem) {
-        localforage.setItem('cp_currentItem', currentItem.toMiniJSON());
+        localforage.setItem('cp_currentItem', {
+          progress: currentItem.progress,
+          track: {
+            id: currentItem.track.id
+          }
+        });
       }
+      currentItem.save();
     }, 10000);
+
+    const throttledStatusUpdate = throttle((currentItem) => {
+      currentItem.save();
+    }, 500);
 
     const throttledViewUpdate = throttle(() => {
       this.cdr.detectChanges();
     }, 1000);
 
-    this.playQueue.items.on('add remove reset change:status', debouncedPlayQueueSave);
-    this.playQueue.items.on('update remove reset change:status', debouncedPlayQueueSave);
-    this.playQueue.items.on('update remove reset', debouncedSetHasPlayer);
+    this.playQueue.items.once('add', () => {
+      if (this.playQueue.items.getPlayingItem()) {
+        this.playQueue.items.getPlayingItem().pause();
+      }
+      this.setLastPlayingItem();
+    });
+
     this.playQueue.items.on('change:progress', throttledProgressUpdate);
     this.playQueue.items.on('change:progress', throttledViewUpdate);
+
+    this.playQueue.items.on('change:status', throttledStatusUpdate);
+    this.playQueue.items.on('change:progress', throttledProgressUpdate);
+
+    this.playQueue.items.on('update', debouncedPlayQueueSave);
+    this.playQueue.items.on('update remove reset', debouncedSetHasPlayer);
+
+    this.playQueue.items.on('remove', item => item.destroy());
+
+    this.playQueue.fetch();
 
     this.fullScreenService.getObservable()
       .pipe(

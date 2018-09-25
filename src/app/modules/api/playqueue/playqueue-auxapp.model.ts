@@ -36,16 +36,32 @@ export class PlayqueueAuxappModel extends AuxappModel {
     return superCall;
   }
 
-  save() {
+  save(): any {
     if (this.id) {
-      let index = 0;
+      const persistTracks = [];
       this.items.each((item) => {
-        if (index < 3) {
-          item.save();
+        if (item.isNew() && !item.isStopped()) {
+          persistTracks.push(item.toJSON());
         }
-        index++;
+      });
+      return this.request(`${this.url()}/item`, 'POST', {
+        data: persistTracks
+      }).then((responseItems: Array<any>) => {
+        responseItems.forEach((responseItem) => {
+          const queueItem = this.items.find((item: PlayqueueItemAuxappModel) => {
+            return item.track.id === responseItem.track_id;
+          });
+          if (queueItem) {
+            queueItem.set(PlayqueueItemAuxappModel.prototype.parse.call(queueItem, responseItem));
+          }
+        });
       });
     }
+  }
+
+  destroy() {
+    this.items.reset();
+    return super.destroy();
   }
 
   initialize() {
