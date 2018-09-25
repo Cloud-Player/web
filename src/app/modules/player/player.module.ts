@@ -12,6 +12,7 @@ import {YoutubePlayerComponent} from './components/youtube-player/youtube-player
 import {TracksModule} from '../tracks/tracks.module';
 import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
 import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-player';
+import {DeezerPlayerComponent} from './components/deezer-player/deezer-player';
 import {SocketPlayerService} from './services/socket-player';
 
 @NgModule({
@@ -28,6 +29,7 @@ import {SocketPlayerService} from './services/socket-player';
     SoundcloudPlayerComponent,
     YoutubePlayerComponent,
     MixcloudPlayerComponent,
+    DeezerPlayerComponent,
     PlayerManagerComponent,
     PlayerComponent,
     VolumeBtnComponent
@@ -41,7 +43,8 @@ import {SocketPlayerService} from './services/socket-player';
   entryComponents: [
     SoundcloudPlayerComponent,
     YoutubePlayerComponent,
-    MixcloudPlayerComponent
+    MixcloudPlayerComponent,
+    DeezerPlayerComponent
   ]
 })
 export class PlayerModule {

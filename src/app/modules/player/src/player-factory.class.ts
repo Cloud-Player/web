@@ -9,6 +9,7 @@ import {YoutubePlayerComponent} from '../components/youtube-player/youtube-playe
 import {ITrack} from '../../api/tracks/track.interface';
 import {MixcloudPlayerComponent} from '../components/mixcloud-player/mixcloud-player';
 import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {DeezerPlayerComponent} from '../components/deezer-player/deezer-player';
 
 @Injectable()
 export class PlayerFactory {
@@ -25,7 +26,8 @@ export class PlayerFactory {
     this._playerComponentMap = {
       soundcloud: SoundcloudPlayerComponent,
       youtube: YoutubePlayerComponent,
-      mixcloud: MixcloudPlayerComponent
+      mixcloud: MixcloudPlayerComponent,
+      deezer: DeezerPlayerComponent
     };
   }
 
