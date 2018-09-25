@@ -43,7 +43,7 @@ export class CollectionTextInputSearchComponent implements OnInit, OnDestroy, On
     this.searchTermsSubscription =
       this.searchTerms
         .pipe(
-          debounceTime(600),        // wait for 300ms pause in events
+          debounceTime(300),        // wait for 300ms pause in events
           distinctUntilChanged(),   // ignore if next search term is same as previous
           switchMap(term => {
               if (term) {
