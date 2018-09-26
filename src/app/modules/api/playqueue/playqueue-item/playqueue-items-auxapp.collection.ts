@@ -9,6 +9,8 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   private _playIndex = 0;
   private _loopPlayQueue = false;
   private _isShuffled = false;
+  private _playRecommended = true;
+  private _recommandationsBasedOnItem: PlayqueueItemAuxappModel;
 
   endpoint = null;
   model: any = PlayqueueItemAuxappModel;
@@ -130,6 +132,12 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     });
   }
 
+  getRecommendedItems() {
+    return this.filter((playQueueItem) => {
+      return playQueueItem.isRecommended();
+    });
+  }
+
   getNextItem(): PlayqueueItemAuxappModel {
     if (this.hasNextItem()) {
       const total = this.length;
@@ -216,6 +224,22 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
       this.setPlayIndex();
       this.add(item, {at: this.getPlayIndex() + index + incr, silent: true, doNothing: true});
     });
+
+    const recommendedItems = this.getRecommendedItems();
+    let incr2: number;
+
+    if (this._playRecommended) {
+      incr2 = incr + this.getQueuedItems().length;
+    } else {
+      incr2 = this.length;
+    }
+
+    recommendedItems.forEach((item: TModel, index: number) => {
+      this.remove(item, {silent: true});
+      this.setPlayIndex();
+      console.log(this.getPlayIndex() + index + incr2);
+      this.add(item, {at: this.getPlayIndex() + index + incr2, silent: true, doNothing: true});
+    });
   }
 
   stopScheduledItemsBeforeCurrentItem(): void {
@@ -247,6 +271,46 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     return this._loopPlayQueue;
   }
 
+  public fetchRecommendedItems() {
+    if (
+      this.getRecommendedItems().length > 0 ||
+      (this._recommandationsBasedOnItem && this._recommandationsBasedOnItem === this.getCurrentItem())
+    ) {
+      console.log('SKIP');
+      this._recommandationsBasedOnItem = this.getCurrentItem();
+      return new Promise((resolve) => {
+        resolve(this);
+      });
+    } else {
+      this._recommandationsBasedOnItem = this.getCurrentItem();
+      return this.request(`/queue/${this.playQueueId}/reco`, 'GET').then((recommendedTracks) => {
+        const recommendedItems = [];
+        recommendedTracks.forEach((recommendedTrack) => {
+          const recommendedItem = {
+            track: recommendedTrack.track,
+            status: PlayQueueItemStatus.Recommended
+          };
+          recommendedItem.track.provider = recommendedTrack.track_provider_id;
+          recommendedItems.push(recommendedItem);
+        });
+        this.getRecommendedItems().forEach((item) => {
+          this.remove(item);
+        });
+        this.add(recommendedItems);
+        return this;
+      });
+    }
+  }
+
+  public enableRecommendedTracks(enable: boolean) {
+    this._playRecommended = enable;
+    this.ensureQueuingOrder();
+  }
+
+  public isPlayingRecommendedTracks() {
+    return this._playRecommended;
+  }
+
   add(item: TModel | TModel[] | {}, options: any = {}): any {
     if (options.doNothing || !item) {
       return super.add(item, options);
@@ -270,6 +334,19 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     return item;
   }
 
+  parse(items) {
+    const cleanedUp = [];
+    items.forEach((item) => {
+      if (item.id && item.state !== 'stopped') {
+        cleanedUp.push(item);
+      } else {
+        console.log('DROP');
+      }
+    });
+    return cleanedUp;
+  }
+
+
   initialize(): void {
     this.on('change:status', (queueItem: TModel) => {
       this.setPlayIndex();
@@ -286,6 +363,10 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
           this.stopScheduledItemsBeforeCurrentItem();
         }
 
+        this.ensureQueuingOrder();
+      }
+
+      if (queueItem.isQueued()) {
         this.ensureQueuingOrder();
       }
 

@@ -3,6 +3,7 @@ import {nested} from '../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {PlayqueueItemsAuxappCollection} from './playqueue-item/playqueue-items-auxapp.collection';
 import {PlayqueueItemAuxappModel} from './playqueue-item/playqueue-item-auxapp.model';
+import {PlayQueueItemStatus} from '../../player/src/playqueue-item-status.enum';
 
 export class PlayqueueAuxappModel extends AuxappModel {
   private static instance: PlayqueueAuxappModel;
@@ -40,8 +41,9 @@ export class PlayqueueAuxappModel extends AuxappModel {
     if (this.id) {
       const persistTracks = [];
       this.items.each((item) => {
-        if (item.isNew() && !item.isStopped()) {
+        if (item.isNew() && !item.isStopped() && !item.isRecommended()) {
           persistTracks.push(item.toJSON());
+          item.isSyncing = true;
         }
       });
       return this.request(`${this.url()}/item`, 'POST', {
@@ -53,6 +55,7 @@ export class PlayqueueAuxappModel extends AuxappModel {
           });
           if (queueItem) {
             queueItem.set(PlayqueueItemAuxappModel.prototype.parse.call(queueItem, responseItem));
+            queueItem.isSyncing = false;
           }
         });
       });

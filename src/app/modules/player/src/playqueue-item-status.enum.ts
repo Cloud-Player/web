@@ -6,5 +6,6 @@ export enum PlayQueueItemStatus {
   Stopped = 'stopped',
   RequestedStop = 'REQUESTED_STOP',
   Queued = 'queued',
-  Scheduled = 'scheduled'
+  Scheduled = 'scheduled',
+  Recommended = 'recommended'
 }

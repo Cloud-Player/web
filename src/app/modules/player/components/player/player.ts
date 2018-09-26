@@ -84,8 +84,24 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 
+    const saveItem = (item) => {
+      switch (item.status) {
+        case PlayQueueItemStatus.Playing:
+        case PlayQueueItemStatus.Paused:
+        case PlayQueueItemStatus.Queued:
+        case PlayQueueItemStatus.Stopped:
+          item.save();
+          break;
+      }
+    };
+
     const debouncedPlayQueueSave = debounce(() => {
-      this.playQueue.save();
+      // this.playQueue.items.off('change:progress', throttledProgressUpdate);
+      this.playQueue.items.off('change:status', saveItem);
+      this.playQueue.save().then(() => {
+        // this.playQueue.items.on('change:progress', throttledProgressUpdate);
+        this.playQueue.items.off('change:status', saveItem);
+      });
     }, 1000);
 
     const debouncedSetHasPlayer = debounce(() => {
@@ -123,14 +139,19 @@ export class PlayerComponent implements OnInit {
       this.setLastPlayingItem();
     });
 
-    this.playQueue.items.on('change:progress', throttledProgressUpdate);
     this.playQueue.items.on('change:progress', throttledViewUpdate);
-
-    this.playQueue.items.on('change:status', throttledStatusUpdate);
-    this.playQueue.items.on('change:progress', throttledProgressUpdate);
+    this.playQueue.items.on('change:status', (item) => {
+      if (item.status === PlayQueueItemStatus.Playing) {
+        this.playQueue.items.fetchRecommendedItems();
+      }
+      item.save();
+    });
 
     this.playQueue.items.on('update', debouncedPlayQueueSave);
     this.playQueue.items.on('update remove reset', debouncedSetHasPlayer);
+    this.playQueue.items.once('update', () => {
+      this.playQueue.items.fetchRecommendedItems();
+    });
 
     this.playQueue.items.on('remove', item => item.destroy());
 

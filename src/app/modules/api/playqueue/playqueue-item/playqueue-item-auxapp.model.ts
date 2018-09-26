@@ -134,10 +134,18 @@ export class PlayqueueItemAuxappModel
     return this.status === PlayQueueItemStatus.Scheduled;
   }
 
+  isRecommended(): boolean {
+    return this.status === PlayQueueItemStatus.Recommended;
+  }
+
   toMiniJSON() {
     const item = this.toJSON();
     item.track = this.track.toMiniJSON();
     return item;
+  }
+
+  getIndex() {
+    return this.collection.indexOf(this);
   }
 
   // compose() {
@@ -180,6 +188,14 @@ export class PlayqueueItemAuxappModel
       return {
         state: status
       };
+    }
+  }
+
+  save() {
+    if (!this.isSyncing) {
+      return super.save();
+    } else {
+      console.log('IGNORE');
     }
   }
 }
