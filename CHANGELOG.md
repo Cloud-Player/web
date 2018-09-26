@@ -1,3 +1,7 @@
+# v5.4.0
+- Persist playqueue on server
+- Add recommended track feature
+
 # v5.3.3
 - Fix modal scrolling bug on mobile devices
 - Increase click area for add to queue button on mobile devices
