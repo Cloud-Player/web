@@ -8,7 +8,7 @@ export class TracksYoutubeCollection<TModel extends TrackYoutubeModel>
 
   endpoint = 'track/youtube';
 
-  public static getTrackDetails(trackIds: Array<string>): Promise<any> {
+  public static getTrackDetails(trackIds: any): Promise<any> {
     const url = `${AuxappCollection.prototype.hostName.call(this)}/track/youtube`;
 
     if (trackIds.length === 0) {

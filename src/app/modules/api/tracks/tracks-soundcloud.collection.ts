@@ -7,7 +7,7 @@ export class TracksSoundcloudCollection<TModel extends TrackSoundcloudModel>
 
   endpoint = 'track/soundcloud';
 
-  public static getTrackDetails(trackIds: Array<string>): Promise<any> {
+  public static getTrackDetails(trackIds: any): Promise<any> {
     const url = `${AuxappCollection.prototype.hostName.call(this)}/track/soundcloud`;
 
     if (trackIds.length === 0) {
