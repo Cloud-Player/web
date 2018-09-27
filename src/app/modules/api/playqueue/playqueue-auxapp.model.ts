@@ -46,6 +46,11 @@ export class PlayqueueAuxappModel extends AuxappModel {
           item.isSyncing = true;
         }
       });
+      if (persistTracks.length === 0) {
+        return new Promise((resolve) => {
+          resolve(this);
+        });
+      }
       return this.request(`${this.url()}/item`, 'POST', {
         data: persistTracks
       }).then((responseItems: Array<any>) => {
