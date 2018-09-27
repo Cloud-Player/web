@@ -25,4 +25,13 @@ export class TracksAuxappCollection<TModel extends TrackAuxappModel>
   queryParams: {
     [key: string]: string | number | boolean
   } = {};
+
+  public static getTrackDetails(tracks: Array<{ id: string, provider_id: string }>): any {
+    return TracksAuxappCollection.prototype.request(
+      `${TracksAuxappCollection.prototype.hostName()}/track`,
+      'POST',
+      {
+        data: tracks
+      });
+  }
 }
