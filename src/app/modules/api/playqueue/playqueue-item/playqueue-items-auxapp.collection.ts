@@ -2,6 +2,8 @@ import {PlaylistItemsAuxappCollection} from '../../playlists/playlist-item/playl
 import {PlayqueueItemAuxappModel} from './playqueue-item-auxapp.model';
 import {isArray, shuffle, sortBy} from 'underscore';
 import {PlayQueueItemStatus} from '../../../player/src/playqueue-item-status.enum';
+import {TracksAuxappCollection} from '../../tracks/tracks-auxapp.collection';
+import {debounce} from 'underscore';
 
 export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappModel>
   extends PlaylistItemsAuxappCollection<TModel> {
@@ -271,6 +273,32 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     return this._loopPlayQueue;
   }
 
+  public fetchTrackDetails() {
+    const trackWithOutDetails = [];
+    this.each((item) => {
+      if (!item.track.title) {
+        trackWithOutDetails.push({
+          id: item.track.id,
+          provider_id: item.track.provider
+        });
+      }
+    });
+    if (trackWithOutDetails.length > 0) {
+      return TracksAuxappCollection.getTrackDetails(trackWithOutDetails).then((tracksWithDetails: Array<any>) => {
+        tracksWithDetails.forEach((trackWithDetail) => {
+          console.log('[PLAYER] SET TRACK DETAIL FOR', trackWithDetail);
+          const existingItem = this.getItemByTrackId(trackWithDetail.id);
+          if (existingItem) {
+            existingItem.track.set(existingItem.track.parse(trackWithDetail));
+            existingItem.trigger('change:track');
+          } else {
+            console.log('DOES NOT EXIST');
+          }
+        });
+      });
+    }
+  }
+
   public fetchRecommendedItems() {
     if (
       this.getRecommendedItems().length > 0 ||
@@ -335,15 +363,19 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   parse(items) {
-    const cleanedUp = [];
-    items.forEach((item) => {
-      if (item.id && item.state !== 'stopped') {
-        cleanedUp.push(item);
-      } else {
-        console.log('DROP');
-      }
-    });
-    return cleanedUp;
+    if (isArray(items)) {
+      const cleanedUp = [];
+      items.forEach((item) => {
+        if (item.id && item.state !== 'stopped' && item.track) {
+          cleanedUp.push(item);
+        } else {
+          console.log('DROP');
+        }
+      });
+      return cleanedUp;
+    } else {
+      return items;
+    }
   }
 
 
@@ -379,5 +411,8 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     this.on('remove', () => {
       this.setPlayIndex();
     });
+
+    const debouncedTrackDetailsFetch = debounce(this.fetchTrackDetails.bind(this), 500);
+    this.on('add', debouncedTrackDetailsFetch);
   }
 }
