@@ -21,6 +21,7 @@ export class SocketMessageService {
   private _socket: WebSocket;
   private _isOpened: boolean;
   private _observable: EventEmitter<ISocketEvent>;
+  private _subscribedChannelIds: Array<string> = [];
 
   constructor(private messageService: MessageService) {
     this._observable = new EventEmitter();
@@ -30,6 +31,13 @@ export class SocketMessageService {
     console.log('[SOCKET] Open');
     this._isOpened = true;
     this._observable.emit({type: SocketStatusTypes.OPEN});
+    this._subscribedChannelIds.forEach((channelId) => {
+      this.subscribeOnChannelId(channelId);
+    });
+  }
+
+  private subscribeOnChannelId(channelId: string) {
+    this.sendMessage(channelId, MessageMethodTypes.SUBSCRIBE);
   }
 
   private onMessage(event: MessageEvent) {
@@ -94,11 +102,19 @@ export class SocketMessageService {
   }
 
   public subscribe(channelId: string, method: MessageMethodTypes, callback: Function): MessageSubscription {
-    this.sendMessage(channelId, MessageMethodTypes.SUBSCRIBE);
+    const indexOfSubscribedChannelId = this._subscribedChannelIds.indexOf(channelId);
+    if (indexOfSubscribedChannelId < 0) {
+      this._subscribedChannelIds.push(channelId);
+    }
+    this.subscribeOnChannelId(channelId);
     return this.messageService.subscribe(MessageTypes.SOCKET, channelId, method, callback);
   }
 
   public unSubscribe(channelId: string, method?: MessageMethodTypes, callback?: Function) {
+    const indexOfSubscribedChannelId = this._subscribedChannelIds.indexOf(channelId);
+    if (indexOfSubscribedChannelId >= 0) {
+      this._subscribedChannelIds.splice(indexOfSubscribedChannelId, 0);
+    }
     return this.messageService.unSubscribe(MessageTypes.SOCKET, channelId, method, callback);
   }
 
