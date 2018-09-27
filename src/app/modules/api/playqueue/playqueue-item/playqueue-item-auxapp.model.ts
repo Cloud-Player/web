@@ -192,7 +192,7 @@ export class PlayqueueItemAuxappModel
   }
 
   save() {
-    if (!this.isSyncing) {
+    if (!this.isSyncing && !this.isNew()) {
       return super.save();
     } else {
       console.log('IGNORE');
