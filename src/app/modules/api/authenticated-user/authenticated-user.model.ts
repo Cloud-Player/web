@@ -23,9 +23,9 @@ export class AuthenticatedUserModel extends AuxappModel {
 
   fetch(...args) {
     const id = this.id;
-    this.set('id', 'me');
+    this.set('id', 'me', {silent: true});
     const superCall = super.fetch.apply(this, ...args);
-    this.set('id', id);
+    this.set('id', id, {silent: true});
     return superCall;
   }
 }

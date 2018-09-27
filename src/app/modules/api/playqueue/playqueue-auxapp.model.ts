@@ -28,12 +28,12 @@ export class PlayqueueAuxappModel extends AuxappModel {
 
   fetch(...args) {
     const id = this.id;
-    this.set('id', 'mine');
+    this.set('id', 'mine', {silent: true});
     const superCall = super.fetch.apply(this, ...args).then(() => {
       this.items.fetch();
       return this;
     });
-    this.set('id', id);
+    this.set('id', id, {silent: true});
     return superCall;
   }
 
