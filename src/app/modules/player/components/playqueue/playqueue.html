@@ -1,18 +1,4 @@
 <div class="play-queue scrollable">
-  STOPPED
-  <ul>
-    <li *ngFor="let item of playQueue.items.getStoppedItems()">
-      {{item.getIndex()}} {{item.track.title}}
-    </li>
-  </ul>
-  <hr>
-  PLAYING
-  <ul *ngIf="playQueue.items.getCurrentItem()">
-    <li>
-      {{playQueue.items.getCurrentItem().getIndex()}} {{playQueue.items.getCurrentItem().track.title}}
-    </li>
-  </ul>
-  <hr>
   QUEUED
   <ul>
     <li *ngFor="let item of playQueue.items.getQueuedItems()">
