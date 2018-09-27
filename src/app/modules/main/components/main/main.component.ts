@@ -10,6 +10,8 @@ import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {Modal} from '../../../shared/src/modal-factory.class';
 import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
 import {PrivacyManager} from '../../services/privacy-manager';
+import {SocketMessageService, SocketStatusTypes} from '../../../shared/services/socket-message';
+import {filter} from 'rxjs/operators';
 
 export interface IPrivacySettings {
   allowTracking: boolean;
@@ -31,7 +33,8 @@ export class MainComponent implements OnInit {
               private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
               private toastService: ToastService,
-              private privacyConfigModalOpener: PrivacyConfigModalOpener) {
+              private privacyConfigModalOpener: PrivacyConfigModalOpener,
+              private socketMessageService: SocketMessageService) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
@@ -86,5 +89,26 @@ export class MainComponent implements OnInit {
         this.privacyConfigModalOpener.open();
       }
     });
+
+    this.socketMessageService.open('wss://api.aux.app/websocket');
+    this.socketMessageService.getObservable()
+      .pipe(
+        filter((value) => {
+          return value.type === SocketStatusTypes.CLOSED;
+        })
+      )
+      .subscribe(() => {
+        console.warn('[PLAYER] CLOSED');
+        this.socketMessageService.open('wss://api.aux.app/websocket');
+      });
+    this.socketMessageService.getObservable()
+      .pipe(
+        filter((value) => {
+          return value.type === SocketStatusTypes.OPEN;
+        })
+      )
+      .subscribe(() => {
+        console.log('[PLAYER] OPEN');
+      });
   }
 }
