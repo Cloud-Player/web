@@ -12,6 +12,7 @@ import {YoutubePlayerComponent} from './components/youtube-player/youtube-player
 import {TracksModule} from '../tracks/tracks.module';
 import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
 import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-player';
+import {SocketPlayerService} from './services/socket-player';
 
 @NgModule({
   imports: [
@@ -33,6 +34,9 @@ import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-pla
   ],
   exports: [
     PlayerComponent
+  ],
+  providers: [
+    SocketPlayerService
   ],
   entryComponents: [
     SoundcloudPlayerComponent,

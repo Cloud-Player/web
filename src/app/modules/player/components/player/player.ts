@@ -11,6 +11,9 @@ import {filter} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {SocketMessageService} from '../../../shared/services/socket-message';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {MessageMethodTypes} from '../../../shared/services/message';
+import {SocketPlayerService} from '../../services/socket-player';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 
 @Component({
   selector: 'app-player',
@@ -24,11 +27,16 @@ export class PlayerComponent implements OnInit {
   @ViewChild('playerManager')
   private playerManager: PlayerManagerComponent;
 
+  private authenticatedUser: AuthenticatedUserModel;
+
   constructor(private logoService: LogoService,
               private el: ElementRef,
               private layoutService: LayoutService,
               private fullScreenService: FullScreenService,
+              private socketMessageService: SocketMessageService,
+              private socketPlayerService: SocketPlayerService,
               private cdr: ChangeDetectorRef) {
+    this.authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
   private enteredFullScreen() {
@@ -93,12 +101,18 @@ export class PlayerComponent implements OnInit {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 
     const saveItem = (item) => {
+      console.log('[PLAYER] STATUS CHANGE', item.status);
       switch (item.status) {
         case PlayQueueItemStatus.Playing:
         case PlayQueueItemStatus.Paused:
         case PlayQueueItemStatus.Queued:
         case PlayQueueItemStatus.Stopped:
           item.save();
+          break;
+        case PlayQueueItemStatus.Scheduled:
+          if (item.previousAttributes().status === PlayQueueItemStatus.Queued) {
+            item.save();
+          }
           break;
       }
     };
@@ -108,7 +122,7 @@ export class PlayerComponent implements OnInit {
       this.playQueue.items.off('change:status', saveItem);
       this.playQueue.save().then(() => {
         // this.playQueue.items.on('change:progress', throttledProgressUpdate);
-        this.playQueue.items.off('change:status', saveItem);
+        this.playQueue.items.on('change:status', saveItem);
       });
     }, 1000);
 
@@ -152,7 +166,6 @@ export class PlayerComponent implements OnInit {
       if (item.status === PlayQueueItemStatus.Playing) {
         this.playQueue.items.fetchRecommendedItems();
       }
-      item.save();
     });
 
     this.playQueue.items.on('update', debouncedPlayQueueSave);
@@ -163,7 +176,14 @@ export class PlayerComponent implements OnInit {
 
     this.playQueue.items.on('remove', item => item.destroy());
 
-    this.playQueue.fetch();
+    if (!this.authenticatedUser.isNew()) {
+      this.playQueue.fetch();
+    } else {
+      this.authenticatedUser.once('change:id', () => {
+        this.playQueue.fetch();
+      });
+    }
+    this.socketPlayerService.setPlayqueue(this.playQueue);
 
     this.fullScreenService.getObservable()
       .pipe(
