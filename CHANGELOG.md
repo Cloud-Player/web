@@ -1,3 +1,6 @@
+# v5.4.1
+- React on websocket channel updates for Playqueue
+
 # v5.4.0
 - Persist playqueue on server
 - Add recommended track feature

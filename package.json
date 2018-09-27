@@ -1,6 +1,6 @@
 {
   "name": "cloud-player",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "description": "Music/video player to play music from YouTube, SoundCloud and Mixcloud",
   "scripts": {
     "ng": "ng",
