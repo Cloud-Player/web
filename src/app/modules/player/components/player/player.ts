@@ -81,6 +81,14 @@ export class PlayerComponent implements OnInit {
     this.playerManager.setVolume(volume / 100);
   }
 
+  public enterPlayerControls() {
+    this.el.nativeElement.classList.add('player-controls-active');
+  }
+
+  public leavePlayerControls() {
+    this.el.nativeElement.classList.remove('player-controls-active');
+  }
+
   ngOnInit(): void {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 

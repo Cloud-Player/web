@@ -8,6 +8,8 @@
 
     <app-player-controls [isBuffering]="isBuffering"
                          [playQueue]="playQueue"
+                         (mouseenter)="enterPlayerControls()"
+                         (mouseleave)="leavePlayerControls()"
                          (volumeChange)="setVolume($event)"></app-player-controls>
   </div>
 
