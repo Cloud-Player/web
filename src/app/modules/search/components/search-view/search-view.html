@@ -120,6 +120,24 @@
                        icon="fa fa-search">
       </app-empty-state>
     </app-tab-pane>
+    <app-tab-pane [id]="availableProviderMap['deezer'].id"
+                  [title]="availableProviderMap['deezer'].title"
+                  [icon]="availableProviderMap['deezer'].icon">
+      <div *ngIf="tracksDeezer.length>0"
+           class="results">
+        <app-search-result-tracks [tracks]="tracksDeezer">
+        </app-search-result-tracks>
+      </div>
+      <app-empty-state *ngIf="tracksDeezer.length === 0 && tracksDeezer.isSyncing"
+                       title="Searching for tracks"
+                       icon="fa fa-search">
+      </app-empty-state>
+
+      <app-empty-state *ngIf="tracksDeezer.queryParams.q && tracksDeezer.length === 0 && !isFetching"
+                       title="No tracks were found"
+                       icon="fa fa-search">
+      </app-empty-state>
+    </app-tab-pane>
   </app-tab-bar>
 
   <app-empty-state *ngIf="showWelcomeText"

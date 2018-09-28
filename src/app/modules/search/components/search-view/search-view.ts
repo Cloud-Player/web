@@ -19,6 +19,8 @@ import {TracksAuxappCollection} from '../../../api/tracks/tracks-auxapp.collecti
 import {TrackAuxappModel} from '../../../api/tracks/track-auxapp.model';
 import {TracksMixcloudCollection} from '../../../api/tracks/tracks-mixcloud.collection';
 import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
+import {TracksDeezerCollection} from '../../../api/tracks/tracks-deezer.collection';
+import {TrackDeezerModel} from '../../../api/tracks/track-deezer.model';
 
 @Component({
   selector: 'app-search-view',
@@ -31,6 +33,7 @@ export class SearchViewComponent implements AfterViewInit {
   public tracksSoundCloud: TracksSoundcloudCollection<TrackSoundcloudModel>;
   public tracksYoutube: TracksYoutubeCollection<TrackYoutubeModel>;
   public tracksMixcloud: TracksMixcloudCollection<TrackMixcloudModel>;
+  public tracksDeezer: TracksDeezerCollection<TrackDeezerModel>;
   public searchCollection: TracksAuxappCollection<TrackAuxappModel>;
   public isFetching = false;
   public showWelcomeText = false;
@@ -50,6 +53,7 @@ export class SearchViewComponent implements AfterViewInit {
     this.tracksSoundCloud = new TracksSoundcloudCollection();
     this.tracksYoutube = new TracksYoutubeCollection();
     this.tracksMixcloud = new TracksMixcloudCollection();
+    this.tracksDeezer = new TracksDeezerCollection();
     this.searchCollection = this.tracksSoundCloud;
     this.setRandomSearchTerm();
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
@@ -76,6 +80,9 @@ export class SearchViewComponent implements AfterViewInit {
         break;
       case ProviderMap.mixcloud.id:
         this.searchCollection = this.tracksMixcloud;
+        break;
+      case ProviderMap.deezer.id:
+        this.searchCollection = this.tracksDeezer;
         break;
     }
     localforage.setItem('sc_search_provider', tabPane.id);
@@ -189,6 +196,15 @@ export class SearchViewComponent implements AfterViewInit {
     });
 
     this.tracksMixcloud.on('sync error', () => {
+      this.isFetching = false;
+    });
+
+    this.tracksDeezer.on('request', () => {
+      this.isFetching = true;
+      this.showWelcomeText = false;
+    });
+
+    this.tracksDeezer.on('sync error', () => {
       this.isFetching = false;
     });
 
