@@ -90,7 +90,7 @@ export class SocketPlayerService {
   private subscribeOnPlayqueueChanges(playQueue: PlayqueueAuxappModel) {
     this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.PUT, this.updateItem.bind(this));
     this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.POST, this.addItem.bind(this));
-    this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.DELETE, this.resetPlayqueue.bind(this));
+    //this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.DELETE, this.resetPlayqueue.bind(this));
     console.log('[PLAYER] Subscribe', playQueue.id);
   }
 
