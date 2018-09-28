@@ -6,6 +6,7 @@ import {dynamicInstance} from '../../backbone/decorators/dynamic-instance.decora
 import {TrackSoundcloudModel} from './track-soundcloud.model';
 import {TrackYoutubeModel} from './track-youtube.model';
 import {TrackMixcloudModel} from './track-mixcloud.model';
+import {TrackDeezerModel} from './track-deezer.model';
 
 export class TracksAuxappCollection<TModel extends TrackAuxappModel>
   extends AuxappCollection<TModel> implements ITracks<TModel> {
@@ -15,7 +16,8 @@ export class TracksAuxappCollection<TModel extends TrackAuxappModel>
     identifierKeyValueMap: {
       soundcloud: TrackSoundcloudModel,
       youtube: TrackYoutubeModel,
-      mixcloud: TrackMixcloudModel
+      mixcloud: TrackMixcloudModel,
+      deezer: TrackDeezerModel
     }
   })
   model: ITrackModelConstructor = TrackAuxappModel;

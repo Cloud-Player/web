@@ -1,3 +1,6 @@
+# v5.4.2
+- Start deezer integration (Search and play tracks)
+
 # v5.4.1
 - React on websocket channel updates for Playqueue
 

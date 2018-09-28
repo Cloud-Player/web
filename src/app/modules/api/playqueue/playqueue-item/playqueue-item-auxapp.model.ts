@@ -10,6 +10,7 @@ import {defaultValue} from '../../../backbone/decorators/default-value.decorator
 import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {PlayqueueItemsAuxappCollection} from './playqueue-items-auxapp.collection';
 import {AuxappModel} from '../../auxapp/auxapp.model';
+import {TrackDeezerModel} from '../../tracks/track-deezer.model';
 
 export class PlayqueueItemAuxappModel
   extends PlaylistItemAuxappModel {
@@ -26,7 +27,8 @@ export class PlayqueueItemAuxappModel
     identifierKeyValueMap: {
       'soundcloud': TrackSoundcloudModel,
       'youtube': TrackYoutubeModel,
-      'mixcloud': TrackMixcloudModel
+      'mixcloud': TrackMixcloudModel,
+      'deezer': TrackDeezerModel
     }
   })
   track: ITrack;

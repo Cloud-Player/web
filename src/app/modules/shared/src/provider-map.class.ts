@@ -33,10 +33,17 @@ export class ProviderMap {
     id: 'mixcloud'
   };
 
+  static deezer: IProvider = {
+    title: 'Deezer',
+    icon: 'fa fa-signal',
+    id: 'deezer'
+  };
+
   static map: IProviderMap = {
     auxapp: ProviderMap.auxapp,
     soundcloud: ProviderMap.soundcloud,
     youtube: ProviderMap.youtube,
-    mixcloud: ProviderMap.mixcloud
+    mixcloud: ProviderMap.mixcloud,
+    deezer: ProviderMap.deezer
   };
 }
