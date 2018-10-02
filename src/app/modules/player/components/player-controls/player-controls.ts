@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -178,7 +178,7 @@ export class PlayerControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this._docTitle = document.title;
-    this.playQueue.items.on('change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
+    this.playQueue.items.on('update change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
       if (status === PlayQueueItemStatus.RequestedPlaying || status === PlayQueueItemStatus.RequestedPause) {
         this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);

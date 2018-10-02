@@ -155,7 +155,9 @@ export class PlayqueueItemAuxappModel
   // }
 
   parse(attrs) {
-    attrs.status = attrs.state;
+    if (!this.isPlaying() && !this.isPaused()) {
+      attrs.status = attrs.state;
+    }
     delete attrs.state;
 
     if (!attrs.track || attrs.track === null || (attrs.track && !attrs.track.id)) {
@@ -164,6 +166,7 @@ export class PlayqueueItemAuxappModel
       attrs.track.provider = attrs.track.provider_id;
       delete attrs.track.provider_id;
     }
+
     return attrs;
   }
 
@@ -180,21 +183,19 @@ export class PlayqueueItemAuxappModel
         status = PlayQueueItemStatus.Stopped;
         break;
     }
+    const item: any = {
+      state: status,
+      progress: Math.round(this.progress)
+    };
     if (this.isNew()) {
-      return {
-        track_provider_id: this.track.provider,
-        track_id: this.track.id.toString(),
-        state: status
-      };
-    } else {
-      return {
-        state: status
-      };
+      item.track_provider_id = this.track.provider;
+      item.track_id = this.track.id.toString();
     }
+    return item;
   }
 
   save() {
-    if (!this.isSyncing && !this.isNew()) {
+    if (!this.isSyncing) {
       return super.save();
     } else {
       console.log('IGNORE');

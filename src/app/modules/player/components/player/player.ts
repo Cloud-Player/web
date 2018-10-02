@@ -162,6 +162,7 @@ export class PlayerComponent implements OnInit {
     });
 
     this.playQueue.items.on('change:progress', throttledViewUpdate);
+    this.playQueue.items.on('change:progress', throttledProgressUpdate);
     this.playQueue.items.on('change:status', (item) => {
       if (item.status === PlayQueueItemStatus.Playing) {
         this.playQueue.items.fetchRecommendedItems();
@@ -185,39 +186,6 @@ export class PlayerComponent implements OnInit {
     }
     this.socketPlayerService.setPlayqueue(this.playQueue);
 
-    const item = this.playQueue.items.add([
-      {
-        state: 'paused',
-        track: {
-          id: 916424
-        },
-        track_id: 916424,
-        track_provider_id: 'deezer'
-      },
-      {
-        state: 'scheduled',
-        track: {
-          id: 1109730
-        },
-        track_id: 1109730,
-        track_provider_id: 'deezer'
-      },
-      {
-        state: 'scheduled',
-        track: {
-          id: 548348612
-        },
-        track_id: 548348612,
-        track_provider_id: 'deezer'
-      }, {
-        state: 'scheduled',
-        track: {
-          id: 548348632
-        },
-        track_id: 548348632,
-        track_provider_id: 'deezer'
-      }
-    ], {parse: true});
     this.fullScreenService.getObservable()
       .pipe(
         filter(eventType => eventType === FullScreenEventType.Enter)
