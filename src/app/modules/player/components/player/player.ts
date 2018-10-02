@@ -162,6 +162,7 @@ export class PlayerComponent implements OnInit {
     });
 
     this.playQueue.items.on('change:progress', throttledViewUpdate);
+    this.playQueue.items.on('change:progress', throttledProgressUpdate);
     this.playQueue.items.on('change:status', (item) => {
       if (item.status === PlayQueueItemStatus.Playing) {
         this.playQueue.items.fetchRecommendedItems();
