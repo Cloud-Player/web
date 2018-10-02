@@ -1,3 +1,6 @@
+# v5.4.3
+- Update socket logic
+
 # v5.4.2
 - Start deezer integration (Search and play tracks)
 
