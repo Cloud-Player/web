@@ -28,7 +28,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _throttledTimeUpdate = throttle(this.emitTimeChange.bind(this), 900);
   private _forcePlayStart = false;
   private _forcePlayStartTry = 0;
-  private _seekedTo = null;
+  private _seekTo = null;
 
   @Input()
   public track: ITrack;
@@ -183,7 +183,7 @@ export abstract class AbstractPlayer implements OnInit {
     } else {
       this._forcePlayStart = false;
       this._forcePlayStartTry = 0;
-      this._seekedTo = null;
+      this._seekTo = null;
       this.setStatus(PlayerStatus.Playing);
     }
     this._error = null;
@@ -192,7 +192,7 @@ export abstract class AbstractPlayer implements OnInit {
   protected onPaused() {
     if (this._forcePlayStart && this._forcePlayStartTry < 5) {
       this._forcePlayStartTry++;
-      this.play(this._seekedTo);
+      this.play(this._seekTo);
     } else {
       this._forcePlayStartTry = 0;
       this.setStatus(PlayerStatus.Paused);
@@ -377,7 +377,7 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public seekTo(to: number): Promise<any> {
-    this._seekedTo = to;
+    this._seekTo = to;
     this.executeOnInitialised(() => {
       this.seekPlayerTo(to);
     });
