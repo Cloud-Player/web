@@ -78,6 +78,8 @@ export class MainComponent implements OnInit {
           browser: `${ClientDetector.getClient().name}`,
           os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
           screenSize: '100'
+        }).then(() => {
+          this.socketMessageService.open('wss://api.aux.app/websocket');
         });
       });
       // Fetch favourite tracks on every id change
@@ -90,7 +92,6 @@ export class MainComponent implements OnInit {
       }
     });
 
-    this.socketMessageService.open('wss://api.aux.app/websocket');
     this.socketMessageService.getObservable()
       .pipe(
         filter((value) => {
