@@ -103,8 +103,8 @@ export class PlayerComponent implements OnInit {
     const saveItem = (item) => {
       console.log('[PLAYER] STATUS CHANGE', item.status);
       switch (item.status) {
-        case PlayQueueItemStatus.Playing:
-        case PlayQueueItemStatus.Paused:
+        case PlayQueueItemStatus.RequestedPlaying:
+        case PlayQueueItemStatus.RequestedPause:
         case PlayQueueItemStatus.Queued:
         case PlayQueueItemStatus.Stopped:
           item.save();
