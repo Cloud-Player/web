@@ -1,3 +1,6 @@
+# v5.4.4
+- Update socket logic
+
 # v5.4.3
 - Update socket logic
 
