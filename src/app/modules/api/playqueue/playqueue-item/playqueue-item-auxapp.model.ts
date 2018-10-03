@@ -9,7 +9,6 @@ import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {PlayqueueItemsAuxappCollection} from './playqueue-items-auxapp.collection';
-import {AuxappModel} from '../../auxapp/auxapp.model';
 import {TrackDeezerModel} from '../../tracks/track-deezer.model';
 
 export class PlayqueueItemAuxappModel
@@ -43,6 +42,8 @@ export class PlayqueueItemAuxappModel
 
   @attributesKey('indexBeforeShuffle')
   indexBeforeShuffle: number;
+
+  seekToSeconds: number;
 
   urlRoot = () => {
     return (<PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>>this.collection).url();
@@ -103,13 +104,9 @@ export class PlayqueueItemAuxappModel
   }
 
   seekTo(to: number): Promise<any> {
-    if (this.isPlaying()) {
-      return this.pause().then(() => {
-        return this.play(to);
-      });
-    } else {
-      return this.play(to);
-    }
+    this.seekToSeconds = to;
+    this.status = PlayQueueItemStatus.RequestedSeek;
+    return this.resolveOnStatus(PlayQueueItemStatus.Playing);
   }
 
   restart(): Promise<any> {

@@ -337,6 +337,14 @@ export class PlayerManagerComponent implements OnInit {
       case PlayQueueItemStatus.RequestedPlaying:
         this.startPlayerFor(item, item.progress);
         break;
+      case PlayQueueItemStatus.RequestedSeek:
+        if (this._activePlayer) {
+          console.log(item.progress);
+          this._activePlayer.instance.seekTo(item.seekToSeconds);
+        } else {
+          this.startPlayerFor(item, item.progress);
+        }
+        break;
       case PlayQueueItemStatus.RequestedStop:
         if (item === this.playQueue.items.getCurrentItem()) {
           this.stopPlayer();
