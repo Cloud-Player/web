@@ -95,6 +95,8 @@ export class SocketPlayerService {
           }
           break;
       }
+    } else {
+      this.addItem(item);
     }
   }
 
