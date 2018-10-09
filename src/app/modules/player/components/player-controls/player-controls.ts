@@ -44,7 +44,7 @@ export class PlayerControlsComponent implements OnInit {
               private cdr: ChangeDetectorRef,
               public fullScreenService: FullScreenService) {
     this.volumeChange = new EventEmitter<number>();
-    this.isInHeadlessModeChange = new EventEmitter<number>();
+    this.isInHeadlessModeChange = new EventEmitter<boolean>();
   }
 
   private setMobileMediaNotification(track: ITrack) {
