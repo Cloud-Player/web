@@ -339,7 +339,6 @@ export class PlayerManagerComponent implements OnInit {
         break;
       case PlayQueueItemStatus.RequestedSeek:
         if (this._activePlayer) {
-          console.log(item.progress);
           this._activePlayer.instance.seekTo(item.seekToSeconds);
         } else {
           this.startPlayerFor(item, item.progress);
@@ -396,6 +395,19 @@ export class PlayerManagerComponent implements OnInit {
   public seekActivePlayerTrackTo(seekTo: number) {
     if (this._activePlayer) {
       this._activePlayer.instance.seekTo(seekTo);
+    }
+  }
+
+  public isInHeadlessMode(): boolean {
+    return this._playerFactory.isInHeadlessMode();
+  }
+
+  public setInHeadlessMode(isHeadless: boolean) {
+    this._playerFactory.setInHeadlessMode(isHeadless);
+    const currentItem = this.playQueue.items.getCurrentItem();
+    if (currentItem) {
+      const player = this._playerFactory.createPlayer(this.playQueue.items.getCurrentItem());
+      this.activatePlayer(player, this._activePlayer, currentItem.progress, currentItem.isPlaying());
     }
   }
 
