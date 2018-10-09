@@ -239,7 +239,6 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     recommendedItems.forEach((item: TModel, index: number) => {
       this.remove(item, {silent: true});
       this.setPlayIndex();
-      console.log(this.getPlayIndex() + index + incr2);
       this.add(item, {at: this.getPlayIndex() + index + incr2, silent: true, doNothing: true});
     });
   }
@@ -286,13 +285,10 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     if (trackWithOutDetails.length > 0) {
       return TracksAuxappCollection.getTrackDetails(trackWithOutDetails).then((tracksWithDetails: Array<any>) => {
         tracksWithDetails.forEach((trackWithDetail) => {
-          console.log('[PLAYER] SET TRACK DETAIL FOR', trackWithDetail);
           const existingItem = this.getItemByTrackId(trackWithDetail.id);
           if (existingItem) {
             existingItem.track.set(existingItem.track.parse(trackWithDetail));
             existingItem.trigger('change:track');
-          } else {
-            console.log('DOES NOT EXIST');
           }
         });
       });
@@ -301,10 +297,9 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
   public fetchRecommendedItems() {
     if (
-      this.getRecommendedItems().length > 0 ||
+      // this.getRecommendedItems().length > 0 ||
       (this._recommandationsBasedOnItem && this._recommandationsBasedOnItem === this.getCurrentItem())
     ) {
-      console.log('SKIP');
       this._recommandationsBasedOnItem = this.getCurrentItem();
       return new Promise((resolve) => {
         resolve(this);
