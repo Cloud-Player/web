@@ -107,7 +107,6 @@ export class PlayerComponent implements OnInit {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 
     const saveItem = (item) => {
-      console.log('[PLAYER] STATUS CHANGE', item.status);
       switch (item.status) {
         case PlayQueueItemStatus.RequestedPlaying:
         case PlayQueueItemStatus.RequestedPause:
@@ -124,12 +123,7 @@ export class PlayerComponent implements OnInit {
     };
 
     const debouncedPlayQueueSave = debounce(() => {
-      // this.playQueue.items.off('change:progress', throttledProgressUpdate);
-      this.playQueue.items.off('change:status', saveItem);
-      this.playQueue.save().then(() => {
-        // this.playQueue.items.on('change:progress', throttledProgressUpdate);
-        this.playQueue.items.on('change:status', saveItem);
-      });
+      this.playQueue.save();
     }, 1000);
 
     const debouncedSetHasPlayer = debounce(() => {
@@ -161,9 +155,7 @@ export class PlayerComponent implements OnInit {
     }, 1000);
 
     this.playQueue.items.once('add', () => {
-      if (this.playQueue.items.getPlayingItem()) {
-        this.playQueue.items.getPlayingItem().pause();
-      }
+
       this.setLastPlayingItem();
     });
 
@@ -173,6 +165,7 @@ export class PlayerComponent implements OnInit {
       if (item.status === PlayQueueItemStatus.Playing) {
         this.playQueue.items.fetchRecommendedItems();
       }
+      saveItem(item);
     });
 
     this.playQueue.items.on('update', debouncedPlayQueueSave);
