@@ -95,7 +95,7 @@ export abstract class AbstractPlayer implements OnInit {
   protected setCurrentTime(currentTime: number): void {
     if (isNumber(currentTime) && currentTime > 0) {
       this._currentTime = currentTime;
-      this._throttledTimeUpdate(currentTime);
+      this.emitTimeChange(currentTime);
     }
   }
 
