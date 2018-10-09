@@ -22,6 +22,7 @@ export class SocketMessageService {
   private _isOpened: boolean;
   private _observable: EventEmitter<ISocketEvent>;
   private _subscribedChannelIds: Array<string> = [];
+  private _openSubscriptions: Array<string> = [];
 
   constructor(private messageService: MessageService) {
     this._observable = new EventEmitter();
@@ -37,7 +38,10 @@ export class SocketMessageService {
   }
 
   private subscribeOnChannelId(channelId: string) {
-    this.sendMessage(channelId, MessageMethodTypes.SUBSCRIBE);
+    if (this._openSubscriptions.indexOf(channelId) < 0) {
+      this._openSubscriptions.push((channelId));
+      this.sendMessage(channelId, MessageMethodTypes.SUBSCRIBE);
+    }
   }
 
   private onMessage(event: MessageEvent) {
@@ -61,6 +65,7 @@ export class SocketMessageService {
   private onClose(event: Event) {
     console.warn('[SOCKET] Closed');
     this._isOpened = false;
+    this._openSubscriptions = [];
     this._observable.emit({type: SocketStatusTypes.CLOSED});
   }
 
