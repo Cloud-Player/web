@@ -284,6 +284,7 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public initialise(options?: IPlayerOptions): Promise<any> {
+    this.setCurrentTime(0);
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
@@ -380,6 +381,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   public seekTo(to: number): Promise<any> {
     this._seekTo = to;
+    this.currentTimeChange.emit(to);
     this.executeOnInitialised(() => {
       this.seekPlayerTo(to);
     });
@@ -412,6 +414,7 @@ export abstract class AbstractPlayer implements OnInit {
     } else {
       this.setStatus(PlayerStatus.Updating);
       this.track = track;
+      this.setDuration(track.duration);
       if (this.getStatus() === PlayerStatus.Playing) {
         return this.stop().then(() => {
           this.preload();
