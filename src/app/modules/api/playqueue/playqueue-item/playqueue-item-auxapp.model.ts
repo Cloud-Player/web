@@ -45,6 +45,11 @@ export class PlayqueueItemAuxappModel
 
   seekToSeconds: number;
 
+  socketData: {
+    status: PlayQueueItemStatus,
+    progress: number;
+  };
+
   urlRoot = () => {
     return (<PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>>this.collection).url();
   };
@@ -69,6 +74,17 @@ export class PlayqueueItemAuxappModel
     }
 
     return this._promisePerState[requestedStatus];
+  }
+
+  private isPlayerStateSameAsSocket() {
+    if (this.socketData) {
+      const isSameState = (this.socketData.status === PlayQueueItemStatus.Paused && this.isPaused()) ||
+        (this.socketData.status === PlayQueueItemStatus.Playing && this.isPlaying());
+      const isSameProgress = this.progress >= this.socketData.progress - 5 && this.progress <= this.socketData.progress + 5;
+      return (isSameState && isSameProgress);
+    } else {
+      return false;
+    }
   }
 
   queue(): void {
@@ -104,6 +120,7 @@ export class PlayqueueItemAuxappModel
   }
 
   seekTo(to: number): Promise<any> {
+    this.progress = to;
     this.seekToSeconds = to;
     this.status = PlayQueueItemStatus.RequestedSeek;
     return this.resolveOnStatus(PlayQueueItemStatus.Playing);
@@ -171,6 +188,7 @@ export class PlayqueueItemAuxappModel
     let status = this.status;
     switch (status) {
       case PlayQueueItemStatus.RequestedPlaying:
+      case PlayQueueItemStatus.RequestedSeek:
         status = PlayQueueItemStatus.Playing;
         break;
       case PlayQueueItemStatus.RequestedPause:
@@ -192,10 +210,14 @@ export class PlayqueueItemAuxappModel
   }
 
   save() {
+    if (this.isPlayerStateSameAsSocket()) {
+      return new Promise((resolve) => {
+        this.socketData = null;
+        resolve(this);
+      });
+    }
     if (!this.isSyncing) {
       return super.save();
-    } else {
-      console.log('IGNORE');
     }
   }
 }
