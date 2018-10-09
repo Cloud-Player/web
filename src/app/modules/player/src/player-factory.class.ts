@@ -10,6 +10,7 @@ import {ITrack} from '../../api/tracks/track.interface';
 import {MixcloudPlayerComponent} from '../components/mixcloud-player/mixcloud-player';
 import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 import {DeezerPlayerComponent} from '../components/deezer-player/deezer-player';
+import {HeadlessPlayerComponent} from '../components/headless-player/headless-player';
 
 @Injectable()
 export class PlayerFactory {
@@ -19,6 +20,7 @@ export class PlayerFactory {
   private _container: ViewContainerRef;
   private _playerComponentMap;
   private _playerStore: PlayerStore<PlayerStoreItem>;
+  private _isInHeadlessMode = false;
 
   constructor(resolver: ComponentFactoryResolver) {
     this._resolver = resolver;
@@ -39,7 +41,9 @@ export class PlayerFactory {
   }
 
   private getComponentForType(type: string) {
-    if (this._playerComponentMap[type]) {
+    if (this._isInHeadlessMode) {
+      return HeadlessPlayerComponent;
+    } else if (this._playerComponentMap[type]) {
       return this._playerComponentMap[type];
     } else {
       throw new Error(`There is no player available for the type ${type}`);
@@ -65,6 +69,7 @@ export class PlayerFactory {
   private getReusablePlayer(playQueueItem: PlayqueueItemAuxappModel): PlayerStoreItem {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
       return player.provider === playQueueItem.track.provider &&
+        player.component.instance.isHeadlessPlayer === this._isInHeadlessMode &&
         player.component.instance.getStatus() === PlayerStatus.NotInitialised ||
         player.component.instance.getStatus() === PlayerStatus.Ended ||
         player.component.instance.getStatus() === PlayerStatus.Stopped;
@@ -90,6 +95,14 @@ export class PlayerFactory {
         }
       }
     });
+  }
+
+  public setInHeadlessMode(isHeadless: boolean) {
+    this._isInHeadlessMode = isHeadless;
+  }
+
+  public isInHeadlessMode(): boolean {
+    return this._isInHeadlessMode;
   }
 
   public setContainer(container: ViewContainerRef) {

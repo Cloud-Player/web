@@ -14,6 +14,11 @@
     <app-volume-btn [volume]="volume" (volumeChange)="setVolume($event)"></app-volume-btn>
   </div>
   <div class="fullscreen">
+    <button class="btn btn-xs btn-default"
+            [ngClass]="{'is-activated': isInHeadlessMode}"
+            (click)="toggleHeadlessMode()">
+      <i class="fa fa-rss"></i>
+    </button>
     <button *ngIf="fullScreenService.canEnterFullScreen()"
             class="btn btn-xs btn-default"
             (click)="toggleFullScreen()">

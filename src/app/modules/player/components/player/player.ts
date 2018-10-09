@@ -23,6 +23,7 @@ import {AuthenticatedUserModel} from '../../../api/authenticated-user/authentica
 export class PlayerComponent implements OnInit {
   public playQueue: PlayqueueAuxappModel;
   public isBuffering: boolean;
+  public isHeadlessPlayer: boolean;
 
   @ViewChild('playerManager')
   private playerManager: PlayerManagerComponent;
@@ -83,6 +84,11 @@ export class PlayerComponent implements OnInit {
         this.logoService.play();
         break;
     }
+  }
+
+  public setInHeadlessMode(isHeadless: boolean) {
+    this.playerManager.setInHeadlessMode(isHeadless);
+    this.isHeadlessPlayer = this.playerManager.isInHeadlessMode();
   }
 
   public setVolume(volume: number) {
@@ -176,6 +182,8 @@ export class PlayerComponent implements OnInit {
     });
 
     this.playQueue.items.on('remove', item => item.destroy());
+
+    this.isHeadlessPlayer = this.playerManager.isInHeadlessMode();
 
     if (!this.authenticatedUser.isNew()) {
       this.playQueue.fetch();

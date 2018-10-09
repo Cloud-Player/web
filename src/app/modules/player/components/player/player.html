@@ -7,10 +7,13 @@
                         (playerStatusChange)="changePlayerStatus($event)"></app-player-manager>
 
     <app-player-controls [isBuffering]="isBuffering"
+                         [isInHeadlessMode]="isHeadlessPlayer"
                          [playQueue]="playQueue"
                          (mouseenter)="enterPlayerControls()"
                          (mouseleave)="leavePlayerControls()"
-                         (volumeChange)="setVolume($event)"></app-player-controls>
+                         (volumeChange)="setVolume($event)"
+                         (isInHeadlessModeChange)="setInHeadlessMode($event)">
+    </app-player-controls>
   </div>
 
   <app-play-queue [playQueue]="playQueue" class="queue"></app-play-queue>

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -29,14 +29,22 @@ export class PlayerControlsComponent implements OnInit {
   @Input()
   public volume = 100;
 
+  @Input()
+  public isInHeadlessMode: boolean;
+
   @Output()
   public volumeChange: EventEmitter<number>;
+
+  @Output()
+  public isInHeadlessModeChange: EventEmitter<boolean>;
 
   constructor(private humanReadableSecPipe: HumanReadableSecondsPipe,
               private userAnalyticsService: UserAnalyticsService,
               private el: ElementRef,
+              private cdr: ChangeDetectorRef,
               public fullScreenService: FullScreenService) {
     this.volumeChange = new EventEmitter<number>();
+    this.isInHeadlessModeChange = new EventEmitter<number>();
   }
 
   private setMobileMediaNotification(track: ITrack) {
@@ -113,6 +121,11 @@ export class PlayerControlsComponent implements OnInit {
         this.play();
       }
     }
+  }
+
+  public toggleHeadlessMode() {
+    this.isInHeadlessMode = !this.isInHeadlessMode;
+    this.isInHeadlessModeChange.emit(this.isInHeadlessMode);
   }
 
   public previous(): void {

@@ -42,6 +42,8 @@ export abstract class AbstractPlayer implements OnInit {
   @Output()
   public statusChange = new EventEmitter();
 
+  public isHeadlessPlayer = false;
+
   protected abstract initialisePlayerSDK(): Promise<any>;
 
   protected abstract initialisePlayer(options?: IPlayerOptions): Promise<any>;
