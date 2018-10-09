@@ -89,7 +89,6 @@ export class HeadlessPlayerComponent extends AbstractPlayer implements IPlayer, 
     if (this._fakeTimeUpdater) {
       clearInterval(this._fakeTimeUpdater);
     }
-    console.log('SEEK PLAYER', to);
     this._fakeTime = to;
     if (this.isAllowedToPlay()) {
       this.startPlayer();
