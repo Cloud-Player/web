@@ -26,7 +26,6 @@ export class SocketPlayerService {
   private addItem(item: IPlayqueueItemMessage) {
     const existingItem = this.playQueue.items.getItemByTrackId(item.track_id);
     if (!existingItem) {
-      console.log('[PLAYER] ADD', item);
       const playQueueItem = new PlayqueueItemAuxappModel({
         id: item.id,
         progress: item.progress,
@@ -35,16 +34,9 @@ export class SocketPlayerService {
           provider: item.track_provider_id
         }
       });
-      const addedItem: PlayqueueItemAuxappModel = this.playQueue.items.add(playQueueItem);
-      switch (item.state) {
-        case PlayQueueItemStatus.Playing:
-          addedItem.play();
-          break;
-        case PlayQueueItemStatus.Queued:
-          addedItem.queue();
-          break;
-      }
+      this.playQueue.items.add(playQueueItem);
     }
+    this.updateItem(item);
   }
 
   private addItems(items: Array<IPlayqueueItemMessage>) {
@@ -58,39 +50,37 @@ export class SocketPlayerService {
   }
 
   private updateItem(item: IPlayqueueItemMessage) {
-    console.log('[PLAYER] Update', item);
     const existingItem = this.playQueue.items.getItemByTrackId(item.track_id);
     if (existingItem) {
+      existingItem.socketData = {
+        status: item.state,
+        progress: item.progress
+      };
       switch (item.state) {
         case PlayQueueItemStatus.Playing:
           if (!existingItem.isPlaying()) {
-            console.log('[PLAYER] PLAY', existingItem.track.title);
-            existingItem.play();
+            existingItem.play(item.progress);
           } else {
             existingItem.seekTo(item.progress);
           }
           break;
         case PlayQueueItemStatus.Paused:
           if (!existingItem.isPaused() && !existingItem.isStopped()) {
-            console.log('[PLAYER] PAUSE', existingItem.track.title);
             existingItem.pause();
           }
           break;
         case PlayQueueItemStatus.Stopped:
           if (!existingItem.isStopped()) {
-            console.log('[PLAYER] STOP', existingItem.track.title);
             existingItem.stop();
           }
           break;
         case PlayQueueItemStatus.Queued:
           if (!existingItem.isQueued()) {
-            console.log('[PLAYER] QUEUE', existingItem.track.title);
             existingItem.queue();
           }
           break;
         case PlayQueueItemStatus.Scheduled:
           if (existingItem.isQueued()) {
-            console.log('[PLAYER] DEQUEUE', existingItem.track.title);
             existingItem.unQueue();
           }
           break;
@@ -122,7 +112,6 @@ export class SocketPlayerService {
     this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.PUT, this.updateItems.bind(this));
     this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.POST, this.addItems.bind(this));
     this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.DELETE, this.deleteItem.bind(this));
-    console.log('[PLAYER] Subscribe', playQueue.id);
   }
 
   public setPlayqueue(playQueue: PlayqueueAuxappModel) {
@@ -130,7 +119,6 @@ export class SocketPlayerService {
     if (this.playQueue.id) {
       this.subscribeOnPlayqueueChanges(this.playQueue);
     } else {
-      console.log('[PLAYER] Wait for id');
       this.playQueue.on('change:id', this.subscribeOnPlayqueueChanges, this);
     }
   }
