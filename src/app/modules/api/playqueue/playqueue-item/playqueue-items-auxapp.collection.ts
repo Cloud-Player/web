@@ -367,9 +367,10 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
       const cleanedUp = [];
       items.forEach((item) => {
         if (item.id && item.state !== 'stopped' && item.track) {
+          if (item.state === 'playing') {
+            item.state = 'paused';
+          }
           cleanedUp.push(item);
-        } else {
-          console.log('DROP');
         }
       });
       return cleanedUp;
