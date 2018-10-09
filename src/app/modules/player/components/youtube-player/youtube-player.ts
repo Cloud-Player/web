@@ -173,15 +173,18 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
 
   protected pausePlayer(): void {
     this._canPlay = false;
+    clearTimeout(this._timePoller);
     this._ytPlayer.pauseVideo();
   }
 
   protected stopPlayer(): void {
     this._canPlay = false;
+    clearTimeout(this._timePoller);
     this._ytPlayer.stopVideo();
   }
 
   protected seekPlayerTo(to: number) {
+    clearTimeout(this._timePoller);
     this._ytPlayer.seekTo(to, true);
   }
 
