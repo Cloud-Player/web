@@ -154,6 +154,7 @@ export class PlayerControlsComponent implements OnInit {
     const currItem = this.playQueue.items.getCurrentItem();
     if (currItem) {
       currItem.seekTo(from);
+      currItem.save();
     }
   }
 
