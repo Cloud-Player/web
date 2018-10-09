@@ -1,3 +1,6 @@
+# v5.4.5
+- Provide headless player that shows state of current playqueue item
+
 # v5.4.4
 - Update socket logic
 
