@@ -1,5 +1,4 @@
 import {IAuthenticatedUserAccount} from './authenticated-user-account.interface';
-import {AccountYoutubeModel} from '../../account/account-youtube.model';
 import {nested} from '../../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
 import {AuthenticatedUserPlaylistsYoutubeCollection} from '../playlist/authenticated-user-playlists-youtube.collection';
@@ -7,14 +6,17 @@ import {AuthenticatedUserPlaylistYoutubeModel} from '../playlist/authenticated-u
 import {AuthenticatedUserPlaylistAuxappModel} from '../playlist/authenticated-user-playlist-auxapp.model';
 import {FavouriteTracksYoutubeModel} from '../../favourite-tracks/favourite-tracks-youtube.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
+import {AccountDeezerModel} from '../../account/account-deezer.model';
+import {AuthenticatedUserPlaylistsDeezerCollection} from '../playlist/authenticated-user-playlists-deezer.collection';
+import {AuthenticatedUserPlaylistDeezerModel} from '../playlist/authenticated-user-playlist-deezer.model';
 
-export class AuthenticatedUserAccountYoutubeModel
-  extends AccountYoutubeModel implements IAuthenticatedUserAccount {
-  public loginUrl = `${this.hostName()}/youtube`;
+export class AuthenticatedUserAccountDeezerModel
+  extends AccountDeezerModel implements IAuthenticatedUserAccount {
+  public loginUrl = `${this.hostName()}/deezer`;
 
   @attributesKey('playlists')
   @nested()
-  playlists: AuthenticatedUserPlaylistsYoutubeCollection<AuthenticatedUserPlaylistYoutubeModel>;
+  playlists: AuthenticatedUserPlaylistsDeezerCollection<AuthenticatedUserPlaylistDeezerModel>;
 
   @attributesKey('favouriteTracks')
   @nested()
@@ -57,7 +59,7 @@ export class AuthenticatedUserAccountYoutubeModel
     return playlist.save();
   }
 
-  isConnected(){
+  isConnected() {
     return this.connected && !this.isNew();
   }
 }

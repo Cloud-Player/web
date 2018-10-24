@@ -12,9 +12,6 @@ export class AuthenticatedUserPlaylistYoutubeModel
 
   endpoint = '/playlists';
 
-  @queryParam()
-  part = 'snippet,status';
-
   @attributesKey('canEdit')
   @defaultValue(true)
   canEdit: boolean;

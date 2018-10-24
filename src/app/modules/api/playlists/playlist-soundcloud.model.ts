@@ -7,6 +7,8 @@ import {PlaylistItemsSoundcloudCollection} from './playlist-item/playlist-items-
 import {PlaylistItemSoundcloudModel} from './playlist-item/playlist-item-soundcloud.model';
 import {ImageSoundcloudModel} from '../image/image-soundcloud.model';
 import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
+import {IPlaylistItem} from './playlist-item/playlist-item.interface';
+import {ImageAuxappModel} from '../image/image-auxapp.model';
 
 export class PlaylistSoundcloudModel
   extends SoundcloudProxyModel implements IPlaylist {
@@ -42,30 +44,23 @@ export class PlaylistSoundcloudModel
 
   @attributesKey('artwork_url')
   @nested()
-  image: ImageSoundcloudModel;
+  image: ImageAuxappModel;
 
-  parse(attrs: any) {
-    attrs.isPublic = (attrs.sharing === 'public');
-    delete attrs.sharing;
-
-    if (!attrs.artwork_url && attrs.tracks.length > 0) {
-      attrs.artwork_url = attrs.tracks[0].artwork_url;
+  private setCover(item: IPlaylistItem) {
+    if (item.track.image.getSmallSizeUrl()) {
+      this.image.small = item.track.image.getSmallSizeUrl();
+      this.image.medium = item.track.image.getMediumSizeUrl();
+      this.image.large = item.track.image.getLargeSizeUrl();
+    } else {
+      item.track.image.on('change', () => {
+        this.setCover(item);
+      });
     }
-
-    attrs.items = attrs.tracks;
-
-    return attrs;
   }
 
-  compose(attrs: any) {
-    return {
-      playlist: {
-        title: attrs.title,
-        sharing: attrs.isPublic ? 'public' : 'private',
-        description: attrs.description,
-        tracks: attrs.items
-      }
-    };
+  parse(attributes) {
+    delete attributes.items;
+    return attributes;
   }
 
   initialize(): void {
@@ -75,16 +70,10 @@ export class PlaylistSoundcloudModel
     this.on('change:id', () => {
       this.items.setEndpoint(this.id);
     });
-    this.items.on('save', (item) => {
-      this.save().then(
-        () => {
-          this.items.trigger('save:completed');
-        },
-        () => {
-          this.items.trigger('save:error');
-        });
+    this.items.once('add', (item: IPlaylistItem) => {
+      if (!this.image.getSmallSizeUrl()) {
+        this.setCover(item);
+      }
     });
-
-    this.items.on('fetch', this.fetch.bind(this));
   }
 }

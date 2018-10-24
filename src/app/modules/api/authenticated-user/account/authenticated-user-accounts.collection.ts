@@ -7,6 +7,7 @@ import {AccountsCollection} from '../../account/accounts.collection';
 import {IAccount} from '../../account/account.interface';
 import {BaseModel} from '../../../backbone/models/base.model';
 import {CollectionSetOptions} from 'backbone';
+import {AuthenticatedUserAccountDeezerModel} from './authenticated-user-account-deezer.model';
 
 export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUserAccount>
   extends AccountsCollection<TModel> {
@@ -18,7 +19,8 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
     identifierKeyValueMap: {
       auxapp: AuthenticatedUserAccountAuxappModel,
       youtube: AuthenticatedUserAccountYoutubeModel,
-      soundcloud: AuthenticatedUserAccountSoundcloudModel
+      soundcloud: AuthenticatedUserAccountSoundcloudModel,
+      deezer: AuthenticatedUserAccountDeezerModel
     }
   })
   model = AuthenticatedUserAccountSoundcloudModel;
@@ -34,7 +36,8 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
     [
       AuthenticatedUserAccountAuxappModel,
       AuthenticatedUserAccountSoundcloudModel,
-      AuthenticatedUserAccountYoutubeModel
+      AuthenticatedUserAccountYoutubeModel,
+      AuthenticatedUserAccountDeezerModel
     ].forEach((account) => {
       const tmpAccountModel: IAccount = new account({tmp: 1});
       this.add(tmpAccountModel);

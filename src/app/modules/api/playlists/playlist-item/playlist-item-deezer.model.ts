@@ -6,22 +6,17 @@ import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {AuxappModel} from '../../auxapp/auxapp.model';
 import {ITrack} from '../../tracks/track.interface';
 import {TrackMixcloudModel} from '../../tracks/track-mixcloud.model';
+import {nested} from '../../../backbone/decorators/nested.decorator';
+import {TrackDeezerModel} from '../../tracks/track-deezer.model';
 
-export class PlaylistItemAuxappModel
+export class PlaylistItemDeezerModel
   extends AuxappModel implements IPlaylistItem {
 
-  public type = 'auxapp';
+  public type = 'deezer';
 
   @attributesKey('track')
-  @dynamicInstance({
-    identifierKey: 'provider_id',
-    identifierKeyValueMap: {
-      soundcloud: TrackSoundcloudModel,
-      youtube: TrackYoutubeModel,
-      mixcloud: TrackMixcloudModel
-    }
-  })
-  track: ITrack;
+  @nested()
+  track: TrackDeezerModel;
 
   @attributesKey('created')
   created: number;
@@ -40,12 +35,5 @@ export class PlaylistItemAuxappModel
     delete attributes.track_id;
     delete attributes.track_provider_id;
     return attributes;
-  }
-
-  compose(): any {
-    return {
-      track_provider_id: this.track.provider,
-      track_id: this.track.id
-    };
   }
 }

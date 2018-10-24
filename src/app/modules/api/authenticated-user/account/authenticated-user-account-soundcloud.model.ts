@@ -26,6 +26,16 @@ export class AuthenticatedUserAccountSoundcloudModel
   @defaultValue(false)
   connected: boolean;
 
+  initialize(): void {
+    if (this.id) {
+      this.playlists.setEndpoint(this.id);
+    }
+    this.on('change:id', () => {
+      this.playlists.setEndpoint(this.id);
+      //this.favouriteTracks.setEndpoint(this.id);
+    });
+  }
+
   parse(attrs: any) {
     if (attrs.image) {
       attrs.avatar_url = attrs.image.small;

@@ -4,18 +4,14 @@ import {attributesKey} from '../../../backbone/decorators/attributes-key.decorat
 import {nested} from '../../../backbone/decorators/nested.decorator';
 import {YoutubeProxyModel} from '../../youtube/youtube-proxy.model';
 import {queryParam} from '../../../backbone/decorators/query-param.decorator';
+import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
+import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
+import {AuxappModel} from '../../auxapp/auxapp.model';
+import {TrackDeezerModel} from '../../tracks/track-deezer.model';
 
 export class PlaylistItemYoutubeModel
-  extends YoutubeProxyModel implements IPlaylistItem {
-  private _playlistId: string;
-
+  extends AuxappModel implements IPlaylistItem {
   public type = 'youtube';
-
-  @queryParam()
-  part = 'snippet';
-
-  @attributesKey('order')
-  order: number;
 
   @attributesKey('track')
   @nested()
@@ -24,44 +20,19 @@ export class PlaylistItemYoutubeModel
   @attributesKey('created')
   created: number;
 
-  setEndpoint(playlistId: string) {
-    this.queryParams.playlistId = playlistId;
-    this.endpoint = `/playlistItems`;
-    this._playlistId = playlistId;
-  }
-
-  parse(attributes: any) {
-    const parsedPlaylistItem: any = {
-      id: attributes.id
-    };
-    if (attributes.snippet) {
-      parsedPlaylistItem.title = attributes.snippet.title;
-      parsedPlaylistItem.order = attributes.snippet.order;
-      if (attributes.snippet.resourceId) {
-        parsedPlaylistItem.track = {
-          snippet: attributes.snippet,
-          id: attributes.snippet.resourceId.videoId || attributes.snippet.resourceId
+  parse(attributes) {
+    if (!attributes.track) {
+      if (!this.track || this.track.isNew()) {
+        attributes.track = {
+          id: attributes.id,
+          provider_id: attributes.provider_id
         };
-        parsedPlaylistItem.created = attributes.snippet.publishedAt;
+      } else {
+        delete attributes.track;
       }
     }
-    return parsedPlaylistItem;
-  }
-
-  compose(attributes): any {
-    return {
-      snippet: {
-        playlistId: this._playlistId,
-        position: attributes.order,
-        resourceId: {
-          kind: 'youtube#video',
-          videoId: attributes.track.id
-        }
-      }
-    };
-  }
-
-  initialize() {
-    this.order = this.collection.length;
+    delete attributes.track_id;
+    delete attributes.track_provider_id;
+    return attributes;
   }
 }

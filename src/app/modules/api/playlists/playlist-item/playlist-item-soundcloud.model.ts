@@ -5,9 +5,10 @@ import {attributesKey} from '../../../backbone/decorators/attributes-key.decorat
 import {nested} from '../../../backbone/decorators/nested.decorator';
 import {PlaylistItemsSoundcloudCollection} from './playlist-items-soundcloud.collection';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
+import {AuxappModel} from '../../auxapp/auxapp.model';
 
 export class PlaylistItemSoundcloudModel
-  extends SoundcloudProxyModel implements IPlaylistItem {
+  extends AuxappModel implements IPlaylistItem {
 
   collection: PlaylistItemsSoundcloudCollection<PlaylistItemSoundcloudModel>;
 
@@ -22,49 +23,18 @@ export class PlaylistItemSoundcloudModel
   created: number;
 
   parse(attributes) {
-
     if (!attributes.track) {
-      return {
-        track: attributes
-      };
-    } else {
-      return attributes;
+      if (!this.track || this.track.isNew()) {
+        attributes.track = {
+          id: attributes.track_id,
+          provider_id: attributes.track_provider_id
+        };
+      } else {
+        delete attributes.track;
+      }
     }
+    delete attributes.track_id;
+    delete attributes.track_provider_id;
+    return attributes;
   }
-
-  setEndpoint(playlistId: number) {
-    this.endpoint = `/playlists/${playlistId}`;
-  }
-
-  destroy() {
-    if (this.collection) {
-      const collection = this.collection;
-      collection.remove(this);
-      return collection.triggerSave(this);
-    }
-  }
-
-  save() {
-    if (this.collection) {
-      this.collection.add(this.toJSON(), {merge: true});
-      return this.collection.triggerSave(this);
-    }
-  }
-
-  compose(attributes) {
-    return {
-      id: this.track.id
-    };
-  }
-
-  initialize() {
-    if (this.track.id) {
-      this.set('id', this.track.id);
-    }
-
-    this.track.on('change:id', () => {
-      this.set('id', this.track.id);
-    });
-  }
-
 }

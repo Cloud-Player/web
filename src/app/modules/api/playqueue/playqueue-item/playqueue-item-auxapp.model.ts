@@ -171,6 +171,8 @@ export class PlayqueueItemAuxappModel
   parse(attrs) {
     if (!this.isPlaying() && !this.isPaused()) {
       attrs.status = attrs.state;
+    } else if(attrs.state === 'playing') {
+      console.error('SET ITEM STATE TO PAUSE');
     }
     delete attrs.state;
 

@@ -1,31 +1,28 @@
+import {AuxappModel} from '../auxapp/auxapp.model';
+import {IPlaylist} from './playlist.interface';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
-import {IPlaylist} from './playlist.interface';
-import {YoutubeProxyModel} from '../youtube/youtube-proxy.model';
-import {ImageYoutubeModel} from '../image/image-youtube.model';
-import {queryParam} from '../../backbone/decorators/query-param.decorator';
-import {PlaylistItemYoutubeModel} from './playlist-item/playlist-item-youtube.model';
-import {PlaylistItemsYoutubeCollection} from './playlist-item/playlist-items-youtube.collection';
-import {ArtistYoutubeModel} from '../artist/artist-youtube.model';
 import {ImageAuxappModel} from '../image/image-auxapp.model';
 import {IPlaylistItem} from './playlist-item/playlist-item.interface';
+import {PlaylistItemsAuxappCollection} from './playlist-item/playlist-items-auxapp.collection';
+import {PlaylistItemAuxappModel} from './playlist-item/playlist-item-auxapp.model';
+import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
+import {PlaylistItemDeezerModel} from './playlist-item/playlist-item-deezer.model';
+import {PlaylistItemsDeezerCollection} from './playlist-item/playlist-items-deezer.collection';
 
-export class PlaylistYoutubeModel extends YoutubeProxyModel implements IPlaylist {
-  endpoint = '/playlists';
-
-  @queryParam()
-  part = 'snippet';
+export class PlaylistDeezerModel extends AuxappModel implements IPlaylist {
+  endpoint = '/playlist/deezer';
 
   @attributesKey('provider')
-  @defaultValue('youtube')
+  @defaultValue('deezer')
   provider: string;
 
   @attributesKey('canEdit')
   @defaultValue(false)
   canEdit: boolean;
 
-  @attributesKey('isPublic')
+  @attributesKey('public')
   @defaultValue(false)
   isPublic: boolean;
 
@@ -38,15 +35,15 @@ export class PlaylistYoutubeModel extends YoutubeProxyModel implements IPlaylist
 
   @attributesKey('user')
   @nested()
-  artist: ArtistYoutubeModel;
-
-  @attributesKey('items')
-  @nested()
-  items: PlaylistItemsYoutubeCollection<PlaylistItemYoutubeModel>;
+  artist: ArtistAuxappModel;
 
   @attributesKey('image')
   @nested()
   image: ImageAuxappModel;
+
+  @attributesKey('items')
+  @nested()
+  items: PlaylistItemsDeezerCollection<PlaylistItemDeezerModel>;
 
   private setCover(item: IPlaylistItem) {
     if (item.track.image.getSmallSizeUrl()) {
@@ -79,3 +76,4 @@ export class PlaylistYoutubeModel extends YoutubeProxyModel implements IPlaylist
     });
   }
 }
+
