@@ -45,7 +45,6 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
         this.onWaiting();
         break;
       case 'play':
-        console.log('PLAY', DZ.player.getCurrentTrack().duration);
         this.setDuration(DZ.player.getCurrentTrack().duration);
         this.onPlaying();
         break;
@@ -105,7 +104,6 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
         channelUrl: '/assets/deezer-channel.html',
         player: {
           onload: () => {
-            console.log('INITIALISED');
             resolve();
           }
         }
@@ -149,7 +147,6 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
 
   protected seekPlayerTo(to: number) {
     if (this.getDuration()) {
-      console.log(this.getDuration());
       this._seekedTo = (to / this.getDuration()) * 100;
       DZ.player.seek(this._seekedTo);
     }
