@@ -12,6 +12,9 @@ import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../privacy-confi
 import {PrivacyManager} from '../../services/privacy-manager';
 import {SocketMessageService, SocketStatusTypes} from '../../../shared/services/socket-message';
 import {filter} from 'rxjs/operators';
+import {SessionsCollection} from '../../../api/sessions/sessions.collection';
+import {SessionModel} from '../../../api/sessions/session.model';
+import {Authenticator} from '../../../authenticated-user/services/authenticator';
 
 export interface IPrivacySettings {
   allowTracking: boolean;
@@ -28,14 +31,17 @@ export interface IPrivacySettings {
 export class MainComponent implements OnInit {
   private _authenticatedUser: AuthenticatedUserModel;
   private _privacyConfigModal: Modal<PrivacyConfigComponent>;
+  private _sessions: SessionsCollection<SessionModel>;
 
   constructor(private privacyManager: PrivacyManager,
               private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
               private toastService: ToastService,
               private privacyConfigModalOpener: PrivacyConfigModalOpener,
-              private socketMessageService: SocketMessageService) {
+              private socketMessageService: SocketMessageService,
+              private authenticator: Authenticator) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
+    this._sessions = new SessionsCollection<SessionModel>();
   }
 
   private onNewVersionAvailable() {
@@ -71,45 +77,53 @@ export class MainComponent implements OnInit {
     const auxappAccount: AuthenticatedUserAccountAuxappModel =
       <AuthenticatedUserAccountAuxappModel>this._authenticatedUser.accounts.getAccountForProvider('auxapp');
 
-    if (auxappAccount) {
-      // Create session only once per app start
-      auxappAccount.once('change:id', () => {
-        auxappAccount.createSession({
-          browser: `${ClientDetector.getClient().name}`,
-          os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
-          screenSize: '100'
-        }).then(() => {
-          this.socketMessageService.open('wss://api.aux.app/websocket');
-        });
-      });
-      // Fetch favourite tracks on every id change
-      this._authenticatedUser.on('change:id', auxappAccount.favouriteTracks.fetch.bind(auxappAccount.favouriteTracks));
-    }
+    // if (auxappAccount) {
+    //   // Create session only once per app start
+    //   auxappAccount.on('change:id', () => {
+    //     const session = new SessionModel();
+    //     session.browser = `${ClientDetector.getClient().name}`;
+    //     session.os = `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`;
+    //     session.screen = `${screen.availWidth}x${screen.availHeight}`;
+    //     this._sessions.add(session);
+    //     this._authenticatedUser.session.set(session.toJSON());
+    //     session.save().then(() => {
+    //       this.socketMessageService.open('wss://api.aux.app/websocket');
+    //     });
+    //   });
+    //   // Fetch favourite tracks on every id change
+    //   this._authenticatedUser.on('change:id', auxappAccount.favouriteTracks.fetch.bind(auxappAccount.favouriteTracks));
+    //
+    //   //this._sessions.fetch();
+    //   this._sessions.on('add', () => {
+    //     debugger;
+    //   });
+    // }
 
-    this.privacyManager.getPrivacySettings().then(() => {
-      if (!this.privacyManager.isConfigured) {
-        this.privacyConfigModalOpener.open();
-      }
-    });
+    // this.privacyManager.getPrivacySettings().then(() => {
+    //   if (!this.privacyManager.isConfigured) {
+    //     this.privacyConfigModalOpener.open();
+    //   }
+    // });
 
-    this.socketMessageService.getObservable()
-      .pipe(
-        filter((value) => {
-          return value.type === SocketStatusTypes.CLOSED;
-        })
-      )
-      .subscribe(() => {
-        console.warn('[PLAYER] CLOSED');
-        this.socketMessageService.open('wss://api.aux.app/websocket');
-      });
-    this.socketMessageService.getObservable()
-      .pipe(
-        filter((value) => {
-          return value.type === SocketStatusTypes.OPEN;
-        })
-      )
-      .subscribe(() => {
-        console.log('[PLAYER] OPEN');
-      });
+    // this.socketMessageService.getObservable()
+    //   .pipe(
+    //     filter((value) => {
+    //       return value.type === SocketStatusTypes.CLOSED;
+    //     })
+    //   )
+    //   .subscribe(() => {
+    //     console.warn('[PLAYER] CLOSED');
+    //     this.socketMessageService.open('wss://api.aux.app/websocket');
+    //   });
+    // this.socketMessageService.getObservable()
+    //   .pipe(
+    //     filter((value) => {
+    //       return value.type === SocketStatusTypes.OPEN;
+    //     })
+    //   )
+    //   .subscribe(() => {
+    //     console.log('[PLAYER] OPEN');
+    //   });
+    this.authenticator.login();
   }
 }

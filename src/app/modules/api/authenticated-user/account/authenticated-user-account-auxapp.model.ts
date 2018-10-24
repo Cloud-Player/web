@@ -44,16 +44,6 @@ export class AuthenticatedUserAccountAuxappModel
     });
   }
 
-  createSession(device: { os: string, screenSize: string, browser: string }): any {
-    return this.request('/session', 'POST', {
-      data: {
-        system: device.os,
-        browser: device.browser,
-        screen: `${screen.availWidth}x${screen.height}`
-      }
-    });
-  }
-
   createNewPlaylist(title: string, isPublic: boolean = false) {
     const playlist = new AuthenticatedUserPlaylistAuxappModel();
     playlist.title = title;
