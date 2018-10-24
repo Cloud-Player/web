@@ -14,6 +14,8 @@ import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/pl
 import {MessageMethodTypes} from '../../../shared/services/message';
 import {SocketPlayerService} from '../../services/socket-player';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {SessionsCollection} from '../../../api/sessions/sessions.collection';
+import {SessionModel} from '../../../api/sessions/session.model';
 
 @Component({
   selector: 'app-player',
@@ -30,6 +32,8 @@ export class PlayerComponent implements OnInit {
 
   private authenticatedUser: AuthenticatedUserModel;
 
+  private sessions: SessionsCollection<SessionModel>;
+
   constructor(private logoService: LogoService,
               private el: ElementRef,
               private layoutService: LayoutService,
@@ -38,6 +42,7 @@ export class PlayerComponent implements OnInit {
               private socketPlayerService: SocketPlayerService,
               private cdr: ChangeDetectorRef) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
+    this.sessions = SessionsCollection.getInstance();
   }
 
   private enteredFullScreen() {
@@ -46,18 +51,6 @@ export class PlayerComponent implements OnInit {
 
   private leftFullScreen() {
     this.el.nativeElement.classList.remove('fullscreen-player');
-  }
-
-  private setLastPlayingItem() {
-    localforage.getItem('cp_currentItem').then((lastPlayingItem: any) => {
-      if (lastPlayingItem && lastPlayingItem.track.id && lastPlayingItem.progress) {
-        const lastPlaying = this.playQueue.items.getItemByTrackId(lastPlayingItem.track.id);
-        if (lastPlaying) {
-          lastPlaying.progress = lastPlayingItem.progress;
-          this.playerManager.seekActivePlayerTrackTo(Math.round(lastPlaying.progress));
-        }
-      }
-    });
   }
 
   public changePlayerStatus(playerStatus: PlayerStatus): void {
@@ -109,6 +102,13 @@ export class PlayerComponent implements OnInit {
     const saveItem = (item) => {
       switch (item.status) {
         case PlayQueueItemStatus.RequestedPlaying:
+          this.authenticatedUser.session.state = 'player';
+          const playerSession = this.sessions.findWhere({state: 'player'});
+          if (this.socketMessageService.isOpen() && !playerSession) {
+            this.authenticatedUser.session.save();
+          }
+          item.save();
+          break;
         case PlayQueueItemStatus.RequestedPause:
         case PlayQueueItemStatus.Queued:
         case PlayQueueItemStatus.Stopped:
@@ -135,29 +135,12 @@ export class PlayerComponent implements OnInit {
     }, 1000);
 
     const throttledProgressUpdate = throttle((currentItem) => {
-      if (currentItem) {
-        localforage.setItem('cp_currentItem', {
-          progress: currentItem.progress,
-          track: {
-            id: currentItem.track.id
-          }
-        });
-      }
       currentItem.save();
     }, 10000);
-
-    const throttledStatusUpdate = throttle((currentItem) => {
-      currentItem.save();
-    }, 500);
 
     const throttledViewUpdate = throttle(() => {
       this.cdr.detectChanges();
     }, 1000);
-
-    this.playQueue.items.once('add', () => {
-
-      this.setLastPlayingItem();
-    });
 
     this.playQueue.items.on('change:progress', throttledViewUpdate);
     this.playQueue.items.on('change:progress', throttledProgressUpdate);
@@ -178,13 +161,6 @@ export class PlayerComponent implements OnInit {
 
     this.isHeadlessPlayer = this.playerManager.isInHeadlessMode();
 
-    if (!this.authenticatedUser.isNew()) {
-      this.playQueue.fetch();
-    } else {
-      this.authenticatedUser.once('change:id', () => {
-        this.playQueue.fetch();
-      });
-    }
     this.socketPlayerService.setPlayqueue(this.playQueue);
 
     this.fullScreenService.getObservable()
@@ -198,5 +174,24 @@ export class PlayerComponent implements OnInit {
         filter(eventType => eventType === FullScreenEventType.Leave)
       )
       .subscribe(this.leftFullScreen.bind(this));
+
+    this.sessions.on('update change:state', (session) => {
+      const playerSession = this.sessions.findWhere({state: 'player'});
+      // console.log('ADD CHANGE', arguments);
+      if (playerSession && playerSession.id !== this.authenticatedUser.session.id) {
+        console.log('NOT MY SESSION', this.authenticatedUser.session.id, playerSession.id);
+        if (session.state === 'player') {
+          this.playerManager.setInHeadlessMode(true);
+        }
+      }
+    });
+
+    this.sessions.on('remove', (session) => {
+      if (session.state === 'player') {
+        // this.playerManager.setInHeadlessMode(false);
+        // this.authenticatedUser.session.state = 'player';
+        // this.authenticatedUser.session.save();
+      }
+    });
   }
 }
