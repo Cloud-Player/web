@@ -1,3 +1,6 @@
+# v5.3.4
+- Fix broken search by defining providers that shall be returned to ignore providers that are not yet supported
+
 # v5.3.3
 - Fix modal scrolling bug on mobile devices
 - Increase click area for add to queue button on mobile devices
