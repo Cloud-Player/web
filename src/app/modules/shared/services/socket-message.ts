@@ -23,6 +23,7 @@ export class SocketMessageService {
   private _observable: EventEmitter<ISocketEvent>;
   private _subscribedChannelIds: Array<string> = [];
   private _openSubscriptions: Array<string> = [];
+  private _socketUrl: string;
 
   constructor(private messageService: MessageService) {
     this._observable = new EventEmitter();
@@ -64,6 +65,9 @@ export class SocketMessageService {
 
   private onClose(event: Event) {
     console.warn('[SOCKET] Closed');
+    if (this._isOpened) {
+      this.reOpen();
+    }
     this._isOpened = false;
     this._openSubscriptions = [];
     this._observable.emit({type: SocketStatusTypes.CLOSED});
@@ -74,15 +78,25 @@ export class SocketMessageService {
     this._observable.emit({type: SocketStatusTypes.ERROR, detail: event.error});
   }
 
+  private reOpen() {
+    this.open(this._socketUrl);
+  }
+
   public open(socketUrl: string) {
     if (this._isOpened) {
       this._socket.close();
     }
+    this._socketUrl = socketUrl;
     this._socket = new WebSocket(socketUrl);
     this._socket.addEventListener('open', this.onOpen.bind(this));
     this._socket.addEventListener('message', this.onMessage.bind(this));
     this._socket.addEventListener('close', this.onClose.bind(this));
     this._socket.addEventListener('error', this.onError.bind(this));
+  }
+
+  public close() {
+    this._isOpened = false;
+    this._socket.close();
   }
 
   public sendMessage(channelId: string, method: MessageMethodTypes, body?: any) {
@@ -121,6 +135,10 @@ export class SocketMessageService {
       this._subscribedChannelIds.splice(indexOfSubscribedChannelId, 0);
     }
     return this.messageService.unSubscribe(MessageTypes.SOCKET, channelId, method, callback);
+  }
+
+  public isOpen() {
+    return this._isOpened;
   }
 
   public getObservable() {
