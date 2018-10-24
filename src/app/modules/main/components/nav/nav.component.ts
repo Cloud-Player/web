@@ -22,6 +22,7 @@ import {PrivacyManager} from '../../services/privacy-manager';
 import {PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
+import {AuthenticatedUserAccountDeezerModel} from '../../../api/authenticated-user/account/authenticated-user-account-deezer.model';
 
 const packageJSON = require('../../../../../../package.json');
 
@@ -57,6 +58,15 @@ export class NavComponent implements OnInit {
       title: ProviderMap.youtube.title,
       icon: ProviderMap.youtube.icon,
       accountModel: AuthenticatedUserAccountYoutubeModel,
+      tmpPlaylistModel: new AuthenticatedUserPlaylistYoutubeModel(),
+      playlistCollapsed: null,
+      playlistCollapsedBeforeDragVal: null
+    },
+    deezer: {
+      providerId: ProviderMap.deezer.id,
+      title: ProviderMap.deezer.title,
+      icon: ProviderMap.deezer.icon,
+      accountModel: AuthenticatedUserAccountDeezerModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistYoutubeModel(),
       playlistCollapsed: null,
       playlistCollapsedBeforeDragVal: null
@@ -210,13 +220,6 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticatedUser.accounts.each((account: IAuthenticatedUserAccount) => {
-      account.on('change:id', () => {
-        account.playlists.fetch();
-        this.update();
-      });
-      account.playlists.on('add remove reset change', this.update.bind(this));
-    });
     this.dragAndDropService.getObservable()
       .pipe(
         filter(dragAndDropState => dragAndDropState === DragAndDropStates.DragStart)
@@ -230,6 +233,11 @@ export class NavComponent implements OnInit {
     const debouncedLayoutChange = debounce(() => {
       this.layoutService.emitLayoutChange(LayoutChangeTypes.menuSidebarChange);
     }, 100);
+
+    this.authenticatedUser.accounts.each((account: IAuthenticatedUserAccount) => {
+      account.playlists.on('add remove reset change', this.update.bind(this));
+    });
+    this.authenticatedUser.accounts.getAccountForProvider('auxapp').on('change:id', this.update.bind(this));
 
     this.zone.runOutsideAngular(() => {
       this.shrinkingSidebar.nativeElement.addEventListener('transitionend', debouncedLayoutChange);
