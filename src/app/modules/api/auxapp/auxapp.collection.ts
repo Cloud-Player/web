@@ -8,7 +8,7 @@ export class AuxappCollection<TModel extends AuxappModel> extends BaseCollection
   model: any = AuxappModel;
 
   hostName(): string {
-    return Globals.apiHost;
+    return Globals.httpApiUrl;
   }
 
   request(url: string, method: string, options: any = {}) {

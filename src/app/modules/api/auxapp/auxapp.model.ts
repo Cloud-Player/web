@@ -7,7 +7,7 @@ import {Globals} from '../../../../globals';
 export class AuxappModel extends BaseModel {
 
   hostName(): string {
-    return Globals.apiHost;
+    return Globals.httpApiUrl;
   }
 
   request(url: string, method: string, options: any = {}) {
