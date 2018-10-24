@@ -65,6 +65,7 @@ export class SocketPlayerService {
           }
           break;
         case PlayQueueItemStatus.Paused:
+          console.error('PAUSE ITEM');
           if (!existingItem.isPaused() && !existingItem.isStopped()) {
             existingItem.pause();
           }
@@ -118,8 +119,7 @@ export class SocketPlayerService {
     this.playQueue = playQueue;
     if (this.playQueue.id) {
       this.subscribeOnPlayqueueChanges(this.playQueue);
-    } else {
-      this.playQueue.on('change:id', this.subscribeOnPlayqueueChanges, this);
     }
+    this.playQueue.on('change:id', this.subscribeOnPlayqueueChanges, this);
   }
 }
