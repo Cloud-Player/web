@@ -3,10 +3,10 @@ import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {uniqueId} from 'underscore';
 import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
-import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {TrackDeezerModel} from '../../../api/tracks/track-deezer.model';
+import {PlayerStatus} from '../../src/player-status.enum';
 
 @Component({
   selector: 'app-deezer-player',
@@ -41,20 +41,24 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
   private handleMcStatusChange(ev: string, arg: any) {
     switch (ev) {
       case 'buffering':
+        console.log('ON BUFFERING');
         this.setDuration(DZ.player.getCurrentTrack().duration);
         this.onWaiting();
         break;
       case 'play':
+        console.log('ON PLAY');
         this.setDuration(DZ.player.getCurrentTrack().duration);
         this.onPlaying();
         break;
       case 'pause':
+        console.log('ON PAUSE');
         this.onPaused();
         break;
       case 'ended':
         this.onEnded();
         break;
       case 'progress':
+        console.log('ON PROGRESS');
         this.onCurrentTimeUpdate(arg[0]);
         this.setDuration(arg[1]);
         break;
@@ -127,13 +131,15 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
 
   protected startPlayer(): void {
     this.onRequestPlay();
+    console.log('START PLAYER');
     DZ.player.play();
-    // DZ.player.play().then(() => {
-    //   if (this._seekedTo) {
-    //     this.seekPlayerTo(this._seekedTo);
-    //     this._seekedTo = null;
-    //   }
-    // });
+    setTimeout(() => {
+      if (!DZ.player.isPlaying()) {
+        console.error('CAN NOT START');
+        this.pausePlayer();
+        this.setStatus(PlayerStatus.Paused);
+      }
+    }, 500);
   }
 
   protected pausePlayer(): void {
