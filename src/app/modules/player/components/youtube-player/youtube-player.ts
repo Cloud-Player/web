@@ -128,7 +128,8 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
-          iv_load_policy: 3
+          iv_load_policy: 3,
+          origin: location.host
         },
         events: {
           onReady: () => {
