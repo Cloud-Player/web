@@ -8,6 +8,7 @@ import {ToastTypes} from '../../shared/src/toast-types.enum';
 import {ClientDetector} from '../../shared/services/client-detector.service';
 import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 import {PlayqueueAuxappModel} from '../../api/playqueue/playqueue-auxapp.model';
+import {PlayQueueItemStatus} from '../../player/src/playqueue-item-status.enum';
 
 @Directive({
   selector: '[appTrackPlayOn]'
@@ -78,16 +79,20 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     } else {
       this.playQueue.destroy().then(() => {
         if (this.tracks) {
-          this.tracks.forEach((track: ITrack, index) => {
+          const indexOfPlayingTrack = this.tracks.indexOf(this.track);
+          this.tracks.forEach((track: ITrack, ind: number) => {
             if (!this.playQueue.items.getItemByTrackId(track.id)) {
-              this.playQueue.items.add({track: track});
+              let status = PlayQueueItemStatus.Scheduled;
+              /* Add items as stopped when they appear in tracklist before the current playing track */
+              if (indexOfPlayingTrack >= 0 && ind < indexOfPlayingTrack) {
+                status = PlayQueueItemStatus.Stopped;
+              }
+              this.playQueue.items.add({track: track, status: status});
             }
           });
-          this.playQueue.items.getItemByTrackId(this.track.id).play();
-        } else {
-          this.playQueue.items.add({track: this.track}).play();
         }
       });
+      this.playQueue.items.add({track: this.track}).play();
       this.userAnalyticsService.trackEvent('play_track', `${this.track.provider}:${this.track.title}`, 'appTrackPlayOn');
     }
   }
