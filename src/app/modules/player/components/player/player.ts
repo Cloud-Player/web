@@ -102,9 +102,13 @@ export class PlayerComponent implements OnInit {
     const saveItem = (item) => {
       switch (item.status) {
         case PlayQueueItemStatus.RequestedPlaying:
-          this.authenticatedUser.session.state = 'player';
           const playerSession = this.sessions.findWhere({state: 'player'});
-          if (this.socketMessageService.isOpen() && !playerSession) {
+          if (this.socketMessageService.isOpen() &&
+            !playerSession &&
+            /* When set to playing by socket do not to this session as player */
+            !(item.socketData && item.socketData.status === 'playing')
+          ) {
+            this.authenticatedUser.session.state = 'player';
             this.authenticatedUser.session.save();
           }
           item.save();
