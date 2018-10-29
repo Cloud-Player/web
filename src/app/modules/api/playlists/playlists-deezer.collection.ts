@@ -1,6 +1,5 @@
 import {IPlaylists} from './playlists.interface';
 import {IPlaylistModelConstructor} from './playlist.interface';
-import {PlaylistAuxappModel} from './playlist-auxapp.model';
 import {AuxappCollection} from '../auxapp/auxapp.collection';
 import {PlaylistDeezerModel} from './playlist-deezer.model';
 

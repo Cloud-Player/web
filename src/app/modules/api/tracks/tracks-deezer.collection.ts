@@ -5,11 +5,7 @@ import {TrackDeezerModel} from './track-deezer.model';
 export class TracksDeezerCollection<TModel extends TrackDeezerModel>
   extends TracksAuxappCollection<TModel> {
 
+  endpoint = '/track/deezer';
   model: ITrackModelConstructor = TrackDeezerModel;
 
-  endpoint = '/track/deezer';
-
-  queryParams: {
-    [key: string]: string | number | boolean
-  } = {};
 }

@@ -1,5 +1,4 @@
 import {AuxappModel} from '../auxapp/auxapp.model';
-import {ClientDetector} from '../../shared/services/client-detector.service';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 
 export class SessionModel extends AuxappModel {

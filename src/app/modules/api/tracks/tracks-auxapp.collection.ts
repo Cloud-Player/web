@@ -7,9 +7,13 @@ import {TrackSoundcloudModel} from './track-soundcloud.model';
 import {TrackYoutubeModel} from './track-youtube.model';
 import {TrackMixcloudModel} from './track-mixcloud.model';
 import {TrackDeezerModel} from './track-deezer.model';
+import {queryParam} from '../../backbone/decorators/query-param.decorator';
 
 export class TracksAuxappCollection<TModel extends TrackAuxappModel>
   extends AuxappCollection<TModel> implements ITracks<TModel> {
+
+  @queryParam()
+  provider_id = 'soundcloud,youtube,mixcloud,deezer';
 
   @dynamicInstance({
     identifierKey: 'provider_id',

@@ -1,6 +1,5 @@
 import {AuxappCollection} from '../auxapp/auxapp.collection';
 import {AuxappModel} from '../auxapp/auxapp.model';
-import {queryParam} from '../../backbone/decorators/query-param.decorator';
 import {SessionModel} from './session.model';
 
 export class SessionsCollection<TModel extends SessionModel> extends AuxappCollection<AuxappModel> {

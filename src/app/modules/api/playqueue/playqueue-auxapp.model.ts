@@ -3,7 +3,6 @@ import {nested} from '../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {PlayqueueItemsAuxappCollection} from './playqueue-item/playqueue-items-auxapp.collection';
 import {PlayqueueItemAuxappModel} from './playqueue-item/playqueue-item-auxapp.model';
-import {PlayQueueItemStatus} from '../../player/src/playqueue-item-status.enum';
 
 export class PlayqueueAuxappModel extends AuxappModel {
   private static instance: PlayqueueAuxappModel;

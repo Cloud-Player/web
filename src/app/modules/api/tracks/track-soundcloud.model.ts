@@ -7,7 +7,7 @@ import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {ITrack} from './track.interface';
 import {TrackAuxappModel} from './track-auxapp.model';
 
-export class TrackSoundcloudModel extends TrackAuxappModel implements ITrack{
+export class TrackSoundcloudModel extends TrackAuxappModel implements ITrack {
   endpoint = '/track/soundcloud';
 
   @attributesKey('provider_id')
@@ -24,5 +24,14 @@ export class TrackSoundcloudModel extends TrackAuxappModel implements ITrack{
 
   clone() {
     return new TrackSoundcloudModel(this.toMiniJSON());
+  }
+
+  initialize() {
+    if (this.get('id')) {
+      this.comments.setTrackId(this.id);
+    }
+    this.on('change:id', () => {
+      this.comments.setTrackId(this.id);
+    });
   }
 }

@@ -5,75 +5,21 @@ import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {ImageAuxappModel} from '../image/image-auxapp.model';
 import {IPlaylistItem} from './playlist-item/playlist-item.interface';
-import {PlaylistItemsAuxappCollection} from './playlist-item/playlist-items-auxapp.collection';
-import {PlaylistItemAuxappModel} from './playlist-item/playlist-item-auxapp.model';
 import {ArtistAuxappModel} from '../artist/artist-auxapp.model';
 import {PlaylistItemDeezerModel} from './playlist-item/playlist-item-deezer.model';
 import {PlaylistItemsDeezerCollection} from './playlist-item/playlist-items-deezer.collection';
+import {PlaylistAuxappModel} from './playlist-auxapp.model';
 
-export class PlaylistDeezerModel extends AuxappModel implements IPlaylist {
+export class PlaylistDeezerModel extends PlaylistAuxappModel implements IPlaylist {
+
   endpoint = '/playlist/deezer';
 
   @attributesKey('provider')
   @defaultValue('deezer')
   provider: string;
 
-  @attributesKey('canEdit')
-  @defaultValue(false)
-  canEdit: boolean;
-
-  @attributesKey('public')
-  @defaultValue(false)
-  isPublic: boolean;
-
-  @attributesKey('title')
-  @defaultValue('')
-  title: string;
-
-  @attributesKey('description')
-  description: string;
-
-  @attributesKey('user')
-  @nested()
-  artist: ArtistAuxappModel;
-
-  @attributesKey('image')
-  @nested()
-  image: ImageAuxappModel;
-
   @attributesKey('items')
   @nested()
   items: PlaylistItemsDeezerCollection<PlaylistItemDeezerModel>;
-
-  private setCover(item: IPlaylistItem) {
-    if (item.track.image.getSmallSizeUrl()) {
-      this.image.small = item.track.image.getSmallSizeUrl();
-      this.image.medium = item.track.image.getMediumSizeUrl();
-      this.image.large = item.track.image.getLargeSizeUrl();
-    } else {
-      item.track.image.on('change', () => {
-        this.setCover(item);
-      });
-    }
-  }
-
-  parse(attributes) {
-    delete attributes.items;
-    return attributes;
-  }
-
-  initialize(): void {
-    if (this.id) {
-      this.items.setEndpoint(this.id);
-    }
-    this.on('change:id', () => {
-      this.items.setEndpoint(this.id);
-    });
-    this.items.once('add', (item: IPlaylistItem) => {
-      if (!this.image.getSmallSizeUrl()) {
-        this.setCover(item);
-      }
-    });
-  }
 }
 

@@ -1,9 +1,8 @@
 import {PlaylistItemsAuxappCollection} from '../../playlists/playlist-item/playlist-items-auxapp.collection';
 import {PlayqueueItemAuxappModel} from './playqueue-item-auxapp.model';
-import {isArray, shuffle, sortBy} from 'underscore';
+import {debounce, isArray, shuffle, sortBy} from 'underscore';
 import {PlayQueueItemStatus} from '../../../player/src/playqueue-item-status.enum';
 import {TracksAuxappCollection} from '../../tracks/tracks-auxapp.collection';
-import {debounce} from 'underscore';
 
 export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappModel>
   extends PlaylistItemsAuxappCollection<TModel> {
@@ -16,9 +15,9 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
   endpoint = null;
   model: any = PlayqueueItemAuxappModel;
-  playQueueId: number;
+  playQueueId: string;
 
-  setEndpoint(playqueueId: number) {
+  setEndpoint(playqueueId: string) {
     this.endpoint = `/queue/${playqueueId}/item`;
     this.playQueueId = playqueueId;
   }

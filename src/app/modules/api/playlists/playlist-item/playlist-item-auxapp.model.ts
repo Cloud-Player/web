@@ -6,6 +6,7 @@ import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {AuxappModel} from '../../auxapp/auxapp.model';
 import {ITrack} from '../../tracks/track.interface';
 import {TrackMixcloudModel} from '../../tracks/track-mixcloud.model';
+import {TrackDeezerModel} from '../../tracks/track-deezer.model';
 
 export class PlaylistItemAuxappModel
   extends AuxappModel implements IPlaylistItem {
@@ -18,7 +19,8 @@ export class PlaylistItemAuxappModel
     identifierKeyValueMap: {
       soundcloud: TrackSoundcloudModel,
       youtube: TrackYoutubeModel,
-      mixcloud: TrackMixcloudModel
+      mixcloud: TrackMixcloudModel,
+      deezer: TrackDeezerModel
     }
   })
   track: ITrack;
@@ -30,8 +32,8 @@ export class PlaylistItemAuxappModel
     if (!attributes.track) {
       if (!this.track || this.track.isNew()) {
         attributes.track = {
-          id: attributes.track_id,
-          provider_id: attributes.track_provider_id
+          id: attributes.track_id || attributes.id,
+          provider_id: attributes.track_provider_id || attributes.provider_id
         };
       } else {
         delete attributes.track;
