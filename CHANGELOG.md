@@ -1,3 +1,8 @@
+# v5.4.6
+- Remove proxy models/collections
+- Set in headless mode when entering player and another player is already playing
+- Set in player mode when another player is leaving that was the player
+
 # v5.4.5
 - Provide headless player that shows state of current playqueue item
 
