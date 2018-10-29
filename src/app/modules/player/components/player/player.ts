@@ -184,22 +184,18 @@ export class PlayerComponent implements OnInit {
       )
       .subscribe(this.leftFullScreen.bind(this));
 
-    this.sessions.on('update change:state', (session) => {
+    this.sessions.on('add change:state', (session) => {
       const playerSession = this.sessions.findWhere({state: 'player'});
-      // console.log('ADD CHANGE', arguments);
       if (playerSession && playerSession.id !== this.authenticatedUser.session.id) {
-        console.log('NOT MY SESSION', this.authenticatedUser.session.id, playerSession.id);
-        if (session.state === 'player') {
-          this.playerManager.setInHeadlessMode(true);
-        }
+        this.playerManager.setInHeadlessMode(true);
       }
     });
 
     this.sessions.on('remove', (session) => {
       if (session.state === 'player') {
-        // this.playerManager.setInHeadlessMode(false);
-        // this.authenticatedUser.session.state = 'player';
-        // this.authenticatedUser.session.save();
+        this.playerManager.setInHeadlessMode(false);
+        this.authenticatedUser.session.state = 'player';
+        this.authenticatedUser.session.save();
       }
     });
   }
