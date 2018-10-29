@@ -8,9 +8,17 @@ import {PlaylistDeezerModel} from '../playlists/playlist-deezer.model';
 import {PlaylistsDeezerCollection} from '../playlists/playlists-deezer.collection';
 import {AuxappModel} from '../auxapp/auxapp.model';
 import {ImageAuxappModel} from '../image/image-auxapp.model';
+import {PlaylistsSoundcloudCollection} from '../playlists/playlists-soundcloud.collection';
+import {PlaylistSoundcloudModel} from '../playlists/playlist-soundcloud.model';
+import {TracksSoundcloudCollection} from '../tracks/tracks-soundcloud.collection';
+import {TrackSoundcloudModel} from '../tracks/track-soundcloud.model';
+import {TrackDeezerModel} from '../tracks/track-deezer.model';
+import {TracksDeezerCollection} from '../tracks/tracks-deezer.collection';
 
 export class AccountDeezerModel extends AuxappModel implements IAccount {
-  @attributesKey('provider')
+  endpoint = '/account';
+
+  @attributesKey('provider_id')
   @defaultValue('deezer')
   provider: string;
 
@@ -28,28 +36,7 @@ export class AccountDeezerModel extends AuxappModel implements IAccount {
 
   @attributesKey('tracks')
   @nested()
-  tracks: TracksYoutubeCollection<TrackYoutubeModel>;
-
-  sync(method: string, model: any, options: any = {}) {
-    const id = this.id;
-    model.set(model.idAttribute, null);
-    const sync = super.sync(method, model, options);
-    model.set(model.idAttribute, id);
-    return sync;
-  }
-
-  parse(attributes: any) {
-    const parsedAccount: any = {
-      id: attributes.id
-    };
-
-    if (attributes.snippet) {
-      parsedAccount.title = attributes.snippet.title;
-      parsedAccount.image = attributes.snippet.thumbnails;
-    }
-
-    return parsedAccount;
-  }
+  tracks: TracksDeezerCollection<TrackDeezerModel>;
 
   getFullName(): string {
     return this.title;

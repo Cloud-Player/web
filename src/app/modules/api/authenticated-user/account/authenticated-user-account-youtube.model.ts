@@ -27,10 +27,11 @@ export class AuthenticatedUserAccountYoutubeModel
   initialize(): void {
     if (this.id) {
       this.playlists.setEndpoint(this.id);
+      this.favouriteTracks.setEndpoint(this.id);
     }
     this.on('change:id', () => {
       this.playlists.setEndpoint(this.id);
-      //this.favouriteTracks.setEndpoint(this.id);
+      this.favouriteTracks.setEndpoint(this.id);
     });
   }
 
@@ -57,7 +58,7 @@ export class AuthenticatedUserAccountYoutubeModel
     return playlist.save();
   }
 
-  isConnected(){
+  isConnected() {
     return this.connected && !this.isNew();
   }
 }

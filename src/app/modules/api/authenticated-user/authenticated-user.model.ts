@@ -3,7 +3,6 @@ import {attributesKey} from '../../backbone/decorators/attributes-key.decorator'
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {AuthenticatedUserAccountsCollection} from './account/authenticated-user-accounts.collection';
 import {IAuthenticatedUserAccount} from './account/authenticated-user-account.interface';
-import * as localforage from 'localforage';
 import {SessionModel} from '../sessions/session.model';
 
 export class AuthenticatedUserModel extends AuxappModel {

@@ -8,8 +8,6 @@ import {defaultValue} from '../../../backbone/decorators/default-value.decorator
 export class AuthenticatedUserPlaylistSoundcloudModel
   extends PlaylistSoundcloudModel {
 
-  endpoint = '/me/playlists';
-
   @attributesKey('canEdit')
   @defaultValue(true)
   canEdit: boolean;

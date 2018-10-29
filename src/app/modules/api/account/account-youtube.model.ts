@@ -4,29 +4,26 @@ import {nested} from '../../backbone/decorators/nested.decorator';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {TrackYoutubeModel} from '../tracks/track-youtube.model';
 import {TracksYoutubeCollection} from '../tracks/tracks-youtube.collection';
-import {YoutubeProxyModel} from '../youtube/youtube-proxy.model';
 import {PlaylistsYoutubeCollection} from '../playlists/playlists-youtube.collection';
 import {PlaylistYoutubeModel} from '../playlists/playlist-youtube.model';
-import {ImageYoutubeModel} from '../image/image-youtube.model';
+import {AuxappModel} from '../auxapp/auxapp.model';
+import {ImageAuxappModel} from '../image/image-auxapp.model';
+import {PlaylistsSoundcloudCollection} from '../playlists/playlists-soundcloud.collection';
+import {PlaylistSoundcloudModel} from '../playlists/playlist-soundcloud.model';
+import {TracksSoundcloudCollection} from '../tracks/tracks-soundcloud.collection';
+import {TrackSoundcloudModel} from '../tracks/track-soundcloud.model';
 
-export class AccountYoutubeModel extends YoutubeProxyModel implements IAccount {
+export class AccountYoutubeModel extends AuxappModel implements IAccount {
 
-  endpoint = '/channels';
+  endpoint = '/account';
 
-  queryParams: {
-    [key: string]: string | number | boolean
-  } = {
-    mine: true,
-    part: 'snippet'
-  };
-
-  @attributesKey('provider')
+  @attributesKey('provider_id')
   @defaultValue('youtube')
   provider: string;
 
   @attributesKey('image')
   @nested()
-  image: ImageYoutubeModel;
+  image: ImageAuxappModel;
 
   @attributesKey('title')
   @defaultValue('')
@@ -39,27 +36,6 @@ export class AccountYoutubeModel extends YoutubeProxyModel implements IAccount {
   @attributesKey('tracks')
   @nested()
   tracks: TracksYoutubeCollection<TrackYoutubeModel>;
-
-  sync(method: string, model: any, options: any = {}) {
-    const id = this.id;
-    model.set(model.idAttribute, null);
-    const sync = super.sync(method, model, options);
-    model.set(model.idAttribute, id);
-    return sync;
-  }
-
-  parse(attributes: any) {
-    const parsedAccount: any = {
-      id: attributes.id
-    };
-
-    if (attributes.snippet) {
-      parsedAccount.title = attributes.snippet.title;
-      parsedAccount.image = attributes.snippet.thumbnails;
-    }
-
-    return parsedAccount;
-  }
 
   getFullName(): string {
     return this.title;

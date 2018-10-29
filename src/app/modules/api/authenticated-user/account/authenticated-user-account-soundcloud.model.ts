@@ -29,10 +29,11 @@ export class AuthenticatedUserAccountSoundcloudModel
   initialize(): void {
     if (this.id) {
       this.playlists.setEndpoint(this.id);
+      this.favouriteTracks.setEndpoint(this.id);
     }
     this.on('change:id', () => {
       this.playlists.setEndpoint(this.id);
-      //this.favouriteTracks.setEndpoint(this.id);
+      this.favouriteTracks.setEndpoint(this.id);
     });
   }
 

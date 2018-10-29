@@ -9,7 +9,7 @@ export class FavouriteTrackItemsAuxappCollection<TModel extends FavouriteTrackIt
 
   model = FavouriteTrackItemAuxappModel;
 
-  setEndpoint(favouriteId: number) {
+  setEndpoint(favouriteId: string) {
     this.endpoint = `favourite/auxapp/${favouriteId}/item`;
   }
 
