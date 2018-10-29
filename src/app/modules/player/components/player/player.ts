@@ -139,7 +139,12 @@ export class PlayerComponent implements OnInit {
     }, 1000);
 
     const throttledProgressUpdate = throttle((currentItem) => {
-      currentItem.save();
+      /*
+       * Use setTimeout to make sure all changes are set before calling save
+       * Model is triggering change for each attribute immediatly so when progress and
+       * status is updated this method is called even though status has not been updated yet
+       */
+      setTimeout(currentItem.save.bind(currentItem));
     }, 10000);
 
     const throttledViewUpdate = throttle(() => {
