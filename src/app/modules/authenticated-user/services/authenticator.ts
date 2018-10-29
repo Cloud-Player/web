@@ -56,17 +56,18 @@ export class Authenticator {
     this._playQueue.fetch();
   }
 
+  private activateSession(session) {
+    this._sessions.add(session);
+    this.socketMessageService.open(Globals.websocketApiUrl);
+    this._sessions.fetch();
+  }
+
   private createSession() {
-    const session = new SessionModel();
-    session.browser = `${ClientDetector.getClient().name}`;
-    session.system = `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`;
-    session.screen = `${screen.availWidth}x${screen.availHeight}`;
-    this._authenticatedUser.session = session;
-    session.save().then(() => {
-      this._sessions.add(session);
-      this.socketMessageService.open(Globals.websocketApiUrl);
-      this._sessions.fetch();
-    });
+    const userSession = this._authenticatedUser.session;
+    userSession.browser = `${ClientDetector.getClient().name}`;
+    userSession.system = `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`;
+    userSession.screen = `${screen.availWidth}x${screen.availHeight}`;
+    userSession.save().then(this.activateSession.bind(this));
   }
 
   private addSession(item) {
