@@ -29,4 +29,16 @@ export class TracksAuxappCollection<TModel extends TrackAuxappModel>
   queryParams: {
     [key: string]: string | number | boolean
   } = {};
+
+  parse(items) {
+    const supportedItems = [];
+    items.forEach((item) => {
+      if (item instanceof TrackSoundcloudModel ||
+        item instanceof TrackYoutubeModel ||
+        item instanceof TrackMixcloudModel) {
+        supportedItems.push(item);
+      }
+    });
+    return supportedItems;
+  }
 }

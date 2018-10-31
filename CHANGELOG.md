@@ -1,4 +1,7 @@
 # v5.3.4
+- Verify that tracks returned by search are supported
+
+# v5.3.4
 - Fix broken search by defining providers that shall be returned to ignore providers that are not yet supported
 
 # v5.3.3
