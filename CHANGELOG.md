@@ -1,4 +1,4 @@
-# v5.3.4
+# v5.3.5
 - Verify that tracks returned by search are supported
 
 # v5.3.4
