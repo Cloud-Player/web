@@ -7,7 +7,7 @@ import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
 import {PlayerManagerComponent} from '../player-manager/player-manager';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
 import {LayoutService, WindowElementTypes} from '../../../shared/services/layout';
-import {filter} from 'rxjs/internal/operators';
+import {filter, first} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {SocketMessageService} from '../../../shared/services/socket-message';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
@@ -16,6 +16,8 @@ import {SocketPlayerService} from '../../services/socket-player';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {SessionsCollection} from '../../../api/sessions/sessions.collection';
 import {SessionModel} from '../../../api/sessions/session.model';
+import {NavigationStart, Router, UrlTree} from '@angular/router';
+import {PlayerFactory} from '../../src/player-factory.class';
 
 @Component({
   selector: 'app-player',
@@ -34,7 +36,8 @@ export class PlayerComponent implements OnInit {
 
   private sessions: SessionsCollection<SessionModel>;
 
-  constructor(private logoService: LogoService,
+  constructor(private router: Router,
+              private logoService: LogoService,
               private el: ElementRef,
               private layoutService: LayoutService,
               private fullScreenService: FullScreenService,
@@ -51,6 +54,23 @@ export class PlayerComponent implements OnInit {
 
   private leftFullScreen() {
     this.el.nativeElement.classList.remove('fullscreen-player');
+  }
+
+  private setInitialTrackFromUrlParams(queryParams) {
+    const listenParam = queryParams.listen;
+    if (listenParam) {
+      const [provider, trackId, progress] = listenParam.split(':');
+      if (provider && trackId && PlayerFactory.hasPlayerForProvider(provider)) {
+        const newPlayQueueItem = new PlayqueueItemAuxappModel({
+          track: {
+            provider: provider,
+            id: trackId
+          },
+          progress: progress || 0
+        });
+        this.playQueue.items.setInitialItem(newPlayQueueItem);
+      }
+    }
   }
 
   public changePlayerStatus(playerStatus: PlayerStatus): void {
@@ -198,5 +218,15 @@ export class PlayerComponent implements OnInit {
         this.authenticatedUser.session.save();
       }
     });
+
+    this.router.events
+      .pipe(
+        filter(ev => ev instanceof NavigationStart),
+        first()
+      )
+      .subscribe((ev: NavigationStart) => {
+        const tree: UrlTree = this.router.parseUrl(ev.url);
+        this.setInitialTrackFromUrlParams(tree.queryParams);
+      });
   }
 }

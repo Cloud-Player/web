@@ -15,22 +15,19 @@ import {HeadlessPlayerComponent} from '../components/headless-player/headless-pl
 @Injectable()
 export class PlayerFactory {
   public static playerWidth = 320;
-
+  private static _playerComponentMap = {
+    soundcloud: SoundcloudPlayerComponent,
+    youtube: YoutubePlayerComponent,
+    mixcloud: MixcloudPlayerComponent,
+    deezer: DeezerPlayerComponent
+  };
   private _resolver: ComponentFactoryResolver;
   private _container: ViewContainerRef;
-  private _playerComponentMap;
   private _playerStore: PlayerStore<PlayerStoreItem>;
   private _isInHeadlessMode = false;
 
   constructor(resolver: ComponentFactoryResolver) {
     this._resolver = resolver;
-
-    this._playerComponentMap = {
-      soundcloud: SoundcloudPlayerComponent,
-      youtube: YoutubePlayerComponent,
-      mixcloud: MixcloudPlayerComponent,
-      deezer: DeezerPlayerComponent
-    };
   }
 
   public static getPlayerSize(track: ITrack): IPlayerSize {
@@ -40,18 +37,22 @@ export class PlayerFactory {
     };
   }
 
-  private getComponentForType(type: string) {
+  public static hasPlayerForProvider(provider: string) {
+    return PlayerFactory._playerComponentMap[provider];
+  }
+
+  private getComponentForProvider(provider: string) {
     if (this._isInHeadlessMode) {
       return HeadlessPlayerComponent;
-    } else if (this._playerComponentMap[type]) {
-      return this._playerComponentMap[type];
+    } else if (PlayerFactory._playerComponentMap[provider]) {
+      return PlayerFactory._playerComponentMap[provider];
     } else {
-      throw new Error(`There is no player available for the type ${type}`);
+      throw new Error(`There is no player available for the type ${provider}`);
     }
   }
 
   private createNewPlayer(item: PlayqueueItemAuxappModel): PlayerStoreItem {
-    const component: Type<IPlayer> = this.getComponentForType(item.track.provider);
+    const component: Type<IPlayer> = this.getComponentForProvider(item.track.provider);
     const factory: ComponentFactory<IPlayer> = this._resolver.resolveComponentFactory(component);
     const playerComponent: ComponentRef<IPlayer> = this._container.createComponent(factory);
     const player = new PlayerStoreItem({
@@ -79,7 +80,7 @@ export class PlayerFactory {
   }
 
   private cleanUp() {
-    keys(this._playerComponentMap).forEach((providerKey) => {
+    keys(PlayerFactory._playerComponentMap).forEach((providerKey) => {
       const playersForProvider = this._playerStore.where({provider: providerKey});
       while (playersForProvider.length > 2) {
         const player = playersForProvider.shift();
@@ -95,6 +96,10 @@ export class PlayerFactory {
         }
       }
     });
+  }
+
+  public hasPlayerForProvider(provider: string) {
+    return !!this.getComponentForProvider(provider);
   }
 
   public setInHeadlessMode(isHeadless: boolean) {
