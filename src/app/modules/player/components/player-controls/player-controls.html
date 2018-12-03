@@ -14,16 +14,7 @@
     <app-volume-btn [volume]="volume" (volumeChange)="setVolume($event)"></app-volume-btn>
   </div>
   <div class="fullscreen">
-    <button *ngIf="sessions.length>1"
-            class="btn btn-xs btn-default"
-            [ngClass]="{'is-activated': isInHeadlessMode}"
-            (click)="toggleHeadlessMode()">
-      <i class="fa fa-rss"></i>
-    </button>
-    <app-options-btn style="display: inline-block;margin-right: 5px;" >
-      <app-option-btn title="abc"></app-option-btn>
-      <app-option-btn title="xy"></app-option-btn>
-    </app-options-btn>
+    <app-remote-device-selector></app-remote-device-selector>
     <button *ngIf="fullScreenService.canEnterFullScreen()"
             class="btn btn-xs btn-default"
             (click)="toggleFullScreen()">

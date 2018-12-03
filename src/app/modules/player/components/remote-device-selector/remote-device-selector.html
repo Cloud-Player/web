@@ -1,0 +1,24 @@
+<app-options-btn class="remote-device-selector"
+                 icon="fa fa-rss"
+                 style="display: inline-block;margin-right: 5px;">
+  <div *ngFor="let session of sessions.models">
+    <app-option-btn
+      *ngIf="!session.is_mine"
+      (click)="playOnDevice(session)"
+      [title]="session.browser"
+      [isActive]="session.is_player">
+    </app-option-btn>
+    <app-option-btn
+      *ngIf="session.is_mine && !session.is_player && sessions.getPlayerSession()"
+      (click)="playOnDevice(session)"
+      title="Play on this device">
+    </app-option-btn>
+    <app-option-btn
+      *ngIf="session.is_mine && session.is_player"
+      (click)="playOnDevice(session)"
+      title="Is Playing on this Device"
+      [isActive]="true">
+    </app-option-btn>
+  </div>
+</app-options-btn>
+

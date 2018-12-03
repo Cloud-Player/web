@@ -15,6 +15,8 @@ import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-pla
 import {DeezerPlayerComponent} from './components/deezer-player/deezer-player';
 import {SocketPlayerService} from './services/socket-player';
 import {HeadlessPlayerComponent} from './components/headless-player/headless-player';
+import {AuthenticatedUserModule} from '../authenticated-user/authenticated-user.module';
+import {RemoteDeviceSelectorComponent} from './components/remote-device-selector/remote-device-selector';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import {HeadlessPlayerComponent} from './components/headless-player/headless-pla
     FormsModule,
     SharedModule,
     TracksModule,
-    CommentsModule
+    CommentsModule,
+    AuthenticatedUserModule
   ],
   declarations: [
     PlayerControlsComponent,
@@ -34,7 +37,8 @@ import {HeadlessPlayerComponent} from './components/headless-player/headless-pla
     HeadlessPlayerComponent,
     PlayerManagerComponent,
     PlayerComponent,
-    VolumeBtnComponent
+    VolumeBtnComponent,
+    RemoteDeviceSelectorComponent
   ],
   exports: [
     PlayerComponent
