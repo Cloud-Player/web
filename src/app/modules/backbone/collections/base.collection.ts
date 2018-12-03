@@ -1,6 +1,6 @@
 import {BaseModel} from '../models/base.model';
 import {getUrl} from '../utils/get_url.util';
-import {extend, findKey, isArray, result} from 'underscore';
+import {extend, findKey, isArray, result, clone} from 'underscore';
 import {prepareParams} from '../utils/prepare_params';
 import {SelectableCollection} from './selectable.collection';
 import {Model, ModelSaveOptions} from 'backbone';
@@ -41,7 +41,7 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
     });
   }
 
-  private prepareDynamicModel(item: TModel | {}, options): TModel | {} {
+  private _prepareDynamicModel(item: TModel | {}, options): TModel | {} {
     if (!(item instanceof this.model)) {
       const dynamicInstances = result(this, 'dynamicInstances');
       const instance = InstanceResolver.getDynamicInstance(dynamicInstances, 'model', item);
@@ -51,11 +51,11 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
           item = instance.parse(item);
         }
         instance.set(item, options);
-        item = instance;
+        return instance;
       }
     }
 
-    return item;
+    return null;
   }
 
   dynamicInstances(): IDynamicInstances {
@@ -72,7 +72,7 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
 
   url = () => {
     return getUrl(this);
-  }
+  };
 
   create(attributes: any, options: ModelSaveOptions = {}) {
     options.wait = true;
@@ -165,21 +165,33 @@ export class BaseCollection<TModel extends BaseModel> extends SelectableCollecti
     }
   }
 
-  add(item: TModel | TModel[] | {}, options: any = {}): any {
-    if (isArray(item)) {
-      const addedItems: Array<TModel | {}> = [];
-      item.forEach((obj: any) => {
-        addedItems.push(this.prepareDynamicModel(obj, options));
-      });
-      item = addedItems;
-    } else {
-      item = this.prepareDynamicModel(item, options);
-    }
-
-    item = super.add(item, options);
-    return item;
+  add(models, options?): any {
+    return super.add(models, options);
   }
-
 }
+
+/*
+ * We extend the backbone Collection functionality so it can instantiate dynamic models. As the method is declared as private in the typing
+ * this small prototype hack has to be used
+ * With this functionality the colelction can have different model instances based on a key that is set in attrs.
+ */
+// @ts-ignore
+BaseCollection.prototype._prepareModel = function (attrs, options) {
+  if (attrs instanceof Model) {
+    if (!attrs.collection) {
+      (<any>attrs).collection = this;
+    }
+    return attrs;
+  }
+  options = options ? clone(options) : {};
+  options.collection = this;
+
+  const model: Model = <Model>(this._prepareDynamicModel(attrs, options) || new this.model(attrs, options));
+  if (!model.validationError) {
+    return model;
+  }
+  this.trigger('invalid', this, model.validationError, options);
+  return false;
+};
 
 

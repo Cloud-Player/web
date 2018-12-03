@@ -7,6 +7,7 @@ import {AuxappModel} from '../../auxapp/auxapp.model';
 import {ITrack} from '../../tracks/track.interface';
 import {TrackMixcloudModel} from '../../tracks/track-mixcloud.model';
 import {TrackDeezerModel} from '../../tracks/track-deezer.model';
+import {TrackAuxappModel} from '../../tracks/track-auxapp.model';
 
 export class PlaylistItemAuxappModel
   extends AuxappModel implements IPlaylistItem {
@@ -20,7 +21,8 @@ export class PlaylistItemAuxappModel
       soundcloud: TrackSoundcloudModel,
       youtube: TrackYoutubeModel,
       mixcloud: TrackMixcloudModel,
-      deezer: TrackDeezerModel
+      deezer: TrackDeezerModel,
+      default: TrackAuxappModel
     }
   })
   track: ITrack;

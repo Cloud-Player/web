@@ -31,6 +31,9 @@ export class InstanceResolver {
         identifierValue = attributes[dynamicInstanceDefinition.identifierKey];
       } else if (isObject(attributes[key])) {
         identifierValue = attributes[key][dynamicInstanceDefinition.identifierKey];
+        if (!identifierValue && dynamicInstanceDefinition.identifierKeyValueMap.default) {
+          identifierValue = 'default';
+        }
       }
 
       if (identifierValue) {
