@@ -13,6 +13,8 @@ import {PlayqueueAuxappModel} from '../../api/playqueue/playqueue-auxapp.model';
 import {Globals} from '../../../../globals';
 import {MessageMethodTypes} from '../../shared/services/message';
 import {IAccount} from '../../api/account/account.interface';
+import {ActivatedRoute} from '@angular/router';
+import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 @Injectable()
 export class Authenticator {
@@ -23,7 +25,8 @@ export class Authenticator {
 
   constructor(private privacyManager: PrivacyManager,
               private privacyConfigModalOpener: PrivacyConfigModalOpener,
-              private socketMessageService: SocketMessageService) {
+              private socketMessageService: SocketMessageService,
+              private activatedRoute: ActivatedRoute) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
     this._subject = new Subject<any>();
     this._sessions = SessionsCollection.getInstance();
@@ -38,10 +41,7 @@ export class Authenticator {
   private updateAccountPlaylists(account: IAuthenticatedUserAccount) {
     account.playlists.reset();
     if (account.isConnected()) {
-      console.log(account.provider, 'FETCH PLAYLIST');
       account.playlists.fetch();
-    } else {
-      console.log(account.provider, 'IS NOT CONNECTED');
     }
   }
 
@@ -52,7 +52,11 @@ export class Authenticator {
   }
 
   private updatePlayQueue() {
+    const currentItem = this._playQueue.items.getCurrentItem();
     this._playQueue.clear();
+    if (currentItem) {
+      this._playQueue.setInitialTrack(currentItem.track, currentItem.progress);
+    }
     this._playQueue.fetch();
   }
 
@@ -71,7 +75,6 @@ export class Authenticator {
   }
 
   private addSession(item) {
-    console.log('ADD SESSION', arguments);
     this._sessions.add(item);
   }
 
