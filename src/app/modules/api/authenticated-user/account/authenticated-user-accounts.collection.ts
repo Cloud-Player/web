@@ -48,4 +48,9 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
     });
   }
 
+  public getAuxappAccount(): AuthenticatedUserAccountAuxappModel {
+    const account = <unknown>this.getAccountForProvider('auxapp');
+    return <AuthenticatedUserAccountAuxappModel>account;
+  }
+
 }

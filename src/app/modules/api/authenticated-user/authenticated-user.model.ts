@@ -33,6 +33,10 @@ export class AuthenticatedUserModel extends AuxappModel {
     this.set('id', id, {silent: true});
     return superCall;
   }
+
+  public getAuxappAccount(): AuthenticatedUserAccountAuxappModel {
+    return this.accounts.getAuxappAccount();
+  }
 }
 
 
