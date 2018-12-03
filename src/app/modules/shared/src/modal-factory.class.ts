@@ -1,6 +1,7 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Type, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from '../components/modal/modal/modal';
 import {Subject} from 'rxjs';
+import {IModalOptions} from './modal.interface';
 
 export enum ModalStates {
   Initalised,
@@ -70,6 +71,10 @@ export class Modal<TComponent> {
     return this._modalRef.instance.getInstance();
   }
 
+  public getOptions(): IModalOptions {
+    return this._modalRef.instance.getOptions();
+  }
+
   public close() {
     this._subject.next(ModalStates.Closed);
     this._modalRef.instance.hide();
@@ -78,6 +83,12 @@ export class Modal<TComponent> {
   public getTitle() {
     if (this._modalRef) {
       return this._modalRef.instance.getTitle();
+    }
+  }
+
+  public getElement() {
+    if (this._modalRef) {
+      return this._modalRef.instance.getElement();
     }
   }
 

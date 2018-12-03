@@ -18,6 +18,7 @@ export class ModalService {
   private _subject: Subject<ModalServiceStates>;
   private _modalFactory: ModalFactory;
   private _isInitialised = false;
+  private _lastRemovedModal;
 
   constructor(private userAnalyticsService: UserAnalyticsService) {
     this._modalFactory = new ModalFactory();
@@ -28,6 +29,7 @@ export class ModalService {
     if (this._modalStack.length > 0) {
       const lastOpenedModal = this._modalStack[this._modalStack.length - 1];
       lastOpenedModal.deactivate();
+      this._lastRemovedModal = lastOpenedModal;
     }
     this._modalStack.push(modal);
   }
@@ -39,6 +41,7 @@ export class ModalService {
       const previousOpenedModal = this._modalStack[index - 1];
       previousOpenedModal.activate();
     }
+    this._lastRemovedModal = modal;
   }
 
   public init(resolver: ComponentFactoryResolver, container: ViewContainerRef) {
@@ -74,6 +77,7 @@ export class ModalService {
         this._subject.next(ModalServiceStates.ModalRemoved);
         if (this.getOpenedModalsAmount() === 0) {
           this._subject.next(ModalServiceStates.NoModalVisible);
+          this._lastRemovedModal = null;
         }
         this.userAnalyticsService.trackEvent('modal', `close_${modal.getTitle()}`, 'ModalService');
       });
@@ -81,6 +85,20 @@ export class ModalService {
 
   public getOpenedModalsAmount() {
     return this._modalStack.length;
+  }
+
+  public getModalStack(): Array<Modal<any>> {
+    return this._modalStack;
+  }
+
+  public getLastRemovedModal() {
+    return this._lastRemovedModal;
+  }
+
+  public getOpenModal() {
+    if (this._modalStack.length > 0) {
+      return this._modalStack[this._modalStack.length - 1];
+    }
   }
 
   public createModal<TComponent>(component: Type<TComponent>): Modal<TComponent> {

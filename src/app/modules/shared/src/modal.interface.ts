@@ -11,6 +11,7 @@ export interface IModalOptions {
   dismissible: boolean;
   primaryAction?: IModalActionBtn;
   secondaryAction?: IModalActionBtn;
+  center?: boolean;
 }
 
 export interface IModalComponent {

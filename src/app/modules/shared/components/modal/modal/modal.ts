@@ -55,6 +55,15 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
     this.visibilityChange = new EventEmitter<boolean>();
   }
 
+  private centerModal() {
+    const windowHeight = window.innerHeight;
+    const modalEl = this.el.nativeElement.querySelector('.modal');
+    const modalHeight = modalEl.offsetHeight;
+    const center = Math.max(windowHeight / 2 - modalHeight / 2, 0);
+    this.el.nativeElement.style.marginTop = `${center}px`;
+    modalEl.style.marginTop = 0;
+  }
+
   private build() {
     if (!this._isBuild) {
       const modalFactory: ComponentFactory<IModalComponent> = this.resolver.resolveComponentFactory(this._component);
@@ -99,6 +108,9 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
   public show() {
     this.el.nativeElement.style.display = 'block';
     setTimeout(() => {
+      if (this.modalOptions.center) {
+        this.centerModal();
+      }
       this.isVisible = true;
       if (this._componentRef && this._componentRef.instance.modalOnOpen) {
         this._componentRef.instance.modalOnOpen();
@@ -114,6 +126,10 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
 
   public getTitle() {
     return this.modalOptions.title;
+  }
+
+  public getOptions() {
+    return this.modalOptions;
   }
 
   public hideAfterExecution(action: modalAction) {
@@ -146,6 +162,10 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
 
   public getInstance(): any {
     return this._componentRef.instance;
+  }
+
+  public getElement(): ElementRef {
+    return this.el;
   }
 
   handleDone(event: AnimationEvent) {
