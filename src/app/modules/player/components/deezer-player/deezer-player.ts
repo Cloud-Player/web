@@ -1,12 +1,14 @@
 /// <reference path="./deezer.d.ts" />
 import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {uniqueId} from 'underscore';
+import {extend, uniqueId} from 'underscore';
 import {IPlayer, IPlayerOptions, IPlayerSize} from '../../src/player.interface';
 import {AbstractPlayer} from '../../src/abstract-player.class';
 import {ImageSizes} from '../../../shared/src/image-sizes.enum';
 import {ProviderMap} from '../../../shared/src/provider-map.class';
 import {TrackDeezerModel} from '../../../api/tracks/track-deezer.model';
 import {PlayerStatus} from '../../src/player-status.enum';
+import {ITrack} from '../../../api/tracks/track.interface';
+import {Events} from 'backbone';
 
 @Component({
   selector: 'app-deezer-player',
@@ -15,8 +17,10 @@ import {PlayerStatus} from '../../src/player-status.enum';
 })
 export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, OnInit, OnDestroy {
   private _dzApiReady = false;
-  private _dzPlayerReady = false;
   private _seekedTo: number;
+  private _newTrack: ITrack;
+  private _eventHandler;
+  private _lastTrackDuration: number;
 
   @Input()
   public track: TrackDeezerModel;
@@ -34,47 +38,62 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
     if ((<any>window).DZ) {
       this._dzApiReady = true;
     }
+    this._eventHandler = extend({}, Events);
   }
 
-  public id = uniqueId('mc_player');
+  public id = uniqueId('dz_player');
 
-  private handleMcStatusChange(ev: string, arg: any) {
+  private handleDzStatusChange(ev: string, arg: any) {
     switch (ev) {
       case 'buffering':
-        console.log('ON BUFFERING');
-        this.setDuration(DZ.player.getCurrentTrack().duration);
         this.onWaiting();
         break;
       case 'play':
-        console.log('ON PLAY');
-        this.setDuration(DZ.player.getCurrentTrack().duration);
+        if (this._seekedTo) {
+          DZ.player.seek(this._seekedTo);
+          this._seekedTo = null;
+        }
         this.onPlaying();
         break;
       case 'pause':
-        console.log('ON PAUSE');
         this.onPaused();
         break;
       case 'ended':
         this.onEnded();
         break;
       case 'progress':
-        console.log('ON PROGRESS');
-        this.onCurrentTimeUpdate(arg[0]);
-        this.setDuration(arg[1]);
+        const progress = arg[0];
+        const duration = arg[1];
+        if (duration !== this._lastTrackDuration) {
+          this._lastTrackDuration = duration;
+          this.setDuration(duration);
+        }
+        if (progress) {
+          this.onCurrentTimeUpdate(progress);
+        }
+        break;
+      case 'player_loaded':
+        this.onReady();
         break;
     }
   }
 
   protected bindListeners() {
     this.unBindListeners();
-    DZ.Event.subscribe('player_paused', this.handleMcStatusChange.bind(this, 'pause'));
-    DZ.Event.subscribe('player_play', this.handleMcStatusChange.bind(this, 'play'));
-    DZ.Event.subscribe('PlayerEvents', this.handleMcStatusChange.bind(this, 'buffering'));
-    DZ.Event.subscribe('player_position', this.handleMcStatusChange.bind(this, 'progress'));
-    DZ.Event.subscribe('track_end', this.handleMcStatusChange.bind(this, 'ended'));
+
+    this._eventHandler.on('onStateChange', this.handleDzStatusChange.bind(this));
   }
 
   protected unBindListeners() {
+    this._eventHandler.off();
+  }
+
+  protected eventDelegator(type, args = []) {
+    if (typeof args !== 'object') {
+      args = [args];
+    }
+    args.unshift(type);
+    this._eventHandler.trigger.apply(this._eventHandler, args);
   }
 
   protected initialisePlayerSDK(): Promise<boolean> {
@@ -86,7 +105,7 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
       } else {
         let js: HTMLScriptElement;
         const scripts = document.getElementsByTagName('script')[0];
-        js = document.createElement('script');
+        js = <HTMLScriptElement>document.createElement('script');
         js.id = deezerElId;
         js.src = 'https://e-cdns-files.dzcdn.net/js/min/dz.js';
         scripts.parentNode.insertBefore(js, youtubeScriptEl);
@@ -108,6 +127,27 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
         channelUrl: '/assets/deezer-channel.html',
         player: {
           onload: () => {
+            DZ.Event.subscribe('player_paused', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['pause', data]);
+            });
+            DZ.Event.subscribe('player_play', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['play', data]);
+            });
+            DZ.Event.subscribe('player_buffering', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['buffering', data]);
+            });
+            DZ.Event.subscribe('player_position', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['progress', data]);
+            });
+            DZ.Event.subscribe('track_end', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['ended', data]);
+            });
+            DZ.Event.subscribe('player_loaded', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['loaded', data]);
+            });
+            DZ.Event.subscribe('current_track', (data) => {
+              this.eventDelegator.call(this, 'onStateChange', ['track_change', data]);
+            });
             resolve();
           }
         }
@@ -126,12 +166,14 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
   }
 
   protected preloadTrack(track: TrackDeezerModel, startTime: number = 0) {
+    this._newTrack = track;
+    DZ.player.pause();
+    DZ.player.playTracks([]);
     DZ.player.playTracks([track.id]);
   }
 
   protected startPlayer(): void {
     this.onRequestPlay();
-    console.log('START PLAYER');
     DZ.player.play();
     setTimeout(() => {
       if (!DZ.player.isPlaying()) {
