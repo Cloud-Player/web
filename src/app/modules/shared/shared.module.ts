@@ -53,6 +53,7 @@ import {ListFooterComponent} from './components/list-footer/list-footer';
 import {AlertBoxComponent} from './components/alert/alert-box';
 import {SocketMessageService} from './services/socket-message';
 import {MessageService} from './services/message';
+import {SocketBackboneSender} from './services/socket-backbone-sender';
 
 @NgModule({
   imports: [
@@ -162,6 +163,7 @@ import {MessageService} from './services/message';
     LayoutService,
     MessageService,
     SocketMessageService,
+    SocketBackboneSender,
     AuthenticatedUserGuard
   ],
   entryComponents: [
