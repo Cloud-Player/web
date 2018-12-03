@@ -6,6 +6,8 @@ import {AuthenticatedUserPlaylistAuxappModel} from '../playlist/authenticated-us
 import {AuthenticatedUserPlaylistsAuxappCollection} from '../playlist/authenticated-user-playlists-auxapp.collection';
 import {nested} from '../../../backbone/decorators/nested.decorator';
 import {FavouriteTracksAuxappModel} from '../../favourite-tracks/favourite-tracks-auxapp.model';
+import {SessionsCollection} from '../sessions/sessions.collection';
+import {SessionModel} from '../sessions/session.model';
 
 export class AuthenticatedUserAccountAuxappModel
   extends AccountAuxappModel implements IAuthenticatedUserAccount {
@@ -34,13 +36,17 @@ export class AuthenticatedUserAccountAuxappModel
   @defaultValue(false)
   connected: boolean;
 
+  @attributesKey('sessions')
+  @nested()
+  sessions: SessionsCollection<SessionModel>;
+
   initialize(): void {
     if (this.id) {
       this.playlists.setEndpoint(this.id);
     }
     this.on('change:id', () => {
       this.playlists.setEndpoint(this.id);
-      //this.favouriteTracks.setEndpoint(this.id);
+      this.sessions.setEndpoint(this.id);
     });
   }
 

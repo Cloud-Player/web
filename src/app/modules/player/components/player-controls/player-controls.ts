@@ -8,8 +8,9 @@ import {AbstractImageModel} from '../../../api/image/abstract-image';
 import {filter} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
-import {SessionsCollection} from '../../../api/sessions/sessions.collection';
-import {SessionModel} from '../../../api/sessions/session.model';
+import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
+import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 
 declare let MediaMetadata: any;
 
@@ -48,7 +49,7 @@ export class PlayerControlsComponent implements OnInit {
               public fullScreenService: FullScreenService) {
     this.volumeChange = new EventEmitter<number>();
     this.isInHeadlessModeChange = new EventEmitter<boolean>();
-    this.sessions = SessionsCollection.getInstance();
+    this.sessions = AuthenticatedUserModel.getInstance().getAuxappAccount().sessions;
   }
 
   private setMobileMediaNotification(track: ITrack) {

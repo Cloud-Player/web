@@ -10,11 +10,20 @@ export class SessionModel extends AuxappModel {
   @attributesKey('system')
   system: string;
 
+  @attributesKey('account_id')
+  account_id: string;
+
   @attributesKey('screen')
   screen: string;
 
   @attributesKey('state')
   state: string;
+
+  @attributesKey('is_mine')
+  is_mine: boolean;
+
+  @attributesKey('is_player')
+  is_player: boolean;
 
   compose(attrs) {
     if (this.isNew()) {

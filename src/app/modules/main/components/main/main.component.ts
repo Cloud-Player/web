@@ -11,10 +11,9 @@ import {Modal} from '../../../shared/src/modal-factory.class';
 import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
 import {PrivacyManager} from '../../services/privacy-manager';
 import {SocketMessageService, SocketStatusTypes} from '../../../shared/services/socket-message';
-import {filter} from 'rxjs/operators';
-import {SessionsCollection} from '../../../api/sessions/sessions.collection';
-import {SessionModel} from '../../../api/sessions/session.model';
 import {Authenticator} from '../../../authenticated-user/services/authenticator';
+import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
+import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 
 export interface IPrivacySettings {
   allowTracking: boolean;

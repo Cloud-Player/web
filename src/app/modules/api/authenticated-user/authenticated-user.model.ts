@@ -3,7 +3,8 @@ import {attributesKey} from '../../backbone/decorators/attributes-key.decorator'
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {AuthenticatedUserAccountsCollection} from './account/authenticated-user-accounts.collection';
 import {IAuthenticatedUserAccount} from './account/authenticated-user-account.interface';
-import {SessionModel} from '../sessions/session.model';
+import {AuthenticatedUserAccountAuxappModel} from './account/authenticated-user-account-auxapp.model';
+import {SessionModel} from './sessions/session.model';
 
 export class AuthenticatedUserModel extends AuxappModel {
   private static instance: AuthenticatedUserModel;

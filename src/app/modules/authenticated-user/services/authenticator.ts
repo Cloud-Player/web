@@ -5,16 +5,13 @@ import {IPrivacyManagerEvent, PrivacyManager, PrivacyManagerState} from '../../m
 import {PrivacyConfigModalOpener} from '../../main/components/privacy-config/privacy-config';
 import {filter} from 'rxjs/operators';
 import {IAuthenticatedUserAccount} from '../../api/authenticated-user/account/authenticated-user-account.interface';
-import {SessionModel} from '../../api/sessions/session.model';
-import {ClientDetector} from '../../shared/services/client-detector.service';
-import {SessionsCollection} from '../../api/sessions/sessions.collection';
 import {SocketMessageService} from '../../shared/services/socket-message';
 import {PlayqueueAuxappModel} from '../../api/playqueue/playqueue-auxapp.model';
-import {Globals} from '../../../../globals';
 import {MessageMethodTypes} from '../../shared/services/message';
-import {IAccount} from '../../api/account/account.interface';
 import {ActivatedRoute} from '@angular/router';
-import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {SessionsCollection} from '../../api/authenticated-user/sessions/sessions.collection';
+import {SessionModel} from '../../api/authenticated-user/sessions/session.model';
+import {Globals} from '../../../../globals';
 
 @Injectable()
 export class Authenticator {
@@ -29,9 +26,9 @@ export class Authenticator {
               private activatedRoute: ActivatedRoute) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
     this._subject = new Subject<any>();
-    this._sessions = SessionsCollection.getInstance();
+    this._sessions = this._authenticatedUser.getAuxappAccount().sessions;
     this._playQueue = PlayqueueAuxappModel.getInstance();
-    this._authenticatedUser.accounts.getAccountForProvider('auxapp')
+    this._authenticatedUser.getAuxappAccount()
       .on('change:id', this.reactOnAuxAccountIdChange.bind(this));
     this._authenticatedUser.accounts.each((account) => {
       account.on('change:id', this.reactOnAccountIdChange.bind(this));
@@ -60,20 +57,6 @@ export class Authenticator {
     this._playQueue.fetch();
   }
 
-  private activateSession(session) {
-    this._sessions.add(session);
-    this.socketMessageService.open(Globals.websocketApiUrl);
-    this._sessions.fetch();
-  }
-
-  private createSession() {
-    const userSession = this._authenticatedUser.session;
-    userSession.browser = `${ClientDetector.getClient().name}`;
-    userSession.system = `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`;
-    userSession.screen = `${screen.availWidth}x${screen.availHeight}`;
-    userSession.save().then(this.activateSession.bind(this));
-  }
-
   private addSession(item) {
     this._sessions.add(item);
   }
@@ -94,10 +77,12 @@ export class Authenticator {
   }
 
   private subscribeOnSessionChanges() {
-    const accountId = this._authenticatedUser.accounts.getAccountForProvider('auxapp').id;
+    const accountId = this._authenticatedUser.getAuxappAccount().id;
     if (accountId) {
-      this.socketMessageService.subscribe(`session.${accountId}`, MessageMethodTypes.POST, this.addSession.bind(this));
-      this.socketMessageService.subscribe(`session.${accountId}`, MessageMethodTypes.PUT, this.updateSessions.bind(this));
+      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.RESPONSE, this.addSession.bind(this));
+      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.POST, this.addSession.bind(this));
+      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.PUT, this.updateSessions.bind(this));
+      this.socketMessageService.sendMessage(`account.${accountId}.session`, MessageMethodTypes.GET);
     }
   }
 
@@ -108,8 +93,9 @@ export class Authenticator {
   private reactOnAuxAccountIdChange() {
     this.updateUserFavouriteTracks();
     this.updatePlayQueue();
-    this.createSession();
     this.subscribeOnSessionChanges();
+    this._authenticatedUser.getAuxappAccount().sessions.reset();
+    this.socketMessageService.open(Globals.websocketApiUrl);
   }
 
   public login() {

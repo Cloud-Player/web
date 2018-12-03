@@ -7,12 +7,14 @@ export class SessionsCollection<TModel extends SessionModel> extends AuxappColle
 
   model: any = SessionModel;
 
-  endpoint = 'session?account_id=mine';
-
   static getInstance() {
     if (!this._instance) {
       this._instance = new SessionsCollection<SessionModel>();
     }
     return this._instance;
+  }
+
+  public getMySession(): TModel {
+    return <TModel>this.findWhere({is_mine: true});
   }
 }

@@ -14,10 +14,12 @@ import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/pl
 import {MessageMethodTypes} from '../../../shared/services/message';
 import {SocketPlayerService} from '../../services/socket-player';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {SessionsCollection} from '../../../api/sessions/sessions.collection';
-import {SessionModel} from '../../../api/sessions/session.model';
 import {NavigationStart, Router, UrlTree} from '@angular/router';
 import {PlayerFactory} from '../../src/player-factory.class';
+import {SocketBackboneSender} from '../../../shared/services/socket-backbone-sender';
+import {BaseModel} from '../../../backbone/models/base.model';
+import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
+import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 
 @Component({
   selector: 'app-player',
@@ -128,8 +130,13 @@ export class PlayerComponent implements OnInit {
             /* When set to playing by socket do not to this session as player */
             !(item.socketData && item.socketData.status === 'playing')
           ) {
-            this.authenticatedUser.session.state = 'player';
-            this.authenticatedUser.session.save();
+            const sessions = this.authenticatedUser.getAuxappAccount().sessions;
+            const mySession = sessions.getMySession();
+            if (mySession) {
+              mySession.is_player = true;
+              this.socketBackboneSender.decorate(mySession);
+              mySession.save();
+            }
           }
           item.save();
           break;
@@ -205,8 +212,9 @@ export class PlayerComponent implements OnInit {
       .subscribe(this.leftFullScreen.bind(this));
 
     this.sessions.on('add change:state', (session) => {
-      const playerSession = this.sessions.findWhere({state: 'player'});
-      if (playerSession && playerSession.id !== this.authenticatedUser.session.id) {
+      const playerSession = this.sessions.getPlayerSession();
+      const mySession = this.sessions.getMySession();
+      if (playerSession && mySession && playerSession !== mySession) {
         this.playerManager.setInHeadlessMode(true);
       }
     });
@@ -214,7 +222,7 @@ export class PlayerComponent implements OnInit {
     this.sessions.on('remove', (session) => {
       if (session.state === 'player') {
         this.playerManager.setInHeadlessMode(false);
-        this.authenticatedUser.session.state = 'player';
+        this.authenticatedUser.session.is_player = true;
         this.authenticatedUser.session.save();
       }
     });
