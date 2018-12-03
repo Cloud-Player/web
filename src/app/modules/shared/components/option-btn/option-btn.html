@@ -1,4 +1,6 @@
-<div class="option-btn clickable" (click)="execute()">
+<div class="option-btn clickable"
+     [class.isActive]="isActive"
+     (click)="execute()">
   <span *ngIf="icon" class="icon">
     <i [class]="icon"></i>
   </span>

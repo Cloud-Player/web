@@ -6,6 +6,11 @@
     display: block;
     border-bottom: 1px solid $gray-lighter;
 
+    &.isActive{
+      background: $gray-darker;
+      color: $brand-primary;
+    }
+
     &:hover {
       background: $gray-lighter;
       .fa-queue{
