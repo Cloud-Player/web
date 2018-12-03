@@ -74,7 +74,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
       return;
     }
     const existingPlayQueueItem = this.playQueue.items.getItemByTrackId(this.track.id);
-    if (existingPlayQueueItem && existingPlayQueueItem.isPaused()) {
+    if (existingPlayQueueItem) {
       existingPlayQueueItem.play();
     } else {
       this.playQueue.destroy();
