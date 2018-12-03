@@ -29,6 +29,7 @@ export abstract class AbstractPlayer implements OnInit {
   private _forcePlayStart = false;
   private _forcePlayStartTry = 0;
   private _seekTo = null;
+  private _initialTrackDuration = 0;
 
   @Input()
   public track: ITrack;
@@ -294,6 +295,15 @@ export abstract class AbstractPlayer implements OnInit {
     }
   }
 
+  private updateTrackDuration(newDuration: number) {
+    if (newDuration) {
+      this._initialTrackDuration = newDuration;
+      this.setDuration(newDuration);
+    } else {
+      this._initialTrackDuration = null;
+    }
+  }
+
   public initialise(options?: IPlayerOptions): Promise<any> {
     this.setCurrentTime(0);
     if (!this._initialisePromise) {
@@ -313,6 +323,8 @@ export abstract class AbstractPlayer implements OnInit {
             return this.initialisePlayer(options);
           });
         }
+
+        this.updateTrackDuration(this.track.duration);
 
         return this.executeInitialisingQueue(promiseQueue).then(() => {
           this._playerSdkIsInitialised = true;
@@ -425,7 +437,7 @@ export abstract class AbstractPlayer implements OnInit {
     } else {
       this.setStatus(PlayerStatus.Updating);
       this.track = track;
-      this.setDuration(track.duration);
+      this.updateTrackDuration(track.duration);
       if (this.getStatus() === PlayerStatus.Playing) {
         return this.stop().then(() => {
           this.preload();
