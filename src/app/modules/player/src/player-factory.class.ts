@@ -150,7 +150,15 @@ export class PlayerFactory {
     }
   }
 
-  public destroyPlayer(player: ComponentRef<IPlayer>): void {
-    player.instance.deInitialize();
+  public destroyPlayer(player: ComponentRef<IPlayer>, destroy?: boolean): void {
+    if (destroy) {
+      player.destroy();
+      const playerItemForPlayer = this._playerStore.filter((playerItem) => {
+        return playerItem.component === player;
+      });
+      this._playerStore.remove(playerItemForPlayer);
+    } else {
+      player.instance.deInitialize();
+    }
   }
 }
