@@ -17,7 +17,6 @@ import {IFavouriteTrackItem} from '../../../api/favourite-tracks/favourite-track
 })
 export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   private _authenticatedUser: AuthenticatedUserModel;
-  private _favouriteTracksPerProvider: Array<IFavouriteTracks>;
   private _auxappFavouriteTracks: FavouriteTracksAuxappModel;
   private _debouncedUpdate: Function;
   private _isDestroyed = false;
@@ -51,22 +50,20 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   like(): void {
-    if (!this.hasLikedTrack()) {
-      this._favouriteTracksPerProvider.forEach((favouriteTracks: IFavouriteTracks) => {
-        const favouriteTrack = favouriteTracks.items.add({
-          track: this.track.clone()
-        });
-        favouriteTrack.save().then(() => {
-          this.userAnalyticsService.trackEvent(
-            'toggle_like',
-            `${favouriteTrack.type}:like_${this.track.provider}`,
-            'app-option-btn');
-        }, () => {
-          this.userAnalyticsService.trackEvent(
-            'toggle_like',
-            `${favouriteTrack.type}:like_error:${this.track.provider}`,
-            'app-option-btn');
-        });
+    if (!this.hasLikedTrack() && this._auxappFavouriteTracks) {
+      const favouriteTrack = this._auxappFavouriteTracks.items.add({
+        track: this.track.clone()
+      });
+      favouriteTrack.save().then(() => {
+        this.userAnalyticsService.trackEvent(
+          'toggle_like',
+          `${favouriteTrack.type}:like_${this.track.provider}`,
+          'app-option-btn');
+      }, () => {
+        this.userAnalyticsService.trackEvent(
+          'toggle_like',
+          `${favouriteTrack.type}:like_error:${this.track.provider}`,
+          'app-option-btn');
       });
     }
   }
@@ -99,15 +96,9 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const providerAccount = this._authenticatedUser.accounts.getAccountForProvider(this.track.provider);
     const auxappAccount = this._authenticatedUser.accounts.getAccountForProvider('auxapp');
-    this._favouriteTracksPerProvider = [];
-    if (providerAccount && providerAccount.isConnected()) {
-      this._favouriteTracksPerProvider.push(providerAccount.favouriteTracks);
-    }
     if (auxappAccount && auxappAccount instanceof AuthenticatedUserAccountAuxappModel) {
       this._auxappFavouriteTracks = auxappAccount.favouriteTracks;
-      this._favouriteTracksPerProvider.push(auxappAccount.favouriteTracks);
     }
     this._auxappFavouriteTracks.items.on('add remove reset', this._debouncedUpdate, this);
     this._authenticatedUser.accounts.getAccountForProvider('auxapp').on('change:connected', this._debouncedUpdate, this);
