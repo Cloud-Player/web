@@ -28,7 +28,7 @@ export class AddToQueueOptionComponent {
   }
 
   public addToQueue() {
-    this._playQueue.items.queue({track: this.track});
+    this._playQueue.items.queue({track: this.track.clone()});
   }
 
   public removeFromQueue() {
