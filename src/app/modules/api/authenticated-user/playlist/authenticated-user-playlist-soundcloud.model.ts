@@ -9,7 +9,7 @@ export class AuthenticatedUserPlaylistSoundcloudModel
   extends PlaylistSoundcloudModel {
 
   @attributesKey('canEdit')
-  @defaultValue(true)
+  @defaultValue(false)
   canEdit: boolean;
 
   @attributesKey('items')

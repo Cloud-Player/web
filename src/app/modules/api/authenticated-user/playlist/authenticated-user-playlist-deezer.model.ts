@@ -13,18 +13,10 @@ export class AuthenticatedUserPlaylistDeezerModel
   public accountId: string;
 
   @attributesKey('canEdit')
-  @defaultValue(true)
+  @defaultValue(false)
   public canEdit: boolean;
 
   @attributesKey('items')
   @nested()
   items: PlaylistItemsDeezerCollection<PlaylistItemDeezerModel>;
-
-  compose(attrs: any) {
-    return {
-      title: attrs.title,
-      public: attrs.public,
-      description: attrs.description
-    };
-  }
 }

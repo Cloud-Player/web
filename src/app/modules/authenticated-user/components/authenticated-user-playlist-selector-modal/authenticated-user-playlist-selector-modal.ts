@@ -19,7 +19,7 @@ import {UserAnalyticsService} from '../../../user-analytics/services/user-analyt
   styleUrls: ['./authenticated-user-playlist-selector-modal.scss'],
   templateUrl: './authenticated-user-playlist-selector-modal.html'
 })
-export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, OnChanges, IModalComponent {
+export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, IModalComponent {
   private _subscription: Subscription;
   private _modal: IModal;
   private _createNewPlaylistModal: Modal<AuthenticatedUserPlaylistFormComponent>;
@@ -28,6 +28,7 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
   public accounts: AuthenticatedUserAccountsCollection<IAuthenticatedUserAccount>;
   public selectedAccount: IAuthenticatedUserAccount;
   public applicableAccounts: Array<IAuthenticatedUserAccount>;
+  public account: IAuthenticatedUserAccount;
 
   @Input()
   track: ITrack;
@@ -44,14 +45,6 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
         text: 'Cancel'
       }
     };
-  }
-
-  public selectTab(tabPane: TabPaneComponent) {
-    this.selectedAccount = this.accounts.getAccountForProvider(tabPane.id);
-
-    if (this.selectedAccount && this.selectedAccount.playlists.length === 0) {
-      this.selectedAccount.playlists.fetch();
-    }
   }
 
   public addTrackTo(playlist: IPlaylist) {
@@ -72,38 +65,15 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
     this._modal.hide();
   }
 
-  public setAccounts() {
-    this.applicableAccounts = [];
-    if (this.track) {
-      this.accounts.each((account) => {
-        if (
-          account.provider === this.track.provider || account.provider === 'auxapp'
-        ) {
-          this.applicableAccounts.push(account);
-        }
-      });
-    }
-  }
-
-  public connect() {
-    this.externalUserAuthenticator.connect(this.selectedAccount)
-      .then(this.selectedAccount.playlists.fetch);
-  }
-
   public createNewPlaylist() {
-    this._createNewPlaylistModal.getInstance().account = this.selectedAccount;
-    this._createNewPlaylistModal.getInstance().setPlaylistFromProvider(this.selectedAccount.provider);
+    this._createNewPlaylistModal.getInstance().account = this.account;
+    this._createNewPlaylistModal.getInstance().setPlaylistFromProvider(this.account.provider);
     this._createNewPlaylistModal.open();
   }
 
   ngOnInit(): void {
-    this.selectedAccount = this.accounts.getAccountForProvider('auxapp');
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.track) {
-      this.setAccounts();
-    }
+    this.account = this.accounts.getAccountForProvider('auxapp');
+    this.account.playlists.fetch();
   }
 
   setModal(modal: IModal) {

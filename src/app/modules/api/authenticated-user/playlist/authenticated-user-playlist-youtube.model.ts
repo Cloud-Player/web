@@ -10,24 +10,10 @@ export class AuthenticatedUserPlaylistYoutubeModel
   extends PlaylistYoutubeModel implements IPlaylist {
 
   @attributesKey('canEdit')
-  @defaultValue(true)
+  @defaultValue(false)
   canEdit: boolean;
 
   @attributesKey('items')
   @nested()
   items: PlaylistItemsYoutubeCollection<PlaylistItemYoutubeModel>;
-
-  compose(attrs: any) {
-    return {
-      id: attrs.id,
-      snippet: {
-        title: attrs.title,
-        description: attrs.description
-      },
-      status: {
-        privacyStatus: attrs.isPublic ? 'public' : 'private'
-      }
-    };
-  }
-
 }

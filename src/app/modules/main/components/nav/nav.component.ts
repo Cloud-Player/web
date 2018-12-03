@@ -41,8 +41,8 @@ export class NavComponent implements OnInit {
       icon: ProviderMap.auxapp.icon,
       accountModel: AuthenticatedUserAccountAuxappModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistAuxappModel(),
-      playlistCollapsed: null,
-      playlistCollapsedBeforeDragVal: null
+      playlistCollapsed: false,
+      playlistCollapsedBeforeDragVal: false
     },
     soundcloud: {
       providerId: ProviderMap.soundcloud.id,
@@ -50,8 +50,8 @@ export class NavComponent implements OnInit {
       icon: ProviderMap.soundcloud.icon,
       accountModel: AuthenticatedUserAccountSoundcloudModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistSoundcloudModel(),
-      playlistCollapsed: null,
-      playlistCollapsedBeforeDragVal: null
+      playlistCollapsed: false,
+      playlistCollapsedBeforeDragVal: false
     },
     youtube: {
       providerId: ProviderMap.youtube.id,
@@ -59,8 +59,8 @@ export class NavComponent implements OnInit {
       icon: ProviderMap.youtube.icon,
       accountModel: AuthenticatedUserAccountYoutubeModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistYoutubeModel(),
-      playlistCollapsed: null,
-      playlistCollapsedBeforeDragVal: null
+      playlistCollapsed: false,
+      playlistCollapsedBeforeDragVal: false
     },
     deezer: {
       providerId: ProviderMap.deezer.id,
@@ -68,8 +68,8 @@ export class NavComponent implements OnInit {
       icon: ProviderMap.deezer.icon,
       accountModel: AuthenticatedUserAccountDeezerModel,
       tmpPlaylistModel: new AuthenticatedUserPlaylistYoutubeModel(),
-      playlistCollapsed: null,
-      playlistCollapsedBeforeDragVal: null
+      playlistCollapsed: false,
+      playlistCollapsedBeforeDragVal: false
     }
   };
 
@@ -175,38 +175,12 @@ export class NavComponent implements OnInit {
 
   public dragStart() {
     const dragData = this.dragAndDropService.getDragData().dragData;
-    switch (dragData.constructor) {
-      case TrackSoundcloudModel:
-        this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.auxapp.playlistCollapsed;
-        this.availableProviderMap.auxapp.playlistCollapsed = false;
-
-        this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
-        this.availableProviderMap.soundcloud.playlistCollapsed = false;
-
-        this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
-        this.availableProviderMap.youtube.playlistCollapsed = true;
-        break;
-      case TrackYoutubeModel:
-        this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.auxapp.playlistCollapsed;
-        this.availableProviderMap.auxapp.playlistCollapsed = false;
-
-        this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
-        this.availableProviderMap.soundcloud.playlistCollapsed = true;
-
-        this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
-        this.availableProviderMap.youtube.playlistCollapsed = false;
-        break;
-      case TrackMixcloudModel:
-        this.availableProviderMap.auxapp.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.auxapp.playlistCollapsed;
-        this.availableProviderMap.auxapp.playlistCollapsed = false;
-
-        this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
-        this.availableProviderMap.soundcloud.playlistCollapsed = true;
-
-        this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
-        this.availableProviderMap.youtube.playlistCollapsed = true;
-        break;
-    }
+    this.availableProviderMap.youtube.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.youtube.playlistCollapsed;
+    this.availableProviderMap.youtube.playlistCollapsed = true;
+    this.availableProviderMap.soundcloud.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.soundcloud.playlistCollapsed;
+    this.availableProviderMap.soundcloud.playlistCollapsed = true;
+    this.availableProviderMap.deezer.playlistCollapsedBeforeDragVal = !!this.availableProviderMap.deezer.playlistCollapsed;
+    this.availableProviderMap.deezer.playlistCollapsed = true;
     this.el.nativeElement.classList.add('open');
     this.update();
   }
