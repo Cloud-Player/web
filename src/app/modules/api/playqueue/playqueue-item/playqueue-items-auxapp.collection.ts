@@ -10,8 +10,9 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   private _playIndex = 0;
   private _loopPlayQueue = false;
   private _isShuffled = false;
-  private _playRecommended = true;
+  private _playRecommended = false;
   private _recommandationsBasedOnItem: PlayqueueItemAuxappModel;
+  private _initialItem: PlayqueueItemAuxappModel;
 
   endpoint = null;
   model: any = PlayqueueItemAuxappModel;
@@ -31,7 +32,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   private setPlayIndex(): number {
-    const currentPlaylingItem = this.getPlayingItem();
+    const currentPlaylingItem = this.getPlayingItem() || this.getPausedItem();
     const oldPlayIndex = this._playIndex;
     if (currentPlaylingItem) {
       this._playIndex = this.indexOf(currentPlaylingItem);
@@ -208,7 +209,10 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     });
     this.setPlayIndex();
     this.ensureQueuingOrder();
-    this.stopScheduledItemsBeforeCurrentItem();
+    this.stopScheduledItemsBeforeCurrentItem({
+      enforceStop: false,
+      silent: true
+    });
     this._isShuffled = false;
     this.trigger('change:shuffle', this._isShuffled, this);
   }
@@ -242,13 +246,16 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     });
   }
 
-  stopScheduledItemsBeforeCurrentItem(): void {
+  stopScheduledItemsBeforeCurrentItem(options: {
+    enforceStop: boolean,
+    silent: boolean
+  }): void {
     const scheduledItem = this.find((item: TModel) => {
       return item.isScheduled();
     });
     if (scheduledItem && this.indexOf(scheduledItem) < this._playIndex) {
-      scheduledItem.stop();
-      this.stopScheduledItemsBeforeCurrentItem();
+      scheduledItem.stop(options);
+      this.stopScheduledItemsBeforeCurrentItem(options);
     }
   }
 
@@ -333,6 +340,10 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     return this._playRecommended;
   }
 
+  public setInitialItem(item: PlayqueueItemAuxappModel) {
+    this._initialItem = item;
+  }
+
   add(item: TModel | TModel[] | {}, options: any = {}): any {
     if (options.doNothing || !item) {
       return super.add(item, options);
@@ -359,10 +370,13 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   parse(items) {
     if (isArray(items)) {
       const cleanedUp = [];
-      items.forEach((item) => {
-        if (item.id && item.state !== 'stopped' && item.track) {
-          if (item.state === 'playing' && !this.get(item.id)) {
-            item.state = 'paused';
+      items.forEach((item, index) => {
+        if (item.id && item.track && item.track.provider_id) {
+          if (item.state === PlayQueueItemStatus.Playing) {
+            item.state = PlayQueueItemStatus.Paused;
+          }
+          if (item.state === PlayQueueItemStatus.Stopped) {
+            item.state = PlayQueueItemStatus.Scheduled;
           }
           cleanedUp.push(item);
         }
@@ -387,7 +401,10 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
         });
 
         if (this.hasPreviousItem() && this.getPreviousItem().isScheduled()) {
-          this.stopScheduledItemsBeforeCurrentItem();
+          this.stopScheduledItemsBeforeCurrentItem({
+            enforceStop: true,
+            silent: true
+          });
         }
 
         this.ensureQueuingOrder();
@@ -409,5 +426,27 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
     const debouncedTrackDetailsFetch = debounce(this.fetchTrackDetails.bind(this), 500);
     this.on('add', debouncedTrackDetailsFetch);
+    this.on('sync', () => {
+      this.setPlayIndex();
+      if (this._initialItem) {
+        const currentItem = this.getCurrentItem();
+        if (currentItem) {
+          this.remove(currentItem);
+        }
+        const existingItem = this.getItemByTrackId(this._initialItem.track.id);
+        if (existingItem) {
+          existingItem.play(this._initialItem.progress);
+        } else {
+          this.addAndPlay(this._initialItem);
+        }
+        this.add(currentItem, {at: this._playIndex + 1, silent: true});
+        this._initialItem = null;
+      }
+      this.stopScheduledItemsBeforeCurrentItem({
+        enforceStop: true,
+        silent: true
+      });
+      this.ensureQueuingOrder();
+    });
   }
 }

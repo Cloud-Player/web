@@ -115,10 +115,21 @@ export class PlayqueueItemAuxappModel
     return this.resolveOnStatus(PlayQueueItemStatus.Paused);
   }
 
-  stop(): Promise<any> {
-    this.status = PlayQueueItemStatus.RequestedStop;
+  stop(options: {
+    enforceStop: boolean,
+    silent: boolean
+  }= {
+    enforceStop: false,
+    silent: false
+  }): Promise<any> {
     this.progress = 0;
-    return this.resolveOnStatus(PlayQueueItemStatus.Stopped);
+    if (options.enforceStop) {
+      this.set('status', PlayQueueItemStatus.Stopped, {silent: options.silent});
+      return Promise.resolve();
+    } else {
+      this.set('status', PlayQueueItemStatus.RequestedStop, {silent: options.silent});
+      return this.resolveOnStatus(PlayQueueItemStatus.Stopped);
+    }
   }
 
   seekTo(to: number): Promise<any> {
@@ -173,8 +184,6 @@ export class PlayqueueItemAuxappModel
   parse(attrs) {
     if (!this.isPlaying() && !this.isPaused()) {
       attrs.status = attrs.state;
-    } else if(attrs.state === 'playing') {
-      console.error('SET ITEM STATE TO PAUSE');
     }
     delete attrs.state;
 
@@ -220,7 +229,7 @@ export class PlayqueueItemAuxappModel
         resolve(this);
       });
     }
-    if (!this.isSyncing) {
+    if (!this.isNew() && this.urlRoot()) {
       return super.save();
     }
   }

@@ -416,7 +416,7 @@ export class PlayerManagerComponent implements OnInit {
 
     this.playQueue.items.setLoopPlayQueue(true);
     this.playQueue.items.on('change:status', this.reactOnPlayQueueChange, this);
-    this.playQueue.items.once('add', () => {
+    this.playQueue.items.on('sync', () => {
       const firstPlayQueueItem = this.playQueue.items.getCurrentItem();
       if (!this._activePlayer && firstPlayQueueItem) {
         const firstPlayer = this._playerFactory.createPlayer(firstPlayQueueItem);

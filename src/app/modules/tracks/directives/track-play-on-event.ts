@@ -77,22 +77,11 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     if (existingPlayQueueItem && existingPlayQueueItem.isPaused()) {
       existingPlayQueueItem.play();
     } else {
-      this.playQueue.destroy().then(() => {
-        if (this.tracks) {
-          const indexOfPlayingTrack = this.tracks.indexOf(this.track);
-          this.tracks.forEach((track: ITrack, ind: number) => {
-            if (!this.playQueue.items.getItemByTrackId(track.id)) {
-              let status = PlayQueueItemStatus.Scheduled;
-              /* Add items as stopped when they appear in tracklist before the current playing track */
-              if (indexOfPlayingTrack >= 0 && ind < indexOfPlayingTrack) {
-                status = PlayQueueItemStatus.Stopped;
-              }
-              this.playQueue.items.add({track: track, status: status});
-            }
-          });
-        }
+      this.playQueue.destroy();
+      this.tracks.forEach((track: ITrack) => {
+        this.playQueue.items.add({track: track.clone(), status: PlayQueueItemStatus.Scheduled});
       });
-      this.playQueue.items.add({track: this.track}).play();
+      this.playQueue.items.getItemByTrackId(this.track.id).play();
       this.userAnalyticsService.trackEvent('play_track', `${this.track.provider}:${this.track.title}`, 'appTrackPlayOn');
     }
   }

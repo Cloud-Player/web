@@ -204,7 +204,7 @@ export class PlayerControlsComponent implements OnInit {
       }
     });
 
-    this.playQueue.items.on('add', () => {
+    this.playQueue.items.on('add sync', () => {
       const currentItem = this.playQueue.items.getCurrentItem();
       if (currentItem) {
         this.currentItem = this.playQueue.items.getCurrentItem();
