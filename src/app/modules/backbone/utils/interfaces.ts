@@ -20,6 +20,7 @@ export interface IDynamicInstanceDefinition {
   identifierKey: string;
   identifierKeyValueMap: {
     [key: string]: IModelOrCollectionConstructor;
+    default?: IModelOrCollectionConstructor;
   };
 }
 
