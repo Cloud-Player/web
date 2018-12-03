@@ -1,5 +1,5 @@
-import {AuxappModel} from '../auxapp/auxapp.model';
-import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
+import {AuxappModel} from '../../auxapp/auxapp.model';
+import {attributesKey} from '../../../backbone/decorators/attributes-key.decorator';
 
 export class SessionModel extends AuxappModel {
   endpoint = 'session';
@@ -16,9 +16,6 @@ export class SessionModel extends AuxappModel {
   @attributesKey('screen')
   screen: string;
 
-  @attributesKey('state')
-  state: string;
-
   @attributesKey('is_mine')
   is_mine: boolean;
 
@@ -30,7 +27,7 @@ export class SessionModel extends AuxappModel {
       return attrs;
     } else {
       return {
-        state: attrs.state
+        is_player: attrs.is_player
       };
     }
   }

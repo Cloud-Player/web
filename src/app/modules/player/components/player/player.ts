@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LogoService} from '../../../shared/services/logo.service';
-import * as localforage from 'localforage';
 import {debounce, throttle} from 'underscore';
 import {PlayerStatus} from '../../src/player-status.enum';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -45,9 +44,10 @@ export class PlayerComponent implements OnInit {
               private fullScreenService: FullScreenService,
               private socketMessageService: SocketMessageService,
               private socketPlayerService: SocketPlayerService,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private socketBackboneSender: SocketBackboneSender) {
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
-    this.sessions = SessionsCollection.getInstance();
+    this.sessions = this.authenticatedUser.getAuxappAccount().sessions;
   }
 
   private enteredFullScreen() {
@@ -122,6 +122,7 @@ export class PlayerComponent implements OnInit {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 
     const saveItem = (item) => {
+      this.socketBackboneSender.decorate(item);
       switch (item.status) {
         case PlayQueueItemStatus.RequestedPlaying:
           const playerSession = this.sessions.findWhere({state: 'player'});

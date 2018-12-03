@@ -1,8 +1,8 @@
-import {AuxappCollection} from '../auxapp/auxapp.collection';
-import {AuxappModel} from '../auxapp/auxapp.model';
 import {SessionModel} from './session.model';
+import {AuxappCollection} from '../../auxapp/auxapp.collection';
+import {AuxappModel} from '../../auxapp/auxapp.model';
 
-export class SessionsCollection<TModel extends SessionModel> extends AuxappCollection<AuxappModel> {
+export class SessionsCollection<TModel extends SessionModel> extends AuxappCollection<TModel> {
   private static _instance: SessionsCollection<SessionModel>;
 
   model: any = SessionModel;
@@ -14,7 +14,15 @@ export class SessionsCollection<TModel extends SessionModel> extends AuxappColle
     return this._instance;
   }
 
-  public getMySession(): TModel {
-    return <TModel>this.findWhere({is_mine: true});
+  public getMySession(): SessionModel {
+    return this.findWhere({is_mine: true});
+  }
+
+  public getPlayerSession(): SessionModel {
+    return this.findWhere({is_player: true});
+  }
+
+  public setEndpoint(accountId: string) {
+    this.endpoint = `account/${accountId}/session`;
   }
 }

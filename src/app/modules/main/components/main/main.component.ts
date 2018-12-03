@@ -29,8 +29,6 @@ export interface IPrivacySettings {
 
 export class MainComponent implements OnInit {
   private _authenticatedUser: AuthenticatedUserModel;
-  private _privacyConfigModal: Modal<PrivacyConfigComponent>;
-  private _sessions: SessionsCollection<SessionModel>;
 
   constructor(private privacyManager: PrivacyManager,
               private userAnalyticsService: UserAnalyticsService,
@@ -40,7 +38,6 @@ export class MainComponent implements OnInit {
               private socketMessageService: SocketMessageService,
               private authenticator: Authenticator) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
-    this._sessions = new SessionsCollection<SessionModel>();
   }
 
   private onNewVersionAvailable() {
