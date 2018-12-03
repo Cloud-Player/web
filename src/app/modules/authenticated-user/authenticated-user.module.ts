@@ -14,6 +14,7 @@ import {AuthenticatedUserPlaylistSelectorModalComponent} from './components/auth
 import {AuthenticatedUserPlaylistFormComponent} from './components/authenticated-user-form-component/authenticated-user-playlist-form';
 import {DeleteAccountComponent} from './components/delete-account/delete-account';
 import {Authenticator} from './services/authenticator';
+import {LoginWithProviderComponent} from './components/login-with-provider/login-with-provider';
 
 @NgModule({
   imports: [
@@ -31,11 +32,13 @@ import {Authenticator} from './services/authenticator';
     AuthenticatedUserViewComponent,
     AuthenticatedUserPlaylistFormComponent,
     DeleteAccountComponent,
+    LoginWithProviderComponent,
 
     AuthenticatedUserPlaylistSelectorModalComponent
   ],
   exports: [
-    AuthenticatedUserPlaylistSelectorModalComponent
+    AuthenticatedUserPlaylistSelectorModalComponent,
+    LoginWithProviderComponent
   ],
   providers: [
     ExternalUserAuthenticator,
