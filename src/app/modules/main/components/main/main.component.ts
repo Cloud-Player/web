@@ -74,56 +74,6 @@ export class MainComponent implements OnInit {
     // Handle service worker update
     window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable.bind(this));
 
-    const auxappAccount: AuthenticatedUserAccountAuxappModel =
-      <AuthenticatedUserAccountAuxappModel>this._authenticatedUser.accounts.getAccountForProvider('auxapp');
-
-    // if (auxappAccount) {
-    //   // Create session only once per app start
-    //   auxappAccount.on('change:id', () => {
-    //     const session = new SessionModel();
-    //     session.browser = `${ClientDetector.getClient().name}`;
-    //     session.os = `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`;
-    //     session.screen = `${screen.availWidth}x${screen.availHeight}`;
-    //     this._sessions.add(session);
-    //     this._authenticatedUser.session.set(session.toJSON());
-    //     session.save().then(() => {
-    //       this.socketMessageService.open('wss://api.aux.app/websocket');
-    //     });
-    //   });
-    //   // Fetch favourite tracks on every id change
-    //   this._authenticatedUser.on('change:id', auxappAccount.favouriteTracks.fetch.bind(auxappAccount.favouriteTracks));
-    //
-    //   //this._sessions.fetch();
-    //   this._sessions.on('add', () => {
-    //     debugger;
-    //   });
-    // }
-
-    // this.privacyManager.getPrivacySettings().then(() => {
-    //   if (!this.privacyManager.isConfigured) {
-    //     this.privacyConfigModalOpener.open();
-    //   }
-    // });
-
-    // this.socketMessageService.getObservable()
-    //   .pipe(
-    //     filter((value) => {
-    //       return value.type === SocketStatusTypes.CLOSED;
-    //     })
-    //   )
-    //   .subscribe(() => {
-    //     console.warn('[PLAYER] CLOSED');
-    //     this.socketMessageService.open('wss://api.aux.app/websocket');
-    //   });
-    // this.socketMessageService.getObservable()
-    //   .pipe(
-    //     filter((value) => {
-    //       return value.type === SocketStatusTypes.OPEN;
-    //     })
-    //   )
-    //   .subscribe(() => {
-    //     console.log('[PLAYER] OPEN');
-    //   });
     this.authenticator.login();
   }
 }
