@@ -118,7 +118,9 @@
          [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
          dragEffect="copy">
       <app-context-menu>
-        <div class="track">
+        <div class="track"
+             appTrackPlayOn="click"
+             [track]="playQueueItem.track">
           <div class="cover">
             <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
           </div>
@@ -159,7 +161,9 @@
            [dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"
            dragEffect="copy">
         <app-context-menu>
-          <div class="track">
+          <div class="track"
+               appTrackPlayOn="click"
+               [track]="playQueueItem.track">
             <div class="cover">
               <app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>
             </div>
