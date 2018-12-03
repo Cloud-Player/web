@@ -99,7 +99,7 @@ export class MixcloudPlayerComponent extends AbstractPlayer implements IPlayer, 
       } else {
         let js: HTMLScriptElement;
         const scripts = document.getElementsByTagName('script')[0];
-        js = document.createElement('script');
+        js = <HTMLScriptElement>document.createElement('script');
         js.id = mixcloudElId;
         js.src = '//widget.mixcloud.com/media/js/widgetApi.js';
         scripts.parentNode.insertBefore(js, youtubeScriptEl);

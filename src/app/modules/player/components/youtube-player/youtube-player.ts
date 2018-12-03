@@ -13,7 +13,7 @@ import {TrackYoutubeModel} from '../../../api/tracks/track-youtube.model';
 })
 export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, OnInit, OnDestroy {
   private _ytPlayer: YT.Player;
-  private _timePoller: number;
+  private _timePoller: any;
   private _ytApiReady = false;
   private _eventHandler;
   private _canPlay = false;
@@ -92,7 +92,7 @@ export class YoutubePlayerComponent extends AbstractPlayer implements IPlayer, O
         };
         let js: HTMLScriptElement;
         const scripts = document.getElementsByTagName('script')[0];
-        js = document.createElement('script');
+        js = <HTMLScriptElement>document.createElement('script');
         js.id = youtubeElId;
         js.src = '//www.youtube.com/iframe_api';
         scripts.parentNode.insertBefore(js, youtubeScriptEl);
