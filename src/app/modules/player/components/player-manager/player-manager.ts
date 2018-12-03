@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
   ComponentRef,
@@ -23,6 +24,8 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {filter} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {IAuthenticatedUserAccount} from '../../../api/authenticated-user/account/authenticated-user-account.interface';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 
 @Component({
   selector: 'app-player-manager',
@@ -40,6 +43,8 @@ export class PlayerManagerComponent implements OnInit {
   private _activePlayer: ComponentRef<IPlayer>;
   private _upcomingPlayer: ComponentRef<IPlayer>;
   private _sizeBeforeFullScreen: number = PlayerFactory.playerWidth;
+  private _loginToPlayAlertIsOpen = false;
+
 
   @ViewChild('playerContainer', {read: ViewContainerRef})
   private container: ViewContainerRef;
@@ -50,10 +55,14 @@ export class PlayerManagerComponent implements OnInit {
   @Output()
   public playerStatusChange: EventEmitter<PlayerStatus> = new EventEmitter();
 
+  public loginRequired = false;
+  public accountForLogin: IAuthenticatedUserAccount;
+
   constructor(private resolver: ComponentFactoryResolver,
               private el: ElementRef,
               private fullScreenService: FullScreenService,
-              private userAnalyticsService: UserAnalyticsService) {
+              private userAnalyticsService: UserAnalyticsService,
+              private cdr: ChangeDetectorRef) {
     this._playerSubscriptions = new Subscription();
     this._playerFactory = new PlayerFactory(this.resolver);
   }
@@ -73,6 +82,7 @@ export class PlayerManagerComponent implements OnInit {
         this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:is_playing`, 'app-player-manager');
         this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Playing;
         this._errorRetryCounter = 0;
+        this._loginToPlayAlertIsOpen = false;
         break;
       case PlayerStatus.Paused:
         this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:paused`, 'app-player-manager');
@@ -97,9 +107,23 @@ export class PlayerManagerComponent implements OnInit {
           this.retryOnError();
         }
         break;
+      case PlayerStatus.LoginRequired:
+        if (!this._loginToPlayAlertIsOpen) {
+          if (this.playQueue.items.getCurrentItem()) {
+            const currentUserAccounts = AuthenticatedUserModel.getInstance().accounts;
+            const trackProvider = this.playQueue.items.getCurrentItem().track.provider;
+            const accountForTrack = currentUserAccounts.getAccountForProvider(trackProvider);
+            if (accountForTrack) {
+              this.loginRequired = true;
+              this.accountForLogin = accountForTrack;
+            }
+          }
+        }
+        break;
     }
     this._playerStatus = status;
     this.playerStatusChange.emit(newStatus);
+    this.cdr.detectChanges();
   }
 
   private unBindListeners() {
@@ -408,6 +432,22 @@ export class PlayerManagerComponent implements OnInit {
     if (currentItem) {
       const player = this._playerFactory.createPlayer(this.playQueue.items.getCurrentItem());
       this.activatePlayer(player, this._activePlayer, currentItem.progress, currentItem.isPlaying());
+    }
+  }
+
+  public onLoginChange(isLoggedIn) {
+    if (isLoggedIn) {
+      this.loginRequired = false;
+      this._loginToPlayAlertIsOpen = false;
+      if (this.playQueue.items.getCurrentItem()) {
+        if (this._activePlayer) {
+          this._playerFactory.destroyPlayer(this._activePlayer, true);
+          this._activePlayer = null;
+        }
+        this.playQueue.items.getCurrentItem().play();
+      }
+    } else {
+      alert('LOGIN ABORTED');
     }
   }
 

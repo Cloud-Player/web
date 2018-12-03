@@ -77,10 +77,21 @@ export abstract class AbstractPlayer implements OnInit {
     });
   }
 
+  protected checkLoginByTrackDuration(trackDuration: number, playerDuration: any) {
+    const playerDurationNum = parseInt(playerDuration, 10);
+    if (trackDuration && playerDurationNum && playerDurationNum < (trackDuration - 10)) {
+      this.setAllowedToPlay(false);
+      this.setAbleToPlay(false);
+      this.pausePlayer();
+      this.setStatus(PlayerStatus.LoginRequired);
+    }
+  }
+
   protected setDuration(duration: number) {
     if (isNumber(duration) && duration > 0) {
       this._duration = duration;
       this.durationChange.emit(duration);
+      this.checkLoginByTrackDuration(this.track.duration, duration);
     }
   }
 

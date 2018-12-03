@@ -1,4 +1,8 @@
 <div class="player-controller"
      [ngClass]="{'has-players': this.hasActivePlayer()}">
   <div #playerContainer></div>
+  <app-login-with-provider *ngIf="loginRequired"
+                           [account]="accountForLogin"
+                           (loginStateChange)="onLoginChange($event)">
+  </app-login-with-provider>
 </div>
