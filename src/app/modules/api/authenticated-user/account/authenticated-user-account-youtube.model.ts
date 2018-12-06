@@ -24,6 +24,17 @@ export class AuthenticatedUserAccountYoutubeModel
   @defaultValue(false)
   connected: boolean;
 
+  initialize(): void {
+    if (this.id) {
+      this.playlists.setEndpoint(this.id);
+      this.favouriteTracks.setEndpoint(this.id);
+    }
+    this.on('change:id', () => {
+      this.playlists.setEndpoint(this.id);
+      this.favouriteTracks.setEndpoint(this.id);
+    });
+  }
+
   parse(attrs: any) {
     if (attrs.items && attrs.items.length > 0) {
       return super.parse(attrs.items[0]);
@@ -39,15 +50,7 @@ export class AuthenticatedUserAccountYoutubeModel
     }
   }
 
-  createNewPlaylist(title: string, isPublic: boolean = false) {
-    const playlist = new AuthenticatedUserPlaylistAuxappModel();
-    playlist.title = title;
-    playlist.isPublic = isPublic;
-    this.playlists.add(playlist);
-    return playlist.save();
-  }
-
-  isConnected(){
+  isConnected() {
     return this.connected && !this.isNew();
   }
 }

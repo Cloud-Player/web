@@ -5,11 +5,7 @@ import {TrackMixcloudModel} from './track-mixcloud.model';
 export class TracksMixcloudCollection<TModel extends TrackMixcloudModel>
   extends TracksAuxappCollection<TModel> {
 
+  endpoint = '/track/mixcloud';
   model: ITrackModelConstructor = TrackMixcloudModel;
 
-  endpoint = '/track/mixcloud';
-
-  queryParams: {
-    [key: string]: string | number | boolean
-  } = {};
 }

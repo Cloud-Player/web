@@ -17,6 +17,9 @@ export class OptionBtnComponent {
   @Input()
   public executeAction = true;
 
+  @Input()
+  public isActive = false;
+
   @Output()
   public action: EventEmitter<any>;
 

@@ -10,6 +10,10 @@ import {ClientDetector} from '../../../shared/services/client-detector.service';
 import {Modal} from '../../../shared/src/modal-factory.class';
 import {PrivacyConfigComponent, PrivacyConfigModalOpener} from '../privacy-config/privacy-config';
 import {PrivacyManager} from '../../services/privacy-manager';
+import {SocketMessageService, SocketStatusTypes} from '../../../shared/services/socket-message';
+import {Authenticator} from '../../../authenticated-user/services/authenticator';
+import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
+import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 
 export interface IPrivacySettings {
   allowTracking: boolean;
@@ -25,13 +29,14 @@ export interface IPrivacySettings {
 
 export class MainComponent implements OnInit {
   private _authenticatedUser: AuthenticatedUserModel;
-  private _privacyConfigModal: Modal<PrivacyConfigComponent>;
 
   constructor(private privacyManager: PrivacyManager,
               private userAnalyticsService: UserAnalyticsService,
               private nativeAppHandlerService: NativeAppHandlerService,
               private toastService: ToastService,
-              private privacyConfigModalOpener: PrivacyConfigModalOpener) {
+              private privacyConfigModalOpener: PrivacyConfigModalOpener,
+              private socketMessageService: SocketMessageService,
+              private authenticator: Authenticator) {
     this._authenticatedUser = AuthenticatedUserModel.getInstance();
   }
 
@@ -65,26 +70,6 @@ export class MainComponent implements OnInit {
     // Handle service worker update
     window.addEventListener('newAppVersionAvailable', this.onNewVersionAvailable.bind(this));
 
-    const auxappAccount: AuthenticatedUserAccountAuxappModel =
-      <AuthenticatedUserAccountAuxappModel>this._authenticatedUser.accounts.getAccountForProvider('auxapp');
-
-    if (auxappAccount) {
-      // Create session only once per app start
-      auxappAccount.once('change:id', () => {
-        auxappAccount.createSession({
-          browser: `${ClientDetector.getClient().name}`,
-          os: `${ClientDetector.getOs().name}:${ClientDetector.getOs().version}`,
-          screenSize: '100'
-        });
-      });
-      // Fetch favourite tracks on every id change
-      this._authenticatedUser.on('change:id', auxappAccount.favouriteTracks.fetch.bind(auxappAccount.favouriteTracks));
-    }
-
-    this.privacyManager.getPrivacySettings().then(() => {
-      if (!this.privacyManager.isConfigured) {
-        this.privacyConfigModalOpener.open();
-      }
-    });
+    this.authenticator.login();
   }
 }

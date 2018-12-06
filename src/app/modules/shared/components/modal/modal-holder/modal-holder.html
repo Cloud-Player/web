@@ -1,4 +1,6 @@
-<div class="modal-holder">
+<div class="modal-holder"
+     #modalHolder
+     (click)="closeModals($event)">
   <div #modalContainer></div>
   <div class="backdrop"
        [@backdropState]="showBackdrop?'visible':'hidden'"

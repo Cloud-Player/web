@@ -53,6 +53,9 @@ import {ListFooterComponent} from './components/list-footer/list-footer';
 import {AlertBoxComponent} from './components/alert/alert-box';
 import {SocketMessageService} from './services/socket-message';
 import {MessageService} from './services/message';
+import {SocketBackboneSender} from './services/socket-backbone-sender';
+import {ConfirmDeleteComponent} from './components/confirm-delete/confirm-delete';
+import {ConfirmDeleteDirective} from './directives/confirm-delete';
 
 @NgModule({
   imports: [
@@ -80,6 +83,7 @@ import {MessageService} from './services/message';
     LoadingSpinnerComponent,
     MultiLineComponent,
     ListFooterComponent,
+    ConfirmDeleteComponent,
 
     OptionBtnComponent,
     OptionsBtnComponent,
@@ -102,6 +106,7 @@ import {MessageService} from './services/message';
     FocusInputDirective,
     TimeAgoDirective,
     FillHeightDirective,
+    ConfirmDeleteDirective,
 
     HumanReadableSecondsPipe,
     KMilShortenerPipe,
@@ -147,6 +152,7 @@ import {MessageService} from './services/message';
     FocusInputDirective,
     TimeAgoDirective,
     FillHeightDirective,
+    ConfirmDeleteDirective,
 
     HumanReadableSecondsPipe,
     KMilShortenerPipe,
@@ -162,10 +168,12 @@ import {MessageService} from './services/message';
     LayoutService,
     MessageService,
     SocketMessageService,
+    SocketBackboneSender,
     AuthenticatedUserGuard
   ],
   entryComponents: [
-    ModalComponent
+    ModalComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class SharedModule {

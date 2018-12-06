@@ -5,7 +5,7 @@
         class="comment">
       <div class="user-image">
         <img
-          [src]="bigComments ? comment.user.image.getImageByFormat('badge') : comment.user.image.getImageByFormat('tiny')"/>
+          [src]="comment.account.image.getSmallSizeUrl()"/>
       </div>
       <div class="text">
         <app-multi-line

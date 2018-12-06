@@ -9,24 +9,25 @@ import {YoutubePlayerComponent} from '../components/youtube-player/youtube-playe
 import {ITrack} from '../../api/tracks/track.interface';
 import {MixcloudPlayerComponent} from '../components/mixcloud-player/mixcloud-player';
 import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {DeezerPlayerComponent} from '../components/deezer-player/deezer-player';
+import {HeadlessPlayerComponent} from '../components/headless-player/headless-player';
 
 @Injectable()
 export class PlayerFactory {
   public static playerWidth = 320;
-
+  private static _playerComponentMap = {
+    soundcloud: SoundcloudPlayerComponent,
+    youtube: YoutubePlayerComponent,
+    mixcloud: MixcloudPlayerComponent,
+    deezer: DeezerPlayerComponent
+  };
   private _resolver: ComponentFactoryResolver;
   private _container: ViewContainerRef;
-  private _playerComponentMap;
   private _playerStore: PlayerStore<PlayerStoreItem>;
+  private _isInHeadlessMode = false;
 
   constructor(resolver: ComponentFactoryResolver) {
     this._resolver = resolver;
-
-    this._playerComponentMap = {
-      soundcloud: SoundcloudPlayerComponent,
-      youtube: YoutubePlayerComponent,
-      mixcloud: MixcloudPlayerComponent
-    };
   }
 
   public static getPlayerSize(track: ITrack): IPlayerSize {
@@ -36,16 +37,22 @@ export class PlayerFactory {
     };
   }
 
-  private getComponentForType(type: string) {
-    if (this._playerComponentMap[type]) {
-      return this._playerComponentMap[type];
+  public static hasPlayerForProvider(provider: string) {
+    return PlayerFactory._playerComponentMap[provider];
+  }
+
+  private getComponentForProvider(provider: string) {
+    if (this._isInHeadlessMode) {
+      return HeadlessPlayerComponent;
+    } else if (PlayerFactory._playerComponentMap[provider]) {
+      return PlayerFactory._playerComponentMap[provider];
     } else {
-      throw new Error(`There is no player available for the type ${type}`);
+      throw new Error(`There is no player available for the type ${provider}`);
     }
   }
 
   private createNewPlayer(item: PlayqueueItemAuxappModel): PlayerStoreItem {
-    const component: Type<IPlayer> = this.getComponentForType(item.track.provider);
+    const component: Type<IPlayer> = this.getComponentForProvider(item.track.provider);
     const factory: ComponentFactory<IPlayer> = this._resolver.resolveComponentFactory(component);
     const playerComponent: ComponentRef<IPlayer> = this._container.createComponent(factory);
     const player = new PlayerStoreItem({
@@ -63,6 +70,7 @@ export class PlayerFactory {
   private getReusablePlayer(playQueueItem: PlayqueueItemAuxappModel): PlayerStoreItem {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
       return player.provider === playQueueItem.track.provider &&
+        player.component.instance.isHeadlessPlayer === this._isInHeadlessMode &&
         player.component.instance.getStatus() === PlayerStatus.NotInitialised ||
         player.component.instance.getStatus() === PlayerStatus.Ended ||
         player.component.instance.getStatus() === PlayerStatus.Stopped;
@@ -72,7 +80,7 @@ export class PlayerFactory {
   }
 
   private cleanUp() {
-    keys(this._playerComponentMap).forEach((providerKey) => {
+    keys(PlayerFactory._playerComponentMap).forEach((providerKey) => {
       const playersForProvider = this._playerStore.where({provider: providerKey});
       while (playersForProvider.length > 2) {
         const player = playersForProvider.shift();
@@ -88,6 +96,18 @@ export class PlayerFactory {
         }
       }
     });
+  }
+
+  public hasPlayerForProvider(provider: string) {
+    return !!this.getComponentForProvider(provider);
+  }
+
+  public setInHeadlessMode(isHeadless: boolean) {
+    this._isInHeadlessMode = isHeadless;
+  }
+
+  public isInHeadlessMode(): boolean {
+    return this._isInHeadlessMode;
   }
 
   public setContainer(container: ViewContainerRef) {
@@ -135,7 +155,15 @@ export class PlayerFactory {
     }
   }
 
-  public destroyPlayer(player: ComponentRef<IPlayer>): void {
-    player.instance.deInitialize();
+  public destroyPlayer(player: ComponentRef<IPlayer>, destroy?: boolean): void {
+    if (destroy) {
+      player.destroy();
+      const playerItemForPlayer = this._playerStore.filter((playerItem) => {
+        return playerItem.component === player;
+      });
+      this._playerStore.remove(playerItemForPlayer);
+    } else {
+      player.instance.deInitialize();
+    }
   }
 }

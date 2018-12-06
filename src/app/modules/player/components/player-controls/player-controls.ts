@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -8,6 +8,10 @@ import {AbstractImageModel} from '../../../api/image/abstract-image';
 import {filter} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
+import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
+import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
+import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {Authenticator} from '../../../authenticated-user/services/authenticator';
 
 declare let MediaMetadata: any;
 
@@ -18,6 +22,7 @@ declare let MediaMetadata: any;
 })
 export class PlayerControlsComponent implements OnInit {
   private _docTitle: string;
+  public sessions: SessionsCollection<SessionModel>;
   public currentItem: PlayqueueItemAuxappModel = new PlayqueueItemAuxappModel();
 
   @Input()
@@ -29,14 +34,23 @@ export class PlayerControlsComponent implements OnInit {
   @Input()
   public volume = 100;
 
+  @Input()
+  public isInHeadlessMode: boolean;
+
   @Output()
   public volumeChange: EventEmitter<number>;
+
+  @Output()
+  public isInHeadlessModeChange: EventEmitter<boolean>;
 
   constructor(private humanReadableSecPipe: HumanReadableSecondsPipe,
               private userAnalyticsService: UserAnalyticsService,
               private el: ElementRef,
+              private cdr: ChangeDetectorRef,
               public fullScreenService: FullScreenService) {
     this.volumeChange = new EventEmitter<number>();
+    this.isInHeadlessModeChange = new EventEmitter<boolean>();
+    this.sessions = AuthenticatedUserModel.getInstance().getAuxappAccount().sessions;
   }
 
   private setMobileMediaNotification(track: ITrack) {
@@ -71,9 +85,9 @@ export class PlayerControlsComponent implements OnInit {
     }
   }
 
-  private setBrowserTitle(playingTrack?: ITrack) {
-    if (playingTrack) {
-      document.title = playingTrack.title;
+  private setBrowserTitle(playQueueItem?: PlayqueueItemAuxappModel) {
+    if (playQueueItem.isPlaying()) {
+      document.title = playQueueItem.track.title;
     } else {
       document.title = this._docTitle;
     }
@@ -115,6 +129,11 @@ export class PlayerControlsComponent implements OnInit {
     }
   }
 
+  public toggleHeadlessMode() {
+    this.isInHeadlessMode = !this.isInHeadlessMode;
+    this.isInHeadlessModeChange.emit(this.isInHeadlessMode);
+  }
+
   public previous(): void {
     const playingItem = this.playQueue.items.getPlayingItem();
     if (playingItem && playingItem.progress > 3) {
@@ -141,6 +160,7 @@ export class PlayerControlsComponent implements OnInit {
     const currItem = this.playQueue.items.getCurrentItem();
     if (currItem) {
       currItem.seekTo(from);
+      currItem.save();
     }
   }
 
@@ -178,24 +198,24 @@ export class PlayerControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this._docTitle = document.title;
-    this.playQueue.items.on('change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
-      if (status === PlayQueueItemStatus.RequestedPlaying) {
+    this.playQueue.items.on('update change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
+      if (status === PlayQueueItemStatus.RequestedPlaying || status === PlayQueueItemStatus.RequestedPause) {
         this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
-        this.setBrowserTitle(this.currentItem.track);
-      }
-      if (status === PlayQueueItemStatus.RequestedPause) {
-        this.currentItem = this.playQueue.items.getCurrentItem();
-        this.setMobileMediaNotification(this.currentItem.track);
-        this.setBrowserTitle();
+        this.setBrowserTitle(this.currentItem);
       }
     });
 
-    this.playQueue.items.on('add', () => {
+    this.playQueue.items.on('add sync', () => {
       const currentItem = this.playQueue.items.getCurrentItem();
       if (currentItem) {
         this.currentItem = this.playQueue.items.getCurrentItem();
       }
+    });
+
+    this.playQueue.items.on('reset', () => {
+      this.currentItem = new PlayqueueItemAuxappModel();
+      this.cdr.detectChanges();
     });
 
     this.fullScreenService.getObservable()

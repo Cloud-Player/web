@@ -28,6 +28,8 @@ export abstract class AbstractPlayer implements OnInit {
   private _throttledTimeUpdate = throttle(this.emitTimeChange.bind(this), 900);
   private _forcePlayStart = false;
   private _forcePlayStartTry = 0;
+  private _seekTo = null;
+  private _initialTrackDuration = 0;
 
   @Input()
   public track: ITrack;
@@ -40,6 +42,8 @@ export abstract class AbstractPlayer implements OnInit {
 
   @Output()
   public statusChange = new EventEmitter();
+
+  public isHeadlessPlayer = false;
 
   protected abstract initialisePlayerSDK(): Promise<any>;
 
@@ -74,10 +78,21 @@ export abstract class AbstractPlayer implements OnInit {
     });
   }
 
+  protected checkLoginByTrackDuration(trackDuration: number, playerDuration: any) {
+    const playerDurationNum = parseInt(playerDuration, 10);
+    if (trackDuration && playerDurationNum && playerDurationNum < (trackDuration - 10)) {
+      this.setAllowedToPlay(false);
+      this.setAbleToPlay(false);
+      this.pausePlayer();
+      this.setStatus(PlayerStatus.LoginRequired);
+    }
+  }
+
   protected setDuration(duration: number) {
     if (isNumber(duration) && duration > 0) {
       this._duration = duration;
       this.durationChange.emit(duration);
+      this.checkLoginByTrackDuration(this.track.duration, duration);
     }
   }
 
@@ -92,7 +107,7 @@ export abstract class AbstractPlayer implements OnInit {
   protected setCurrentTime(currentTime: number): void {
     if (isNumber(currentTime) && currentTime > 0) {
       this._currentTime = currentTime;
-      this._throttledTimeUpdate(currentTime);
+      this.emitTimeChange(currentTime);
     }
   }
 
@@ -182,6 +197,7 @@ export abstract class AbstractPlayer implements OnInit {
     } else {
       this._forcePlayStart = false;
       this._forcePlayStartTry = 0;
+      this._seekTo = null;
       this.setStatus(PlayerStatus.Playing);
     }
     this._error = null;
@@ -190,7 +206,7 @@ export abstract class AbstractPlayer implements OnInit {
   protected onPaused() {
     if (this._forcePlayStart && this._forcePlayStartTry < 5) {
       this._forcePlayStartTry++;
-      this.play();
+      this.play(this._seekTo);
     } else {
       this._forcePlayStartTry = 0;
       this.setStatus(PlayerStatus.Paused);
@@ -279,7 +295,17 @@ export abstract class AbstractPlayer implements OnInit {
     }
   }
 
+  private updateTrackDuration(newDuration: number) {
+    if (newDuration) {
+      this._initialTrackDuration = newDuration;
+      this.setDuration(newDuration);
+    } else {
+      this._initialTrackDuration = null;
+    }
+  }
+
   public initialise(options?: IPlayerOptions): Promise<any> {
+    this.setCurrentTime(0);
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
@@ -297,6 +323,8 @@ export abstract class AbstractPlayer implements OnInit {
             return this.initialisePlayer(options);
           });
         }
+
+        this.updateTrackDuration(this.track.duration);
 
         return this.executeInitialisingQueue(promiseQueue).then(() => {
           this._playerSdkIsInitialised = true;
@@ -375,6 +403,8 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   public seekTo(to: number): Promise<any> {
+    this._seekTo = to;
+    this.currentTimeChange.emit(to);
     this.executeOnInitialised(() => {
       this.seekPlayerTo(to);
     });
@@ -407,6 +437,7 @@ export abstract class AbstractPlayer implements OnInit {
     } else {
       this.setStatus(PlayerStatus.Updating);
       this.track = track;
+      this.updateTrackDuration(track.duration);
       if (this.getStatus() === PlayerStatus.Playing) {
         return this.stop().then(() => {
           this.preload();

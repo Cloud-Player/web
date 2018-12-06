@@ -42,11 +42,9 @@ export class NestedModel extends Model {
 
   private _setDynamicInstance(attributes: {} = {}) {
     const dynamicInstances = result(this, 'dynamicInstances');
-
     for (const key in dynamicInstances) {
       if (dynamicInstances.hasOwnProperty(key) &&
         !(attributes[key] instanceof Model || attributes[key] instanceof Collection)) {
-
         const instance =
           InstanceResolver.getDynamicInstance(dynamicInstances, key, attributes);
 
@@ -75,9 +73,9 @@ export class NestedModel extends Model {
     if (isObject(value) && !isArray(value)) {
       this.get(key).add(value, options);
     } else if (isArray(value)) {
-      value.forEach(function (val: string | any) {
+      value.forEach((val: string | any) => {
         this._setNestedCollection(key, val, options);
-      }.bind(this));
+      });
     } else {
       const id = this.get(key).model.prototype.idAttribute,
         obj = {};

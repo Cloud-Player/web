@@ -7,6 +7,8 @@ import {AccountsCollection} from '../../account/accounts.collection';
 import {IAccount} from '../../account/account.interface';
 import {BaseModel} from '../../../backbone/models/base.model';
 import {CollectionSetOptions} from 'backbone';
+import {AuthenticatedUserAccountDeezerModel} from './authenticated-user-account-deezer.model';
+import {isObject} from 'underscore';
 
 export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUserAccount>
   extends AccountsCollection<TModel> {
@@ -18,16 +20,20 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
     identifierKeyValueMap: {
       auxapp: AuthenticatedUserAccountAuxappModel,
       youtube: AuthenticatedUserAccountYoutubeModel,
-      soundcloud: AuthenticatedUserAccountSoundcloudModel
+      soundcloud: AuthenticatedUserAccountSoundcloudModel,
+      deezer: AuthenticatedUserAccountDeezerModel
     }
   })
   model = AuthenticatedUserAccountSoundcloudModel;
 
   set(models?: TModel | TModel[], options: CollectionSetOptions = {}): TModel[] {
     if (models instanceof BaseModel && models.id && this.getAccountForProvider(models.provider)) {
-      this.getAccountForProvider(models.provider).set(models.toJSON(), {merge: true});
+      return this.getAccountForProvider(models.provider).set(models.toJSON(), {merge: true});
+    } else if (isObject(models) && this.getAccountForProvider((<any>models).provider_id)) {
+      return this.getAccountForProvider((<any>models).provider_id).set(models, {merge: true});
+    } else {
+      return super.set.call(this, models, options);
     }
-    return super.set.call(this, models, options);
   }
 
   initialize() {
@@ -39,6 +45,11 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
       const tmpAccountModel: IAccount = new account({tmp: 1});
       this.add(tmpAccountModel);
     });
+  }
+
+  public getAuxappAccount(): AuthenticatedUserAccountAuxappModel {
+    const account = <unknown>this.getAccountForProvider('auxapp');
+    return <AuthenticatedUserAccountAuxappModel>account;
   }
 
 }

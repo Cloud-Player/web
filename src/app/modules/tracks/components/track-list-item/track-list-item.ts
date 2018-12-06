@@ -46,18 +46,23 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addToQueue(track: ITrack) {
-    this.playQueue.items.queue({track: track});
+    const existingTrack = this.playQueue.items.getItemByTrackId(track.id);
+    if (existingTrack) {
+      existingTrack.queue();
+    } else {
+      this.playQueue.items.queue({track: track});
+    }
   }
 
   removeFromQueue(track: ITrack) {
-    const playQueueItem = this.playQueue.items.get(track);
+    const playQueueItem = this.playQueue.items.getItemByTrackId(track.id);
     if (playQueueItem) {
       return playQueueItem.unQueue();
     }
   }
 
   isQueued() {
-    const playQueueItem = this.playQueue.items.get(this.track);
+    const playQueueItem = this.playQueue.items.getItemByTrackId(this.track.id);
     if (playQueueItem) {
       return playQueueItem.isQueued();
     } else {

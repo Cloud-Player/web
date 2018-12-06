@@ -11,7 +11,5 @@ export interface IAuthenticatedUserAccount extends IAccount {
   tracks: ITracks<ITrack>;
   favouriteTracks: IFavouriteTracks;
   connected: boolean;
-
-  createNewPlaylist(title: string, isPublic: boolean): Promise<IPlaylist>;
   isConnected(): boolean;
 }

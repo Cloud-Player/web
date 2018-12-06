@@ -20,7 +20,8 @@ import {BackboneModule} from '../backbone/backbone.module';
   ],
   exports: [
     TrackListItemComponent,
-    ToggleLikedTrackComponent
+    ToggleLikedTrackComponent,
+    TrackPlayOnEventDirective
   ],
   declarations: [
     TrackDetailViewComponent,

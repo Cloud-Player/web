@@ -2,11 +2,12 @@ import {BaseModel} from '../../backbone/models/base.model';
 import {request} from '../../backbone/utils/request.util';
 import {ModelSaveOptions} from 'backbone';
 import {isUndefined} from 'underscore';
+import {Globals} from '../../../../globals';
 
 export class AuxappModel extends BaseModel {
 
   hostName(): string {
-    return 'https://api.aux.app';
+    return Globals.httpApiUrl;
   }
 
   request(url: string, method: string, options: any = {}) {

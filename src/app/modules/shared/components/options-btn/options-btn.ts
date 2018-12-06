@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnDestroy, Output, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, ViewChild} from '@angular/core';
 import {OptionBtnComponent} from '../option-btn/option-btn';
 import {Subscription} from 'rxjs';
 
@@ -11,9 +11,18 @@ export class OptionsBtnComponent implements OnDestroy {
   private _subscriptions: Subscription;
   public options: Array<OptionBtnComponent> = [];
   public optionsAreVisible: Boolean = false;
-  @Output() openState = new EventEmitter();
-  @ViewChild('optionsHolder') optionsHolder: ElementRef;
-  @ViewChild('toggler') toggler: ElementRef;
+
+  @Input()
+  icon = 'fa fa-ellipsis-v';
+
+  @Output()
+  openState = new EventEmitter();
+
+  @ViewChild('optionsHolder')
+  optionsHolder: ElementRef;
+
+  @ViewChild('toggler')
+  toggler: ElementRef;
 
   constructor(private el: ElementRef, private renderer2: Renderer2) {
     this._subscriptions = new Subscription();

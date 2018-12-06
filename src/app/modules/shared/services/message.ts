@@ -27,6 +27,7 @@ export enum MessageMethodTypes {
   GET = 'get',
   POST = 'post',
   PUT = 'put',
+  PATCH = 'patch',
   DELETE = 'delete',
   SUBSCRIBE = 'sub',
   UNSUBSCRIBE = 'unsub',
@@ -42,6 +43,7 @@ export interface IMessage {
   channel: string;
   method: MessageMethodTypes;
   body: any;
+  sequence?: number;
 }
 
 @Injectable()

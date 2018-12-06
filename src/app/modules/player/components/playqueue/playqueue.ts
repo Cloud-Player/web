@@ -19,6 +19,7 @@ export class PlayQueueComponent implements OnInit {
   public coverSize = ImageSizes.Medium;
   public showDragAndDropHelp = false;
   public providerMap: ProviderMap = ProviderMap.map;
+  public playRecommended: boolean;
 
   @Input()
   public playQueue: PlayqueueAuxappModel;
@@ -96,6 +97,10 @@ export class PlayQueueComponent implements OnInit {
     }
   }
 
+  public setPlayRecommended(playRecommended: boolean) {
+    this.playQueue.items.enableRecommendedTracks(playRecommended);
+  }
+
   public removeQueuedItems() {
     this.playQueue.items.getQueuedItems().forEach((item) => {
       this.playQueue.items.remove(item);
@@ -140,5 +145,6 @@ export class PlayQueueComponent implements OnInit {
         })
     );
     this.playQueue.items.on('add remove reset change:status change:track change:shuffle change:loop', this._debouncedUpdate, this);
+    this.playRecommended = this.playQueue.items.isPlayingRecommendedTracks();
   }
 }

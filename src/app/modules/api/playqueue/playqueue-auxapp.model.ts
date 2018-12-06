@@ -3,6 +3,7 @@ import {nested} from '../../backbone/decorators/nested.decorator';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {PlayqueueItemsAuxappCollection} from './playqueue-item/playqueue-items-auxapp.collection';
 import {PlayqueueItemAuxappModel} from './playqueue-item/playqueue-item-auxapp.model';
+import {ITrack} from '../tracks/track.interface';
 
 export class PlayqueueAuxappModel extends AuxappModel {
   private static instance: PlayqueueAuxappModel;
@@ -13,11 +14,17 @@ export class PlayqueueAuxappModel extends AuxappModel {
   @nested()
   items: PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>;
 
+  private initialItem: PlayqueueItemAuxappModel;
+
   static getInstance(): PlayqueueAuxappModel {
     if (!PlayqueueAuxappModel.instance) {
       PlayqueueAuxappModel.instance = new PlayqueueAuxappModel();
     }
     return PlayqueueAuxappModel.instance;
+  }
+
+  public setInitialTrack(track: ITrack, startTime: number = 0) {
+    this.initialItem = new PlayqueueItemAuxappModel({track: track.clone(), progress: startTime});
   }
 
   parse(attributes) {
@@ -27,25 +34,54 @@ export class PlayqueueAuxappModel extends AuxappModel {
 
   fetch(...args) {
     const id = this.id;
-    this.set('id', 'mine');
+    this.set('id', 'mine', {silent: true});
     const superCall = super.fetch.apply(this, ...args).then(() => {
-      this.items.fetch();
+      if (this.initialItem) {
+        this.items.setInitialItem(this.initialItem);
+      }
+      this.items.fetch().then(() => {
+        this.initialItem = null;
+      });
       return this;
     });
-    this.set('id', id);
+    this.set('id', id, {silent: true});
     return superCall;
   }
 
-  save() {
+  save(): any {
     if (this.id) {
-      let index = 0;
+      const persistTracks = [];
       this.items.each((item) => {
-        if (index < 3) {
-          item.save();
+        if (item.isNew() && !item.isRecommended()) {
+          persistTracks.push(item.toJSON());
+          item.isSyncing = true;
         }
-        index++;
+      });
+      if (persistTracks.length === 0) {
+        return new Promise((resolve) => {
+          resolve(this);
+        });
+      }
+      return this.request(`${this.url()}/item`, 'POST', {
+        data: persistTracks
+      }).then((responseItems: Array<any>) => {
+        responseItems.forEach((responseItem) => {
+          const queueItem = this.items.find((item: PlayqueueItemAuxappModel) => {
+            return item.track.id === responseItem.track_id;
+          });
+          if (queueItem) {
+            delete responseItem.progress;
+            queueItem.set(PlayqueueItemAuxappModel.prototype.parse.call(queueItem, responseItem));
+            queueItem.isSyncing = false;
+          }
+        });
       });
     }
+  }
+
+  destroy() {
+    this.items.reset();
+    return super.destroy();
   }
 
   initialize() {

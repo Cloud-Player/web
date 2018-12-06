@@ -3,6 +3,7 @@ import {ModalService, ModalServiceStates} from '../../../services/modal';
 import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
 import {LayoutService, WindowElementTypes} from '../../../services/layout';
 import {filter} from 'rxjs/internal/operators';
+import {Modal, ModalStates} from '../../../src/modal-factory.class';
 
 @Component({
   selector: 'app-modal-holder',
@@ -20,6 +21,9 @@ import {filter} from 'rxjs/internal/operators';
 export class ModalHolderComponent implements OnInit, OnDestroy {
   @ViewChild('modalContainer', {read: ViewContainerRef})
   private _container: ViewContainerRef;
+
+  @ViewChild('modalHolder')
+  private _modalHolder: ElementRef;
 
   public showBackdrop = false;
 
@@ -42,6 +46,32 @@ export class ModalHolderComponent implements OnInit, OnDestroy {
     this.layoutService.unRegisterWindowElement(WindowElementTypes.Modal);
   }
 
+  private targetWasInModal(modal: Modal<any>, target: EventTarget) {
+    if (!modal || !target) {
+      return false;
+    }
+    const modalEl = modal.getElement().nativeElement.querySelector('.modal');
+    return modalEl && modalEl.contains(target);
+  }
+
+  closeModals($event: MouseEvent) {
+    const openModal = this.modalService.getOpenModal();
+    const lastClosedModal = this.modalService.getLastRemovedModal();
+    if (this.targetWasInModal(openModal, $event.target) || this.targetWasInModal(lastClosedModal, $event.target)) {
+      return;
+    }
+    openModal.getObservable().next(ModalStates.Abort);
+    console.warn('CLOSED MODALS', $event.target);
+    let canContinue = true;
+    this.modalService.getModalStack().reverse().forEach((modal) => {
+      if (canContinue && modal.getOptions().dismissible) {
+        modal.close();
+      } else {
+        canContinue = false;
+      }
+    });
+  }
+
   handleDone(event: AnimationEvent) {
     if (event.fromState === 'visible' && event.toState === 'hidden') {
       this.el.nativeElement.classList.remove('has-visible-modals');
@@ -62,6 +92,14 @@ export class ModalHolderComponent implements OnInit, OnDestroy {
         filter(ev => ev === ModalServiceStates.NoModalVisible)
       )
       .subscribe(this.onNoMoreModalVisible.bind(this));
+
+    this.modalService.getObservable()
+      .pipe(
+        filter(ev => ev === ModalServiceStates.ModalRemoved)
+      )
+      .subscribe(() => {
+        //debugger;
+      });
   }
 
   ngOnDestroy(): void {

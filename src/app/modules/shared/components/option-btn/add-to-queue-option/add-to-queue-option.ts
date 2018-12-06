@@ -19,7 +19,7 @@ export class AddToQueueOptionComponent {
   }
 
   public isQueued() {
-    const playQueueItem = this._playQueue.items.get(this.track);
+    const playQueueItem = this._playQueue.items.getItemByTrackId(this.track.id);
     if (playQueueItem) {
       return playQueueItem.isQueued();
     } else {
@@ -28,11 +28,11 @@ export class AddToQueueOptionComponent {
   }
 
   public addToQueue() {
-    this._playQueue.items.queue({track: this.track});
+    this._playQueue.items.queue({track: this.track.clone()});
   }
 
   public removeFromQueue() {
-    const playQueueItem = this._playQueue.items.get(this.track);
+    const playQueueItem = this._playQueue.items.getItemByTrackId(this.track.id);
     if (playQueueItem) {
       playQueueItem.unQueue();
     }
