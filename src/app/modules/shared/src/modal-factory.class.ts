@@ -1,12 +1,17 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Type, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from '../components/modal/modal/modal';
 import {Subject} from 'rxjs';
-import {IModalOptions} from './modal.interface';
+import {IModalOptions, ModalActionButton} from './modal.interface';
 
 export enum ModalStates {
   Initalised,
   Opened,
   Closed,
+  ExecutePrimaryInProgress,
+  ExecutedPrimary,
+  ExecuteSecondaryInProgress,
+  ExecutedSecondary,
+  Abort,
   Destroyed
 }
 
@@ -46,6 +51,27 @@ export class Modal<TComponent> {
       this._resolver = resolver;
       this._container = container;
       this.build();
+      this._modalRef.instance.actionExecuted
+        .subscribe((ev) => {
+          switch (ev) {
+            case ModalActionButton.PRIMARY:
+              this._subject.next(ModalStates.ExecutePrimaryInProgress);
+              break;
+            case ModalActionButton.PRIMARYDONE:
+              this._subject.next(ModalStates.ExecutedPrimary);
+              break;
+            case ModalActionButton.SECONDARY:
+              this._subject.next(ModalStates.Abort);
+              this._subject.next(ModalStates.ExecuteSecondaryInProgress);
+              break;
+            case ModalActionButton.SECONDARYDONE:
+              this._subject.next(ModalStates.ExecutedSecondary);
+              break;
+            case ModalActionButton.CANCEL:
+              this._subject.next(ModalStates.Abort);
+              break;
+          }
+        });
       this._subject.next(ModalStates.Initalised);
     }
   }
@@ -97,6 +123,7 @@ export class Modal<TComponent> {
   }
 
   public $cleanUp() {
+    this._modalRef.instance.actionExecuted.unsubscribe();
     this._modalRef.destroy();
     this._subject.next(ModalStates.Destroyed);
     this._subject.unsubscribe();

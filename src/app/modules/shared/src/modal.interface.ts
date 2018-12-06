@@ -1,3 +1,5 @@
+import {EventEmitter} from '@angular/core';
+
 export type modalAction = (modal: IModal) => Promise<any> | void;
 
 export interface IModalActionBtn {
@@ -7,7 +9,7 @@ export interface IModalActionBtn {
 }
 
 export interface IModalOptions {
-  title: string;
+  title: (() => string) | string;
   dismissible: boolean;
   primaryAction?: IModalActionBtn;
   secondaryAction?: IModalActionBtn;
@@ -22,6 +24,14 @@ export interface IModalComponent {
   modalOnOpen?(): void;
 
   modalOnClose?(): void;
+}
+
+export enum ModalActionButton {
+  PRIMARY,
+  PRIMARYDONE,
+  SECONDARY,
+  SECONDARYDONE,
+  CANCEL
 }
 
 export interface IModal {
