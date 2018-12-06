@@ -172,7 +172,10 @@ export class PlayerComponent implements OnInit {
        * Model is triggering change for each attribute immediatly so when progress and
        * status is updated this method is called even though status has not been updated yet
        */
-      setTimeout(currentItem.save.bind(currentItem));
+      setTimeout(() => {
+        this.socketBackboneSender.decorate(currentItem);
+        currentItem.save();
+      });
     }, 10000);
 
     const throttledViewUpdate = throttle(() => {
