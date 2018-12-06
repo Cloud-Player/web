@@ -153,7 +153,10 @@ export class PlayerManagerComponent implements OnInit {
 
     this._playerSubscriptions.add(player.currentTimeChange
       .subscribe(currentTime => {
-        this.playQueue.items.getItemByTrackId(player.track.id).progress = currentTime;
+        const item = this.playQueue.items.getItemByTrackId(player.track.id);
+        if (item) {
+          item.progress = currentTime;
+        }
       })
     );
 
@@ -198,13 +201,18 @@ export class PlayerManagerComponent implements OnInit {
     this._playerSubscriptions.add(
       player.durationChange
         .subscribe(() => {
-          this.playQueue.items.getItemByTrackId(player.track.id).duration = player.getDuration();
+          const playQueueItem = this.playQueue.items.getItemByTrackId(player.track.id);
+          if (playQueueItem) {
+            playQueueItem.duration = player.getDuration();
+          }
         })
     );
 
     const currentDuration = player.getDuration();
-    if (isNumber(currentDuration) && currentDuration > 0) {
-      this.playQueue.items.getItemByTrackId(player.track.id).duration = player.getDuration();
+    const playQueueItem = this.playQueue.items.getItemByTrackId(player.track.id);
+
+    if (playQueueItem && isNumber(currentDuration) && currentDuration > 0) {
+      playQueueItem.duration = player.getDuration();
     }
     this.handlePlayerStatusChange(player.getStatus());
   }
@@ -462,6 +470,18 @@ export class PlayerManagerComponent implements OnInit {
         const firstPlayer = this._playerFactory.createPlayer(firstPlayQueueItem);
         this.activatePlayer(firstPlayer, this._activePlayer, firstPlayQueueItem.progress, false);
       }
+    });
+
+    this.playQueue.items.on('reset', () => {
+      if (this._activePlayer) {
+        this.removePlayer(this._activePlayer);
+        this._activePlayer = null;
+      }
+      if (this._upcomingPlayer) {
+        this.removePlayer(this._upcomingPlayer);
+        this._upcomingPlayer = null;
+      }
+      this.setHeight(0);
     });
 
     this.fullScreenService.getObservable()
