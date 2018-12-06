@@ -65,15 +65,21 @@ export class Authenticator {
     items.forEach(this.updateSession.bind(this));
   }
 
+  private deleteSessions(items) {
+    items.forEach(this.deleteSession.bind(this));
+  }
+
   private updateSession(item) {
     const existingSession = this._sessions.get(item.id);
     if (existingSession) {
-      if (item.state === 'idle') {
-        this._sessions.remove(existingSession);
-      } else {
-        existingSession.set(item);
-      }
+      existingSession.set(item);
+    } else {
+      this.addSession(item);
     }
+  }
+
+  private deleteSession(item) {
+    this._sessions.remove(item);
   }
 
   private subscribeOnSessionChanges() {
@@ -82,6 +88,7 @@ export class Authenticator {
       this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.RESPONSE, this.addSession.bind(this));
       this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.POST, this.addSession.bind(this));
       this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.PUT, this.updateSessions.bind(this));
+      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.DELETE, this.deleteSessions.bind(this));
       this.socketMessageService.sendMessage(`account.${accountId}.session`, MessageMethodTypes.GET);
     }
   }
