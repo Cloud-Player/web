@@ -98,6 +98,9 @@ export class Authenticator {
   }
 
   private reactOnAuxAccountIdChange() {
+    if (this.socketMessageService.isOpen()) {
+      this.socketMessageService.close();
+    }
     this.updateUserFavouriteTracks();
     this.updatePlayQueue();
     this.subscribeOnSessionChanges();
