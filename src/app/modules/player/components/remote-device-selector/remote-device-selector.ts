@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
@@ -22,13 +22,13 @@ export class RemoteDeviceSelectorComponent {
     });
   }
 
-  public playOnDevice(session) {
-    const playerSession = this.sessions.getPlayerSession();
-    if (playerSession) {
-      playerSession.is_player = false;
-      this.socketBackboneSender.decorate(playerSession);
-      playerSession.save();
+  public getMySessionId() {
+    if (this.sessions.getMySession()) {
+      return this.sessions.getMySession().id;
     }
+  }
+
+  public playOnDevice(session) {
     session.is_player = true;
     this.socketBackboneSender.decorate(session);
     session.save();
