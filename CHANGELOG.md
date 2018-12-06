@@ -1,3 +1,10 @@
+# v5.4.0
+- Persist playqueue on server so its portable to all devices
+- Prepare Deezer integration
+- Let user confirm delete before deleting playlist
+- Remove proxy endpoint calls
+- Upgrade to Angular 7
+
 # v5.3.5
 - Verify that tracks returned by search are supported
 
