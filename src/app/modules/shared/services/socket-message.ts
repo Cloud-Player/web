@@ -25,6 +25,7 @@ export class SocketMessageService {
   private _openSubscriptions: Array<string> = [];
   private _socketUrl: string;
   private _keepOpen: boolean;
+  private _isClosing: boolean;
 
   constructor(private messageService: MessageService) {
     this._observable = new EventEmitter();
@@ -63,7 +64,7 @@ export class SocketMessageService {
       this.messageService.handleMessage(MessageTypes.SOCKET, {
         channel: jsonData.channel,
         method: MessageMethodTypes[jsonData.method.toUpperCase() as keyof typeof MessageMethodTypes],
-        body: jsonData.body
+        body: jsonData.body || []
       });
       this._observable.emit({type: SocketStatusTypes.MESSAGE, detail: jsonData});
     } else {
@@ -78,10 +79,11 @@ export class SocketMessageService {
   private onClose(event: Event) {
     console.warn('[SOCKET] Closed');
     if (this._keepOpen) {
-      setTimeout(this.reOpen.bind(this), 1000);
+      setTimeout(this.reOpen.bind(this), 3000);
     }
     this._isOpened = false;
     this._openSubscriptions = [];
+    this._isClosing = false;
     this._observable.emit({type: SocketStatusTypes.CLOSED});
   }
 
@@ -122,8 +124,20 @@ export class SocketMessageService {
   }
 
   public open(socketUrl: string) {
+    if (this._isClosing) {
+      this.getObservable()
+        .pipe(
+          filter(ev => ev.type === SocketStatusTypes.CLOSED),
+          first()
+        )
+        .subscribe(this.open.bind(this, socketUrl));
+      console.log('WAIT UNITL ITS CLOSED');
+      return;
+    }
     if (this._isOpened) {
       this._socket.close();
+      this.open(socketUrl);
+      return;
     }
     this._keepOpen = true;
     this._socketUrl = socketUrl;
@@ -135,15 +149,17 @@ export class SocketMessageService {
   }
 
   public close() {
+    this._subscribedChannelIds = [];
+    this._openSubscriptions = [];
     this._keepOpen = false;
     this._isOpened = false;
+    this._isClosing = true;
     this._socket.close();
   }
 
   public sendMessage(channelId: string, method: MessageMethodTypes, body?: any): Promise<any> {
     if (this._isOpened) {
       const message: IMessage = {channel: channelId, method: method, body: body, sequence: +new Date()};
-      this._socket.send(JSON.stringify(message));
       this._observable.emit({
         type: SocketStatusTypes.SEND_MESSAGE,
         detail: message
@@ -155,7 +171,8 @@ export class SocketMessageService {
           .pipe(
             filter((ev: ISocketEvent) => {
               return ev.type === SocketStatusTypes.OPEN;
-            })
+            }),
+            first()
           )
           .subscribe(() => {
             this.sendMessage(channelId, method, body).then((rsp) => {

@@ -32,11 +32,23 @@ export class SocketBackboneSender {
   public decorate(model: BaseModel) {
     const superSync = model.sync;
     model.sync = (...args): any => {
-      if (this.socketMessageService.isOpen()) {
-        return this.sendRequestWithSocket(model, args[0]);
-      } else {
-        return superSync.apply(model, args);
-      }
+      return new Promise((resolve, reject) => {
+        if (this.socketMessageService.isOpen()) {
+          this.sendRequestWithSocket(model, args[0]).then((rsp) => {
+            resolve(rsp);
+          }, (err) => {
+            reject(err);
+          });
+        } else {
+          superSync.apply(model, args).then((rsp) => {
+            resolve(rsp);
+          }, (err) => {
+            reject(err);
+          });
+        }
+        model.sync = superSync;
+      });
     };
+    return model;
   }
 }
