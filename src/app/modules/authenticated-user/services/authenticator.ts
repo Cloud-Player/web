@@ -12,6 +12,7 @@ import {ActivatedRoute} from '@angular/router';
 import {SessionsCollection} from '../../api/authenticated-user/sessions/sessions.collection';
 import {SessionModel} from '../../api/authenticated-user/sessions/session.model';
 import {Globals} from '../../../../globals';
+import {ITrack} from '../../api/tracks/track.interface';
 
 @Injectable()
 export class Authenticator {
@@ -52,7 +53,7 @@ export class Authenticator {
     const currentItem = this._playQueue.items.getCurrentItem();
     this._playQueue.clear();
     if (currentItem) {
-      this._playQueue.setInitialTrack(currentItem.track, currentItem.progress);
+      this._playQueue.setInitialTrack(<ITrack>currentItem.track.clone(), currentItem.progress);
     }
     this._playQueue.fetch();
   }
