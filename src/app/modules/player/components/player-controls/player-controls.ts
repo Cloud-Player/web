@@ -11,6 +11,7 @@ import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/pl
 import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
 import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
+import {Authenticator} from '../../../authenticated-user/services/authenticator';
 
 declare let MediaMetadata: any;
 
@@ -210,6 +211,11 @@ export class PlayerControlsComponent implements OnInit {
       if (currentItem) {
         this.currentItem = this.playQueue.items.getCurrentItem();
       }
+    });
+
+    this.playQueue.items.on('reset', () => {
+      this.currentItem = new PlayqueueItemAuxappModel();
+      this.cdr.detectChanges();
     });
 
     this.fullScreenService.getObservable()
