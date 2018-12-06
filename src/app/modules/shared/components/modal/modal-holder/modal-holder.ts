@@ -3,7 +3,7 @@ import {ModalService, ModalServiceStates} from '../../../services/modal';
 import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
 import {LayoutService, WindowElementTypes} from '../../../services/layout';
 import {filter} from 'rxjs/internal/operators';
-import {Modal} from '../../../src/modal-factory.class';
+import {Modal, ModalStates} from '../../../src/modal-factory.class';
 
 @Component({
   selector: 'app-modal-holder',
@@ -60,6 +60,7 @@ export class ModalHolderComponent implements OnInit, OnDestroy {
     if (this.targetWasInModal(openModal, $event.target) || this.targetWasInModal(lastClosedModal, $event.target)) {
       return;
     }
+    openModal.getObservable().next(ModalStates.Abort);
     console.warn('CLOSED MODALS', $event.target);
     let canContinue = true;
     this.modalService.getModalStack().reverse().forEach((modal) => {

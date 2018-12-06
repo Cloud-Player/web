@@ -13,7 +13,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
-import {IModal, IModalComponent, IModalOptions, modalAction} from '../../../src/modal.interface';
+import {IModal, IModalComponent, IModalOptions, modalAction, ModalActionButton} from '../../../src/modal.interface';
 import {Modal} from '../../../src/modal-factory.class';
 
 @Component({
@@ -43,16 +43,20 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
   @Output()
   public visibilityChange: EventEmitter<boolean>;
 
+  @Output()
+  public actionExecuted: EventEmitter<ModalActionButton>;
+
   constructor(private resolver: ComponentFactoryResolver,
               private el: ElementRef) {
     this.modalOptions = {
-      title: 'ABC',
+      title: '',
       dismissible: true,
       primaryAction: {
         text: 'Ok'
       }
     };
     this.visibilityChange = new EventEmitter<boolean>();
+    this.actionExecuted = new EventEmitter<ModalActionButton>();
   }
 
   private centerModal() {
@@ -124,28 +128,43 @@ export class ModalComponent implements IModal, OnInit, OnDestroy {
     this.visibilityChange.emit(false);
   }
 
+  public cancel() {
+    this.actionExecuted.emit(ModalActionButton.CANCEL);
+    this.hide();
+  }
+
   public getTitle() {
-    return this.modalOptions.title;
+    if (typeof this.modalOptions.title === 'function') {
+      return this.modalOptions.title();
+    } else {
+      return this.modalOptions.title;
+    }
   }
 
   public getOptions() {
     return this.modalOptions;
   }
 
-  public hideAfterExecution(action: modalAction) {
+  public hideAfterExecution(action: modalAction, actionBtn: ModalActionButton) {
     if (action) {
-      Promise.resolve(action(this)).then(this.hide.bind(this));
+      Promise.resolve(action(this)).then(() => {
+        this.actionExecuted.emit(actionBtn);
+        this.hide();
+      });
     } else {
+      this.actionExecuted.emit(actionBtn);
       this.hide();
     }
   }
 
   public executeSecondary() {
-    this.hideAfterExecution(this.modalOptions.secondaryAction.action);
+    this.actionExecuted.emit(ModalActionButton.SECONDARY);
+    this.hideAfterExecution(this.modalOptions.secondaryAction.action, ModalActionButton.SECONDARYDONE);
   }
 
   public executePrimary() {
-    this.hideAfterExecution(this.modalOptions.primaryAction.action);
+    this.actionExecuted.emit(ModalActionButton.PRIMARY);
+    this.hideAfterExecution(this.modalOptions.primaryAction.action, ModalActionButton.PRIMARYDONE);
   }
 
   public hasFooter() {
