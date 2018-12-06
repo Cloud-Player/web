@@ -31,6 +31,15 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     return item;
   }
 
+  private _getPlayIndex() {
+    const currentPlaylingItem = this.getPlayingItem() || this.getPausedItem();
+    if (currentPlaylingItem) {
+      return this.indexOf(currentPlaylingItem);
+    } else {
+      return -1;
+    }
+  }
+
   private setPlayIndex(): number {
     const currentPlaylingItem = this.getPlayingItem() || this.getPausedItem();
     const oldPlayIndex = this._playIndex;
@@ -426,27 +435,43 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
     const debouncedTrackDetailsFetch = debounce(this.fetchTrackDetails.bind(this), 500);
     this.on('add', debouncedTrackDetailsFetch);
-    this.on('sync', () => {
-      this.setPlayIndex();
-      if (this._initialItem) {
-        const currentItem = this.getCurrentItem();
-        if (currentItem) {
-          this.remove(currentItem);
+    this.on('sync', (itemOrItems) => {
+      if (itemOrItems instanceof PlayqueueItemsAuxappCollection) {
+        console.log('UPDATE');
+        this.setPlayIndex();
+        this.stopScheduledItemsBeforeCurrentItem({
+          enforceStop: true,
+          silent: true
+        });
+        this.ensureQueuingOrder();
+
+        if (this._initialItem) {
+          const currentItem = this.getCurrentItem();
+          const existingInitialItem = this.getItemByTrackId(this._initialItem.track.id);
+          if (existingInitialItem && existingInitialItem === currentItem) {
+            currentItem.seekTo(existingInitialItem.progress);
+          } else if (existingInitialItem && existingInitialItem !== currentItem) {
+            if (currentItem) {
+              const addPos = this._getPlayIndex();
+              this.remove(currentItem, {silent: true});
+              this.remove(existingInitialItem, {silent: true});
+              this.add(existingInitialItem, {at: addPos}).play();
+              const added = this.add(currentItem, {at: addPos + 1, silent: true});
+              added.status = PlayQueueItemStatus.Scheduled;
+            }
+          } else if (!existingInitialItem) {
+            if (currentItem) {
+              const addPos = this.getPlayIndex();
+              this.remove(currentItem, {silent: true});
+              this.add(this._initialItem, {at: addPos}).play();
+              const added = this.add(currentItem, {at: addPos + 1, silent: true});
+              added.status = PlayQueueItemStatus.Scheduled;
+            }
+          }
+          this._initialItem = null;
+          this.setPlayIndex();
         }
-        const existingItem = this.getItemByTrackId(this._initialItem.track.id);
-        if (existingItem) {
-          existingItem.play(this._initialItem.progress);
-        } else {
-          this.addAndPlay(this._initialItem);
-        }
-        this.add(currentItem, {at: this._playIndex + 1, silent: true});
-        this._initialItem = null;
       }
-      this.stopScheduledItemsBeforeCurrentItem({
-        enforceStop: true,
-        silent: true
-      });
-      this.ensureQueuingOrder();
     });
   }
 }
