@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px"
+	 height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<defs>
+  <mask id="playerStateMask">
+    <circle fill="#fff" cx="29.632" cy="35.198" r="20.364"/>
+    <polygon fill="#000" points="29.28,41.075 19.616,46.821 19.616,23.199 29.278,28.944">
+      <animate class="icon-animation-to-play" begin="indefinite" attributeName="points" dur="200ms" to="27.48,46.821 19.616,46.821 19.616,23.199 27.478,23.199" fill="freeze"/>
+      <animate class="icon-animation-to-pause" begin="indefinite" attributeName="points" dur="200ms" to="29.28,41.075 19.616,46.821 19.616,23.199 29.278,28.944" fill="freeze"/>
+    </polygon>
+
+    <polygon fill="#000" points="29.263,28.944 40.014,35.01 40.014,35.01 29.263,41.075">
+      <animate class="icon-animation-to-play" begin="indefinite" attributeName="points" dur="200ms" to="32.15,23.199 40.014,23.199 40.014,46.821 32.15,46.821" fill="freeze"/>
+      <animate class="icon-animation-to-pause" begin="indefinite" attributeName="points" dur="200ms" to="29.263,28.944 40.014,35.01 40.014,35.01 29.263,41.075" fill="freeze"/>
+    </polygon>
+  </mask>
+</defs>
+<g id="play-pause-circle" mask="url(#playerStateMask)">
+	<path fill="#FF3600" d="M29.632,15.323c-10.976,0-19.875,8.898-19.875,19.873c0,10.974,8.899,19.877,19.875,19.877
+		c10.977,0,19.875-8.903,19.875-19.877C49.507,24.221,40.609,15.323,29.632,15.323z"/>
+</g>
+</svg>
