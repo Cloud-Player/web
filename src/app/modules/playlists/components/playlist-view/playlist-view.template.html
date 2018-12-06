@@ -9,7 +9,11 @@
          class="btn btn-default">
         <i class="fa fa-pencil" aria-hidden="true"></i>
       </a>
-      <button class="btn btn-default btn-danger" (click)="delete()">
+      <button class="btn btn-default btn-danger"
+              appConfirmDelete
+              entityType="playlist"
+              [name]="playlist.title"
+              (confirmedClick)="delete()">
         <i class="fa fa-trash-o" aria-hidden="true"></i>
       </button>
     </div>
