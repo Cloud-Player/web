@@ -110,9 +110,7 @@ export class SocketPlayerService {
   }
 
   private subscribeOnPlayqueueChanges(playQueue: PlayqueueAuxappModel) {
-    this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.PUT, this.updateItems.bind(this));
-    this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.POST, this.addItems.bind(this));
-    this.socketMessageService.subscribe(`queue.${playQueue.id}.item`, MessageMethodTypes.DELETE, this.deleteItem.bind(this));
+    /* check out aux.app */
   }
 
   public setPlayqueue(playQueue: PlayqueueAuxappModel) {

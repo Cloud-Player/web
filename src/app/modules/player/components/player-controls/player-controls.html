@@ -14,7 +14,6 @@
     <app-volume-btn [volume]="volume" (volumeChange)="setVolume($event)"></app-volume-btn>
   </div>
   <div class="fullscreen">
-    <app-remote-device-selector></app-remote-device-selector>
     <button *ngIf="fullScreenService.canEnterFullScreen()"
             class="btn btn-xs btn-default"
             (click)="toggleFullScreen()">

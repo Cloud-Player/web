@@ -4,7 +4,7 @@
          [src]="auxappAccount.image.getSmallSizeUrl()">
     <i *ngIf="!auxappAccount.image.getSmallSizeUrl()"
        class="fa fa-user"></i>
-    {{auxappAccount.getFullName()}}
+    {{auxappAccount.getFullName() || 'Guest'}}
   </app-view-header>
 
   <div *ngIf="!hasConnectedAccount"

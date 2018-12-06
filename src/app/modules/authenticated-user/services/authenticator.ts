@@ -86,11 +86,7 @@ export class Authenticator {
   private subscribeOnSessionChanges() {
     const accountId = this._authenticatedUser.getAuxappAccount().id;
     if (accountId) {
-      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.RESPONSE, this.addSession.bind(this));
-      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.POST, this.addSession.bind(this));
-      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.PUT, this.updateSessions.bind(this));
-      this.socketMessageService.subscribe(`account.${accountId}.session`, MessageMethodTypes.DELETE, this.deleteSessions.bind(this));
-      this.socketMessageService.sendMessage(`account.${accountId}.session`, MessageMethodTypes.GET);
+      /* check out aux.app */
     }
   }
 

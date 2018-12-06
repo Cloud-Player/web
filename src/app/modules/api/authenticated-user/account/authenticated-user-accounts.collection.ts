@@ -40,8 +40,7 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
     [
       AuthenticatedUserAccountAuxappModel,
       AuthenticatedUserAccountSoundcloudModel,
-      AuthenticatedUserAccountYoutubeModel,
-      AuthenticatedUserAccountDeezerModel
+      AuthenticatedUserAccountYoutubeModel
     ].forEach((account) => {
       const tmpAccountModel: IAccount = new account({tmp: 1});
       this.add(tmpAccountModel);

@@ -13,7 +13,7 @@ export class TracksAuxappCollection<TModel extends TrackAuxappModel>
   extends AuxappCollection<TModel> implements ITracks<TModel> {
 
   @queryParam()
-  provider_id = 'soundcloud,youtube,mixcloud,deezer';
+  provider_id = 'soundcloud,youtube,mixcloud';
 
   @dynamicInstance({
     identifierKey: 'provider_id',
