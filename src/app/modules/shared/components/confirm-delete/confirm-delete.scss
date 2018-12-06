@@ -1,0 +1,10 @@
+@import 'variables';
+
+:host {
+  @media (max-width: $screen-md-min) {
+    .scroll-view {
+      padding: 0 0;
+    }
+  }
+}
+
