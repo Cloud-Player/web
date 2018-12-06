@@ -195,6 +195,7 @@ export class PlayerComponent implements OnInit {
     });
 
     this.playQueue.items.on('remove', item => item.destroy());
+    this.playQueue.items.on('reset sync', this.cdr.detectChanges.bind(this.cdr));
 
     this.isHeadlessPlayer = this.playerManager.isInHeadlessMode();
 
@@ -212,19 +213,13 @@ export class PlayerComponent implements OnInit {
       )
       .subscribe(this.leftFullScreen.bind(this));
 
-    this.sessions.on('add change:state', (session) => {
+    this.sessions.on('add change remove', (session) => {
       const playerSession = this.sessions.getPlayerSession();
       const mySession = this.sessions.getMySession();
-      if (playerSession && mySession && playerSession !== mySession) {
+      if (playerSession && mySession && playerSession.id !== mySession.id) {
         this.playerManager.setInHeadlessMode(true);
-      }
-    });
-
-    this.sessions.on('remove', (session) => {
-      if (session.state === 'player') {
+      } else {
         this.playerManager.setInHeadlessMode(false);
-        this.authenticatedUser.session.is_player = true;
-        this.authenticatedUser.session.save();
       }
     });
 
