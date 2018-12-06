@@ -55,11 +55,6 @@ export class PlaylistAuxappModel extends AuxappModel implements IPlaylist {
     }
   }
 
-  parse(attributes) {
-    delete attributes.items;
-    return attributes;
-  }
-
   initialize(): void {
     if (this.id) {
       this.items.setEndpoint(this.id);

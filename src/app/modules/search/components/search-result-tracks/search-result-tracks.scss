@@ -5,6 +5,8 @@
     .header {
       display: flex;
       white-space: nowrap;
+      border-bottom: 1px solid $gray-lighter;
+      padding: 15px 0 25px;
 
       app-sort-tracks {
         flex-grow: 1;
@@ -28,11 +30,10 @@
 
     /deep/ app-filter-form {
       .search-filter {
-        background: #f5f5f5;
-        margin-left: -18px;
-        width: calc(100% + 34px);
+        margin-left: -15px;
+        width: calc(100% + 30px);
         margin-top: 10px;
-        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2) inset;
+        box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.3) inset;
       }
 
       .new-filter {

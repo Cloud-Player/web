@@ -19,6 +19,7 @@ export interface IPlayer {
   track: ITrack;
   supportsMultiplePlayerInstances: boolean;
   supportsCrossfade: boolean;
+  isHeadlessPlayer: boolean;
 
   getDuration(): number;
 

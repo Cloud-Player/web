@@ -12,6 +12,11 @@ import {YoutubePlayerComponent} from './components/youtube-player/youtube-player
 import {TracksModule} from '../tracks/tracks.module';
 import {VolumeBtnComponent} from './components/volume-btn/volume-btn';
 import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-player';
+import {DeezerPlayerComponent} from './components/deezer-player/deezer-player';
+import {SocketPlayerService} from './services/socket-player';
+import {HeadlessPlayerComponent} from './components/headless-player/headless-player';
+import {AuthenticatedUserModule} from '../authenticated-user/authenticated-user.module';
+import {RemoteDeviceSelectorComponent} from './components/remote-device-selector/remote-device-selector';
 
 @NgModule({
   imports: [
@@ -19,7 +24,8 @@ import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-pla
     FormsModule,
     SharedModule,
     TracksModule,
-    CommentsModule
+    CommentsModule,
+    AuthenticatedUserModule
   ],
   declarations: [
     PlayerControlsComponent,
@@ -27,17 +33,25 @@ import {MixcloudPlayerComponent} from './components/mixcloud-player/mixcloud-pla
     SoundcloudPlayerComponent,
     YoutubePlayerComponent,
     MixcloudPlayerComponent,
+    DeezerPlayerComponent,
+    HeadlessPlayerComponent,
     PlayerManagerComponent,
     PlayerComponent,
-    VolumeBtnComponent
+    VolumeBtnComponent,
+    RemoteDeviceSelectorComponent
   ],
   exports: [
     PlayerComponent
   ],
+  providers: [
+    SocketPlayerService
+  ],
   entryComponents: [
     SoundcloudPlayerComponent,
     YoutubePlayerComponent,
-    MixcloudPlayerComponent
+    MixcloudPlayerComponent,
+    DeezerPlayerComponent,
+    HeadlessPlayerComponent
   ]
 })
 export class PlayerModule {

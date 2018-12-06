@@ -1,13 +1,14 @@
 import {BaseCollection} from '../../backbone/collections/base.collection';
 import {request} from '../../backbone/utils/request.util';
 import {AuxappModel} from './auxapp.model';
+import {Globals} from '../../../../globals';
 
 export class AuxappCollection<TModel extends AuxappModel> extends BaseCollection<TModel> {
 
   model: any = AuxappModel;
 
   hostName(): string {
-    return 'https://api.aux.app';
+    return Globals.httpApiUrl;
   }
 
   request(url: string, method: string, options: any = {}) {

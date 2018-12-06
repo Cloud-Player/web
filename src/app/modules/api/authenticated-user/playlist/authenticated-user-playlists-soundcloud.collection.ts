@@ -6,6 +6,10 @@ import {PlaylistsSoundcloudCollection} from '../../playlists/playlists-soundclou
 export class AuthenticatedUserPlaylistsSoundcloudCollection<TModel extends AuthenticatedUserPlaylistSoundcloudModel>
   extends PlaylistsSoundcloudCollection<PlaylistSoundcloudModel> {
 
-  endpoint = '/me/playlists';
   model: IPlaylistModelConstructor = AuthenticatedUserPlaylistSoundcloudModel;
+
+  setEndpoint(id: string) {
+    this.queryParams['account_id'] = id;
+    this.endpoint = `/playlist/soundcloud`;
+  }
 }

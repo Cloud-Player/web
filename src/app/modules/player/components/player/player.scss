@@ -35,6 +35,12 @@
     }
   }
 
+  &.player-controls-active{
+    app-player-manager {
+      pointer-events: none;
+    }
+  }
+
   @media only screen and (min-width: $screen-sm-min) {
     .player {
       width: 320px;

@@ -1,7 +1,6 @@
 import {ComponentFactoryResolver, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Modal, ModalFactory, ModalStates} from '../src/modal-factory.class';
-import {UserAnalyticsService} from '../../user-analytics/services/user-analytics.service';
 import {filter} from 'rxjs/internal/operators';
 
 export enum ModalServiceStates {
@@ -18,8 +17,9 @@ export class ModalService {
   private _subject: Subject<ModalServiceStates>;
   private _modalFactory: ModalFactory;
   private _isInitialised = false;
+  private _lastRemovedModal;
 
-  constructor(private userAnalyticsService: UserAnalyticsService) {
+  constructor() {
     this._modalFactory = new ModalFactory();
     this._subject = new Subject();
   }
@@ -28,6 +28,7 @@ export class ModalService {
     if (this._modalStack.length > 0) {
       const lastOpenedModal = this._modalStack[this._modalStack.length - 1];
       lastOpenedModal.deactivate();
+      this._lastRemovedModal = lastOpenedModal;
     }
     this._modalStack.push(modal);
   }
@@ -39,6 +40,7 @@ export class ModalService {
       const previousOpenedModal = this._modalStack[index - 1];
       previousOpenedModal.activate();
     }
+    this._lastRemovedModal = modal;
   }
 
   public init(resolver: ComponentFactoryResolver, container: ViewContainerRef) {
@@ -63,7 +65,6 @@ export class ModalService {
         if (this.getOpenedModalsAmount() === 1) {
           this._subject.next(ModalServiceStates.ModalVisbile);
         }
-        this.userAnalyticsService.trackEvent('modal', `open_${modal.getTitle()}`, 'ModalService');
       });
     modal.getObservable()
       .pipe(
@@ -74,13 +75,27 @@ export class ModalService {
         this._subject.next(ModalServiceStates.ModalRemoved);
         if (this.getOpenedModalsAmount() === 0) {
           this._subject.next(ModalServiceStates.NoModalVisible);
+          this._lastRemovedModal = null;
         }
-        this.userAnalyticsService.trackEvent('modal', `close_${modal.getTitle()}`, 'ModalService');
       });
   }
 
   public getOpenedModalsAmount() {
     return this._modalStack.length;
+  }
+
+  public getModalStack(): Array<Modal<any>> {
+    return this._modalStack;
+  }
+
+  public getLastRemovedModal() {
+    return this._lastRemovedModal;
+  }
+
+  public getOpenModal() {
+    if (this._modalStack.length > 0) {
+      return this._modalStack[this._modalStack.length - 1];
+    }
   }
 
   public createModal<TComponent>(component: Type<TComponent>): Modal<TComponent> {

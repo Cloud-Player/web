@@ -19,7 +19,6 @@ export class AddToPlaylistOptionComponent implements OnInit, OnDestroy {
 
   public openAddToPlaylistModal() {
     this._playlistSelectorModal.getInstance().track = this.track;
-    this._playlistSelectorModal.getInstance().setAccounts();
     this._playlistSelectorModal.open();
   }
 

@@ -2,20 +2,18 @@
 
 :host {
   display: block;
-  widht: inherit;
-
-  //&:not(:last-child){
-  border-bottom: 1px solid #efefef;
-  //}
+  width: inherit;
+  user-select:none;
+  border-bottom: 1px solid $gray-lighter;
 
   .track-list-item {
     display: flex;
     margin: 0 -15px;
     padding: 20px 15px;
+    position: relative;
 
     &:hover {
       background: $gray-lighter;
-
       .cover /deep/ app-track-play-button .play-button {
         opacity: 1;
       }
@@ -96,6 +94,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 18px;
+        color: black;
 
         .drag-indicator {
           cursor: grab;
@@ -119,7 +118,7 @@
             color: #aaa;
             &:before {
               content: '—';
-              margin-left: -2px;
+              margin-left: 2px;
               margin-right: 2px;
             }
           }

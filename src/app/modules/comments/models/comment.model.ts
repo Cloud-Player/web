@@ -1,14 +1,14 @@
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
-import {SoundcloudProxyModel} from '../../api/soundcloud/soundcloud-proxy.model';
-import {ArtistSoundcloudModel} from '../../api/artist/artist-soundcloud.model';
+import {AuxappModel} from '../../api/auxapp/auxapp.model';
+import {ArtistAuxappModel} from '../../api/artist/artist-auxapp.model';
 
-export class Comment extends SoundcloudProxyModel {
+export class Comment extends AuxappModel {
   endpoint = '/comments';
 
-  @attributesKey('user')
+  @attributesKey('account')
   @nested()
-  user: ArtistSoundcloudModel;
+  account: ArtistAuxappModel;
 
   @attributesKey('timestamp')
   timestamp: number;

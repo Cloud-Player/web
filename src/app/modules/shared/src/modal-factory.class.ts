@@ -1,11 +1,17 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Type, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from '../components/modal/modal/modal';
 import {Subject} from 'rxjs';
+import {IModalOptions, ModalActionButton} from './modal.interface';
 
 export enum ModalStates {
   Initalised,
   Opened,
   Closed,
+  ExecutePrimaryInProgress,
+  ExecutedPrimary,
+  ExecuteSecondaryInProgress,
+  ExecutedSecondary,
+  Abort,
   Destroyed
 }
 
@@ -45,6 +51,27 @@ export class Modal<TComponent> {
       this._resolver = resolver;
       this._container = container;
       this.build();
+      this._modalRef.instance.actionExecuted
+        .subscribe((ev) => {
+          switch (ev) {
+            case ModalActionButton.PRIMARY:
+              this._subject.next(ModalStates.ExecutePrimaryInProgress);
+              break;
+            case ModalActionButton.PRIMARYDONE:
+              this._subject.next(ModalStates.ExecutedPrimary);
+              break;
+            case ModalActionButton.SECONDARY:
+              this._subject.next(ModalStates.Abort);
+              this._subject.next(ModalStates.ExecuteSecondaryInProgress);
+              break;
+            case ModalActionButton.SECONDARYDONE:
+              this._subject.next(ModalStates.ExecutedSecondary);
+              break;
+            case ModalActionButton.CANCEL:
+              this._subject.next(ModalStates.Abort);
+              break;
+          }
+        });
       this._subject.next(ModalStates.Initalised);
     }
   }
@@ -70,6 +97,10 @@ export class Modal<TComponent> {
     return this._modalRef.instance.getInstance();
   }
 
+  public getOptions(): IModalOptions {
+    return this._modalRef.instance.getOptions();
+  }
+
   public close() {
     this._subject.next(ModalStates.Closed);
     this._modalRef.instance.hide();
@@ -81,11 +112,18 @@ export class Modal<TComponent> {
     }
   }
 
+  public getElement() {
+    if (this._modalRef) {
+      return this._modalRef.instance.getElement();
+    }
+  }
+
   public destroy() {
     this._modalFactory.destroyModal(this);
   }
 
   public $cleanUp() {
+    this._modalRef.instance.actionExecuted.unsubscribe();
     this._modalRef.destroy();
     this._subject.next(ModalStates.Destroyed);
     this._subject.unsubscribe();

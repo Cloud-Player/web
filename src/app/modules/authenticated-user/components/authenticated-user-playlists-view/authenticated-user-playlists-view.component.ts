@@ -61,6 +61,12 @@ export class AuthenticatedUserPlaylistsViewComponent implements OnInit, OnDestro
     this.externalUserAuthenticator.connect(account);
   }
 
+  public canCreatePlaylist() {
+    if (this.selectedAccount) {
+      return this.selectedAccount.provider === 'auxapp';
+    }
+  }
+
   ngOnInit(): void {
     this.selectedAccount = this.accounts.getAccountForProvider('auxapp');
     const authSubscription = this.externalUserAuthenticator.getObservable()

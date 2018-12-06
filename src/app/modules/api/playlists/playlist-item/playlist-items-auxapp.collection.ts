@@ -11,15 +11,15 @@ export class PlaylistItemsAuxappCollection<TModel extends PlaylistItemAuxappMode
 
   hasCreatedAttribute = true;
 
+  setEndpoint(playlistId: string) {
+    this.endpoint = `/playlist/auxapp/${playlistId}/item`;
+  }
+
   public sort(options?: any) {
     const orgComparator = this.comparator;
     this.comparator = SortPlaylistItemsComparator.sortItems(this, orgComparator);
     const result = super.sort(options);
     this.comparator = orgComparator;
     return result;
-  }
-
-  setEndpoint(playlistId: number) {
-    this.endpoint = `/playlist/auxapp/${playlistId}/item`;
   }
 }

@@ -2,6 +2,7 @@
 
 .search-filter {
   position: relative;
+  background: #eee;
 
   .nav-tabs {
     z-index: 1;
@@ -43,7 +44,6 @@
 
   .new-filter {
     position: relative;
-    background: $light-white;
     width: 100%;
     padding: 30px 15px 15px;
     margin-bottom: 15px;

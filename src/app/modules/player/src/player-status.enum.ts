@@ -9,5 +9,6 @@ export enum PlayerStatus {
   Paused = 'PAUSED',
   Ended = 'ENDED',
   Updating = 'UPDATING',
-  Error = 'ERROR'
+  Error = 'ERROR',
+  LoginRequired = 'LOGIN_REQUIRED'
 }

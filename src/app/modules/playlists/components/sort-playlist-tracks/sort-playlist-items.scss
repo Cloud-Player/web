@@ -1,9 +1,21 @@
+@import 'variables';
+
 div.sort-tracks {
   display: flex;
+  white-space: nowrap;
+  border-bottom: 1px solid $gray-lighter;
+  padding: 15px 0 25px;
 
   .sort-tracks {
     padding-right: 5px;
   }
+
+  .sort-by-tracks {
+    span {
+      margin-left: 5px;
+    }
+  }
+
   app-collection-sort {
     flex: auto 0 0;
     display: inline-flex;

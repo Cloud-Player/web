@@ -9,7 +9,8 @@ import {TrackSoundcloudModel} from '../../tracks/track-soundcloud.model';
 import {defaultValue} from '../../../backbone/decorators/default-value.decorator';
 import {TrackYoutubeModel} from '../../tracks/track-youtube.model';
 import {PlayqueueItemsAuxappCollection} from './playqueue-items-auxapp.collection';
-import {AuxappModel} from '../../auxapp/auxapp.model';
+import {TrackDeezerModel} from '../../tracks/track-deezer.model';
+import {TrackAuxappModel} from '../../tracks/track-auxapp.model';
 
 export class PlayqueueItemAuxappModel
   extends PlaylistItemAuxappModel {
@@ -24,9 +25,11 @@ export class PlayqueueItemAuxappModel
   @dynamicInstance({
     identifierKey: 'provider',
     identifierKeyValueMap: {
-      'soundcloud': TrackSoundcloudModel,
-      'youtube': TrackYoutubeModel,
-      'mixcloud': TrackMixcloudModel
+      soundcloud: TrackSoundcloudModel,
+      youtube: TrackYoutubeModel,
+      mixcloud: TrackMixcloudModel,
+      deezer: TrackDeezerModel,
+      default: TrackAuxappModel
     }
   })
   track: ITrack;
@@ -42,7 +45,14 @@ export class PlayqueueItemAuxappModel
   @attributesKey('indexBeforeShuffle')
   indexBeforeShuffle: number;
 
-  url = () => {
+  seekToSeconds: number;
+
+  socketData: {
+    status: PlayQueueItemStatus,
+    progress: number;
+  };
+
+  urlRoot = () => {
     return (<PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>>this.collection).url();
   };
 
@@ -66,6 +76,17 @@ export class PlayqueueItemAuxappModel
     }
 
     return this._promisePerState[requestedStatus];
+  }
+
+  private isPlayerStateSameAsSocket() {
+    if (this.socketData) {
+      const isSameState = (this.socketData.status === PlayQueueItemStatus.Paused && this.isPaused()) ||
+        (this.socketData.status === PlayQueueItemStatus.Playing && this.isPlaying());
+      const isSameProgress = this.progress >= this.socketData.progress - 5 && this.progress <= this.socketData.progress + 5;
+      return (isSameState && isSameProgress);
+    } else {
+      return false;
+    }
   }
 
   queue(): void {
@@ -94,20 +115,28 @@ export class PlayqueueItemAuxappModel
     return this.resolveOnStatus(PlayQueueItemStatus.Paused);
   }
 
-  stop(): Promise<any> {
-    this.status = PlayQueueItemStatus.RequestedStop;
+  stop(options: {
+    enforceStop: boolean,
+    silent: boolean
+  }= {
+    enforceStop: false,
+    silent: false
+  }): Promise<any> {
     this.progress = 0;
-    return this.resolveOnStatus(PlayQueueItemStatus.Stopped);
+    if (options.enforceStop) {
+      this.set('status', PlayQueueItemStatus.Stopped, {silent: options.silent});
+      return Promise.resolve();
+    } else {
+      this.set('status', PlayQueueItemStatus.RequestedStop, {silent: options.silent});
+      return this.resolveOnStatus(PlayQueueItemStatus.Stopped);
+    }
   }
 
   seekTo(to: number): Promise<any> {
-    if (this.isPlaying()) {
-      return this.pause().then(() => {
-        return this.play(to);
-      });
-    } else {
-      return this.play(to);
-    }
+    this.progress = to;
+    this.seekToSeconds = to;
+    this.status = PlayQueueItemStatus.RequestedSeek;
+    return this.resolveOnStatus(PlayQueueItemStatus.Playing);
   }
 
   restart(): Promise<any> {
@@ -134,34 +163,74 @@ export class PlayqueueItemAuxappModel
     return this.status === PlayQueueItemStatus.Scheduled;
   }
 
+  isRecommended(): boolean {
+    return this.status === PlayQueueItemStatus.Recommended;
+  }
+
   toMiniJSON() {
     const item = this.toJSON();
     item.track = this.track.toMiniJSON();
     return item;
   }
 
-  compose() {
-    return AuxappModel.prototype.compose.apply(this, arguments);
+  getIndex() {
+    return this.collection.indexOf(this);
   }
 
   // compose() {
-  //   // let status = this.status;
-  //   // switch (status) {
-  //   //   case PlayQueueItemStatus.RequestedPlaying:
-  //   //     status = PlayQueueItemStatus.Playing;
-  //   //     break;
-  //   //   case PlayQueueItemStatus.RequestedPause:
-  //   //     status = PlayQueueItemStatus.Paused;
-  //   //     break;
-  //   //   case PlayQueueItemStatus.RequestedStop:
-  //   //     status = PlayQueueItemStatus.Stopped;
-  //   //     break;
-  //   // }
-  //   // return {
-  //   //   track_provider_id: this.track.provider,
-  //   //   track_id: this.track.id.toString(),
-  //   //   state: status
-  //   // };
+  //   return AuxappModel.prototype.compose.apply(this, arguments);
   // }
 
+  parse(attrs) {
+    if (!this.isPlaying() && !this.isPaused()) {
+      attrs.status = attrs.state;
+    }
+    delete attrs.state;
+
+    if (!attrs.track || attrs.track === null || (attrs.track && !attrs.track.id)) {
+      delete attrs.track;
+    } else {
+      attrs.track.provider = attrs.track.provider_id;
+      delete attrs.track.provider_id;
+    }
+
+    return attrs;
+  }
+
+  compose() {
+    let status = this.status;
+    switch (status) {
+      case PlayQueueItemStatus.RequestedPlaying:
+      case PlayQueueItemStatus.RequestedSeek:
+        status = PlayQueueItemStatus.Playing;
+        break;
+      case PlayQueueItemStatus.RequestedPause:
+        status = PlayQueueItemStatus.Paused;
+        break;
+      case PlayQueueItemStatus.RequestedStop:
+        status = PlayQueueItemStatus.Stopped;
+        break;
+    }
+    const item: any = {
+      state: status,
+      progress: Math.round(this.progress)
+    };
+    if (this.isNew()) {
+      item.track_provider_id = this.track.provider;
+      item.track_id = this.track.id.toString();
+    }
+    return item;
+  }
+
+  save() {
+    if (this.isPlayerStateSameAsSocket()) {
+      return new Promise((resolve) => {
+        this.socketData = null;
+        resolve(this);
+      });
+    }
+    if (!this.isNew() && this.urlRoot()) {
+      return super.save();
+    }
+  }
 }

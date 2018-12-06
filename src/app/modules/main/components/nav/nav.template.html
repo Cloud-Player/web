@@ -80,6 +80,7 @@
             </div>
             <div *ngIf="account.isConnected()">
               <app-nav-input-item
+                *ngIf="account.provider==='auxapp'"
                 icon="fa fa-plus"
                 title="Add new playlist"
                 [(ngModel)]="availableProviderMap[account.provider].tmpPlaylistModel.title"

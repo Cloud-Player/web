@@ -24,7 +24,7 @@ export class ShufflePlayOptionComponent {
   }
 
   public shufflePlay() {
-    this._playQueue.items.resetQueue();
+    this._playQueue.destroy();
 
     if (this.tracks) {
       this.tracks.forEach((track: ITrack, index) => {
