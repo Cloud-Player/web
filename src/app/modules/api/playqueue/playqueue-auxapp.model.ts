@@ -66,14 +66,14 @@ export class PlayqueueAuxappModel extends AuxappModel {
         data: persistTracks
       }).then((responseItems: Array<any>) => {
         responseItems.forEach((responseItem) => {
-          const queueItem = this.items.find((item: PlayqueueItemAuxappModel) => {
+          const queueItems = this.items.filter((item: PlayqueueItemAuxappModel) => {
             return item.track.id === responseItem.track_id;
           });
-          if (queueItem) {
+          queueItems.forEach((queueItem) => {
             delete responseItem.progress;
             queueItem.set(PlayqueueItemAuxappModel.prototype.parse.call(queueItem, responseItem));
             queueItem.isSyncing = false;
-          }
+          });
         });
       });
     }
@@ -81,7 +81,11 @@ export class PlayqueueAuxappModel extends AuxappModel {
 
   destroy() {
     this.items.reset();
-    return super.destroy();
+    let destroyPromise = super.destroy();
+    if (!destroyPromise) {
+      destroyPromise = Promise.resolve();
+    }
+    return destroyPromise;
   }
 
   initialize() {

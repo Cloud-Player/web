@@ -6,7 +6,7 @@ export class FavouriteTrackItemAuxappModel
 
   compose(): any {
     return {
-      track_provider_id: this.track.provider,
+      track_provider_id: this.track.provider_id,
       track_id: this.track.id.toString()
     };
   }

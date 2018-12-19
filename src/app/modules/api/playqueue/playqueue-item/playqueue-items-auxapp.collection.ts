@@ -7,12 +7,16 @@ import {TracksAuxappCollection} from '../../tracks/tracks-auxapp.collection';
 export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappModel>
   extends PlaylistItemsAuxappCollection<TModel> {
 
-  private _playIndex = 0;
+  private _playIndex;
   private _loopPlayQueue = false;
   private _isShuffled = false;
   private _playRecommended = false;
   private _recommandationsBasedOnItem: PlayqueueItemAuxappModel;
   private _initialItem: PlayqueueItemAuxappModel;
+
+  queryParams = {
+    size: 100
+  };
 
   endpoint = null;
   model: any = PlayqueueItemAuxappModel;
@@ -40,8 +44,8 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     }
   }
 
-  private setPlayIndex(): number {
-    const currentPlaylingItem = this.getPlayingItem() || this.getPausedItem();
+  public setPlayIndex(playQueueItem: TModel): number {
+    const currentPlaylingItem = playQueueItem;
     const oldPlayIndex = this._playIndex;
     if (currentPlaylingItem) {
       this._playIndex = this.indexOf(currentPlaylingItem);
@@ -209,6 +213,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   deShuffle() {
+    const currentPlaying = <TModel>this.at(this._playIndex);
     const items = this.getScheduledItems();
     items.push(this.getCurrentItem());
     const sorted = sortBy(items, 'indexBeforeShuffle');
@@ -216,7 +221,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
       this.remove(item, {silent: true});
       this.add(item, {at: item.indexBeforeShuffle, silent: true});
     });
-    this.setPlayIndex();
+    this.setPlayIndex(currentPlaying);
     this.ensureQueuingOrder();
     this.stopScheduledItemsBeforeCurrentItem({
       enforceStop: false,
@@ -231,11 +236,12 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   ensureQueuingOrder(): void {
+    const currentPlaying = <TModel>this.at(this._playIndex);
     const queuedItems = this.getQueuedItems();
     const incr = this.getCurrentItem() ? 1 : 0;
+    const currentItem = <PlayqueueItemAuxappModel>this.at(this._playIndex);
     queuedItems.forEach((item: TModel, index: number) => {
       this.remove(item, {silent: true});
-      this.setPlayIndex();
       this.add(item, {at: this.getPlayIndex() + index + incr, silent: true, doNothing: true});
     });
 
@@ -250,9 +256,27 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
     recommendedItems.forEach((item: TModel, index: number) => {
       this.remove(item, {silent: true});
-      this.setPlayIndex();
       this.add(item, {at: this.getPlayIndex() + index + incr2, silent: true, doNothing: true});
     });
+    this.setPlayIndex(currentPlaying);
+  }
+
+  stopItemsBeforeAndScheduleAfter(item: TModel) {
+    const existing = this.get(item);
+    if (existing) {
+      const indexOfExisting = this.indexOf(existing);
+      this.each((playqueueItem, index) => {
+        if (index < indexOfExisting) {
+          if (!playqueueItem.isStopped()) {
+            playqueueItem.stop();
+          }
+        } else if (index > indexOfExisting) {
+          if (playqueueItem.isPaused() || playqueueItem.isPlaying() || playqueueItem.isStopped()) {
+            playqueueItem.schedule();
+          }
+        }
+      });
+    }
   }
 
   stopScheduledItemsBeforeCurrentItem(options: {
@@ -265,16 +289,6 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     if (scheduledItem && this.indexOf(scheduledItem) < this._playIndex) {
       scheduledItem.stop(options);
       this.stopScheduledItemsBeforeCurrentItem(options);
-    }
-  }
-
-  scheduleStoppedItemsAfterCurrentItem(scheduledItem: TModel): void {
-    if (scheduledItem && scheduledItem.isStopped()) {
-      const index = this.indexOf(scheduledItem);
-      if (index > this._playIndex) {
-        scheduledItem.set('status', PlayQueueItemStatus.Scheduled);
-        this.scheduleStoppedItemsAfterCurrentItem(this.at(index - 1));
-      }
     }
   }
 
@@ -293,7 +307,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
       if (!item.track.title) {
         trackWithOutDetails.push({
           id: item.track.id,
-          provider_id: item.track.provider
+          provider_id: item.track.provider_id
         });
       }
     });
@@ -311,33 +325,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   public fetchRecommendedItems() {
-    if (
-      // this.getRecommendedItems().length > 0 ||
-      (this._recommandationsBasedOnItem && this._recommandationsBasedOnItem === this.getCurrentItem())
-    ) {
-      this._recommandationsBasedOnItem = this.getCurrentItem();
-      return new Promise((resolve) => {
-        resolve(this);
-      });
-    } else {
-      this._recommandationsBasedOnItem = this.getCurrentItem();
-      return this.request(`/queue/${this.playQueueId}/reco`, 'GET').then((recommendedTracks) => {
-        const recommendedItems = [];
-        recommendedTracks.forEach((recommendedTrack) => {
-          const recommendedItem = {
-            track: recommendedTrack.track,
-            status: PlayQueueItemStatus.Recommended
-          };
-          recommendedItem.track.provider = recommendedTrack.track_provider_id;
-          recommendedItems.push(recommendedItem);
-        });
-        this.getRecommendedItems().forEach((item) => {
-          this.remove(item);
-        });
-        this.add(recommendedItems);
-        return this;
-      });
-    }
+    return Promise.resolve();
   }
 
   public enableRecommendedTracks(enable: boolean) {
@@ -371,8 +359,6 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
     item = super.add(item, options);
 
     this.ensureQueuingOrder();
-    this.setPlayIndex();
-
     return item;
   }
 
@@ -398,78 +384,40 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
 
 
   initialize(): void {
-    this.on('change:status', (queueItem: TModel) => {
-      this.setPlayIndex();
-      if (queueItem.isPlaying()) {
-        this.filter((item: TModel) => {
-          return item.isPlaying() || item.isPaused();
-        }).forEach((playingQueueItem: PlayqueueItemAuxappModel) => {
-          if (playingQueueItem.id !== queueItem.id) {
-            playingQueueItem.stop();
-          }
-        });
-
-        if (this.hasPreviousItem() && this.getPreviousItem().isScheduled()) {
-          this.stopScheduledItemsBeforeCurrentItem({
-            enforceStop: true,
-            silent: true
-          });
-        }
-
-        this.ensureQueuingOrder();
-      }
-
+    this.on('add change:status', (queueItem: TModel) => {
       if (queueItem.isQueued()) {
         this.ensureQueuingOrder();
-      }
-
-      if (queueItem.isStopped()) {
-        queueItem.progress = 0;
-        this.scheduleStoppedItemsAfterCurrentItem(queueItem);
       }
     });
 
     this.on('remove', () => {
-      this.setPlayIndex();
+      const currentItem = <TModel>this.at(this._playIndex);
+      this.setPlayIndex(currentItem);
     });
 
     const debouncedTrackDetailsFetch = debounce(this.fetchTrackDetails.bind(this), 500);
     this.on('add', debouncedTrackDetailsFetch);
     this.on('sync', (itemOrItems) => {
       if (itemOrItems instanceof PlayqueueItemsAuxappCollection) {
-        console.log('UPDATE');
-        this.setPlayIndex();
-        this.stopScheduledItemsBeforeCurrentItem({
-          enforceStop: true,
-          silent: true
-        });
-        this.ensureQueuingOrder();
-
+        if (!this._playIndex) {
+          const playingOrPaused = <TModel>itemOrItems
+            .find(item => item.isPlaying() || item.isPaused());
+          if (playingOrPaused) {
+            this._playIndex = this.indexOf(playingOrPaused);
+          } else {
+            this._playIndex = 0;
+          }
+        }
+        let currentItem = <TModel>this.at(this._playIndex);
         if (this._initialItem) {
-          const currentItem = this.getCurrentItem();
-          const existingInitialItem = this.getItemByTrackId(this._initialItem.track.id);
+          const existingInitialItem = this.get(this._initialItem);
           if (existingInitialItem && existingInitialItem === currentItem) {
             currentItem.seekTo(existingInitialItem.progress);
-          } else if (existingInitialItem && existingInitialItem !== currentItem) {
-            if (currentItem) {
-              const addPos = this._getPlayIndex();
-              this.remove(currentItem, {silent: true});
-              this.remove(existingInitialItem, {silent: true});
-              this.add(existingInitialItem, {at: addPos}).play();
-              const added = this.add(currentItem, {at: addPos + 1, silent: true});
-              added.status = PlayQueueItemStatus.Scheduled;
-            }
-          } else if (!existingInitialItem) {
-            if (currentItem) {
-              const addPos = this.getPlayIndex();
-              this.remove(currentItem, {silent: true});
-              this.add(this._initialItem, {at: addPos}).play();
-              const added = this.add(currentItem, {at: addPos + 1, silent: true});
-              added.status = PlayQueueItemStatus.Scheduled;
-            }
+          } else {
+            currentItem = this.add(this._initialItem, {at: this._playIndex});
           }
           this._initialItem = null;
-          this.setPlayIndex();
+          this.setPlayIndex(currentItem);
         }
       }
     });

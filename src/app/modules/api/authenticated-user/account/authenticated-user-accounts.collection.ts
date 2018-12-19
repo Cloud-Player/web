@@ -21,16 +21,20 @@ export class AuthenticatedUserAccountsCollection<TModel extends IAuthenticatedUs
       auxapp: AuthenticatedUserAccountAuxappModel,
       youtube: AuthenticatedUserAccountYoutubeModel,
       soundcloud: AuthenticatedUserAccountSoundcloudModel,
-      deezer: AuthenticatedUserAccountDeezerModel
+      deezer: AuthenticatedUserAccountDeezerModel,
+      default: AuthenticatedUserAccountAuxappModel
     }
   })
   model = AuthenticatedUserAccountSoundcloudModel;
 
   set(models?: TModel | TModel[], options: CollectionSetOptions = {}): TModel[] {
     if (models instanceof BaseModel && models.id && this.getAccountForProvider(models.provider)) {
-      return this.getAccountForProvider(models.provider).set(models.toJSON(), {merge: true});
+      options.merge = true;
+      return this.getAccountForProvider(models.provider).set(models.toJSON(), options);
     } else if (isObject(models) && this.getAccountForProvider((<any>models).provider_id)) {
-      return this.getAccountForProvider((<any>models).provider_id).set(models, {merge: true});
+      options.merge = true;
+      const existing = this.getAccountForProvider((<any>models).provider_id);
+      return existing.set(existing.parse(models), options);
     } else {
       return super.set.call(this, models, options);
     }

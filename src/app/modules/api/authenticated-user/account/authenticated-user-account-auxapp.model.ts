@@ -60,7 +60,7 @@ export class AuthenticatedUserAccountAuxappModel
   }
 
   parse(attributes) {
-    if (attributes.title === null) {
+    if (!attributes.title) {
       delete attributes.title;
       attributes.tmpAccount = true;
     }

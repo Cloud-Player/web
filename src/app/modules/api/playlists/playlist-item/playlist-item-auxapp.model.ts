@@ -31,11 +31,11 @@ export class PlaylistItemAuxappModel
   created: number;
 
   parse(attributes) {
-    if (!attributes.track) {
+    if (!attributes.track || !attributes.track.id) {
       if (!this.track || this.track.isNew()) {
         attributes.track = {
           id: attributes.track_id || attributes.id,
-          provider_id: attributes.track_provider_id || attributes.provider_id
+          provider_id: attributes.provider_id || attributes.track_provider_id
         };
       } else {
         delete attributes.track;
@@ -48,7 +48,7 @@ export class PlaylistItemAuxappModel
 
   compose(): any {
     return {
-      track_provider_id: this.track.provider,
+      track_provider_id: this.track.provider_id,
       track_id: this.track.id
     };
   }

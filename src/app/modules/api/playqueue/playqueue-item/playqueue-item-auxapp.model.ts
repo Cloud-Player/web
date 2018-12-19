@@ -16,6 +16,32 @@ export class PlayqueueItemAuxappModel
   extends PlaylistItemAuxappModel {
 
   private _promisePerState = {};
+  private _blockUpdate: boolean;
+  private _blockUpdateTimeout;
+
+  public static isNewStatus(previousStatus: PlayQueueItemStatus, newStatus: PlayQueueItemStatus) {
+    if (!previousStatus) {
+      return true;
+    }
+
+    if (previousStatus === PlayQueueItemStatus.RequestedPlaying && newStatus === PlayQueueItemStatus.Playing) {
+      return false;
+    }
+
+    if (previousStatus === PlayQueueItemStatus.RequestedPause && newStatus === PlayQueueItemStatus.Paused) {
+      return false;
+    }
+
+    if (previousStatus === PlayQueueItemStatus.RequestedStop && newStatus === PlayQueueItemStatus.Stopped) {
+      return false;
+    }
+
+    if (previousStatus && newStatus && previousStatus === newStatus) {
+      return false;
+    }
+
+    return true;
+  }
 
   @attributesKey('status')
   @defaultValue(PlayQueueItemStatus.Scheduled)
@@ -23,7 +49,7 @@ export class PlayqueueItemAuxappModel
 
   @attributesKey('track')
   @dynamicInstance({
-    identifierKey: 'provider',
+    identifierKey: 'provider_id',
     identifierKeyValueMap: {
       soundcloud: TrackSoundcloudModel,
       youtube: TrackYoutubeModel,
@@ -45,12 +71,10 @@ export class PlayqueueItemAuxappModel
   @attributesKey('indexBeforeShuffle')
   indexBeforeShuffle: number;
 
-  seekToSeconds: number;
+  @attributesKey('socketUpdateTime')
+  socketUpdateTime: number;
 
-  socketData: {
-    status: PlayQueueItemStatus,
-    progress: number;
-  };
+  seekToSeconds: number;
 
   urlRoot = () => {
     return (<PlayqueueItemsAuxappCollection<PlayqueueItemAuxappModel>>this.collection).url();
@@ -78,15 +102,14 @@ export class PlayqueueItemAuxappModel
     return this._promisePerState[requestedStatus];
   }
 
-  private isPlayerStateSameAsSocket() {
-    if (this.socketData) {
-      const isSameState = (this.socketData.status === PlayQueueItemStatus.Paused && this.isPaused()) ||
-        (this.socketData.status === PlayQueueItemStatus.Playing && this.isPlaying());
-      const isSameProgress = this.progress >= this.socketData.progress - 5 && this.progress <= this.socketData.progress + 5;
-      return (isSameState && isSameProgress);
-    } else {
-      return false;
+  public newProgressEqualsCurrent(newProgress: number) {
+    if (this.progress) {
+      return newProgress >= this.progress - 5 && newProgress <= this.progress + 5;
     }
+  }
+
+  schedule() {
+    this.status = PlayQueueItemStatus.Scheduled;
   }
 
   queue(): void {
@@ -118,7 +141,7 @@ export class PlayqueueItemAuxappModel
   stop(options: {
     enforceStop: boolean,
     silent: boolean
-  }= {
+  } = {
     enforceStop: false,
     silent: false
   }): Promise<any> {
@@ -177,24 +200,43 @@ export class PlayqueueItemAuxappModel
     return this.collection.indexOf(this);
   }
 
-  // compose() {
-  //   return AuxappModel.prototype.compose.apply(this, arguments);
-  // }
-
-  parse(attrs) {
-    if (!this.isPlaying() && !this.isPaused()) {
-      attrs.status = attrs.state;
-    }
-    delete attrs.state;
-
-    if (!attrs.track || attrs.track === null || (attrs.track && !attrs.track.id)) {
-      delete attrs.track;
-    } else {
-      attrs.track.provider = attrs.track.provider_id;
-      delete attrs.track.provider_id;
+  parse(attributes) {
+    attributes.status = attributes.state || this.status;
+    // When current state is stopped but an update wants to set it into pause ignore the update
+    // When the current state is playing or paused and the new status want to put it into playing/paused ignore it as well because
+    // the player could be in requested state
+    if (
+      (this.isStopped() && (attributes.status === PlayQueueItemStatus.Paused)) ||
+      (this.status === PlayQueueItemStatus.RequestedPlaying && attributes.status === PlayQueueItemStatus.Playing) ||
+      (this.status === PlayQueueItemStatus.RequestedPause && attributes.status === PlayQueueItemStatus.Paused)
+    ) {
+      attributes.status = this.status;
     }
 
-    return attrs;
+    // When the model was saved with status playing and the server returns the state but in the meantime the
+    // Item switched to pause ignore the update. Maybe the player was not ready yet
+    if (this._blockUpdate) {
+      attributes.status = this.status;
+      delete attributes.progress;
+      console.warn('Ignore status update');
+    }
+
+    if (this.newProgressEqualsCurrent(attributes.progress)) {
+      delete attributes.progress;
+    }
+
+    if (!attributes.track || !attributes.track.id) {
+      if (!this.track || this.track.isNew()) {
+        attributes.track = {
+          id: attributes.track_id || attributes.id,
+          provider_id: attributes.provider_id || attributes.track_provider_id
+        };
+      } else {
+        delete attributes.track;
+      }
+    }
+
+    return attributes;
   }
 
   compose() {
@@ -216,20 +258,23 @@ export class PlayqueueItemAuxappModel
       progress: Math.round(this.progress)
     };
     if (this.isNew()) {
-      item.track_provider_id = this.track.provider;
+      item.track_provider_id = this.track.provider_id;
       item.track_id = this.track.id.toString();
     }
+
+    // Block further incoming updates for one second
+    this._blockUpdate = true;
+    if (this._blockUpdateTimeout) {
+      clearTimeout(this._blockUpdateTimeout);
+    }
+    this._blockUpdateTimeout = setTimeout(() => {
+      this._blockUpdate = false;
+    }, 1000);
     return item;
   }
 
   save() {
-    if (this.isPlayerStateSameAsSocket()) {
-      return new Promise((resolve) => {
-        this.socketData = null;
-        resolve(this);
-      });
-    }
-    if (!this.isNew() && this.urlRoot()) {
+    if (this.urlRoot()) {
       return super.save();
     }
   }
