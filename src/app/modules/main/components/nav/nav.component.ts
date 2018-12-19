@@ -157,12 +157,12 @@ export class NavComponent implements OnInit {
         () => {
           this.userAnalyticsService.trackEvent(
             'playlist',
-            `${playlistItem.type}:add:${track.provider}`,
+            `${playlistItem.type}:add:${track.provider_id}`,
             'app-nav-sidebar');
         }, () => {
           this.userAnalyticsService.trackEvent(
             'playlist',
-            `${playlistItem.type}:add_error:${track.provider}`,
+            `${playlistItem.type}:add_error:${track.provider_id}`,
             'app-nav-sidebar');
         }
       );

@@ -53,12 +53,12 @@ export class AuthenticatedUserPlaylistSelectorModalComponent implements OnInit, 
       () => {
         this.userAnalyticsService.trackEvent(
           'playlist',
-          `${playlistItem.type}:add:${this.track.provider}`,
+          `${playlistItem.type}:add:${this.track.provider_id}`,
           'app-authenticated-user-playlist-selector-modal');
       }, () => {
         this.userAnalyticsService.trackEvent(
           'playlist',
-          `${playlistItem.type}:add_error:${this.track.provider}`,
+          `${playlistItem.type}:add_error:${this.track.provider_id}`,
           'app-authenticated-user-playlist-selector-modal');
       }
     );
