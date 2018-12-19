@@ -26,6 +26,7 @@ declare namespace DZ {
 
   export namespace Event {
     export function subscribe(ev: string, callback: Function);
+    export function unsubscribe(ev: string, callback?: Function);
   }
 
   export namespace player {

@@ -20,7 +20,6 @@ import {isNumber} from 'underscore';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {EaseService} from '../../../shared/services/ease.service';
 import {FullScreenEventType, FullScreenService} from '../../../shared/services/fullscreen.service';
-import {ITrack} from '../../../api/tracks/track.interface';
 import {filter} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
@@ -44,6 +43,8 @@ export class PlayerManagerComponent implements OnInit {
   private _upcomingPlayer: ComponentRef<IPlayer>;
   private _sizeBeforeFullScreen: number = PlayerFactory.playerWidth;
   private _loginToPlayAlertIsOpen = false;
+  private _errorRetryInProgress = false;
+  private _errorRetryTimeout: any;
 
 
   @ViewChild('playerContainer', {read: ViewContainerRef})
@@ -76,23 +77,26 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
-  private handlePlayerStatusChange(newStatus: PlayerStatus) {
+  private handlePlayerStatusChange(newStatus: PlayerStatus, playQueueItem: PlayqueueItemAuxappModel) {
     switch (newStatus) {
       case PlayerStatus.Playing:
-        this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:is_playing`, 'app-player-manager');
-        this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Playing;
+        this.userAnalyticsService.trackEvent(
+          'player', `${this.playQueue.items.getCurrentItem().track.provider_id}:is_playing`, 'app-player-manager');
+        playQueueItem.status = PlayQueueItemStatus.Playing;
         this._errorRetryCounter = 0;
         this._loginToPlayAlertIsOpen = false;
         break;
       case PlayerStatus.Paused:
-        this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:paused`, 'app-player-manager');
-        this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Paused;
+        this.userAnalyticsService.trackEvent(
+          'player', `${this.playQueue.items.getCurrentItem().track.provider_id}:paused`, 'app-player-manager');
+        playQueueItem.status = PlayQueueItemStatus.Paused;
         break;
       case PlayerStatus.Stopped:
-        this.playQueue.items.getCurrentItem().status = PlayQueueItemStatus.Stopped;
+        playQueueItem.status = PlayQueueItemStatus.Stopped;
         break;
       case PlayerStatus.Ended:
-        this.userAnalyticsService.trackEvent('player', `${this.playQueue.items.getCurrentItem().track.provider}:ended`, 'app-player-manager');
+        this.userAnalyticsService.trackEvent(
+          'player', `${this.playQueue.items.getCurrentItem().track.provider_id}:ended`, 'app-player-manager');
         if (this.playQueue.items.hasNextItem()) {
           this.playQueue.items.getNextItem().play();
         } else {
@@ -100,18 +104,21 @@ export class PlayerManagerComponent implements OnInit {
         }
         break;
       case PlayerStatus.Error:
-        this.userAnalyticsService.trackEvent('player', `error:${this._activePlayer.instance.getError()}`, 'app-player-manager');
+        this.userAnalyticsService.trackEvent(
+          'player', `error:${this._activePlayer.instance.getError()}`, 'app-player-manager');
         const currentItem = this.playQueue.items.getCurrentItem();
         if (currentItem && currentItem.isPlaying()) {
           this.playQueue.items.getCurrentItem().pause();
-          this.retryOnError();
+          if (!this._errorRetryInProgress) {
+            this.retryOnError();
+          }
         }
         break;
       case PlayerStatus.LoginRequired:
         if (!this._loginToPlayAlertIsOpen) {
           if (this.playQueue.items.getCurrentItem()) {
             const currentUserAccounts = AuthenticatedUserModel.getInstance().accounts;
-            const trackProvider = this.playQueue.items.getCurrentItem().track.provider;
+            const trackProvider = this.playQueue.items.getCurrentItem().track.provider_id;
             const accountForTrack = currentUserAccounts.getAccountForProvider(trackProvider);
             if (accountForTrack) {
               this.loginRequired = true;
@@ -132,10 +139,25 @@ export class PlayerManagerComponent implements OnInit {
   }
 
   private retryOnError() {
+    this._errorRetryInProgress = true;
+    console.warn('RETRY AFTER ERROR');
     const currentItem = this.playQueue.items.getCurrentItem();
     const progress = currentItem.progress;
-    if (this._errorRetryCounter > 2) {
+
+    if (currentItem.status === PlayQueueItemStatus.Playing) {
+      this._errorRetryCounter = 0;
+      this._errorRetryInProgress = false;
+      return;
+    }
+
+    if (this._errorRetryCounter > 3) {
+      console.error('[Player Manager] Error could not be resolved, play next track!');
+      this._errorRetryInProgress = false;
       this.userAnalyticsService.trackEvent('player', 'error_resolve_timeout', 'app-player-manager');
+      if (this.playQueue.items.hasNextItem()) {
+        this.playQueue.items.getNextItem().play();
+        this._errorRetryCounter = 0;
+      }
       return;
     }
     this._errorRetryCounter++;
@@ -144,28 +166,41 @@ export class PlayerManagerComponent implements OnInit {
       this._activePlayer = null;
     }
     currentItem.play(progress).then(() => {
+      if (this._errorRetryTimeout) {
+        clearTimeout(this._errorRetryTimeout);
+      }
+      this._errorRetryCounter = 0;
+      this._errorRetryInProgress = false;
       this.userAnalyticsService.trackEvent('player', 'resolved_player_error', 'app-player-manager');
     });
+
+    this._errorRetryTimeout = setTimeout(() => {
+      this.retryOnError();
+    }, 1000);
   }
 
   private bindListeners(player: IPlayer): void {
     this.unBindListeners();
 
     this._playerSubscriptions.add(player.currentTimeChange
-      .subscribe(currentTime => {
-        const item = this.playQueue.items.getItemByTrackId(player.track.id);
-        if (item) {
-          item.progress = currentTime;
-        }
+      .subscribe(ev => {
+        ev.item.progress = ev.progress;
       })
+    );
+
+    this._playerSubscriptions.add(
+      player.durationChange
+        .subscribe((ev) => {
+          ev.item.duration = ev.duration;
+        })
     );
 
     this._playerSubscriptions.add(
       player.currentTimeChange
         .pipe(
-          filter((currentTime: number) => {
+          filter((ev) => {
             if (player.getDuration()) {
-              return currentTime >= (player.getDuration() - this._prepareTime);
+              return ev.progress >= (player.getDuration() - this._prepareTime);
             }
           })
         )
@@ -177,9 +212,9 @@ export class PlayerManagerComponent implements OnInit {
     const crossFadeSubscription = this._playerSubscriptions.add(
       player.currentTimeChange
         .pipe(
-          filter(currentTime => {
+          filter(ev => {
             if (player.getDuration() > this._fadeDuration) {
-              return currentTime >= player.getDuration() - this._fadeDuration;
+              return ev.progress >= player.getDuration() - this._fadeDuration;
             } else {
               return false;
             }
@@ -193,28 +228,18 @@ export class PlayerManagerComponent implements OnInit {
 
     this._playerSubscriptions.add(
       player.statusChange
-        .subscribe((status: PlayerStatus) => {
-          this.handlePlayerStatusChange(status);
-        })
-    );
-
-    this._playerSubscriptions.add(
-      player.durationChange
-        .subscribe(() => {
-          const playQueueItem = this.playQueue.items.getItemByTrackId(player.track.id);
-          if (playQueueItem) {
-            playQueueItem.duration = player.getDuration();
-          }
+        .subscribe((status) => {
+          this.handlePlayerStatusChange(status.newStatus, status.item);
         })
     );
 
     const currentDuration = player.getDuration();
-    const playQueueItem = this.playQueue.items.getItemByTrackId(player.track.id);
+    const item = this.playQueue.items.get(player.playQueueItem);
 
-    if (playQueueItem && isNumber(currentDuration) && currentDuration > 0) {
-      playQueueItem.duration = player.getDuration();
+    if (item && isNumber(currentDuration) && currentDuration > 0) {
+      item.duration = player.getDuration();
     }
-    this.handlePlayerStatusChange(player.getStatus());
+    this.handlePlayerStatusChange(player.getStatus(), player.playQueueItem);
   }
 
   private crossFade() {
@@ -225,7 +250,7 @@ export class PlayerManagerComponent implements OnInit {
       nextPlayer.instance.supportsCrossfade &&
       nextPlayer.instance.isAbleToPlay()) {
       nextPlayer.instance.play().then(() => {
-        nextPlayer.instance.setSize(PlayerFactory.getPlayerSize(nextPlayer.instance.track));
+        nextPlayer.instance.setSize(PlayerFactory.getPlayerSize(nextPlayer.instance.playQueueItem.track));
         nextPlayer.instance.setVolume(this._volume);
         nextPlayer.instance.fadeIn(this._fadeDuration * 1000);
         currentPlayer.instance.fadeOut(this._fadeDuration * 1000);
@@ -241,7 +266,7 @@ export class PlayerManagerComponent implements OnInit {
     const upcoming: PlayqueueItemAuxappModel = this.playQueue.items.getNextItem();
 
     if (upcoming) {
-      if (this._upcomingPlayer && this._upcomingPlayer.instance.track.id === upcoming.track.id) {
+      if (this._upcomingPlayer && this._upcomingPlayer.instance.playQueueItem.track.id === upcoming.track.id) {
         // Player is already prepared for the next track so do nothig
         return;
       } else {
@@ -253,7 +278,7 @@ export class PlayerManagerComponent implements OnInit {
         // In case provider does not support multiple player instances like Mixcloud do not initialise a new instance
         if (this._activePlayer &&
           !this._activePlayer.instance.supportsMultiplePlayerInstances &&
-          upcoming.track.provider === this._activePlayer.instance.track.provider) {
+          upcoming.track.provider_id === this._activePlayer.instance.playQueueItem.track.provider_id) {
           return;
         }
         this._upcomingPlayer = this._playerFactory.createPlayer(upcoming);
@@ -264,9 +289,9 @@ export class PlayerManagerComponent implements OnInit {
     }
   }
 
-  private setPlayQueueItemToStopped(track: ITrack) {
-    const playQueueItem = this.playQueue.items.getItemByTrackId(track.id);
-    if (playQueueItem && playQueueItem.status === PlayQueueItemStatus.RequestedStop) {
+  private setPlayQueueItemToStopped(playQueueItem: PlayqueueItemAuxappModel) {
+    const item = this.playQueue.items.get(playQueueItem);
+    if (item && playQueueItem.status === PlayQueueItemStatus.RequestedStop) {
       playQueueItem.status = PlayQueueItemStatus.Stopped;
     }
   }
@@ -292,9 +317,13 @@ export class PlayerManagerComponent implements OnInit {
     newPlayer.instance.removeClass('upcoming');
     newPlayer.instance.setOpacity(null);
 
-    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.track);
+    const playerSize = PlayerFactory.getPlayerSize(newPlayer.instance.playQueueItem.track);
     this.setHeight(playerSize.height);
     newPlayer.instance.setSize(playerSize);
+
+    const item = newPlayer.instance.playQueueItem;
+    this.playQueue.items.setPlayIndex(item);
+    this.playQueue.items.stopItemsBeforeAndScheduleAfter(item);
 
     this.bindListeners(newPlayer.instance);
 
@@ -303,14 +332,14 @@ export class PlayerManagerComponent implements OnInit {
   }
 
   private reusePlayer(existingPlayer: ComponentRef<IPlayer>, playQueueItem: PlayqueueItemAuxappModel, startTime?: number) {
-    this.setPlayQueueItemToStopped(existingPlayer.instance.track);
-    existingPlayer.instance.updateTrack(playQueueItem.track).then(() => {
+    this.setPlayQueueItemToStopped(existingPlayer.instance.playQueueItem);
+    existingPlayer.instance.updatePlayQueueItem(playQueueItem).then(() => {
       this.activatePlayer(existingPlayer, this._upcomingPlayer, startTime);
     });
   }
 
   private removePlayer(player: ComponentRef<IPlayer>) {
-    this.setPlayQueueItemToStopped(player.instance.track);
+    this.setPlayQueueItemToStopped(player.instance.playQueueItem);
     player.instance.removeClass('upcoming');
     player.instance.removeClass('active');
     this._playerFactory.destroyPlayer(player);
@@ -320,14 +349,19 @@ export class PlayerManagerComponent implements OnInit {
     const activePlayer: ComponentRef<IPlayer> = this._activePlayer;
     const nextPlayer: ComponentRef<IPlayer> = this._upcomingPlayer;
 
-    if (activePlayer && activePlayer.instance.track.id === playQueueItem.track.id) {
+    if (activePlayer && activePlayer.instance.playQueueItem.track.id === playQueueItem.track.id) {
       /*
        * 1. PlayQueueItem track id is the one from current player -> just trigger play
        */
+      activePlayer.instance.pause();
+      activePlayer.instance.updatePlayQueueItem(playQueueItem);
+      this.playQueue.items.setPlayIndex(playQueueItem);
+      this.playQueue.items.stopItemsBeforeAndScheduleAfter(playQueueItem);
       activePlayer.instance.setVolume(this._volume);
       activePlayer.instance.play(startTime);
       activePlayer.instance.addClass('active');
-    } else if (nextPlayer && nextPlayer.instance.track.id === playQueueItem.track.id && nextPlayer.instance.isAbleToPlay()) {
+      activePlayer.instance.setOpacity(null);
+    } else if (nextPlayer && nextPlayer.instance.playQueueItem.track.id === playQueueItem.track.id && nextPlayer.instance.isAbleToPlay()) {
       /*
        * 2. NextPlayer for PlayQueueTrack does exist and is able to play so start that one
        */
@@ -343,6 +377,10 @@ export class PlayerManagerComponent implements OnInit {
        */
       const newPlayer = this._playerFactory.createPlayer(playQueueItem);
       this.activatePlayer(newPlayer, activePlayer, startTime);
+    }
+
+    if (activePlayer && playQueueItem !== activePlayer.instance.playQueueItem) {
+      activePlayer.instance.playQueueItem = playQueueItem;
     }
   }
 
@@ -367,6 +405,7 @@ export class PlayerManagerComponent implements OnInit {
   private reactOnPlayQueueChange(item: PlayqueueItemAuxappModel): void {
     switch (item.status) {
       case PlayQueueItemStatus.RequestedPlaying:
+        this.loginRequired = false;
         this.startPlayerFor(item, item.progress);
         break;
       case PlayQueueItemStatus.RequestedSeek:
@@ -392,12 +431,12 @@ export class PlayerManagerComponent implements OnInit {
   private updatePlayerWidth(width: number) {
     PlayerFactory.playerWidth = width;
     if (this._activePlayer) {
-      const playerSize = PlayerFactory.getPlayerSize(this._activePlayer.instance.track);
+      const playerSize = PlayerFactory.getPlayerSize(this._activePlayer.instance.playQueueItem.track);
       this._activePlayer.instance.setSize(playerSize);
       this.setHeight(playerSize.height);
     }
     if (this._upcomingPlayer) {
-      this._upcomingPlayer.instance.setSize(PlayerFactory.getPlayerSize(this._upcomingPlayer.instance.track));
+      this._upcomingPlayer.instance.setSize(PlayerFactory.getPlayerSize(this._upcomingPlayer.instance.playQueueItem.track));
     }
   }
 
@@ -434,12 +473,15 @@ export class PlayerManagerComponent implements OnInit {
     return this._playerFactory.isInHeadlessMode();
   }
 
-  public setInHeadlessMode(isHeadless: boolean) {
-    this._playerFactory.setInHeadlessMode(isHeadless);
-    const currentItem = this.playQueue.items.getCurrentItem();
-    if (currentItem) {
-      const player = this._playerFactory.createPlayer(this.playQueue.items.getCurrentItem());
-      this.activatePlayer(player, this._activePlayer, currentItem.progress, currentItem.isPlaying());
+  public setInHeadlessMode(isHeadless: boolean, canAutoplay = true) {
+    if (this._playerFactory.isInHeadlessMode() !== isHeadless) {
+      this._playerFactory.setInHeadlessMode(isHeadless);
+      const currentItem = this.playQueue.items.getCurrentItem();
+      if (currentItem) {
+        const player = this._playerFactory.createPlayer(this.playQueue.items.getCurrentItem());
+        const startPlayer = currentItem.isPlaying() && canAutoplay;
+        this.activatePlayer(player, this._activePlayer, currentItem.progress, startPlayer);
+      }
     }
   }
 
@@ -447,15 +489,16 @@ export class PlayerManagerComponent implements OnInit {
     if (isLoggedIn) {
       this.loginRequired = false;
       this._loginToPlayAlertIsOpen = false;
-      if (this.playQueue.items.getCurrentItem()) {
-        if (this._activePlayer) {
-          this._playerFactory.destroyPlayer(this._activePlayer, true);
-          this._activePlayer = null;
+
+      setTimeout(() => {
+        if (this.playQueue.items.getCurrentItem()) {
+          if (this._activePlayer) {
+            this._playerFactory.destroyPlayer(this._activePlayer, true);
+            this._activePlayer = null;
+          }
+          this.playQueue.items.getCurrentItem().play(0);
         }
-        this.playQueue.items.getCurrentItem().play();
-      }
-    } else {
-      alert('LOGIN ABORTED');
+      }, 3000);
     }
   }
 
@@ -481,6 +524,7 @@ export class PlayerManagerComponent implements OnInit {
         this.removePlayer(this._upcomingPlayer);
         this._upcomingPlayer = null;
       }
+      this.loginRequired = false;
       this.setHeight(0);
     });
 

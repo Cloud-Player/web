@@ -55,7 +55,7 @@
   <app-range-slider class="time"
                     [min]="0"
                     [max]="currentItem.duration"
-                    [value]="currentItem.progress"
+                    [value]="progress"
                     [step]="0.01"
                     [transformDisplayValue]="transformProgressBarValues"
                     [showCurrentValue]="true"
@@ -65,7 +65,7 @@
   </app-range-slider>
 
   <app-context-menu>
-    <div *ngIf="currentItem.track" class="meta">
+    <div *ngIf="!currentItem.track.isNew()" class="meta">
       <app-toggle-liked-track [track]="currentItem.track" class="hidden-xs"></app-toggle-liked-track>
       <div class="details"
            appDraggable="true"
@@ -83,7 +83,7 @@
     </div>
   </app-context-menu>
 
-  <div *ngIf="!currentItem.track"
+  <div *ngIf="currentItem.track.isNew()"
        class="dummy meta">
     <i class="fa fa-heart-o"
        aria-hidden="true"></i>

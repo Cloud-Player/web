@@ -1,6 +1,7 @@
 export enum PlayerStatus {
   NotInitialised = 'NOT_INITIALISED',
   Initialised = 'INITIALISED',
+  Initialising = 'INITIALISING',
   Waiting = 'WAITING',
   Ready = 'READY',
   RequestPlay = 'REQUEST_PLAY',

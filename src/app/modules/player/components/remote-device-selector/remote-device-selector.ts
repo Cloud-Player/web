@@ -28,6 +28,11 @@ export class RemoteDeviceSelectorComponent {
     }
   }
 
+  public isConnected() {
+    return this._authenticatedUser.accounts
+      .filter(account => account.isConnected()).length > 1;
+  }
+
   public playOnDevice(session) {
     session.is_player = true;
     this.socketBackboneSender.decorate(session);

@@ -17,6 +17,7 @@ import {SocketPlayerService} from './services/socket-player';
 import {HeadlessPlayerComponent} from './components/headless-player/headless-player';
 import {AuthenticatedUserModule} from '../authenticated-user/authenticated-user.module';
 import {RemoteDeviceSelectorComponent} from './components/remote-device-selector/remote-device-selector';
+import {EmptyPlayerComponent} from './components/empty-player/empty-player';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {RemoteDeviceSelectorComponent} from './components/remote-device-selector
     PlayerManagerComponent,
     PlayerComponent,
     VolumeBtnComponent,
-    RemoteDeviceSelectorComponent
+    RemoteDeviceSelectorComponent,
+    EmptyPlayerComponent
   ],
   exports: [
     PlayerComponent
@@ -51,7 +53,8 @@ import {RemoteDeviceSelectorComponent} from './components/remote-device-selector
     YoutubePlayerComponent,
     MixcloudPlayerComponent,
     DeezerPlayerComponent,
-    HeadlessPlayerComponent
+    HeadlessPlayerComponent,
+    EmptyPlayerComponent
   ]
 })
 export class PlayerModule {

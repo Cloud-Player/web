@@ -20,5 +20,15 @@
       [isActive]="true">
     </app-option-btn>
   </div>
+  <div *ngIf="sessions.length===1">
+    <app-option-btn
+      *ngIf="!isConnected()"
+      title="Login to remote control other devices of your account">
+    </app-option-btn>
+    <app-option-btn
+      *ngIf="isConnected()"
+      title="No other device available. Login on another device">
+    </app-option-btn>
+  </div>
 </app-options-btn>
 

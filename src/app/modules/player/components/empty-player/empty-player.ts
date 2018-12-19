@@ -7,11 +7,11 @@ import {ITrack} from '../../../api/tracks/track.interface';
 import {PlayerStatus} from '../../src/player-status.enum';
 
 @Component({
-  selector: 'app-headless-player',
-  styleUrls: ['./headless-player.scss'],
-  templateUrl: './headless-player.html'
+  selector: 'app-empty-player',
+  styleUrls: ['./empty-player.scss'],
+  templateUrl: './empty-player.html'
 })
-export class HeadlessPlayerComponent extends AbstractPlayer implements IPlayer, OnInit, OnDestroy {
+export class EmptyPlayerComponent extends AbstractPlayer implements IPlayer, OnInit, OnDestroy {
   @Input()
   public track: ITrack;
 
@@ -40,9 +40,6 @@ export class HeadlessPlayerComponent extends AbstractPlayer implements IPlayer, 
   protected initialisePlayer(options: IPlayerOptions): Promise<Mixcloud.IPlayerWidget> {
     this.setStatus(PlayerStatus.Initialised);
     this.setDuration(this.track.duration);
-    this.track.on('change:duration', () => {
-      this.setDuration(this.track.duration);
-    });
     return new Promise((resolve, reject) => {
       this.onReady();
       resolve();
@@ -65,6 +62,11 @@ export class HeadlessPlayerComponent extends AbstractPlayer implements IPlayer, 
     this.setAllowedToPlay(true);
     this.setAbleToPlay(true);
     this.setStatus(PlayerStatus.Playing);
+    setTimeout(() => {
+      console.error('No Player available for the track ' + JSON.stringify(this.track));
+      this.stopPlayer();
+      this.setStatus(PlayerStatus.Ended);
+    }, 5000);
   }
 
   protected pausePlayer(): void {
@@ -77,10 +79,6 @@ export class HeadlessPlayerComponent extends AbstractPlayer implements IPlayer, 
   }
 
   protected seekPlayerTo(to: number) {
-    if (to) {
-      this.onCurrentTimeUpdate(to);
-    }
-    this.statusChange.emit({newStatus: PlayerStatus.Playing, item: this.playQueueItem});
   }
 
   public getPlayerEl(): ElementRef {

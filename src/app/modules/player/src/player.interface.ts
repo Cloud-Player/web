@@ -2,6 +2,7 @@ import {EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ITrack} from '../../api/tracks/track.interface';
 import {PlayerStatus} from './player-status.enum';
+import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
 export interface IPlayerSize {
   height: number;
@@ -12,11 +13,14 @@ export interface IPlayerOptions {
   size: IPlayerSize;
 }
 
-export interface IPlayer {
-  durationChange: EventEmitter<{}>;
-  statusChange: EventEmitter<{}>;
-  currentTimeChange: EventEmitter<{}>;
-  track: ITrack;
+export interface IPlayerUpdates {
+  durationChange: EventEmitter<{duration: number, item: PlayqueueItemAuxappModel}>;
+  statusChange: EventEmitter<{ newStatus: PlayerStatus, item: PlayqueueItemAuxappModel }>;
+  currentTimeChange: EventEmitter<{progress: number, item: PlayqueueItemAuxappModel}>;
+}
+
+export interface IPlayer extends IPlayerUpdates{
+  playQueueItem: PlayqueueItemAuxappModel;
   supportsMultiplePlayerInstances: boolean;
   supportsCrossfade: boolean;
   isHeadlessPlayer: boolean;
@@ -51,7 +55,7 @@ export interface IPlayer {
 
   fadeOut(duration: number): Observable<number>;
 
-  updateTrack(track: ITrack): Promise<any>;
+  updatePlayQueueItem(item: PlayqueueItemAuxappModel): Promise<any>;
 
   addClass(className: string): void;
 

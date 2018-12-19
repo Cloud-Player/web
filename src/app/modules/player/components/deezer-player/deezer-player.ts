@@ -21,6 +21,7 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
   private _newTrack: ITrack;
   private _eventHandler;
   private _lastTrackDuration: number;
+  private _canPlayWatcherTimeout;
 
   @Input()
   public track: TrackDeezerModel;
@@ -30,7 +31,6 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
    */
   public supportsMultiplePlayerInstances = false;
   public supportsCrossfade = false;
-
   public providerMap: ProviderMap = ProviderMap.map;
 
   constructor(private el: ElementRef) {
@@ -64,8 +64,9 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
       case 'progress':
         const progress = arg[0];
         const duration = arg[1];
-        if (duration !== this._lastTrackDuration) {
-          this._lastTrackDuration = duration;
+        const floorDuration = Math.floor(duration / 60 * 10) / 10;
+        if (floorDuration && floorDuration !== this._lastTrackDuration) {
+          this._lastTrackDuration = floorDuration;
           this.setDuration(duration);
         }
         if (progress) {
@@ -117,7 +118,7 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
     });
   }
 
-  protected initialisePlayer(options: IPlayerOptions): Promise<Mixcloud.IPlayerWidget> {
+  protected initialisePlayer(options?: IPlayerOptions): Promise<Mixcloud.IPlayerWidget> {
     return new Promise((resolve) => {
       if (!document.getElementById('dz-root')) {
         throw new Error('Deezer player element is not attached to the dom!');
@@ -156,6 +157,7 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
   }
 
   protected deInitialisePlayer(): void {
+    this._lastTrackDuration = null;
   }
 
   protected setPlayerVolume(volume: number) {
@@ -175,7 +177,10 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
   protected startPlayer(): void {
     this.onRequestPlay();
     DZ.player.play();
-    setTimeout(() => {
+    if (this._canPlayWatcherTimeout) {
+      window.clearTimeout(this._canPlayWatcherTimeout);
+    }
+    this._canPlayWatcherTimeout = setTimeout(() => {
       if (!DZ.player.isPlaying()) {
         console.error('CAN NOT START');
         this.pausePlayer();
@@ -197,6 +202,12 @@ export class DeezerPlayerComponent extends AbstractPlayer implements IPlayer, On
     if (this.getDuration()) {
       this._seekedTo = (to / this.getDuration()) * 100;
       DZ.player.seek(this._seekedTo);
+      setTimeout(() => {
+        if (DZ.player.isPlaying()) {
+          this.onWaiting();
+          this.onPlaying();
+        }
+      }, 500);
     }
   }
 

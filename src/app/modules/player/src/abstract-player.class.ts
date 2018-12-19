@@ -3,11 +3,12 @@ import {ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {isNumber, isString, throttle} from 'underscore';
 import {PlayerStatus} from './player-status.enum';
 import {EaseService} from '../../shared/services/ease.service';
-import {IPlayerOptions, IPlayerSize} from './player.interface';
+import {IPlayerOptions, IPlayerSize, IPlayerUpdates} from './player.interface';
 import {ITrack} from '../../api/tracks/track.interface';
 import {filter} from 'rxjs/internal/operators';
+import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 
-export abstract class AbstractPlayer implements OnInit {
+export abstract class AbstractPlayer implements IPlayerUpdates, OnInit {
   private _duration: number;
   private _currentTime: number;
   private _volume: number;
@@ -30,18 +31,30 @@ export abstract class AbstractPlayer implements OnInit {
   private _forcePlayStartTry = 0;
   private _seekTo = null;
   private _initialTrackDuration = 0;
+  private _playQueueItem: PlayqueueItemAuxappModel;
+
+  protected track: ITrack;
+
+  // @Input()
+  // public track: ITrack;
 
   @Input()
-  public track: ITrack;
+  public set playQueueItem(playQueueItem: PlayqueueItemAuxappModel) {
+    this.updatePlayQueueItem(playQueueItem);
+  }
+
+  public get playQueueItem() {
+    return this._playQueueItem;
+  }
 
   @Output()
-  public durationChange = new EventEmitter();
+  public durationChange: EventEmitter<{ duration: number, item: PlayqueueItemAuxappModel }> = new EventEmitter();
 
   @Output()
-  public currentTimeChange = new EventEmitter();
+  public currentTimeChange: EventEmitter<{ progress: number, item: PlayqueueItemAuxappModel }> = new EventEmitter();
 
   @Output()
-  public statusChange = new EventEmitter();
+  public statusChange: EventEmitter<{ newStatus: PlayerStatus, item: PlayqueueItemAuxappModel }> = new EventEmitter();
 
   public isHeadlessPlayer = false;
 
@@ -80,6 +93,9 @@ export abstract class AbstractPlayer implements OnInit {
 
   protected checkLoginByTrackDuration(trackDuration: number, playerDuration: any) {
     const playerDurationNum = parseInt(playerDuration, 10);
+    if (!trackDuration || !playerDuration || !this._currentTime || this._currentTime < 1) {
+      return;
+    }
     if (trackDuration && playerDurationNum && playerDurationNum < (trackDuration - 10)) {
       this.setAllowedToPlay(false);
       this.setAbleToPlay(false);
@@ -91,8 +107,8 @@ export abstract class AbstractPlayer implements OnInit {
   protected setDuration(duration: number) {
     if (isNumber(duration) && duration > 0) {
       this._duration = duration;
-      this.durationChange.emit(duration);
-      this.checkLoginByTrackDuration(this.track.duration, duration);
+      this.durationChange.emit({duration: duration, item: this.playQueueItem});
+      this.checkLoginByTrackDuration(this.playQueueItem.track.duration, duration);
     }
   }
 
@@ -101,13 +117,14 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   private emitTimeChange(time: number) {
-    this.currentTimeChange.emit(time);
+    this.currentTimeChange.emit({progress: time, item: this.playQueueItem});
   }
 
   protected setCurrentTime(currentTime: number): void {
     if (isNumber(currentTime) && currentTime > 0) {
       this._currentTime = currentTime;
       this.emitTimeChange(currentTime);
+      this.checkLoginByTrackDuration(this.playQueueItem.track.duration, this.getDuration());
     }
   }
 
@@ -116,13 +133,13 @@ export abstract class AbstractPlayer implements OnInit {
   }
 
   protected setStatus(status: PlayerStatus) {
-    if (!this._initialised && status !== PlayerStatus.NotInitialised) {
+    if (!this._initialised && status !== PlayerStatus.NotInitialised && status !== PlayerStatus.Initialising) {
       /*Make sure that the status NotInitialised can not be overwritted by a delayed promise*/
       return;
     }
     if (this._status !== status) {
       this._status = status;
-      this.statusChange.emit(status);
+      this.statusChange.emit({newStatus: status, item: this.playQueueItem});
       this.removeClass(/status-/);
       this.addClass('status-' + status);
     }
@@ -250,7 +267,7 @@ export abstract class AbstractPlayer implements OnInit {
         } else {
           const subscription = this.statusChange
             .pipe(
-              filter(newState => newState === requiredStatus)
+              filter(statusEv => statusEv.newStatus === requiredStatus)
             )
             .subscribe(() => {
               resolve();
@@ -306,6 +323,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   public initialise(options?: IPlayerOptions): Promise<any> {
     this.setCurrentTime(0);
+    this.setStatus(PlayerStatus.Initialising);
     if (!this._initialisePromise) {
       this._initialisePromise = new Promise(resolve => {
         const promiseQueue = [];
@@ -324,7 +342,7 @@ export abstract class AbstractPlayer implements OnInit {
           });
         }
 
-        this.updateTrackDuration(this.track.duration);
+        this.updateTrackDuration(this.playQueueItem.track.duration);
 
         return this.executeInitialisingQueue(promiseQueue).then(() => {
           this._playerSdkIsInitialised = true;
@@ -364,7 +382,7 @@ export abstract class AbstractPlayer implements OnInit {
   public preload(startTime?: number): void {
     this.setCurrentTime(startTime);
     this.executeOnInitialised(() => {
-      this.preloadTrack(this.track, startTime);
+      this.preloadTrack(this.playQueueItem.track, startTime);
     });
   }
 
@@ -404,7 +422,7 @@ export abstract class AbstractPlayer implements OnInit {
 
   public seekTo(to: number): Promise<any> {
     this._seekTo = to;
-    this.currentTimeChange.emit(to);
+    this.currentTimeChange.emit({progress: to, item: this.playQueueItem});
     this.executeOnInitialised(() => {
       this.seekPlayerTo(to);
     });
@@ -431,12 +449,21 @@ export abstract class AbstractPlayer implements OnInit {
     return obs;
   }
 
-  public updateTrack(track: ITrack): Promise<any> {
-    if (track.id === this.track.id) {
+  public updatePlayQueueItem(newItem: PlayqueueItemAuxappModel) {
+    if (this._playQueueItem && this._playQueueItem.id && newItem.id && this._playQueueItem.id === newItem.id) {
       return Promise.resolve();
     } else {
-      this.setStatus(PlayerStatus.Updating);
+      this._playQueueItem = newItem;
+      return this.updateTrack(this._playQueueItem.track);
+    }
+  }
+
+  public updateTrack(track: ITrack): Promise<any> {
+    if (this.track && this.track.id === track.id) {
+      return Promise.resolve();
+    } else {
       this.track = track;
+      this.setStatus(PlayerStatus.Updating);
       this.updateTrackDuration(track.duration);
       if (this.getStatus() === PlayerStatus.Playing) {
         return this.stop().then(() => {

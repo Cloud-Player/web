@@ -1,11 +1,20 @@
+<!--<app-toggle-switch style="width: 45px;transform: scale(0.75);"-->
+                   <!--[(value)]="playRecommended"-->
+                   <!--(valueChange)="setPlayRecommended($event)">-->
+<!--</app-toggle-switch>-->
+
+<!--{{playQueue.items.getNextPlayIndex()}}-->
+
 <!--<div class="play-queue scrollable">-->
   <!--<ul>-->
-    <!--<li *ngFor="let item of playQueue.items.models">-->
+    <!--<div *ngFor="let item of playQueue.items.models">-->
+      <!--<li *ngIf="!item.isStopped()">-->
       <!--<span *ngIf="item === playQueue.items.getCurrentItem()">-->
-         <!-- ->-->
+               <!-- ->-->
       <!--</span>-->
-      <!--{{item.getIndex()}}) {{item.status}} {{item.track.title}}-->
-    <!--</li>-->
+        <!--{{item.getIndex()}}) {{item.status}} {{item.track.title}} {{item.track.provider_id}}-->
+      <!--</li>-->
+    <!--</div>-->
   <!--</ul>-->
 <!--</div>-->
 
@@ -59,54 +68,6 @@
     </div>
   </div>
 
-  <!--<div class="scheduled-tracks-list" *ngIf="true || playQueue.items.getRecommendedItems().length>0">-->
-    <!--<div class="divider">-->
-      <!--<div class="title">Recommended</div>-->
-      <!--<div class="btn-group">-->
-        <!--<app-toggle-switch style="width: 45px;transform: scale(0.75);"-->
-                           <!--[(value)]="playRecommended"-->
-                           <!--(valueChange)="setPlayRecommended($event)">-->
-        <!--</app-toggle-switch>-->
-      <!--</div>-->
-    <!--</div>-->
-
-    <!--<div *ngFor="let playQueueItem of playQueue.items.getRecommendedItems() | limitCollectionresults: {limit: 1}"-->
-         <!--appDraggable="true"-->
-         <!--[dragData]="playQueueItem.track.toJSON()"-->
-         <!--[dragImageUrl]="playQueueItem.track.image.getSmallSizeUrl()"-->
-         <!--dragEffect="copy">-->
-      <!--<app-context-menu>-->
-        <!--<div class="track">-->
-          <!--<app-track-cover [track]="playQueueItem.track" [size]="coverSize"></app-track-cover>-->
-          <!--<div class="details"-->
-               <!--[class.dummy]="!playQueueItem.track.artist.getFullName() && !playQueueItem.track.title">-->
-            <!--<div style="display: flex; align-items: center">-->
-              <!--<b class="title"-->
-                 <!--style="flex-grow: 1; width: inherit; overflow: hidden; text-overflow: ellipsis;"-->
-                 <!--[title]="playQueueItem.track.title">-->
-                <!--{{playQueueItem.track.title}}-->
-              <!--</b>-->
-            <!--</div>-->
-            <!--<div class="artist">{{playQueueItem.track.artist.getFullName()}}</div>-->
-            <!--<div class="stats">-->
-              <!--<div class="duration">-->
-                <!--<i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>-->
-                <!--{{playQueueItem.track.duration | hReadableSeconds}}-->
-              <!--</div>-->
-              <!--<div *ngIf="playQueueItem.track.genre && playQueueItem.track.genre.length>0"-->
-                   <!--class="genre">-->
-                <!--<i class="fa fa-dot-circle-o" aria-hidden="true" alt="genre"></i>-->
-                <!--{{playQueueItem.track.genre[0]}}-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<app-add-to-queue-option [track]="playQueueItem.track" hidden></app-add-to-queue-option>-->
-        <!--<app-add-to-playlist-option [track]="playQueueItem.track" hidden></app-add-to-playlist-option>-->
-      <!--</app-context-menu>-->
-    <!--</div>-->
-  <!--</div>-->
-
   <div class="scheduled-tracks-list" *ngIf="hasScheduledItems()">
     <div class="divider">
       <div class="title">Scheduled Tracks</div>
@@ -134,8 +95,8 @@
               <a class="provider"
                  [href]="playQueueItem.track.externalLink"
                  target="_blank"
-                 title="Open in {{providerMap[playQueueItem.track.provider].title}}">
-                <span class="{{providerMap[playQueueItem.track.provider].icon}}"></span>
+                 title="Open in {{providerMap[playQueueItem.track.provider_id].title}}">
+                <span class="{{providerMap[playQueueItem.track.provider_id].icon}}"></span>
               </a>
               <div class="duration">
                 <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>
@@ -177,8 +138,8 @@
                 <a class="provider"
                    [href]="playQueueItem.track.externalLink"
                    target="_blank"
-                   title="Open in {{providerMap[playQueueItem.track.provider].title}}">
-                  <span class="{{providerMap[playQueueItem.track.provider].icon}}"></span>
+                   title="Open in {{providerMap[playQueueItem.track.provider_id].title}}">
+                  <span class="{{providerMap[playQueueItem.track.provider_id].icon}}"></span>
                 </a>
                 <div class="duration">
                   <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>

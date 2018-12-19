@@ -10,13 +10,11 @@ import {filter, first} from 'rxjs/internal/operators';
 import {PlayqueueAuxappModel} from '../../../api/playqueue/playqueue-auxapp.model';
 import {SocketMessageService} from '../../../shared/services/socket-message';
 import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
-import {MessageMethodTypes} from '../../../shared/services/message';
 import {SocketPlayerService} from '../../services/socket-player';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
 import {NavigationStart, Router, UrlTree} from '@angular/router';
 import {PlayerFactory} from '../../src/player-factory.class';
 import {SocketBackboneSender} from '../../../shared/services/socket-backbone-sender';
-import {BaseModel} from '../../../backbone/models/base.model';
 import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
 import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 
@@ -65,12 +63,29 @@ export class PlayerComponent implements OnInit {
       if (provider && trackId && PlayerFactory.hasPlayerForProvider(provider)) {
         const newPlayQueueItem = new PlayqueueItemAuxappModel({
           track: {
-            provider: provider,
+            provider_id: provider,
             id: trackId
           },
+          status: PlayQueueItemStatus.Paused,
           progress: progress || 0
         });
         this.playQueue.items.setInitialItem(newPlayQueueItem);
+      }
+    }
+  }
+
+  private enterPlayerMode() {
+    const playerSession = this.sessions.getPlayerSession();
+    if (
+      this.socketMessageService.isOpen() &&
+      !playerSession
+    ) {
+      const sessions = this.authenticatedUser.getAuxappAccount().sessions;
+      const mySession = sessions.getMySession();
+      if (mySession) {
+        mySession.is_player = true;
+        this.socketBackboneSender.decorate(mySession);
+        mySession.save();
       }
     }
   }
@@ -121,37 +136,9 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.playQueue = PlayqueueAuxappModel.getInstance();
 
-    const saveItem = (item) => {
+    const saveItem = (item: PlayqueueItemAuxappModel) => {
       this.socketBackboneSender.decorate(item);
-      switch (item.status) {
-        case PlayQueueItemStatus.RequestedPlaying:
-          const playerSession = this.sessions.findWhere({state: 'player'});
-          if (this.socketMessageService.isOpen() &&
-            !playerSession &&
-            /* When set to playing by socket do not to this session as player */
-            !(item.socketData && item.socketData.status === 'playing')
-          ) {
-            const sessions = this.authenticatedUser.getAuxappAccount().sessions;
-            const mySession = sessions.getMySession();
-            if (mySession) {
-              mySession.is_player = true;
-              this.socketBackboneSender.decorate(mySession);
-              mySession.save();
-            }
-          }
-          item.save();
-          break;
-        case PlayQueueItemStatus.RequestedPause:
-        case PlayQueueItemStatus.Queued:
-        case PlayQueueItemStatus.Stopped:
-          item.save();
-          break;
-        case PlayQueueItemStatus.Scheduled:
-          if (item.previousAttributes().status === PlayQueueItemStatus.Queued) {
-            item.save();
-          }
-          break;
-      }
+      item.save();
     };
 
     const debouncedPlayQueueSave = debounce(() => {
@@ -182,14 +169,33 @@ export class PlayerComponent implements OnInit {
       this.cdr.detectChanges();
     }, 1000);
 
-    this.playQueue.items.on('change:progress', throttledViewUpdate);
-    this.playQueue.items.on('change:progress', throttledProgressUpdate);
-    this.playQueue.items.on('change:status', (item) => {
-      if (item.status === PlayQueueItemStatus.Playing) {
-        this.playQueue.items.fetchRecommendedItems();
+    const statusChange = (model) => {
+      if (model.changed.socketUpdateTime) {
+        // DO NOT SAVE UPDATES THAT CAME IN BY SOCKET
+        return;
+      } else if (model.changed.status) {
+        if (
+          model.status === PlayQueueItemStatus.RequestedPlaying ||
+          model.changed.status === PlayQueueItemStatus.RequestedPlaying ||
+          model.changed.status === PlayQueueItemStatus.RequestedSeek
+        ) {
+          this.enterPlayerMode();
+          this.playQueue.items.fetchRecommendedItems();
+        }
+        if (PlayqueueItemAuxappModel.isNewStatus(model.previousAttributes().status, model.changed.status)) {
+          saveItem(model);
+        }
+      } else if (model.changed.progress) {
+        throttledProgressUpdate(model);
+      } else {
+        if (model.isPlaying()) {
+          this.enterPlayerMode();
+        }
       }
-      saveItem(item);
-    });
+    };
+
+    this.playQueue.items.on('change:progress', throttledViewUpdate);
+    this.playQueue.items.on('change', statusChange.bind(this));
 
     this.playQueue.items.on('update', debouncedPlayQueueSave);
     this.playQueue.items.on('update remove reset', debouncedSetHasPlayer);
@@ -216,13 +222,30 @@ export class PlayerComponent implements OnInit {
       )
       .subscribe(this.leftFullScreen.bind(this));
 
-    this.sessions.on('add change remove', (session) => {
-      const playerSession = this.sessions.getPlayerSession();
+    this.sessions.on('change', (session) => {
+      let playerSession: SessionModel;
+      if (session.is_player) {
+        playerSession = session;
+      } else {
+        playerSession = this.sessions.getPlayerSession();
+      }
       const mySession = this.sessions.getMySession();
       if (playerSession && mySession && playerSession.id !== mySession.id) {
         this.playerManager.setInHeadlessMode(true);
-      } else {
+      } else if (playerSession) {
         this.playerManager.setInHeadlessMode(false);
+      }
+    });
+
+    this.sessions.on('remove', (session) => {
+      if (session.is_player) {
+        this.playerManager.setInHeadlessMode(false, false);
+      }
+    });
+
+    this.sessions.on('add', (session) => {
+      if (session.is_player) {
+        this.playerManager.setInHeadlessMode(true);
       }
     });
 

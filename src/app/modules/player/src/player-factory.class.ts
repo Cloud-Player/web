@@ -11,6 +11,7 @@ import {MixcloudPlayerComponent} from '../components/mixcloud-player/mixcloud-pl
 import {PlayqueueItemAuxappModel} from '../../api/playqueue/playqueue-item/playqueue-item-auxapp.model';
 import {DeezerPlayerComponent} from '../components/deezer-player/deezer-player';
 import {HeadlessPlayerComponent} from '../components/headless-player/headless-player';
+import {EmptyPlayerComponent} from '../components/empty-player/empty-player';
 
 @Injectable()
 export class PlayerFactory {
@@ -47,20 +48,21 @@ export class PlayerFactory {
     } else if (PlayerFactory._playerComponentMap[provider]) {
       return PlayerFactory._playerComponentMap[provider];
     } else {
-      throw new Error(`There is no player available for the type ${provider}`);
+      console.error(`There is no player available for the type ${provider}`);
+      return EmptyPlayerComponent;
     }
   }
 
   private createNewPlayer(item: PlayqueueItemAuxappModel): PlayerStoreItem {
-    const component: Type<IPlayer> = this.getComponentForProvider(item.track.provider);
+    const component: Type<IPlayer> = this.getComponentForProvider(item.track.provider_id);
     const factory: ComponentFactory<IPlayer> = this._resolver.resolveComponentFactory(component);
     const playerComponent: ComponentRef<IPlayer> = this._container.createComponent(factory);
     const player = new PlayerStoreItem({
       component: playerComponent,
-      provider: item.track.provider
+      provider: item.track.provider_id
     });
     const playerSize = PlayerFactory.getPlayerSize(item.track);
-    playerComponent.instance.track = item.track;
+    playerComponent.instance.playQueueItem = item;
     playerComponent.instance.initialise({size: playerSize});
     playerComponent.instance.preload(item.progress);
     playerComponent.instance.addClass('player');
@@ -69,7 +71,7 @@ export class PlayerFactory {
 
   private getReusablePlayer(playQueueItem: PlayqueueItemAuxappModel): PlayerStoreItem {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
-      return player.provider === playQueueItem.track.provider &&
+      return player.provider === playQueueItem.track.provider_id &&
         player.component.instance.isHeadlessPlayer === this._isInHeadlessMode &&
         player.component.instance.getStatus() === PlayerStatus.NotInitialised ||
         player.component.instance.getStatus() === PlayerStatus.Ended ||
@@ -90,7 +92,8 @@ export class PlayerFactory {
           playerStatus === PlayerStatus.Stopped ||
           playerStatus === PlayerStatus.Paused ||
           playerStatus === PlayerStatus.Ended) {
-          console.warn('Playerfactory cleanup service destroys unused player for provider ' + player.component.instance.track.provider);
+          console.warn(
+            'Playerfactory cleanup service destroys unused player for provider ' + player.component.instance.playQueueItem.track.provider_id);
           player.component.destroy();
           this._playerStore.remove(player);
         }
@@ -117,7 +120,7 @@ export class PlayerFactory {
 
   public canReusePlayer(playerComponent: ComponentRef<IPlayer>, playQueueItem: PlayqueueItemAuxappModel) {
     const applicablePlayer = this._playerStore.find((player: PlayerStoreItem) => {
-      return player.component === playerComponent && player.provider === playQueueItem.track.provider;
+      return player.component === playerComponent && player.provider === playQueueItem.track.provider_id;
     });
 
     return !!applicablePlayer;
@@ -134,7 +137,7 @@ export class PlayerFactory {
     if (reusablePlayer) {
       const reusablePlayerComponent = reusablePlayer.component;
 
-      if (reusablePlayerComponent.instance.track.id === item.track.id &&
+      if (reusablePlayerComponent.instance.playQueueItem.track.id === item.track.id &&
         reusablePlayerComponent.instance.getStatus() === PlayerStatus.Playing) {
         return reusablePlayer.component;
       }
@@ -143,7 +146,7 @@ export class PlayerFactory {
         reusablePlayerComponent.instance.initialise({size: playerSize});
       }
 
-      reusablePlayerComponent.instance.updateTrack(item.track);
+      reusablePlayerComponent.instance.updatePlayQueueItem(item);
       reusablePlayerComponent.instance.preload(item.progress);
       return reusablePlayerComponent;
     } else {

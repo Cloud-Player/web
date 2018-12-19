@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HumanReadableSecondsPipe} from '../../../shared/pipes/h-readable-seconds.pipe';
 import {UserAnalyticsService} from '../../../user-analytics/services/user-analytics.service';
 import {PlayQueueItemStatus} from '../../src/playqueue-item-status.enum';
@@ -11,7 +11,6 @@ import {PlayqueueItemAuxappModel} from '../../../api/playqueue/playqueue-item/pl
 import {SessionsCollection} from '../../../api/authenticated-user/sessions/sessions.collection';
 import {SessionModel} from '../../../api/authenticated-user/sessions/session.model';
 import {AuthenticatedUserModel} from '../../../api/authenticated-user/authenticated-user.model';
-import {Authenticator} from '../../../authenticated-user/services/authenticator';
 
 declare let MediaMetadata: any;
 
@@ -24,6 +23,8 @@ export class PlayerControlsComponent implements OnInit {
   private _docTitle: string;
   public sessions: SessionsCollection<SessionModel>;
   public currentItem: PlayqueueItemAuxappModel = new PlayqueueItemAuxappModel();
+  public progress = 0;
+  private _pollTimeInterval;
 
   @Input()
   public isBuffering: boolean;
@@ -51,6 +52,7 @@ export class PlayerControlsComponent implements OnInit {
     this.volumeChange = new EventEmitter<number>();
     this.isInHeadlessModeChange = new EventEmitter<boolean>();
     this.sessions = AuthenticatedUserModel.getInstance().getAuxappAccount().sessions;
+    this.currentItem = new PlayqueueItemAuxappModel();
   }
 
   private setMobileMediaNotification(track: ITrack) {
@@ -100,6 +102,33 @@ export class PlayerControlsComponent implements OnInit {
 
   private leftFullScreen() {
     this.el.nativeElement.classList.remove('full-screen');
+  }
+
+  private isOutSideSlidingWindow(newProgress) {
+    if (newProgress && this.currentItem) {
+      return (
+        newProgress >= this.currentItem.duration ||
+        (
+          newProgress <= this.currentItem.progress - 5 &&
+          newProgress >= this.currentItem.progress + 5
+        )
+      );
+    }
+  }
+
+  private pollTime() {
+    if (this.isOutSideSlidingWindow(this.progress)) {
+      this.progress = this.currentItem.progress;
+    } else if (this.currentItem && this.currentItem.status === PlayQueueItemStatus.Playing) {
+      this.progress++;
+    }
+
+    if (this.currentItem && this.currentItem.isPlaying()) {
+      if (this._pollTimeInterval) {
+        clearTimeout(this._pollTimeInterval);
+      }
+      this._pollTimeInterval = setTimeout(this.pollTime.bind(this), 1000);
+    }
   }
 
   public play(): void {
@@ -199,10 +228,14 @@ export class PlayerControlsComponent implements OnInit {
   ngOnInit(): void {
     this._docTitle = document.title;
     this.playQueue.items.on('update change:status', (model: PlayqueueItemAuxappModel, status: PlayQueueItemStatus) => {
-      if (status === PlayQueueItemStatus.RequestedPlaying || status === PlayQueueItemStatus.RequestedPause) {
+      if (status === PlayQueueItemStatus.Playing || status === PlayQueueItemStatus.Paused) {
         this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
         this.setBrowserTitle(this.currentItem);
+        this.pollTime();
+      }
+      if (model instanceof PlayqueueItemAuxappModel && model.isPaused() && this._pollTimeInterval) {
+        clearTimeout(this._pollTimeInterval);
       }
     });
 
@@ -210,11 +243,13 @@ export class PlayerControlsComponent implements OnInit {
       const currentItem = this.playQueue.items.getCurrentItem();
       if (currentItem) {
         this.currentItem = this.playQueue.items.getCurrentItem();
+        this.progress = this.currentItem.progress;
       }
     });
 
     this.playQueue.items.on('reset', () => {
       this.currentItem = new PlayqueueItemAuxappModel();
+      this.progress = this.currentItem.progress;
       this.cdr.detectChanges();
     });
 
