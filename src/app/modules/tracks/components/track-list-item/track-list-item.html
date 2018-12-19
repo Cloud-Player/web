@@ -20,8 +20,9 @@
           {{track.title}}
         </b>
         <div class="artist">
-          <span>{{track.artist.getFullName()}}</span>
-          <span class="created">created
+          <span *ngIf="track.artist.getFullName()">{{track.artist.getFullName()}}</span>
+          <span *ngIf="track.createdAt"
+                class="created">created
               <span [appTimeAgo]="track.createdAt">{{track.createdAt}}</span>
           </span>
         </div>
@@ -45,8 +46,8 @@
       <a class="label label-default label-light"
          [href]="track.externalLink"
          target="_blank"
-         title="Open in {{providerMap[track.provider].title}}">
-        <span class="{{providerMap[track.provider].icon}}"></span>
+         title="Open in {{providerMap[track.provider_id].title}}">
+        <span class="{{providerMap[track.provider_id].icon}}"></span>
       </a>
       <div class="duration label label-default label-light">
         <i class="fa fa-clock-o" aria-hidden="true" alt="play count"></i>

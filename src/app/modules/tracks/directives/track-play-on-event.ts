@@ -62,7 +62,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
     toast.type = ToastTypes.Info;
     toast.title = 'Not supported yet';
     toast.message =
-      `Due to mobile browser restrictions the playback of ${this.track.provider}
+      `Due to mobile browser restrictions the playback of ${this.track.provider_id}
        tracks is not supported on this device yet.
        We are working on a solution.`;
     this.toastService.addToast(toast);
@@ -82,7 +82,7 @@ export class TrackPlayOnEventDirective implements OnInit, OnDestroy {
         this.playQueue.items.add({track: track.clone(), status: PlayQueueItemStatus.Scheduled});
       });
       this.playQueue.items.getItemByTrackId(this.track.id).play();
-      this.userAnalyticsService.trackEvent('play_track', `${this.track.provider}:${this.track.title}`, 'appTrackPlayOn');
+      this.userAnalyticsService.trackEvent('play_track', `${this.track.provider_id}:${this.track.title}`, 'appTrackPlayOn');
     }
   }
 

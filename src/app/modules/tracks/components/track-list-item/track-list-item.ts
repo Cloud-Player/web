@@ -80,7 +80,7 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.bindTrackChangeListener(this.track);
-    this.playQueue.items.on('change:status remove', this._debouncedUpdate, this);
+    this.playQueue.items.on('change:status add remove', this._debouncedUpdate, this);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -95,6 +95,6 @@ export class TrackListItemComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.unBindTrackChangeListener(this.track);
-    this.playQueue.items.off('change:status remove', this._debouncedUpdate, this);
+    this.playQueue.items.off('change:status add remove', this._debouncedUpdate, this);
   }
 }

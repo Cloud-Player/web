@@ -57,12 +57,12 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
       favouriteTrack.save().then(() => {
         this.userAnalyticsService.trackEvent(
           'toggle_like',
-          `${favouriteTrack.type}:like_${this.track.provider}`,
+          `${favouriteTrack.type}:like_${this.track.provider_id}`,
           'app-option-btn');
       }, () => {
         this.userAnalyticsService.trackEvent(
           'toggle_like',
-          `${favouriteTrack.type}:like_error:${this.track.provider}`,
+          `${favouriteTrack.type}:like_error:${this.track.provider_id}`,
           'app-option-btn');
       });
     }
@@ -76,12 +76,12 @@ export class ToggleLikedTrackComponent implements OnInit, OnDestroy {
       favouriteTrackItem.destroy().then(() => {
         this.userAnalyticsService.trackEvent(
           'toggle_like',
-          `${favouriteTrackItem.type}:dislike_${this.track.provider}`,
+          `${favouriteTrackItem.type}:dislike_${this.track.provider_id}`,
           'app-option-btn');
       }, () => {
         this.userAnalyticsService.trackEvent(
           'toggle_like',
-          `${favouriteTrackItem.type}:dislike_error:${this.track.provider}`,
+          `${favouriteTrackItem.type}:dislike_error:${this.track.provider_id}`,
           'app-option-btn');
       });
     }
