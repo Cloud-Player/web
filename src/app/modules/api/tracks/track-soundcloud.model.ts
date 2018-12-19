@@ -12,7 +12,7 @@ export class TrackSoundcloudModel extends TrackAuxappModel implements ITrack {
 
   @attributesKey('provider_id')
   @defaultValue('soundcloud')
-  provider: string;
+  provider_id: string;
 
   @attributesKey('comments')
   @nested()

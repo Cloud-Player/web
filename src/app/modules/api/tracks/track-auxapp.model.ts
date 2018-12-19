@@ -17,7 +17,7 @@ export class TrackAuxappModel extends AuxappModel implements ITrack {
 
   @attributesKey('provider_id')
   @defaultValue('auxapp')
-  provider: string;
+  provider_id: string;
 
   @attributesKey('account')
   @nested()
@@ -58,7 +58,7 @@ export class TrackAuxappModel extends AuxappModel implements ITrack {
 
   public toMiniJSON() {
     const obj: any = {};
-    obj.provider = this.provider;
+    obj.provider_id = this.provider_id;
     obj.id = this.id;
     obj.title = this.title;
     obj.duration = this.duration;

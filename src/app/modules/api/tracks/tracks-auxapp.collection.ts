@@ -37,7 +37,9 @@ export class TracksAuxappCollection<TModel extends TrackAuxappModel>
       `${TracksAuxappCollection.prototype.hostName()}/track`,
       'POST',
       {
-        data: tracks
+        data: {
+          ids: tracks
+        }
       });
   }
 }

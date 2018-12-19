@@ -7,7 +7,7 @@ export class TrackMixcloudModel extends TrackAuxappModel {
 
   @attributesKey('provider_id')
   @defaultValue('mixcloud')
-  provider: string;
+  provider_id: string;
 
   clone() {
     return new TrackMixcloudModel(this.toMiniJSON());

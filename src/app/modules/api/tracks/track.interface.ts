@@ -9,7 +9,7 @@ export interface ITrackModelConstructor {
 export interface ITrack extends BaseModel {
   type: 'Track';
   hasDetails: boolean;
-  provider: string;
+  provider_id: string;
   artist: IArtist;
   image: AbstractImageModel;
   title: string;

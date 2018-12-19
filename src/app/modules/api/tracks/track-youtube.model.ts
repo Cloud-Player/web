@@ -7,7 +7,7 @@ export class TrackYoutubeModel extends TrackAuxappModel {
 
   @attributesKey('provider_id')
   @defaultValue('youtube')
-  provider: string;
+  provider_id: string;
 
   clone() {
     return new TrackYoutubeModel(this.toMiniJSON());

@@ -7,7 +7,7 @@ export class TrackDeezerModel extends TrackAuxappModel {
 
   @attributesKey('provider_id')
   @defaultValue('deezer')
-  provider: string;
+  provider_id: string;
 
   clone() {
     return new TrackDeezerModel(this.toMiniJSON());
