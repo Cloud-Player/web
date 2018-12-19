@@ -34,13 +34,22 @@ export class InstanceResolver {
         if (!identifierValue && dynamicInstanceDefinition.identifierKeyValueMap.default) {
           identifierValue = 'default';
         }
+      } else if (!identifierValue && !attributes[key] && dynamicInstanceDefinition.identifierKeyValueMap.default) {
+        identifierValue = 'default';
       }
 
       if (identifierValue) {
-        return this.getDynamicConstructorForIdentifierKeyValue(
+        let availableConstructor = this.getDynamicConstructorForIdentifierKeyValue(
           dynamicInstanceDefinition,
           identifierValue
         );
+        if (!availableConstructor && dynamicInstanceDefinition.identifierKeyValueMap.default) {
+          availableConstructor = this.getDynamicConstructorForIdentifierKeyValue(
+            dynamicInstanceDefinition,
+            'default'
+          );
+        }
+        return availableConstructor;
       }
     }
 

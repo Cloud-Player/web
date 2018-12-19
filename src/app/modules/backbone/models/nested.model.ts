@@ -43,13 +43,13 @@ export class NestedModel extends Model {
   private _setDynamicInstance(attributes: {} = {}) {
     const dynamicInstances = result(this, 'dynamicInstances');
     for (const key in dynamicInstances) {
-      if (dynamicInstances.hasOwnProperty(key) &&
-        !(attributes[key] instanceof Model || attributes[key] instanceof Collection)) {
-        const instance =
-          InstanceResolver.getDynamicInstance(dynamicInstances, key, attributes);
-
-        if (instance) {
-          this.attributes[key] = instance;
+      if (dynamicInstances.hasOwnProperty(key)) {
+        if (!(this.attributes[key] instanceof Model || this.attributes[key] instanceof Collection)) {
+          const instance =
+            InstanceResolver.getDynamicInstance(dynamicInstances, key, attributes);
+          if (instance) {
+            this.attributes[key] = instance;
+          }
         }
       }
     }
