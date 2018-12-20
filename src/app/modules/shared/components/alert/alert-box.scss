@@ -4,32 +4,47 @@
   .alert {
     display: flex;
     padding: 0;
+    position: relative;
+    background: $primay-gradient;
+    box-shadow: $primary-boxshadow;
+    border-radius: 4px !important;
+    color: white;
 
     .icon {
       width: 30px;
-      background: #fcf8e3;
+      background: $primay-gradient;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .icon,
-    .message{
-      padding: 10px 20px;
+    .icon {
+      padding: 20px 40px;
+      i {
+        color: white;
+      }
     }
 
-    .header{
+    .message {
+      padding: 20px;
+      flex-grow: 1;
+    }
+
+    .header {
       display: flex;
       align-items: center;
+      flex-grow: 1;
+      color: $aux-brand-primary;
 
-      h3{
+      h3 {
         flex-grow: 1;
-        margin: 0;
+        margin: 0 0 5px 0;
       }
 
-      .closer{
-        justify-self: flex-end;
-        margin-left: 5px;
+      .closer {
+        position: absolute;
+        top: 5px;
+        right: 10px;
       }
     }
   }

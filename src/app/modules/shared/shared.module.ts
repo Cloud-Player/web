@@ -56,6 +56,7 @@ import {MessageService} from './services/message';
 import {SocketBackboneSender} from './services/socket-backbone-sender';
 import {ConfirmDeleteComponent} from './components/confirm-delete/confirm-delete';
 import {ConfirmDeleteDirective} from './directives/confirm-delete';
+import {AuxAppLogoComponent} from './components/aux-app-logo/aux-app-logo';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import {ConfirmDeleteDirective} from './directives/confirm-delete';
   ],
   declarations: [
     AlertBoxComponent,
+    AuxAppLogoComponent,
     LogoComponent,
     CollectionTextInputSearchComponent,
     CollapsibleComponent,
@@ -114,6 +116,7 @@ import {ConfirmDeleteDirective} from './directives/confirm-delete';
   ],
   exports: [
     AlertBoxComponent,
+    AuxAppLogoComponent,
     LogoComponent,
     CollectionTextInputSearchComponent,
     CollapsibleComponent,

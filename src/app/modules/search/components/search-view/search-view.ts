@@ -21,6 +21,7 @@ import {TracksMixcloudCollection} from '../../../api/tracks/tracks-mixcloud.coll
 import {TrackMixcloudModel} from '../../../api/tracks/track-mixcloud.model';
 import {TracksDeezerCollection} from '../../../api/tracks/tracks-deezer.collection';
 import {TrackDeezerModel} from '../../../api/tracks/track-deezer.model';
+import {ClientDetector, ClientNames} from '../../../shared/services/client-detector.service';
 
 @Component({
   selector: 'app-search-view',
@@ -57,6 +58,10 @@ export class SearchViewComponent implements AfterViewInit {
     this.searchCollection = this.tracksSoundCloud;
     this.setRandomSearchTerm();
     this.authenticatedUser = AuthenticatedUserModel.getInstance();
+  }
+
+  public isNativeClient() {
+    return ClientDetector.getClient().name === ClientNames.Electron;
   }
 
   public setIsConnected() {

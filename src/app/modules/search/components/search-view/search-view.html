@@ -14,6 +14,22 @@
     to create playlists and favourite tracks
   </div>
 
+  <app-alert-box *ngIf="!isNativeClient()">
+    <div class="content-container">
+      <div class="logo">
+        <app-aux-app-logo></app-aux-app-logo>
+      </div>
+      <div class="text-content">
+        <h3>pink is the new orange — we are aux.app now</h3>
+        Cloud-Player becomes <a href="https://aux.app">aux.app</a>! We have a new name, a new color and even more
+        features. Your music library is also ready.
+      </div>
+    </div>
+    <div class="btn-row">
+      <a href="https://aux.app" class="btn btn-primary">check out aux.app</a>
+    </div>
+  </app-alert-box>
+
   <app-tab-bar #tabBar
                (tabChange)="selectTab($event)"
                [hidden]="showWelcomeText"

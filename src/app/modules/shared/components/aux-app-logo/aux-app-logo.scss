@@ -1,0 +1,50 @@
+@import 'variables';
+
+:host {
+  .logo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: stroke-dashoffset 5s;
+
+    &.animate{
+      #logoPathAnimation path {
+        animation: animate 5s ease infinite;
+      }
+    }
+
+    .text-logo {
+      color: $brand-primary;
+      font-size: 55px;
+      margin-left: 10px;
+    }
+
+    #logoPathAnimation path {
+      fill: none;
+      stroke: white;
+      stroke-width: 5;
+      stroke-dasharray: 200;
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+    }
+
+    @keyframes animate {
+      0% {
+        stroke-dashoffset: 200;
+      }
+      50% {
+        stroke-dashoffset: 100;
+      }
+      51% {
+        stroke-dashoffset: 0;
+      }
+      100% {
+        stroke-dashoffset: -100;
+      }
+    }
+  }
+}
