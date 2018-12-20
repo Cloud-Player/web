@@ -1,3 +1,6 @@
+# v5.5.0
+- Add teaser banner for aux.app
+
 # v5.4.1
 - Fix playback instabilities due to playqueue changes
 
