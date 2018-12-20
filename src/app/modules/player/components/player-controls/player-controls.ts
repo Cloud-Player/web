@@ -23,7 +23,6 @@ export class PlayerControlsComponent implements OnInit {
   private _docTitle: string;
   public sessions: SessionsCollection<SessionModel>;
   public currentItem: PlayqueueItemAuxappModel = new PlayqueueItemAuxappModel();
-  public progress = 0;
   private _pollTimeInterval;
 
   @Input()
@@ -102,33 +101,6 @@ export class PlayerControlsComponent implements OnInit {
 
   private leftFullScreen() {
     this.el.nativeElement.classList.remove('full-screen');
-  }
-
-  private isOutSideSlidingWindow(newProgress) {
-    if (newProgress && this.currentItem) {
-      return (
-        newProgress >= this.currentItem.duration ||
-        (
-          newProgress <= this.currentItem.progress - 5 &&
-          newProgress >= this.currentItem.progress + 5
-        )
-      );
-    }
-  }
-
-  private pollTime() {
-    if (this.isOutSideSlidingWindow(this.progress)) {
-      this.progress = this.currentItem.progress;
-    } else if (this.currentItem && this.currentItem.status === PlayQueueItemStatus.Playing) {
-      this.progress++;
-    }
-
-    if (this.currentItem && this.currentItem.isPlaying()) {
-      if (this._pollTimeInterval) {
-        clearTimeout(this._pollTimeInterval);
-      }
-      this._pollTimeInterval = setTimeout(this.pollTime.bind(this), 1000);
-    }
   }
 
   public play(): void {
@@ -232,7 +204,6 @@ export class PlayerControlsComponent implements OnInit {
         this.currentItem = this.playQueue.items.getCurrentItem();
         this.setMobileMediaNotification(this.currentItem.track);
         this.setBrowserTitle(this.currentItem);
-        this.pollTime();
       }
       if (model instanceof PlayqueueItemAuxappModel && model.isPaused() && this._pollTimeInterval) {
         clearTimeout(this._pollTimeInterval);
@@ -243,13 +214,11 @@ export class PlayerControlsComponent implements OnInit {
       const currentItem = this.playQueue.items.getCurrentItem();
       if (currentItem) {
         this.currentItem = this.playQueue.items.getCurrentItem();
-        this.progress = this.currentItem.progress;
       }
     });
 
     this.playQueue.items.on('reset', () => {
       this.currentItem = new PlayqueueItemAuxappModel();
-      this.progress = this.currentItem.progress;
       this.cdr.detectChanges();
     });
 
