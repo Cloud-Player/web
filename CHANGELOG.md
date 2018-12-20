@@ -1,3 +1,6 @@
+# v5.4.1
+- Fix playback instabilities due to playqueue changes
+
 # v5.4.0
 - Persist playqueue on server so its portable to all devices
 - Prepare Deezer integration
