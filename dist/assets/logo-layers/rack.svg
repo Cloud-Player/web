@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px"
+	 height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+	<g id="rack">
+		<path fill="#FF3600" d="M64.757,1.33c-7.047,0-12.76,5.713-12.76,12.761c0,7.047,5.713,12.76,12.76,12.76
+			c7.048,0,12.763-5.713,12.763-12.76C77.52,7.042,71.803,1.33,64.757,1.33z M64.757,24.194c-5.579,0-10.103-4.523-10.103-10.104
+			c0-5.579,4.523-10.102,10.103-10.102S74.86,8.511,74.86,14.09C74.858,19.671,70.334,24.194,64.757,24.194z"/>
+		<rect x="63.661" y="0" fill="#FF3600" width="2.237" height="2.239"/>
+		<rect x="76.526" y="12.867" fill="#FF3600" width="2.238" height="2.238"/>
+		<rect x="63.661" y="25.733" fill="#FF3600" width="2.237" height="2.237"/>
+		<rect x="50.794" y="12.867" fill="#FF3600" width="2.24" height="2.238"/>
+
+			<rect x="54.575" y="3.785" transform="matrix(0.7072 -0.707 0.707 0.7072 12.8571 40.7675)" fill="#FF3600" width="2.151" height="2.15"/>
+
+			<rect x="72.83" y="3.783" transform="matrix(-0.707 0.7072 -0.7072 -0.707 129.5916 -43.9769)" fill="#FF3600" width="2.151" height="2.148"/>
+
+			<rect x="72.83" y="22.035" transform="matrix(0.7074 -0.7068 0.7068 0.7074 5.2872 58.9953)" fill="#FF3600" width="2.152" height="2.152"/>
+
+			<rect x="54.578" y="22.036" transform="matrix(-0.7069 0.7073 -0.7073 -0.7069 111.3398 0.0847)" fill="#FF3600" width="2.15" height="2.151"/>
+	</g>
+</svg>
