@@ -236,6 +236,9 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
   }
 
   ensureQueuingOrder(): void {
+    if (!this._playIndex) {
+      return;
+    }
     const currentPlaying = <TModel>this.at(this._playIndex);
     const queuedItems = this.getQueuedItems();
     const incr = this.getCurrentItem() ? 1 : 0;
@@ -419,6 +422,7 @@ export class PlayqueueItemsAuxappCollection<TModel extends PlayqueueItemAuxappMo
           this._initialItem = null;
           this.setPlayIndex(currentItem);
         }
+        this.ensureQueuingOrder();
       }
     });
   }
