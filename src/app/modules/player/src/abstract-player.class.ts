@@ -108,7 +108,6 @@ export abstract class AbstractPlayer implements IPlayerUpdates, OnInit {
     if (isNumber(duration) && duration > 0) {
       this._duration = duration;
       this.durationChange.emit({duration: duration, item: this.playQueueItem});
-      this.checkLoginByTrackDuration(this.playQueueItem.track.duration, duration);
     }
   }
 
@@ -124,7 +123,6 @@ export abstract class AbstractPlayer implements IPlayerUpdates, OnInit {
     if (isNumber(currentTime) && currentTime > 0) {
       this._currentTime = currentTime;
       this.emitTimeChange(currentTime);
-      this.checkLoginByTrackDuration(this.playQueueItem.track.duration, this.getDuration());
     }
   }
 
