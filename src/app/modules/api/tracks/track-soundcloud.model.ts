@@ -2,10 +2,10 @@ import {Comments} from '../../comments/collections/comments.collection';
 import {attributesKey} from '../../backbone/decorators/attributes-key.decorator';
 import {nested} from '../../backbone/decorators/nested.decorator';
 import {Comment} from '../../comments/models/comment.model';
-import {Globals} from '../../../../globals';
 import {defaultValue} from '../../backbone/decorators/default-value.decorator';
 import {ITrack} from './track.interface';
 import {TrackAuxappModel} from './track-auxapp.model';
+import {environment} from '../../../../environments/environment';
 
 export class TrackSoundcloudModel extends TrackAuxappModel implements ITrack {
   endpoint = '/track/soundcloud';
@@ -19,7 +19,7 @@ export class TrackSoundcloudModel extends TrackAuxappModel implements ITrack {
   comments: Comments<Comment>;
 
   getResourceUrl(): string {
-    return `https://api.soundcloud.com/tracks/${this.id}/stream?client_id=${Globals.soundcloudClientId}`;
+    return `https://api.soundcloud.com/tracks/${this.id}/stream?client_id=${environment.clientIdSc}`;
   }
 
   clone() {

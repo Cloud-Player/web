@@ -1,5 +1,5 @@
 export const Globals = {
-  soundcloudClientId: 'mqCVRxAeYDUjlPhqj27Hb1H9kydm9fMm',
+  soundcloudClientId: 'ENTER SOUNDCLOUD CLIENT ID HERE https://developers.soundcloud.com/',
   httpApiUrl: `https://api.aux.app`,
   websocketApiUrl: `wss://api.aux.app/websocket`
 };

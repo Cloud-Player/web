@@ -11,8 +11,8 @@ import {MessageMethodTypes} from '../../shared/services/message';
 import {ActivatedRoute} from '@angular/router';
 import {SessionsCollection} from '../../api/authenticated-user/sessions/sessions.collection';
 import {SessionModel} from '../../api/authenticated-user/sessions/session.model';
-import {Globals} from '../../../../globals';
 import {ITrack} from '../../api/tracks/track.interface';
+import {environment} from '../../../../environments/environment';
 
 @Injectable()
 export class Authenticator {
@@ -102,7 +102,7 @@ export class Authenticator {
     this.updatePlayQueue();
     this.subscribeOnSessionChanges();
     this._authenticatedUser.getAuxappAccount().sessions.reset();
-    this.socketMessageService.open(Globals.websocketApiUrl);
+    this.socketMessageService.open(environment.websocketApiUrl);
   }
 
   public login() {

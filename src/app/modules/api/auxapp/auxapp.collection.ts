@@ -1,14 +1,14 @@
 import {BaseCollection} from '../../backbone/collections/base.collection';
 import {request} from '../../backbone/utils/request.util';
 import {AuxappModel} from './auxapp.model';
-import {Globals} from '../../../../globals';
+import {environment} from '../../../../environments/environment';
 
 export class AuxappCollection<TModel extends AuxappModel> extends BaseCollection<TModel> {
 
   model: any = AuxappModel;
 
   hostName(): string {
-    return Globals.httpApiUrl;
+    return environment.httpApiUrl;
   }
 
   request(url: string, method: string, options: any = {}) {

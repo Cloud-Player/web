@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  clientIdSc: 'ENTER SOUNDCLOUD CLIENT ID HERE https://developers.soundcloud.com/',
+  httpApiUrl: `https://api.aux.app`,
+  websocketApiUrl: `wss://api.aux.app/websocket`
 };
