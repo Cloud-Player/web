@@ -1,10 +1,12 @@
 # Cloud-Player is now aux.app
 What a thrilling ride. However every ride comes eventually to an end. So does our ride with Cloud-Player.
 But nothing to be sad about because our new ride has already started at [aux.app](https://aux.app). 
-This repository will not be maintained anymore
+This repository will not be maintained anymore.
+
+[![aux.app Teaser](./src/assets/launch-aux-app.png)](https://aux.app)
 
 # Cloud-Player
-[![Cloud Player Teaser](./src/assets/meta/social/facebook.jpg)](https://cloud-player.io)
+![Cloud Player Teaser](./src/assets/meta/social/facebook.jpg)
 
 ## Multiple providers – One player
 Cloud-Player combines the libraries of multiple streaming providers into a single music player. 
@@ -15,16 +17,12 @@ So far, it is using the official
 [SoundCloud API](https://developers.soundcloud.com/docs/api) and 
 [Mixcloud API](https://www.mixcloud.com/developers/)
 
-[Start the webplayer](https://cloud-player.io)
-
 ## Native desktop player
 We also have a native desktop player for macOS and Windows, so you can install the Cloud-Player app on your desktop 
 and control the player with your media keys on your keyboard.
 
-[Get the native desktop app](https://github.com/Cloud-Player/desktop-app)
-
 ## No signup required
-You get a temporary account when you start [Cloud-Player](https://cloud-player.io) the first time 
+You get a temporary account when you start Cloud-Player the first time 
 so you don’t have to sign up. 
 The account will be automatically deleted when you are not using Cloud-Player for more than 30 days.
 To persist your account and use it accross devices, login with your SoundCloud or YouTube account.
