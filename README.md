@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/Cloud-Player/web.svg?branch=master)](https://travis-ci.org/Cloud-Player/web)
+# Cloud-Player is now aux.app
+What a thrilling ride. However every ride comes eventually to an end. So does our ride with Cloud-Player.
+But nothing to be sad about because our new ride has already started at [aux.app](https://aux.app). 
+This repository will not be maintained anymore
 
 # Cloud-Player
 [![Cloud Player Teaser](./src/assets/meta/social/facebook.jpg)](https://cloud-player.io)
