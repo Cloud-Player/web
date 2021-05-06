@@ -54,7 +54,7 @@
     "moment": "2.22.2",
     "reflect-metadata": "0.1.12",
     "rxjs": "6.3.3",
-    "underscore": "1.8.3",
+    "underscore": "1.12.1",
     "web-animations-js": "2.3.1",
     "zone.js": "0.8.26"
   },
