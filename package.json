@@ -51,7 +51,7 @@
     "core-js": "2.5.7",
     "font-awesome": "4.7.0",
     "localforage": "1.7.3",
-    "moment": "2.22.2",
+    "moment": "2.29.4",
     "reflect-metadata": "0.1.12",
     "rxjs": "6.3.3",
     "underscore": "1.8.3",
